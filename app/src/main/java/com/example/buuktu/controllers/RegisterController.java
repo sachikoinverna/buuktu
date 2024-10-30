@@ -40,11 +40,23 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
 
             }
         } else if (view.getId()==R.id.et_userRegister) {
-
+            if(!b){
+                handlerCheckUser();
+            } else if (b) {
+                CheckUtil.setErrorMessage(null,register.getTv_usernameRegister());
+            }
         } else if (view.getId()==R.id.et_pronounsRegister){
-
+            if(!b){
+                handlerCheckPronouns();
+            } else if (b) {
+                CheckUtil.setErrorMessage(null,register.getTv_pronounsRegister());
+            }
         } else if (view.getId()==R.id.et_emailRegister){
-
+            if(!b){
+                handlerCheckEmail();
+            } else if (b) {
+                CheckUtil.setErrorMessage(null,register.getTv_emailRegister());
+            }
         }
         else if (view.getId()==R.id.et_password) {
             if (!b) {
@@ -54,11 +66,17 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
             }
         }else if (view.getId()==R.id.et_passwordRepeat) {
             if(!b){
-                handlerCheckPasswordRepeat(register.getEt_passwordRegister().getText().toString(),register.getEt_passwordRepeat().getText().toString());
+                handlerCheckPasswordRepeat();
+            } else if (b) {
+                CheckUtil.setErrorMessage(null,register.getTv_passwordRepeatRegister());
             }
-        } /*else if (view.getId()==R.id.et_telephoneRegister) {
-
-        }*/
+        } else if (view.getId()==R.id.et_telephoneRegister) {
+            if(!b){
+                handlerCheckTelephone();
+            } else if (b) {
+                CheckUtil.setErrorMessage(null,register.getTv_telephoneRegister());
+            }
+        }
     }
     private boolean handlerCheckName(){
         if(CheckUtil.checkTextEmpty(register.getEt_nameRegister())){
@@ -66,6 +84,13 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
             return false;
         }else if (!CheckUtil.checkNumbers(register.getEt_nameRegister().getText().toString())){
             CheckUtil.setErrorMessage(register.getString(R.string.numberErrorTextField),register.getTv_nameRegister());
+            return false;
+        }
+        return true;
+    }
+    private boolean handlerCheckPronouns(){
+        if(CheckUtil.checkTextEmpty(register.getEt_pronounsRegister())){
+            CheckUtil.setErrorMessage(register.getString(R.string.pronounsErrorEmpty),register.getTv_pronounsRegister());
             return false;
         }
         return true;
@@ -96,8 +121,8 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
         CheckUtil.setErrorMessage(null,register.getTv_passwordRegister());
         return true;
     }
-    public boolean handlerCheckPasswordRepeat(String password, String passwordRepeat){
-        if (!password.equals(passwordRepeat)) {
+    public boolean handlerCheckPasswordRepeat(){
+        if (!register.getEt_passwordRegister().equals(register.getEt_passwordRepeat())) {
             CheckUtil.setErrorMessage(register.getString(R.string.passwordErrorRepeat),register.getTv_passwordRepeatRegister());
         }
         CheckUtil.setErrorMessage(null,register.getTv_passwordRepeatRegister());
@@ -110,39 +135,7 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
         }
         return true;
     }
-    private boolean handlerCheckEmail(String email){
-        if(CheckUtil.checkTextEmpty(register.getEt_emailRegister())){
-            CheckUtil.setErrorMessage(register.getString(R.string.emailErrorEmpty),register.getEt_emailRegister());
-            return false;
-        }
-        if (!CheckUtil.checkEmailStructure(email)){
-            CheckUtil.setErrorMessage(register.getString(R.string.emailErrorFormat),register.getEt_emailRegister());
-            return false;
-        }
-        return true;
-    }
-    public boolean checkPasswordRepeat(String password, String passwordRepeat){
-        if (!password.equals(passwordRepeat)) {
-            CheckUtil.setErrorMessage(register.getString(R.string.passwordErrorRepeat),register.getTv_passwordRepeatRegister());
-        }
-        CheckUtil.setErrorMessage(null,register.getTv_passwordRepeatRegister());
-        return true;
-    }
-    public boolean checkUser(){
-     //   if(CheckUtil.checkTextEmpty(register.getEt)){
-       //     CheckUtil.setErrorMessage(getString(R.string.userErrorEmpty),et_userRegister);
-        //    return false;
-        //}
-        return true;
-    }
-    private boolean handlerCheckBirthdayDate(){
-        if(CheckUtil.checkTextEmpty(register.getDp_birthday())){
-            CheckUtil.setErrorMessage(register.getString(R.string.birthdayErrorEmpty),register.getDp_birthday());
-            return false;
-        }
-        return true;
-    }
-    public boolean checkEmail(){
+    private boolean handlerCheckEmail(){
         if(CheckUtil.checkTextEmpty(register.getEt_emailRegister())){
             CheckUtil.setErrorMessage(register.getString(R.string.emailErrorEmpty),register.getTv_emailRegister());
             return false;
@@ -153,24 +146,37 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
         }
         return true;
     }
+    public boolean handlerCheckUser(){
+        if(CheckUtil.checkTextEmpty(register.getEt_userRegister())){
+            CheckUtil.setErrorMessage(register.getString(R.string.userErrorEmpty),register.getTv_usernameRegister());
+            return false;
+        }
+        return true;
+    }
+    private boolean handlerCheckBirthdayDate(){
+        if(CheckUtil.checkTextEmpty(register.getDp_birthday())){
+            CheckUtil.setErrorMessage(register.getString(R.string.birthdayErrorEmpty),register.getDp_birthday());
+            return false;
+        }
+        return true;
+    }
     private void handlerGoToRegister(){
-        Intent intent = new Intent(register, Login.class);
+        Intent intent = new Intent(register,Login.class);
         register.startActivity(intent);
     }
-    /*public boolean checkAllFields(){
-        if(checkName(et_nameRegister) && checkSurname(et_surnameRegister.getText().toString()) && checkBirthdayDate() && checkUser() && checkEmail(et_emailRegister.getText().toString()) && checkPassword(et_password.getText().toString())&& checkPasswordRepeat(et_password.getText().toString(),et_passwordRepeat.getText().toString())&& checkPronouns(et_pronounsRegister.getText().toString())){
+    private boolean checkAllFields(){
+        if(handlerCheckName() && handlerCheckSurname() && handlerCheckBirthdayDate() && handlerCheckUser() && handlerCheckEmail() && handlerCheckPassword()&& handlerCheckPasswordRepeat()&& handlerCheckPronouns()){
             return true;
         }
         return false;
     }
-    public void register(){
+    private void register(){
         if(checkAllFields()){
 
         }else{
 
         }
     }
-    */
     /*public void showDatePickerDialog(View view)
     {
         DatePickerDialog date = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
@@ -186,8 +192,8 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
     }*/
     @Override
     public void onClick(View view) {
-        if (view.getId()==R.id.bt_registerToLogin){
-            handlerGoToRegister();
+            if(view.getId()==R.id.bt_registerToLogin) {
+                handlerGoToRegister();
+            }
         }
-    }
 }
