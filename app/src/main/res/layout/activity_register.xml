@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/bt_registerToLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@null"
@@ -46,25 +46,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/et_nameRegisterFilled"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:textAlignment="center"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginTop="50dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"
                     android:hint="@string/name"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    app:startIconDrawable="@drawable/outline_person_24"
+                    android:textAlignment="center"
                     app:boxCornerRadiusBottomEnd="58dp"
-                    app:boxCornerRadiusTopEnd="58dp"
                     app:boxCornerRadiusBottomStart="58dp"
+                    app:boxCornerRadiusTopEnd="58dp"
                     app:boxCornerRadiusTopStart="58dp"
                     app:counterEnabled="true"
-                    app:errorEnabled="true"
-
-                    app:counterMaxLength="50">
+                    app:counterMaxLength="50"
+                    app:errorEnabled="false"
+                    app:startIconDrawable="@drawable/outline_person_24">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_nameRegister"
@@ -75,24 +75,38 @@
                         android:maxLength="50"
                         android:textAlignment="center"
                         android:textColorHint="@color/brownMaroon" />
+
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/tv_errorNameRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="TextView"
+                    android:textAlignment="center"
+                    android:textColor="@color/redError"
+                    tools:layout_editor_absoluteX="-170dp"
+                    tools:layout_editor_absoluteY="589dp" />
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/et_surnameRegisterFilled"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:textAlignment="center"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginTop="50dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"
                     android:hint="@string/surname"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    app:startIconDrawable="@drawable/outline_person_24"
+                    android:textAlignment="center"
                     app:boxCornerRadiusBottomEnd="58dp"
-                    app:boxCornerRadiusTopEnd="58dp"
                     app:boxCornerRadiusBottomStart="58dp"
+                    app:boxCornerRadiusTopEnd="58dp"
                     app:boxCornerRadiusTopStart="58dp"
                     app:counterEnabled="true"
-                    app:counterMaxLength="50">
+                    app:counterMaxLength="50"
+                    app:errorEnabled="false"
+                    app:startIconDrawable="@drawable/outline_person_24">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_surnameRegister"
@@ -103,23 +117,33 @@
                         android:textAlignment="center"
                         android:textColorHint="@color/brownMaroon" />
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/tv_errorSurnameRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    android:textAlignment="center"
+                    android:textColor="@color/redError" />
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/et_pronounsRegisterFilled"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:textAlignment="center"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginTop="50dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"
                     android:hint="@string/pronouns"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    app:startIconDrawable="@drawable/outline_person_24"
+                    android:textAlignment="center"
                     app:boxCornerRadiusBottomEnd="58dp"
-                    app:boxCornerRadiusTopEnd="58dp"
                     app:boxCornerRadiusBottomStart="58dp"
+                    app:boxCornerRadiusTopEnd="58dp"
                     app:boxCornerRadiusTopStart="58dp"
                     app:counterEnabled="true"
-                    app:counterMaxLength="50">
+                    app:counterMaxLength="50"
+                    app:errorEnabled="false"
+                    app:startIconDrawable="@drawable/outline_person_24">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_pronounsRegister"
@@ -130,22 +154,35 @@
                         android:textAlignment="center"
                         android:textColorHint="@color/brownMaroon" />
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/tv_errorPronounsRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="TextView"
+                    android:textAlignment="center"
+                    android:textColor="@color/redError"
+                    tools:layout_editor_absoluteX="-170dp"
+                    tools:layout_editor_absoluteY="589dp" />
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/dp_birthdayFilled"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:textAlignment="center"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginTop="50dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:hint="@string/birthday"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    app:startIconDrawable="@drawable/outline_calendar_month_24"
-                    app:boxCornerRadiusBottomEnd="58dp"
-                    app:boxCornerRadiusTopEnd="58dp"
                     android:focusable="false"
+                    android:hint="@string/birthday"
+                    android:textAlignment="center"
+                    app:boxCornerRadiusBottomEnd="58dp"
                     app:boxCornerRadiusBottomStart="58dp"
-                    app:boxCornerRadiusTopStart="58dp">
+                    app:boxCornerRadiusTopEnd="58dp"
+                    app:boxCornerRadiusTopStart="58dp"
+                    app:errorEnabled="false"
+                    app:startIconDrawable="@drawable/outline_calendar_month_24">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/dp_birthday"
@@ -157,30 +194,35 @@
                         android:onClick="showDatePickerDialog"
                         android:textAlignment="center"
                         android:textColorHint="@color/brownMaroon" />
+
                 </com.google.android.material.textfield.TextInputLayout>
+
                 <TextView
                     android:id="@+id/tv_birthdayError"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="TextView"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="@color/redError" />
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/et_userRegisterFilled"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:textAlignment="center"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginTop="50dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"
                     android:hint="@string/username"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    app:startIconDrawable="@drawable/outline_person_24"
+                    android:textAlignment="center"
                     app:boxCornerRadiusBottomEnd="58dp"
-                    app:boxCornerRadiusTopEnd="58dp"
                     app:boxCornerRadiusBottomStart="58dp"
+                    app:boxCornerRadiusTopEnd="58dp"
                     app:boxCornerRadiusTopStart="58dp"
                     app:counterEnabled="true"
-                    app:counterMaxLength="20">
+                    app:counterMaxLength="20"
+                    app:errorEnabled="false"
+                    app:startIconDrawable="@drawable/outline_person_24">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_userRegister"
@@ -190,29 +232,34 @@
                         android:maxLength="20"
                         android:textAlignment="center" />
                 </com.google.android.material.textfield.TextInputLayout>
+
                 <TextView
-                    android:id="@+id/tv_userError"
+                    android:id="@+id/tv_errorUsernameRegister"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="TextView"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="@color/redError" />
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/et_emailRegisterFilled"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:textAlignment="center"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginTop="50dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"
                     android:hint="@string/email"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    app:startIconDrawable="@drawable/outline_email_24"
+                    android:textAlignment="center"
                     app:boxCornerRadiusBottomEnd="58dp"
-                    app:boxCornerRadiusTopEnd="58dp"
                     app:boxCornerRadiusBottomStart="58dp"
+                    app:boxCornerRadiusTopEnd="58dp"
                     app:boxCornerRadiusTopStart="58dp"
                     app:counterEnabled="true"
-                    app:counterMaxLength="50">
+                    app:counterMaxLength="50"
+                    app:errorEnabled="false"
+                    app:startIconDrawable="@drawable/outline_email_24">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_emailRegister"
@@ -221,24 +268,39 @@
                         android:inputType="textEmailAddress"
                         android:maxLength="50"
                         android:textAlignment="center" />
+
                 </com.google.android.material.textfield.TextInputLayout>
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/et_telephoneRegisterFilled"
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:textAlignment="center"
-                        android:layout_marginTop="50dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginLeft="10dp"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        app:startIconDrawable="@drawable/outline_local_phone_24"
-                        app:boxCornerRadiusBottomEnd="58dp"
-                        app:boxCornerRadiusTopEnd="58dp"
-                        app:boxCornerRadiusBottomStart="58dp"
-                        app:boxCornerRadiusTopStart="58dp"
-                        app:counterEnabled="true"
-                        android:hint="@string/numberphone"
-                        app:counterMaxLength="50">
+
+                <TextView
+                    android:id="@+id/tv_errorEmailRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="TextView"
+                    android:textAlignment="center"
+                    android:textColor="@color/redError"
+                    tools:layout_editor_absoluteX="-170dp"
+                    tools:layout_editor_absoluteY="589dp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/et_telephoneRegisterFilled"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginRight="10dp"
+                    android:hint="@string/numberphone"
+                    android:textAlignment="center"
+                    app:boxCornerRadiusBottomEnd="58dp"
+                    app:boxCornerRadiusBottomStart="58dp"
+                    app:boxCornerRadiusTopEnd="58dp"
+                    app:boxCornerRadiusTopStart="58dp"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="50"
+                    app:errorEnabled="false"
+                    app:startIconDrawable="@drawable/outline_local_phone_24">
+
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_telephoneRegister"
                         android:layout_width="match_parent"
@@ -247,7 +309,18 @@
                         android:inputType="phone"
                         android:maxLength="6"
                         android:textAlignment="center" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/tv_errorNumberRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    android:textAlignment="center"
+                    android:textColor="@color/redError"
+                    tools:layout_editor_absoluteX="-170dp"
+                    tools:layout_editor_absoluteY="589dp" />
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/et_passwordFilled"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -265,6 +338,7 @@
                     app:counterEnabled="true"
                     app:counterMaxLength="50"
                     app:endIconMode="password_toggle"
+                    app:errorEnabled="true"
                     app:startIconDrawable="@drawable/outline_password_24">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -275,7 +349,18 @@
                         android:inputType="textPassword"
                         android:maxLength="50"
                         android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/tv_errorPasswordRegister"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="TextView"
+                        android:textAlignment="center"
+                        android:textColor="@color/redError"
+                        tools:layout_editor_absoluteX="-170dp"
+                        tools:layout_editor_absoluteY="589dp" />
                 </com.google.android.material.textfield.TextInputLayout>
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/et_passwordRepeatRegisterFilled"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -293,8 +378,8 @@
                     app:counterEnabled="true"
                     app:counterMaxLength="50"
                     app:endIconMode="password_toggle"
-                    app:startIconDrawable="@drawable/outline_password_24"
-                    app:errorEnabled="true">
+                    app:errorEnabled="false"
+                    app:startIconDrawable="@drawable/outline_password_24">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_passwordRepeat"
@@ -304,6 +389,18 @@
                         android:maxLength="50"
                         android:textAlignment="center" />
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/tv_errorPasswordRepeatRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="TextView"
+                    android:textAlignment="center"
+                    android:textColor="@color/redError"
+                    tools:layout_editor_absoluteX="-170dp"
+                    tools:layout_editor_absoluteY="589dp" />
+
             </LinearLayout>
         </ScrollView>
 
@@ -314,10 +411,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/login"
-        app:layout_constraintBottom_toBottomOf="@+id/imageButton3"
-        app:layout_constraintEnd_toEndOf="@+id/imageButton3"
-        app:layout_constraintStart_toStartOf="@+id/imageButton3"
-        app:layout_constraintTop_toTopOf="@+id/imageButton3" />
+        app:layout_constraintBottom_toBottomOf="@+id/bt_registerToLogin"
+        app:layout_constraintEnd_toEndOf="@+id/bt_registerToLogin"
+        app:layout_constraintStart_toStartOf="@+id/bt_registerToLogin"
+        app:layout_constraintTop_toTopOf="@+id/bt_registerToLogin" />
 
     <ImageButton
         android:id="@+id/imageButton4"

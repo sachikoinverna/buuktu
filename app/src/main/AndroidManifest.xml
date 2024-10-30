@@ -12,8 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Buuktu"
         tools:targetApi="31">
+        <activity android:name=".views.Login"
+            android:exported="false"/>
         <activity
-            android:name=".views.MainActivity"
+            android:name=".views.Register"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

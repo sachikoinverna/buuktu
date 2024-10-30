@@ -4,6 +4,9 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
-
+    <style name="error_appearance" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/redError</item>
+        <item name="android:textSize">12sp</item>
+    </style>
     <style name="Theme.Buuktu" parent="Base.Theme.Buuktu" />
 </resources>

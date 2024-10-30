@@ -1,7 +1,9 @@
 package com.example.buuktu.utils;
 
 import android.util.Patterns;
+import android.widget.TextView;
 
+import com.example.buuktu.R;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.regex.Pattern;
@@ -55,7 +57,7 @@ public class CheckUtil {
         return false;
     }
 
-    public static void setErrorMessage(String error, TextInputEditText textInputEditText) {
-        textInputEditText.setError(error);
+    public static void setErrorMessage(String error, TextView textView) {
+        textView.setText(error);
     }
 }

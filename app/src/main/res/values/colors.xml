@@ -6,4 +6,5 @@
     <color name="greenWhatever">#50bb75</color>
     <color name="brownMaroon">#8d4925</color>
     <color name="brownBrown">#7a3916</color>
+    <color name="redError">#5b1102</color>
 </resources>

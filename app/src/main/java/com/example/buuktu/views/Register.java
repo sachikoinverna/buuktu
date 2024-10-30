@@ -5,7 +5,10 @@ import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +17,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.buuktu.R;
+import com.example.buuktu.controllers.RegisterController;
 import com.example.buuktu.utils.CheckUtil;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -30,6 +34,16 @@ public class Register extends AppCompatActivity {
     public TextInputEditText et_passwordRepeat;
     public TextInputEditText et_password;
     public TextInputEditText et_telephoneRegister;
+    public TextView tv_nameRegister;
+    public TextView tv_surnameRegister;
+    public TextView tv_emailRegister;
+    public TextView tv_birthdayRegister;
+    public TextView tv_passwordRegister;
+    public TextView tv_passwordRepeatRegister;
+    public TextView tv_pronounsRegister;
+    public TextView tv_usernameRegister;
+    public TextView tv_telephoneRegister;
+    ImageButton bt_registerToLogin;
     Calendar calendar;
     int yearC;
     int monthC;
@@ -55,70 +69,38 @@ public class Register extends AppCompatActivity {
         et_password = findViewById(R.id.et_password);
         et_passwordRepeat = findViewById(R.id.et_passwordRepeat);
         et_telephoneRegister = findViewById(R.id.et_telephoneRegister);
-        CheckUtil.setErrorMessage(null,et_nameRegister);
-        CheckUtil.setErrorMessage(null,et_surnameRegister);
-        CheckUtil.setErrorMessage(null,et_pronounsRegister);
-        CheckUtil.setErrorMessage(null,et_emailRegister);
-        CheckUtil.setErrorMessage(null,et_password);
-        CheckUtil.setErrorMessage(null,et_telephoneRegister);
-        CheckUtil.setErrorMessage(  null,dp_birthday);
+        tv_nameRegister = findViewById(R.id.tv_errorNameRegister);
+        tv_surnameRegister = findViewById(R.id.tv_errorSurnameRegister);
+        tv_emailRegister = findViewById(R.id.tv_errorEmailRegister);
+        tv_birthdayRegister = findViewById(R.id.tv_birthdayError);
+        tv_passwordRegister = findViewById(R.id.tv_errorPasswordRegister);
+        tv_passwordRepeatRegister = findViewById(R.id.tv_errorPasswordRepeatRegister);
+        tv_pronounsRegister = findViewById(R.id.tv_errorPronounsRegister);
+        tv_usernameRegister = findViewById(R.id.tv_errorUsernameRegister);
+        tv_telephoneRegister = findViewById(R.id.tv_errorUsernameRegister);
+        bt_registerToLogin = findViewById(R.id.bt_registerToLogin);
+        CheckUtil.setErrorMessage(null,tv_nameRegister);
+        CheckUtil.setErrorMessage(null,tv_surnameRegister);
+        CheckUtil.setErrorMessage(null,tv_emailRegister);
+        CheckUtil.setErrorMessage(null,tv_birthdayRegister);
+        CheckUtil.setErrorMessage(null,tv_passwordRegister);
+        CheckUtil.setErrorMessage(null,tv_passwordRepeatRegister);
+        CheckUtil.setErrorMessage(  null,tv_birthdayRegister);
         //setErrorMessage("",tv_passwordErrorRepeat);
         calendar = Calendar.getInstance();
         yearC = calendar.get(Calendar.YEAR);
         monthC = calendar.get(Calendar.MONTH);
         dayC = calendar.get(Calendar.DAY_OF_MONTH);
+        RegisterController registerController = new RegisterController(this);
+        et_nameRegister.setOnFocusChangeListener(registerController);
+        et_password.setOnFocusChangeListener(registerController);
+        et_passwordRepeat.setOnFocusChangeListener(registerController);
+        bt_registerToLogin.setOnClickListener(registerController);
+        dp_birthday.setOnClickListener(registerController);
     }
-    public boolean checkName(String name){
-        if(CheckUtil.checkTextEmpty(et_nameRegister)){
-            CheckUtil.setErrorMessage(getString(R.string.nameErrorEmpty),et_nameRegister);
-            return false;
-        }else if (!CheckUtil.checkNumbers(name)){
-             CheckUtil.setErrorMessage(getString(R.string.numberErrorTextField),et_nameRegister);
-            return false;
-        }
-        return true;
-    }
-    public boolean checkSurname(String surname){
-        if(CheckUtil.checkTextEmpty(et_surnameRegister)){
-            CheckUtil.setErrorMessage(getString(R.string.surnameErrorEmpty),et_surnameRegister);
-            return false;
-        }else if (!CheckUtil.checkNumbers(surname)){
-            CheckUtil.setErrorMessage(getString(R.string.numberErrorTextField),et_surnameRegister);
-            return false;
-        }
-        return true;
-    }
+    private void setListeners(){
 
-    public boolean checkEmailStructure(String email){
-        try {
-            Pattern pattern = Patterns.EMAIL_ADDRESS;
-            return pattern.matcher(email).matches();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
-    public boolean checkPronouns(String pronouns){
-        if(CheckUtil.checkTextEmpty(et_pronounsRegister)){
-            CheckUtil.setErrorMessage(getString(R.string.pronounsErrorEmpty),et_pronounsRegister);
-            return false;
-        }else if (!CheckUtil.checkNumbers(pronouns)){
-            //setErrorMessage(getString(R.string.numberErrorTextField),);
-            return false;
-        }
-        return true;
-    }
-    public boolean checkEmail(String email){
-        if(CheckUtil.checkTextEmpty(et_emailRegister)){
-            CheckUtil.setErrorMessage(getString(R.string.emailErrorEmpty),et_emailRegister);
-            return false;
-        }
-        if (!checkEmailStructure(email)){
-                CheckUtil.setErrorMessage(getString(R.string.emailErrorFormat),et_emailRegister);
-                return false;
-        }
-        return true;
-    }
-
     public TextInputEditText getDp_birthday() {
         return dp_birthday;
     }
@@ -128,78 +110,25 @@ public class Register extends AppCompatActivity {
     public TextInputEditText getEt_surnameRegister() {
         return et_surnameRegister;
     }
-        public TextInputEditText getEt_pronounsRegister() {
-            return et_pronounsRegister;
-        }
-
-    public boolean checkTelephone(){
-        if(CheckUtil.checkTextEmpty(et_telephoneRegister)){
-            CheckUtil.setErrorMessage(getString(R.string.telephoneErrorEmpty),et_telephoneRegister);
-            return false;
-        }
-        return true;
+    public TextInputEditText getEt_passwordRegister(){
+        return et_password;
     }
-    public boolean checkPassword(String password){
-        if (CheckUtil.checkTextEmpty(et_password)){
-            CheckUtil.setErrorMessage(getString(R.string.passwordErrorEmpty),et_password);
-        } else if (password.length()<8) {
-            CheckUtil.setErrorMessage(getString(R.string.passwordTooShort),et_password);
-            return false;
-        }else if(!CheckUtil.checkSpecialCharacter(password)){
-            CheckUtil.setErrorMessage(getString(R.string.passwordErrorSpecialChar),et_password);
-            return false;
-        } else if (!CheckUtil.checkUppercase(password)){
-            CheckUtil.setErrorMessage(getString(R.string.passwordErrorUppercase),et_password);
-            return false;
-        }
-        CheckUtil.setErrorMessage(null,et_password);
-        return true;
+    public TextInputEditText getEt_passwordRepeat(){
+        return et_passwordRepeat;
     }
-    public boolean checkSpecialCharacter(String password){
-        for (int i = 0; i < password.length(); i++) {
-            char c = password.charAt(i);
-            if (c >= 33 && c <= 46 || c == 64) {
-                return true;
-            }
-        }
-        return false;
+    public TextInputEditText getEt_pronounsRegister() {
+        return et_pronounsRegister;
     }
-
-    public boolean checkPasswordRepeat(String password, String passwordRepeat){
-        if (!password.equals(passwordRepeat)) {
-            CheckUtil.setErrorMessage(getString(R.string.passwordErrorRepeat),et_passwordRepeat);
-        }
-        CheckUtil.setErrorMessage(null,et_passwordRepeat);
-        return true;
+    public TextInputEditText getEt_userRegister() {
+        return et_userRegister;
     }
-    public boolean checkUser(){
-        if(CheckUtil.checkTextEmpty(et_userRegister)){
-            CheckUtil.setErrorMessage(getString(R.string.userErrorEmpty),et_userRegister);
-            return false;
-        }
-        return true;
+    public TextInputEditText getEt_emailRegister() {
+        return et_emailRegister;
     }
-    public boolean checkBirthdayDate(){
-        if(CheckUtil.checkTextEmpty(dp_birthday)){
-            CheckUtil.setErrorMessage(getString(R.string.birthdayErrorEmpty),dp_birthday);
-            return false;
-        }
-        return true;
+    public TextInputEditText getEt_telephoneRegister() {
+        return et_telephoneRegister;
     }
-    public boolean checkAllFields(){
-        if(checkName(et_nameRegister.getText().toString()) && checkSurname(et_surnameRegister.getText().toString()) && checkBirthdayDate() && checkUser() && checkEmail(et_emailRegister.getText().toString()) && checkPassword(et_password.getText().toString())&& checkPasswordRepeat(et_password.getText().toString(),et_passwordRepeat.getText().toString())&& checkPronouns(et_pronounsRegister.getText().toString())){
-            return true;
-        }
-            return false;
-    }
-    public void register(){
-        if(checkAllFields()){
-
-        }else{
-
-        }
-    }
-    public void showDatePickerDialog(View view)
+    /*public void showDatePickerDialog(View view)
     {
         DatePickerDialog date = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -211,5 +140,33 @@ public class Register extends AppCompatActivity {
             }
         },yearC,monthC,dayC);
         date.show();
+    }*/
+
+    public TextView getTv_nameRegister() {
+        return tv_nameRegister;
+    }
+    public TextView getTv_surnameRegister() {
+        return tv_surnameRegister;
+    }
+    public TextView getTv_emailRegister() {
+        return tv_emailRegister;
+    }
+    public TextView getTv_birthdayRegister() {
+        return tv_birthdayRegister;
+    }
+    public TextView getTv_passwordRegister() {
+        return tv_passwordRegister;
+    }
+    public TextView getTv_passwordRepeatRegister() {
+        return tv_passwordRepeatRegister;
+    }
+    public TextView getTv_pronounsRegister() {
+        return tv_pronounsRegister;
+    }
+    public TextView getTv_usernameRegister() {
+        return tv_usernameRegister;
+    }
+    public TextView getTv_telephoneRegister() {
+        return tv_telephoneRegister;
     }
 }

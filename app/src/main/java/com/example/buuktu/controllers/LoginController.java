@@ -1,4 +1,4 @@
-package com.example.buuktu.views;
+package com.example.buuktu.controllers;
 
 import android.view.View;
 
