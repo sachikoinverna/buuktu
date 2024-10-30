@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">buuk-tu</string>
+    <string name="user_email">Email/Username</string>
+    <string name="user_password">Password</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="numberphone">Number phone</string>
+    <string name="pronouns">Pronouns</string>
+    <string name="username">Username</string>
+    <string name="birthday">Birthday</string>
+    <string name="repeatPassword">Repeat password</string>
+    <string name="worlds">Worlds</string>
+    <string name="writtingPlanet">Writting planet</string>
+    <string name="incorrectLogin">Incorrect login</string>
+    <string name="email">Correo electronico</string>
+    <string name="numberErrorTextField">No puede contener numeros</string>
+    <string name="nameErrorEmpty">El nombre no puede estar vacio</string>
+    <string name="surnameErrorEmpty">El apellido no puede estar vacio</string>
+    <string name="pronounsErrorEmpty">Los pronombres no pueden estar vacios</string>
+    <string name="birthdayErrorEmpty">El cumpleaños no puede estar vacio</string>
+    <string name="userErrorEmpty">El nombre de usuario no puede estar vacio</string>
+    <string name="emailErrorEmpty">El correo electronico no puede estar vacio</string>
+    <string name="telephoneErrorEmpty">El telefono no puede estar vacio</string>
+    <string name="emailErrorFormat">Formato de email no valido</string>
+    <string name="emailExists">El correo electronico ya existe</string>
+    "
+    <string name="passwordErrorEmpty">La contraseña no puede estar vacia</string>
+    <string name="passwordTooShort">Debe contener al menos 8 caracteres</string>
+    <string name="passwordErrorSpecialChar">Debe contener al menos un caracter especial</string>
+    <string name="passwordErrorUppercase">Debe contener al menos una mayuscula</string>
+    <string name="passwordErrorRepeatEmpty">La contraseña no puede estar vacia</string>
+    <string name="passwordErrorRepeat">Contraseñas no coinciden</string>
+</resources>

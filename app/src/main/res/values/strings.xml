@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">buuk-tu</string>
+    <string name="user_email">Email/Username</string>
+    <string name="user_password">Password</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="numberphone">Number phone</string>
+    <string name="pronouns">Pronouns</string>
+    <string name="username">Username</string>
+    <string name="birthday">Birthday</string>
+    <string name="repeatPassword">Repeat password</string>
+    <string name="worlds">Worlds</string>
+    <string name="writtingPlanet">Writting planet</string>
+    <string name="incorrectLogin">Incorrect login</string>
+    <string name="email">Email</string>
+    <string name="numberErrorTextField">Can not contain numbers</string>
+    <string name="nameErrorEmpty">Name can not be empty</string>
+    <string name="surnameErrorEmpty">Surname can not be empty</string>
+    <string name="pronounsErrorEmpty">Pronouns can not be empty</string>
+    <string name="birthdayErrorEmpty">Birthday can not be empty</string>
+    <string name="userErrorEmpty">Username can not be empty</string>
+    <string name="emailErrorEmpty">Email can not be empty</string>
+    <string name="telephoneErrorEmpty">Telephone can not be empty</string>
+    <string name="emailErrorFormat">Email format no valid</string>
+    <string name="emailExists">Email already exists</string>"
+    <string name="passwordErrorEmpty">Password can not be empty</string>
+    <string name="passwordTooShort">Password must contains at least 8 characters</string>
+    <string name="passwordErrorSpecialChar">Password must contain at least one special characters</string>
+    <string name="passwordErrorUppercase">Password must contain at least one uppercase letter</string>
+    <string name="passwordErrorRepeatEmpty">Password can not be empty</string>
+    <string name="passwordErrorRepeat">Passwords do not match</string>
+    </resources>
