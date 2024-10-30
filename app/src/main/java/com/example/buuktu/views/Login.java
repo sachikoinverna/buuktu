@@ -24,8 +24,8 @@ public class Login extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        Typeface birchLeaf = Typeface.createFromAsset(this.getAssets(), "font/birchleaf.ttf");
+        /*Typeface birchLeaf = Typeface.createFromAsset(this.getAssets(), "font/birchleaf.ttf");
         TextView textView = findViewById(R.id.textView);
-        textView.setTypeface(birchLeaf);
+        textView.setTypeface(birchLeaf);*/
     }
 }

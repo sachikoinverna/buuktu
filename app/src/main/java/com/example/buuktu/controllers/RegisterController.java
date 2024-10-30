@@ -171,7 +171,7 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
         return true;
     }
     private void handlerGoToRegister(){
-        Intent intent = new Intent(register,Login.class);
+        Intent intent = new Intent(register.getApplicationContext(),Login.class);
         register.startActivity(intent);
     }
     private boolean checkAllFields(){
