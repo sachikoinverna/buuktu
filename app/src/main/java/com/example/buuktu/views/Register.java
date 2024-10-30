@@ -128,20 +128,6 @@ public class Register extends AppCompatActivity {
     public TextInputEditText getEt_telephoneRegister() {
         return et_telephoneRegister;
     }
-    /*public void showDatePickerDialog(View view)
-    {
-        DatePickerDialog date = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                dp_birthday.setText(""+day+"/"+(month+1)+"/"+year);
-                dayC= day;
-                monthC= month;
-                yearC= year;
-            }
-        },yearC,monthC,dayC);
-        date.show();
-    }*/
-
     public TextView getTv_nameRegister() {
         return tv_nameRegister;
     }

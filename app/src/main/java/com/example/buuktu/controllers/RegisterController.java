@@ -12,7 +12,9 @@ import com.example.buuktu.views.Login;
 import com.example.buuktu.views.Register;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.Date;
 
 public class RegisterController implements View.OnFocusChangeListener, View.OnClickListener {
     Calendar calendar;
