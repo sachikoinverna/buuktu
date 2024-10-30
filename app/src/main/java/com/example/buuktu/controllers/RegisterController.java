@@ -12,10 +12,20 @@ import com.example.buuktu.views.Login;
 import com.example.buuktu.views.Register;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.Calendar;
+
 public class RegisterController implements View.OnFocusChangeListener, View.OnClickListener {
+    Calendar calendar;
+    int yearC;
+    int monthC;
+    int dayC;
     private final Register register;
     public RegisterController(Register register) {
         this.register = register;
+        calendar = Calendar.getInstance();
+        yearC = calendar.get(Calendar.YEAR);
+        monthC = calendar.get(Calendar.MONTH);
+        dayC = calendar.get(Calendar.DAY_OF_MONTH);
     }
     @Override
     public void onFocusChange(View view, boolean b) {
@@ -177,23 +187,25 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
 
         }
     }
-    /*public void showDatePickerDialog(View view)
+    private void showDatePickerDialog()
     {
-        DatePickerDialog date = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog date = new DatePickerDialog(register, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                dp_birthday.setText(""+day+"/"+(month+1)+"/"+year);
+                register.getDp_birthday().setText(""+day+"/"+(month+1)+"/"+year);
                 dayC= day;
                 monthC= month;
                 yearC= year;
             }
         },yearC,monthC,dayC);
         date.show();
-    }*/
+    }
     @Override
     public void onClick(View view) {
             if(view.getId()==R.id.bt_registerToLogin) {
                 handlerGoToRegister();
+            } else if (view.getId()==R.id.dp_birthday) {
+                showDatePickerDialog();
             }
-        }
+    }
 }
