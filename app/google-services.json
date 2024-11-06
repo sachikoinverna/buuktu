@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "949863777401",
+    "project_id": "buuk-tu",
+    "storage_bucket": "buuk-tu.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:949863777401:android:352eb9dadec7fb92f3c0a8",
+        "android_client_info": {
+          "package_name": "com.example.buuk_tu"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB88UbwHJwUmE--zmZswxjq9l130QQoKP8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:949863777401:android:ee7c3b3dce16385bf3c0a8",
+        "android_client_info": {
+          "package_name": "com.example.buuktu"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB88UbwHJwUmE--zmZswxjq9l130QQoKP8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

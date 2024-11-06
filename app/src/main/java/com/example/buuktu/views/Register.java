@@ -20,7 +20,15 @@ import com.example.buuktu.R;
 import com.example.buuktu.controllers.RegisterController;
 import com.example.buuktu.utils.CheckUtil;
 import com.google.android.material.textfield.TextInputEditText;
-
+/*import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
+import com.mongodb.MongoException;
+import com.mongodb.ServerApi;
+import com.mongodb.ServerApiVersion;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoDatabase;
+import org.bson.Document;*/
 import java.util.Calendar;
 import java.util.regex.Pattern;
 
@@ -50,6 +58,7 @@ public class Register extends AppCompatActivity {
     int dayC;
     String errorMailFormat;
     String dateSelected;
+    //String connectionString = "mongodb+srv://chikorita:<db_password>@cluster0.zphspah.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +95,9 @@ public class Register extends AppCompatActivity {
         CheckUtil.setErrorMessage(null,tv_passwordRegister);
         CheckUtil.setErrorMessage(null,tv_passwordRepeatRegister);
         CheckUtil.setErrorMessage(  null,tv_birthdayRegister);
-        //setErrorMessage("",tv_passwordErrorRepeat);
+        CheckUtil.setErrorMessage("",tv_pronounsRegister);
+        CheckUtil.setErrorMessage(null,tv_usernameRegister);
+        CheckUtil.setErrorMessage(null,tv_telephoneRegister);
         calendar = Calendar.getInstance();
         yearC = calendar.get(Calendar.YEAR);
         monthC = calendar.get(Calendar.MONTH);
@@ -97,6 +108,24 @@ public class Register extends AppCompatActivity {
         et_passwordRepeat.setOnFocusChangeListener(registerController);
         bt_registerToLogin.setOnClickListener(registerController);
         dp_birthday.setOnClickListener(registerController);
+        /*ServerApi serverApi = ServerApi.builder()
+                .version(ServerApiVersion.V1)
+                .build();
+        MongoClientSettings settings = MongoClientSettings.builder()
+                .applyConnectionString(new ConnectionString(connectionString))
+                .serverApi(serverApi)
+                .build();
+        // Create a new client and connect to the server
+        try (MongoClient mongoClient = MongoClients.create(settings)) {
+            try {
+                // Send a ping to confirm a successful connection
+                MongoDatabase database = mongoClient.getDatabase("users");
+                database.runCommand(new Document("ping", 1));
+                System.out.println("Pinged your deployment. You successfully connected to MongoDB!");
+            } catch (MongoException e) {
+                e.printStackTrace();
+            }
+        }*/
     }
     private void setListeners(){
 
