@@ -226,10 +226,10 @@ public class Register extends AppCompatActivity {
                             CollectionReference dbUsers = db.collection("Users");
 
                             // adding our data to our courses object class.
-                         //   UserModel user = new UserModel(et_nameRegister.getText().toString(),et_password.getText().toString(),et_nameRegister.getText().toString(),et_surnameRegister.getText().toString(),et_pronounsRegister.getText().toString(), Date.from(dp_birthday.getText().toString()),et_userRegister.getText().toString(),et_telephoneRegister.getText().toString(),task.getResult().getUser().getUid());
+                           // UserModel user = new UserModel(et_nameRegister.getText().toString(),et_password.getText().toString(),et_nameRegister.getText().toString(),et_surnameRegister.getText().toString(),et_pronounsRegister.getText().toString(), Date.from(dp_birthday.getText().toString()),et_userRegister.getText().toString(),et_telephoneRegister.getText().toString(),task.getResult().getUser().getUid());
 
                             // below method is use to add data to Firebase Firestore.
-                      //      dbUsers.add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                           // dbUsers.document(task.getResult().getUser().getUid()).set(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                          //       @Override
                           //      public void onSuccess(DocumentReference documentReference) {
                                     // after the data addition is successful
