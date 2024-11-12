@@ -2,6 +2,7 @@ package com.example.buuktu.views;
 
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -9,8 +10,10 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -18,8 +21,18 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.buuktu.R;
 import com.example.buuktu.controllers.RegisterController;
+import com.example.buuktu.models.UserModel;
 import com.example.buuktu.utils.CheckUtil;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 /*import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.MongoException;
@@ -30,9 +43,11 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;*/
 import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 public class Register extends AppCompatActivity {
+    private FirebaseFirestore db;
     public TextInputEditText dp_birthday;
     public TextInputEditText et_nameRegister;
     public TextInputEditText et_surnameRegister;
@@ -58,6 +73,8 @@ public class Register extends AppCompatActivity {
     int dayC;
     String errorMailFormat;
     String dateSelected;
+    ImageButton bt_register;
+    private FirebaseAuth auth;
     //String connectionString = "mongodb+srv://chikorita:<db_password>@cluster0.zphspah.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +86,7 @@ public class Register extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        auth = FirebaseAuth.getInstance();
         dp_birthday = findViewById(R.id.dp_birthday);
         et_nameRegister = findViewById(R.id.et_nameRegister);
         et_surnameRegister = findViewById(R.id.et_surnameRegister);
@@ -108,6 +126,16 @@ public class Register extends AppCompatActivity {
         et_passwordRepeat.setOnFocusChangeListener(registerController);
         bt_registerToLogin.setOnClickListener(registerController);
         dp_birthday.setOnClickListener(registerController);
+        db = FirebaseFirestore.getInstance();
+        bt_register = findViewById(R.id.bt_register);
+        bt_register.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+               // addDataToFirestore(courseName, courseDescription, courseDuration);
+
+            }
+        });
         /*ServerApi serverApi = ServerApi.builder()
                 .version(ServerApiVersion.V1)
                 .build();
@@ -184,4 +212,49 @@ public class Register extends AppCompatActivity {
     public TextView getTv_telephoneRegister() {
         return tv_telephoneRegister;
     }
+    private void addDataToFirestore(String courseName, String courseDescription, String courseDuration) {
+
+        // creating a collection reference
+        // for our Firebase Firetore database.
+        auth.createUserWithEmailAndPassword("chikoritaxserperior@gmail.com", "123456")
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+
+                            Toast.makeText(Register.this, "Signup Successful", Toast.LENGTH_SHORT).show();
+                            CollectionReference dbUsers = db.collection("Users");
+
+                            // adding our data to our courses object class.
+                         //   UserModel user = new UserModel(et_nameRegister.getText().toString(),et_password.getText().toString(),et_nameRegister.getText().toString(),et_surnameRegister.getText().toString(),et_pronounsRegister.getText().toString(), Date.from(dp_birthday.getText().toString()),et_userRegister.getText().toString(),et_telephoneRegister.getText().toString(),task.getResult().getUser().getUid());
+
+                            // below method is use to add data to Firebase Firestore.
+                      //      dbUsers.add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                         //       @Override
+                          //      public void onSuccess(DocumentReference documentReference) {
+                                    // after the data addition is successful
+                                    // we are displaying a success toast message.
+                                    Toast.makeText(Register.this, "Your Course has been added to Firebase Firestore", Toast.LENGTH_SHORT).show();
+                                }
+                        //    }).addOnFailureListener(new OnFailureListener() {
+                      //          @Override
+                        //        public void onFailure(@NonNull Exception e) {
+                                    // this method is called when the data addition process is failed.
+                                    // displaying a toast message when data addition is failed.
+                        //            Toast.makeText(MainActivity.this, "Fail to add course \n" + e, Toast.LENGTH_SHORT).show();
+                         //       }
+                      //      });
+                      //  } else {
+                            switch (task.getException().getMessage()) {
+                                case "auth/email-already-in-use":
+                            //        Toast.makeText(Login.this, "Ya existe una cuenta con el correo electronico", Toast.LENGTH_LONG).show();
+                                    break;
+                                default:
+                                    break;
+                            }
+                      //      Toast.makeText(Login.this, "Signup Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                //    }
+                });
+                }
 }

@@ -341,15 +341,6 @@
                     app:errorEnabled="true"
                     app:startIconDrawable="@drawable/outline_password_24">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_password"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="textPassword"
-                        android:maxLength="50"
-                        android:textAlignment="center" />
-
                     <TextView
                         android:id="@+id/tv_errorPasswordRegister"
                         android:layout_width="match_parent"
@@ -401,6 +392,15 @@
                     tools:layout_editor_absoluteX="-170dp"
                     tools:layout_editor_absoluteY="589dp" />
 
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPassword"
+                    android:maxLength="50"
+                    android:textAlignment="center" />
+
             </LinearLayout>
         </ScrollView>
 
@@ -417,7 +417,7 @@
         app:layout_constraintTop_toTopOf="@+id/bt_registerToLogin" />
 
     <ImageButton
-        android:id="@+id/imageButton4"
+        android:id="@+id/bt_register"
         android:layout_width="100dp"
         android:layout_height="100dp"
         app:layout_constraintEnd_toEndOf="parent"
