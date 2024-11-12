@@ -42,6 +42,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;*/
+import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Pattern;
@@ -226,35 +227,35 @@ public class Register extends AppCompatActivity {
                             CollectionReference dbUsers = db.collection("Users");
 
                             // adding our data to our courses object class.
-                           // UserModel user = new UserModel(et_nameRegister.getText().toString(),et_password.getText().toString(),et_nameRegister.getText().toString(),et_surnameRegister.getText().toString(),et_pronounsRegister.getText().toString(), Date.from(dp_birthday.getText().toString()),et_userRegister.getText().toString(),et_telephoneRegister.getText().toString(),task.getResult().getUser().getUid());
+                            UserModel user = new UserModel(et_nameRegister.getText().toString(),et_password.getText().toString(),et_nameRegister.getText().toString(),et_surnameRegister.getText().toString(),et_pronounsRegister.getText().toString(), Date.from(Instant.parse(dp_birthday.getText().toString())),et_userRegister.getText().toString(),et_telephoneRegister.getText().toString());
 
                             // below method is use to add data to Firebase Firestore.
-                           // dbUsers.document(task.getResult().getUser().getUid()).set(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                         //       @Override
-                          //      public void onSuccess(DocumentReference documentReference) {
-                                    // after the data addition is successful
-                                    // we are displaying a success toast message.
+                            String uid =task.getResult().getUser().getUid();
+                            //.document(uid)
+                            dbUsers.add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
                                     Toast.makeText(Register.this, "Your Course has been added to Firebase Firestore", Toast.LENGTH_SHORT).show();
                                 }
-                        //    }).addOnFailureListener(new OnFailureListener() {
-                      //          @Override
-                        //        public void onFailure(@NonNull Exception e) {
+                            }).addOnFailureListener(new OnFailureListener() {
+                               @Override
+                                public void onFailure(@NonNull Exception e) {
                                     // this method is called when the data addition process is failed.
                                     // displaying a toast message when data addition is failed.
-                        //            Toast.makeText(MainActivity.this, "Fail to add course \n" + e, Toast.LENGTH_SHORT).show();
-                         //       }
-                      //      });
-                      //  } else {
+                                    Toast.makeText(Register.this, "Fail to add course \n" + e, Toast.LENGTH_SHORT).show();
+                            }
+                           });
+                        } else {
                             switch (task.getException().getMessage()) {
                                 case "auth/email-already-in-use":
-                            //        Toast.makeText(Login.this, "Ya existe una cuenta con el correo electronico", Toast.LENGTH_LONG).show();
+                                   Toast.makeText(Register.this, "Ya existe una cuenta con el correo electronico", Toast.LENGTH_LONG).show();
                                     break;
                                 default:
                                     break;
                             }
-                      //      Toast.makeText(Login.this, "Signup Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Register.this, "Signup Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
-                //    }
+                   }
                 });
                 }
 }
