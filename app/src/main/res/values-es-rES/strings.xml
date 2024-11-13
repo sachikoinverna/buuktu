@@ -26,7 +26,7 @@
     <string name="telephoneErrorEmpty">El telefono no puede estar vacio</string>
     <string name="emailErrorFormat">Formato de email no valido</string>
     <string name="emailExists">El correo electronico ya existe</string>
-    "
+    <string name="userErrorExists">Usuario ya existente</string>
     <string name="passwordErrorEmpty">La contraseña no puede estar vacia</string>
     <string name="passwordTooShort">Debe contener al menos 8 caracteres</string>
     <string name="passwordErrorSpecialChar">Debe contener al menos un caracter especial</string>

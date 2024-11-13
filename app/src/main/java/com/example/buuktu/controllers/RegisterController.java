@@ -25,8 +25,10 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Calendar;
-import java.sql.Date;
+import java.util.Date;
 
 public class RegisterController implements View.OnFocusChangeListener, View.OnClickListener {
     Calendar calendar;
@@ -34,8 +36,8 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
     int monthC;
     int dayC;
     private final Register register;
-    private FirebaseAuth auth;
-    FirebaseFirestore dbFire;
+   private FirebaseAuth auth;
+  //  FirebaseFirestore dbFire;
     private FirebaseFirestore db;
 
     public RegisterController(Register register) {
@@ -181,6 +183,9 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
         if(CheckUtil.checkTextEmpty(register.getEt_userRegister())){
             CheckUtil.setErrorMessage(register.getString(R.string.userErrorEmpty),register.getTv_usernameRegister());
             return false;
+        } else if (CheckUtil.checkExistentUsername(register)) {
+            CheckUtil.setErrorMessage(register.getString(R.string.userErrorExists),register.getTv_usernameRegister());
+            return false;
         }
         return true;
     }
@@ -203,7 +208,7 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
     }
     private void register(){
         if(checkAllFields()){
-
+            addDataToFirestore();
         }else{
 
         }
@@ -232,52 +237,48 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
             }
     }
     private void addDataToFirestore() {
+                auth.createUserWithEmailAndPassword(register.getEt_emailRegister().getText().toString(), register.getEt_passwordRegister().getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
 
-        // creating a collection reference
-        // for our Firebase Firetore database.
-     /*   if(checkAllFields()) {
-            auth.createUserWithEmailAndPassword(register.getEt_emailRegister().getText().toString(), register.getEt_passwordRegister().getText().toString())
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
+                            Toast.makeText(register, "Signup Successful", Toast.LENGTH_SHORT).show();
+                            CollectionReference dbUsers = db.collection("Users");
+                            LocalDate localDate = LocalDate.parse("2000-01-01");
+                            ZoneId zoneId = ZoneId.systemDefault(); // Or specify a specific zone
+                            Instant instant = localDate.atStartOfDay(zoneId).toInstant();
+                            // adding our data to our courses object class.et_pronounsRegister.getText().toString(), Date.from(Inst
+                            UserModel user = new UserModel(register.getEt_emailRegister().getText().toString(), task.getResult().getUser().getUid(), register.getEt_nameRegister().getText().toString(), register.getEt_surnameRegister().getText().toString(), register.getEt_pronounsRegister().getText().toString(), Date.from(instant),register.getEt_userRegister().getText().toString(), register.getEt_telephoneRegister().getText().toString());
 
-                                Toast.makeText(register, "Signup Successful", Toast.LENGTH_SHORT).show();
-                                CollectionReference dbUsers = db.collection("Users");
+                            // below method is use to add data to Firebase Firestore.
+                            DocumentReference documentRef = dbUsers.document(task.getResult().getUser().getUid());
 
-                                // adding our data to our courses object class.
-                                UserModel user = new UserModel(register.getEt_emailRegister().getText().toString(),task.getResult().getUser().getUid(), register.getEt_nameRegister().getText().toString(), register.getEt_surnameRegister().getText().toString(), register.getEt_pronounsRegister().getText().toString(), Date.valueOf(register.getDp_birthday().getText().toString()), register.getEt_userRegister().getText().toString(), register.getEt_telephoneRegister().getText().toString());
+                            //.document(uid)
+                            documentRef.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    Toast.makeText(register, "Your Course has been added to Firebase Firestore", Toast.LENGTH_SHORT).show();
 
-                                // below method is use to add data to Firebase Firestore.
-                                DocumentReference documentRef = dbUsers.document();
-
-                                //.document(uid)
-                                documentRef.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
-                                        Toast.makeText(register, "Your Course has been added to Firebase Firestore", Toast.LENGTH_SHORT).show();
-
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        // this method is called when the data addition process is failed.
-                                        // displaying a toast message when data addition is failed.
-                                        Toast.makeText(register, "Fail to add course \n" + e, Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            } else {
-                                switch (task.getException().getMessage()) {
-                                    case "auth/email-already-in-use":
-                                        Toast.makeText(register, "Ya existe una cuenta con el correo electronico", Toast.LENGTH_LONG).show();
-                                        break;
-                                    default:
-                                        break;
                                 }
-                                Toast.makeText(register, "Signup Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    // this method is called when the data addition process is failed.
+                                    // displaying a toast message when data addition is failed.
+                                    Toast.makeText(register, "Fail to add course \n" + e, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        } else {
+                            switch (task.getException().getMessage()) {
+                                case "auth/email-already-in-use":
+                                    Toast.makeText(register, "Ya existe una cuenta con el correo electronico", Toast.LENGTH_LONG).show();
+                                    break;
+                                default:
+                                    break;
                             }
+                            Toast.makeText(register, "Signup Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
-                    });*/
-       // }
+                    }
+                });
+            }
     }
-}

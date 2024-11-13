@@ -21,6 +21,7 @@
     <string name="pronounsErrorEmpty">Pronouns can not be empty</string>
     <string name="birthdayErrorEmpty">Birthday can not be empty</string>
     <string name="userErrorEmpty">Username can not be empty</string>
+    <string name="userErrorExists">Username already exists</string>
     <string name="emailErrorEmpty">Email can not be empty</string>
     <string name="telephoneErrorEmpty">Telephone can not be empty</string>
     <string name="emailErrorFormat">Email format no valid</string>
