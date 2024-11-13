@@ -2,19 +2,31 @@ package com.example.buuktu.controllers;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.example.buuktu.R;
+import com.example.buuktu.models.UserModel;
 import com.example.buuktu.utils.CheckUtil;
 import com.example.buuktu.views.Login;
 import com.example.buuktu.views.Register;
-import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.time.LocalDate;
+import java.time.Instant;
 import java.util.Calendar;
-import java.util.Date;
+import java.sql.Date;
 
 public class RegisterController implements View.OnFocusChangeListener, View.OnClickListener {
     Calendar calendar;
@@ -22,12 +34,19 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
     int monthC;
     int dayC;
     private final Register register;
+    private FirebaseAuth auth;
+    FirebaseFirestore dbFire;
+    private FirebaseFirestore db;
+
     public RegisterController(Register register) {
         this.register = register;
         calendar = Calendar.getInstance();
         yearC = calendar.get(Calendar.YEAR);
         monthC = calendar.get(Calendar.MONTH);
         dayC = calendar.get(Calendar.DAY_OF_MONTH);
+     //   FirebaseApp.initializeApp(register);
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
     }
     @Override
     public void onFocusChange(View view, boolean b) {
@@ -208,6 +227,57 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
                 handlerGoToRegister();
             } else if (view.getId()==R.id.dp_birthday) {
                 showDatePickerDialog();
+            } else if (view.getId()==R.id.bt_register) {
+                addDataToFirestore();
             }
+    }
+    private void addDataToFirestore() {
+
+        // creating a collection reference
+        // for our Firebase Firetore database.
+     /*   if(checkAllFields()) {
+            auth.createUserWithEmailAndPassword(register.getEt_emailRegister().getText().toString(), register.getEt_passwordRegister().getText().toString())
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+
+                                Toast.makeText(register, "Signup Successful", Toast.LENGTH_SHORT).show();
+                                CollectionReference dbUsers = db.collection("Users");
+
+                                // adding our data to our courses object class.
+                                UserModel user = new UserModel(register.getEt_emailRegister().getText().toString(),task.getResult().getUser().getUid(), register.getEt_nameRegister().getText().toString(), register.getEt_surnameRegister().getText().toString(), register.getEt_pronounsRegister().getText().toString(), Date.valueOf(register.getDp_birthday().getText().toString()), register.getEt_userRegister().getText().toString(), register.getEt_telephoneRegister().getText().toString());
+
+                                // below method is use to add data to Firebase Firestore.
+                                DocumentReference documentRef = dbUsers.document();
+
+                                //.document(uid)
+                                documentRef.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Toast.makeText(register, "Your Course has been added to Firebase Firestore", Toast.LENGTH_SHORT).show();
+
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        // this method is called when the data addition process is failed.
+                                        // displaying a toast message when data addition is failed.
+                                        Toast.makeText(register, "Fail to add course \n" + e, Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            } else {
+                                switch (task.getException().getMessage()) {
+                                    case "auth/email-already-in-use":
+                                        Toast.makeText(register, "Ya existe una cuenta con el correo electronico", Toast.LENGTH_LONG).show();
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                Toast.makeText(register, "Signup Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });*/
+       // }
     }
 }

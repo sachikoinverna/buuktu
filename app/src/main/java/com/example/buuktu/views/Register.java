@@ -28,11 +28,15 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.Filter;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 /*import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.MongoException;
@@ -43,9 +47,12 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;*/
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Pattern;
+import com.google.api.core.ApiFuture;
 
 public class Register extends AppCompatActivity {
     private FirebaseFirestore db;
@@ -76,6 +83,8 @@ public class Register extends AppCompatActivity {
     String dateSelected;
     ImageButton bt_register;
     private FirebaseAuth auth;
+    FirebaseFirestore dbFire;
+    String UID;
     //String connectionString = "mongodb+srv://chikorita:<db_password>@cluster0.zphspah.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,14 +138,7 @@ public class Register extends AppCompatActivity {
         dp_birthday.setOnClickListener(registerController);
         db = FirebaseFirestore.getInstance();
         bt_register = findViewById(R.id.bt_register);
-        bt_register.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-               // addDataToFirestore(courseName, courseDescription, courseDuration);
-
-            }
-        });
+      //  FirebaseApp.initializeApp(this);
         /*ServerApi serverApi = ServerApi.builder()
                 .version(ServerApiVersion.V1)
                 .build();
@@ -155,6 +157,7 @@ public class Register extends AppCompatActivity {
                 e.printStackTrace();
             }
         }*/
+        addDataToFirestoreTest();
     }
     private void setListeners(){
 
@@ -213,49 +216,75 @@ public class Register extends AppCompatActivity {
     public TextView getTv_telephoneRegister() {
         return tv_telephoneRegister;
     }
-    private void addDataToFirestore(String courseName, String courseDescription, String courseDuration) {
-
-        // creating a collection reference
-        // for our Firebase Firetore database.
-        auth.createUserWithEmailAndPassword("chikoritaxserperior@gmail.com", "123456")
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-
-                            Toast.makeText(Register.this, "Signup Successful", Toast.LENGTH_SHORT).show();
-                            CollectionReference dbUsers = db.collection("Users");
-
-                            // adding our data to our courses object class.
-                            UserModel user = new UserModel(et_nameRegister.getText().toString(),et_password.getText().toString(),et_nameRegister.getText().toString(),et_surnameRegister.getText().toString(),et_pronounsRegister.getText().toString(), Date.from(Instant.parse(dp_birthday.getText().toString())),et_userRegister.getText().toString(),et_telephoneRegister.getText().toString());
-
-                            // below method is use to add data to Firebase Firestore.
-                            String uid =task.getResult().getUser().getUid();
-                            //.document(uid)
-                            dbUsers.add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                @Override
-                                public void onSuccess(DocumentReference documentReference) {
-                                    Toast.makeText(Register.this, "Your Course has been added to Firebase Firestore", Toast.LENGTH_SHORT).show();
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                               @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    // this method is called when the data addition process is failed.
-                                    // displaying a toast message when data addition is failed.
-                                    Toast.makeText(Register.this, "Fail to add course \n" + e, Toast.LENGTH_SHORT).show();
-                            }
-                           });
-                        } else {
-                            switch (task.getException().getMessage()) {
-                                case "auth/email-already-in-use":
-                                   Toast.makeText(Register.this, "Ya existe una cuenta con el correo electronico", Toast.LENGTH_LONG).show();
-                                    break;
-                                default:
-                                    break;
-                            }
-                            Toast.makeText(Register.this, "Signup Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                   }
-                });
+    public Boolean checkExistentUsername(){
+        final Boolean[] exists = {false};
+        CollectionReference dbUsers = db.collection("Users");
+        dbUsers.whereEqualTo("username", "chikoritaxserperior").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                if(!queryDocumentSnapshots.isEmpty()){
+                    Toast.makeText(Register.this, "Ya existe un usuario con ese nombre", Toast.LENGTH_LONG).show();
+                    exists[0] = true;
                 }
-}
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                exists[0] = false;
+            }
+        });
+        return exists[0];
+    }
+
+            private void addDataToFirestoreTest() {
+
+                // creating a collection reference
+                // for our Firebase Firetore database.
+                checkExistentUsername();
+                auth.createUserWithEmailAndPassword("chikoritaxserperior@gmail.com", "123456")
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+
+                                    Toast.makeText(Register.this, "Signup Successful", Toast.LENGTH_SHORT).show();
+                                    CollectionReference dbUsers = db.collection("Users");
+                                    LocalDate localDate = LocalDate.parse("2000-01-01");
+                                    ZoneId zoneId = ZoneId.systemDefault(); // Or specify a specific zone
+                                    Instant instant = localDate.atStartOfDay(zoneId).toInstant();
+                                    // adding our data to our courses object class.et_pronounsRegister.getText().toString(), Date.from(Inst
+                                    UserModel user = new UserModel("chikoritaxserperior@gmail.com", task.getResult().getUser().getUid(), "chikorita", "chiko", "chikorita/serperior", Date.from(instant), "chikoritaxserperior", "613 13 13");
+
+                                    // below method is use to add data to Firebase Firestore.
+                                    DocumentReference documentRef = dbUsers.document(task.getResult().getUser().getUid());
+
+                                    //.document(uid)
+                                    documentRef.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            Toast.makeText(Register.this, "Your Course has been added to Firebase Firestore", Toast.LENGTH_SHORT).show();
+
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            // this method is called when the data addition process is failed.
+                                            // displaying a toast message when data addition is failed.
+                                            Toast.makeText(Register.this, "Fail to add course \n" + e, Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                } else {
+                                    switch (task.getException().getMessage()) {
+                                        case "auth/email-already-in-use":
+                                            Toast.makeText(Register.this, "Ya existe una cuenta con el correo electronico", Toast.LENGTH_LONG).show();
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                    Toast.makeText(Register.this, "Signup Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+            }
+        }

@@ -1,14 +1,9 @@
 package com.example.buuktu.views;
 
-import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -16,20 +11,13 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.buuktu.R;
 import com.example.buuktu.controllers.LoginController;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class Login extends AppCompatActivity {
     //private DatabaseReference mDatabase;
-    private TextView textViewE;
-    private TextView textViewP;
+    private TextInputEditText editTextEmailLogin;
+    private TextInputEditText editTextPasswordLogin;
     private FirebaseAuth auth;
     //FirebaseDatabase database = FirebaseDatabase.getInstance();
     @Override
@@ -43,8 +31,8 @@ public class Login extends AppCompatActivity {
             return insets;
         });
         auth = FirebaseAuth.getInstance();
-        textViewE = findViewById(R.id.et_emailLogin);
-        textViewP = findViewById(R.id.et_passwordLogin);
+        editTextEmailLogin = findViewById(R.id.et_emailLogin);
+        editTextPasswordLogin = findViewById(R.id.et_passwordLoginFilled);
 
         //WORK WORK WORK WORK WORK WORK WORK WORK WORK
         /*auth.createUserWithEmailAndPassword("chikoritaxserperior@gmail.com", "123456")
@@ -97,5 +85,12 @@ public class Login extends AppCompatActivity {
         /*Typeface birchLeaf = Typeface.createFromAsset(this.getAssets(), "font/birchleaf.ttf");
         TextView textView = findViewById(R.id.textView);
         textView.setTypeface(birchLeaf);*/
+    }
+    public TextInputEditText getEt_emailLogin() {
+        return editTextEmailLogin;
+    }
+    public TextInputEditText getEt_passwordLogin() {
+        return editTextPasswordLogin;
+
     }
 }
