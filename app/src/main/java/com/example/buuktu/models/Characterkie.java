@@ -7,7 +7,7 @@ public class Characterkie {
     private String name;
     private String surname;
     private String pronouns;
-    private Date birthday;
+    private String birthday;
     private String horoscope;
     private Date deathday;
     private boolean alive;
