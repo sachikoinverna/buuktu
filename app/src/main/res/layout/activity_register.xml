@@ -47,6 +47,14 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <ImageButton
+                    android:id="@+id/bt_chooseImageRegister"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
+                    app:srcCompat="@mipmap/default_icon" />
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/et_nameRegisterFilled"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"

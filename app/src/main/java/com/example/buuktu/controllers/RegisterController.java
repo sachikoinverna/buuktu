@@ -1,11 +1,18 @@
 package com.example.buuktu.controllers;
 
+import static androidx.activity.result.ActivityResultCallerKt.registerForActivityResult;
+
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.net.Uri;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.PickVisualMediaRequest;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 
 import com.example.buuktu.R;
@@ -17,7 +24,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -36,6 +42,7 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
     int monthC;
     int dayC;
     private final Register register;
+    private Uri image;
    private FirebaseAuth auth;
   //  FirebaseFirestore dbFire;
     private FirebaseFirestore db;
@@ -234,7 +241,26 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
                 showDatePickerDialog();
             } else if (view.getId()==R.id.bt_register) {
                 addDataToFirestore();
+            } else if (view.getId()==R.id.bt_chooseImageRegister) {
+                chooseImage();
             }
+    }
+    private void chooseImage(){
+        ActivityResultLauncher<PickVisualMediaRequest> pickMedia =
+                register.registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
+                    // Callback is invoked after the user selects a media item or closes the
+                    // photo picker.
+                    if (uri != null) {
+                        Log.d("PhotoPicker", "Selected URI: " + uri);
+                        register.getBt_chooseImage().setImageURI(uri);
+                        image = uri;
+                    } else {
+                        Log.d("PhotoPicker", "No media selected");
+                    }
+                });
+        pickMedia.launch(new PickVisualMediaRequest.Builder()
+                .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+                .build());
     }
     private void addDataToFirestore() {
                 auth.createUserWithEmailAndPassword(register.getEt_emailRegister().getText().toString(), register.getEt_passwordRegister().getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {

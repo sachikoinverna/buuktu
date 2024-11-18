@@ -2,12 +2,14 @@ package com.example.buuktu.views;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.PickVisualMediaRequest;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -15,27 +17,13 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.buuktu.R;
 import com.example.buuktu.controllers.RegisterController;
-import com.example.buuktu.models.UserModel;
 import com.example.buuktu.utils.CheckUtil;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.ktx.Firebase;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Calendar;
-import java.util.Date;
+
 public class Register extends AppCompatActivity {
     private FirebaseFirestore db;
     public TextInputEditText dp_birthday;
@@ -67,7 +55,7 @@ public class Register extends AppCompatActivity {
     private FirebaseAuth auth;
     FirebaseFirestore dbFire;
     String UID;
-
+    private ImageButton bt_chooseImage;
     //String connectionString = "mongodb+srv://chikorita:<db_password>@cluster0.zphspah.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +67,7 @@ public class Register extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        bt_chooseImage = findViewById(R.id.bt_chooseImageRegister);
         auth = FirebaseAuth.getInstance();
         dp_birthday = findViewById(R.id.dp_birthday);
         et_nameRegister = findViewById(R.id.et_nameRegister);
@@ -121,13 +110,21 @@ public class Register extends AppCompatActivity {
         dp_birthday.setOnClickListener(registerController);
         db = FirebaseFirestore.getInstance();
         bt_register = findViewById(R.id.bt_register);
-        //FirebaseApp.initializeApp(this);
+/*// Launch the photo picker and let the user choose only images/videos of a
+// specific MIME type, such as GIFs.
+        String mimeType = "image/gif";
+        pickMedia.launch(new PickVisualMediaRequest.Builder()
+                .setMediaType(new PickVisualMedia.SingleMimeType(mimeType))
+                .build());
+    }*/
     }
 
     private void setListeners() {
 
     }
-
+    public ImageButton getBt_chooseImage() {
+        return bt_chooseImage;
+    }
     public TextInputEditText getDp_birthday() {
         return dp_birthday;
     }
