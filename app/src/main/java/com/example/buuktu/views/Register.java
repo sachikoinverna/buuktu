@@ -21,6 +21,8 @@ import com.example.buuktu.utils.CheckUtil;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.Calendar;
 
@@ -55,6 +57,15 @@ public class Register extends AppCompatActivity {
     private FirebaseAuth auth;
     FirebaseFirestore dbFire;
     String UID;
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    // Create a child reference
+// imagesRef now points to "images"
+    //StorageReference imagesRef = storageRef.child("images");
+
+    // Child references can also take paths
+// spaceRef now points to "images/space.jpg
+// imagesRef still points to "images"
+    //StorageReference spaceRef = storageRef.child("images/space.jpg");
     private ImageButton bt_chooseImage;
     //String connectionString = "mongodb+srv://chikorita:<db_password>@cluster0.zphspah.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
     @Override
