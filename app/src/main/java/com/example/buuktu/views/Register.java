@@ -1,6 +1,9 @@
 package com.example.buuktu.views;
 
 
+import static com.google.android.gms.common.util.CollectionUtils.listOf;
+
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -232,5 +235,8 @@ public class Register extends AppCompatActivity {
                 .build());
         //StorageReference userRef = storage.getReference().child("ujlDPggHwenVJNQcUSqO");
         //userRef.child(image.getLastPathSegment()).putFile(image);
+    }
+    public void personalizarImagen(){
+        //bt_chooseImage.setBor
     }
 }
