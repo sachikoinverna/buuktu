@@ -1,9 +1,13 @@
 package com.example.buuktu.controllers;
 
 import static androidx.activity.result.ActivityResultCallerKt.registerForActivityResult;
+import static androidx.browser.customtabs.CustomTabsClient.getPackageName;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
@@ -29,7 +33,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -43,10 +51,12 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
     int dayC;
     private final Register register;
     private Uri image;
-   private FirebaseAuth auth;
+    private FirebaseAuth auth;
+    private boolean imgDefault = true;
   //  FirebaseFirestore dbFire;
     private FirebaseFirestore db;
-
+    // Get a non-default Storage bucket
+    FirebaseStorage storage = FirebaseStorage.getInstance("gs://buuk-tu-users");
     public RegisterController(Register register) {
         this.register = register;
         calendar = Calendar.getInstance();
@@ -56,6 +66,15 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
      //   FirebaseApp.initializeApp(register);
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+        StorageReference userRef = storage.getReference().child("ajYrQVbzQAdW7mgjIF3fxNJsIjF3");
+        register.getIB_profile_photo().setDrawingCacheEnabled(true);
+        register.getIB_profile_photo().buildDrawingCache();
+        Bitmap bitmap = ((BitmapDrawable) register.getIB_profile_photo().getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+        //Uri file = Uri.fromFile(new File(String.valueOf(R.mipmap.default_icon)));
+        userRef.putBytes(data);
     }
     @Override
     public void onFocusChange(View view, boolean b) {
@@ -246,21 +265,29 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
             }
     }
     private void chooseImage(){
-        ActivityResultLauncher<PickVisualMediaRequest> pickMedia =
-                register.registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
+        // Registers a photo picker activity launcher in single-select mode.
+        /*ActivityResultLauncher<PickVisualMediaRequest> pickMedia =
+                registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri {
                     // Callback is invoked after the user selects a media item or closes the
                     // photo picker.
                     if (uri != null) {
                         Log.d("PhotoPicker", "Selected URI: " + uri);
-                        register.getBt_chooseImage().setImageURI(uri);
-                        image = uri;
                     } else {
                         Log.d("PhotoPicker", "No media selected");
                     }
-                });
+                });*/
+
+// Launch the photo picker and let the user choose only images.
+        /*pickMedia.launch(new PickVisualMediaRequest.Builder()
+                .setMediaType(PickVisualMedia.ImageOnly.INSTANCE)
+                .build());*/
+
+// Launch the photo picker and let the user choose only images/videos of a
+// specific MIME type, such as GIFs.
+       /*String mimeType = "image/gif";
         pickMedia.launch(new PickVisualMediaRequest.Builder()
-                .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
-                .build());
+                .setMediaType(new ActivityResultContracts.PickVisualMedia.SingleMimeType(mimeType))
+                .build());*/
     }
     private void addDataToFirestore() {
                 auth.createUserWithEmailAndPassword(register.getEt_emailRegister().getText().toString(), register.getEt_passwordRegister().getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -273,7 +300,6 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
                             LocalDate localDate = LocalDate.parse("2000-01-01");
                             ZoneId zoneId = ZoneId.systemDefault(); // Or specify a specific zone
                             Instant instant = localDate.atStartOfDay(zoneId).toInstant();
-                            // adding our data to our courses object class.et_pronounsRegister.getText().toString(), Date.from(Inst
                             UserModel user = new UserModel(register.getEt_emailRegister().getText().toString(), task.getResult().getUser().getUid(), register.getEt_nameRegister().getText().toString(), register.getEt_surnameRegister().getText().toString(), register.getEt_pronounsRegister().getText().toString(), Date.from(instant),register.getEt_userRegister().getText().toString(), register.getEt_telephoneRegister().getText().toString());
 
                             // below method is use to add data to Firebase Firestore.
@@ -284,7 +310,8 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
                                 @Override
                                 public void onSuccess(Void unused) {
                                     Toast.makeText(register, "Your Course has been added to Firebase Firestore", Toast.LENGTH_SHORT).show();
-
+                                    StorageReference userRef = storage.getReference().child(task.getResult().getUser().getUid());
+                                    userRef.child(image.getLastPathSegment()).putFile(image);
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override

@@ -121,13 +121,11 @@ public class Register extends AppCompatActivity {
         dp_birthday.setOnClickListener(registerController);
         db = FirebaseFirestore.getInstance();
         bt_register = findViewById(R.id.bt_register);
-/*// Launch the photo picker and let the user choose only images/videos of a
-// specific MIME type, such as GIFs.
-        String mimeType = "image/gif";
-        pickMedia.launch(new PickVisualMediaRequest.Builder()
-                .setMediaType(new PickVisualMedia.SingleMimeType(mimeType))
-                .build());
-    }*/
+
+        //String mimeType = "image/gif";
+        /*pickMedia.launch(new PickVisualMediaRequest.Builder()
+                .setMediaType(new ActivityResultContracts.PickVisualMedia.SingleMimeType(mimeType))
+                .build());*/
     }
 
     private void setListeners() {
@@ -206,5 +204,8 @@ public class Register extends AppCompatActivity {
 
     public TextView getTv_telephoneRegister() {
         return tv_telephoneRegister;
+    }
+    public ImageButton getIB_profile_photo(){
+        return bt_chooseImage;
     }
 }
