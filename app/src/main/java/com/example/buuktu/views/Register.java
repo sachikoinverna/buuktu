@@ -3,6 +3,8 @@ package com.example.buuktu.views;
 
 import static com.google.android.gms.common.util.CollectionUtils.listOf;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -237,6 +239,8 @@ public class Register extends AppCompatActivity {
         //userRef.child(image.getLastPathSegment()).putFile(image);
     }
     public void personalizarImagen(){
+        //Bitmap circularBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        //Canvas canvas = new Canvas(circularBitmap);
         //bt_chooseImage.setBor
     }
 }
