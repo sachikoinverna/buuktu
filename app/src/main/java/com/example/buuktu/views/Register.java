@@ -1,8 +1,10 @@
 package com.example.buuktu.views;
 
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -57,7 +59,21 @@ public class Register extends AppCompatActivity {
     private FirebaseAuth auth;
     FirebaseFirestore dbFire;
     String UID;
+    Uri image;
+    RegisterController registerController;
     FirebaseStorage storage = FirebaseStorage.getInstance();
+    ActivityResultLauncher<PickVisualMediaRequest> pickMedia =
+            registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
+                // Callback is invoked after the user selects a media item or closes the
+                // photo picker.
+                if (uri != null) {
+                    //registerController.setUri(uri);
+                    image = uri;
+                    Log.d("PhotoPicker", "Selected URI: " + uri);
+                } else {
+                    Log.d("PhotoPicker", "No media selected");
+                }
+            });
     // Create a child reference
 // imagesRef now points to "images"
     //StorageReference imagesRef = storageRef.child("images");
@@ -113,7 +129,7 @@ public class Register extends AppCompatActivity {
         yearC = calendar.get(Calendar.YEAR);
         monthC = calendar.get(Calendar.MONTH);
         dayC = calendar.get(Calendar.DAY_OF_MONTH);
-        RegisterController registerController = new RegisterController(this);
+        registerController = new RegisterController(this);
         et_nameRegister.setOnFocusChangeListener(registerController);
         et_password.setOnFocusChangeListener(registerController);
         et_passwordRepeat.setOnFocusChangeListener(registerController);
@@ -122,10 +138,8 @@ public class Register extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         bt_register = findViewById(R.id.bt_register);
 
-        //String mimeType = "image/gif";
-        /*pickMedia.launch(new PickVisualMediaRequest.Builder()
-                .setMediaType(new ActivityResultContracts.PickVisualMedia.SingleMimeType(mimeType))
-                .build());*/
+
+
     }
 
     private void setListeners() {
@@ -207,5 +221,16 @@ public class Register extends AppCompatActivity {
     }
     public ImageButton getIB_profile_photo(){
         return bt_chooseImage;
+    }
+    public Uri getImage(){
+        return image;
+    }
+    public void selectImage(View view){
+        String mimeType = "image/gif";
+        pickMedia.launch(new PickVisualMediaRequest.Builder()
+                .setMediaType(new ActivityResultContracts.PickVisualMedia.SingleMimeType(mimeType))
+                .build());
+        //StorageReference userRef = storage.getReference().child("ujlDPggHwenVJNQcUSqO");
+        //userRef.child(image.getLastPathSegment()).putFile(image);
     }
 }
