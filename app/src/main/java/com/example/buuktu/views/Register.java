@@ -8,13 +8,16 @@ import static android.Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static com.google.android.gms.common.util.CollectionUtils.listOf;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ImageDecoder;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,6 +26,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
@@ -46,6 +50,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.IOException;
 import java.util.Calendar;
 
 public class Register extends AppCompatActivity {
@@ -72,6 +77,8 @@ public class Register extends AppCompatActivity {
     public TextView tv_usernameRegister;
     public TextView tv_telephoneRegister;
     ImageButton bt_registerToLogin;
+    ImageButton bt_chooseImage;
+    ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
     Calendar calendar;
     int yearC;
     int monthC;
@@ -85,18 +92,7 @@ public class Register extends AppCompatActivity {
     Uri image;
     RegisterController registerController;
     FirebaseStorage storage = FirebaseStorage.getInstance();
-    ActivityResultLauncher<PickVisualMediaRequest> pickMedia =
-            registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
-                // Callback is invoked after the user selects a media item or closes the
-                // photo picker.
-                if (uri != null) {
-                    //registerController.setUri(uri);
-                    image = uri;
-                    Log.d("PhotoPicker", "Selected URI: " + uri);
-                } else {
-                    Log.d("PhotoPicker", "No media selected");
-                }
-            });
+
     // Create a child reference
 // imagesRef now points to "images"
     //StorageReference imagesRef = storageRef.child("images");
@@ -105,7 +101,6 @@ public class Register extends AppCompatActivity {
 // spaceRef now points to "images/space.jpg
 // imagesRef still points to "images"
     //StorageReference spaceRef = storageRef.child("images/space.jpg");
-    private ImageButton bt_chooseImage;
     //String connectionString = "mongodb+srv://chikorita:<db_password>@cluster0.zphspah.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +113,31 @@ public class Register extends AppCompatActivity {
             return insets;
         });
         bt_chooseImage = findViewById(R.id.bt_chooseImageRegister);
+        pickMedia =
+                registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
+                    // Callback is invoked after the user selects a media item or closes the
+                    // photo picker.
+                    if (uri != null) {
+                        //registerController.setUri(uri);
+                        image = uri;
+                        try {
+                            //Bitmap image1 = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                            ImageDecoder.Source image1 = ImageDecoder.createSource(this.getContentResolver(),uri);
+                            Bitmap bitmap = ImageDecoder.decodeBitmap(image1);
+                            Bitmap bitmap1 = Bitmap.createScaledBitmap(bitmap, 300, 300, false);
+                            bt_chooseImage.setImageBitmap(bitmap1);
+
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        bt_chooseImage.setBackgroundColor(Color.TRANSPARENT);
+                        personalizarImagen();
+                        Log.d("PhotoPicker", "Selected URI: " + uri);
+                    } else {
+                        Log.d("PhotoPicker", "No media selected");
+                    }
+                });
+
         auth = FirebaseAuth.getInstance();
         dp_birthday = findViewById(R.id.dp_birthday);
         et_nameRegister = findViewById(R.id.et_nameRegister);
@@ -250,53 +270,20 @@ public class Register extends AppCompatActivity {
         return image;
     }
     public void selectImage(View view){
-        /*if (ContextCompat.checkSelfPermission(
-                this, Manifest.permission.READ_MEDIA_IMAGES) ==
-                PackageManager.PERMISSION_GRANTED) {
-            // You can use the API that requires the permission.
-            performAction(...);
-        } else if (ActivityCompat.shouldShowRequestPermissionRationale(
-                this, Manifest.permission.REQUESTED_PERMISSION)) {
-            // In an educational UI, explain to the user why your app requires this
-            // permission for a specific feature to behave as expected, and what
-            // features are disabled if it's declined. In this UI, include a
-            // "cancel" or "no thanks" button that lets the user continue
-            // using your app without granting the permission.
-            showInContextUI(...);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_MEDIA_IMAGES}, REQUEST_CODE);
+                return; // Esperar hasta que el usuario otorgue permisos
+            }
         } else {
-            // You can directly ask for the permission.
-            // The registered ActivityResultCallback gets the result of this request.
-            requestPermissionLauncher.launch(
-                    Manifest.permission.REQUESTED_PERMISSION);
-        }*/
-        if (
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
-                        (
-                                ContextCompat.checkSelfPermission(this, READ_MEDIA_IMAGES) == PERMISSION_GRANTED ||
-                                        ContextCompat.checkSelfPermission(this, READ_MEDIA_VIDEO) == PERMISSION_GRANTED
-                        )
-        ) {
-            // Full access on Android 13 (API level 33) or higher
-        } else if (
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE &&
-                        ContextCompat.checkSelfPermission(this, READ_MEDIA_VISUAL_USER_SELECTED) == PERMISSION_GRANTED
-        ) {
-            String mimeType = "image/gif";
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE);
+                return; // Esperar hasta que el usuario otorgue permisos
+            }
+        }String mimeType = "image/gif";
             pickMedia.launch(new PickVisualMediaRequest.Builder()
-                    .setMediaType(new ActivityResultContracts.PickVisualMedia.SingleMimeType(mimeType))
+                    .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
                     .build());
-        }  else if (ContextCompat.checkSelfPermission(this, READ_EXTERNAL_STORAGE) == PERMISSION_GRANTED) {
-            String mimeType = "image/gif";
-            pickMedia.launch(new PickVisualMediaRequest.Builder()
-                    .setMediaType(new ActivityResultContracts.PickVisualMedia.SingleMimeType(mimeType))
-                    .build());
-        } else {
-            // Access denied
-        }
-                String mimeType = "image/gif";
-                pickMedia.launch(new PickVisualMediaRequest.Builder()
-                        .setMediaType(new ActivityResultContracts.PickVisualMedia.SingleMimeType(mimeType))
-                        .build());
 
 
         //StorageReference userRef = storage.getReference().child("ujlDPggHwenVJNQcUSqO");
