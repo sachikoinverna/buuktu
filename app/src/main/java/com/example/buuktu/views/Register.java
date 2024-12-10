@@ -1,13 +1,20 @@
 package com.example.buuktu.views;
 
 
+import static android.Manifest.permission.READ_MEDIA_IMAGES;
+import static android.Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED;
 import static com.google.android.gms.common.util.CollectionUtils.listOf;
 
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -18,10 +25,15 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.buuktu.Manifest;
 import com.example.buuktu.R;
 import com.example.buuktu.controllers.RegisterController;
 import com.example.buuktu.utils.CheckUtil;
@@ -34,6 +46,9 @@ import com.google.firebase.storage.StorageReference;
 import java.util.Calendar;
 
 public class Register extends AppCompatActivity {
+    int flag = Intent.FLAG_GRANT_READ_URI_PERMISSION;
+    int RESULT_CODE = 0;
+    int REQUEST_CODE = 1;
     private FirebaseFirestore db;
     public TextInputEditText dp_birthday;
     public TextInputEditText et_nameRegister;
@@ -142,6 +157,7 @@ public class Register extends AppCompatActivity {
         dp_birthday.setOnClickListener(registerController);
         db = FirebaseFirestore.getInstance();
         bt_register = findViewById(R.id.bt_register);
+        personalizarImagen();
 
 
 
@@ -231,16 +247,27 @@ public class Register extends AppCompatActivity {
         return image;
     }
     public void selectImage(View view){
-        String mimeType = "image/gif";
-        pickMedia.launch(new PickVisualMediaRequest.Builder()
-                .setMediaType(new ActivityResultContracts.PickVisualMedia.SingleMimeType(mimeType))
-                .build());
+                String mimeType = "image/gif";
+                pickMedia.launch(new PickVisualMediaRequest.Builder()
+                        .setMediaType(new ActivityResultContracts.PickVisualMedia.SingleMimeType(mimeType))
+                        .build());
+
+
         //StorageReference userRef = storage.getReference().child("ujlDPggHwenVJNQcUSqO");
         //userRef.child(image.getLastPathSegment()).putFile(image);
     }
     public void personalizarImagen(){
-        //Bitmap circularBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
         //Canvas canvas = new Canvas(circularBitmap);
         //bt_chooseImage.setBor
+        Bitmap originalBitmap = ((BitmapDrawable) bt_chooseImage.getDrawable()).getBitmap();
+        RoundedBitmapDrawable roundedDrawable = RoundedBitmapDrawableFactory.create(getResources(), originalBitmap);
+        roundedDrawable.setCircular(true);
+        roundedDrawable.setCornerRadius(originalBitmap.getHeight());
+        bt_chooseImage.setImageDrawable(roundedDrawable);
+        bt_chooseImage.setBackgroundColor(Color.TRANSPARENT);
+        Drawable drawableBorder = getResources().getDrawable(R.drawable.border_register);
+        drawableBorder.setTint(Color.RED);
+        bt_chooseImage.setBackground(drawableBorder);
+        //bt_chooseImage.set
     }
 }
