@@ -1,8 +1,11 @@
 package com.example.buuktu.views;
 
 
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.READ_MEDIA_IMAGES;
+import static android.Manifest.permission.READ_MEDIA_VIDEO;
 import static android.Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED;
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static com.google.android.gms.common.util.CollectionUtils.listOf;
 
 import android.content.Intent;
@@ -13,6 +16,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -33,7 +37,6 @@ import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.buuktu.Manifest;
 import com.example.buuktu.R;
 import com.example.buuktu.controllers.RegisterController;
 import com.example.buuktu.utils.CheckUtil;
@@ -247,6 +250,49 @@ public class Register extends AppCompatActivity {
         return image;
     }
     public void selectImage(View view){
+        /*if (ContextCompat.checkSelfPermission(
+                this, Manifest.permission.READ_MEDIA_IMAGES) ==
+                PackageManager.PERMISSION_GRANTED) {
+            // You can use the API that requires the permission.
+            performAction(...);
+        } else if (ActivityCompat.shouldShowRequestPermissionRationale(
+                this, Manifest.permission.REQUESTED_PERMISSION)) {
+            // In an educational UI, explain to the user why your app requires this
+            // permission for a specific feature to behave as expected, and what
+            // features are disabled if it's declined. In this UI, include a
+            // "cancel" or "no thanks" button that lets the user continue
+            // using your app without granting the permission.
+            showInContextUI(...);
+        } else {
+            // You can directly ask for the permission.
+            // The registered ActivityResultCallback gets the result of this request.
+            requestPermissionLauncher.launch(
+                    Manifest.permission.REQUESTED_PERMISSION);
+        }*/
+        if (
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+                        (
+                                ContextCompat.checkSelfPermission(this, READ_MEDIA_IMAGES) == PERMISSION_GRANTED ||
+                                        ContextCompat.checkSelfPermission(this, READ_MEDIA_VIDEO) == PERMISSION_GRANTED
+                        )
+        ) {
+            // Full access on Android 13 (API level 33) or higher
+        } else if (
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE &&
+                        ContextCompat.checkSelfPermission(this, READ_MEDIA_VISUAL_USER_SELECTED) == PERMISSION_GRANTED
+        ) {
+            String mimeType = "image/gif";
+            pickMedia.launch(new PickVisualMediaRequest.Builder()
+                    .setMediaType(new ActivityResultContracts.PickVisualMedia.SingleMimeType(mimeType))
+                    .build());
+        }  else if (ContextCompat.checkSelfPermission(this, READ_EXTERNAL_STORAGE) == PERMISSION_GRANTED) {
+            String mimeType = "image/gif";
+            pickMedia.launch(new PickVisualMediaRequest.Builder()
+                    .setMediaType(new ActivityResultContracts.PickVisualMedia.SingleMimeType(mimeType))
+                    .build());
+        } else {
+            // Access denied
+        }
                 String mimeType = "image/gif";
                 pickMedia.launch(new PickVisualMediaRequest.Builder()
                         .setMediaType(new ActivityResultContracts.PickVisualMedia.SingleMimeType(mimeType))
@@ -270,4 +316,27 @@ public class Register extends AppCompatActivity {
         bt_chooseImage.setBackground(drawableBorder);
         //bt_chooseImage.set
     }
+    /*@Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_CODE:
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 &&
+                        grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission is granted. Continue the action or workflow
+                    // in your app.
+                }  else {
+                    // Explain to the user that the feature is unavailable because
+                    // the feature requires a permission that the user has denied.
+                    // At the same time, respect the user's decision. Don't link to
+                    // system settings in an effort to convince the user to change
+                    // their decision.
+                }
+                return;
+        }*/
+        // Other 'case' lines to check for other
+        // permissions this app might request.
+//    }
 }
+//}
