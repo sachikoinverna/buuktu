@@ -1,6 +1,7 @@
 package com.example.buuktu.views;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,5 +26,6 @@ FirebaseAuth auth = FirebaseAuth.getInstance();
             return insets;
         });
         UID = auth.getCurrentUser().getUid();
+        Toast.makeText(this, UID, Toast.LENGTH_SHORT).show();
     }
 }

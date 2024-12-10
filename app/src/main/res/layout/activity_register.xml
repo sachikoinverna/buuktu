@@ -364,15 +364,13 @@
                     app:errorEnabled="true"
                     app:startIconDrawable="@drawable/outline_password_24">
 
-                    <TextView
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/tv_errorPasswordRegister"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="TextView"
                         android:textAlignment="center"
-                        android:textColor="@color/redError"
-                        tools:layout_editor_absoluteX="-170dp"
-                        tools:layout_editor_absoluteY="589dp" />
+                        android:textColor="@color/redError" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout

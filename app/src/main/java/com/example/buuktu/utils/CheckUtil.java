@@ -41,51 +41,23 @@ public class CheckUtil {
         return exists[0];
     }
     public static boolean checkNumbers(String text){
-        for ( int i=0;i<=text.length();i++){
-            for (int z=0;z<10;z++){
-                if (Integer.valueOf(text)==z){
-                    return false;
-                }
-            }
-        }
-        return true;
+            return text.matches(".*\\d.*"); // Verifica si hay algún dígito en el texto
+
     }
     public static boolean checkEmailStructure(String email){
-        try {
-            Pattern pattern = Patterns.EMAIL_ADDRESS;
-            return pattern.matcher(email).matches();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+            return email != null && Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
     public static boolean checkTextEmpty(TextInputEditText textInputEditText){
-        if(textInputEditText.getText().toString().equals("")){
-            return true;
-        }
-        return false;
+            return textInputEditText.getText().toString().trim().isEmpty();
     }
     public static boolean checkPasswordLength(String password){
-        if(password.length()<8){
-            return false;
-        }
-        return true;
+            return password.length()<8;
     }
     public static boolean checkUppercase(String password){
-        for (int i = 0; i < password.length(); i++) {
-            char c = password.charAt(i);
-            if (Character.isUpperCase(c))
-                return true;
-        }
-        return false;
+        return password != null && password.chars().anyMatch(Character::isUpperCase);
     }
     public static boolean checkSpecialCharacter(String password){
-        for (int i = 0; i < password.length(); i++) {
-            char c = password.charAt(i);
-            if (c >= 33 && c <= 46 || c == 64) {
-                return true;
-            }
-        }
-        return false;
+        return password != null && password.matches(".*[\\W_].*");
     }
 
     public static void setErrorMessage(String error, TextView textView) {

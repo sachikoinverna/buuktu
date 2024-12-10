@@ -62,8 +62,8 @@ public class LoginController implements View.OnClickListener {
                                                 @Override
                                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                                     if (task.isSuccessful()) {
-                                                        Toast.makeText(login,"Login Successful",Toast.LENGTH_SHORT).show();
-                                                        Intent intent = new Intent(login, MainActivity.class);
+                                                        //Toast.makeText(login,"Login Successful",Toast.LENGTH_SHORT).show();
+                                                        Intent intent = new Intent(login.getApplicationContext(), MainActivity.class);
                                                         login.startActivity(intent);
                                                     } else {
                                                         Toast.makeText(login,"Login Failed",Toast.LENGTH_SHORT).show();

@@ -1,6 +1,8 @@
 package com.example.buuktu.controllers;
 import static androidx.activity.result.ActivityResultCallerKt.registerForActivityResult;
 
+import static com.example.buuktu.R.id.*;
+
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -74,64 +76,63 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
     }
     @Override
     public void onFocusChange(View view, boolean b) {
-        if(view.getId()== R.id.et_nameRegister){
+        final int caso = view.getId();
+        if (caso == R.id.et_nameRegister) {
             if (!b) {
                 handlerCheckName();
-            }else if (b){
-                CheckUtil.setErrorMessage(null,register.getTv_nameRegister());
+            } else if (b) {
+                CheckUtil.setErrorMessage(null, register.getTv_nameRegister());
             }
-        } else if (view.getId()==R.id.et_surnameRegister) {
+        } else if (caso == R.id.et_surnameRegister) {
             if (!b) {
                 handlerCheckSurname();
             } else if (b) {
-                CheckUtil.setErrorMessage(null,register.getTv_surnameRegister());
+                CheckUtil.setErrorMessage(null, register.getTv_surnameRegister());
             }
-
-        }else if (view.getId()==R.id.dp_birthday) {
+        } else if (caso == R.id.dp_birthday) {
             if (!b) {
                 handlerCheckBirthdayDate();
             } else if (b) {
-                CheckUtil.setErrorMessage(null,register.getTv_birthdayRegister());
-
+                CheckUtil.setErrorMessage(null, register.getTv_birthdayRegister());
             }
-        } else if (view.getId()==R.id.et_userRegister) {
-            if(!b){
+        } else if (caso == R.id.et_userRegister) {
+            if (!b) {
                 handlerCheckUser();
             } else if (b) {
-                CheckUtil.setErrorMessage(null,register.getTv_usernameRegister());
+                CheckUtil.setErrorMessage(null, register.getTv_usernameRegister());
             }
-        } else if (view.getId()==R.id.et_pronounsRegister){
-            if(!b){
+        } else if (caso == R.id.et_pronounsRegister) {
+            if (!b) {
                 handlerCheckPronouns();
             } else if (b) {
-                CheckUtil.setErrorMessage(null,register.getTv_pronounsRegister());
+                CheckUtil.setErrorMessage(null, register.getTv_pronounsRegister());
             }
-        } else if (view.getId()==R.id.et_emailRegister){
-            if(!b){
+        } else if (caso == R.id.et_emailRegister) {
+            if (!b) {
                 handlerCheckEmail();
             } else if (b) {
-                CheckUtil.setErrorMessage(null,register.getTv_emailRegister());
+                CheckUtil.setErrorMessage(null, register.getTv_emailRegister());
             }
-        }
-        else if (view.getId()==R.id.et_password) {
+        } else if (caso == R.id.et_password) {
             if (!b) {
                 handlerCheckPassword();
             } else if (b) {
-                CheckUtil.setErrorMessage(null,register.getTv_passwordRegister());
+                CheckUtil.setErrorMessage(null, register.getTv_passwordRegister());
             }
-        }else if (view.getId()==R.id.et_passwordRepeat) {
-            if(!b){
+        } else if (caso == R.id.et_passwordRepeat) {
+            if (!b) {
                 handlerCheckPasswordRepeat();
             } else if (b) {
-                CheckUtil.setErrorMessage(null,register.getTv_passwordRepeatRegister());
+                CheckUtil.setErrorMessage(null, register.getTv_passwordRepeatRegister());
             }
-        } else if (view.getId()==R.id.et_telephoneRegister) {
-            if(!b){
+        } else if (caso == R.id.et_telephoneRegister) {
+            if (!b) {
                 handlerCheckTelephone();
             } else if (b) {
-                CheckUtil.setErrorMessage(null,register.getTv_telephoneRegister());
+                CheckUtil.setErrorMessage(null, register.getTv_telephoneRegister());
             }
         }
+
     }
     private boolean handlerCheckName(){
         if(CheckUtil.checkTextEmpty(register.getEt_nameRegister())){
