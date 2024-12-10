@@ -67,6 +67,7 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
      //   FirebaseApp.initializeApp(register);
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+        register.getBt_deleteImageRegister().setVisibility(View.INVISIBLE);
     }
     public void setUri(Uri image){
         image=image;
@@ -255,7 +256,15 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
                 showDatePickerDialog();
             } else if (view.getId()==R.id.bt_register) {
                 addDataToFirestore();
+            } else if (view.getId()==R.id.bt_deleteImageRegister) {
+                putDefaultImage();
             }
+    }
+    private void putDefaultImage(){
+        register.getIB_profile_photo().setImageResource(R.mipmap.default_icon);
+        Bitmap bitmap = ((BitmapDrawable) register.getIB_profile_photo().getDrawable()).getBitmap();
+        register.personalizarImagen(bitmap);
+        register.getBt_deleteImageRegister().setVisibility(View.INVISIBLE);
     }
     private void addDataToFirestore() {
                 auth.createUserWithEmailAndPassword(register.getEt_emailRegister().getText().toString(), register.getEt_passwordRegister().getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {

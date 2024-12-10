@@ -78,6 +78,7 @@ public class Register extends AppCompatActivity {
     public TextView tv_telephoneRegister;
     ImageButton bt_registerToLogin;
     ImageButton bt_chooseImage;
+    ImageButton bt_deleteImageRegister;
     ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
     Calendar calendar;
     int yearC;
@@ -91,7 +92,7 @@ public class Register extends AppCompatActivity {
     String UID;
     Uri image;
     RegisterController registerController;
-    FirebaseStorage storage = FirebaseStorage.getInstance();
+    FirebaseStorage storage = FirebaseStorage.getInstance("gs://buuk-tu-users");
 
     // Create a child reference
 // imagesRef now points to "images"
@@ -113,6 +114,9 @@ public class Register extends AppCompatActivity {
             return insets;
         });
         bt_chooseImage = findViewById(R.id.bt_chooseImageRegister);
+        Bitmap originalBitmap = ((BitmapDrawable) bt_chooseImage.getDrawable()).getBitmap();
+        personalizarImagen(originalBitmap);
+
         pickMedia =
                 registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
                     // Callback is invoked after the user selects a media item or closes the
@@ -124,20 +128,23 @@ public class Register extends AppCompatActivity {
                             //Bitmap image1 = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
                             ImageDecoder.Source image1 = ImageDecoder.createSource(this.getContentResolver(),uri);
                             Bitmap bitmap = ImageDecoder.decodeBitmap(image1);
-                            Bitmap bitmap1 = Bitmap.createScaledBitmap(bitmap, 300, 300, false);
+                            Bitmap bitmap1 = Bitmap.createScaledBitmap(bitmap, 280, 280, false);
                             bt_chooseImage.setImageBitmap(bitmap1);
+                            personalizarImagen(bitmap1);
+                            StorageReference userRef = storage.getReference().child("ujlDPggHwenVJNQcUSqO");
+                            userRef.child(image.getLastPathSegment()).putFile(image);
+                            bt_deleteImageRegister.setVisibility(View.VISIBLE);
 
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
-                        bt_chooseImage.setBackgroundColor(Color.TRANSPARENT);
-                        personalizarImagen();
+
                         Log.d("PhotoPicker", "Selected URI: " + uri);
                     } else {
                         Log.d("PhotoPicker", "No media selected");
                     }
                 });
-
+        bt_deleteImageRegister = findViewById(R.id.bt_deleteImageRegister);
         auth = FirebaseAuth.getInstance();
         dp_birthday = findViewById(R.id.dp_birthday);
         et_nameRegister = findViewById(R.id.et_nameRegister);
@@ -173,6 +180,7 @@ public class Register extends AppCompatActivity {
         monthC = calendar.get(Calendar.MONTH);
         dayC = calendar.get(Calendar.DAY_OF_MONTH);
         registerController = new RegisterController(this);
+        et_surnameRegister.setOnFocusChangeListener(registerController);
         et_nameRegister.setOnFocusChangeListener(registerController);
         et_password.setOnFocusChangeListener(registerController);
         et_passwordRepeat.setOnFocusChangeListener(registerController);
@@ -180,12 +188,11 @@ public class Register extends AppCompatActivity {
         dp_birthday.setOnClickListener(registerController);
         db = FirebaseFirestore.getInstance();
         bt_register = findViewById(R.id.bt_register);
-        personalizarImagen();
-
-
-
+        bt_deleteImageRegister.setOnClickListener(registerController);
     }
-
+    public ImageButton getBt_deleteImageRegister(){
+        return bt_deleteImageRegister;
+    }
     private void setListeners() {
 
     }
@@ -286,16 +293,15 @@ public class Register extends AppCompatActivity {
                     .build());
 
 
-        //StorageReference userRef = storage.getReference().child("ujlDPggHwenVJNQcUSqO");
-        //userRef.child(image.getLastPathSegment()).putFile(image);
+
     }
-    public void personalizarImagen(){
+    public void personalizarImagen(Bitmap bitmap){
         //Canvas canvas = new Canvas(circularBitmap);
         //bt_chooseImage.setBor
-        Bitmap originalBitmap = ((BitmapDrawable) bt_chooseImage.getDrawable()).getBitmap();
-        RoundedBitmapDrawable roundedDrawable = RoundedBitmapDrawableFactory.create(getResources(), originalBitmap);
+
+        RoundedBitmapDrawable roundedDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
         roundedDrawable.setCircular(true);
-        roundedDrawable.setCornerRadius(originalBitmap.getHeight());
+        roundedDrawable.setCornerRadius(bitmap.getHeight());
         bt_chooseImage.setImageDrawable(roundedDrawable);
         bt_chooseImage.setBackgroundColor(Color.TRANSPARENT);
         Drawable drawableBorder = getResources().getDrawable(R.drawable.border_register);
