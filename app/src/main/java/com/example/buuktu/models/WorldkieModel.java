@@ -4,16 +4,26 @@ import java.util.Date;
 
 public class WorldkieModel {
     private String UID;
+    private String UID_AUTHOR;
     private String name;
     private Date creation_date;
     private Date last_update;
+    private final static String PREFIX = "WORLDKIE_";
 
     public String getUID() {
         return UID;
     }
 
-    public void setUID(String UID) {
-        this.UID = UID;
+    public void setUID(String UID_AUTHOR) {
+        this.UID = PREFIX + UID_AUTHOR;
+    }
+
+    public String getUID_AUTHOR() {
+        return UID_AUTHOR;
+    }
+
+    public void setUID_AUTHOR(String UID_AUTHOR) {
+        this.UID_AUTHOR = UID_AUTHOR;
     }
 
     public String getName() {
