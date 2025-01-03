@@ -29,7 +29,7 @@ public class LoginController implements View.OnClickListener {
         this.login = login;
        auth = FirebaseAuth.getInstance();
        db = FirebaseFirestore.getInstance();
-       handlerLogin();
+       //handlerLogin();
     }
 
     private void handlerClearFields(){
@@ -45,7 +45,7 @@ public class LoginController implements View.OnClickListener {
                     new OnSuccessListener<AuthResult>() {
                         @Override
                         public void onSuccess(AuthResult authResult) {
-                            Intent intent = new Intent(login, MainActivity.class);
+                            Intent intent = new Intent(login.getApplicationContext(), MainActivity.class);
                             login.startActivity(intent);
                         }
                     }).addOnFailureListener(new OnFailureListener() {
@@ -57,7 +57,7 @@ public class LoginController implements View.OnClickListener {
                         public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                             if(!queryDocumentSnapshots.isEmpty()){
                                 for (int i = 0; i < queryDocumentSnapshots.size(); i++){
-                                    auth.signInWithEmailAndPassword(queryDocumentSnapshots.getDocuments().get(i).getString("email"), "123456")
+                                    auth.signInWithEmailAndPassword(queryDocumentSnapshots.getDocuments().get(i).getString("email"), login.getEt_passwordLogin().getText().toString())
                                             .addOnCompleteListener(login, new OnCompleteListener<AuthResult>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -65,6 +65,7 @@ public class LoginController implements View.OnClickListener {
                                                         //Toast.makeText(login,"Login Successful",Toast.LENGTH_SHORT).show();
                                                         Intent intent = new Intent(login.getApplicationContext(), MainActivity.class);
                                                         login.startActivity(intent);
+
                                                     } else {
                                                         Toast.makeText(login,"Login Failed",Toast.LENGTH_SHORT).show();
                                                     }

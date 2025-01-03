@@ -128,7 +128,7 @@ public class Register extends AppCompatActivity {
                             //Bitmap image1 = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
                             ImageDecoder.Source image1 = ImageDecoder.createSource(this.getContentResolver(),uri);
                             Bitmap bitmap = ImageDecoder.decodeBitmap(image1);
-                            Bitmap bitmap1 = Bitmap.createScaledBitmap(bitmap, 280, 280, false);
+                            Bitmap bitmap1 = Bitmap.createScaledBitmap(bitmap, 640, 640, false);
                             bt_chooseImage.setImageBitmap(bitmap1);
                             personalizarImagen(bitmap1);
                             StorageReference userRef = storage.getReference().child("ujlDPggHwenVJNQcUSqO");

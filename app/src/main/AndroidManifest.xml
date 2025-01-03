@@ -26,6 +26,9 @@
             android:name=".views.Login"
             android:exported="false" />
         <activity
+            android:name=".views.MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.Register"
             android:exported="true">
             <intent-filter>
