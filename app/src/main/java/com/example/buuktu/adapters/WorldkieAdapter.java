@@ -79,10 +79,10 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
     public void onBindViewHolder(@NonNull WorldkieAdapter.ViewHolder holder, int position) {
             holder.getTv_name_wordkie().setText(dataSet.get(position).getName());
             //De esra forma establacemos las imagenes de la lista
-            String uri = "@drawable/" + dataSet.get(position).getPhoto();  // where myresource (without the extension) is the file
-            int imageResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
-            Drawable res =  context.getResources().getDrawable(imageResource);
-            holder.getIv_photo_wordlkie().setImageDrawable(res);
+            //String uri = "@drawable/" + dataSet.get(position).getPhoto();  // where myresource (without the extension) is the file
+            //int imageResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
+            //Drawable res =  context.getResources().getDrawable(imageResource);
+            holder.getIv_photo_wordlkie().setImageDrawable(dataSet.get(position).getPhoto());
     }
 
 

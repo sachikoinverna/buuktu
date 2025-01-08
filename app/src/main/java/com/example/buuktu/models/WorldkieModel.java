@@ -1,6 +1,7 @@
 package com.example.buuktu.models;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 
 import java.util.Date;
 
@@ -10,9 +11,9 @@ public class WorldkieModel {
     private String name;
     private Date creation_date;
     private Date last_update;
-    private Bitmap photo;
+    private Drawable photo;
 
-    public WorldkieModel(String UID, String UID_AUTHOR, String name, Date creation_date, Date last_update, Bitmap photo) {
+    public WorldkieModel(String UID, String UID_AUTHOR, String name, Date creation_date, Date last_update, Drawable photo) {
         this.UID = UID;
         this.UID_AUTHOR = UID_AUTHOR;
         this.name = name;
@@ -20,16 +21,16 @@ public class WorldkieModel {
         this.last_update = last_update;
         this.photo = photo;
     }
-    public WorldkieModel(String UID, String name, Bitmap photo) {
+    public WorldkieModel(String UID, String name, Drawable photo) {
         this.UID = UID;
         this.name = name;
         this.photo = photo;
     }
-    public Bitmap getPhoto() {
+    public Drawable getPhoto() {
         return photo;
     }
 
-    public void setPhoto(Bitmap photo) {
+    public void setPhoto(Drawable photo) {
         this.photo = photo;
     }
 
