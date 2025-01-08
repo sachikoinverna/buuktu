@@ -69,22 +69,20 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
     //Se llama cada vez que se hace scroll en la pantalla y los elementos desaparecen y aparecen
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        //Creamos la vista de cada item a partir de nuestro layout
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.worldkie_list_layout, viewGroup, false);
 
+        //Creamos la vista de cada item a partir de nuestro layout
+           View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.worldkie_list_layout, viewGroup, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull WorldkieAdapter.ViewHolder holder, int position) {
-        holder.getTv_name_wordkie().setText(dataSet.get(position).getName());
-
-        //De esra forma establacemos las imagenes de la lista
-        String uri = "@drawable/" + dataSet.get(position).getPhoto();  // where myresource (without the extension) is the file
-        int imageResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
-
-        Drawable res =  context.getResources().getDrawable(imageResource);
-        holder.getIv_photo_wordlkie().setImageDrawable(res);
+            holder.getTv_name_wordkie().setText(dataSet.get(position).getName());
+            //De esra forma establacemos las imagenes de la lista
+            String uri = "@drawable/" + dataSet.get(position).getPhoto();  // where myresource (without the extension) is the file
+            int imageResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
+            Drawable res =  context.getResources().getDrawable(imageResource);
+            holder.getIv_photo_wordlkie().setImageDrawable(res);
     }
 
 

@@ -11,16 +11,20 @@ public class WorldkieModel {
     private Date creation_date;
     private Date last_update;
     private Bitmap photo;
-    private final static String PREFIX = "WORLDKIE_";
 
-    public WorldkieModel(String UID, String name, Date creation_date, Date last_update, Bitmap photo) {
+    public WorldkieModel(String UID, String UID_AUTHOR, String name, Date creation_date, Date last_update, Bitmap photo) {
         this.UID = UID;
+        this.UID_AUTHOR = UID_AUTHOR;
         this.name = name;
         this.creation_date = creation_date;
         this.last_update = last_update;
         this.photo = photo;
     }
-
+    public WorldkieModel(String UID, String name, Bitmap photo) {
+        this.UID = UID;
+        this.name = name;
+        this.photo = photo;
+    }
     public Bitmap getPhoto() {
         return photo;
     }
@@ -33,8 +37,8 @@ public class WorldkieModel {
         return UID;
     }
 
-    public void setUID(String UID_AUTHOR) {
-        this.UID = PREFIX + UID_AUTHOR;
+    public void setUID(String UID) {
+        this.UID = UID;
     }
 
     public String getUID_AUTHOR() {

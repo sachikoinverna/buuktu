@@ -6,12 +6,17 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buuktu.R;
+import com.example.buuktu.adapters.WorldkieAdapter;
 import com.example.buuktu.models.WorldkieModel;
+import com.example.buuktu.utils.BitmapUtils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,6 +24,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
@@ -26,9 +32,11 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 String UID;
 FirebaseAuth auth = FirebaseAuth.getInstance();
+
 ArrayList<WorldkieModel> worldkieModelArrayList;
 private FirebaseFirestore db;
-
+FirebaseStorage storage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
+RecyclerView rc_worldkies;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,47 +47,39 @@ private FirebaseFirestore db;
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        rc_worldkies = findViewById(R.id.rc_worldkies);
         db = FirebaseFirestore.getInstance();
         UID = auth.getCurrentUser().getUid();
         Toast.makeText(this, UID, Toast.LENGTH_SHORT).show();
         worldkieModelArrayList = new ArrayList<>();
         CollectionReference dbWorldkies = db.collection("Worldkies");
-        dbWorldkies.orderBy("UID").startAt(UID).endAt(UID + '~').get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        dbWorldkies.whereEqualTo("UID_AUTHOR",UID).orderBy("last_update").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 if (!queryDocumentSnapshots.isEmpty()){
-                    for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
-                        // Create a storage reference from our app
-                       // StorageReference storageRef = storage.getReference();
-
-// Create a reference with an initial file path and name
-                        //StorageReference pathReference = storageRef.child("images/stars.jpg");
-
-// Create a reference to a file from a Google Cloud Storage URI
-                       // StorageReference gsReference = storage.getReferenceFromUrl("gs://bucket/images/stars.jpg");
-
-// Create a reference from an HTTPS URL
-// Note that in the URL, characters are URL escaped!
-                       // StorageReference httpsReference = storage.getReferenceFromUrl("https://firebasestorage.googleapis.com/b/bucket/o/images%20stars.jpg");
-                       // StorageReference islandRef = storageRef.child("images/island.jpg");
-
-                        //final long ONE_MEGABYTE = 1024 * 1024;
-                        //islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                          //  @Override
-                            //public void onSuccess(byte[] bytes) {
-                              //  DocumentSnapshot documentSnapshot = queryDocumentSnapshots.getDocuments().get(i);
-                                //WorldkieModel worldkieModel = new WorldkieModel(documentSnapshot.getString(""}
-                        //}).addOnFailureListener(new OnFailureListener() {
-                          //  @Override
-                            //public void onFailure(@NonNull Exception exception) {
-                                // Handle any errors
+                    for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                        StorageReference storageRef = storage.getReference().child(documentSnapshot.getString("UID"));
+                        final long ONE_MEGABYTE = 1024 * 1024;
+                        storageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                            @Override
+                            public void onSuccess(byte[] bytes) {
+                                WorldkieModel worldkieModel = new WorldkieModel(documentSnapshot.getId(),documentSnapshot.getString("name"), BitmapUtils.convertCompressedByteArrayToBitmap(bytes));
+                                worldkieModelArrayList.add(worldkieModel);
                             }
-                        //});
+                        }).addOnFailureListener(new OnFailureListener() {@Override
+                            public void onFailure(@NonNull Exception exception) {
+                                Toast.makeText(MainActivity.this, "Error al cargar imagen", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
-  } //else if (queryDocumentSnapshots.isEmpty()) {
+  } else if (queryDocumentSnapshots.isEmpty()) {
                     
-            //    }
-            //}
+              }
+            }
         });
+        WorldkieAdapter worldkieAdapter = new WorldkieAdapter(worldkieModelArrayList, this);
+        rc_worldkies.setAdapter(worldkieAdapter);
+        rc_worldkies.setLayoutManager(new LinearLayoutManager(this));
+
     }
 }
