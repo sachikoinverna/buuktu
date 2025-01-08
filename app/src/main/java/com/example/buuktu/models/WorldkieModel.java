@@ -1,5 +1,7 @@
 package com.example.buuktu.models;
 
+import android.graphics.Bitmap;
+
 import java.util.Date;
 
 public class WorldkieModel {
@@ -8,7 +10,24 @@ public class WorldkieModel {
     private String name;
     private Date creation_date;
     private Date last_update;
+    private Bitmap photo;
     private final static String PREFIX = "WORLDKIE_";
+
+    public WorldkieModel(String UID, String name, Date creation_date, Date last_update, Bitmap photo) {
+        this.UID = UID;
+        this.name = name;
+        this.creation_date = creation_date;
+        this.last_update = last_update;
+        this.photo = photo;
+    }
+
+    public Bitmap getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Bitmap photo) {
+        this.photo = photo;
+    }
 
     public String getUID() {
         return UID;

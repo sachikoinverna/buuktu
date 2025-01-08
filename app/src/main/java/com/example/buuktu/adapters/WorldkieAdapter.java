@@ -12,11 +12,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.buuktu.R;
 import com.example.buuktu.models.WorldkieModel;
 
 import java.util.ArrayList;
 
-/*public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHolder>{
+public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHolder>{
 
     public interface ItemClickListener {
         public void onClick(View view, int position);
@@ -27,24 +28,23 @@ import java.util.ArrayList;
     private Context context;
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private final TextView tv_name_wordkie;
-        private ImageView ivProducto;
+        private final TextView tv_name_wordlkie;
+        private ImageView iv_photo_wordlkie;
 
         public ViewHolder(View view) {
             super(view);
             view.setOnClickListener(this);
-
-            tv_name_wordkie = (TextView) view.findViewById(R.id.tvNombreProducto);
-            //ivProducto = (ImageView) view.findViewById(R.id.imageView);
+            tv_name_wordlkie = (TextView) view.findViewById(R.id.tv_name_wordlkie);
+            iv_photo_wordlkie = (ImageView) view.findViewById(R.id.iv_photo_wordlkie);
         }
 
         //getters
         public TextView getTv_name_wordkie() {
-            return tv_name_wordkie;
+            return tv_name_wordlkie;
         }
 
-        public ImageView getIvProducto() {
-            return ivProducto;
+        public ImageView getIv_photo_wordlkie() {
+            return iv_photo_wordlkie;
         }
 
         //Esto propaga el evento hacía fuera, así podemos capturarlo en el punto que queramos de
@@ -80,11 +80,11 @@ import java.util.ArrayList;
         holder.getTv_name_wordkie().setText(dataSet.get(position).getName());
 
         //De esra forma establacemos las imagenes de la lista
-        String uri = "@drawable/" + dataSet.get(position).getUrlFoto();  // where myresource (without the extension) is the file
+        String uri = "@drawable/" + dataSet.get(position).getPhoto();  // where myresource (without the extension) is the file
         int imageResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
 
         Drawable res =  context.getResources().getDrawable(imageResource);
-        holder.getIvProducto().setImageDrawable(res);
+        holder.getIv_photo_wordlkie().setImageDrawable(res);
     }
 
 
@@ -93,4 +93,4 @@ import java.util.ArrayList;
     public int getItemCount() {
         return dataSet.size();
     }
-}*/
+}
