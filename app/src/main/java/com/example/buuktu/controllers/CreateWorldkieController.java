@@ -45,14 +45,14 @@ public class CreateWorldkieController implements View.OnClickListener {
         createWorldkie.getBt_deleteImageRegister().setVisibility(View.INVISIBLE);
     }
     private void addDataToFirestore() {
-        CollectionReference dbUsers = db.collection("Worldkies");
-        WorldkieModel worldkieModel = new WorldkieModel(firebaseAuth.getUid(),createWorldkie.getEt_nameWorldkieCreate().getText().toString());
-        dbUsers.document().set(worldkieModel).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                                       @Override
-                                                                       public void onSuccess(Void unused) {
-               /* String uid = documentReference.getId();
+        CollectionReference dbWorldkies = db.collection("Worldkies");
+        WorldkieModel worldkieModel = new WorldkieModel(firebaseAuth.getUid(), createWorldkie.getEt_nameWorldkieCreate().getText().toString());
+        dbWorldkies.add(worldkieModel).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                String uid = documentReference.getId();
                 Toast.makeText(createWorldkie, "Your Course has been added to Firebase Firestore", Toast.LENGTH_SHORT).show();
-                if(createWorldkie.getIB_profile_photo().getDrawable().equals(R.mipmap.default_icon)){
+                if (createWorldkie.getIB_profile_photo().getDrawable().equals(R.mipmap.default_icon)) {
                     // StorageReference userRef = storage.getReference().child("ajYrQVbzQAdW7mgjIF3fxNJsIjF3");
                     //register.getIB_profile_photo().setDrawingCacheEnabled(true);
                     //register.getIB_profile_photo().buildDrawingCache();
@@ -62,42 +62,13 @@ public class CreateWorldkieController implements View.OnClickListener {
                     //byte[] data = baos.toByteArray();
                     //Uri file = Uri.fromFile(new File(String.valueOf(R.mipmap.default_icon)));
                     //userRef.putBytes(data);
-                }else {
-                    StorageReference userRef = storage.getReference().child(task.getResult().getId());
+                } else {
+                    StorageReference userRef = storage.getReference().child(uid);
                     userRef.child(createWorldkie.getImage().getLastPathSegment()).putFile(createWorldkie.getImage());
-                }*/
-                                                                       }
-                                                                   });
+                }
+            }
+        });
     }
-
-           /* @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            String uid = documentReference.getId();
-                            Toast.makeText(createWorldkie, "Your Course has been added to Firebase Firestore", Toast.LENGTH_SHORT).show();
-                            if(createWorldkie.getIB_profile_photo().getDrawable().equals(R.mipmap.default_icon)){
-                                // StorageReference userRef = storage.getReference().child("ajYrQVbzQAdW7mgjIF3fxNJsIjF3");
-                                //register.getIB_profile_photo().setDrawingCacheEnabled(true);
-                                //register.getIB_profile_photo().buildDrawingCache();
-                                //Bitmap bitmap = ((BitmapDrawable) register.getIB_profile_photo().getDrawable()).getBitmap();
-                                // ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                                //bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                                //byte[] data = baos.toByteArray();
-                                //Uri file = Uri.fromFile(new File(String.valueOf(R.mipmap.default_icon)));
-                                //userRef.putBytes(data);
-                            }else {
-                                StorageReference userRef = storage.getReference().child(uid);
-                                userRef.child(createWorldkie.getImage().getLastPathSegment()).putFile(createWorldkie.getImage());
-                            }
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            // this method is called when the data addition process is failed.
-                            // displaying a toast message when data addition is failed.
-                            Toast.makeText(register, "Fail to add course \n" + e, Toast.LENGTH_SHORT).show();
-                        }
-                    });
-               }*/
 
     @Override
     public void onClick(View view) {
