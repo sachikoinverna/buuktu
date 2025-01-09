@@ -189,6 +189,10 @@ public class Register extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         bt_register = findViewById(R.id.bt_register);
         bt_deleteImageRegister.setOnClickListener(registerController);
+        if (auth.getCurrentUser()!=null){
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
     }
     public ImageButton getBt_deleteImageRegister(){
         return bt_deleteImageRegister;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">buuk-tu</string>
+    <string name="appname">buuk-tu</string>
     <string name="user_email">Email/Username</string>
     <string name="user_password">Password</string>
     <string name="name">Name</string>
@@ -33,4 +33,20 @@
     <string name="passwordErrorUppercase">Debe contener al menos una mayuscula</string>
     <string name="passwordErrorRepeatEmpty">La contraseña no puede estar vacia</string>
     <string name="passwordErrorRepeat">Contraseñas no coinciden</string>
+    <string name="aries">Aries</string>
+    <string name="taurus">Taurus</string>
+    <string name="gemini">Gemini</string>
+    <string name="cancer">Cancer</string>
+    <string name="leo">Leo</string>
+    <string name="virgo">Virgo</string>
+    <string name="libra">Libra</string>
+    <string name="scorpio">Scorpio</string>
+    <string name="sagittarius">Sagittarius</string>
+    <string name="Leo">Leo</string>
+    <string name="capricorn">Capricorn</string>
+    <string name="aquarius">Aquarius</string>
+    <string name="pisces">Pisces</string>
+    <string name="app_name"></string>
+    <string name="open_nav">Open Navigation Drawer</string>
+    <string name="close_nav">Close Navigation Drawer</string>
 </resources>

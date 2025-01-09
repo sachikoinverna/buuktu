@@ -81,39 +81,76 @@ public class Home extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ib_addWorldkie = getActivity().findViewById(R.id.ib_addWorldkie);
-        rc_worldkies = getView().findViewById(R.id.rc_worldkies);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        // Inicializa las vistas dentro de onViewCreated
+        rc_worldkies = view.findViewById(R.id.rc_worldkies);
+        ib_addWorldkie = view.findViewById(R.id.ib_addWorldkie);
         db = FirebaseFirestore.getInstance();
         UID = auth.getCurrentUser().getUid();
         Toast.makeText(getContext(), UID, Toast.LENGTH_SHORT).show();
         worldkieModelArrayList = new ArrayList<>();
         CollectionReference dbWorldkies = db.collection("Worldkies");
-        dbWorldkies.whereEqualTo("UID_AUTHOR",UID).orderBy("last_update").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                if (!queryDocumentSnapshots.isEmpty()){
-                    for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
-                        StorageReference storageRef = storage.getReference().child(documentSnapshot.getString("UID"));
-                        final long ONE_MEGABYTE = 1024 * 1024;
-                        storageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                            @Override
-                            public void onSuccess(byte[] bytes) {
-                                Bitmap bitmap = BitmapUtils.convertCompressedByteArrayToBitmap(bytes);
-                                Drawable drawable = new BitmapDrawable(getResources(), bitmap);
-                                WorldkieModel worldkieModel = new WorldkieModel(documentSnapshot.getId(),documentSnapshot.getString("name"), drawable);
-                                worldkieModelArrayList.add(worldkieModel);
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {@Override
-                        public void onFailure(@NonNull Exception exception) {
-                            Toast.makeText(getContext(), "Error al cargar imagen", Toast.LENGTH_SHORT).show();
-                        }
-                        });
-                    }
-                } else if (queryDocumentSnapshots.isEmpty()) {
+        dbWorldkies.whereEqualTo("UID_AUTHOR", UID)
+                .orderBy("last_update")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if (!queryDocumentSnapshots.isEmpty()) {
+                            // Usamos un contador para asegurar que el RecyclerView se actualice solo después de cargar todas las imágenes
+                            final int totalDocuments = queryDocumentSnapshots.size();
+                            final int[] loadedDocuments = {0}; // Usamos un array para mantener la referencia en el bloque lambda
 
-                }
-            }
-        });
+                            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                                StorageReference storageRef = storage.getReference().child(documentSnapshot.getString("UID"));
+                                final long ONE_MEGABYTE = 1024 * 1024;
+
+                                storageRef.getBytes(ONE_MEGABYTE)
+                                        .addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                                            @Override
+                                            public void onSuccess(byte[] bytes) {
+                                                // Convierte el byte array a bitmap y lo asigna
+                                                Bitmap bitmap = BitmapUtils.convertCompressedByteArrayToBitmap(bytes);
+                                                Drawable drawable = new BitmapDrawable(getResources(), bitmap);
+
+                                                // Crear un nuevo WorldkieModel con los datos y agregarlo a la lista
+                                                WorldkieModel worldkieModel = new WorldkieModel(
+                                                        documentSnapshot.getId(),
+                                                        documentSnapshot.getString("name"),
+                                                        drawable
+                                                );
+                                                worldkieModelArrayList.add(worldkieModel);
+
+                                                // Aumentar el contador de documentos cargados
+                                                loadedDocuments[0]++;
+
+                                                // Verificar si todos los documentos se han cargado
+                                                if (loadedDocuments[0] == totalDocuments) {
+                                                    // Configurar el adaptador y el RecyclerView solo después de que todos los datos estén listos
+                                                    WorldkieAdapter worldkieAdapter = new WorldkieAdapter(worldkieModelArrayList, getContext());
+                                                    rc_worldkies.setAdapter(worldkieAdapter);
+                                                    rc_worldkies.setLayoutManager(new LinearLayoutManager(getContext()));
+                                                }
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception exception) {
+                                                Toast.makeText(getContext(), "Error al cargar imagen", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                            }
+                        } else {
+                            // Manejo en caso de que no haya datos
+                            Toast.makeText(getContext(), "No se encontraron elementos", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
         WorldkieAdapter worldkieAdapter = new WorldkieAdapter(worldkieModelArrayList, getContext());
         rc_worldkies.setAdapter(worldkieAdapter);
         rc_worldkies.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -123,12 +160,6 @@ public class Home extends Fragment {
 
             }
         });
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return view;
     }
 }
