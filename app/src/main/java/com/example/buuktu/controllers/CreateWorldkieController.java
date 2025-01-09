@@ -64,6 +64,8 @@ public class CreateWorldkieController implements View.OnClickListener {
                     //userRef.putBytes(data);
                 } else {
                     StorageReference userRef = storage.getReference().child(uid);
+                    Bitmap bitmap = ((BitmapDrawable) createWorldkie.getIB_profile_photo().getDrawable()).getBitmap();
+                    createWorldkie.getIB_profile_photo().setNam
                     userRef.child(createWorldkie.getImage().getLastPathSegment()).putFile(createWorldkie.getImage());
                 }
             }

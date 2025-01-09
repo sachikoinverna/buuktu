@@ -43,6 +43,8 @@ public class CreateWorldkie extends AppCompatActivity {
     int REQUEST_CODE = 1;
     ImageButton bt_chooseImage;
     ImageButton bt_deleteImageRegister;
+    ImageButton bt_cancel;
+    ImageButton bt_ok;
     TextInputEditText et_nameWorldkieCreate;
     FirebaseStorage storage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
     @Override
@@ -55,13 +57,18 @@ public class CreateWorldkie extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        bt_cancel = findViewById(R.id.bt_cancel_addWordlkie);
+        bt_ok = findViewById(R.id.bt_ok_addWordlkie);
         et_nameWorldkieCreate = findViewById(R.id.et_nameWorldkieCreate);
         bt_chooseImage = findViewById(R.id.ib_select_img_create_worldkie);
         bt_deleteImageRegister = findViewById(R.id.ib_delete_img_create_wordlkie);
         bt_deleteImageRegister.setVisibility(View.INVISIBLE);
         CreateWorldkieController createWorldkieController = new CreateWorldkieController(this);
-        //bt_chooseImage.setOnClickListener(createWorldkieController);
+        bt_cancel.setOnClickListener(createWorldkieController);
+        bt_ok.setOnClickListener(createWorldkieController);
+        bt_chooseImage.setOnClickListener(createWorldkieController);
         bt_deleteImageRegister.setOnClickListener(createWorldkieController);
+
         pickMedia =
                 registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
                     // Callback is invoked after the user selects a media item or closes the
