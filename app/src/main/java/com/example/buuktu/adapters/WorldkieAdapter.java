@@ -82,7 +82,7 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
             //String uri = "@drawable/" + dataSet.get(position).getPhoto();  // where myresource (without the extension) is the file
             //int imageResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
             //Drawable res =  context.getResources().getDrawable(imageResource);
-            holder.getIv_photo_wordlkie().setImageDrawable(dataSet.get(position).getPhoto());
+            //holder.getIv_photo_wordlkie().setImageDrawable(dataSet.get(position).getPhoto());
     }
 
 

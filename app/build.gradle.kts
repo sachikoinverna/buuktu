@@ -36,6 +36,7 @@ android {
 }
 
 dependencies {
+    implementation("com.google.android.material:material:1.3.0-alpha02")
     implementation("androidx.activity:activity:1.7.0")
     implementation(platform("com.google.firebase:firebase-bom:33.6.0"))
     implementation("com.google.firebase:firebase-storage")

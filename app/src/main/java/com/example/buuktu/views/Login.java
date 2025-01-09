@@ -32,8 +32,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 public class Login extends AppCompatActivity {
-    private TextInputEditText editTextEmailLogin;
-    private TextInputEditText editTextPasswordLogin;
+    private TextInputEditText editTextEmailLogin,editTextPasswordLogin;
     private FirebaseAuth auth;
     private FirebaseFirestore db;
     ImageButton ib_login;

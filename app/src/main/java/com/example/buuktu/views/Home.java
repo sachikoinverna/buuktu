@@ -1,5 +1,6 @@
 package com.example.buuktu.views;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -45,36 +46,15 @@ public class Home extends Fragment {
     ArrayList<WorldkieModel> worldkieModelArrayList;
     private FirebaseFirestore db;
     FirebaseStorage storage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
-    RecyclerView rc_worldkies;;
-    ImageButton ib_addWorldkie;;
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    RecyclerView rc_worldkies;
+    ImageButton ib_addWorldkie;
+    FloatingActionButton fb_parent,fb_add;
+    Boolean isAllFabsVisible;
     public Home() {
         // Required empty public constructor
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Home.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Home newInstance(String param1, String param2) {
+    public static Home newInstance() {
         Home fragment = new Home();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -88,6 +68,29 @@ public class Home extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         // Inicializa las vistas dentro de onViewCreated
+        fb_parent = view.findViewById(R.id.fb_parentWorldkies);
+        fb_add = view.findViewById(R.id.fb_addWorldkie);
+        fb_add.setVisibility(View.GONE);
+        isAllFabsVisible = false;
+        fb_parent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!isAllFabsVisible) {
+                    fb_add.setVisibility(View.VISIBLE);
+                    isAllFabsVisible = true;
+                } else {
+                    fb_add.setVisibility(View.GONE);
+                    isAllFabsVisible = false;
+                }
+            }
+        });
+        fb_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(), "Hola", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getContext(), CreateWorldkie.class);
+                startActivity(intent);
+            }});
         rc_worldkies = view.findViewById(R.id.rc_worldkies);
        //ib_addWorldkie = view.findViewById(R.id.ib_addWorldkie);
         db = FirebaseFirestore.getInstance();
@@ -119,12 +122,12 @@ public class Home extends Fragment {
                                                 Drawable drawable = new BitmapDrawable(getResources(), bitmap);
 
                                                 // Crear un nuevo WorldkieModel con los datos y agregarlo a la lista
-                                                WorldkieModel worldkieModel = new WorldkieModel(
+                                                /*WorldkieModel worldkieModel = new WorldkieModel(
                                                         documentSnapshot.getId(),
                                                         documentSnapshot.getString("name"),
                                                         drawable
-                                                );
-                                                worldkieModelArrayList.add(worldkieModel);
+                                                );*/
+                                               // worldkieModelArrayList.add(worldkieModel);
 
                                                 // Aumentar el contador de documentos cargados
                                                 loadedDocuments[0]++;
@@ -154,12 +157,12 @@ public class Home extends Fragment {
         WorldkieAdapter worldkieAdapter = new WorldkieAdapter(worldkieModelArrayList, getContext());
         rc_worldkies.setAdapter(worldkieAdapter);
         rc_worldkies.setLayoutManager(new LinearLayoutManager(getContext()));
-        ib_addWorldkie.setOnClickListener(new View.OnClickListener() {
+        /*ib_addWorldkie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
             }
-        });
+        });*/
         return view;
     }
 }
