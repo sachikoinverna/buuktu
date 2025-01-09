@@ -89,7 +89,7 @@ public class Home extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         // Inicializa las vistas dentro de onViewCreated
         rc_worldkies = view.findViewById(R.id.rc_worldkies);
-        ib_addWorldkie = view.findViewById(R.id.ib_addWorldkie);
+       //ib_addWorldkie = view.findViewById(R.id.ib_addWorldkie);
         db = FirebaseFirestore.getInstance();
         UID = auth.getCurrentUser().getUid();
         Toast.makeText(getContext(), UID, Toast.LENGTH_SHORT).show();

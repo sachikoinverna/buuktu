@@ -2,6 +2,7 @@ package com.example.buuktu.views;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        inicialize();
         // Configuración de la Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -106,8 +108,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }/* else if (item.getItemId() == R.id.nav_settings) {
             replaceFragment(new SettingsFragment());
         }*/ else if (item.getItemId() == R.id.nav_logout) {
-            firebaseAuth.removeAuthStateListener(authStateListener);
-            super.onDestroy();
+            firebaseAuth.signOut();
+            finishAffinity();
+            startActivity(new Intent(this, Login.class));
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

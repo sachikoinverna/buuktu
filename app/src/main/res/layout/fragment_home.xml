@@ -12,15 +12,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/ib_addWorldkie"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:contentDescription="hola"
-        app:layout_constraintStart_toEndOf="@+id/rc_worldkies"
-        app:layout_constraintTop_toBottomOf="@+id/rc_worldkies"
-        app:srcCompat="@drawable/add_button" />
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/add_button"
+        style="@style/customNormalFAB"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
