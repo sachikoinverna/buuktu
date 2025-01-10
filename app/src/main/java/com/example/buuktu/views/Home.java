@@ -67,102 +67,96 @@ public class Home extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        // Inicializa las vistas dentro de onViewCreated
+
+        // Inicializa las vistas
         fb_parent = view.findViewById(R.id.fb_parentWorldkies);
         fb_add = view.findViewById(R.id.fb_addWorldkie);
         fb_add.setVisibility(View.GONE);
         isAllFabsVisible = false;
-        fb_parent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!isAllFabsVisible) {
-                    fb_add.setVisibility(View.VISIBLE);
-                    isAllFabsVisible = true;
-                } else {
-                    fb_add.setVisibility(View.GONE);
-                    isAllFabsVisible = false;
-                }
+
+        fb_parent.setOnClickListener(view1 -> {
+            if (!isAllFabsVisible) {
+                fb_add.setVisibility(View.VISIBLE);
+                isAllFabsVisible = true;
+            } else {
+                fb_add.setVisibility(View.GONE);
+                isAllFabsVisible = false;
             }
         });
-        fb_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getContext(), "Hola", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getContext(), CreateWorldkie.class);
-                startActivity(intent);
-            }});
+
+        fb_add.setOnClickListener(view12 -> {
+            Toast.makeText(getContext(), "Hola", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getContext(), CreateWorldkie.class);
+            startActivity(intent);
+        });
+
         rc_worldkies = view.findViewById(R.id.rc_worldkies);
-       //ib_addWorldkie = view.findViewById(R.id.ib_addWorldkie);
+
         db = FirebaseFirestore.getInstance();
         UID = auth.getCurrentUser().getUid();
         Toast.makeText(getContext(), UID, Toast.LENGTH_SHORT).show();
         worldkieModelArrayList = new ArrayList<>();
+
         CollectionReference dbWorldkies = db.collection("Worldkies");
         dbWorldkies.whereEqualTo("UID_AUTHOR", UID)
                 .orderBy("last_update")
                 .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        if (!queryDocumentSnapshots.isEmpty()) {
-                            // Usamos un contador para asegurar que el RecyclerView se actualice solo después de cargar todas las imágenes
-                            final int totalDocuments = queryDocumentSnapshots.size();
-                            final int[] loadedDocuments = {0}; // Usamos un array para mantener la referencia en el bloque lambda
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        final int totalDocuments = queryDocumentSnapshots.size();
+                        final int[] loadedDocuments = {0};
 
-                            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                        for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                            if (documentSnapshot.getBoolean("photo_default")) {
+                                Drawable drawable = getResources().getDrawable(R.drawable.worldkie_default);
+                                WorldkieModel worldkieModel = new WorldkieModel(
+                                        documentSnapshot.getId(), documentSnapshot.getString("UID_AUTHOR"),
+                                        documentSnapshot.getString("name"),
+                                        drawable
+                                );
+                                worldkieModelArrayList.add(worldkieModel);
+
+                                // Aumentar el contador y verificar si todos los documentos están listos
+                                loadedDocuments[0]++;
+                                if (loadedDocuments[0] == totalDocuments) {
+                                    WorldkieAdapter worldkieAdapter = new WorldkieAdapter(worldkieModelArrayList, getContext());
+                                    rc_worldkies.setAdapter(worldkieAdapter);
+                                    rc_worldkies.setLayoutManager(new LinearLayoutManager(getContext()));
+                                }
+                            } else {
                                 StorageReference storageRef = storage.getReference().child(documentSnapshot.getString("UID"));
                                 final long ONE_MEGABYTE = 1024 * 1024;
 
                                 storageRef.getBytes(ONE_MEGABYTE)
-                                        .addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                                            @Override
-                                            public void onSuccess(byte[] bytes) {
-                                                // Convierte el byte array a bitmap y lo asigna
-                                                Bitmap bitmap = BitmapUtils.convertCompressedByteArrayToBitmap(bytes);
-                                                Drawable drawable = new BitmapDrawable(getResources(), bitmap);
+                                        .addOnSuccessListener(bytes -> {
+                                            Bitmap bitmap = BitmapUtils.convertCompressedByteArrayToBitmap(bytes);
+                                            Drawable drawable = new BitmapDrawable(getResources(), bitmap);
 
-                                                // Crear un nuevo WorldkieModel con los datos y agregarlo a la lista
-                                                /*WorldkieModel worldkieModel = new WorldkieModel(
-                                                        documentSnapshot.getId(),
-                                                        documentSnapshot.getString("name"),
-                                                        drawable
-                                                );*/
-                                               // worldkieModelArrayList.add(worldkieModel);
+                                            WorldkieModel worldkieModel = new WorldkieModel(
+                                                    documentSnapshot.getId(),
+                                                    documentSnapshot.getString("UID_AUTHOR"),
+                                                    documentSnapshot.getString("name"),
+                                                    drawable
+                                            );
+                                            worldkieModelArrayList.add(worldkieModel);
 
-                                                // Aumentar el contador de documentos cargados
-                                                loadedDocuments[0]++;
-
-                                                // Verificar si todos los documentos se han cargado
-                                                if (loadedDocuments[0] == totalDocuments) {
-                                                    // Configurar el adaptador y el RecyclerView solo después de que todos los datos estén listos
-                                                    WorldkieAdapter worldkieAdapter = new WorldkieAdapter(worldkieModelArrayList, getContext());
-                                                    rc_worldkies.setAdapter(worldkieAdapter);
-                                                    rc_worldkies.setLayoutManager(new LinearLayoutManager(getContext()));
-                                                }
+                                            // Aumentar el contador y verificar si todos los documentos están listos
+                                            loadedDocuments[0]++;
+                                            if (loadedDocuments[0] == totalDocuments) {
+                                                WorldkieAdapter worldkieAdapter = new WorldkieAdapter(worldkieModelArrayList, getContext());
+                                                rc_worldkies.setAdapter(worldkieAdapter);
+                                                rc_worldkies.setLayoutManager(new LinearLayoutManager(getContext()));
                                             }
                                         })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception exception) {
-                                                Toast.makeText(getContext(), "Error al cargar imagen", Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
+                                        .addOnFailureListener(exception ->
+                                                Toast.makeText(getContext(), "Error al cargar imagen", Toast.LENGTH_SHORT).show()
+                                        );
                             }
-                        } else {
-                            // Manejo en caso de que no haya datos
-                            Toast.makeText(getContext(), "No se encontraron elementos", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-        WorldkieAdapter worldkieAdapter = new WorldkieAdapter(worldkieModelArrayList, getContext());
-        rc_worldkies.setAdapter(worldkieAdapter);
-        rc_worldkies.setLayoutManager(new LinearLayoutManager(getContext()));
-        /*ib_addWorldkie.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-            }
-        });*/
         return view;
     }
+
 }
