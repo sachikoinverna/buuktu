@@ -28,6 +28,8 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CreateWorldkieController implements View.OnClickListener {
     private final CreateWorldkie createWorldkie;
@@ -38,6 +40,7 @@ public class CreateWorldkieController implements View.OnClickListener {
         this.createWorldkie = createWorldkie;
         this.firebaseAuth = FirebaseAuth.getInstance();
         this.db = FirebaseFirestore.getInstance();
+        createWorldkie.getIB_profile_photo().setTag(R.drawable.worldkie_default, true);
     }
     private void putDefaultImage(){
         createWorldkie.getIB_profile_photo().setImageResource(R.mipmap.default_icon);
@@ -47,8 +50,15 @@ public class CreateWorldkieController implements View.OnClickListener {
     }
     private void addDataToFirestore() {
         CollectionReference dbWorldkies = db.collection("Worldkies");
-        WorldkieModel worldkieModel = new WorldkieModel(firebaseAuth.getUid(), createWorldkie.getEt_nameWorldkieCreate().getText().toString());
-        dbWorldkies.add(worldkieModel).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        Date creation_date = new Date();
+        Map<String, Object> worldkieData = new HashMap<>();
+        worldkieData.put("UID_AUTHOR", firebaseAuth.getUid());
+        worldkieData.put("name", createWorldkie.getEt_nameWorldkieCreate().getText().toString()); // Corrección clave
+        worldkieData.put("creation_date", creation_date);
+        worldkieData.put("last_update", creation_date);
+        boolean isDefaultImage = (boolean) createWorldkie.getIB_profile_photo().getTag(R.drawable.worldkie_default);
+        worldkieData.put("photo_default", isDefaultImage);
+        dbWorldkies.add(worldkieData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
                 String uid = documentReference.getId();

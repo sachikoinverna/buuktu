@@ -14,11 +14,11 @@ public class WorldkieModel {
     private Date creation_date;
     private Date last_update;
     private Drawable photo;
-
+    private boolean photo_default;
     public WorldkieModel() {
     }
 
-    public WorldkieModel(String UID, String UID_AUTHOR, String name, Date creation_date, Date last_update, Drawable photo) {
+    public WorldkieModel(String UID, String UID_AUTHOR, String name, Date creation_date, Date last_update) {
         this.UID = UID;
         this.UID_AUTHOR = UID_AUTHOR;
         this.name = name;
@@ -26,29 +26,23 @@ public class WorldkieModel {
         this.last_update = last_update;
     }
     public WorldkieModel(String UID_AUTHOR, String name) {
-        this.UID =UID;
         this.UID_AUTHOR = UID_AUTHOR;
         this.name = name;
         this.creation_date = new Date();
         this.last_update = creation_date;
     }
-    public WorldkieModel(String UID_AUTHOR, String name, Drawable photo) {
-        this.UID =UID;
+    public WorldkieModel(String UID,String UID_AUTHOR, String name, Drawable photo) {
+        this.UID = UID;
         this.UID_AUTHOR = UID_AUTHOR;
         this.name = name;
-        this.creation_date = new Date();
-        this.last_update = creation_date;
         this.photo = photo;
     }
-    // Evita que el campo sea serializado al guardar los datos en Firebase Realtime Database
-    @Exclude
     public Drawable getPhoto() {
         return photo;
     }
     public void setPhoto(Drawable photo) {
         this.photo = photo;
     }
-    @Exclude
     public String getUID() {
         return UID;
     }
