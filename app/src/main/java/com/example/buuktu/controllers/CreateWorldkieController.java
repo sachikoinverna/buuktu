@@ -3,6 +3,7 @@ package com.example.buuktu.controllers;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -99,6 +100,12 @@ public class CreateWorldkieController implements View.OnClickListener {
                         }
                     });
                 }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+               /* Log.e("Error", e.getMessage().toString());
+                Toast.makeText(createWorldkie, e.getMessage().toString(), Toast.LENGTH_LONG).show();*/
             }
         });
     }

@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -157,7 +158,8 @@ public class Home extends Fragment {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getContext(),e.getMessage().toString(),Toast.LENGTH_SHORT).show();
+                        Log.e("Error", e.getMessage().toString());
+                        Toast.makeText(getContext(), e.getMessage().toString(), Toast.LENGTH_LONG).show();
                     }
                 });
 
