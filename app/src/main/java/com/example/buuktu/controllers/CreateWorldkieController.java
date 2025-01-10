@@ -2,10 +2,12 @@ package com.example.buuktu.controllers;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 
 import com.example.buuktu.R;
 import com.example.buuktu.models.UserModel;
@@ -75,8 +77,14 @@ public class CreateWorldkieController implements View.OnClickListener {
                     //userRef.putBytes(data);
                 } else {
                     StorageReference userRef = storage.getReference().child(uid);
-                    Bitmap bitmap = ((BitmapDrawable) createWorldkie.getIB_profile_photo().getDrawable()).getBitmap();
-                   // createWorldkie.getIB_profile_photo().setNam
+                    Drawable drawable = createWorldkie.getIB_profile_photo().getDrawable();
+                    Bitmap bitmap = null;
+
+                    if (drawable instanceof BitmapDrawable) {
+                        bitmap = ((BitmapDrawable) drawable).getBitmap();
+                    } else if (drawable instanceof RoundedBitmapDrawable) {
+                        bitmap = ((RoundedBitmapDrawable) drawable).getBitmap();
+                    }// createWorldkie.getIB_profile_photo().setNam
                     userRef.child(uid+createWorldkie.getImage().getLastPathSegment());
                     UploadTask uploadTask = userRef.putFile(createWorldkie.getImage());
                     uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
