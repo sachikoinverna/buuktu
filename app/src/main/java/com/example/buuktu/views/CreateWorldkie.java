@@ -1,5 +1,7 @@
 package com.example.buuktu.views;
 
+import static android.widget.Toast.LENGTH_LONG;
+
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,11 +16,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -31,7 +35,11 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.buuktu.R;
 import com.example.buuktu.controllers.CreateWorldkieController;
 import com.example.buuktu.models.WorldkieModel;
+import com.example.buuktu.utils.BitmapUtils;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.storage.FirebaseStorage;
@@ -52,6 +60,7 @@ public class CreateWorldkie extends AppCompatActivity {
     TextInputEditText et_nameWorldkieCreate;
     FirebaseStorage storage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
     boolean create = getIntent().getBooleanExtra("create",true);
+    WorldkieModel worldkieModel = getIntent().getSerializableExtra("worldkie") != null ? (WorldkieModel) getIntent().getSerializableExtra("worldkie") : null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,12 +77,16 @@ public class CreateWorldkie extends AppCompatActivity {
         bt_chooseImage = findViewById(R.id.ib_select_img_create_worldkie);
         bt_deleteImageRegister = findViewById(R.id.ib_delete_img_create_wordlkie);
         bt_deleteImageRegister.setVisibility(View.INVISIBLE);
-      //  CreateWorldkieController createWorldkieController = new CreateWorldkieController(this);
-     /*   bt_cancel.setOnClickListener(createWorldkieController);
+        CreateWorldkieController createWorldkieController=null;
+        if(create){
+             new CreateWorldkieController(this,create);
+        } else {
+              new CreateWorldkieController(this,create,worldkieModel);
+        }
+        bt_cancel.setOnClickListener(createWorldkieController);
         bt_ok.setOnClickListener(createWorldkieController);
         bt_deleteImageRegister.setOnClickListener(createWorldkieController);
-*/
-      /*  pickMedia =
+        pickMedia =
                 registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
                     if (uri != null) {
                         //registerController.setUri(uri);
@@ -84,10 +97,10 @@ public class CreateWorldkie extends AppCompatActivity {
                             Bitmap bitmap = ImageDecoder.decodeBitmap(image1);
                             Bitmap bitmap1 = Bitmap.createScaledBitmap(bitmap, 640, 640, false);
                             bt_chooseImage.setImageBitmap(bitmap1);
-                            personalizarImagen(bitmap1);*/
-                            /*StorageReference userRef = storage.getReference().child("ujlDPggHwenVJNQcUSqO");
-                            userRef.child(image.getLastPathSegment()).putFile(image);*/
-                         /*   bt_deleteImageRegister.setVisibility(View.VISIBLE);
+                            personalizarImagen(bitmap1);
+                            StorageReference userRef = storage.getReference().child("ujlDPggHwenVJNQcUSqO");
+                            userRef.child(image.getLastPathSegment()).putFile(image);
+                            bt_deleteImageRegister.setVisibility(View.VISIBLE);
 
                         } catch (IOException e) {
                             throw new RuntimeException(e);
@@ -97,27 +110,14 @@ public class CreateWorldkie extends AppCompatActivity {
                     } else {
                         Log.d("PhotoPicker", "No media selected");
                     }
-                });*/
-        if (create){
-            createMode();
-        }else {
-           // editarMode();
-        }
+                });
     }
-    public void createMode(){
-        getEt_nameWorldkieCreate().setText("");
-       // putDefaultImage();
-    }
-   /* public void editarMode(WorldkieModel worldkieModel){
-        create=false;
-        createWorldkie.getEt_nameWorldkieCreate().setText(worldkieModel.getName());
-    }*/
-   /* private void putDefaultImage(){
+    private void putDefaultImage(){
         getIB_profile_photo().setImageResource(R.mipmap.default_icon);
-        Bitmap bitmap = ((BitmapDrawable) createWorldkie.getIB_profile_photo().getDrawable()).getBitmap();
+        Bitmap bitmap = ((BitmapDrawable) getIB_profile_photo().getDrawable()).getBitmap();
         personalizarImagen(bitmap);
         getBt_deleteImageRegister().setVisibility(View.INVISIBLE);
-    }*/
+    }
     public TextInputEditText getEt_nameWorldkieCreate(){
         return et_nameWorldkieCreate;
     }

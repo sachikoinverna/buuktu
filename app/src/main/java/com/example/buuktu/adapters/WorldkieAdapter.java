@@ -19,6 +19,12 @@ import com.example.buuktu.controllers.HomeController;
 import com.example.buuktu.controllers.WorldkieAdapterController;
 import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.views.CreateWorldkie;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 
@@ -38,6 +44,9 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
         private ImageButton ib_enterToAWorldkie ;
         private ImageButton ib_editAWorldkie;
         private ImageButton ib_deleteAWorldkie;
+        private FirebaseStorage firebaseStorage;
+        private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        ;
         public ViewHolder(View view) {
             super(view);
             tv_name_wordlkie = view.findViewById(R.id.tv_name_wordlkie);
@@ -45,6 +54,13 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
             ib_enterToAWorldkie= view.findViewById(R.id.ib_enterToAWorldkie);
             ib_editAWorldkie = view.findViewById(R.id.ib_editAWorldkie);
             ib_deleteAWorldkie = view.findViewById(R.id.ib_deleteAWorldkie);
+        }
+
+        public FirebaseStorage getFirebaseStorage() {
+            return firebaseStorage;
+        }
+        public FirebaseFirestore getDb() {
+            return firestore;
         }
 
         public ImageButton getIb_enterToAWorldkie() {
@@ -98,14 +114,27 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
             holder.getIb_editAWorldkie().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    /*Intent intent = new Intent(a, CreateWorldkie.class);
-                    intent*/
+                    Intent intent = new Intent(holder.itemView.getContext(), CreateWorldkie.class);
+                    intent.putExtra("create",false);
+                    intent.putExtra("worldkie",dataSet.get(position));
+                    holder.itemView.getContext().startActivity(intent);
                 }
             });
             holder.getIb_deleteAWorldkie().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    CollectionReference collectionReference = holder.getDb().collection("Worldkies");
+                    collectionReference.whereEqualTo("UID",dataSet.get(position).getUID()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                        }
+                    });
                 }
             });
             //De esra forma establacemos las imagenes de la lista

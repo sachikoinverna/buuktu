@@ -5,9 +5,10 @@ import android.graphics.drawable.Drawable;
 
 import com.google.firebase.database.Exclude;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class WorldkieModel {
+public class WorldkieModel implements Serializable {
     private String UID;
     private String UID_AUTHOR;
     private String name;
@@ -81,5 +82,11 @@ public class WorldkieModel {
 
     public void setLast_update(Date last_update) {
         this.last_update = last_update;
+    }
+    public boolean isPhoto_default() {
+        return photo_default;
+    }
+    public void setPhoto_default(boolean photo_default) {
+        this.photo_default = photo_default;
     }
 }

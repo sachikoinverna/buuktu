@@ -1,6 +1,7 @@
 package com.example.buuktu.controllers;
 
 import static android.content.Intent.getIntent;
+import static android.widget.Toast.LENGTH_LONG;
 
 import static androidx.core.content.ContextCompat.startActivity;
 
@@ -18,6 +19,7 @@ import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import com.example.buuktu.R;
 import com.example.buuktu.models.UserModel;
 import com.example.buuktu.models.WorldkieModel;
+import com.example.buuktu.utils.BitmapUtils;
 import com.example.buuktu.views.CreateWorldkie;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -27,6 +29,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -45,19 +48,47 @@ public class CreateWorldkieController implements View.OnClickListener {
     private FirebaseAuth firebaseAuth;
     private FirebaseStorage storage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
     private boolean create;
-    public CreateWorldkieController(CreateWorldkie createWorldkie, boolean create) {
+    private WorldkieModel worldkieModel;
+    public CreateWorldkieController(CreateWorldkie createWorldkie,boolean create){
         this.createWorldkie = createWorldkie;
         this.firebaseAuth = FirebaseAuth.getInstance();
         this.db = FirebaseFirestore.getInstance();
-        createWorldkie.getIB_profile_photo().setTag(R.drawable.worldkie_default, true);
         this.create=create;
-       /* if(create){
-            createMode();
-        } else {
-            editarMode();
-        }*/
+        createMode();
     }
-
+    public CreateWorldkieController(CreateWorldkie createWorldkie, boolean create, WorldkieModel worldkieModel) {
+        this.createWorldkie = createWorldkie;
+        this.firebaseAuth = FirebaseAuth.getInstance();
+        this.db = FirebaseFirestore.getInstance();
+        this.create=create;
+        this.worldkieModel=worldkieModel;
+        editarMode(worldkieModel);
+    }
+    public void createMode(){
+        createWorldkie.getEt_nameWorldkieCreate().setText("");
+        putDefaultImage();
+    }
+    public void editarMode(WorldkieModel worldkieModel){
+        create=false;
+        createWorldkie.getEt_nameWorldkieCreate().setText(worldkieModel.getName());
+        obtenerImagen();
+    }
+    private void obtenerImagen(){
+        if (worldkieModel.isPhoto_default()) {
+            Drawable drawable = createWorldkie.getResources().getDrawable(R.drawable.worldkie_default);
+            createWorldkie.getIB_profile_photo().setImageDrawable(drawable);
+        } else {
+            StorageReference storageRef = storage.getReference().child(worldkieModel.getUID());
+            final long ONE_MEGABYTE = 1024 * 1024;
+            storageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(bytes -> {
+                Bitmap bitmap = BitmapUtils.convertCompressedByteArrayToBitmap(bytes);
+                Drawable drawable = new BitmapDrawable(createWorldkie.getResources(), bitmap);
+                createWorldkie.getIB_profile_photo().setImageDrawable(drawable);
+            }).addOnFailureListener(exception ->
+                            Toast.makeText(createWorldkie, "Error al cargar imagen", Toast.LENGTH_SHORT).show()
+                                        );
+                            }
+    }
     private void putDefaultImage(){
         createWorldkie.getIB_profile_photo().setImageResource(R.mipmap.default_icon);
         Bitmap bitmap = ((BitmapDrawable) createWorldkie.getIB_profile_photo().getDrawable()).getBitmap();
