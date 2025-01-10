@@ -46,6 +46,34 @@
                     android:layout_weight="1"
                     android:textSize="20sp" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/ib_enterToAWorldkie"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        card_view:srcCompat="@drawable/outline_person_24" />
+
+                    <ImageButton
+                        android:id="@+id/ib_editAWorldkie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        card_view:srcCompat="@android:drawable/sym_call_outgoing" />
+
+                    <ImageButton
+                        android:id="@+id/ib_deleteAWorldkie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        card_view:srcCompat="@drawable/outline_password_24" />
+                </LinearLayout>
+
 
             </LinearLayout>
 

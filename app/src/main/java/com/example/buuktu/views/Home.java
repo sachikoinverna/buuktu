@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.buuktu.R;
 import com.example.buuktu.adapters.WorldkieAdapter;
+import com.example.buuktu.controllers.HomeController;
 import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.utils.BitmapUtils;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -50,7 +51,7 @@ public class Home extends Fragment {
     private FirebaseFirestore db;
     FirebaseStorage storage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
     RecyclerView rc_worldkies;
-    ImageButton ib_addWorldkie;
+    ImageButton ib_addWorldkie,ib_enterToAWorldkie;
     FloatingActionButton fb_parent, fb_add;
     Boolean isAllFabsVisible;
 
