@@ -154,6 +154,11 @@ public class Home extends Fragment {
                             }
                         }
                     }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(),e.getMessage().toString(),Toast.LENGTH_SHORT).show();
+                    }
                 });
 
         return view;
