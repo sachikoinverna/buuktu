@@ -44,12 +44,20 @@ public class CreateWorldkieController implements View.OnClickListener {
     private FirebaseFirestore db;
     private FirebaseAuth firebaseAuth;
     private FirebaseStorage storage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
-    public CreateWorldkieController(CreateWorldkie createWorldkie) {
+    private boolean create;
+    public CreateWorldkieController(CreateWorldkie createWorldkie, boolean create) {
         this.createWorldkie = createWorldkie;
         this.firebaseAuth = FirebaseAuth.getInstance();
         this.db = FirebaseFirestore.getInstance();
         createWorldkie.getIB_profile_photo().setTag(R.drawable.worldkie_default, true);
+        this.create=create;
+       /* if(create){
+            createMode();
+        } else {
+            editarMode();
+        }*/
     }
+
     private void putDefaultImage(){
         createWorldkie.getIB_profile_photo().setImageResource(R.mipmap.default_icon);
         Bitmap bitmap = ((BitmapDrawable) createWorldkie.getIB_profile_photo().getDrawable()).getBitmap();
@@ -112,6 +120,7 @@ public class CreateWorldkieController implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+
         if (view.getId() == R.id.ib_delete_img_create_wordlkie){
             putDefaultImage();
         } else if (view.getId()==R.id.bt_ok_addWordlkie) {

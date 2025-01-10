@@ -93,6 +93,7 @@ public class Home extends Fragment {
         fb_add.setOnClickListener(view12 -> {
             Toast.makeText(getContext(), "Hola", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(getContext(), CreateWorldkie.class);
+            intent.putExtra("create",true);
             startActivity(intent);
         });
 

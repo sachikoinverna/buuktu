@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.ImageDecoder;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -29,6 +30,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.buuktu.R;
 import com.example.buuktu.controllers.CreateWorldkieController;
+import com.example.buuktu.models.WorldkieModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
@@ -49,6 +51,7 @@ public class CreateWorldkie extends AppCompatActivity {
     ImageButton bt_ok;
     TextInputEditText et_nameWorldkieCreate;
     FirebaseStorage storage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
+    boolean create = getIntent().getBooleanExtra("create",true);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,15 +68,13 @@ public class CreateWorldkie extends AppCompatActivity {
         bt_chooseImage = findViewById(R.id.ib_select_img_create_worldkie);
         bt_deleteImageRegister = findViewById(R.id.ib_delete_img_create_wordlkie);
         bt_deleteImageRegister.setVisibility(View.INVISIBLE);
-        CreateWorldkieController createWorldkieController = new CreateWorldkieController(this);
-        bt_cancel.setOnClickListener(createWorldkieController);
+      //  CreateWorldkieController createWorldkieController = new CreateWorldkieController(this);
+     /*   bt_cancel.setOnClickListener(createWorldkieController);
         bt_ok.setOnClickListener(createWorldkieController);
         bt_deleteImageRegister.setOnClickListener(createWorldkieController);
-
-        pickMedia =
+*/
+      /*  pickMedia =
                 registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
-                    // Callback is invoked after the user selects a media item or closes the
-                    // photo picker.
                     if (uri != null) {
                         //registerController.setUri(uri);
                         image = uri;
@@ -83,10 +84,10 @@ public class CreateWorldkie extends AppCompatActivity {
                             Bitmap bitmap = ImageDecoder.decodeBitmap(image1);
                             Bitmap bitmap1 = Bitmap.createScaledBitmap(bitmap, 640, 640, false);
                             bt_chooseImage.setImageBitmap(bitmap1);
-                            personalizarImagen(bitmap1);
+                            personalizarImagen(bitmap1);*/
                             /*StorageReference userRef = storage.getReference().child("ujlDPggHwenVJNQcUSqO");
                             userRef.child(image.getLastPathSegment()).putFile(image);*/
-                            bt_deleteImageRegister.setVisibility(View.VISIBLE);
+                         /*   bt_deleteImageRegister.setVisibility(View.VISIBLE);
 
                         } catch (IOException e) {
                             throw new RuntimeException(e);
@@ -96,8 +97,27 @@ public class CreateWorldkie extends AppCompatActivity {
                     } else {
                         Log.d("PhotoPicker", "No media selected");
                     }
-                });
+                });*/
+        if (create){
+            createMode();
+        }else {
+           // editarMode();
+        }
     }
+    public void createMode(){
+        getEt_nameWorldkieCreate().setText("");
+       // putDefaultImage();
+    }
+   /* public void editarMode(WorldkieModel worldkieModel){
+        create=false;
+        createWorldkie.getEt_nameWorldkieCreate().setText(worldkieModel.getName());
+    }*/
+   /* private void putDefaultImage(){
+        getIB_profile_photo().setImageResource(R.mipmap.default_icon);
+        Bitmap bitmap = ((BitmapDrawable) createWorldkie.getIB_profile_photo().getDrawable()).getBitmap();
+        personalizarImagen(bitmap);
+        getBt_deleteImageRegister().setVisibility(View.INVISIBLE);
+    }*/
     public TextInputEditText getEt_nameWorldkieCreate(){
         return et_nameWorldkieCreate;
     }

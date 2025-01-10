@@ -1,6 +1,7 @@
 package com.example.buuktu.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import com.example.buuktu.R;
 import com.example.buuktu.controllers.HomeController;
 import com.example.buuktu.controllers.WorldkieAdapterController;
 import com.example.buuktu.models.WorldkieModel;
+import com.example.buuktu.views.CreateWorldkie;
 
 import java.util.ArrayList;
 
@@ -34,14 +36,14 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
         private final TextView tv_name_wordlkie;
         private ImageView iv_photo_wordlkie;
         private ImageButton ib_enterToAWorldkie ;
-        private ImageButton ib_select_img_create_worldkie;
+        private ImageButton ib_editAWorldkie;
         private ImageButton ib_deleteAWorldkie;
         public ViewHolder(View view) {
             super(view);
             tv_name_wordlkie = view.findViewById(R.id.tv_name_wordlkie);
             iv_photo_wordlkie =  view.findViewById(R.id.iv_photo_wordlkie);
             ib_enterToAWorldkie= view.findViewById(R.id.ib_enterToAWorldkie);
-            ib_select_img_create_worldkie = view.findViewById(R.id.ib_select_img_create_worldkie);
+            ib_editAWorldkie = view.findViewById(R.id.ib_editAWorldkie);
             ib_deleteAWorldkie = view.findViewById(R.id.ib_deleteAWorldkie);
         }
 
@@ -49,8 +51,8 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
             return ib_enterToAWorldkie;
         }
 
-        public ImageButton getIb_select_img_create_worldkie() {
-            return ib_select_img_create_worldkie;
+        public ImageButton getIb_editAWorldkie() {
+            return ib_editAWorldkie;
         }
 
         public ImageButton getIb_deleteAWorldkie() {
@@ -86,7 +88,26 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull WorldkieAdapter.ViewHolder holder, int position) {
             holder.getTv_name_wordkie().setText(dataSet.get(position).getName());
+            holder.getIb_enterToAWorldkie().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Intent intent = new Intent(getClass(),);
+                    //getClass()
+                }
+            });
+            holder.getIb_editAWorldkie().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    /*Intent intent = new Intent(a, CreateWorldkie.class);
+                    intent*/
+                }
+            });
+            holder.getIb_deleteAWorldkie().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
+                }
+            });
             //De esra forma establacemos las imagenes de la lista
             //String uri = "@drawable/" + dataSet.get(position).getPhoto();  // where myresource (without the extension) is the file
             //int imageResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
