@@ -22,6 +22,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -66,7 +67,19 @@ public class CreateWorldkieController implements View.OnClickListener {
                     StorageReference userRef = storage.getReference().child(uid);
                     Bitmap bitmap = ((BitmapDrawable) createWorldkie.getIB_profile_photo().getDrawable()).getBitmap();
                    // createWorldkie.getIB_profile_photo().setNam
-                    userRef.child(createWorldkie.getImage().getLastPathSegment()).putFile(createWorldkie.getImage());
+                    userRef.child(uid+createWorldkie.getImage().getLastPathSegment());
+                    UploadTask uploadTask = userRef.putFile(createWorldkie.getImage());
+                    uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Toast.makeText(createWorldkie, "Subida exitosa",Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(createWorldkie,"Subida fallida",Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }
         });

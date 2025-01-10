@@ -66,7 +66,6 @@ public class CreateWorldkie extends AppCompatActivity {
         CreateWorldkieController createWorldkieController = new CreateWorldkieController(this);
         bt_cancel.setOnClickListener(createWorldkieController);
         bt_ok.setOnClickListener(createWorldkieController);
-        bt_chooseImage.setOnClickListener(createWorldkieController);
         bt_deleteImageRegister.setOnClickListener(createWorldkieController);
 
         pickMedia =
@@ -83,8 +82,8 @@ public class CreateWorldkie extends AppCompatActivity {
                             Bitmap bitmap1 = Bitmap.createScaledBitmap(bitmap, 640, 640, false);
                             bt_chooseImage.setImageBitmap(bitmap1);
                             personalizarImagen(bitmap1);
-                            StorageReference userRef = storage.getReference().child("ujlDPggHwenVJNQcUSqO");
-                            userRef.child(image.getLastPathSegment()).putFile(image);
+                            /*StorageReference userRef = storage.getReference().child("ujlDPggHwenVJNQcUSqO");
+                            userRef.child(image.getLastPathSegment()).putFile(image);*/
                             bt_deleteImageRegister.setVisibility(View.VISIBLE);
 
                         } catch (IOException e) {
@@ -124,9 +123,6 @@ public class CreateWorldkie extends AppCompatActivity {
         pickMedia.launch(new PickVisualMediaRequest.Builder()
                 .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
                 .build());
-
-
-
     }
     public void personalizarImagen(Bitmap bitmap){
         //Canvas canvas = new Canvas(circularBitmap);
