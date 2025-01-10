@@ -1,5 +1,10 @@
 package com.example.buuktu.controllers;
 
+import static android.content.Intent.getIntent;
+
+import static androidx.core.content.ContextCompat.startActivity;
+
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -59,24 +64,14 @@ public class CreateWorldkieController implements View.OnClickListener {
         worldkieData.put("name", createWorldkie.getEt_nameWorldkieCreate().getText().toString()); // Corrección clave
         worldkieData.put("creation_date", creation_date);
         worldkieData.put("last_update", creation_date);
-        boolean isDefaultImage = (boolean) createWorldkie.getIB_profile_photo().getTag(R.drawable.worldkie_default);
-        worldkieData.put("photo_default", isDefaultImage);
+        //boolean isDefaultImage = (boolean) createWorldkie.getIB_profile_photo().getTag(R.drawable.worldkie_default);
+        worldkieData.put("photo_default", createWorldkie.getIB_profile_photo().getDrawable().equals(R.drawable.worldkie_default));
         dbWorldkies.add(worldkieData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
                 String uid = documentReference.getId();
                 Toast.makeText(createWorldkie, "Your Course has been added to Firebase Firestore", Toast.LENGTH_SHORT).show();
-                if (createWorldkie.getIB_profile_photo().getDrawable().equals(R.mipmap.default_icon)) {
-                    // StorageReference userRef = storage.getReference().child("ajYrQVbzQAdW7mgjIF3fxNJsIjF3");
-                    //register.getIB_profile_photo().setDrawingCacheEnabled(true);
-                    //register.getIB_profile_photo().buildDrawingCache();
-                    //Bitmap bitmap = ((BitmapDrawable) register.getIB_profile_photo().getDrawable()).getBitmap();
-                    // ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    //bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                    //byte[] data = baos.toByteArray();
-                    //Uri file = Uri.fromFile(new File(String.valueOf(R.mipmap.default_icon)));
-                    //userRef.putBytes(data);
-                } else {
+                if (!createWorldkie.getIB_profile_photo().getDrawable().equals(R.drawable.worldkie_default)) {
                     StorageReference userRef = storage.getReference().child(uid);
                     Drawable drawable = createWorldkie.getIB_profile_photo().getDrawable();
                     Bitmap bitmap = null;
@@ -92,6 +87,11 @@ public class CreateWorldkieController implements View.OnClickListener {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             Toast.makeText(createWorldkie, "Subida exitosa",Toast.LENGTH_SHORT).show();
+                           /* createWorldkie.getParentActivityIntent().
+                            Intent intent = getIntent(createWorldkie,);
+                            createWorldkie.finish();
+                            finish();
+                            startActivity(intent);*/
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override

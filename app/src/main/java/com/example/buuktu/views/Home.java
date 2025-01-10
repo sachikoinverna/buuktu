@@ -1,5 +1,7 @@
 package com.example.buuktu.views;
 
+import static android.widget.Toast.LENGTH_LONG;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -49,11 +51,13 @@ public class Home extends Fragment {
     FirebaseStorage storage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
     RecyclerView rc_worldkies;
     ImageButton ib_addWorldkie;
-    FloatingActionButton fb_parent,fb_add;
+    FloatingActionButton fb_parent, fb_add;
     Boolean isAllFabsVisible;
+
     public Home() {
         // Required empty public constructor
     }
+
     public static Home newInstance() {
         Home fragment = new Home();
         return fragment;
@@ -105,7 +109,6 @@ public class Home extends Fragment {
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     if (!queryDocumentSnapshots.isEmpty()) {
                         final int totalDocuments = queryDocumentSnapshots.size();
-                        final int[] loadedDocuments = {0};
 
                         for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
                             if (documentSnapshot.getBoolean("photo_default")) {
@@ -116,16 +119,9 @@ public class Home extends Fragment {
                                         drawable
                                 );
                                 worldkieModelArrayList.add(worldkieModel);
-
-                                // Aumentar el contador y verificar si todos los documentos están listos
-                                loadedDocuments[0]++;
-                                if (loadedDocuments[0] == totalDocuments) {
-                                    WorldkieAdapter worldkieAdapter = new WorldkieAdapter(worldkieModelArrayList, getContext());
-                                    rc_worldkies.setAdapter(worldkieAdapter);
-                                    rc_worldkies.setLayoutManager(new LinearLayoutManager(getContext()));
-                                }
+                                updateRecyclerView(worldkieModelArrayList); // Call after processing each document (default image)
                             } else {
-                                StorageReference storageRef = storage.getReference().child(documentSnapshot.getString("UID"));
+                                StorageReference storageRef = storage.getReference().child(documentSnapshot.getId());
                                 final long ONE_MEGABYTE = 1024 * 1024;
 
                                 storageRef.getBytes(ONE_MEGABYTE)
@@ -140,14 +136,7 @@ public class Home extends Fragment {
                                                     drawable
                                             );
                                             worldkieModelArrayList.add(worldkieModel);
-
-                                            // Aumentar el contador y verificar si todos los documentos están listos
-                                            loadedDocuments[0]++;
-                                            if (loadedDocuments[0] == totalDocuments) {
-                                                WorldkieAdapter worldkieAdapter = new WorldkieAdapter(worldkieModelArrayList, getContext());
-                                                rc_worldkies.setAdapter(worldkieAdapter);
-                                                rc_worldkies.setLayoutManager(new LinearLayoutManager(getContext()));
-                                            }
+                                            updateRecyclerView(worldkieModelArrayList); // Call after processing each document (custom image)
                                         })
                                         .addOnFailureListener(exception ->
                                                 Toast.makeText(getContext(), "Error al cargar imagen", Toast.LENGTH_SHORT).show()
@@ -159,11 +148,17 @@ public class Home extends Fragment {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.e("Error", e.getMessage().toString());
-                        Toast.makeText(getContext(), e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), e.getMessage().toString(), LENGTH_LONG).show();
                     }
                 });
-
         return view;
     }
+
+// Helper method to update the RecyclerView
+        private void updateRecyclerView(ArrayList<WorldkieModel> worldkieModelArrayList) {
+            WorldkieAdapter worldkieAdapter = new WorldkieAdapter(worldkieModelArrayList, getContext());
+            rc_worldkies.setAdapter(worldkieAdapter);
+            rc_worldkies.setLayoutManager(new LinearLayoutManager(getContext()));
+        }
 
 }
