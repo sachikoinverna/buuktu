@@ -44,9 +44,8 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
         private ImageButton ib_enterToAWorldkie ;
         private ImageButton ib_editAWorldkie;
         private ImageButton ib_deleteAWorldkie;
-        private FirebaseStorage firebaseStorage;
+        private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
         private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-        ;
         public ViewHolder(View view) {
             super(view);
             tv_name_wordlkie = view.findViewById(R.id.tv_name_wordlkie);
@@ -103,7 +102,7 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull WorldkieAdapter.ViewHolder holder, int position) {
-            holder.getTv_name_wordkie().setText(dataSet.get(position).getName());
+            holder.getTv_name_wordkie().setText(dataSet.get(holder.getAdapterPosition()).getName());
             holder.getIb_enterToAWorldkie().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -116,32 +115,41 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
                 public void onClick(View v) {
                     Intent intent = new Intent(holder.itemView.getContext(), CreateWorldkie.class);
                     intent.putExtra("create",false);
-                    intent.putExtra("worldkie",dataSet.get(position));
+                    intent.putExtra("worldkie",new WorldkieModel(dataSet.get(holder.getAdapterPosition()).getUID(),dataSet.get(holder.getAdapterPosition()).getName(),dataSet.get(holder.getAdapterPosition()).isPhoto_default()));
                     holder.itemView.getContext().startActivity(intent);
                 }
             });
             holder.getIb_deleteAWorldkie().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    CollectionReference collectionReference = holder.getDb().collection("Worldkies");
-                    collectionReference.whereEqualTo("UID",dataSet.get(position).getUID()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                        @Override
-                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                                                  @Override
+                                                                  public void onClick(View v) {
+                                                                      holder.getDb().collection("Worldkies").document(dataSet.get(holder.getAdapterPosition()).getUID()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                          @Override
+                                                                          public void onSuccess(Void unused) {
+                                                                                holder.getFirebaseStorage().getReference().child(dataSet.get(holder.getAdapterPosition()).getUID()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                                    @Override
+                                                                                    public void onSuccess(Void unused) {
 
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
+                                                                                    }
+                                                                                }).addOnFailureListener(new OnFailureListener() {
+                                                                                    @Override
+                                                                                    public void onFailure(@NonNull Exception e) {
 
-                        }
-                    });
-                }
-            });
+                                                                                    }
+                                                                                });
+                                                                          }
+                                                                      }).addOnFailureListener(new OnFailureListener() {
+                                                                          @Override
+                                                                          public void onFailure(@NonNull Exception e) {
+
+                                                                          }
+                                                                      });
+                                                                  }
+                                                              });
             //De esra forma establacemos las imagenes de la lista
             //String uri = "@drawable/" + dataSet.get(position).getPhoto();  // where myresource (without the extension) is the file
             //int imageResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
             //Drawable res =  context.getResources().getDrawable(imageResource);
-            holder.getIv_photo_wordlkie().setImageDrawable(dataSet.get(position).getPhoto());
+            holder.getIv_photo_wordlkie().setImageDrawable(dataSet.get(holder.getAdapterPosition()).getPhoto());
     }
 
 

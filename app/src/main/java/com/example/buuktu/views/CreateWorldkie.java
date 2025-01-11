@@ -59,8 +59,8 @@ public class CreateWorldkie extends AppCompatActivity {
     ImageButton bt_ok;
     TextInputEditText et_nameWorldkieCreate;
     FirebaseStorage storage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
-    boolean create = getIntent().getBooleanExtra("create",true);
-    WorldkieModel worldkieModel = getIntent().getSerializableExtra("worldkie") != null ? (WorldkieModel) getIntent().getSerializableExtra("worldkie") : null;
+    boolean create;
+    WorldkieModel worldkieModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,9 +78,12 @@ public class CreateWorldkie extends AppCompatActivity {
         bt_deleteImageRegister = findViewById(R.id.ib_delete_img_create_wordlkie);
         bt_deleteImageRegister.setVisibility(View.INVISIBLE);
         CreateWorldkieController createWorldkieController=null;
+        Intent intent = getIntent();
+        boolean create = getIntent().getBooleanExtra("create",true);
         if(create){
              new CreateWorldkieController(this,create);
         } else {
+              worldkieModel = (WorldkieModel) intent.getSerializableExtra("worldkie");
               new CreateWorldkieController(this,create,worldkieModel);
         }
         bt_cancel.setOnClickListener(createWorldkieController);

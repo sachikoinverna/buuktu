@@ -38,6 +38,11 @@ public class WorldkieModel implements Serializable {
         this.name = name;
         this.photo = photo;
     }
+    public WorldkieModel(String UID, String name, boolean photo_default) {
+        this.UID = UID;
+        this.name = name;
+        this.photo_default=photo_default;
+    }
     public Drawable getPhoto() {
         return photo;
     }
