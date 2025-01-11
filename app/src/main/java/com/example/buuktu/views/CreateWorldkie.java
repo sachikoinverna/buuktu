@@ -79,12 +79,14 @@ public class CreateWorldkie extends AppCompatActivity {
         bt_deleteImageRegister.setVisibility(View.INVISIBLE);
         CreateWorldkieController createWorldkieController=null;
         Intent intent = getIntent();
-        boolean create = getIntent().getBooleanExtra("create",true);
+        boolean create = intent.getBooleanExtra("create",true);
         if(create){
-             new CreateWorldkieController(this,create);
+             createWorldkieController = new CreateWorldkieController(this,true);
         } else {
-              worldkieModel = (WorldkieModel) intent.getSerializableExtra("worldkie");
-              new CreateWorldkieController(this,create,worldkieModel);
+            worldkieModel = (WorldkieModel) intent.getSerializableExtra("worldkie");
+            Toast.makeText(this,String.valueOf(worldkieModel.isPhoto_default()),Toast.LENGTH_SHORT).show();
+
+            createWorldkieController = new CreateWorldkieController(this,false,worldkieModel);
         }
         bt_cancel.setOnClickListener(createWorldkieController);
         bt_ok.setOnClickListener(createWorldkieController);

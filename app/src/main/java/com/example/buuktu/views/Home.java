@@ -118,7 +118,7 @@ public class Home extends Fragment {
                                 WorldkieModel worldkieModel = new WorldkieModel(
                                         documentSnapshot.getId(), documentSnapshot.getString("UID_AUTHOR"),
                                         documentSnapshot.getString("name"),
-                                        drawable
+                                        drawable, true
                                 );
                                 worldkieModelArrayList.add(worldkieModel);
                                 updateRecyclerView(worldkieModelArrayList); // Call after processing each document (default image)
@@ -135,7 +135,7 @@ public class Home extends Fragment {
                                                     documentSnapshot.getId(),
                                                     documentSnapshot.getString("UID_AUTHOR"),
                                                     documentSnapshot.getString("name"),
-                                                    drawable
+                                                    drawable, false
                                             );
                                             worldkieModelArrayList.add(worldkieModel);
                                             updateRecyclerView(worldkieModelArrayList); // Call after processing each document (custom image)

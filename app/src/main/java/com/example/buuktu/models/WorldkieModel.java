@@ -32,11 +32,12 @@ public class WorldkieModel implements Serializable {
         this.creation_date = new Date();
         this.last_update = creation_date;
     }
-    public WorldkieModel(String UID,String UID_AUTHOR, String name, Drawable photo) {
+    public WorldkieModel(String UID,String UID_AUTHOR, String name, Drawable photo, boolean photo_default) {
         this.UID = UID;
         this.UID_AUTHOR = UID_AUTHOR;
         this.name = name;
         this.photo = photo;
+        this.photo_default = photo_default;
     }
     public WorldkieModel(String UID, String name, boolean photo_default) {
         this.UID = UID;
