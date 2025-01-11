@@ -69,14 +69,12 @@ public class CreateWorldkieController implements View.OnClickListener {
         putDefaultImage();
     }
     public void editarMode(WorldkieModel worldkieModel){
-        create=false;
         createWorldkie.getEt_nameWorldkieCreate().setText(worldkieModel.getName());
         obtenerImagen();
     }
     private void obtenerImagen(){
         if (worldkieModel.isPhoto_default()) {
-            Drawable drawable = createWorldkie.getResources().getDrawable(R.drawable.worldkie_default);
-            createWorldkie.getIB_profile_photo().setImageDrawable(drawable);
+            putDefaultImage();
         } else {
             StorageReference storageRef = storage.getReference().child(worldkieModel.getUID());
             final long ONE_MEGABYTE = 1024 * 1024;
@@ -90,7 +88,7 @@ public class CreateWorldkieController implements View.OnClickListener {
                             }
     }
     private void putDefaultImage(){
-        createWorldkie.getIB_profile_photo().setImageResource(R.mipmap.default_icon);
+        createWorldkie.getIB_profile_photo().setImageResource(R.drawable.worldkie_default);
         Bitmap bitmap = ((BitmapDrawable) createWorldkie.getIB_profile_photo().getDrawable()).getBitmap();
         createWorldkie.personalizarImagen(bitmap);
         createWorldkie.getBt_deleteImageRegister().setVisibility(View.INVISIBLE);
@@ -148,6 +146,55 @@ public class CreateWorldkieController implements View.OnClickListener {
             }
         });
     }
+    private void editDataFirestore() {
+        CollectionReference dbWorldkies = db.collection("Worldkies");
+        Date last_update = new Date();
+        Map<String, Object> worldkieData = new HashMap<>();
+        if(!createWorldkie.getEt_nameWorldkieCreate().equals(worldkieModel.getName())) {
+            worldkieData.put("name", createWorldkie.getEt_nameWorldkieCreate().getText().toString());
+        }
+        /*if (createWorldkie.) {
+
+        }*/
+        worldkieData.put("last_update", last_update);
+        //boolean isDefaultImage = (boolean) createWorldkie.getIB_profile_photo().getTag(R.drawable.worldkie_default);
+        if(!worldkieModel.isPhoto_default()!=createWorldkie.getIB_profile_photo().getDrawable().equals(R.drawable.worldkie_default)) {
+            worldkieData.put("photo_default", createWorldkie.getIB_profile_photo().getDrawable().equals(R.drawable.worldkie_default));
+        }
+        dbWorldkies.document(worldkieModel.getUID()).update(worldkieData).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+               /* String uid = documentReference.getId();
+                Toast.makeText(createWorldkie, "Your Course has been added to Firebase Firestore", Toast.LENGTH_SHORT).show();
+                if (!createWorldkie.getIB_profile_photo().getDrawable().equals(R.drawable.worldkie_default)) {
+                    StorageReference userRef = storage.getReference().child(uid);
+                    Drawable drawable = createWorldkie.getIB_profile_photo().getDrawable();
+                    Bitmap bitmap = null;
+
+                    if (drawable instanceof BitmapDrawable) {
+                        bitmap = ((BitmapDrawable) drawable).getBitmap();
+                    } else if (drawable instanceof RoundedBitmapDrawable) {
+                        bitmap = ((RoundedBitmapDrawable) drawable).getBitmap();
+                    }// createWorldkie.getIB_profile_photo().setNam
+                    userRef.child(uid+createWorldkie.getImage().getLastPathSegment());
+                    UploadTask uploadTask = userRef.putFile(createWorldkie.getImage());
+                    uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Toast.makeText(createWorldkie, "Subida exitosa",Toast.LENGTH_SHORT).show();*/
+                           /* createWorldkie.getParentActivityIntent().
+                            Intent intent = getIntent(createWorldkie,);
+                            createWorldkie.finish();
+                            finish();
+                            startActivity(intent);*/
+                        }
+            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                        }
+                    });
+    }
 
     @Override
     public void onClick(View view) {
@@ -155,7 +202,11 @@ public class CreateWorldkieController implements View.OnClickListener {
         if (view.getId() == R.id.ib_delete_img_create_wordlkie){
             putDefaultImage();
         } else if (view.getId()==R.id.bt_ok_addWordlkie) {
-            addDataToFirestore();
+            if(create) {
+                addDataToFirestore();
+            }else{
+
+            }
         } else if (view.getId()==R.id.bt_cancel_addWordlkie) {
             createWorldkie.finish();
         }

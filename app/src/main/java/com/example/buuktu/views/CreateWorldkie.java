@@ -101,8 +101,6 @@ public class CreateWorldkie extends AppCompatActivity {
                             Bitmap bitmap1 = Bitmap.createScaledBitmap(bitmap, 640, 640, false);
                             bt_chooseImage.setImageBitmap(bitmap1);
                             personalizarImagen(bitmap1);
-                            StorageReference userRef = storage.getReference().child("ujlDPggHwenVJNQcUSqO");
-                            userRef.child(image.getLastPathSegment()).putFile(image);
                             bt_deleteImageRegister.setVisibility(View.VISIBLE);
 
                         } catch (IOException e) {
