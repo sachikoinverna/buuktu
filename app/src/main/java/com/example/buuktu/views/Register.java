@@ -261,8 +261,12 @@ public class Register extends AppCompatActivity {
     public Uri getImage(){
         return image;
     }
-    public void selectImage(View view){
-        Dialog dialog = new Dialog(this);
+    public void selectImage(View view){/*
+        BottomSheetProfilePhoto bottomSheetProfilePhoto = new BottomSheetProfilePhoto();
+        bottomSheetProfilePhoto.show(getSupportFragmentManager(),"BottomSheetProfilePhoto");*/
+        BottomSheetProfilePhotoDefault bottomSheetProfilePhotoDefault = new BottomSheetProfilePhotoDefault();
+        bottomSheetProfilePhotoDefault.show(getSupportFragmentManager(),"BottomSheetProfilePhotoDefault");
+       /* Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_options_images);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.setCancelable(false);
@@ -276,8 +280,10 @@ public class Register extends AppCompatActivity {
         dialog2.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog2.setCancelable(false);
         dialog2.getWindow().getAttributes().windowAnimations = R.style.animation;
-        img_one = dialog.findViewById(R.id.ib_imgOne);
-        img_gal = dialog.findViewById(R.id.ib_gallery);
+        */
+        /*img_one = dialog.findViewById(R.id.ib_imgOne);
+        */
+        /*img_gal = dialog.findViewById(R.id.ib_gallery);
         img_def = dialog.findViewById(R.id.ib_default);
 
         if (img_one != null) {
@@ -306,7 +312,7 @@ public class Register extends AppCompatActivity {
                 }
             });
         }
-        dialog.show();
+        dialog.show();*/
 
     }
     public void selectImageGallery(){

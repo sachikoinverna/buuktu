@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -19,27 +20,38 @@ public class BottomSheetProfilePhoto extends BottomSheetDialogFragment {
         View v = inflater.inflate(R.layout.dialog_options_images,
                 container, false);
 
-        ImageButton img_one = v.findViewById(R.id.ib_imgOne);
+       // ImageButton img_one = v.findViewById(R.id.ib_imgOne);
         ImageButton img_gal = v.findViewById(R.id.ib_gallery);
         ImageButton img_def = v.findViewById(R.id.ib_default);
 
-        /*.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity(),
-                        "Algorithm Shared", Toast.LENGTH_SHORT).show();
-                dismiss();
-            }
-        });
+       /* if (img_one != null) {
+            img_one.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getContext(), "Imagen seleccionada", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }*/
 
-        course_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity(),
-                        "Course Shared", Toast.LENGTH_SHORT).show();
-                dismiss();
-            }
-        });*/
+        if (img_gal != null) {
+            img_gal.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getContext(), "Galeria seleccionada", Toast.LENGTH_SHORT).show();
+                    //selectImageGallery();
+                }
+            });
+        }
+
+        if (img_def != null) {
+            img_def.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getContext(), "Imagenes default seleccionada", Toast.LENGTH_SHORT).show();
+                    //dialog2.show();
+                }
+            });
+        }
         return v;
     }
 }
