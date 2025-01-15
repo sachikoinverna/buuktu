@@ -9,6 +9,7 @@ import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static com.google.android.gms.common.util.CollectionUtils.listOf;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -24,6 +25,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -60,11 +62,12 @@ public class Register extends AppCompatActivity {
     int RESULT_CODE = 0;
     int REQUEST_CODE = 1;
     private FirebaseFirestore db;
-    public TextInputEditText dp_birthday,et_nameRegister,et_surnameRegister,et_pronounsRegister,et_userRegister,et_emailRegister,et_passwordRepeat,et_password,et_telephoneRegister;
+    public TextInputEditText dp_birthday,et_nameRegister,et_pronounsRegister,et_userRegister,et_emailRegister,et_passwordRepeat,et_password,et_telephoneRegister;
     public TextView tv_nameRegister,tv_surnameRegister,tv_emailRegister,tv_birthdayRegister,tv_passwordRegister,tv_passwordRepeatRegister,tv_pronounsRegister,tv_usernameRegister,tv_telephoneRegister;
     ImageButton bt_registerToLogin;
     ImageButton bt_chooseImage;
     ImageButton bt_deleteImageRegister;
+    ImageButton img_one,img_def,img_gal;
     private ToggleButton tb_privateAccountRegister;
     ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
     Calendar calendar;
@@ -133,7 +136,6 @@ public class Register extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         dp_birthday = findViewById(R.id.dp_birthday);
         et_nameRegister = findViewById(R.id.et_nameRegister);
-        et_surnameRegister = findViewById(R.id.et_surnameRegister);
         et_pronounsRegister = findViewById(R.id.et_pronounsRegister);
         et_userRegister = findViewById(R.id.et_userRegister);
         et_emailRegister = findViewById(R.id.et_emailRegister);
@@ -141,18 +143,16 @@ public class Register extends AppCompatActivity {
         et_passwordRepeat = findViewById(R.id.et_passwordRepeat);
         et_telephoneRegister = findViewById(R.id.et_telephoneRegister);
         tv_nameRegister = findViewById(R.id.tv_errorNameRegister);
-        tv_surnameRegister = findViewById(R.id.tv_errorSurnameRegister);
         tv_emailRegister = findViewById(R.id.tv_errorEmailRegister);
         tv_birthdayRegister = findViewById(R.id.tv_birthdayError);
         tv_passwordRegister = findViewById(R.id.tv_errorPasswordRegister);
         tv_passwordRepeatRegister = findViewById(R.id.tv_errorPasswordRepeatRegister);
         tv_pronounsRegister = findViewById(R.id.tv_errorPronounsRegister);
         tv_usernameRegister = findViewById(R.id.tv_errorUsernameRegister);
-        tv_telephoneRegister = findViewById(R.id.tv_errorUsernameRegister);
+        tv_telephoneRegister = findViewById(R.id.tv_errorNumberRegister);
         bt_registerToLogin = findViewById(R.id.bt_registerToLogin);
         CheckUtil.setErrorMessage(null, tv_nameRegister);
-        CheckUtil.setErrorMessage(null, tv_surnameRegister);
-        CheckUtil.setErrorMessage(null, tv_emailRegister);
+         CheckUtil.setErrorMessage(null, tv_emailRegister);
         CheckUtil.setErrorMessage(null, tv_birthdayRegister);
         CheckUtil.setErrorMessage(null, tv_passwordRegister);
         CheckUtil.setErrorMessage(null, tv_passwordRepeatRegister);
@@ -165,7 +165,6 @@ public class Register extends AppCompatActivity {
         monthC = calendar.get(Calendar.MONTH);
         dayC = calendar.get(Calendar.DAY_OF_MONTH);
         registerController = new RegisterController(this);
-        et_surnameRegister.setOnFocusChangeListener(registerController);
         et_nameRegister.setOnFocusChangeListener(registerController);
         et_password.setOnFocusChangeListener(registerController);
         et_passwordRepeat.setOnFocusChangeListener(registerController);
@@ -201,10 +200,6 @@ public class Register extends AppCompatActivity {
         return et_nameRegister;
     }
 
-    public TextInputEditText getEt_surnameRegister() {
-        return et_surnameRegister;
-    }
-
     public TextInputEditText getEt_passwordRegister() {
         return et_password;
     }
@@ -231,10 +226,6 @@ public class Register extends AppCompatActivity {
 
     public TextView getTv_nameRegister() {
         return tv_nameRegister;
-    }
-
-    public TextView getTv_surnameRegister() {
-        return tv_surnameRegister;
     }
 
     public TextView getTv_emailRegister() {
@@ -271,6 +262,54 @@ public class Register extends AppCompatActivity {
         return image;
     }
     public void selectImage(View view){
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_options_images);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.setCancelable(false);
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialog.getWindow().getAttributes().windowAnimations = R.style.animation;
+        }
+
+        Dialog dialog2 = new Dialog(this);
+        dialog2.setContentView(R.layout.dialog_options_images);
+        dialog2.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog2.setCancelable(false);
+        dialog2.getWindow().getAttributes().windowAnimations = R.style.animation;
+        img_one = dialog.findViewById(R.id.ib_imgOne);
+        img_gal = dialog.findViewById(R.id.ib_gallery);
+        img_def = dialog.findViewById(R.id.ib_default);
+
+        if (img_one != null) {
+            img_one.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(Register.this, "Imagen seleccionada", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+        if (img_gal != null) {
+            img_gal.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    selectImageGallery();
+                }
+            });
+        }
+
+        if (img_def != null) {
+            img_def.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog2.show();
+                }
+            });
+        }
+        dialog.show();
+
+    }
+    public void selectImageGallery(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_MEDIA_IMAGES}, REQUEST_CODE);

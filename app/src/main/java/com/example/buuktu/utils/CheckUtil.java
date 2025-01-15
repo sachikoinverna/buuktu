@@ -20,14 +20,13 @@ import java.util.regex.Pattern;
 
 public class CheckUtil {
     private static FirebaseFirestore db= FirebaseFirestore.getInstance();
-    public static Boolean checkExistentUsername(Context context){
+    public static Boolean checkExistentUsername(String username){
         final Boolean[] exists = {false};
         CollectionReference dbUsers = db.collection("Users");
-        dbUsers.whereEqualTo("username", "chikoritaxserperior").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        dbUsers.whereEqualTo("username", username).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 if(!queryDocumentSnapshots.isEmpty()){
-                    Toast.makeText(context, "Ya existe un usuario con ese nombre", Toast.LENGTH_LONG).show();
                     exists[0] = false;
                 }
 

@@ -75,6 +75,7 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
         db = FirebaseFirestore.getInstance();
         register.getBt_deleteImageRegister().setVisibility(View.INVISIBLE);
     }
+
     public void setUri(Uri image){
         image=image;
     }
@@ -86,12 +87,6 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
                 handlerCheckName();
             } else if (b) {
                 CheckUtil.setErrorMessage(null, register.getTv_nameRegister());
-            }
-        } else if (caso == R.id.et_surnameRegister) {
-            if (!b) {
-                handlerCheckSurname();
-            } else if (b) {
-                CheckUtil.setErrorMessage(null, register.getTv_surnameRegister());
             }
         } else if (caso == R.id.dp_birthday) {
             if (!b) {
@@ -155,16 +150,6 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
         }
         return true;
     }
-    private boolean handlerCheckSurname(){
-        if(CheckUtil.checkTextEmpty(register.getEt_surnameRegister())){
-            CheckUtil.setErrorMessage(register.getString(R.string.surnameErrorEmpty),register.getTv_surnameRegister());
-            return false;
-        }else if (!CheckUtil.checkNumbers(register.getEt_surnameRegister().getText().toString())){
-            CheckUtil.setErrorMessage(register.getString(R.string.numberErrorTextField),register.getTv_surnameRegister());
-            return false;
-        }
-        return true;
-    }
     private boolean handlerCheckPassword(){
         if (CheckUtil.checkTextEmpty(register.getEt_passwordRegister())){
             CheckUtil.setErrorMessage(register.getString(R.string.passwordErrorEmpty),register.getTv_passwordRegister());
@@ -210,7 +195,7 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
         if(CheckUtil.checkTextEmpty(register.getEt_userRegister())){
             CheckUtil.setErrorMessage(register.getString(R.string.userErrorEmpty),register.getTv_usernameRegister());
             return false;
-        } else if (CheckUtil.checkExistentUsername(register)) {
+        } else if (CheckUtil.checkExistentUsername(register.getEt_userRegister().getText().toString())) {
             CheckUtil.setErrorMessage(register.getString(R.string.userErrorExists),register.getTv_usernameRegister());
             return false;
         }
@@ -228,7 +213,7 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
         register.startActivity(intent);
     }
     private boolean checkAllFields(){
-        if(handlerCheckName() && handlerCheckSurname() && handlerCheckBirthdayDate() && handlerCheckUser() && handlerCheckEmail() && handlerCheckPassword()&& handlerCheckPasswordRepeat()&& handlerCheckPronouns()){
+        if(handlerCheckName() && handlerCheckBirthdayDate() && handlerCheckUser() && handlerCheckEmail() && handlerCheckPassword()&& handlerCheckPasswordRepeat()&& handlerCheckPronouns()){
             return true;
         }
         return false;
@@ -283,7 +268,7 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
                             ZoneId zoneId = ZoneId.systemDefault(); // Or specify a specific zone
                             Instant instant = localDate.atStartOfDay(zoneId).toInstant();
                             //UserModel user = new UserModel(register.getEt_emailRegister().getText().toString(), task.getResult().getUser().getUid(), register.getEt_nameRegister().getText().toString(), register.getEt_surnameRegister().getText().toString(), register.getEt_pronounsRegister().getText().toString(), Date.from(instant),register.getEt_userRegister().getText().toString(), register.getEt_telephoneRegister().getText().toString());
-                            UserModel user = new UserModel(register.getEt_emailRegister().getText().toString(), task.getResult().getUser().getUid(), register.getEt_nameRegister().getText().toString(), register.getEt_surnameRegister().getText().toString(), register.getEt_pronounsRegister().getText().toString(), Date.from(instant),register.getEt_userRegister().getText().toString(), register.getEt_telephoneRegister().getText().toString(),BitmapUtils.drawableToBitmap(register.getIB_profile_photo().getDrawable()).equals(R.mipmap.default_icon),register.getTb_privateAccountRegister().isChecked());
+                            UserModel user = new UserModel(register.getEt_emailRegister().getText().toString(), task.getResult().getUser().getUid(), register.getEt_nameRegister().getText().toString(), register.getEt_pronounsRegister().getText().toString(), Date.from(instant),register.getEt_userRegister().getText().toString(), register.getEt_telephoneRegister().getText().toString(),BitmapUtils.drawableToBitmap(register.getIB_profile_photo().getDrawable()).equals(R.mipmap.default_icon),register.getTb_privateAccountRegister().isChecked());
 
                             // below method is use to add data to Firebase Firestore.
                             DocumentReference documentRef = dbUsers.document(task.getResult().getUser().getUid());

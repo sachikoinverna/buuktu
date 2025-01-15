@@ -113,43 +113,6 @@
                     tools:layout_editor_absoluteY="589dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/et_surnameRegisterFilled"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="50dp"
-                    android:layout_marginRight="10dp"
-                    android:hint="@string/surname"
-                    android:textAlignment="center"
-                    app:boxCornerRadiusBottomEnd="58dp"
-                    app:boxCornerRadiusBottomStart="58dp"
-                    app:boxCornerRadiusTopEnd="58dp"
-                    app:boxCornerRadiusTopStart="58dp"
-                    app:counterEnabled="true"
-                    app:counterMaxLength="50"
-                    app:errorEnabled="false"
-                    app:startIconDrawable="@drawable/outline_person_24">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_surnameRegister"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="text"
-                        android:maxLength="50"
-                        android:textAlignment="center"
-                        android:textColorHint="@color/brownMaroon" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <TextView
-                    android:id="@+id/tv_errorSurnameRegister"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView"
-                    android:textAlignment="center"
-                    android:textColor="@color/redError" />
-
-                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/et_pronounsRegisterFilled"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"

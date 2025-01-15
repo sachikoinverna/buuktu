@@ -58,7 +58,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/linearLayout"
-        app:srcCompat="@drawable/circle_rounded_filled" />
+        app:srcCompat="@drawable/cardview_border" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

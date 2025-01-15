@@ -4,7 +4,6 @@ import java.util.Date;
 
 public class UserModel {
     private String name;
-    private String surname;
     private String pronouns;
     private Date birthday;
     private String username;
@@ -62,14 +61,6 @@ public class UserModel {
         this.pronouns = pronouns;
     }
 
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
     public String getName() {
         return name;
     }
@@ -97,11 +88,10 @@ public class UserModel {
     public UserModel() {
     }
 
-    public UserModel(String email,String UID, String name, String surname, String pronouns, Date birthday, String username, String number, boolean photo_default, boolean profile_private) {
+    public UserModel(String email,String UID, String name, String pronouns, Date birthday, String username, String number, boolean photo_default, boolean profile_private) {
         this.email = email;
         this.UID = UID;
         this.name = name;
-        this.surname = surname;
         this.pronouns = pronouns;
         this.birthday = birthday;
         this.username = username;
