@@ -165,7 +165,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Cargar el fragmento inicial
         if (savedInstanceState == null) {
             replaceFragment(new Home());
-            navigationView.setCheckedItem(R.id.nav_home);
         }
     }
     private void obtenerImagen(){
@@ -224,11 +223,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.nav_home) {
-            replaceFragment(new Home());
-        }/* else if (item.getItemId() == R.id.nav_settings) {
+        if (item.getItemId() == R.id.nav_settings) {
             replaceFragment(new SettingsFragment());
-        }*/ else if (item.getItemId() == R.id.nav_logout) {
+        }else if (item.getItemId() == R.id.nav_logout) {
             firebaseAuth.signOut();
             finishAffinity();
             startActivity(new Intent(this, Login.class));

@@ -22,6 +22,10 @@
         android:theme="@style/Theme.Buuktu"
         tools:targetApi="31">
         <activity
+            android:name=".CharacterkiesWorldkie"
+            android:exported="false"
+            android:theme="@style/Theme.Buuktu" />
+        <activity
             android:name=".views.ConfigPersonalData"
             android:exported="false" />
         <activity

@@ -3,25 +3,19 @@ package com.example.buuktu.views;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.buuktu.R;
-import com.example.buuktu.adapters.SettingsAdapter;
-import com.example.buuktu.models.SettingModel;
-
-import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link SettingsFragment#newInstance} factory method to
+ * Use the {@link AccountSettings#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SettingsFragment extends Fragment implements SettingsAdapter.ItemClickListener {
+public class AccountSettings extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,10 +25,8 @@ public class SettingsFragment extends Fragment implements SettingsAdapter.ItemCl
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private RecyclerView rc_settings;
-    private ArrayList<SettingModel> dataSet = new ArrayList<SettingModel>();
 
-    public SettingsFragment() {
+    public AccountSettings() {
         // Required empty public constructor
     }
 
@@ -44,11 +36,11 @@ public class SettingsFragment extends Fragment implements SettingsAdapter.ItemCl
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment SettingsFragment.
+     * @return A new instance of fragment AccountSettings.
      */
     // TODO: Rename and change types and number of parameters
-    public static SettingsFragment newInstance(String param1, String param2) {
-        SettingsFragment fragment = new SettingsFragment();
+    public static AccountSettings newInstance(String param1, String param2) {
+        AccountSettings fragment = new AccountSettings();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -68,23 +60,9 @@ public class SettingsFragment extends Fragment implements SettingsAdapter.ItemCl
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-         View v = inflater.inflate(R.layout.fragment_settings, container, false);// Inflate the layout for this fragment
-         rc_settings = v.findViewById(R.id.rc_settings);
-         dataSet.add(new SettingModel("Perfil"));
-         dataSet.add(new SettingModel("Cuenta"));
-        SettingsAdapter settingsAdapter = new SettingsAdapter(dataSet,getContext());
-        rc_settings.setAdapter(settingsAdapter);
-        rc_settings.setLayoutManager(new LinearLayoutManager(getContext()));
-        settingsAdapter.setOnClickListener(this);
-         return v;
-    }
+        // Inflate the layout for this fragment
+        View v = inflater.inflate(R.layout.fragment_account_settings, container, false);
 
-    @Override
-    public void onClick(View view, int position) {
-        if (dataSet.get(position).getName().equals("Perfil")){
-            System.out.println("Perfil");
-        } else if (dataSet.get(position).getName().equals("Account")) {
-            System.out.println("Account");
-        }
+        return v;
     }
 }

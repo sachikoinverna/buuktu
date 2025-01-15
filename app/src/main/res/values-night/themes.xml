@@ -21,12 +21,14 @@
         <item name="cornerSizeBottomLeft">0dp</item>
 
     </style>
+
     <style name="customRoundedFAB">
 
         <!--for the extended FAB the cornerFamily is given the value as the cut-->
         <item name="cornerFamily">rounded</item>
 
     </style>
+
     <style name="animation">
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>

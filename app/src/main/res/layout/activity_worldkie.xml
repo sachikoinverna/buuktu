@@ -7,4 +7,24 @@
     android:layout_height="match_parent"
     tools:context=".views.Worldkie">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rc_characterkiesWorldkiePreview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" />
+
+            </HorizontalScrollView>
+    </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

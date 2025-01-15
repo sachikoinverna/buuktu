@@ -9,27 +9,14 @@
         android:checkableBehavior="single">
 
         <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/outline_email_24"
-            android:title="Home"/>
-
-        <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/outline_local_phone_24"
             android:title="Settings"/>
 
-        <item
-            android:id="@+id/nav_share"
-            android:icon="@drawable/outline_password_24"
-            android:title="Share"/>
-
-        <item
-            android:id="@+id/nav_about"
-            android:icon="@drawable/outline_person_24"
-            android:title="About Us"/>
     </group>
         <group>
-            <item android:title="Item"
-                android:id="@+id/nav_logout"/>
+            <item
+                android:id="@+id/nav_logout"
+                android:title="@string/close_session" />
         </group>
 </menu>

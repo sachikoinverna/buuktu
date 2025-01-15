@@ -2,8 +2,6 @@ package com.example.buuktu.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,15 +13,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buuktu.R;
-import com.example.buuktu.controllers.HomeController;
-import com.example.buuktu.controllers.WorldkieAdapterController;
 import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.views.CreateWorldkie;
+import com.example.buuktu.views.Worldkie;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
@@ -48,8 +43,8 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
         private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         public ViewHolder(View view) {
             super(view);
-            tv_name_wordlkie = view.findViewById(R.id.tv_name_wordlkie);
-            iv_photo_wordlkie =  view.findViewById(R.id.iv_photo_wordlkie);
+            tv_name_wordlkie = view.findViewById(R.id.tv_name_setting);
+            iv_photo_wordlkie =  view.findViewById(R.id.iv_photo_setting);
             ib_enterToAWorldkie= view.findViewById(R.id.ib_enterToAWorldkie);
             ib_editAWorldkie = view.findViewById(R.id.ib_editAWorldkie);
             ib_deleteAWorldkie = view.findViewById(R.id.ib_deleteAWorldkie);
@@ -106,8 +101,8 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
             holder.getIb_enterToAWorldkie().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //Intent intent = new Intent(getClass(),);
-                    //getClass()
+                    Intent intent = new Intent(holder.itemView.getContext(), Worldkie.class);
+                    holder.itemView.getContext().startActivity(intent);
                 }
             });
             holder.getIb_editAWorldkie().setOnClickListener(new View.OnClickListener() {

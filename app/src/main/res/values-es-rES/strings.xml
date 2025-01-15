@@ -47,6 +47,7 @@
     <string name="aquarius">Aquarius</string>
     <string name="pisces">Pisces</string>
     <string name="app_name"></string>
+    <string name="close_session">Cerrar sesion</string>
     <string name="open_nav">Open Navigation Drawer</string>
     <string name="close_nav">Close Navigation Drawer</string>
     <string name="worldkie_privacity">Private worldkie</string>

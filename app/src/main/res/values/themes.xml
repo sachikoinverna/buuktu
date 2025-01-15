@@ -6,6 +6,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
     <style name="error_appearance" parent="@android:style/TextAppearance">
         <item name="android:textColor">@color/redError</item>
         <item name="android:textSize">12sp</item>
@@ -25,14 +26,17 @@
         <item name="cornerSizeBottomLeft">0dp</item>
 
     </style>
+
     <style name="customRoundedFAB">
 
         <!--for the extended FAB the cornerFamily is given the value as the cut-->
         <item name="cornerFamily">rounded</item>
     </style>
+
     <style name="animation">
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
+
     <style name="Theme.Buuktu" parent="Base.Theme.Buuktu" />
 </resources>
