@@ -21,4 +21,10 @@
         <item name="cornerSizeBottomLeft">0dp</item>
 
     </style>
+    <style name="customRoundedFAB">
+
+        <!--for the extended FAB the cornerFamily is given the value as the cut-->
+        <item name="cornerFamily">rounded</item>
+
+    </style>
 </resources>

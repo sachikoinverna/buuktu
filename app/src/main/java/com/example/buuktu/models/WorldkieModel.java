@@ -16,6 +16,7 @@ public class WorldkieModel implements Serializable {
     private Date last_update;
     private Drawable photo;
     private boolean photo_default;
+    private boolean worldkie_private;
     public WorldkieModel() {
     }
 
@@ -32,18 +33,29 @@ public class WorldkieModel implements Serializable {
         this.creation_date = new Date();
         this.last_update = creation_date;
     }
-    public WorldkieModel(String UID,String UID_AUTHOR, String name, Drawable photo, boolean photo_default) {
+    public WorldkieModel(String UID,String UID_AUTHOR, String name, Drawable photo, boolean photo_default, boolean worldkie_private) {
         this.UID = UID;
         this.UID_AUTHOR = UID_AUTHOR;
         this.name = name;
         this.photo = photo;
         this.photo_default = photo_default;
+        this.worldkie_private = worldkie_private;
     }
-    public WorldkieModel(String UID, String name, boolean photo_default) {
+    public WorldkieModel(String UID, String name, boolean photo_default, boolean worldkie_private) {
         this.UID = UID;
         this.name = name;
         this.photo_default=photo_default;
+        this.worldkie_private=worldkie_private;
     }
+
+    public boolean isWorldkie_private() {
+        return worldkie_private;
+    }
+
+    public void setWorldkie_private(boolean worldkie_private) {
+        this.worldkie_private = worldkie_private;
+    }
+
     public Drawable getPhoto() {
         return photo;
     }

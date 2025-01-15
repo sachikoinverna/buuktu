@@ -22,7 +22,8 @@
         android:layout_marginBottom="100dp"
         android:src="@drawable/add_button"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:shapeAppearance="@style/customNormalFAB" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fb_addWorldkie"
@@ -33,6 +34,7 @@
         android:layout_marginBottom="32dp"
         android:src="@drawable/outline_local_phone_24"
         app:layout_constraintBottom_toTopOf="@+id/fb_parentWorldkies"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:shapeAppearanceOverlay="@style/customNormalFAB" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

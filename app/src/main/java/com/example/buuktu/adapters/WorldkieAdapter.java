@@ -115,7 +115,7 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
                 public void onClick(View v) {
                     Intent intent = new Intent(holder.itemView.getContext(), CreateWorldkie.class);
                     intent.putExtra("create",false);
-                    intent.putExtra("worldkie",new WorldkieModel(dataSet.get(holder.getAdapterPosition()).getUID(),dataSet.get(holder.getAdapterPosition()).getName(),dataSet.get(holder.getAdapterPosition()).isPhoto_default()));
+                    intent.putExtra("worldkie",new WorldkieModel(dataSet.get(holder.getAdapterPosition()).getUID(),dataSet.get(holder.getAdapterPosition()).getName(),dataSet.get(holder.getAdapterPosition()).isPhoto_default(),dataSet.get(holder.getAdapterPosition()).isWorldkie_private()));
                     holder.itemView.getContext().startActivity(intent);
                 }
             });

@@ -10,9 +10,10 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
+        android:id="@+id/iv_fsaf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/add_button"/>
+        android:src="@drawable/add_button" />
 
     <TextView
         android:layout_width="wrap_content"

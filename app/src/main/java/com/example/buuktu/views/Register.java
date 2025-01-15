@@ -25,8 +25,10 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
@@ -63,6 +65,7 @@ public class Register extends AppCompatActivity {
     ImageButton bt_registerToLogin;
     ImageButton bt_chooseImage;
     ImageButton bt_deleteImageRegister;
+    private ToggleButton tb_privateAccountRegister;
     ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
     Calendar calendar;
     int yearC,monthC,dayC;
@@ -98,7 +101,7 @@ public class Register extends AppCompatActivity {
         bt_chooseImage = findViewById(R.id.bt_chooseImageRegister);
         Bitmap originalBitmap = ((BitmapDrawable) bt_chooseImage.getDrawable()).getBitmap();
         personalizarImagen(originalBitmap);
-
+        tb_privateAccountRegister = findViewById(R.id.tb_privateAccountRegister);
         pickMedia =
                 registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
                     // Callback is invoked after the user selects a media item or closes the
@@ -110,7 +113,7 @@ public class Register extends AppCompatActivity {
                             //Bitmap image1 = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
                             ImageDecoder.Source image1 = ImageDecoder.createSource(this.getContentResolver(),uri);
                             Bitmap bitmap = ImageDecoder.decodeBitmap(image1);
-                            Bitmap bitmap1 = Bitmap.createScaledBitmap(bitmap, 640, 640, false);
+                            Bitmap bitmap1 = Bitmap.createScaledBitmap(bitmap, 100, 100, false);
                             bt_chooseImage.setImageBitmap(bitmap1);
                             personalizarImagen(bitmap1);
                             StorageReference userRef = storage.getReference().child("ujlDPggHwenVJNQcUSqO");
@@ -182,6 +185,11 @@ public class Register extends AppCompatActivity {
     private void setListeners() {
 
     }
+
+    public ToggleButton getTb_privateAccountRegister() {
+        return tb_privateAccountRegister;
+    }
+
     public ImageButton getBt_chooseImage() {
         return bt_chooseImage;
     }
@@ -293,6 +301,8 @@ public class Register extends AppCompatActivity {
         Drawable drawableBorder = getResources().getDrawable(R.drawable.border_register);
         drawableBorder.setTint(Color.RED);
         bt_chooseImage.setBackground(drawableBorder);
+        bt_chooseImage.setPadding(15, 15, 15, 15); // Añadir padding para el borde visible
+        bt_chooseImage.setScaleType(ImageView.ScaleType.CENTER_CROP); // Ajusta la imagen para que quede dentro del borde
         //bt_chooseImage.set
     }
     /*@Override

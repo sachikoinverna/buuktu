@@ -4,6 +4,7 @@ import static androidx.activity.result.ActivityResultCallerKt.registerForActivit
 import static com.example.buuktu.R.id.*;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -22,6 +23,7 @@ import androidx.annotation.NonNull;
 
 import com.example.buuktu.R;
 import com.example.buuktu.models.UserModel;
+import com.example.buuktu.utils.BitmapUtils;
 import com.example.buuktu.utils.CheckUtil;
 import com.example.buuktu.views.Login;
 import com.example.buuktu.views.Register;
@@ -54,7 +56,9 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
     private Uri image;
     private FirebaseAuth auth;
     private boolean imgDefault = true;
-  //  FirebaseFirestore dbFire;
+    private ProgressDialog barraProgreso;
+
+    //  FirebaseFirestore dbFire;
     private FirebaseFirestore db;
     ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
 
@@ -279,7 +283,7 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
                             ZoneId zoneId = ZoneId.systemDefault(); // Or specify a specific zone
                             Instant instant = localDate.atStartOfDay(zoneId).toInstant();
                             //UserModel user = new UserModel(register.getEt_emailRegister().getText().toString(), task.getResult().getUser().getUid(), register.getEt_nameRegister().getText().toString(), register.getEt_surnameRegister().getText().toString(), register.getEt_pronounsRegister().getText().toString(), Date.from(instant),register.getEt_userRegister().getText().toString(), register.getEt_telephoneRegister().getText().toString());
-                            UserModel user = new UserModel(register.getEt_emailRegister().getText().toString(), task.getResult().getUser().getUid(), register.getEt_nameRegister().getText().toString(), register.getEt_surnameRegister().getText().toString(), register.getEt_pronounsRegister().getText().toString(), Date.from(instant),register.getEt_userRegister().getText().toString(), register.getEt_telephoneRegister().getText().toString());
+                            UserModel user = new UserModel(register.getEt_emailRegister().getText().toString(), task.getResult().getUser().getUid(), register.getEt_nameRegister().getText().toString(), register.getEt_surnameRegister().getText().toString(), register.getEt_pronounsRegister().getText().toString(), Date.from(instant),register.getEt_userRegister().getText().toString(), register.getEt_telephoneRegister().getText().toString(),BitmapUtils.drawableToBitmap(register.getIB_profile_photo().getDrawable()).equals(R.mipmap.default_icon),register.getTb_privateAccountRegister().isChecked());
 
                             // below method is use to add data to Firebase Firestore.
                             DocumentReference documentRef = dbUsers.document(task.getResult().getUser().getUid());
@@ -325,4 +329,14 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
                     }
                 });
             }
+    private void mostrarBarraProgreso(){
+        barraProgreso = new ProgressDialog(register);
+        barraProgreso.setTitle("Buscando...");
+        barraProgreso.setMessage("Progreso...");
+        barraProgreso.setProgressStyle(barraProgreso.STYLE_HORIZONTAL);
+        barraProgreso.setProgress(0);
+        barraProgreso.setMax(10);
+        barraProgreso.show();
+
+    }
     }

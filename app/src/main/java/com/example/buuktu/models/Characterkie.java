@@ -11,5 +11,4 @@ public class Characterkie {
     private String horoscope;
     private Date deathday;
     private boolean alive;
-    private String WAYKIE_ID;
 }

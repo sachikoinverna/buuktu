@@ -49,4 +49,5 @@
     <string name="app_name"></string>
     <string name="open_nav">Open Navigation Drawer</string>
     <string name="close_nav">Close Navigation Drawer</string>
+    <string name="worldkie_privacity">Private worldkie</string>
 </resources>

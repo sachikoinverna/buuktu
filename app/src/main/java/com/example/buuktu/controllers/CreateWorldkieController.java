@@ -5,6 +5,7 @@ import static android.widget.Toast.LENGTH_LONG;
 
 import static androidx.core.content.ContextCompat.startActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -49,6 +50,7 @@ public class CreateWorldkieController implements View.OnClickListener {
     private FirebaseStorage storage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
     private boolean create;
     private WorldkieModel worldkieModel;
+    private ProgressDialog barraProgreso;
     public CreateWorldkieController(CreateWorldkie createWorldkie,boolean create){
         this.createWorldkie = createWorldkie;
         this.firebaseAuth = FirebaseAuth.getInstance();
@@ -66,13 +68,13 @@ public class CreateWorldkieController implements View.OnClickListener {
     }
     public void createMode(){
         createWorldkie.getEt_nameWorldkieCreate().setText("");
+        createWorldkie.getTb_worldkiePrivacity().setChecked(false);
         putDefaultImage();
-        Toast.makeText(createWorldkie,String.valueOf(create),Toast.LENGTH_SHORT).show();
     }
     public void editarMode(WorldkieModel worldkieModel){
         createWorldkie.getEt_nameWorldkieCreate().setText(worldkieModel.getName());
+        createWorldkie.getTb_worldkiePrivacity().setChecked(worldkieModel.isWorldkie_private());
         obtenerImagen();
-        Toast.makeText(createWorldkie,String.valueOf(create),Toast.LENGTH_SHORT).show();
     }
     private void obtenerImagen(){
         if (worldkieModel.isPhoto_default()) {
@@ -97,22 +99,23 @@ public class CreateWorldkieController implements View.OnClickListener {
         createWorldkie.getBt_deleteImageRegister().setVisibility(View.INVISIBLE);
     }
     private void addDataToFirestore() {
-        CollectionReference dbWorldkies = db.collection("Worldkies");
+        mostrarBarraProgreso();
         Date creation_date = new Date();
         Map<String, Object> worldkieData = new HashMap<>();
         worldkieData.put("UID_AUTHOR", firebaseAuth.getUid());
         worldkieData.put("name", createWorldkie.getEt_nameWorldkieCreate().getText().toString()); // Corrección clave
         worldkieData.put("creation_date", creation_date);
         worldkieData.put("last_update", creation_date);
-        //boolean isDefaultImage = (boolean) createWorldkie.getIB_profile_photo().getTag(R.drawable.worldkie_default);
         worldkieData.put("photo_default", createWorldkie.getIB_profile_photo().getDrawable().equals(R.drawable.worldkie_default));
-        dbWorldkies.add(worldkieData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        worldkieData.put("worldkie_private", createWorldkie.getTb_worldkiePrivacity().isChecked());
+        barraProgreso.incrementProgressBy(25);
+        db.collection("Worldkies").add(worldkieData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
-                String uid = documentReference.getId();
+                barraProgreso.incrementProgressBy(25);
                 Toast.makeText(createWorldkie, "Your Course has been added to Firebase Firestore", Toast.LENGTH_SHORT).show();
                 if (!createWorldkie.getIB_profile_photo().getDrawable().equals(R.drawable.worldkie_default)) {
-                    StorageReference userRef = storage.getReference().child(uid);
+                    StorageReference userRef = storage.getReference().child(documentReference.getId());
                     Drawable drawable = createWorldkie.getIB_profile_photo().getDrawable();
                     Bitmap bitmap = null;
 
@@ -121,7 +124,7 @@ public class CreateWorldkieController implements View.OnClickListener {
                     } else if (drawable instanceof RoundedBitmapDrawable) {
                         bitmap = ((RoundedBitmapDrawable) drawable).getBitmap();
                     }// createWorldkie.getIB_profile_photo().setNam
-                    userRef.child(uid+createWorldkie.getImage().getLastPathSegment());
+                    userRef.child(documentReference.getId()+createWorldkie.getImage().getLastPathSegment());
                     UploadTask uploadTask = userRef.putFile(createWorldkie.getImage());
                     uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -132,6 +135,8 @@ public class CreateWorldkieController implements View.OnClickListener {
                             createWorldkie.finish();
                             finish();
                             startActivity(intent);*/
+                            barraProgreso.incrementProgressBy(50);
+                            barraProgreso.dismiss();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -161,7 +166,10 @@ public class CreateWorldkieController implements View.OnClickListener {
         if (worldkieModel.isPhoto_default() != createWorldkie.getIB_profile_photo().getDrawable().equals(R.drawable.worldkie_default)) {
             worldkieData.put("photo_default", createWorldkie.getIB_profile_photo().getDrawable().equals(R.drawable.worldkie_default));
         }
-        dbWorldkies.document(worldkieModel.getUID()).update(worldkieData).addOnSuccessListener(new OnSuccessListener<Void>() {
+        if(worldkieModel.isWorldkie_private() != createWorldkie.getTb_worldkiePrivacity().isChecked()){
+            worldkieData.put("worldkie_private", createWorldkie.getTb_worldkiePrivacity().isChecked());
+        }
+        db.collection("Worldkies").document(worldkieModel.getUID()).update(worldkieData).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 if (worldkieModel.getPhoto()!=createWorldkie.getIB_profile_photo().getDrawable() && !worldkieModel.isPhoto_default()) {
@@ -202,7 +210,16 @@ public class CreateWorldkieController implements View.OnClickListener {
             }
         });
     }
+    private void mostrarBarraProgreso(){
+        barraProgreso = new ProgressDialog(createWorldkie);
+        barraProgreso.setTitle("Buscando...");
+        barraProgreso.setMessage("Progreso...");
+        barraProgreso.setProgressStyle(barraProgreso.STYLE_HORIZONTAL);
+        barraProgreso.setProgress(0);
+        barraProgreso.setMax(10);
+        barraProgreso.show();
 
+    }
 
     @Override
     public void onClick(View view) {

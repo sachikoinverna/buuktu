@@ -11,6 +11,8 @@ public class UserModel {
     private String number;
     private String UID;
     private String email;
+    private boolean photo_default;
+    private boolean profile_private;
 
     public String getEmail() {
         return email;
@@ -76,10 +78,26 @@ public class UserModel {
         this.name = name;
     }
 
+    public boolean isPhoto_default() {
+        return photo_default;
+    }
+
+    public void setPhoto_default(boolean photo_default) {
+        this.photo_default = photo_default;
+    }
+
+    public boolean isProfile_private() {
+        return profile_private;
+    }
+
+    public void setProfile_private(boolean profile_private) {
+        this.profile_private = profile_private;
+    }
+
     public UserModel() {
     }
 
-    public UserModel(String email,String UID, String name, String surname, String pronouns, Date birthday, String username, String number) {
+    public UserModel(String email,String UID, String name, String surname, String pronouns, Date birthday, String username, String number, boolean photo_default, boolean profile_private) {
         this.email = email;
         this.UID = UID;
         this.name = name;
@@ -88,5 +106,7 @@ public class UserModel {
         this.birthday = birthday;
         this.username = username;
         this.number = number;
+        this.photo_default = photo_default;
+        this.profile_private = profile_private;
     }
 }

@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
@@ -58,6 +59,7 @@ public class CreateWorldkie extends AppCompatActivity {
     ImageButton bt_cancel;
     ImageButton bt_ok;
     TextInputEditText et_nameWorldkieCreate;
+    ToggleButton tb_worldkiePrivacity;
     FirebaseStorage storage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
     boolean create;
     WorldkieModel worldkieModel;
@@ -71,6 +73,7 @@ public class CreateWorldkie extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        tb_worldkiePrivacity = findViewById(R.id.tb_worldkiePrivacity);
         bt_cancel = findViewById(R.id.bt_cancel_addWordlkie);
         bt_ok = findViewById(R.id.bt_ok_addWordlkie);
         et_nameWorldkieCreate = findViewById(R.id.et_nameWorldkieCreate);
@@ -121,6 +124,11 @@ public class CreateWorldkie extends AppCompatActivity {
         personalizarImagen(bitmap);
         getBt_deleteImageRegister().setVisibility(View.INVISIBLE);
     }
+
+    public ToggleButton getTb_worldkiePrivacity() {
+        return tb_worldkiePrivacity;
+    }
+
     public TextInputEditText getEt_nameWorldkieCreate(){
         return et_nameWorldkieCreate;
     }
@@ -150,9 +158,6 @@ public class CreateWorldkie extends AppCompatActivity {
                 .build());
     }
     public void personalizarImagen(Bitmap bitmap){
-        //Canvas canvas = new Canvas(circularBitmap);
-        //bt_chooseImage.setBor
-
         RoundedBitmapDrawable roundedDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
         roundedDrawable.setCircular(true);
         roundedDrawable.setCornerRadius(bitmap.getHeight());
@@ -161,6 +166,5 @@ public class CreateWorldkie extends AppCompatActivity {
         Drawable drawableBorder = getResources().getDrawable(R.drawable.border_register);
         drawableBorder.setTint(Color.RED);
         bt_chooseImage.setBackground(drawableBorder);
-        //bt_chooseImage.set
     }
 }
