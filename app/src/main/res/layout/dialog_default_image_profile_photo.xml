@@ -56,22 +56,25 @@
                     android:id="@+id/ib_prf_imgFour"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:layout_weight="1"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    android:background="@null"
+
+                    tools:srcCompat="@mipmap/photoprofilefour" />
 
                 <ImageButton
                     android:id="@+id/ib_prf_imgFive"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:layout_weight="1"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    android:background="@null"
+
+                    tools:srcCompat="@mipmap/photoprofilefive" />
 
                 <ImageButton
                     android:id="@+id/ib_prf_imgSix"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:layout_weight="1"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    android:background="@null"
+
+                    tools:srcCompat="@mipmap/photoprofilesix" />
             </LinearLayout>
 
             <LinearLayout
@@ -83,22 +86,25 @@
                     android:id="@+id/ib_prf_imgSeven"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:layout_weight="1"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    android:background="@null"
+
+                    tools:srcCompat="@mipmap/photoprofileseven" />
 
                 <ImageButton
                     android:id="@+id/ib_prf_imgEight"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:layout_weight="1"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    android:background="@null"
+
+                    tools:srcCompat="@mipmap/photoprofileeight" />
 
                 <ImageButton
                     android:id="@+id/ib_prf_imgNine"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:layout_weight="1"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    android:background="@null"
+
+                    tools:srcCompat="@mipmap/photoprofilenine" />
             </LinearLayout>
 
             <LinearLayout
@@ -110,15 +116,17 @@
                     android:id="@+id/ib_prf_imgTen"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:layout_weight="1"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    android:background="@null"
+
+                    tools:srcCompat="@mipmap/photoprofileten" />
 
                 <ImageButton
                     android:id="@+id/ib_prf_imgEleven"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:layout_weight="1"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    android:background="@null"
+
+                    tools:srcCompat="@mipmap/photoprofileeleven" />
             </LinearLayout>
 
         </LinearLayout>

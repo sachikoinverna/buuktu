@@ -42,47 +42,47 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment {
 
         ImageButton ib_prf_imgThree = v.findViewById(R.id.ib_prf_imgThree);
         Drawable drawable3 = ContextCompat.getDrawable(getContext(), R.mipmap.photoprofilethree);
-        Bitmap bitmap3 = ((BitmapDrawable) drawable).getBitmap();
+        Bitmap bitmap3 = ((BitmapDrawable) drawable3).getBitmap();
         personalizarImagen(bitmap3,ib_prf_imgThree);
 
         ImageButton ib_prf_imgFour = v.findViewById(R.id.ib_prf_imgFour);
         Drawable drawable4 = ContextCompat.getDrawable(getContext(), R.mipmap.photoprofilefour);
-        Bitmap bitmap4 = ((BitmapDrawable) drawable).getBitmap();
+        Bitmap bitmap4 = ((BitmapDrawable) drawable4).getBitmap();
         personalizarImagen(bitmap4,ib_prf_imgFour);
 
         ImageButton ib_prf_imgFive = v.findViewById(R.id.ib_prf_imgFive);
         Drawable drawable5 = ContextCompat.getDrawable(getContext(), R.mipmap.photoprofilefive);
-        Bitmap bitmap5 = ((BitmapDrawable) drawable).getBitmap();
+        Bitmap bitmap5 = ((BitmapDrawable) drawable5).getBitmap();
         personalizarImagen(bitmap5,ib_prf_imgFive);
 
         ImageButton ib_prf_imgSix = v.findViewById(R.id.ib_prf_imgSix);
         Drawable drawable6 = ContextCompat.getDrawable(getContext(), R.mipmap.photoprofilesix);
-        Bitmap bitmap6 = ((BitmapDrawable) drawable).getBitmap();
+        Bitmap bitmap6 = ((BitmapDrawable) drawable6).getBitmap();
         personalizarImagen(bitmap6,ib_prf_imgSix);
 
         ImageButton ib_prf_imgSeven = v.findViewById(R.id.ib_prf_imgSeven);
         Drawable drawable7 = ContextCompat.getDrawable(getContext(), mipmap.photoprofileseven);
-        Bitmap bitmap7 = ((BitmapDrawable) drawable).getBitmap();
+        Bitmap bitmap7 = ((BitmapDrawable) drawable7).getBitmap();
         personalizarImagen(bitmap7,ib_prf_imgSeven);
 
         ImageButton ib_prf_imgEight = v.findViewById(R.id.ib_prf_imgEight);
         Drawable drawable8 = ContextCompat.getDrawable(getContext(), R.mipmap.photoprofileeight);
-        Bitmap bitmap8 = ((BitmapDrawable) drawable).getBitmap();
+        Bitmap bitmap8 = ((BitmapDrawable) drawable8).getBitmap();
         personalizarImagen(bitmap8,ib_prf_imgEight);
 
         ImageButton ib_prf_imgNine = v.findViewById(R.id.ib_prf_imgNine);
         Drawable drawable9 = ContextCompat.getDrawable(getContext(), mipmap.photoprofilenine);
-        Bitmap bitmap9 = ((BitmapDrawable) drawable).getBitmap();
+        Bitmap bitmap9 = ((BitmapDrawable) drawable9).getBitmap();
         personalizarImagen(bitmap9,ib_prf_imgNine);
 
         ImageButton ib_prf_imgTen = v.findViewById(R.id.ib_prf_imgTen);
         Drawable drawable10 = ContextCompat.getDrawable(getContext(), R.mipmap.photoprofileten);
-        Bitmap bitmap10 = ((BitmapDrawable) drawable).getBitmap();
+        Bitmap bitmap10 = ((BitmapDrawable) drawable10).getBitmap();
         personalizarImagen(bitmap10,ib_prf_imgTen);
 
         ImageButton ib_prf_imgEleven = v.findViewById(R.id.ib_prf_imgEleven);
         Drawable drawable11 = ContextCompat.getDrawable(getContext(), R.mipmap.photoprofileeleven);
-        Bitmap bitmap11 = ((BitmapDrawable) drawable).getBitmap();
+        Bitmap bitmap11 = ((BitmapDrawable) drawable11).getBitmap();
         personalizarImagen(bitmap11,ib_prf_imgEleven);
        /* if (img_one != null) {
             img_one.setOnClickListener(new View.OnClickListener() {
