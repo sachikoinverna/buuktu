@@ -1,36 +1,25 @@
 package com.example.buuktu.views;
 
 
-import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
-import static android.Manifest.permission.READ_MEDIA_IMAGES;
-import static android.Manifest.permission.READ_MEDIA_VIDEO;
-import static android.Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED;
-import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static com.google.android.gms.common.util.CollectionUtils.listOf;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ImageDecoder;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
@@ -68,7 +57,7 @@ public class Register extends AppCompatActivity {
     ImageButton bt_chooseImage;
     ImageButton bt_deleteImageRegister;
     ImageButton img_one,img_def,img_gal;
-    private ToggleButton tb_privateAccountRegister;
+    private Switch tb_privateAccountRegister;
     ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
     Calendar calendar;
     int yearC,monthC,dayC;
@@ -145,7 +134,7 @@ public class Register extends AppCompatActivity {
         tv_nameRegister = findViewById(R.id.tv_errorNameRegister);
         tv_emailRegister = findViewById(R.id.tv_errorEmailRegister);
         tv_birthdayRegister = findViewById(R.id.tv_birthdayError);
-        tv_passwordRegister = findViewById(R.id.tv_errorPasswordRegister);
+        tv_passwordRegister = findViewById(R.id.et_password);
         tv_passwordRepeatRegister = findViewById(R.id.tv_errorPasswordRepeatRegister);
         tv_pronounsRegister = findViewById(R.id.tv_errorPronounsRegister);
         tv_usernameRegister = findViewById(R.id.tv_errorUsernameRegister);
@@ -185,7 +174,7 @@ public class Register extends AppCompatActivity {
 
     }
 
-    public ToggleButton getTb_privateAccountRegister() {
+    public Switch getTb_privateAccountRegister() {
         return tb_privateAccountRegister;
     }
 

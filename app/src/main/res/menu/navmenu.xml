@@ -10,13 +10,15 @@
 
         <item
             android:id="@+id/nav_settings"
-            android:icon="@drawable/outline_local_phone_24"
-            android:title="Settings"/>
+            android:icon="@drawable/twotone_settings_suggest_24"
+            android:title="Settings"
+            />
 
     </group>
         <group>
             <item
                 android:id="@+id/nav_logout"
+                android:icon="@drawable/twotone_exit_to_app_24"
                 android:title="@string/close_session" />
         </group>
 </menu>

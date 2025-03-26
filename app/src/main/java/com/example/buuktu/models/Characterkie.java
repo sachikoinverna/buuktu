@@ -1,5 +1,7 @@
 package com.example.buuktu.models;
 
+import android.graphics.drawable.Drawable;
+
 import java.util.Date;
 
 public class Characterkie {
@@ -11,6 +13,9 @@ public class Characterkie {
     private String horoscope;
     private Date deathday;
     private boolean alive;
+    private boolean photo_default;
+    private Drawable photo;
+
     public Characterkie(String UID, String name) {
         this.UID=UID;
         this.name=name;
@@ -78,5 +83,17 @@ public class Characterkie {
 
     public void setUID(String UID) {
         this.UID = UID;
+    }
+    public boolean isPhoto_default() {
+        return photo_default;
+    }
+    public void setPhoto_default(boolean photo_default) {
+        this.photo_default = photo_default;
+    }
+    public Drawable getPhoto() {
+        return photo;
+    }
+    public void setPhoto(Drawable photo) {
+        this.photo = photo;
     }
 }

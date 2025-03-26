@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/main"
-        android:background="@color/redError"
+        android:background="#A67B5B"
         tools:context=".views.MainActivity">
 
         <!-- Include custom Toolbar -->
@@ -26,7 +26,6 @@
         <!-- FloatingActionButton (FAB) -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingActionButton"
-            style="@style/customRoundedFAB "
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal|top"
@@ -68,12 +67,12 @@
 
     <!-- Navigation View for Drawer Menu -->
     <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:id="@+id/nav_view"
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/navmenu"
-        app:itemIconTint="@color/redError"
-        app:itemTextColor="@color/brownBrown" />
+        app:itemIconTint="#493D7A"
+        app:itemTextColor="#5f5a7c"
+        app:menu="@menu/navmenu" />
 </androidx.drawerlayout.widget.DrawerLayout>

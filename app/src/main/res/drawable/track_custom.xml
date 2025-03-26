@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Estado activado (verde) -->
+    <item android:state_checked="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="20dp"/>
+            <solid android:color="#A5D6A7"/> <!-- Verde más claro -->
+            <stroke android:width="2dp" android:color="#4CAF50"/> <!-- Borde verde -->
+        </shape>
+    </item>
+
+    <!-- Estado desactivado (rojo) -->
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="20dp"/>
+            <solid android:color="#EF9A9A"/> <!-- Rojo más claro -->
+            <stroke android:width="2dp" android:color="#F44336"/> <!-- Borde rojo -->
+        </shape>
+    </item>
+</selector>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Estado activado (verde) -->
+    <item android:state_checked="true">
+        <layer-list>
+            <!-- Borde -->
+            <item>
+                <shape android:shape="oval">
+                    <solid android:color="#4CAF50"/> <!-- Verde -->
+                    <size android:width="30dp" android:height="30dp"/>
+                    <stroke android:width="2dp" android:color="#2E7D32"/> <!-- Borde más oscuro -->
+                </shape>
+            </item>
+            <!-- Imagen de la estrella -->
+            <item android:drawable="@drawable/star_icon" android:gravity="center" />
+        </layer-list>
+    </item>
+
+    <!-- Estado desactivado (rojo) -->
+    <item>
+        <layer-list>
+            <!-- Borde -->
+            <item>
+                <shape android:shape="oval">
+                    <solid android:color="#F44336"/> <!-- Rojo -->
+                    <size android:width="30dp" android:height="30dp"/>
+                    <stroke android:width="2dp" android:color="#B71C1C"/> <!-- Borde más oscuro -->
+                </shape>
+            </item>
+            <!-- Imagen de la estrella -->
+            <item android:drawable="@drawable/star_icon" android:gravity="center"/>
+        </layer-list>
+    </item>
+</selector>

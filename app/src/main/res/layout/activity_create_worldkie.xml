@@ -14,18 +14,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:gravity="center"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/imageButton5"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/twotone_arrow_circle_left_24" />
 
                 <ImageButton
                     android:id="@+id/ib_select_img_create_worldkie"
                     android:layout_width="150dp"
-                    android:layout_height="300dp"
-                    android:layout_marginLeft="150dp"
+                    android:layout_height="150dp"
                     android:layout_marginTop="16dp"
                     android:onClick="selectImage"
                     app:srcCompat="@drawable/worldkie_default" />
@@ -68,44 +77,39 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/worldkie_privacity" />
-
-                <ToggleButton
-                    android:id="@+id/tb_worldkiePrivacity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/pixel_toggle_background"/>
-            </LinearLayout>
+            <Switch
+                android:id="@+id/tb_worldkiePrivacity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Private worldkie"
+                android:thumb="@drawable/thumb_custom"
+                android:track="@drawable/track_custom" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/bt_cancel_addWordlkie"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:layout_marginLeft="100dp"
-                    android:background="@color/redError" />
 
                 <ImageButton
                     android:id="@+id/bt_ok_addWordlkie"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:layout_marginLeft="100dp"
-                    android:background="@color/greenWhatever" />
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/twotone_check_circle_24"
+                    android:tint="#00A900" />
+
+                <ImageButton
+                    android:id="@+id/bt_cancel_addWordlkie"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_marginLeft="100dp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/twotone_cancel_24"
+                    android:tint="#5A1102" />
 
             </LinearLayout>
         </LinearLayout>

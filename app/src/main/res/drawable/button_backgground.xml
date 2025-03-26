@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Estado cuando el botón está presionado -->
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#49466B"/> <!-- Fondo más oscuro al presionar -->
+            <stroke android:width="2dp" android:color="#FFFFFF"/> <!-- Borde blanco -->
+            <corners android:radius="50dp"/>
+        </shape>
+    </item>
+
+    <!-- Estado normal del fondo del botón -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#5D597C"/> <!-- Fondo color sólido en estado normal -->
+            <stroke android:width="2dp" android:color="#FFFFFF"/> <!-- Borde blanco -->
+            <corners android:radius="50dp"/>
+        </shape>
+    </item>
+
+</selector>

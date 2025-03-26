@@ -5,14 +5,16 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/img_register"
     tools:context=".views.Register">
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
         android:text="@string/register"
+        android:textSize="60sp"
+        app:layout_constraintBottom_toTopOf="@+id/cardview_register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -45,7 +47,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@mipmap/default_icon"
+                android:gravity="center"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -65,10 +67,12 @@
 
                     <ImageButton
                         android:id="@+id/bt_deleteImageRegister"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/outline_email_24" />
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:background="@android:color/transparent"
+                        android:scaleType="fitCenter"
+                        android:visibility="gone"
+                        app:srcCompat="@drawable/twotone_delete_sweep_24" />
                 </LinearLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -88,13 +92,14 @@
                     app:counterEnabled="true"
                     app:counterMaxLength="50"
                     app:errorEnabled="false"
-                    app:startIconDrawable="@drawable/outline_person_24">
+                    app:startIconDrawable="@drawable/twotone_supervised_user_circle_24">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_nameRegister"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
+                        android:gravity="center"
                         android:inputType="text"
                         android:maxLength="50"
                         android:textAlignment="center"
@@ -136,6 +141,7 @@
                         android:id="@+id/et_pronounsRegister"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:inputType="text"
                         android:maxLength="50"
                         android:textAlignment="center"
@@ -162,6 +168,7 @@
                     android:layout_marginTop="50dp"
                     android:layout_marginRight="10dp"
                     android:focusable="false"
+                    android:gravity="center"
                     android:hint="@string/birthday"
                     android:textAlignment="center"
                     app:boxCornerRadiusBottomEnd="58dp"
@@ -169,7 +176,7 @@
                     app:boxCornerRadiusTopEnd="58dp"
                     app:boxCornerRadiusTopStart="58dp"
                     app:errorEnabled="false"
-                    app:startIconDrawable="@drawable/outline_calendar_month_24">
+                    app:startIconDrawable="@drawable/twotone_cake_24">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/dp_birthday"
@@ -178,6 +185,7 @@
                         android:editable="false"
                         android:ems="10"
                         android:focusable="false"
+                        android:gravity="center"
                         android:onClick="showDatePickerDialog"
                         android:textAlignment="center"
                         android:textColorHint="@color/brownMaroon" />
@@ -215,6 +223,7 @@
                         android:id="@+id/et_userRegister"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:inputType="text"
                         android:maxLength="20"
                         android:textAlignment="center" />
@@ -246,12 +255,13 @@
                     app:counterEnabled="true"
                     app:counterMaxLength="50"
                     app:errorEnabled="false"
-                    app:startIconDrawable="@drawable/outline_email_24">
+                    app:startIconDrawable="@drawable/twotone_email_24">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_emailRegister"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:inputType="textEmailAddress"
                         android:maxLength="50"
                         android:textAlignment="center" />
@@ -286,13 +296,14 @@
                     app:counterEnabled="true"
                     app:counterMaxLength="50"
                     app:errorEnabled="false"
-                    app:startIconDrawable="@drawable/outline_local_phone_24">
+                    app:startIconDrawable="@drawable/twotone_phone_24">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_telephoneRegister"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
+                        android:gravity="center"
                         android:inputType="phone"
                         android:maxLength="6"
                         android:textAlignment="center" />
@@ -329,13 +340,24 @@
                     app:startIconDrawable="@drawable/outline_password_24">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tv_errorPasswordRegister"
+                        android:id="@+id/et_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:text="TextView"
                         android:textAlignment="center"
                         android:textColor="@color/redError" />
+
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/tv_errorPasswordRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="TextView"
+                    android:textColor="@color/redError" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/et_passwordRepeatRegisterFilled"
@@ -361,6 +383,7 @@
                         android:id="@+id/et_passwordRepeat"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:inputType="textPassword"
                         android:maxLength="50"
                         android:textAlignment="center" />
@@ -370,42 +393,17 @@
                     android:id="@+id/tv_errorPasswordRepeatRegister"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:gravity="center"
                     android:text="TextView"
-                    android:textAlignment="center"
-                    android:textColor="@color/redError"
-                    tools:layout_editor_absoluteX="-170dp"
-                    tools:layout_editor_absoluteY="589dp" />
+                    android:textColor="@color/redError" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_password"
-                    android:layout_width="match_parent"
+                <Switch
+                    android:id="@+id/tb_privateAccountRegister"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textPassword"
-                    android:maxLength="50"
-                    android:textAlignment="center" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/textView5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="TextView" />
-
-                    <ToggleButton
-                        android:id="@+id/tb_privateAccountRegister"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="ToggleButton" />
-
-                </LinearLayout>
+                    android:text="Cuenta privada"
+                    android:thumb="@drawable/thumb_custom"
+                    android:track="@drawable/track_custom" />
 
             </LinearLayout>
         </ScrollView>
@@ -414,13 +412,31 @@
 
     <TextView
         android:id="@+id/tv_registerbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@drawable/button_backgground"
+        android:foreground="@drawable/twotone_bubble_chart_24"
+        android:foregroundGravity="left|center"
+        android:foregroundTint="#FFFFFF"
+        android:gravity="center"
         android:text="@string/login"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="@+id/bt_registerToLogin"
         app:layout_constraintEnd_toEndOf="@+id/bt_registerToLogin"
         app:layout_constraintStart_toStartOf="@+id/bt_registerToLogin"
         app:layout_constraintTop_toTopOf="@+id/bt_registerToLogin" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:background="@drawable/button_backgground"
+        android:foreground="@drawable/twotone_auto_awesome_24"
+        android:foregroundGravity="left|center"
+        android:foregroundTint="#FFFFFF"
+        android:gravity="center"
+        android:text="TextView"
+        android:textColor="#FFFFFF" />
 
     <ImageButton
         android:id="@+id/bt_register"

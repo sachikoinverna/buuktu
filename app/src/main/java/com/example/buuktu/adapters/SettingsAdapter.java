@@ -8,8 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buuktu.R;
@@ -40,13 +42,15 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView iv_photo_setting;
-        private TextView tv_name_setting;;
+        private TextView tv_name_setting;
+        private CardView card_view_setting_list_one;
         //private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
         //private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         public ViewHolder(View view) {
             super(view);
             iv_photo_setting =  view.findViewById(R.id.iv_photo_setting);
             tv_name_setting= view.findViewById(R.id.tv_name_setting);
+            card_view_setting_list_one = view.findViewById(R.id.card_view_setting_list_one);
         }
 
         public TextView getTv_name_setting() {
@@ -55,6 +59,9 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
 
         public ImageView getIv_photo_setting() {
             return iv_photo_setting;
+        }
+        public CardView getCard_view_setting_list_one() {
+            return card_view_setting_list_one;
         }
     }
 
@@ -80,7 +87,13 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull SettingsAdapter.ViewHolder holder, int position) {
             holder.getTv_name_setting().setText(dataSet.get(holder.getAdapterPosition()).getName());
-        // holder.getIv_photo_wordlkie().setImageDrawable(dataSet.get(holder.getAdapterPosition()).getPhoto());
+         holder.getIv_photo_setting().setImageDrawable(dataSet.get(holder.getAdapterPosition()).getDrawable());
+         holder.getCard_view_setting_list_one().setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 Toast.makeText(context,"Hola",Toast.LENGTH_SHORT).show();
+             }
+         });
     }
 
 

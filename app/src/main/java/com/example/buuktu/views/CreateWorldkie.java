@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Switch;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -59,7 +60,7 @@ public class CreateWorldkie extends AppCompatActivity {
     ImageButton bt_cancel;
     ImageButton bt_ok;
     TextInputEditText et_nameWorldkieCreate;
-    ToggleButton tb_worldkiePrivacity;
+    Switch tb_worldkiePrivacity;
     FirebaseStorage storage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
     boolean create;
     WorldkieModel worldkieModel;
@@ -125,7 +126,7 @@ public class CreateWorldkie extends AppCompatActivity {
         getBt_deleteImageRegister().setVisibility(View.INVISIBLE);
     }
 
-    public ToggleButton getTb_worldkiePrivacity() {
+    public Switch getTb_worldkiePrivacity() {
         return tb_worldkiePrivacity;
     }
 

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/img_login"
+    tools:context=".views.WorldkieMenu">
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="123dp"
+        android:layout_height="50dp"
+        android:background="@drawable/button_backgground"
+        android:gravity="center"
+        android:text="Waykies"
+        android:textColor="#FFFFFF"
+        tools:layout_editor_absoluteX="144dp"
+        tools:layout_editor_absoluteY="435dp" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="123dp"
+        android:layout_height="50dp"
+        android:background="@drawable/button_backgground"
+        android:foreground="@drawable/twotone_map_24"
+        android:foregroundGravity="left|center"
+        android:foregroundTint="#FFFFFF"
+        android:gravity="center"
+        android:text="Regionkies"
+        android:textColor="#FFFFFF"
+        tools:layout_editor_absoluteX="226dp"
+        tools:layout_editor_absoluteY="299dp" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/twotone_catching_pokemon_24"
+        tools:layout_editor_absoluteX="120dp"
+        tools:layout_editor_absoluteY="282dp" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="123dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/button_backgground"
+        android:foreground="@drawable/twotone_catching_pokemon_24"
+        android:foregroundGravity="left|center"
+        android:foregroundTint="#FFFFFF"
+        android:gravity="center"
+        android:text="Stuffikies"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="130dp"
+        android:layout_height="51dp"
+        android:background="@drawable/button_backgground"
+        android:foreground="@drawable/twotone_face_retouching_natural_24"
+        android:foregroundGravity="left|center"
+        android:foregroundTint="#FFFFFF"
+        android:gravity="center"
+        android:text="Characterkies"
+        android:textColor="@color/white"
+        tools:layout_editor_absoluteX="96dp"
+        tools:layout_editor_absoluteY="188dp" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/twotone_face_retouching_natural_24"
+        tools:layout_editor_absoluteX="18dp"
+        tools:layout_editor_absoluteY="101dp" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/twotone_map_24"
+        tools:layout_editor_absoluteX="32dp"
+        tools:layout_editor_absoluteY="188dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

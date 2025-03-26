@@ -3,27 +3,29 @@
 
     <item
         android:id="@+id/home"
-        android:title="Home"
-        android:icon="@drawable/outline_email_24"/>
+        android:icon="@drawable/twotone_houseboat_24"
+        android:title="Home" />
 
     <item
-        android:id="@+id/shorts"
-        android:title="Shorts"
-        android:icon="@drawable/outline_local_phone_24"/>
+        android:id="@+id/search"
+        android:icon="@drawable/twotone_explore_24"
+        android:title="Search" />
 
     <item
-        android:id="@+id/fab"
-        android:title=""
-        android:enabled="false"/>
+        android:id="@+id/inspo"
+        android:enabled="true"
+        android:icon="@drawable/twotone_bubble_chart_24"
+        android:title="Inspo"
+        android:visible="true" />
 
     <item
-        android:id="@+id/subscriptions"
-        android:title="Subscriptions"
-        android:icon="@drawable/outline_password_24"/>
+        android:id="@+id/notifications"
+        android:icon="@drawable/twotone_notifications_24"
+        android:title="Notikies" />
 
     <item
-        android:id="@+id/library"
-        android:title="Library"
-        android:icon="@drawable/outline_person_24"/>
+        android:id="@+id/messages"
+        android:icon="@drawable/twotone_message_24"
+        android:title="Mensajes" />
 
 </menu>

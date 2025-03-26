@@ -1,6 +1,11 @@
 package com.example.buuktu.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,11 +13,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buuktu.R;
 import com.example.buuktu.models.Characterkie;
 import com.example.buuktu.models.SettingModel;
+import com.example.buuktu.utils.DrawableUtils;
+import com.google.rpc.context.AttributeContext;
 
 import java.util.ArrayList;
 
@@ -36,6 +46,7 @@ public class CharacterkiesWorldkiePreviewAdapter extends RecyclerView.Adapter<Ch
         private TextView tv_characterkie_preview_worldkie;
         //private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
         //private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        
         public ViewHolder(View view) {
             super(view);
             iv_characterkie_preview_worldkie =  view.findViewById(R.id.iv_characterkie_preview_worldkie);
@@ -60,7 +71,7 @@ public class CharacterkiesWorldkiePreviewAdapter extends RecyclerView.Adapter<Ch
         this.clicListener = clicListener;
     }
 
-
+    
     //Se llama cada vez que se hace scroll en la pantalla y los elementos desaparecen y aparecen
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -69,13 +80,19 @@ public class CharacterkiesWorldkiePreviewAdapter extends RecyclerView.Adapter<Ch
            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.characterkie_list_layout_preview, viewGroup, false);
         return new ViewHolder(view);
     }
-
     @Override
     public void onBindViewHolder(@NonNull CharacterkiesWorldkiePreviewAdapter.ViewHolder holder, int position) {
-            holder.getTv_characterkie_preview_worldkie().setText(dataSet.get(holder.getAdapterPosition()).getName());
-        // holder.getIv_photo_wordlkie().setImageDrawable(dataSet.get(holder.getAdapterPosition()).getPhoto());
-    }
+        holder.getTv_characterkie_preview_worldkie().setText(dataSet.get(holder.getAdapterPosition()).getName());
+        // holder.getIv_characterkie_preview_worldkie().setImageDrawable(dataSet.get(holder.getAdapterPosition()).getPhoto());
+        Drawable drawable = context.getDrawable(R.drawable.cloudlogin);
+      //  Drawable drawable = dataSet.get(holder.getAdapterPosition()).getPhoto();
 
+        Bitmap bitmap = DrawableUtils.drawableToBitmap(drawable);
+        int colorInt = ContextCompat.getColor(context, R.color.redError);
+        Color color = Color.valueOf(colorInt);
+
+        DrawableUtils.personalizarImagenCircle(context,bitmap,holder.getIv_characterkie_preview_worldkie(),color);
+    }
 
     // Devolvemos el numero de items de nuestro arraylist, lo invoca automaticamente el layout manager
     @Override

@@ -2,6 +2,8 @@ package com.example.buuktu.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buuktu.R;
 import com.example.buuktu.models.WorldkieModel;
+import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.views.CreateWorldkie;
 import com.example.buuktu.views.Worldkie;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -145,6 +149,12 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
             //int imageResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
             //Drawable res =  context.getResources().getDrawable(imageResource);
             holder.getIv_photo_wordlkie().setImageDrawable(dataSet.get(holder.getAdapterPosition()).getPhoto());
+        Bitmap bitmap = DrawableUtils.drawableToBitmap(dataSet.get(holder.getAdapterPosition()).getPhoto());
+        int colorRGB = Color.rgb(139, 111, 71);
+        //8B6F47
+        Color color = Color.valueOf(colorRGB);
+
+        DrawableUtils.personalizarImagenCuadrado(context,bitmap,holder.getIv_photo_wordlkie(),color);
     }
 
 

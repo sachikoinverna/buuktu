@@ -3,16 +3,16 @@ package com.example.buuktu.views;
 import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -20,7 +20,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
@@ -32,33 +31,27 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import com.example.buuktu.R;
+import com.example.buuktu.dialogs.InfoFutureFunctionDialog;
+import com.example.buuktu.dialogs.InfoWorldkiesDialog;
+import com.example.buuktu.listeners.OnDialogInfoClickListener;
 import com.example.buuktu.models.UserModel;
 import com.example.buuktu.utils.BitmapUtils;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.ktx.Firebase;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnDialogInfoClickListener {
 
     private DrawerLayout drawerLayout;
     private BottomNavigationView bottomNavigationView;
-    private ImageButton iv_profileView;
+    private ImageButton iv_profileView,ib_info;
     FirebaseAuth firebaseAuth;
     FirebaseAuth.AuthStateListener authStateListener;
     private String UID;
@@ -67,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-users");
     private UserModel userModel;
     FloatingActionButton floatingActionButton;
+    InfoWorldkiesDialog infoWorldkiesDialog;
+    InfoFutureFunctionDialog infoFutureFunctionDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +82,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
         Toolbar toolbar = findViewById(R.id.toolbar);
         iv_profileView = findViewById(R.id.iv_profileView);
+        ib_info = findViewById(R.id.ib_info);
+        infoFutureFunctionDialog = new InfoFutureFunctionDialog(this);
         UID = FirebaseAuth.getInstance().getUid();
         db = FirebaseFirestore.getInstance();
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
@@ -125,14 +122,46 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 //}
             //}
         //});
+        Animation rotation = AnimationUtils.loadAnimation(this, R.anim.rotate);
+        iv_profileView.startAnimation(rotation);
+        /*
+        // Realizar una tarea en segundo plano (por ejemplo, usando un hilo o AsyncTask)
+new Thread(new Runnable() {
+    @Override
+    public void run() {
+        try {
+            Thread.sleep(5000);  // Simula un proceso largo de 5 segundos
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
+        // Una vez que el proceso termine, detener la animación y ocultar la vista
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                animImageView.clearAnimation();  // Detener la animación
+                animImageView.setVisibility(View.GONE);  // Ocultar la vista
+            }
+        });
+    }
+}).start();
+         */
         iv_profileView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(),"Pulsado",Toast.LENGTH_SHORT).show();
             }
         });
-
+        ib_info = findViewById(R.id.ib_info);
+        infoWorldkiesDialog = new InfoWorldkiesDialog(this);
+        infoWorldkiesDialog.setOnDialogClickListener(this);
+        infoFutureFunctionDialog.setOnDialogClickListener(this);
+        ib_info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mostrarInfoWorldkies(v);
+            }
+        });
         setSupportActionBar(toolbar);
         // Inicialización del DrawerLayout y NavigationView
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -153,11 +182,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 int id = item.getItemId();
                 if (id == R.id.home) {
                     replaceFragment(new Home());
-                }/*else if (id == R.id.search) {
+                }else if (id == R.id.search) {
                     Toast.makeText(MainActivity.this, "Home selected", Toast.LENGTH_SHORT).show();
-                } else if (id == R.id.profile) {
-                    Toast.makeText(MainActivity.this, "Home selected", Toast.LENGTH_SHORT).show();
-                }*/
+                } else if (id == R.id.inspo) {
+                    infoFutureFunctionDialog.show();
+                } else if (id == R.id.notifications) {
+                    infoFutureFunctionDialog.show();
+                } else if (id == R.id.messages){
+                    infoFutureFunctionDialog.show();
+                }
                 return true;
             }
         });
@@ -167,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             replaceFragment(new Home());
         }
     }
-    private void obtenerImagen(){
+    public void obtenerImagen(){
         if (userModel.isPhoto_default()) {
             //putDefaultImage();
         } else {
@@ -206,6 +239,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.commit();
     }
+    private void mostrarInfoWorldkies(View view){
+        infoWorldkiesDialog.show();
+    }
     private void inicialize() {
         firebaseAuth = FirebaseAuth.getInstance();
         authStateListener = new FirebaseAuth.AuthStateListener() {
@@ -241,5 +277,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public void onAccept() {
+
+    }
+
+    @Override
+    public void onCancel() {
+        infoWorldkiesDialog.dismiss();
     }
 }

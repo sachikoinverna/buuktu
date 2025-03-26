@@ -22,6 +22,12 @@
         android:theme="@style/Theme.Buuktu"
         tools:targetApi="31">
         <activity
+            android:name=".views.CreateCharacterkie"
+            android:exported="false" />
+        <activity
+            android:name=".WorldkieMenu"
+            android:exported="false" />
+        <activity
             android:name=".CharacterkiesWorldkie"
             android:exported="false"
             android:theme="@style/Theme.Buuktu" />
@@ -52,6 +58,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

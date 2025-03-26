@@ -1,16 +1,27 @@
 package com.example.buuktu.views;
 
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.ImageDecoder;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.buuktu.CharacterkiesWorldkie;
 import com.example.buuktu.R;
 import com.example.buuktu.adapters.CharacterkiesWorldkiePreviewAdapter;
 import com.example.buuktu.adapters.SettingsAdapter;
@@ -22,6 +33,7 @@ import java.util.ArrayList;
 public class Worldkie extends AppCompatActivity implements CharacterkiesWorldkiePreviewAdapter.ItemClickListener {
     private RecyclerView rc_characterkiesWorldkiePreview;
     private ArrayList<Characterkie> dataSet = new ArrayList<Characterkie>();
+    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +70,11 @@ public class Worldkie extends AppCompatActivity implements CharacterkiesWorldkie
         CharacterkiesWorldkiePreviewAdapter characterkiesWorldkiePreviewAdapter = new CharacterkiesWorldkiePreviewAdapter(dataSet,this);
         rc_characterkiesWorldkiePreview.setAdapter(characterkiesWorldkiePreviewAdapter);
         rc_characterkiesWorldkiePreview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
-        characterkiesWorldkiePreviewAdapter.setOnClickListener(this);
+      //  characterkiesWorldkiePreviewAdapter.setOnClickListener(this);
+      //  ImageDecoder.Source image1 = ImageDecoder.createSource(this.getContentResolver(),uri);
+      //  Drawable drawable = imageView.getDrawable();
+      //  Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+      //  personalizarImagen(bitmap);
     }
 
     @Override
