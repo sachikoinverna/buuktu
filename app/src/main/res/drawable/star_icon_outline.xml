@@ -5,12 +5,11 @@
     android:viewportWidth="24"
     android:viewportHeight="24">
 
-    <!-- Contorno de la estrella -->
     <path
         android:fillColor="@android:color/transparent"
         android:strokeColor="#FFA500"
         android:strokeWidth="2"
         android:strokeLineJoin="round"
         android:strokeLineCap="round"
-        android:pathData="M12,2 L15.09,8.26 L22,9.27 L17,14.14 L18.18,21 L12,17.77 L5.82,21 L7,14.14 L2,9.27 L8.91,8.26 L12,2 Z"/>
+        android:pathData="M12,2 L15,9 H22 L16,13 L18,20 L12,16 L6,20 L8,13 L2,9 H9 Z" />
 </vector>

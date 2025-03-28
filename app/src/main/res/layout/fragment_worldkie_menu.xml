@@ -59,7 +59,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/tv_characterkies"
         android:layout_width="130dp"
         android:layout_height="51dp"
         android:background="@drawable/button_backgground"

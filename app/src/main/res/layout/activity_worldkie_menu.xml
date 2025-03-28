@@ -12,17 +12,21 @@
         android:id="@+id/textView10"
         android:layout_width="123dp"
         android:layout_height="50dp"
+        android:layout_marginStart="96dp"
+        android:layout_marginTop="105dp"
         android:background="@drawable/button_backgground"
         android:gravity="center"
         android:text="Waykies"
         android:textColor="#FFFFFF"
-        tools:layout_editor_absoluteX="96dp"
-        tools:layout_editor_absoluteY="272dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_characterkies" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="123dp"
         android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="34dp"
         android:background="@drawable/button_backgground"
         android:foreground="@drawable/twotone_map_24"
         android:foregroundGravity="left|center"
@@ -30,33 +34,38 @@
         android:gravity="center"
         android:text="Regionkies"
         android:textColor="#FFFFFF"
-        tools:layout_editor_absoluteX="239dp"
-        tools:layout_editor_absoluteY="272dp" />
+        app:layout_constraintStart_toEndOf="@+id/textView10"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="123dp"
         android:layout_height="50dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="49dp"
         android:background="@drawable/button_backgground"
         android:gravity="center"
         android:text="Stuffikies"
         android:textColor="#FFFFFF"
-        tools:layout_editor_absoluteX="239dp"
-        tools:layout_editor_absoluteY="188dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_characterkies" />
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="77dp"
+        android:layout_marginEnd="74dp"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/twotone_catching_pokemon_24"
-        tools:layout_editor_absoluteX="313dp"
-        tools:layout_editor_absoluteY="77dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/twotone_catching_pokemon_24" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/tv_characterkies"
         android:layout_width="140dp"
         android:layout_height="51dp"
+        android:layout_marginTop="116dp"
         android:background="@drawable/button_backgground"
         android:foreground="@drawable/twotone_face_retouching_natural_24"
         android:foregroundGravity="left|center"
@@ -64,25 +73,29 @@
         android:gravity="center"
         android:text="Characterkies"
         android:textColor="@color/white"
-        tools:layout_editor_absoluteX="106dp"
-        tools:layout_editor_absoluteY="116dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="106dp" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="101dp"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/twotone_face_retouching_natural_24"
-        tools:layout_editor_absoluteX="18dp"
-        tools:layout_editor_absoluteY="101dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/twotone_face_retouching_natural_24" />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="63dp"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/twotone_map_24"
-        tools:layout_editor_absoluteX="32dp"
-        tools:layout_editor_absoluteY="188dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:srcCompat="@drawable/twotone_map_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

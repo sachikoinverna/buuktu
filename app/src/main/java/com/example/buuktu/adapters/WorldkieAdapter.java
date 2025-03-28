@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buuktu.R;
+import com.example.buuktu.WorldkieMenu;
 import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.views.CreateWorldkie;
@@ -105,7 +106,8 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
             holder.getIb_enterToAWorldkie().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(holder.itemView.getContext(), Worldkie.class);
+                    //Intent intent = new Intent(holder.itemView.getContext(), Worldkie.class);
+                    Intent intent = new Intent(holder.itemView.getContext(), WorldkieMenu.class);
                     holder.itemView.getContext().startActivity(intent);
                 }
             });

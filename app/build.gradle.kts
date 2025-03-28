@@ -36,7 +36,7 @@ android {
 }
 
 dependencies {
-    implementation("com.google.android.material:material:1.3.0-alpha02")
+    implementation(libs.material) // Usa la versión más reciente de Material Components
     implementation("androidx.activity:activity:1.7.0")
     implementation(platform("com.google.firebase:firebase-bom:33.6.0"))
     implementation("com.google.firebase:firebase-storage")
@@ -50,6 +50,8 @@ dependencies {
     implementation(libs.firebase.firestore)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
+    implementation(libs.cardview) // Usa la versión actual de androidx.cardview
+    implementation(libs.gridlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

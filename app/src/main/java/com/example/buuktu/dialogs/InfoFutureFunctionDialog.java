@@ -23,7 +23,7 @@ public class InfoFutureFunctionDialog extends Dialog implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.info_characterkies_dialog);
+        setContentView(R.layout.future_function_dialog);
         //   ib_next_incorrect = findViewById(R.id.ib_next_incorrect);
         //ib_home_incorrect = findViewById(R.id.ib_home_incorrect);
         ib_close_dialog = findViewById(R.id.ib_close_dialog);

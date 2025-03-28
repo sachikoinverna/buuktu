@@ -1,6 +1,4 @@
-package com.example.buuktu.views;
-
-import static android.provider.MediaStore.Images.Media.getBitmap;
+package com.example.buuktu.bottomsheet;
 
 import static com.example.buuktu.R.*;
 
@@ -21,7 +19,6 @@ import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
 import com.example.buuktu.R;
-import com.example.buuktu.utils.BitmapUtils;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment {

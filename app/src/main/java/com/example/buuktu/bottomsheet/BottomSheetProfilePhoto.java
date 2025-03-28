@@ -1,4 +1,4 @@
-package com.example.buuktu.views;
+package com.example.buuktu.bottomsheet;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,7 +10,6 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.example.buuktu.R;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class BottomSheetProfilePhoto extends BottomSheetDialogFragment {

@@ -16,6 +16,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.annotation.NavigationRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,7 +32,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.example.buuktu.CharacterkiesWorldkie;
 import com.example.buuktu.R;
+import com.example.buuktu.Search;
 import com.example.buuktu.dialogs.InfoFutureFunctionDialog;
 import com.example.buuktu.dialogs.InfoWorldkiesDialog;
 import com.example.buuktu.listeners.OnDialogInfoClickListener;
@@ -183,11 +188,15 @@ new Thread(new Runnable() {
                 if (id == R.id.home) {
                     replaceFragment(new Home());
                 }else if (id == R.id.search) {
-                    Toast.makeText(MainActivity.this, "Home selected", Toast.LENGTH_SHORT).show();
+                    replaceFragment(new Search());
+                    //Toast.makeText(MainActivity.this, "Home selected", Toast.LENGTH_SHORT).show();
                 } else if (id == R.id.inspo) {
-                    infoFutureFunctionDialog.show();
+                    replaceFragment(new Inspo());
+                    //infoFutureFunctionDialog.show();
                 } else if (id == R.id.notifications) {
-                    infoFutureFunctionDialog.show();
+                    Intent intent = new Intent(MainActivity.this, CharacterkiesWorldkie.class);
+                    startActivity(intent);
+                    //infoFutureFunctionDialog.show();
                 } else if (id == R.id.messages){
                     infoFutureFunctionDialog.show();
                 }
@@ -240,6 +249,9 @@ new Thread(new Runnable() {
         fragmentTransaction.commit();
     }
     private void mostrarInfoWorldkies(View view){
+        infoWorldkiesDialog.show();
+    }
+    private void mostrarFutureFunction(View view){
         infoWorldkiesDialog.show();
     }
     private void inicialize() {
