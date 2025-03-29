@@ -8,6 +8,8 @@ import android.text.PrecomputedText;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -28,7 +30,11 @@ import java.util.List;
 
 public class ComponentsUtils {
     public static void customTextInputEditText(Context context, TextInputEditText textInputEditText, TextInputLayout.LayoutParams params) {
-        textInputEditText.setLayoutParams(params);
+            textInputEditText.setLayoutParams(new FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.MATCH_PARENT,
+                    FrameLayout.LayoutParams.WRAP_CONTENT
+            ));
+
         textInputEditText.setGravity(Gravity.CENTER);  // Usa 'setGravity' para alinear el texto
         textInputEditText.setEms(10);
         textInputEditText.setHintTextColor(ContextCompat.getColorStateList(context, R.color.black)); // Color del hint
@@ -63,7 +69,7 @@ public class ComponentsUtils {
                 child.setId(View.generateViewId());
             }
         }
-
+        constraintLayout.addView(textInputLayout);
         // Aplica las restricciones usando ConstraintSet después de asignar los IDs
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(constraintLayout);
@@ -89,6 +95,7 @@ public class ComponentsUtils {
         // Crear un TextInputEditText
         TextInputEditText textInputEditText = new TextInputEditText(context);
         textInputEditText.setId(View.generateViewId());
+        textInputLayout.addView(textInputEditText);
 
         // Establecer el tipo de entrada basado en el tipo proporcionado
         if (type.equals("Decimal")) {
@@ -111,15 +118,14 @@ public class ComponentsUtils {
                 TextInputLayout.LayoutParams.WRAP_CONTENT
         );
 
-        // Llamar a los métodos para personalizar el TextInputLayout y TextInputEditText
-        customTextInputLayout(context, textInputLayout, layoutParamsTextInputLayout, constraintLayout);
         customTextInputEditText(context, textInputEditText, layoutParamsTextInputEditText);
 
-        // Añadir el TextInputLayout al ConstraintLayout primero
-        constraintLayout.addView(textInputLayout);
+        // Llamar a los métodos para personalizar el TextInputLayout y TextInputEditText
+        customTextInputLayout(context, textInputLayout, layoutParamsTextInputLayout, constraintLayout);
+// Añadir el TextInputLayout al ConstraintLayout primero
 
         // Agregar el TextInputEditText al TextInputLayout
-        textInputLayout.addView(textInputEditText);
+
     }
     public static void customRadioButton(Context context, TextInputEditText textInputEditText,LinearLayout.LayoutParams params){
         textInputEditText.setLayoutParams(params);
@@ -142,5 +148,17 @@ public class ComponentsUtils {
             // Añadir al BottomSheet o a un contenedor específico
         //    bottomSheetContainer.addView(radioGroup);
         }
+    }
+    private int getLastFieldBeforeSwitch(ConstraintLayout constraintLayout, int switchId) {
+        int lastFieldId = -1;
+
+        for (int i = 0; i < constraintLayout.getChildCount(); i++) {
+            View child = constraintLayout.getChildAt(i);
+            if (child.getId() == switchId) {
+                break; // Si encontramos el switch, detenemos la búsqueda
+            }
+            lastFieldId = child.getId(); // Guardamos el ID del último campo encontrado
+        }
+        return lastFieldId;
     }
 }
