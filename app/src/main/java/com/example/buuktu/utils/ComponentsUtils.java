@@ -164,10 +164,59 @@ public class ComponentsUtils {
             constraintLayout.removeView(view);
             constraintLayout.removeView(imageButton);
             // Notificar a la Activity o Fragment
+
             listener.onFieldDeleted("Patatas");
-            addConstraintsForView(constraintLayout,id, id2);
+            int previousId = switchId; // O el elemento más cercano antes de la vista eliminada
+            for (int i = 0; i < constraintLayout.getChildCount(); i++) {
+                View child = constraintLayout.getChildAt(i);
+                    ConstraintSet constraintSet2 = new ConstraintSet();
+                    constraintSet2.clone(constraintLayout);
+                    if(child.getId() == R.id.ib_select_img_create_characterkie){
+                        constraintSet2.connect(child.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 24);
+                    }else if(child.getId() == R.id.ib_delete_img_create_characterkie){
+                        constraintSet2.connect(child.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 58);
+                    }
+                    constraintSet2.connect(child.getId(), ConstraintSet.TOP, previousId, ConstraintSet.BOTTOM, 16);
+                    constraintSet2.applyTo(constraintLayout);
+                    previousId = child.getId();
+                }
+
+            /*addConstraintsForView(constraintLayout,id, id2);*/
+            // Lógica para eliminar el TextInputLayout
+          //  View view = getViewById(constraintLayout, relatedViewId);
+           // constraintLayout.removeView(view);
+
+// Eliminar también el ImageButton
+            //constraintLayout.removeView(imageButton);
+
+// Actualizar las restricciones de los campos siguientes
+            //updateConstraintsAfterRemoval(constraintLayout, relatedViewId);
+
         });
     }
+    private static void updateConstraintsAfterRemoval(ConstraintLayout constraintLayout, int removedViewId) {
+        // Obtener el ID del último campo agregado antes de la vista eliminada
+        int lastFieldId = getLastFieldBeforeSwitch(constraintLayout, removedViewId);
+
+        // Iterar sobre todos los elementos en el layout y actualizar sus restricciones
+        for (int i = 0; i < constraintLayout.getChildCount(); i++) {
+            View child = constraintLayout.getChildAt(i);
+
+            // Si el elemento está por debajo del eliminado, actualizar su posición
+            if (child.getId() != View.NO_ID) {
+                ConstraintSet constraintSet = new ConstraintSet();
+                constraintSet.clone(constraintLayout);
+
+                // Actualizar las restricciones: mover hacia arriba para ocupar el espacio vacío
+                constraintSet.connect(child.getId(), ConstraintSet.TOP, lastFieldId, ConstraintSet.BOTTOM, 16);
+                constraintSet.applyTo(constraintLayout);
+
+                // Actualizar el lastFieldId para los siguientes elementos
+                lastFieldId = child.getId();
+            }
+        }
+    }
+
     public static View getViewById(ViewGroup parent, int viewId) {
         // Obtener la View por su ID
         View view = parent.findViewById(viewId);

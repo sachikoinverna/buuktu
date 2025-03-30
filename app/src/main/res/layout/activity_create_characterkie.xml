@@ -27,11 +27,12 @@
             android:id="@+id/ib_delete_img_create_characterkie"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:layout_marginTop="58dp"
             android:background="@android:color/transparent"
             android:scaleType="centerCrop"
             app:layout_constraintStart_toEndOf="@+id/ib_select_img_create_characterkie"
-            app:srcCompat="@drawable/twotone_delete_sweep_24"
-            tools:layout_editor_absoluteY="58dp" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/twotone_delete_sweep_24" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/et_nameCharacterkieCreateFull"
