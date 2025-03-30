@@ -14,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.buuktu.R;
 import com.example.buuktu.bottomsheet.BottomSheetChooseComponents;
+import com.example.buuktu.listeners.OnFieldDeletedListener;
 import com.example.buuktu.models.FieldItem;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -24,7 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreateCharacterkie extends AppCompatActivity {
+public class CreateCharacterkie extends AppCompatActivity implements OnFieldDeletedListener {
     List<String> fieldsAdded = new ArrayList<>();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     CollectionReference fieldkiesRef = db.collection("Fieldkies");
@@ -188,7 +189,16 @@ public void createTextInputEditText(String type) {
 }*/
 
     public void openBottomSheet(View view) {
-        BottomSheetChooseComponents bottomSheetFragment = new BottomSheetChooseComponents(this,constraintLayout);
+        BottomSheetChooseComponents bottomSheetFragment = new BottomSheetChooseComponents(this,constraintLayout,this);
         bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
+    }
+
+    @Override
+    public void onFieldDeleted(String fieldName) {
+        fieldsAdded.remove(fieldName);
+       // fieldsNotAdded.add(fieldName);
+    }
+    private void actualizarBottomSheet() {
+        // Lógica para actualizar el BottomSheet
     }
 }

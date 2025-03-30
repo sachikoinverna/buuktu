@@ -135,7 +135,6 @@ public class Register extends AppCompatActivity {
         tv_nameRegister = findViewById(R.id.tv_errorNameRegister);
         tv_emailRegister = findViewById(R.id.tv_errorEmailRegister);
         tv_birthdayRegister = findViewById(R.id.tv_birthdayError);
-        tv_passwordRegister = findViewById(R.id.et_password);
         tv_passwordRepeatRegister = findViewById(R.id.tv_errorPasswordRepeatRegister);
         tv_pronounsRegister = findViewById(R.id.tv_errorPronounsRegister);
         tv_usernameRegister = findViewById(R.id.tv_errorUsernameRegister);
@@ -144,8 +143,8 @@ public class Register extends AppCompatActivity {
         CheckUtil.setErrorMessage(null, tv_nameRegister);
          CheckUtil.setErrorMessage(null, tv_emailRegister);
         CheckUtil.setErrorMessage(null, tv_birthdayRegister);
-        CheckUtil.setErrorMessage(null, tv_passwordRegister);
-        CheckUtil.setErrorMessage(null, tv_passwordRepeatRegister);
+//        CheckUtil.setErrorMessage(null, tv_passwordRegister);
+ //       CheckUtil.setErrorMessage(null, tv_passwordRepeatRegister);
         CheckUtil.setErrorMessage(null, tv_birthdayRegister);
         CheckUtil.setErrorMessage("", tv_pronounsRegister);
         CheckUtil.setErrorMessage(null, tv_usernameRegister);

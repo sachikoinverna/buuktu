@@ -196,7 +196,6 @@ public class Home extends Fragment {
                         updateRecyclerView(worldkieModelArrayList);
                     }
                 });
-
         return view;
     }
 

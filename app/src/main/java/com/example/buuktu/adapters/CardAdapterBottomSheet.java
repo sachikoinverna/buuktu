@@ -14,10 +14,9 @@ import com.example.buuktu.R;
 import com.example.buuktu.models.CardItem;
 import com.google.android.material.card.MaterialCardView;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
+public class CardAdapterBottomSheet extends RecyclerView.Adapter<CardAdapterBottomSheet.ViewHolder> {
 
     // Modelo de datos, por ejemplo:
     private List<CardItem> cardItems;
@@ -28,7 +27,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         void onItemClick(CardItem item);
     }
 
-    public CardAdapter(Context context, List<CardItem> cardItems, OnItemClickListener listener) {
+    public CardAdapterBottomSheet(Context context, List<CardItem> cardItems, OnItemClickListener listener) {
         this.context = context;
         this.cardItems = cardItems;
         this.listener = listener;

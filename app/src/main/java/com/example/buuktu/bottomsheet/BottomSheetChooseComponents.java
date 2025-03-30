@@ -13,9 +13,11 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buuktu.R;
-import com.example.buuktu.adapters.CardAdapter;
+import com.example.buuktu.adapters.CardAdapterBottomSheet;
+import com.example.buuktu.listeners.OnFieldDeletedListener;
 import com.example.buuktu.models.CardItem;
 import com.example.buuktu.utils.ComponentsUtils;
+import com.example.buuktu.views.CreateCharacterkie;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
@@ -23,12 +25,15 @@ import java.util.List;
 
 public class BottomSheetChooseComponents extends BottomSheetDialogFragment {
     private RecyclerView recyclerView;
-    private CardAdapter adapter;
+    private CardAdapterBottomSheet adapter;
     private Context context;
     private ConstraintLayout constraintLayout;
-    public BottomSheetChooseComponents(Context context,ConstraintLayout constraintLayout) {
+    private OnFieldDeletedListener listener; // Agregar el listener
+
+    public BottomSheetChooseComponents(Context context, ConstraintLayout constraintLayout, OnFieldDeletedListener listener) {
         this.context = context;
         this.constraintLayout = constraintLayout;
+        this.listener = listener; // Inicializar el listener
     }
 
     @Override
@@ -47,11 +52,11 @@ public class BottomSheetChooseComponents extends BottomSheetDialogFragment {
         items.add(new CardItem(R.drawable.twotone_delete_sweep_24, "Elemento 4"));
 
         // Configurar el adaptador
-        adapter = new CardAdapter(getContext(), items, item -> {
+        adapter = new CardAdapterBottomSheet(getContext(), items, item -> {
             // Manejar clic en el CardView
             // Por ejemplo, agregar el campo al layout principal
             // o realizar otra acción
-            ComponentsUtils.createTextInputEditText("String","Patatas",context,constraintLayout);
+            ComponentsUtils.createTextInputEditText("String","Patatas",context,constraintLayout,R.id.tb_CharacterkiePrivacity, listener);
              Toast.makeText(getContext(), "Seleccionaste: " + item.getText(), Toast.LENGTH_SHORT).show();
             dismiss(); // Cierra el BottomSheet si lo deseas
         });
