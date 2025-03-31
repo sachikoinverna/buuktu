@@ -16,7 +16,7 @@ import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
-public class CardAdapterBottomSheet extends RecyclerView.Adapter<CardAdapterBottomSheet.ViewHolder> {
+public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
     // Modelo de datos, por ejemplo:
     private List<CardItem> cardItems;
@@ -27,7 +27,7 @@ public class CardAdapterBottomSheet extends RecyclerView.Adapter<CardAdapterBott
         void onItemClick(CardItem item);
     }
 
-    public CardAdapterBottomSheet(Context context, List<CardItem> cardItems, OnItemClickListener listener) {
+    public CardAdapter(Context context, List<CardItem> cardItems, OnItemClickListener listener) {
         this.context = context;
         this.cardItems = cardItems;
         this.listener = listener;

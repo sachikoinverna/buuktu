@@ -28,7 +28,9 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ComponentsUtils {
     private static int lastAddedFieldId = -1; // Registro del último campo añadido
@@ -164,9 +166,10 @@ public class ComponentsUtils {
             constraintLayout.removeView(view);
             constraintLayout.removeView(imageButton);
             // Notificar a la Activity o Fragment
+            lastAddedFieldId = getLastFieldBeforeSwitch(constraintLayout, switchId);
 
             listener.onFieldDeleted("Patatas");
-            int previousId = switchId; // O el elemento más cercano antes de la vista eliminada
+            int previousId = relatedViewId; // O el elemento más cercano antes de la vista eliminada
             for (int i = 0; i < constraintLayout.getChildCount(); i++) {
                 View child = constraintLayout.getChildAt(i);
                     ConstraintSet constraintSet2 = new ConstraintSet();
@@ -180,6 +183,7 @@ public class ComponentsUtils {
                     constraintSet2.applyTo(constraintLayout);
                     previousId = child.getId();
                 }
+        //    updateConstraintsAfterRemoval(constraintLayout, lastAddedFieldId, switchId);
 
             /*addConstraintsForView(constraintLayout,id, id2);*/
             // Lógica para eliminar el TextInputLayout
@@ -190,32 +194,129 @@ public class ComponentsUtils {
             //constraintLayout.removeView(imageButton);
 
 // Actualizar las restricciones de los campos siguientes
-            //updateConstraintsAfterRemoval(constraintLayout, relatedViewId);
+            updateConstraintsAfterRemovalSingle(constraintLayout, relatedViewId, switchId);
 
         });
     }
-    private static void updateConstraintsAfterRemoval(ConstraintLayout constraintLayout, int removedViewId) {
-        // Obtener el ID del último campo agregado antes de la vista eliminada
-        int lastFieldId = getLastFieldBeforeSwitch(constraintLayout, removedViewId);
+    private static void updateConstraintsAfterRemovalSingle(ConstraintLayout layout, int removedViewId, int switchId) {
+        List<Integer> dynamicFieldIds = new ArrayList<>();
+        Map<Integer, Integer> fieldButtonMap = new HashMap<>(); // Mapa de Campo -> ImageButton asociado
+        boolean foundName = false;
 
-        // Iterar sobre todos los elementos en el layout y actualizar sus restricciones
-        for (int i = 0; i < constraintLayout.getChildCount(); i++) {
-            View child = constraintLayout.getChildAt(i);
+        // Recorrer el layout y recopilar los campos dinámicos después del campo "name"
+        for (int i = 0; i < layout.getChildCount(); i++) {
+            View child = layout.getChildAt(i);
 
-            // Si el elemento está por debajo del eliminado, actualizar su posición
-            if (child.getId() != View.NO_ID) {
-                ConstraintSet constraintSet = new ConstraintSet();
-                constraintSet.clone(constraintLayout);
+            // Excluir botones fijos, el switch y los botones flotantes
+            if (child.getId() == R.id.bt_cancel_addCharacterkie ||
+                    child.getId() == R.id.bt_ok_addCharacterkie ||
+                    child.getId() == R.id.fb_more_createCharacterkie ||
+                    child.getId() == R.id.fb_add_field_createCharacterkie || // Excluir botón flotante de agregar campo
+                    child.getId() == switchId) continue;
 
-                // Actualizar las restricciones: mover hacia arriba para ocupar el espacio vacío
-                constraintSet.connect(child.getId(), ConstraintSet.TOP, lastFieldId, ConstraintSet.BOTTOM, 16);
-                constraintSet.applyTo(constraintLayout);
+            // Detectar el campo "name"
+            if (child.getId() == R.id.et_nameCharacterkieCreateFull) {
+                foundName = true; // A partir de aquí, empezamos a registrar elementos dinámicos
+                continue;
+            }
 
-                // Actualizar el lastFieldId para los siguientes elementos
-                lastFieldId = child.getId();
+            // Solo registrar los campos dinámicos después del "name"
+            if (foundName) {
+                boolean isCampo = child instanceof EditText ||
+                        child instanceof TextView ||
+                        child instanceof TextInputLayout ||
+                        child instanceof RadioGroup;
+                if (isCampo && child.getId() != removedViewId) {
+                    dynamicFieldIds.add(child.getId());
+                } else if (child instanceof ImageButton) {
+                    // Intentamos encontrar el campo al que pertenece este botón
+                    for (int fieldId : dynamicFieldIds) {
+                        if (child.getId() == fieldId + 1) { // Si el ID del ImageButton es el siguiente al del campo
+                            fieldButtonMap.put(fieldId, child.getId());
+                            break;
+                        }
+                    }
+                }
             }
         }
+
+        ConstraintSet set = new ConstraintSet();
+        set.clone(layout);
+
+        // Si hay campos dinámicos después del "name", los reordenamos correctamente
+        if (!dynamicFieldIds.isEmpty()) {
+            // Conectar el primer campo dinámico al campo "name"
+            set.clear(dynamicFieldIds.get(0), ConstraintSet.TOP);
+            set.connect(dynamicFieldIds.get(0), ConstraintSet.TOP, R.id.et_nameCharacterkieCreateFull, ConstraintSet.BOTTOM, 16);
+
+            // Mover su ImageButton si existe
+            if (fieldButtonMap.containsKey(dynamicFieldIds.get(0))) {
+                int buttonId = fieldButtonMap.get(dynamicFieldIds.get(0));
+                set.clear(buttonId, ConstraintSet.TOP);
+                set.clear(buttonId, ConstraintSet.END);
+                set.connect(buttonId, ConstraintSet.TOP, dynamicFieldIds.get(0), ConstraintSet.TOP);
+                set.connect(buttonId, ConstraintSet.END, dynamicFieldIds.get(0), ConstraintSet.END, 8);
+            }
+
+            // Conectar cada campo con el anterior
+            for (int i = 1; i < dynamicFieldIds.size(); i++) {
+                set.clear(dynamicFieldIds.get(i), ConstraintSet.TOP);
+                set.connect(dynamicFieldIds.get(i), ConstraintSet.TOP, dynamicFieldIds.get(i - 1), ConstraintSet.BOTTOM, 16);
+
+                // Mover su ImageButton si existe
+                if (fieldButtonMap.containsKey(dynamicFieldIds.get(i))) {
+                    int buttonId = fieldButtonMap.get(dynamicFieldIds.get(i));
+                    set.clear(buttonId, ConstraintSet.TOP);
+                    set.clear(buttonId, ConstraintSet.END);
+                    set.connect(buttonId, ConstraintSet.TOP, dynamicFieldIds.get(i), ConstraintSet.TOP);
+                    set.connect(buttonId, ConstraintSet.END, dynamicFieldIds.get(i), ConstraintSet.END, 8);
+                }
+            }
+
+            // Conectar el switch debajo del último campo dinámico
+            set.clear(switchId, ConstraintSet.TOP);
+            set.connect(switchId, ConstraintSet.TOP, dynamicFieldIds.get(dynamicFieldIds.size() - 1), ConstraintSet.BOTTOM, 16);
+        } else {
+            // Si no quedan campos dinámicos, conectar el switch directamente al campo "name"
+            set.clear(switchId, ConstraintSet.TOP);
+            set.connect(switchId, ConstraintSet.TOP, R.id.et_nameCharacterkieCreateFull, ConstraintSet.BOTTOM, 16);
+        }
+
+        set.applyTo(layout);
+
+        // Reestablecer la posición de los botones fijos debajo del switch
+        ConstraintSet btnSet = new ConstraintSet();
+        btnSet.clone(layout);
+
+        btnSet.clear(R.id.bt_ok_addCharacterkie, ConstraintSet.TOP);
+        btnSet.connect(R.id.bt_ok_addCharacterkie, ConstraintSet.TOP, switchId, ConstraintSet.BOTTOM, 10);
+
+        btnSet.clear(R.id.bt_cancel_addCharacterkie, ConstraintSet.TOP);
+        btnSet.connect(R.id.bt_cancel_addCharacterkie, ConstraintSet.TOP, switchId, ConstraintSet.BOTTOM, 10);
+
+        // **Ubicación del botón flotante "Más" (fb_more_createCharacterkie)**
+        btnSet.clear(R.id.fb_more_createCharacterkie, ConstraintSet.END);
+        btnSet.clear(R.id.fb_more_createCharacterkie, ConstraintSet.BOTTOM);
+        btnSet.connect(R.id.fb_more_createCharacterkie, ConstraintSet.END, ConstraintLayout.LayoutParams.PARENT_ID, ConstraintSet.END, 10);
+        btnSet.connect(R.id.fb_more_createCharacterkie, ConstraintSet.BOTTOM, ConstraintLayout.LayoutParams.PARENT_ID, ConstraintSet.BOTTOM, 10);
+
+        // **Ubicación del botón flotante "Añadir campo" (fb_add_field_createCharacterkie)**
+        btnSet.clear(R.id.fb_add_field_createCharacterkie, ConstraintSet.END);
+        btnSet.clear(R.id.fb_add_field_createCharacterkie, ConstraintSet.BOTTOM);
+        btnSet.connect(R.id.fb_add_field_createCharacterkie, ConstraintSet.END, ConstraintLayout.LayoutParams.PARENT_ID, ConstraintSet.END, 10);
+        btnSet.connect(R.id.fb_add_field_createCharacterkie, ConstraintSet.BOTTOM, R.id.fb_more_createCharacterkie, ConstraintSet.TOP, 10);
+
+        btnSet.applyTo(layout);
     }
+
+
+
+
+
+
+
+
+
 
     public static View getViewById(ViewGroup parent, int viewId) {
         // Obtener la View por su ID

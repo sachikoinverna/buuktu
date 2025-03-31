@@ -3,12 +3,21 @@ package com.example.buuktu.views;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.buuktu.R;
+import com.example.buuktu.adapters.CardAdapter;
+import com.example.buuktu.models.CardItem;
+import com.example.buuktu.utils.ComponentsUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,7 +34,8 @@ public class Inspo extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    RecyclerView rc_buttons_inspo;
+    private CardAdapter adapter;
     public Inspo() {
         // Required empty public constructor
     }
@@ -62,6 +72,23 @@ public class Inspo extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_inspo, container, false);
+        rc_buttons_inspo = view.findViewById(R.id.rc_buttons_inspo);
+        rc_buttons_inspo.setLayoutManager(new GridLayoutManager(getContext(), 2));
+
+        // Simular datos
+        List<CardItem> items = new ArrayList<>();
+        items.add(new CardItem(R.drawable.sharp_emoji_nature_24, "Elemento 1"));
+        items.add(new CardItem(R.drawable.twotone_message_24, "Elemento 2"));
+        items.add(new CardItem(R.drawable.twotone_catching_pokemon_24, "Elemento 3"));
+        items.add(new CardItem(R.drawable.twotone_delete_sweep_24, "Elemento 4"));
+
+        // Configurar el adaptador
+        adapter = new CardAdapter(getContext(), items, item -> {
+            // Manejar clic en el CardView
+            // Por ejemplo, agregar el campo al layout principal
+            // o realizar otra acción
+        });
+        rc_buttons_inspo.setAdapter(adapter);
         return view;
     }
 }
