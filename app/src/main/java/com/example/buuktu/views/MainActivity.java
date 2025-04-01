@@ -201,10 +201,10 @@ new Thread(new Runnable() {
                 } else if (id == R.id.notifications) {
                   //  PeriodWordsDialog periodWordsDialog = new PeriodWordsDialog(MainActivity.this);
                   //  periodWordsDialog.show();
-                    PeriodNumbersDialog periodNumbersDialog = new PeriodNumbersDialog(MainActivity.this);
-                    periodNumbersDialog.show();
-                    //replaceFragment(new Notes());
-                   // Intent intent = new Intent(MainActivity.this, Notes.class);
+                  //  PeriodNumbersDialog periodNumbersDialog = new PeriodNumbersDialog(MainActivity.this);
+                  //  periodNumbersDialog.show();
+                    replaceFragment(new Notes());
+                    //Intent intent = new Intent(MainActivity.this, Notes.class);
                    // startActivity(intent);
                     //infoFutureFunctionDialog.show();
                 } else if (id == R.id.messages){

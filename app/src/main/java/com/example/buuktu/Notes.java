@@ -121,7 +121,7 @@ public class Notes extends Fragment {
         noteAdapter = new NoteAdapter(getContext(), items, new NoteAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(NoteItem item) {
-                // Manejar el clic en la nota (por ejemplo, abrir detalle o mostrar Toast)
+
             }
         });
         rc_all_notes_adapter.setAdapter(noteAdapter);

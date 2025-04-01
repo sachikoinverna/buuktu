@@ -26,9 +26,6 @@
             android:name=".views.CreateCharacterkie"
             android:exported="false" />
         <activity
-            android:name=".WorldkieMenu"
-            android:exported="false" />
-        <activity
             android:name=".CharacterkiesWorldkie"
             android:exported="false"
             android:theme="@style/Theme.Buuktu" />

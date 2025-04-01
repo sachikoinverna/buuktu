@@ -4,8 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".views.PeriodWordsChallengueFragment">
+    android:layout_height="match_parent">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="300dp"
@@ -48,11 +47,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_period_word_title" />
 
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:src="@mipmap/wordkie_of_the_day"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_period_word" />
+
             <ImageButton
                 android:id="@+id/ib_close_period_word_dialog"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
@@ -61,7 +69,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_period_word" />
+                app:layout_constraintTop_toBottomOf="@+id/imageView7" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
