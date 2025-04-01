@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,14 +14,16 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buuktu.R;
-import com.example.buuktu.WorldkieMenu;
 import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.views.CreateWorldkie;
 import com.example.buuktu.views.Worldkie;
+import com.example.buuktu.views.WorldkieMenu;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -35,8 +38,10 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
 
     }
     private ArrayList<WorldkieModel> dataSet;
+    private FragmentManager fragmentManager;
 
     private Context context;
+    private Fragment menuWorldkie;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView tv_name_wordlkie;
@@ -86,9 +91,10 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
     }
 
     //Constructor donde pasamos la lista de productos y el contexto
-    public WorldkieAdapter(ArrayList<WorldkieModel> dataSet, Context ctx) {
+    public WorldkieAdapter(ArrayList<WorldkieModel> dataSet, Context ctx, FragmentManager fragmentManager) {
         this.dataSet = dataSet;
         this.context = ctx;
+        this.fragmentManager = fragmentManager;
     }
 
     //Se llama cada vez que se hace scroll en la pantalla y los elementos desaparecen y aparecen
@@ -106,9 +112,16 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
             holder.getIb_enterToAWorldkie().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    menuWorldkie = new WorldkieMenu();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("worlkie_id",dataSet.get(holder.getAdapterPosition()).getUID());
+                    menuWorldkie.setArguments(bundle);
+                    fragmentManager.beginTransaction().replace(R.id.fragment_container, menuWorldkie) .addToBackStack(null) // Permite regresar atrás con el botón de retroceso
+                            .commit();
                     //Intent intent = new Intent(holder.itemView.getContext(), Worldkie.class);
-                    Intent intent = new Intent(holder.itemView.getContext(), WorldkieMenu.class);
-                    holder.itemView.getContext().startActivity(intent);
+                //   holder.
+                    // Intent intent = new Intent(holder.itemView.getContext(), WorldkieMenu.class);
+                   // holder.itemView.getContext().startActivity(intent);
                 }
             });
             holder.getIb_editAWorldkie().setOnClickListener(new View.OnClickListener() {

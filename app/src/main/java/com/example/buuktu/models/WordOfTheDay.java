@@ -7,13 +7,13 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class WordOfTheDay {
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    public void obtenerPalabraDelDia(FirebaseCallback callback) {
+    private static FirebaseFirestore db = FirebaseFirestore.getInstance();
+    public static void obtenerPalabraDelDia(FirebaseCallback callback) {
         // Fecha actual para obtener el día del año
         int dayOfYear = LocalDate.now().getDayOfYear();
 
         // Obtén el documento donde type = "Worldkie of the day"
-        db.collection("palabras")  // Cambia "palabras" por el nombre de tu colección
+        db.collection("Wordkies")  // Cambia "palabras" por el nombre de tu colección
                 .whereEqualTo("type", "Wordkie of the day")
                 .get()
                 .addOnSuccessListener(querySnapshot -> {

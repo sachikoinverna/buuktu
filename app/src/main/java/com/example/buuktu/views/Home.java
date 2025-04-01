@@ -2,41 +2,30 @@ package com.example.buuktu.views;
 
 import static android.widget.Toast.LENGTH_LONG;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buuktu.R;
 import com.example.buuktu.adapters.WorldkieAdapter;
 import com.example.buuktu.controllers.HomeController;
-import com.example.buuktu.models.UserModel;
 import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.utils.BitmapUtils;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -217,7 +206,7 @@ public class Home extends Fragment {
 
     // Helper method to update the RecyclerView
         private void updateRecyclerView(ArrayList<WorldkieModel> worldkieModelArrayList) {
-            WorldkieAdapter worldkieAdapter = new WorldkieAdapter(worldkieModelArrayList, getContext());
+            WorldkieAdapter worldkieAdapter = new WorldkieAdapter(worldkieModelArrayList, getContext(), getParentFragmentManager());
             rc_worldkies.setAdapter(worldkieAdapter);
             rc_worldkies.setLayoutManager(new LinearLayoutManager(getContext()));
         }

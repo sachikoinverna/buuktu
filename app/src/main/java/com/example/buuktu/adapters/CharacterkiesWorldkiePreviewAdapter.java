@@ -2,9 +2,7 @@ package com.example.buuktu.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,15 +12,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.RoundedBitmapDrawable;
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buuktu.R;
 import com.example.buuktu.models.Characterkie;
-import com.example.buuktu.models.SettingModel;
 import com.example.buuktu.utils.DrawableUtils;
-import com.google.rpc.context.AttributeContext;
 
 import java.util.ArrayList;
 

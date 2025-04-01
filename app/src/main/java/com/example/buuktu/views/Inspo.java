@@ -83,11 +83,11 @@ public class Inspo extends Fragment {
         items.add(new CardItem(R.drawable.twotone_delete_sweep_24, "Elemento 4"));
 
         // Configurar el adaptador
-        adapter = new CardAdapter(getContext(), items, item -> {
+       /* adapter = new CardAdapter(getContext(), items -> {
             // Manejar clic en el CardView
             // Por ejemplo, agregar el campo al layout principal
             // o realizar otra acción
-        });
+        });*/
         rc_buttons_inspo.setAdapter(adapter);
         return view;
     }

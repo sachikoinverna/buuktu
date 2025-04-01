@@ -1,24 +1,22 @@
-package com.example.buuktu.views;
+package com.example.buuktu;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.example.buuktu.CreateCharacterkie;
-import com.example.buuktu.R;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.example.buuktu.views.WorldkieMenu;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link WorldkieMenu#newInstance} factory method to
+ * Use the {@link CreateCharacterkie#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class WorldkieMenu extends Fragment {
+public class CreateCharacterkie extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,10 +26,10 @@ public class WorldkieMenu extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private TextView tv_characterkiesAdd;
     private FragmentManager fragmentManager;
     private Fragment createCharacterkie;
-    public WorldkieMenu() {
+
+    public CreateCharacterkie() {
         // Required empty public constructor
     }
 
@@ -41,11 +39,11 @@ public class WorldkieMenu extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment WorldkieMenu.
+     * @return A new instance of fragment CreateCharacterkie.
      */
     // TODO: Rename and change types and number of parameters
-    public static WorldkieMenu newInstance(String param1, String param2) {
-        WorldkieMenu fragment = new WorldkieMenu();
+    public static CreateCharacterkie newInstance(String param1, String param2) {
+        CreateCharacterkie fragment = new CreateCharacterkie();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -66,21 +64,10 @@ public class WorldkieMenu extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =inflater.inflate(R.layout.fragment_worldkie_menu, container, false);
-        tv_characterkiesAdd = view.findViewById( R.id.tv_characterkies);
-        fragmentManager = getParentFragmentManager();
-        tv_characterkiesAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createCharacterkie = new CreateCharacterkie();
-                // Bundle bundle = new Bundle();
-                //bundle.putString("worlkie_id",dataSet.get(holder.getAdapterPosition()).getUID());
-                //createCharacterkie.setArguments(bundle);
 
-                fragmentManager.beginTransaction().replace(R.id.fragment_container, createCharacterkie) .addToBackStack(null) // Permite regresar atrás con el botón de retroceso
-                        .commit();
-            }
-        });
+        View view = inflater.inflate(R.layout.fragment_create_characterkie, container, false);
+
+
         return view;
     }
 }

@@ -2,6 +2,7 @@ package com.example.buuktu.views;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.Notification;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -22,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
@@ -34,10 +36,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.buuktu.CharacterkiesWorldkie;
+import com.example.buuktu.Notes;
 import com.example.buuktu.R;
 import com.example.buuktu.Search;
 import com.example.buuktu.dialogs.InfoFutureFunctionDialog;
 import com.example.buuktu.dialogs.InfoWorldkiesDialog;
+import com.example.buuktu.dialogs.PeriodNumbersDialog;
+import com.example.buuktu.dialogs.PeriodWordsDialog;
 import com.example.buuktu.listeners.OnDialogInfoClickListener;
 import com.example.buuktu.models.UserModel;
 import com.example.buuktu.utils.BitmapUtils;
@@ -194,8 +199,13 @@ new Thread(new Runnable() {
                     replaceFragment(new Inspo());
                     //infoFutureFunctionDialog.show();
                 } else if (id == R.id.notifications) {
-                    Intent intent = new Intent(MainActivity.this, CharacterkiesWorldkie.class);
-                    startActivity(intent);
+                  //  PeriodWordsDialog periodWordsDialog = new PeriodWordsDialog(MainActivity.this);
+                  //  periodWordsDialog.show();
+                    PeriodNumbersDialog periodNumbersDialog = new PeriodNumbersDialog(MainActivity.this);
+                    periodNumbersDialog.show();
+                    //replaceFragment(new Notes());
+                   // Intent intent = new Intent(MainActivity.this, Notes.class);
+                   // startActivity(intent);
                     //infoFutureFunctionDialog.show();
                 } else if (id == R.id.messages){
                     infoFutureFunctionDialog.show();

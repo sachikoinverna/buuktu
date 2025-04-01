@@ -7,19 +7,25 @@ public class FieldItem {
     private String kie;
     private List<String> options;
     private String type;
+    private String name;
+    private int icon;
 
     // Constructor para elementos con RadioButton
-    public FieldItem(String component, String kie, List<String> options) {
+    public FieldItem(String component, String kie, List<String> options,int icon) {
         this.component = component;
         this.kie = kie;
         this.options = options;
+        this.icon = icon;
     }
+
     // Constructor para elementos EditText
-    public FieldItem(String component, String kie, String type) {
+    public FieldItem(String component, String kie, String type, int icon) {
         this.component = component;
         this.kie = kie;
         this.type = type;
+        this.icon = icon;
     }
+
     // Getters y Setters
     public String getComponent() {
         return component;
@@ -35,5 +41,13 @@ public class FieldItem {
 
     public String getType() {
         return type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getIcon() {
+        return icon;
     }
 }

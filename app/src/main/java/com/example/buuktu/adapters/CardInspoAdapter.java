@@ -11,13 +11,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buuktu.R;
-import com.example.buuktu.models.CardItem;
 import com.example.buuktu.models.FieldItem;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
-public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
+public class CardInspoAdapter extends RecyclerView.Adapter<CardInspoAdapter.ViewHolder> {
 
     // Modelo de datos, por ejemplo:
     private List<FieldItem> fieldItems;
@@ -28,7 +27,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         void onItemClick(FieldItem fieldItem, int position);
     }
 
-    public CardAdapter(Context context, List<FieldItem> fieldItems, OnItemClickListener listener) {
+    public CardInspoAdapter(Context context, List<FieldItem> fieldItems, OnItemClickListener listener) {
         this.context = context;
         this.fieldItems = fieldItems;
         this.listener = listener;
@@ -75,7 +74,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
             // Configurar los datos en el CardView
             icon.setImageResource(item.getIcon());
             text.setText(item.getName());
-            //cardView.setOnClickListener(v -> listener.onItemClick(item));
+         //   cardView.setOnClickListener(v -> listener.onItemClick(item));
         }
     }
 }

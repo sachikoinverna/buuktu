@@ -16,6 +16,7 @@ import com.example.buuktu.R;
 import com.example.buuktu.adapters.CardAdapter;
 import com.example.buuktu.listeners.OnFieldDeletedListener;
 import com.example.buuktu.models.CardItem;
+import com.example.buuktu.models.FieldItem;
 import com.example.buuktu.utils.ComponentsUtils;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
@@ -28,11 +29,12 @@ public class BottomSheetChooseComponents extends BottomSheetDialogFragment {
     private Context context;
     private ConstraintLayout constraintLayout;
     private OnFieldDeletedListener listener; // Agregar el listener
-
-    public BottomSheetChooseComponents(Context context, ConstraintLayout constraintLayout, OnFieldDeletedListener listener) {
+    List<FieldItem> fieldItems;
+    public BottomSheetChooseComponents(Context context, ConstraintLayout constraintLayout, OnFieldDeletedListener listener, List<FieldItem> fieldItems) {
         this.context = context;
         this.constraintLayout = constraintLayout;
         this.listener = listener; // Inicializar el listener
+        this.fieldItems = fieldItems; // Inicializar la lista de items
     }
 
     @Override
@@ -42,22 +44,19 @@ public class BottomSheetChooseComponents extends BottomSheetDialogFragment {
 
         // Configurar RecyclerView con GridLayoutManager (2 columnas)
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-
-        // Simular datos
-        List<CardItem> items = new ArrayList<>();
-        items.add(new CardItem(R.drawable.sharp_emoji_nature_24, "Elemento 1"));
-        items.add(new CardItem(R.drawable.twotone_message_24, "Elemento 2"));
-        items.add(new CardItem(R.drawable.twotone_catching_pokemon_24, "Elemento 3"));
-        items.add(new CardItem(R.drawable.twotone_delete_sweep_24, "Elemento 4"));
-
         // Configurar el adaptador
-        adapter = new CardAdapter(getContext(), items, item -> {
-            // Manejar clic en el CardView
-            // Por ejemplo, agregar el campo al layout principal
-            // o realizar otra acción
-            ComponentsUtils.createTextInputEditText("String","Patatas",context,constraintLayout,R.id.tb_CharacterkiePrivacity, listener);
-             Toast.makeText(getContext(), "Seleccionaste: " + item.getText(), Toast.LENGTH_SHORT).show();
-            dismiss(); // Cierra el BottomSheet si lo deseas
+        if (fieldItems == null) {
+            fieldItems = new ArrayList<>(); // Evita que sea nulo
+        }
+        adapter = new CardAdapter(getContext(), fieldItems, new CardAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(FieldItem fieldItem, int position) {
+                if (listener != null) {
+                    listener.onFieldDeleted(fieldItem); // Notifica a CreateCharacterkie
+                }
+                fieldItems.remove(position);
+                adapter.notifyItemRemoved(position);
+            }
         });
         recyclerView.setAdapter(adapter);
 
@@ -97,4 +96,5 @@ public class BottomSheetChooseComponents extends BottomSheetDialogFragment {
         }
         return v;
     }*/
+
 }

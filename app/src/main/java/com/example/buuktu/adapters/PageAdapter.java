@@ -2,14 +2,11 @@ package com.example.buuktu.adapters;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.buuktu.FirstFragment;
-import com.example.buuktu.SecondFragment;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 
 public class PageAdapter
         extends FragmentPagerAdapter {

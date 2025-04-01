@@ -1,9 +1,10 @@
 package com.example.buuktu.views;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.RadioButton;
 import android.widget.Switch;
-import android.widget.ToggleButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,18 +16,22 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.buuktu.R;
 import com.example.buuktu.bottomsheet.BottomSheetChooseComponents;
 import com.example.buuktu.listeners.OnFieldDeletedListener;
+import com.example.buuktu.models.CardItem;
 import com.example.buuktu.models.FieldItem;
+import com.example.buuktu.utils.ComponentsUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CreateCharacterkie extends AppCompatActivity implements OnFieldDeletedListener {
-    List<String> fieldsAdded = new ArrayList<>();
+    List<FieldItem> fieldsAdded = new ArrayList<>();
+    List<CardItem> cardItems = new ArrayList<>();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     CollectionReference fieldkiesRef = db.collection("Fieldkies");
     List<FieldItem> fieldsNotAdded = new ArrayList<>();
@@ -49,11 +54,13 @@ public class CreateCharacterkie extends AppCompatActivity implements OnFieldDele
         tb_CharacterkiePrivacity = findViewById(R.id.tb_CharacterkiePrivacity);
         et_nameCharacterkieCreateFull = findViewById(R.id.et_nameCharacterkieCreateFull);
         constraintLayout = findViewById(R.id.constraint_create_characterkie);
-
+        ComponentsUtils.setLastAddedFieldId(-1);
         // characterRef = db.collection("CharacterKies").document(characterId);
-
+        getFields();
+        fieldsNotAdded.add(new FieldItem("EditText","Characterky","Texto",R.drawable.sharp_emoji_nature_24
+        ));
     }
- /*   private void getCharacterkieFields(){
+   /* private void getCharacterkieFields(){
         characterRef.get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.exists()) {
                 Map<String, Object> characterData = documentSnapshot.getData();
@@ -96,7 +103,7 @@ public class CreateCharacterkie extends AppCompatActivity implements OnFieldDele
                     }
                 }
             }
-    }
+    }*/
     private void getFields(){
         fieldkiesRef.whereEqualTo("kie", "stuffkie").get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
@@ -104,101 +111,87 @@ public class CreateCharacterkie extends AppCompatActivity implements OnFieldDele
                                 Log.e("Firestore", "No se encontraron documentos en Fieldkies");
                                 return;
                             }
-                            for (QueryDocumentSnapshot document : queryDocumentSnapshots.getDocuments()) { // ← ¡Aquí está el cambio!
+                            for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) { // ← ¡Aquí está el cambio!
                                 String component = document.getString("component");
+                                Log.e("Firestore", component.toString());
                                 String kie = document.getString("kie");
                                 List<String> options = (List<String>) document.get("options");
                                 String type = document.getString("type");
-                                String uid = document.getId();
-                        // Solo agrega los campos que no han sido añadidos
-                                FieldItem fieldItem;
-                                if (component.equals("RadioButton")) {
-                                    FieldItem campo = new FieldItem(component, kie, options);
-                                } else if (component.equals("")){
-                                    FieldItem campo = new FieldItem(component, kie, type);
-                                }
-                                if (!fieldsAdded.contains(uid)) {
+                                String iconName = document.getString("icon");
+                                int icon = getResources().getIdentifier(iconName, "drawable", getPackageName());
 
-                            camposList.add(campo);
+                                String uid = document.getId();
+
+                        // Solo agrega los campos que no han sido añadidos
+
+                                if (!fieldsAdded.contains(uid)) {
+                                    FieldItem fieldItem=null;
+                                    if (component.equals("RadioButton")) {
+                                        fieldItem = new FieldItem(component, kie, options,icon);
+                                    }
+                                    else if (component.equals("EditText")){
+                                        fieldItem = new FieldItem(component, kie, type,icon);
+                                    }
+                            fieldsNotAdded.add(fieldItem);
                         }
                     }
-    }
-    cargarCamposEnBottomSheet(camposList);
-    })
-            .addOnFailureListener(e -> {
+    cargarCamposEnBottomSheet(fieldsNotAdded);
+    }).addOnFailureListener(e -> {
         Log.e("Firestore", "Error al obtener los campos", e);
     });
-}*/
-/*public void createRadioButton(List<String> options) {
-    // Crear los RadioButtons dinámicamente y añadirlos al BottomSheet
-    for (String option : options) {
-        RadioButton radioButton = new RadioButton(getContext());
-        radioButton.setText(option);
-        radioButton.setButtonDrawable(R.drawable.radiobutton_custom);
-       // ColorStateList colorStateList = new ColorStateList();
-      //  radioButton.setButtonTintList(ColorStateList.valueOf(R.color.brownBrown));
-        RadioGroup radioGroup = new RadioGroup(getContext());
-        // Añadir al BottomSheet o a un contenedor específico
-        bottomSheetContainer.addView(radioGroup);
-    }
 }
-public void createTextInputEditText(String type) {
-    // Crear un EditText según el tipo de dato (Decimal, etc.)
-    TextInputEditText textInputEditText = new TextInputEditText(this);
-    TextInputLayout textInputLayout = new TextInputLayout(this);
-    textInputLayout.setHint(this.getResources().getText(R.string.project_id));
-    textInputLayout.setCounterEnabled(true);
-    float radioEsquinasDP = 58f;  // Radio de las esquinas en dp
-    float radioEsquinasPx = convertDpToPx(radioEsquinasDP);
-    textInputLayout.setStartIconTintList(ContextCompat.getColorStateList(this, R.color.black)); // Reemplaza con el color deseado
-    textInputEditText.setHintTextColor(ContextCompat.getColorStateList(this, R.color.black));
-    // Establecer el radio de las esquinas de TextInputLayout (todas las esquinas)
-    textInputLayout.setBoxCornerRadius(radioEsquinasPx);
-    int LayoutParams = ConstraintLayout.LayoutParams.MATCH_PARENT;
-    int LayoutPa = ConstraintLayout.LayoutParams.WRAP_CONTENT;
-    textInputLayout.setLengthCounter(new TextInputLayout.LengthCounter() {
-        @Override
-        public int countLength(@Nullable Editable text) {
-            return 0;
-        }
-    });
-    textInputEditText.setTextAlignment(TextInputLayout.TEXT_ALIGNMENT_CENTER);
-    textInputEditText.setGravity(Gravity.CENTER);
-    textInputEditText.setWidth(LayoutPa);
-    // EditText.
-    if (type.equals("Decimal")) {
-        textInputEditText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-    } else if (type.equals("String")) {
-        textInputEditText.setInputType(InputType.TYPE_CLASS_TEXT);
-    }
-    textInputLayout.addView(textInputEditText);
-    // Añadir al BottomSheet o a un contenedor específico
-    bottomSheetContainer.addView(editText);
-}*/
-/*public void cargarCamposEnBottomSheet(List<Campo> camposList) {
+    public void cargarCamposEnBottomSheet(List<FieldItem> camposList) {
     // Recorrer los campos y añadirlos al BottomSheet
-    for (Campo campo : camposList) {
-        if (campo.getComponent().equals("RadioButton")) {
-            // Crear RadioButtons con las opciones
-            createRadioButton(campo.getOptions());
-        } else if (campo.getComponent().equals("EditText")) {
-            // Crear EditText según el tipo de dato
-            createEditText(campo.getType());
-        }
-    }
-}*/
+
+}
 
     public void openBottomSheet(View view) {
-        BottomSheetChooseComponents bottomSheetFragment = new BottomSheetChooseComponents(this,constraintLayout,this);
+        BottomSheetChooseComponents bottomSheetFragment = new BottomSheetChooseComponents(this, constraintLayout, this, fieldsNotAdded);
         bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
     }
 
-    @Override
-    public void onFieldDeleted(String fieldName) {
-        fieldsAdded.remove(fieldName);
-       // fieldsNotAdded.add(fieldName);
+    public void removeFieldBottomSheet(FieldItem item){
+        fieldsNotAdded.remove(item);
     }
-    private void actualizarBottomSheet() {
-        // Lógica para actualizar el BottomSheet
+    private void actualizarUIConCampo(FieldItem fieldItem) {
+        // Dependiendo del tipo de campo, añade la vista correcta
+        View nuevoCampo;
+        if (fieldItem.getComponent().equals("TextInputEditText")) {
+            //ComponentsUtils.createComponent(this,fieldItem,R.id.tb_CharacterkiePrivacity,constraintLayout);
+        } else if (fieldItem.getComponent().equals("RadioButton")) {
+            RadioButton radioButton = new RadioButton(this);
+            radioButton.setText(fieldItem.getName());
+            nuevoCampo = radioButton;
+        } else {
+            return;
+        }
+
+        // Agregar el nuevo campo al layout
+       // constraintLayout.addView(nuevoCampo);
+    }
+    private void actualizarBottomSheetConCampo(FieldItem fieldItem) {
+        // Dependiendo del tipo de campo, añade la vista correcta
+        View nuevoCampo;
+        if (fieldItem.getComponent().equals("TextInputEditText")) {
+            ComponentsUtils.createComponent(this,fieldItem,R.id.tb_CharacterkiePrivacity,constraintLayout);
+        } else if (fieldItem.getComponent().equals("RadioButton")) {
+            RadioButton radioButton = new RadioButton(this);
+            radioButton.setText(fieldItem.getName());
+            nuevoCampo = radioButton;
+        } else {
+            return;
+        }
+
+        // Agregar el nuevo campo al layout
+        // constraintLayout.addView(nuevoCampo);
+    }
+
+    @Override
+    public void onFieldDeleted(FieldItem fieldItem) {
+        if (!fieldsAdded.contains(fieldItem)) {
+            fieldsAdded.add(fieldItem);
+            fieldsNotAdded.remove(fieldItem);
+            actualizarUIConCampo(fieldItem);
+        }
     }
 }
