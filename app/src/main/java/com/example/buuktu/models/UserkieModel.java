@@ -1,8 +1,10 @@
 package com.example.buuktu.models;
 
+import android.graphics.drawable.Drawable;
+
 import java.util.Date;
 
-public class UserModel {
+public class UserkieModel {
     private String name;
     private String pronouns;
     private Date birthday;
@@ -12,9 +14,18 @@ public class UserModel {
     private String email;
     private boolean photo_default;
     private boolean profile_private;
-
+    private String surname;
+    private int drawable;
     public String getEmail() {
         return email;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public void setEmail(String email) {
@@ -85,10 +96,10 @@ public class UserModel {
         this.profile_private = profile_private;
     }
 
-    public UserModel() {
+    public UserkieModel() {
     }
 
-    public UserModel(String email,String UID, String name, String pronouns, Date birthday, String username, String number, boolean photo_default, boolean profile_private) {
+    public UserkieModel(String email, String UID, String name, String pronouns, Date birthday, String username, String number, boolean photo_default, boolean profile_private) {
         this.email = email;
         this.UID = UID;
         this.name = name;
@@ -98,5 +109,13 @@ public class UserModel {
         this.number = number;
         this.photo_default = photo_default;
         this.profile_private = profile_private;
+    }
+    public UserkieModel(String UID, String name, int drawable, String username, boolean photo_default, boolean profile_private) {
+        this.UID = UID;
+        this.name = name;
+        this.username = username;
+        this.photo_default = photo_default;
+        this.profile_private = profile_private;
+        this.drawable = drawable;
     }
 }

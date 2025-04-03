@@ -39,9 +39,9 @@ import java.util.ArrayList;
 public class Home extends Fragment {
     private String UID;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseFirestore db;
     private FirebaseStorage storage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
-    private ArrayList<WorldkieModel> worldkieModelArrayList = new ArrayList<>();
+    private ArrayList<WorldkieModel> worldkieModelArrayList;
     private RecyclerView rc_worldkies;
     private FloatingActionButton fb_parent, fb_add;
     private boolean isAllFabsVisible;

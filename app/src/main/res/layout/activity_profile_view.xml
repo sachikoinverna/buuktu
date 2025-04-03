@@ -25,19 +25,23 @@
                     android:layout_height="match_parent">
 
                     <ImageButton
+                        android:id="@+id/ib_profileView"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginTop="50dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/cloudlogin" />
+
+                    <ImageButton
                         android:id="@+id/imageButton2"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         app:layout_constraintEnd_toEndOf="@+id/ib_profileView"
                         app:layout_constraintTop_toTopOf="@+id/ib_profileView"
                         app:srcCompat="@drawable/outline_person_24" />
-
-                    <ImageButton
-                        android:id="@+id/ib_profileView"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        app:srcCompat="@drawable/cloudlogin"
-                        tools:layout_editor_absoluteY="50dp" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView

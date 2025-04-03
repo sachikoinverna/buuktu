@@ -16,6 +16,7 @@
     <string name="writtingPlanet">Writting planet</string>
     <string name="incorrectLogin">Incorrect login</string>
     <string name="email">Correo electronico</string>
+    <string name="at_symbol">\@</string>
     <string name="numberErrorTextField">No puede contener numeros</string>
     <string name="nameErrorEmpty">El nombre no puede estar vacio</string>
     <string name="surnameErrorEmpty">El apellido no puede estar vacio</string>

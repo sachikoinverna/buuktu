@@ -85,7 +85,7 @@ public class CharacterkiesWorldkiePreviewAdapter extends RecyclerView.Adapter<Ch
         int colorInt = ContextCompat.getColor(context, R.color.redError);
         Color color = Color.valueOf(colorInt);
 
-        DrawableUtils.personalizarImagenCircle(context,bitmap,holder.getIv_characterkie_preview_worldkie(),color);
+        DrawableUtils.personalizarImagenCircle(context,bitmap,holder.getIv_characterkie_preview_worldkie(),R.color.brownBrown);
     }
 
     // Devolvemos el numero de items de nuestro arraylist, lo invoca automaticamente el layout manager

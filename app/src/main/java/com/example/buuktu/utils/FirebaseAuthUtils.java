@@ -1,10 +1,23 @@
 package com.example.buuktu.utils;
 
+import static android.content.ContentValues.TAG;
+
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class FirebaseAuthUtils {
-    /*public static final boolean changeEmail() {
+    public static final boolean changeEmail(String newEmail) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        user.updateEmail("user@example.com")
+        user.updateEmail(newEmail)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -13,10 +26,10 @@ public class FirebaseAuthUtils {
                         }
                     }
                 });
+        return true;
     }
-    public static final boolean changePassword() {
+    public static final boolean changePassword(String newPassword) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String newPassword = "SOME-SECURE-PASSWORD";
 
         user.updatePassword(newPassword)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -27,8 +40,10 @@ public class FirebaseAuthUtils {
                         }
                     }
                 });
-    }*/
-   /* public static final boolean deleteAccount() {
+        return true;
+
+    }
+    public static final boolean deleteAccount() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         user.delete()
@@ -40,8 +55,10 @@ public class FirebaseAuthUtils {
                         }
                     }
                 });
-    }*/
-   /* public static final boolean signOut() {
+        return true;
+
+    }
+    public static final boolean signOut() {
         FirebaseAuth.getInstance().signOut();
         return true;
     }
@@ -62,8 +79,9 @@ public class FirebaseAuthUtils {
                         Log.d(TAG, "User re-authenticated.");
                     }
                 });
+        return true;
     }
-    public static final boolean verifyPhoneNumber(String phoneNumber) {
+    public static final boolean verifyEmail() {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
 
@@ -76,12 +94,11 @@ public class FirebaseAuthUtils {
                         }
                     }
                 });
+        return true;
     }
-    public static final boolean correoCOntraseña(){
+    public static final boolean correoContraseña(String email){
         FirebaseAuth auth = FirebaseAuth.getInstance();
-        String emailAddress = "user@example.com";
-
-        auth.sendPasswordResetEmail(emailAddress)
+        auth.sendPasswordResetEmail(email)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -90,5 +107,6 @@ public class FirebaseAuthUtils {
                         }
                     }
                 });
-    }*/
+        return true;
+    }
 }

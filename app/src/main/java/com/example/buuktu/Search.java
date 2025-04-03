@@ -2,15 +2,19 @@ package com.example.buuktu;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.buuktu.adapters.PageAdapter;
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,7 +32,8 @@ public class Search extends Fragment {
     private String mParam1;
     private String mParam2;
     private TabLayout tabLayout;
-    private ViewPager viewPager;
+    private ViewPager2 viewPager;
+    private PageAdapter pageAdapter;
     public Search() {
         // Required empty public constructor
     }
@@ -66,29 +71,36 @@ public class Search extends Fragment {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         tabLayout = view.findViewById(R.id.tbl_search);
         viewPager = view.findViewById(R.id.vp_search);
-        tabLayout.setOnTabSelectedListener(
-                new TabLayout.OnTabSelectedListener() {
-                    @Override
-                    public void onTabSelected(TabLayout.Tab tab) {
-                        // ...
-                    }
+        viewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
+        viewPager.setUserInputEnabled(false);
+        viewPager.setPageTransformer(new ViewPager2.PageTransformer() {
+            @Override
+            public void transformPage(@NonNull View page, float position) {
+                page.setAlpha(0.5f+Math.abs(position)*0.5f);
+            }
+        });
 
-                    @Override
-                    public void onTabUnselected(TabLayout.Tab tab) {
-                        // ...
-                    }
+        pageAdapter = new PageAdapter(requireActivity());
+        viewPager.setAdapter(pageAdapter);
+        viewPager.setUserInputEnabled(true);
 
-                    @Override
-                    public void onTabReselected(TabLayout.Tab tab) {
-                        // ...
-                    }
-                }
-        );
-        int selectedTabPosition = tabLayout.getSelectedTabPosition();
-     //   PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
-       // viewPager.setAdapter(adapter);
-        //addOnPageChangeListener
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
+            switch (position) {
+                case 0:
+                    tab.setText("Worldkies");
+                    break;
+                case 1:
+                    tab.setText("Characterkies");
+                    break;
+                case 2:
+                    tab.setText("Stuffkies");
+                    break;
+                case 3:
+                    tab.setText("Userkies");
+                    break;
+            }
+        }).attach();
+        viewPager.setPageTransformer(null);
 
         return view;
     }

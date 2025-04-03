@@ -38,6 +38,7 @@ import com.example.buuktu.R;
 import com.example.buuktu.bottomsheet.BottomSheetProfilePhotoDefault;
 import com.example.buuktu.controllers.RegisterController;
 import com.example.buuktu.utils.CheckUtil;
+import com.example.buuktu.utils.DrawableUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -93,7 +94,7 @@ public class Register extends AppCompatActivity {
         });
         bt_chooseImage = findViewById(R.id.bt_chooseImageRegister);
         Bitmap originalBitmap = ((BitmapDrawable) bt_chooseImage.getDrawable()).getBitmap();
-        personalizarImagen(originalBitmap);
+        //personalizarImagen(originalBitmap);
         tb_privateAccountRegister = findViewById(R.id.tb_privateAccountRegister);
         pickMedia =
                 registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
@@ -108,7 +109,8 @@ public class Register extends AppCompatActivity {
                             Bitmap bitmap = ImageDecoder.decodeBitmap(image1);
                             Bitmap bitmap1 = Bitmap.createScaledBitmap(bitmap, 100, 100, false);
                             bt_chooseImage.setImageBitmap(bitmap1);
-                            personalizarImagen(bitmap1);
+                            DrawableUtils.personalizarImagenCircleButton(this,bitmap1,bt_chooseImage,R.color.brownMaroon);
+                         //   personalizarImagen(bitmap1);
                             StorageReference userRef = storage.getReference().child("ujlDPggHwenVJNQcUSqO");
                             userRef.child(image.getLastPathSegment()).putFile(image);
                             bt_deleteImageRegister.setVisibility(View.VISIBLE);
@@ -166,6 +168,7 @@ public class Register extends AppCompatActivity {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
+        DrawableUtils.personalizarImagenCircleButton(this,DrawableUtils.drawableToBitmap(bt_chooseImage.getDrawable()),bt_chooseImage,R.color.brownBrown);
     }
     public ImageButton getBt_deleteImageRegister(){
         return bt_deleteImageRegister;
@@ -323,7 +326,7 @@ public class Register extends AppCompatActivity {
 
 
     }
-    public void personalizarImagen(Bitmap bitmap){
+  /*  public void personalizarImagen(Bitmap bitmap){
         //Canvas canvas = new Canvas(circularBitmap);
         //bt_chooseImage.setBor
 
@@ -338,7 +341,7 @@ public class Register extends AppCompatActivity {
         bt_chooseImage.setPadding(15, 15, 15, 15); // Añadir padding para el borde visible
         bt_chooseImage.setScaleType(ImageView.ScaleType.CENTER_CROP); // Ajusta la imagen para que quede dentro del borde
         //bt_chooseImage.set
-    }
+    }*/
     /*@Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions,
                                            int[] grantResults) {

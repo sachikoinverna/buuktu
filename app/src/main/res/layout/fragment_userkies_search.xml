@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WorldkiesSearch">
+    tools:context=".UserkiesSearch">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rc_worldkies_search"
+        android:id="@+id/rc_userkies_search"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </FrameLayout>

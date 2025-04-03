@@ -13,6 +13,7 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -88,18 +89,35 @@ public class DrawableUtils {
 
 
 
-    public static void personalizarImagenCircle(Context context, Bitmap bitmap, ImageView imageView, Color color) {
+    public static void personalizarImagenCircle(Context context, Bitmap bitmap, ImageView imageView, int color) {
         RoundedBitmapDrawable roundedDrawable = RoundedBitmapDrawableFactory.create(context.getResources(), bitmap);
         roundedDrawable.setCircular(true); // Ya hace la imagen circular, no necesita setCornerRadius()
         imageView.setImageDrawable(roundedDrawable);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageView.setPadding(15, 15, 15, 15);
 
+
 // Obtener el drawable del borde de manera segura
         Drawable drawableBorder = ContextCompat.getDrawable(context, R.drawable.border_register);
         if (drawableBorder != null) {
-            drawableBorder.setTint(Color.RED);
+            drawableBorder.setTint(color);
             imageView.setBackground(drawableBorder);
+        }
+
+    }
+    public static void personalizarImagenCircleButton(Context context, Bitmap bitmap, ImageButton imageButton, int color) {
+        RoundedBitmapDrawable roundedDrawable = RoundedBitmapDrawableFactory.create(context.getResources(), bitmap);
+        roundedDrawable.setCircular(true); // Ya hace la imagen circular, no necesita setCornerRadius()
+        imageButton.setImageDrawable(roundedDrawable);
+        imageButton.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        imageButton.setPadding(15, 15, 15, 15);
+
+
+// Obtener el drawable del borde de manera segura
+        Drawable drawableBorder = ContextCompat.getDrawable(context, R.drawable.border_register);
+        if (drawableBorder != null) {
+            drawableBorder.setTint(color);
+            imageButton.setBackground(drawableBorder);
         }
 
     }

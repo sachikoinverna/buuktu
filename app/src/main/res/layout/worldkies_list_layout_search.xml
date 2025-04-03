@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_worldkie_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeWidth="3dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_worldkie_photo_search"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:layout_weight="1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@mipmap/photoprofilefive" />
+
+            <TextView
+                android:id="@+id/tv_worldkie_name_search"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:text="TextView"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/iv_worldkie_photo_search"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_worldkie_username_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:ellipsize="end"
+                android:text="TextView"
+                app:layout_constraintStart_toEndOf="@+id/textView9"
+                app:layout_constraintTop_toBottomOf="@+id/tv_worldkie_name_search" />
+
+            <ImageView
+                android:id="@+id/iv_worldkie_private_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="@+id/iv_worldkie_photo_search"
+                app:layout_constraintTop_toTopOf="@+id/iv_worldkie_photo_search"
+                app:srcCompat="@drawable/twotone_lock_24" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/at_symbol"
+                app:layout_constraintStart_toEndOf="@+id/iv_worldkie_photo_search"
+                app:layout_constraintTop_toBottomOf="@+id/tv_worldkie_name_search" />
+
+            <ImageButton
+                android:id="@+id/ib_show_more_details_worldkie_search"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginEnd="16dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_worldkie_name_search"
+                app:srcCompat="@drawable/twotone_arrow_drop_down_circle_24" />
+
+            <TextView
+                android:id="@+id/tv_date_creation_search_worldkie_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:text="Creacion:"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/iv_worldkie_photo_search"
+                app:layout_constraintTop_toBottomOf="@+id/ib_show_more_details_worldkie_search" />
+
+            <TextView
+                android:id="@+id/tv_date_creation_search_worldkie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="75dp"
+                android:layout_marginTop="16dp"
+                android:text="TextView"
+                app:layout_constraintStart_toEndOf="@+id/tv_date_creation_search_worldkie_title"
+                app:layout_constraintTop_toBottomOf="@+id/ib_show_more_details_worldkie_search" />
+
+            <TextView
+                android:id="@+id/tv_date_last_update_search_worldkie_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:text="Ultima actualizacion:"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_worldkie_photo_search"
+                app:layout_constraintTop_toBottomOf="@+id/tv_date_creation_search_worldkie_title" />
+
+            <TextView
+                android:id="@+id/tv_date_last_update_search_worldkie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:text="TextView"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_date_last_update_search_worldkie_title"
+                app:layout_constraintTop_toBottomOf="@+id/tv_date_creation_search_worldkie" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

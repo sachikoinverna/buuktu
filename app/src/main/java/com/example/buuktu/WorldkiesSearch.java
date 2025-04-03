@@ -1,12 +1,29 @@
 package com.example.buuktu;
 
+import static android.widget.Toast.LENGTH_LONG;
+
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.example.buuktu.adapters.UserkieSearchAdapter;
+import com.example.buuktu.adapters.WorldkieSearchAdapter;
+import com.example.buuktu.models.UserkieModel;
+import com.example.buuktu.models.WorldkieModel;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +40,10 @@ public class WorldkiesSearch extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    RecyclerView rc_worldkies_search;
+    private FirebaseFirestore db;
+    private ArrayList<WorldkieModel> worldkieModelArrayList;
+    CollectionReference collectionWorldkies;
 
     public WorldkiesSearch() {
         // Required empty public constructor
@@ -59,6 +80,43 @@ public class WorldkiesSearch extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_worldkies_search, container, false);
+        View view = inflater.inflate(R.layout.fragment_worldkies_search, container, false);
+        rc_worldkies_search = view.findViewById(R.id.rc_worldkies_search);
+        db = FirebaseFirestore.getInstance();
+        worldkieModelArrayList = new ArrayList<>();
+        collectionWorldkies = db.collection("Worldkies");
+        collectionWorldkies.addSnapshotListener((queryDocumentSnapshots, e) -> {
+            if (e != null) {
+                Log.e("Error", e.getMessage());
+                Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
+                return;
+            }
+
+            if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
+                worldkieModelArrayList.clear(); // Limpia la lista antes de agregar nuevos datos
+
+                for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                    //if (documentSnapshot.getBoolean("photo_default")) {
+                    Drawable drawable = getResources().getDrawable(R.drawable.worldkie_default);
+                    WorldkieModel worldkieModel = new WorldkieModel(
+                            documentSnapshot.getId(),
+                            documentSnapshot.getString("UID_AUTHOR"),
+                            R.drawable.cloudlogin,
+                            documentSnapshot.getString("name"), documentSnapshot.getDate("creation_date"),
+                            true, documentSnapshot.getDate("last_update"), documentSnapshot.getBoolean("worldkie_private")
+                    );
+                    worldkieModelArrayList.add(worldkieModel);
+                    updateRecyclerView(worldkieModelArrayList); // Actualiza después de cargar cada imagen
+
+                }
+            }
+        });
+        return view;
     }
-}
+                private void updateRecyclerView (ArrayList < WorldkieModel > worldkieModelArrayList)
+                {
+                    WorldkieSearchAdapter worldkieSearchAdapter = new WorldkieSearchAdapter(worldkieModelArrayList, getContext(), getParentFragmentManager());
+                    rc_worldkies_search.setAdapter(worldkieSearchAdapter);
+                    rc_worldkies_search.setLayoutManager(new LinearLayoutManager(getContext()));
+                }
+            }

@@ -2,7 +2,6 @@ package com.example.buuktu.views;
 
 import static android.content.ContentValues.TAG;
 
-import android.app.Notification;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -18,12 +17,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.NavigationRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
@@ -35,16 +32,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.buuktu.CharacterkiesWorldkie;
 import com.example.buuktu.Notes;
 import com.example.buuktu.R;
 import com.example.buuktu.Search;
 import com.example.buuktu.dialogs.InfoFutureFunctionDialog;
 import com.example.buuktu.dialogs.InfoWorldkiesDialog;
-import com.example.buuktu.dialogs.PeriodNumbersDialog;
-import com.example.buuktu.dialogs.PeriodWordsDialog;
 import com.example.buuktu.listeners.OnDialogInfoClickListener;
-import com.example.buuktu.models.UserModel;
+import com.example.buuktu.models.UserkieModel;
 import com.example.buuktu.utils.BitmapUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -68,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FirebaseAuth auth;
     private FirebaseFirestore db;
     private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-users");
-    private UserModel userModel;
+    private UserkieModel userkieModel;
     FloatingActionButton floatingActionButton;
     InfoWorldkiesDialog infoWorldkiesDialog;
     InfoFutureFunctionDialog infoFutureFunctionDialog;
@@ -220,7 +214,7 @@ new Thread(new Runnable() {
         }
     }
     public void obtenerImagen(){
-        if (userModel.isPhoto_default()) {
+        if (userkieModel.isPhoto_default()) {
             //putDefaultImage();
         } else {
             /*StorageReference storageRef = storage.getReference().child(worldkieModel.getUID());

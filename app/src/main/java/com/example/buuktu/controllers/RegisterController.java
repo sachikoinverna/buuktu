@@ -1,30 +1,25 @@
 package com.example.buuktu.controllers;
 import static androidx.activity.result.ActivityResultCallerKt.registerForActivityResult;
 
-import static com.example.buuktu.R.id.*;
-
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.media.Image;
 import android.net.Uri;
-import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultCallerKt;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 
 import com.example.buuktu.R;
-import com.example.buuktu.models.UserModel;
+import com.example.buuktu.models.UserkieModel;
 import com.example.buuktu.utils.BitmapUtils;
 import com.example.buuktu.utils.CheckUtil;
+import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.views.Login;
 import com.example.buuktu.views.Register;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,8 +34,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -253,7 +246,8 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
     private void putDefaultImage(){
         register.getIB_profile_photo().setImageResource(R.mipmap.default_icon);
         Bitmap bitmap = ((BitmapDrawable) register.getIB_profile_photo().getDrawable()).getBitmap();
-        register.personalizarImagen(bitmap);
+       // register.personalizarImagen(bitmap);
+        DrawableUtils.personalizarImagenCircleButton(register,bitmap,register.getIB_profile_photo(),R.color.brownMaroon);
         register.getBt_deleteImageRegister().setVisibility(View.INVISIBLE);
     }
     private void addDataToFirestore() {
@@ -267,8 +261,8 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
                             LocalDate localDate = LocalDate.parse("2000-01-01");
                             ZoneId zoneId = ZoneId.systemDefault(); // Or specify a specific zone
                             Instant instant = localDate.atStartOfDay(zoneId).toInstant();
-                            //UserModel user = new UserModel(register.getEt_emailRegister().getText().toString(), task.getResult().getUser().getUid(), register.getEt_nameRegister().getText().toString(), register.getEt_surnameRegister().getText().toString(), register.getEt_pronounsRegister().getText().toString(), Date.from(instant),register.getEt_userRegister().getText().toString(), register.getEt_telephoneRegister().getText().toString());
-                            UserModel user = new UserModel(register.getEt_emailRegister().getText().toString(), task.getResult().getUser().getUid(), register.getEt_nameRegister().getText().toString(), register.getEt_pronounsRegister().getText().toString(), Date.from(instant),register.getEt_userRegister().getText().toString(), register.getEt_telephoneRegister().getText().toString(),BitmapUtils.drawableToBitmap(register.getIB_profile_photo().getDrawable()).equals(R.mipmap.default_icon),register.getTb_privateAccountRegister().isChecked());
+                            //UserkieModel user = new UserkieModel(register.getEt_emailRegister().getText().toString(), task.getResult().getUser().getUid(), register.getEt_nameRegister().getText().toString(), register.getEt_surnameRegister().getText().toString(), register.getEt_pronounsRegister().getText().toString(), Date.from(instant),register.getEt_userRegister().getText().toString(), register.getEt_telephoneRegister().getText().toString());
+                            UserkieModel user = new UserkieModel(register.getEt_emailRegister().getText().toString(), task.getResult().getUser().getUid(), register.getEt_nameRegister().getText().toString(), register.getEt_pronounsRegister().getText().toString(), Date.from(instant),register.getEt_userRegister().getText().toString(), register.getEt_telephoneRegister().getText().toString(),BitmapUtils.drawableToBitmap(register.getIB_profile_photo().getDrawable()).equals(R.mipmap.default_icon),register.getTb_privateAccountRegister().isChecked());
 
                             // below method is use to add data to Firebase Firestore.
                             DocumentReference documentRef = dbUsers.document(task.getResult().getUser().getUid());
