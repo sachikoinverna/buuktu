@@ -169,7 +169,7 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
         //8B6F47
         Color color = Color.valueOf(colorRGB);
 
-        DrawableUtils.personalizarImagenCuadrado(context,bitmap,holder.getIv_photo_wordlkie(),color);
+        DrawableUtils.personalizarImagenCuadrado(context,bitmap,holder.getIv_photo_wordlkie(),R.color.brownMaroon);
     }
 
 

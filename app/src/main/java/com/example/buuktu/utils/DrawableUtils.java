@@ -42,7 +42,7 @@ public class DrawableUtils {
 
         return bitmap;
     }
-    public static void personalizarImagenCuadrado(Context context, Bitmap bitmap, ImageView imageView, Color color) {
+    public static void personalizarImagenCuadrado(Context context, Bitmap bitmap, ImageView imageView, int color) {
         // Asegurar que la imagen sea cuadrada y centrada
         int size = Math.min(bitmap.getWidth(), bitmap.getHeight());
         int x = (bitmap.getWidth() - size) / 2;
@@ -60,7 +60,7 @@ public class DrawableUtils {
                         cornerRadius, cornerRadius, cornerRadius, cornerRadius}, // Radios de los bordes
                 null, null
         ));
-        borderDrawable.getPaint().setColor(color.toArgb()); // Color del borde
+        borderDrawable.getPaint().setColor(color); // Color del borde
         borderDrawable.getPaint().setStyle(Paint.Style.STROKE);
         borderDrawable.getPaint().setStrokeWidth(12); // 🔥 Grosor del borde aumentado
 

@@ -192,7 +192,7 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
         });
         ;
         Color color = Color.valueOf(context.getColor(R.color.brownBrown));
-        DrawableUtils.personalizarImagenCircle(context,DrawableUtils.drawableToBitmap(holder.getIv_worldkie_photo_search().getDrawable()),holder.getIv_worldkie_photo_search(),R.color.brownMaroon);
+        DrawableUtils.personalizarImagenCuadrado(context,DrawableUtils.drawableToBitmap(holder.getIv_worldkie_photo_search().getDrawable()),holder.getIv_worldkie_photo_search(),R.color.brownMaroon);
         /*holder.getIb_enterToAWorldkie().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
