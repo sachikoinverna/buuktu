@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -55,15 +56,15 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         MaterialCardView cardView;
-        TextView content;
-        TextView title;
-
+        TextView content,title;
+        ImageButton ib_option_note_item;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             // Asegúrate de que los IDs coincidan con los de tu layout XML (item_card.xml)
             cardView = itemView.findViewById(R.id.cv_note_item);
             title = itemView.findViewById(R.id.tv_title_note_item);
             content = itemView.findViewById(R.id.tv_content_note_item);
+            ib_option_note_item = itemView.findViewById(R.id.ib_option_note_item);
         }
 
         public void bind(final NoteItem item, final NoteAdapter.OnItemClickListener listener) {
@@ -71,6 +72,12 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             content.setText(item.getContent());
             title.setText(item.getTitle());
             cardView.setOnClickListener(v -> listener.onItemClick(item));
+            ib_option_note_item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                   // context.g
+                }
+            });
         }
     }
 }

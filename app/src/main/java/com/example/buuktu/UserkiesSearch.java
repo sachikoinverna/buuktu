@@ -22,6 +22,8 @@ import com.example.buuktu.adapters.WorldkieAdapter;
 import com.example.buuktu.models.UserkieModel;
 import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.utils.BitmapUtils;
+import com.example.buuktu.utils.FirebaseAuthUtils;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -46,6 +48,7 @@ public class UserkiesSearch extends Fragment {
     private String mParam2;
     RecyclerView rc_userkies_search;
     private FirebaseFirestore db;
+    FirebaseAuth firebaseAuth;
     private ArrayList<UserkieModel> userkieModelArrayList;
     CollectionReference collectionUserkies;
     public UserkiesSearch() {
@@ -99,16 +102,19 @@ public class UserkiesSearch extends Fragment {
 
                 for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
                     //if (documentSnapshot.getBoolean("photo_default")) {
+                    if (!documentSnapshot.getId().equals(firebaseAuth.getUid())) {
+
                         Drawable drawable = getResources().getDrawable(R.drawable.worldkie_default);
                         UserkieModel userkieModel = new UserkieModel(
                                 documentSnapshot.getId(),
                                 documentSnapshot.getString("name"),
                                 R.drawable.cloudlogin,
                                 documentSnapshot.getString("username"),
-                                true,documentSnapshot.getBoolean("private")
+                                true, documentSnapshot.getBoolean("private")
                         );
                         userkieModelArrayList.add(userkieModel);
-                    updateRecyclerView(userkieModelArrayList); // Actualiza después de cargar cada imagen
+                        updateRecyclerView(userkieModelArrayList);
+                    }// Actualiza después de cargar cada imagen
                   //  } else {
                       /*  StorageReference storageRef = storage.getReference().child(documentSnapshot.getId());
                         final long ONE_MEGABYTE = 1024 * 1024;

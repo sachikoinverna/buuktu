@@ -24,7 +24,7 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rc_characterkiesWorldkiePreview"
+                android:id="@+id/rc_characterkiePreviewUserSelf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -42,7 +42,7 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rc_stuffkieWorldkiePreview"
+                android:id="@+id/rc_stuffkiePreviewUserSelf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

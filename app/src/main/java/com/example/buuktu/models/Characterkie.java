@@ -15,6 +15,7 @@ public class Characterkie {
     private boolean alive;
     private boolean photo_default;
     private Drawable photo;
+    private boolean borrador;
 
     public Characterkie(String UID, String name) {
         this.UID=UID;

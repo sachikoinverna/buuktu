@@ -18,6 +18,8 @@ public class WorldkieModel implements Serializable {
     private boolean photo_default;
     private boolean worldkie_private;
     private int drawable;
+    private boolean borrador;
+
     public WorldkieModel() {
     }
 
