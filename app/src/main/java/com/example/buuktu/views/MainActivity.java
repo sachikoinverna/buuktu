@@ -44,6 +44,7 @@ import com.example.buuktu.dialogs.InfoWorldkiesDialog;
 import com.example.buuktu.listeners.OnDialogInfoClickListener;
 import com.example.buuktu.models.UserkieModel;
 import com.example.buuktu.utils.BitmapUtils;
+import com.example.buuktu.utils.PermissionUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -160,6 +161,8 @@ new Thread(new Runnable() {
     }
 }).start();
          */
+      //  PermissionUtils.NotifyPermission(this);
+       // PermissionUtils.NotifyWordOfTheyDay(this);
         iv_profileView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
