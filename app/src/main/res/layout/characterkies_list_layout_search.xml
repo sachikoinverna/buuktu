@@ -31,12 +31,12 @@
                 android:id="@+id/iv_characterkie_photo_search"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:layout_weight="1"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_characterkie_private_search"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@mipmap/photoprofilefive" />
 
@@ -44,8 +44,10 @@
                 android:id="@+id/iv_characterkie_private_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="@+id/iv_characterkie_photo_search"
-                app:layout_constraintTop_toTopOf="@+id/iv_characterkie_photo_search"
+                android:layout_marginStart="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/twotone_lock_24" />
 
             <TextView
@@ -66,8 +68,8 @@
 
             <TextView
                 android:id="@+id/tv_characterkie_username_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="56dp"
+                android:layout_height="18dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:ellipsize="end"

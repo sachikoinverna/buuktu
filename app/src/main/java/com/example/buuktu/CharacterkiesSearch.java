@@ -1,12 +1,30 @@
 package com.example.buuktu;
 
+import static android.widget.Toast.LENGTH_LONG;
+
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.example.buuktu.adapters.CharacterkieSearchAdapter;
+import com.example.buuktu.adapters.StuffkieSearchAdapter;
+import com.example.buuktu.models.Characterkie;
+import com.example.buuktu.models.StuffkieModel;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +41,11 @@ public class CharacterkiesSearch extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private ArrayList<Characterkie> characterkieModelArrayList;
+    CollectionReference collectionCharacterkies;
+    private FirebaseFirestore db;
+    FirebaseAuth firebaseAuth;
+    RecyclerView rc_characterkies_search;
 
     public CharacterkiesSearch() {
         // Required empty public constructor
@@ -58,7 +81,77 @@ public class CharacterkiesSearch extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_characterkies_search, container, false);
+        View view = inflater.inflate(R.layout.fragment_characterkies_search, container, false);
+        rc_characterkies_search = view.findViewById(R.id.rc_characterkies_search);
+        db = FirebaseFirestore.getInstance();
+        characterkieModelArrayList = new ArrayList<>();
+        collectionCharacterkies = db.collection("Characterkies");
+        collectionCharacterkies.addSnapshotListener((queryDocumentSnapshots, e) -> {
+            if (e != null) {
+                Log.e("Error", e.getMessage());
+                Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
+                return;
+            }
+
+            if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
+                characterkieModelArrayList.clear(); // Limpia la lista antes de agregar nuevos datos
+
+                for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                    //if (documentSnapshot.getBoolean("photo_default")) {
+                    //    if (!documentSnapshot.getId().equals(firebaseAuth.getUid())) {
+
+                    Drawable drawable = getResources().getDrawable(R.drawable.worldkie_default);
+                    /*StuffkieModel stuffkieModel = new StuffkieModel(
+                            documentSnapshot.getId(),
+                            documentSnapshot.getString("name"),
+                            Boolean.TRUE.equals(documentSnapshot.getBoolean("stuffkie_private")),
+                            R.drawable.cloudlogin
+                    );*/
+                    Characterkie characterkie = new Characterkie(documentSnapshot.getId(),documentSnapshot.getString("name"));
+                    Log.d("StuffkiesSearch", "Stuffkie encontrado: " + documentSnapshot.getString("name"));
+
+                    characterkieModelArrayList.add(characterkie);
+                    updateRecyclerView(characterkieModelArrayList);
+                    //}// Actualiza después de cargar cada imagen
+                    //  } else {
+                      /*  StorageReference storageRef = storage.getReference().child(documentSnapshot.getId());
+                        final long ONE_MEGABYTE = 1024 * 1024;
+
+                        storageRef.getBytes(ONE_MEGABYTE)
+                                .addOnSuccessListener(bytes -> {*/
+                                 /*   Bitmap bitmap = BitmapUtils.convertCompressedByteArrayToBitmap(bytes);
+                                    Drawable drawable = new BitmapDrawable(getResources(), bitmap);
+
+                                    WorldkieModel worldkieModel = new WorldkieModel(
+                                            documentSnapshot.getId(),
+                                            documentSnapshot.getString("name"),
+                                            R.
+                                            documentSnapshot.getString("username"),
+                                            drawable,
+                                            false,
+                                            documentSnapshot.getBoolean("worldkie_private")
+                                    );*/
+                    //     worldkieModelArrayList.add(worldkieModel);
+                    //    updateRecyclerView(worldkieModelArrayList); // Actualiza después de cargar cada imagen
+                              /*  })
+                                .addOnFailureListener(exception -> {
+                                    Log.e("Error", "Error al cargar imagen: " + exception.getMessage());
+                                });*/
+                }
+            }
+
+            // updateRecyclerView(worldkieModelArrayList); // Actualiza el RecyclerView después de procesar todos los documentos
+        }); /*else {
+                // Si no hay documentos, limpia la lista y actualiza el RecyclerView
+                worldkieModelArrayList.clear();
+                updateRecyclerView(worldkieModelArrayList);
+            }*/
+        //});
+        return view;
+    }
+    private void updateRecyclerView(ArrayList<Characterkie> characterkieArrayList) {
+        CharacterkieSearchAdapter characterkieSearchAdapter = new CharacterkieSearchAdapter(characterkieArrayList, getContext(), getParentFragmentManager());
+        rc_characterkies_search.setAdapter(characterkieSearchAdapter);
+        rc_characterkies_search.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 }

@@ -2,6 +2,9 @@ package com.example.buuktu.views;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -32,6 +35,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.buuktu.broadcastReceiver.WordNotificationReceiver;
 import com.example.buuktu.Notes;
 import com.example.buuktu.R;
 import com.example.buuktu.Search;
@@ -50,6 +54,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnDialogInfoClickListener {
 
@@ -84,6 +90,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(getApplicationContext(), ProfileView.class));
             }
         });
+       /* Intent intent = new Intent(this, WordNotificationReceiver.class);
+        sendBroadcast(intent);*/
         Toolbar toolbar = findViewById(R.id.toolbar);
         iv_profileView = findViewById(R.id.iv_profileView);
         ib_info = findViewById(R.id.ib_info);
@@ -128,6 +136,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //});
         Animation rotation = AnimationUtils.loadAnimation(this, R.anim.rotate);
         iv_profileView.startAnimation(rotation);
+       // scheduleDailyNotification();
+        scheduleTestNotification();
         /*
         // Realizar una tarea en segundo plano (por ejemplo, usando un hilo o AsyncTask)
 new Thread(new Runnable() {
@@ -229,6 +239,52 @@ new Thread(new Runnable() {
             );*/
         }
     }
+    private void scheduleDailyNotification() {
+        Intent intent = new Intent(this, WordNotificationReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        /*Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.add(Calendar.SECOND, 30); // En lugar de set a las 00:00
+*/
+
+        // Si la hora ya pasó hoy, programa para mañana
+        if (calendar.getTimeInMillis() < System.currentTimeMillis()) {
+            calendar.add(Calendar.DAY_OF_YEAR, 1);
+        }
+
+       /* alarmManager.setRepeating(
+                AlarmManager.RTC_WAKEUP,
+                calendar.getTimeInMillis(),
+                AlarmManager.INTERVAL_DAY,
+                pendingIntent
+        );*/
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
+    }
+    private void scheduleTestNotification() {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, WordNotificationReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                this, 0, intent, PendingIntent.FLAG_IMMUTABLE
+        );
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.add(Calendar.SECOND, 10); // Noti en 10 segundos
+
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
+        Log.d("NotiTest", "Alarma programada para: " + calendar.getTime().toString());
+    }
+
     public void personalizarImagen(Bitmap bitmap){
         //Canvas canvas = new Canvas(circularBitmap);
         //bt_chooseImage.setBor

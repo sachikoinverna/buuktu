@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buuktu.R;
+import com.example.buuktu.models.StuffkieModel;
 import com.example.buuktu.models.UserkieModel;
 import com.example.buuktu.utils.DrawableUtils;
 import com.google.android.material.card.MaterialCardView;
@@ -27,7 +28,7 @@ public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAd
     public void onClick(View v) {
 
     }
-    private ArrayList<UserkieModel> dataSet;
+    private ArrayList<StuffkieModel> dataSet;
     private FragmentManager fragmentManager;
 
     private Context context;
@@ -40,11 +41,11 @@ public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAd
         private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         public ViewHolder(View view) {
             super(view);
-            tv_stuffkie_username_search = view.findViewById(R.id.tv_characterkie_username_search);
-            tv_stuffkie_name_search =  view.findViewById(R.id.tv_characterkie_name_search);
-            iv_stuffkie_photo_search= view.findViewById(R.id.iv_characterkie_photo_search);
-            cv_stuffkie_search = view.findViewById(R.id.cv_characterkie_search);
-            iv_stuffkie_private_search = view.findViewById(R.id.iv_characterkie_private_search);
+            tv_stuffkie_username_search = view.findViewById(R.id.tv_stuffkie_username_search);
+            tv_stuffkie_name_search =  view.findViewById(R.id.tv_stuffkie_name_search);
+            iv_stuffkie_photo_search= view.findViewById(R.id.iv_stuffkie_photo_search);
+            cv_stuffkie_search = view.findViewById(R.id.cv_stuffkie_search);
+            iv_stuffkie_private_search = view.findViewById(R.id.iv_stuffkie_private_search);
         }
 
         public FirebaseStorage getFirebaseStorage() {
@@ -74,7 +75,7 @@ public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAd
         }
     }
     //Constructor donde pasamos la lista de productos y el contexto
-    public StuffkieSearchAdapter(ArrayList<UserkieModel> dataSet, Context ctx, FragmentManager fragmentManager) {
+    public StuffkieSearchAdapter(ArrayList<StuffkieModel> dataSet, Context ctx, FragmentManager fragmentManager) {
         this.dataSet = dataSet;
         this.context = ctx;
         this.fragmentManager = fragmentManager;
@@ -84,15 +85,15 @@ public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAd
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
 
         //Creamos la vista de cada item a partir de nuestro layout
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.userkies_list_layout_search, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.stuffkies_list_layout_search, viewGroup, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.getTv_stuffkie_username_search().setText(dataSet.get(holder.getAdapterPosition()).getUsername());
+       // holder.getTv_stuffkie_username_search().setText(dataSet.get(holder.getAdapterPosition()).getUsername());
         holder.getTv_stuffkie_name_search().setText(dataSet.get(holder.getAdapterPosition()).getName());
-        if(dataSet.get(holder.getAdapterPosition()).isProfile_private()){
+        if(dataSet.get(holder.getAdapterPosition()).isStuffkie_private()){
             holder.getIv_stuffkie_private_search().setImageAlpha(R.drawable.twotone_lock_24);
         }else{
             holder.getIv_stuffkie_private_search().setImageAlpha(R.drawable.twotone_lock_open_24);

@@ -191,58 +191,7 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
             }
         });
         ;
-        Color color = Color.valueOf(context.getColor(R.color.brownBrown));
         DrawableUtils.personalizarImagenCuadrado(context,DrawableUtils.drawableToBitmap(holder.getIv_worldkie_photo_search().getDrawable()),holder.getIv_worldkie_photo_search(),R.color.brownMaroon);
-        /*holder.getIb_enterToAWorldkie().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                menuWorldkie = new WorldkieMenu();
-                Bundle bundle = new Bundle();
-                bundle.putString("worlkie_id",dataSet.get(holder.getAdapterPosition()).getUID());
-                menuWorldkie.setArguments(bundle);
-                fragmentManager.beginTransaction().replace(R.id.fragment_container, menuWorldkie) .addToBackStack(null) // Permite regresar atrás con el botón de retroceso
-                        .commit();
-                //Intent intent = new Intent(holder.itemView.getContext(), Worldkie.class);
-                //   holder.
-                // Intent intent = new Intent(holder.itemView.getContext(), WorldkieMenu.class);
-                // holder.itemView.getContext().startActivity(intent);
-            }
-        });*/
-      /*  holder.getIb_editAWorldkie().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(holder.itemView.getContext(), CreateWorldkie.class);
-                intent.putExtra("create",false);
-                //  intent.putExtra("worldkie",new WorldkieModel(dataSet.get(holder.getAdapterPosition()).getUID(),dataSet.get(holder.getAdapterPosition()).getName(),dataSet.get(holder.getAdapterPosition()).isPhoto_default(),dataSet.get(holder.getAdapterPosition()).isWorldkie_private()));
-                holder.itemView.getContext().startActivity(intent);
-            }
-        });*/
-       /* holder.getIb_deleteAWorldkie().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                holder.getDb().collection("Worldkies").document(dataSet.get(holder.getAdapterPosition()).getUID()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        holder.getFirebaseStorage().getReference().child(dataSet.get(holder.getAdapterPosition()).getUID()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-
-                            }
-                        });
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
-                    }
-                });
-            }
-        });*/
         //De esra forma establacemos las imagenes de la lista
         //String uri = "@drawable/" + dataSet.get(position).getPhoto();  // where myresource (without the extension) is the file
         //int imageResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
