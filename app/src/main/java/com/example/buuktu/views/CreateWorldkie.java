@@ -38,6 +38,7 @@ import com.example.buuktu.R;
 import com.example.buuktu.controllers.CreateWorldkieController;
 import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.utils.BitmapUtils;
+import com.example.buuktu.utils.DrawableUtils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.CollectionReference;
@@ -106,7 +107,8 @@ public class CreateWorldkie extends AppCompatActivity {
                             Bitmap bitmap = ImageDecoder.decodeBitmap(image1);
                             Bitmap bitmap1 = Bitmap.createScaledBitmap(bitmap, 640, 640, false);
                             bt_chooseImage.setImageBitmap(bitmap1);
-                            personalizarImagen(bitmap1);
+                           // personalizarImagen(bitmap1);
+                            DrawableUtils.personalizarImagenCircleButton(this,DrawableUtils.drawableToBitmap(bt_chooseImage.getDrawable()),bt_chooseImage,R.color.brownMaroon);
                             bt_deleteImageRegister.setVisibility(View.VISIBLE);
 
                         } catch (IOException e) {

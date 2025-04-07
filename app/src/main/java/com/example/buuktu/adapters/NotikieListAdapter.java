@@ -8,12 +8,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buuktu.R;
 import com.example.buuktu.models.Characterkie;
+import com.example.buuktu.models.NotikieModel;
 import com.example.buuktu.utils.DrawableUtils;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -21,59 +23,55 @@ import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 
-public class CharacterkieSearchAdapter extends RecyclerView.Adapter<CharacterkieSearchAdapter.ViewHolder> implements View.OnClickListener{
+public class NotikieListAdapter extends RecyclerView.Adapter<NotikieListAdapter.ViewHolder> implements View.OnClickListener{
     @Override
     public void onClick(View v) {
 
     }
-    private ArrayList<Characterkie> dataSet;
+    private ArrayList<NotikieModel> dataSet;
     private FragmentManager fragmentManager;
 
     private Context context;
     private Fragment menuWorldkie;
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView iv_characterkie_photo_search,iv_characterkie_private_search;
-        MaterialCardView cv_characterkie_search;
-        TextView tv_characterkie_name_search, tv_characterkie_username_search;
-        private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
+        MaterialCardView cv_notikie_list_layout;
+        TextView tv_text_notikie_list_layout,tv_date_notikie_list_layout;
+        ImageView iv_icon_notikie_list_layout;
+      //  private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
         private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         public ViewHolder(View view) {
             super(view);
-            tv_characterkie_username_search = view.findViewById(R.id.tv_characterkie_username_search);
-            tv_characterkie_name_search =  view.findViewById(R.id.tv_characterkie_name_search);
-            iv_characterkie_photo_search= view.findViewById(R.id.iv_characterkie_photo_search);
-            cv_characterkie_search = view.findViewById(R.id.cv_characterkie_search);
-            iv_characterkie_private_search = view.findViewById(R.id.iv_characterkie_private_search);
+            iv_icon_notikie_list_layout = view.findViewById(R.id.iv_icon_notikie_list_layout);
+            cv_notikie_list_layout = view.findViewById(R.id.cv_notikie_list_layout);
+            tv_date_notikie_list_layout = view.findViewById(R.id.tv_date_notikie_list_layout);
+            tv_text_notikie_list_layout = view.findViewById(R.id.tv_text_notikie_list_layout);
         }
 
-        public FirebaseStorage getFirebaseStorage() {
-            return firebaseStorage;
-        }
+      //  public FirebaseStorage getFirebaseStorage() {
+      //      return firebaseStorage;
+      //  }
         public FirebaseFirestore getDb() {
             return firestore;
         }
 
-        public TextView getTv_characterkie_username_search() {
-            return tv_characterkie_username_search;
+        public MaterialCardView getCv_notikie_list_layout() {
+            return cv_notikie_list_layout;
         }
 
-        public TextView getTv_characterkie_name_search() {
-            return tv_characterkie_name_search;
+        public TextView getTv_text_notikie_list_layout() {
+            return tv_text_notikie_list_layout;
         }
 
-        public MaterialCardView getCv_characterkie_search() {
-            return cv_characterkie_search;
+        public TextView getTv_date_notikie_list_layout() {
+            return tv_date_notikie_list_layout;
         }
 
-        public ImageView getIv_characterkie_photo_search() {
-            return iv_characterkie_photo_search;
-        }
-        public ImageView getIv_characterkie_private_search() {
-            return iv_characterkie_private_search;
+        public ImageView getIv_icon_notikie_list_layout() {
+            return iv_icon_notikie_list_layout;
         }
     }
     //Constructor donde pasamos la lista de productos y el contexto
-    public CharacterkieSearchAdapter(ArrayList<Characterkie> dataSet, Context ctx, FragmentManager fragmentManager) {
+    public NotikieListAdapter(ArrayList<NotikieModel> dataSet, Context ctx, FragmentManager fragmentManager) {
         this.dataSet = dataSet;
         this.context = ctx;
         this.fragmentManager = fragmentManager;
@@ -90,21 +88,23 @@ public class CharacterkieSearchAdapter extends RecyclerView.Adapter<Characterkie
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
        // holder.getTv_characterkie_username_search().setText(dataSet.get(holder.getAdapterPosition()).getUsername());
-        holder.getTv_characterkie_name_search().setText(dataSet.get(holder.getAdapterPosition()).getName());
+        holder.getTv_text_notikie_list_layout().setText(dataSet.get(holder.getAdapterPosition()).getMessage());
+        holder.getIv_icon_notikie_list_layout()
+                .setImageAlpha(dataSet.get(holder.getAdapterPosition()).getIcon());
         /*if(dataSet.get(holder.getAdapterPosition()).is()){
             holder.getIv_characterkie_private_search().setImageAlpha(R.drawable.twotone_lock_24);
         }else{
             holder.getIv_characterkie_private_search().setImageAlpha(R.drawable.twotone_lock_open_24);
         }*/
 
-        holder.getCv_characterkie_search().setOnClickListener(new View.OnClickListener() {
+        holder.getCv_notikie_list_layout().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
         });
         ;
-        DrawableUtils.personalizarImagenCircle(context,DrawableUtils.drawableToBitmap(holder.iv_characterkie_photo_search.getDrawable()),holder.getIv_characterkie_photo_search(),R.color.brownMaroon);
+        DrawableUtils.personalizarImagenCircle(context,DrawableUtils.drawableToBitmap(holder.iv_icon_notikie_list_layout.getDrawable()),holder.getIv_icon_notikie_list_layout(),R.color.brownMaroon);
 
         //De esra forma establacemos las imagenes de la lista
         //String uri = "@drawable/" + dataSet.get(position).getPhoto();  // where myresource (without the extension) is the file

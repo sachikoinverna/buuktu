@@ -35,6 +35,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.buuktu.Notikies;
 import com.example.buuktu.broadcastReceiver.WordNotificationReceiver;
 import com.example.buuktu.Notes;
 import com.example.buuktu.R;
@@ -161,7 +162,7 @@ new Thread(new Runnable() {
     }
 }).start();
          */
-      //  PermissionUtils.NotifyPermission(this);
+       // PermissionUtils.NotifyPermission(this);
        // PermissionUtils.NotifyWordOfTheyDay(this);
         iv_profileView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -210,7 +211,8 @@ new Thread(new Runnable() {
                   //  periodWordsDialog.show();
                   //  PeriodNumbersDialog periodNumbersDialog = new PeriodNumbersDialog(MainActivity.this);
                   //  periodNumbersDialog.show();
-                    replaceFragment(new Notes());
+                    //replaceFragment(new Notes());
+                    replaceFragment(new Notikies());
                     //Intent intent = new Intent(MainActivity.this, Notes.class);
                    // startActivity(intent);
                     //infoFutureFunctionDialog.show();
