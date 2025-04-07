@@ -58,7 +58,7 @@ public class WordNotificationReceiver extends BroadcastReceiver {
 
         notificationManager.notify(1, builder.build());
         Map<String,Object> notikieData = new HashMap<>();
-        notikieData.put("Message",phrase);
+        notikieData.put("message",phrase);
         notikieData.put("icon",R.drawable.twotone_translate_24);
         notikieData.put("date", FieldValue.serverTimestamp());
         db.collection("Notikies").add(notikieData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

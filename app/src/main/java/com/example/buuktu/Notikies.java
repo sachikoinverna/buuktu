@@ -23,11 +23,13 @@ import com.example.buuktu.adapters.StuffkieSearchAdapter;
 import com.example.buuktu.models.CardItem;
 import com.example.buuktu.models.NotikieModel;
 import com.example.buuktu.models.StuffkieModel;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -105,8 +107,12 @@ public class Notikies extends Fragment {
 
                     Drawable drawable = getResources().getDrawable(R.drawable.worldkie_default);
                     NotikieModel notikieModel = new NotikieModel(
-                            documentSnapshot.getString("message"), documentSnapshot.getTimestamp("date"), Math.toIntExact(documentSnapshot.getLong("icon"))
+                            documentSnapshot.getString("message"),
+                            documentSnapshot.getTimestamp("date"), // Usamos getTimestamp para obtener el campo como un Timestamp
+                            Math.toIntExact(documentSnapshot.getLong("icon"))
                     );
+
+
                     Log.d("StuffkiesSearch", "Stuffkie encontrado: " + documentSnapshot.getString("name"));
 
                     notikieModelArrayList.add(notikieModel);
