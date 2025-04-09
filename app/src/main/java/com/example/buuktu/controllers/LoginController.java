@@ -89,9 +89,9 @@ public class LoginController implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if(view.getId()==R.id.bt_loginToRegister) {
+        if(view.getId()==R.id.tv_loginToRegisterButton) {
             handlerGoToRegister();
-        } else if (view.getId()==R.id.ib_login) {
+        } else if (view.getId()==R.id.tv_loginButton) {
             handlerLogin();
         }
     }

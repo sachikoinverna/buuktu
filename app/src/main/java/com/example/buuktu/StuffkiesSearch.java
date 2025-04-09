@@ -20,8 +20,10 @@ import com.example.buuktu.adapters.StuffkieSearchAdapter;
 import com.example.buuktu.adapters.UserkieSearchAdapter;
 import com.example.buuktu.models.StuffkieModel;
 import com.example.buuktu.models.UserkieModel;
+import com.example.buuktu.models.WorldkieModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -47,7 +49,7 @@ public class StuffkiesSearch extends Fragment {
     private FirebaseFirestore db;
     FirebaseAuth firebaseAuth;
     RecyclerView rc_stuffkies_search;
-
+    StuffkieSearchAdapter stuffkieSearchAdapter;
     public StuffkiesSearch() {
         // Required empty public constructor
     }
@@ -88,6 +90,9 @@ public class StuffkiesSearch extends Fragment {
         db = FirebaseFirestore.getInstance();
         stuffkieModelArrayList = new ArrayList<>();
         collectionStuffkies = db.collection("Stuffkies");
+        stuffkieSearchAdapter = new StuffkieSearchAdapter(stuffkieModelArrayList, getContext(), getParentFragmentManager());
+        rc_stuffkies_search.setAdapter(stuffkieSearchAdapter);
+        rc_stuffkies_search.setLayoutManager(new LinearLayoutManager(getContext()));
         collectionStuffkies.addSnapshotListener((queryDocumentSnapshots, e) -> {
             if (e != null) {
                 Log.e("Error", e.getMessage());
@@ -96,23 +101,39 @@ public class StuffkiesSearch extends Fragment {
             }
 
             if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
-                stuffkieModelArrayList.clear(); // Limpia la lista antes de agregar nuevos datos
+                //stuffkieModelArrayList.clear(); // Limpia la lista antes de agregar nuevos datos
 
-                for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
-                    //if (documentSnapshot.getBoolean("photo_default")) {
+                for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
+                    DocumentSnapshot doc = dc.getDocument();                    //if (documentSnapshot.getBoolean("photo_default")) {
                 //    if (!documentSnapshot.getId().equals(firebaseAuth.getUid())) {
 
                         Drawable drawable = getResources().getDrawable(R.drawable.worldkie_default);
                         StuffkieModel stuffkieModel = new StuffkieModel(
-                                documentSnapshot.getId(),
-                                documentSnapshot.getString("name"),
-                                Boolean.TRUE.equals(documentSnapshot.getBoolean("stuffkie_private")),
+                                doc.getId(),
+                                doc.getString("name"),
+                                Boolean.TRUE.equals(doc.getBoolean("stuffkie_private")),
                                 R.drawable.cloudlogin
                         );
-                    Log.d("StuffkiesSearch", "Stuffkie encontrado: " + documentSnapshot.getString("name"));
+                    switch (dc.getType()) {
+                        case ADDED:
+                            safeAddToList(stuffkieModelArrayList, dc.getNewIndex(), stuffkieModel);
+                            stuffkieSearchAdapter.notifyItemInserted(dc.getNewIndex());
+                            break;
 
-                    stuffkieModelArrayList.add(stuffkieModel);
-                        updateRecyclerView(stuffkieModelArrayList);
+                        case MODIFIED:
+                            safeSetToList(stuffkieModelArrayList, dc.getOldIndex(), stuffkieModel);
+                            stuffkieSearchAdapter.notifyItemChanged(dc.getOldIndex());
+                            break;
+
+                        case REMOVED:
+                            if (dc.getOldIndex() >= 0 && dc.getOldIndex() < stuffkieModelArrayList.size()) {
+                                stuffkieModelArrayList.remove(dc.getOldIndex());
+                                stuffkieSearchAdapter.notifyItemRemoved(dc.getOldIndex());
+                            }
+                            break;
+                    }
+                  //  stuffkieModelArrayList.add(stuffkieModel);
+                  //      updateRecyclerView(stuffkieModelArrayList);
                     //}// Actualiza después de cargar cada imagen
                     //  } else {
                       /*  StorageReference storageRef = storage.getReference().child(documentSnapshot.getId());
@@ -150,9 +171,20 @@ public class StuffkiesSearch extends Fragment {
         //});
         return view;
     }
+    private void safeAddToList(ArrayList<StuffkieModel> list, int index, StuffkieModel item) {
+        if (index >= 0 && index <= list.size()) {
+            list.add(index, item);
+        } else {
+            list.add(item); // Fallback: añade al final
+        }
+    }
+
+    private void safeSetToList(ArrayList<StuffkieModel> list, int index, StuffkieModel item) {
+        if (index >= 0 && index < list.size()) {
+            list.set(index, item);
+        }
+    }
     private void updateRecyclerView(ArrayList<StuffkieModel> stuffkieModelArrayList) {
-        StuffkieSearchAdapter stuffkieSearchAdapter = new StuffkieSearchAdapter(stuffkieModelArrayList, getContext(), getParentFragmentManager());
-        rc_stuffkies_search.setAdapter(stuffkieSearchAdapter);
-        rc_stuffkies_search.setLayoutManager(new LinearLayoutManager(getContext()));
+
     }
 }

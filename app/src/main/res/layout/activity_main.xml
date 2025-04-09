@@ -26,10 +26,10 @@
         <!-- FloatingActionButton (FAB) -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingActionButton"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_gravity="center_horizontal|top"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="0dp"
             android:clickable="true"
             android:elevation="6dp"
             app:shapeAppearance="@style/customRoundedFAB"
@@ -37,12 +37,12 @@
 
         <!-- Fragment container for dynamic fragment loading -->
         <FrameLayout
+            android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/fragment_container"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_marginTop="?attr/actionBarSize"
             android:layout_marginBottom="?attr/actionBarSize"
-            android:layout_marginTop="?attr/actionBarSize" />
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         <!-- BottomAppBar with BottomNavigationView -->
         <com.google.android.material.bottomappbar.BottomAppBar

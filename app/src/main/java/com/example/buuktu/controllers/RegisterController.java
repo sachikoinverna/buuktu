@@ -233,11 +233,11 @@ public class RegisterController implements View.OnFocusChangeListener, View.OnCl
     }
     @Override
     public void onClick(View view) {
-            if(view.getId()==R.id.bt_registerToLogin) {
+            if(view.getId()==R.id.tv_registerToLoginButton) {
                 handlerGoToRegister();
             } else if (view.getId()==R.id.dp_birthday) {
                 showDatePickerDialog();
-            } else if (view.getId()==R.id.bt_register) {
+            } else if (view.getId()==R.id.tv_registerButton) {
                 addDataToFirestore();
             } else if (view.getId()==R.id.bt_deleteImageRegister) {
                 putDefaultImage();

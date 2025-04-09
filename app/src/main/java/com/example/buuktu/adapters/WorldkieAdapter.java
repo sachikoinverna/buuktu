@@ -164,12 +164,12 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
             //int imageResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
             //Drawable res =  context.getResources().getDrawable(imageResource);
             holder.getIv_photo_wordlkie().setImageDrawable(dataSet.get(holder.getAdapterPosition()).getPhoto());
-        Bitmap bitmap = DrawableUtils.drawableToBitmap(dataSet.get(holder.getAdapterPosition()).getPhoto());
-        int colorRGB = Color.rgb(139, 111, 71);
+        //Bitmap bitmap = DrawableUtils.drawableToBitmap(dataSet.get(holder.getAdapterPosition()).getPhoto());
+      //  int colorRGB = Color.rgb(139, 111, 71);
         //8B6F47
-        Color color = Color.valueOf(colorRGB);
+      //  Color color = Color.valueOf(colorRGB);
 
-        DrawableUtils.personalizarImagenCuadrado(context,bitmap,holder.getIv_photo_wordlkie(),R.color.brownMaroon);
+        DrawableUtils.personalizarImagenCuadrado(context,DrawableUtils.drawableToBitmap(dataSet.get(holder.getAdapterPosition()).getPhoto()),holder.getIv_photo_wordlkie(),R.color.brownMaroon);
     }
 
 

@@ -12,21 +12,13 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:text="@string/register"
         android:textSize="60sp"
         app:layout_constraintBottom_toTopOf="@+id/cardview_register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/bt_registerToLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/cloudlogin" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardview_register"
@@ -411,9 +403,11 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/tv_registerbutton"
+        android:id="@+id/tv_registerToLoginButton"
         android:layout_width="100dp"
         android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/button_backgground"
         android:foreground="@drawable/twotone_bubble_chart_24"
         android:foregroundGravity="left|center"
@@ -421,30 +415,23 @@
         android:gravity="center"
         android:text="@string/login"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="@+id/bt_registerToLogin"
-        app:layout_constraintEnd_toEndOf="@+id/bt_registerToLogin"
-        app:layout_constraintStart_toStartOf="@+id/bt_registerToLogin"
-        app:layout_constraintTop_toTopOf="@+id/bt_registerToLogin" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/tv_registerButton"
         android:layout_width="120dp"
         android:layout_height="50dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/button_backgground"
         android:foreground="@drawable/twotone_auto_awesome_24"
         android:foregroundGravity="left|center"
         android:foregroundTint="#FFFFFF"
         android:gravity="center"
-        android:text="TextView"
-        android:textColor="#FFFFFF" />
-
-    <ImageButton
-        android:id="@+id/bt_register"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:text="Registro"
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardview_register"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        app:layout_constraintTop_toBottomOf="@+id/cardview_register" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

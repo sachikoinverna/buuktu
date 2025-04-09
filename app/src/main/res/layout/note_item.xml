@@ -40,11 +40,10 @@
 
             <ImageButton
                 android:id="@+id/ib_option_note_item"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                app:layout_constraintBottom_toTopOf="@+id/tv_content_note_item"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/twotone_more_vert_24" />
@@ -54,13 +53,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
                 android:ellipsize="end"
                 android:maxLines="10"
                 android:text="TextView"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_title_note_item" />
+
+            <ImageButton
+                android:id="@+id/ib_delete_note_item"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_content_note_item"
+                app:srcCompat="@drawable/twotone_delete_sweep_24" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>

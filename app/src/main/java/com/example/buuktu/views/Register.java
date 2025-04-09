@@ -39,7 +39,9 @@ import com.example.buuktu.bottomsheet.BottomSheetProfilePhotoDefault;
 import com.example.buuktu.controllers.RegisterController;
 import com.example.buuktu.utils.CheckUtil;
 import com.example.buuktu.utils.DrawableUtils;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -72,7 +74,7 @@ public class Register extends AppCompatActivity {
     Uri image;
     RegisterController registerController;
     FirebaseStorage storage = FirebaseStorage.getInstance("gs://buuk-tu-users");
-
+    TextView tv_registerButton,tv_registerToLoginButton;
     // Create a child reference
 // imagesRef now points to "images"
     //StorageReference imagesRef = storageRef.child("images");
@@ -141,7 +143,7 @@ public class Register extends AppCompatActivity {
         tv_pronounsRegister = findViewById(R.id.tv_errorPronounsRegister);
         tv_usernameRegister = findViewById(R.id.tv_errorUsernameRegister);
         tv_telephoneRegister = findViewById(R.id.tv_errorNumberRegister);
-        bt_registerToLogin = findViewById(R.id.bt_registerToLogin);
+        tv_registerToLoginButton = findViewById(R.id.tv_registerToLoginButton);
         CheckUtil.setErrorMessage(null, tv_nameRegister);
          CheckUtil.setErrorMessage(null, tv_emailRegister);
         CheckUtil.setErrorMessage(null, tv_birthdayRegister);
@@ -159,15 +161,24 @@ public class Register extends AppCompatActivity {
         et_nameRegister.setOnFocusChangeListener(registerController);
         et_password.setOnFocusChangeListener(registerController);
         et_passwordRepeat.setOnFocusChangeListener(registerController);
-        bt_registerToLogin.setOnClickListener(registerController);
+      //  tv_registerToLoginButton.setOnClickListener(registerController);
         dp_birthday.setOnClickListener(registerController);
         db = FirebaseFirestore.getInstance();
-        bt_register = findViewById(R.id.bt_register);
+        tv_registerButton = findViewById(R.id.tv_registerButton);
         bt_deleteImageRegister.setOnClickListener(registerController);
         if (auth.getCurrentUser()!=null){
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
+        auth.signInWithEmailAndPassword("chikoritaxserperior@gmail.com","135sEt754asdtpm*").addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+            @Override
+            public void onSuccess(AuthResult authResult) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
         DrawableUtils.personalizarImagenCircleButton(this,DrawableUtils.drawableToBitmap(bt_chooseImage.getDrawable()),bt_chooseImage,R.color.brownBrown);
     }
     public ImageButton getBt_deleteImageRegister(){

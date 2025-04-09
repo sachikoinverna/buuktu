@@ -16,12 +16,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.buuktu.R;
 import com.example.buuktu.models.Characterkie;
 import com.example.buuktu.models.NotikieModel;
+import com.example.buuktu.utils.DateUtils;
 import com.example.buuktu.utils.DrawableUtils;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class NotikieListAdapter extends RecyclerView.Adapter<NotikieListAdapter.ViewHolder> implements View.OnClickListener{
     @Override
@@ -81,44 +85,59 @@ public class NotikieListAdapter extends RecyclerView.Adapter<NotikieListAdapter.
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
 
         //Creamos la vista de cada item a partir de nuestro layout
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.characterkies_list_layout_search, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.notikie_list_layout, viewGroup, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-       // holder.getTv_characterkie_username_search().setText(dataSet.get(holder.getAdapterPosition()).getUsername());
         holder.getTv_text_notikie_list_layout().setText(dataSet.get(holder.getAdapterPosition()).getMessage());
         holder.getIv_icon_notikie_list_layout()
                 .setImageAlpha(dataSet.get(holder.getAdapterPosition()).getIcon());
-        /*if(dataSet.get(holder.getAdapterPosition()).is()){
-            holder.getIv_characterkie_private_search().setImageAlpha(R.drawable.twotone_lock_24);
-        }else{
-            holder.getIv_characterkie_private_search().setImageAlpha(R.drawable.twotone_lock_open_24);
-        }*/
+        Date date = dataSet.get(holder.getAdapterPosition()).getDate().toDate();
+        long serverTimeMs = date.getTime();
+        long current = DateUtils.currentMs();
+        long timeDifference = DateUtils.getTimeDiference(current,serverTimeMs);
+        long seconds = DateUtils.secondsFrom(timeDifference);
+        long minutes = DateUtils.minutesFrom(timeDifference);
+        long hours = DateUtils.hoursFrom(timeDifference);
+        long days = DateUtils.daysFrom(timeDifference);
+        String timeAgo;
+        SimpleDateFormat dateFormat;
+        if (days > 30) {
+            // Si han pasado más de 30 días, mostrar la fecha completa con hora
+            dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+            timeAgo = "Fecha: " + dateFormat.format(date);
+        } else if (days > 7) {
+            // Si han pasado más de 7 días pero menos de 30 días, mostrar el día de la semana
+            dateFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+            timeAgo = "Fue un " + dateFormat.format(date);
+        } else {
+            // Si han pasado menos de 7 días, mostrar el tiempo transcurrido
+            timeAgo = getTimeAgo(seconds, minutes, hours, days);
+        }
 
+        // Mostrar el tiempo transcurrido o la fecha completa
+        System.out.println(timeAgo);
+        holder.getTv_date_notikie_list_layout().setText(timeAgo);
         holder.getCv_notikie_list_layout().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
         });
-        ;
-        DrawableUtils.personalizarImagenCircle(context,DrawableUtils.drawableToBitmap(holder.iv_icon_notikie_list_layout.getDrawable()),holder.getIv_icon_notikie_list_layout(),R.color.brownMaroon);
-
-        //De esra forma establacemos las imagenes de la lista
-        //String uri = "@drawable/" + dataSet.get(position).getPhoto();  // where myresource (without the extension) is the file
-        //int imageResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
-        //Drawable res =  context.getResources().getDrawable(imageResource);
-        //  holder.getIv_photo_wordlkie().setImageDrawable(dataSet.get(holder.getAdapterPosition()).getPhoto());
-        //  Bitmap bitmap = DrawableUtils.drawableToBitmap(dataSet.get(holder.getAdapterPosition()).getPhoto());
-        //  int colorRGB = Color.rgb(139, 111, 71);
-        //8B6F47
-        //  Color color = Color.valueOf(colorRGB);
-
-        // DrawableUtils.personalizarImagenCuadrado(context,bitmap,holder.getIv_photo_wordlkie(),color);
     }
-
+private String getTimeAgo(long seconds, long minutes, long hours, long days) {
+    if (days > 0) {
+        return days + " día" + (days > 1 ? "s" : "") + "atrás.";
+    } else if (hours > 0) {
+        return  hours + " hora" + (hours > 1 ? "s" : "") + " atrás";
+    } else if (minutes > 0) {
+        return minutes + " minuto" + (minutes > 1 ? "s" : "") + " atrás";
+    } else {
+        return seconds + " segundo" + (seconds > 1 ? "s" : "") + " atrás";
+    }
+}
 
     // Devolvemos el numero de items de nuestro arraylist, lo invoca automaticamente el layout manager
     @Override

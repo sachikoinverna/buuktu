@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -37,6 +38,7 @@ public class Login extends AppCompatActivity {
     private FirebaseFirestore db;
     ImageButton ib_login;
     ImageButton bt_loginToRegister;
+    TextView tv_loginButton,tv_loginToRegisterButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,10 +49,10 @@ public class Login extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        bt_loginToRegister = findViewById(R.id.bt_loginToRegister);
+        tv_loginButton = findViewById(R.id.tv_loginButton);
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
-        ib_login = findViewById(R.id.ib_login);
+        tv_loginToRegisterButton = findViewById(R.id.tv_loginToRegisterButton);
         editTextEmailLogin = findViewById(R.id.et_emailLogin);
         editTextPasswordLogin = findViewById(R.id.et_passwordLogin);
         LoginController loginController = new LoginController(this);

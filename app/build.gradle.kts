@@ -5,11 +5,11 @@ plugins {
 
 android {
     namespace = "com.example.buuktu"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.buuktu"
-        minSdk = 33
+        minSdk = 23
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -37,9 +37,10 @@ android {
 
 dependencies {
     implementation(libs.material) // Usa la versión más reciente de Material Components
-    implementation("androidx.activity:activity:1.7.0")
-    implementation(platform("com.google.firebase:firebase-bom:33.6.0"))
-    implementation("com.google.firebase:firebase-storage")
+    implementation(libs.swiperefreshlayout)
+    implementation(libs.activity.v1101)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.storage)
     implementation (libs.activity.v170)
     implementation(libs.appcompat)
     implementation(libs.material)

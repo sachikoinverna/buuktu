@@ -17,14 +17,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.buuktu.adapters.StuffkieSearchAdapter;
 import com.example.buuktu.adapters.UserkieSearchAdapter;
 import com.example.buuktu.adapters.WorldkieAdapter;
+import com.example.buuktu.adapters.WorldkieSearchAdapter;
 import com.example.buuktu.models.UserkieModel;
 import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.utils.BitmapUtils;
 import com.example.buuktu.utils.FirebaseAuthUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.StorageReference;
@@ -51,6 +54,8 @@ public class UserkiesSearch extends Fragment {
     FirebaseAuth firebaseAuth;
     private ArrayList<UserkieModel> userkieModelArrayList;
     CollectionReference collectionUserkies;
+    UserkieSearchAdapter userkieSearchAdapter;
+
     public UserkiesSearch() {
         // Required empty public constructor
     }
@@ -90,6 +95,9 @@ public class UserkiesSearch extends Fragment {
         db = FirebaseFirestore.getInstance();
         userkieModelArrayList = new ArrayList<>();
         collectionUserkies = db.collection("Users");
+        userkieSearchAdapter = new UserkieSearchAdapter(userkieModelArrayList, getContext(), getParentFragmentManager());
+        rc_userkies_search.setAdapter(userkieSearchAdapter);
+        rc_userkies_search.setLayoutManager(new LinearLayoutManager(getContext()));
         collectionUserkies.addSnapshotListener((queryDocumentSnapshots, e) -> {
             if (e != null) {
                 Log.e("Error", e.getMessage());
@@ -100,22 +108,44 @@ public class UserkiesSearch extends Fragment {
             if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
                 userkieModelArrayList.clear(); // Limpia la lista antes de agregar nuevos datos
 
-                for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                //for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
+                    DocumentSnapshot doc = dc.getDocument();                    //if (docum
                     //if (documentSnapshot.getBoolean("photo_default")) {
-                    if (!documentSnapshot.getId().equals(firebaseAuth.getUid())) {
+                    if (!doc.getId().equals(firebaseAuth.getUid())) {
 
                         Drawable drawable = getResources().getDrawable(R.drawable.worldkie_default);
                         UserkieModel userkieModel = new UserkieModel(
-                                documentSnapshot.getId(),
-                                documentSnapshot.getString("name"),
+                                doc.getId(),
+                                doc.getString("name"),
                                 R.drawable.cloudlogin,
-                                documentSnapshot.getString("username"),
-                                true, documentSnapshot.getBoolean("private")
+                                doc.getString("username"),
+                                true, doc.getBoolean("private")
                         );
-                        userkieModelArrayList.add(userkieModel);
-                        updateRecyclerView(userkieModelArrayList);
-                    }// Actualiza después de cargar cada imagen
-                  //  } else {
+                        switch (dc.getType()) {
+                            case ADDED:
+                                safeAddToList(userkieModelArrayList, dc.getNewIndex(), userkieModel);
+                                userkieSearchAdapter.notifyItemInserted(dc.getNewIndex());
+                                break;
+
+                            case MODIFIED:
+                                safeSetToList(userkieModelArrayList, dc.getOldIndex(), userkieModel);
+                                userkieSearchAdapter.notifyItemChanged(dc.getOldIndex());
+                                break;
+
+                            case REMOVED:
+                                if (dc.getOldIndex() >= 0 && dc.getOldIndex() < userkieModelArrayList.size()) {
+                                    userkieModelArrayList.remove(dc.getOldIndex());
+                                    userkieSearchAdapter.notifyItemRemoved(dc.getOldIndex());
+                                }
+                                break;
+                        }
+                    }
+
+                    //  userkieModelArrayList.add(userkieModel);
+                    // updateRecyclerView(userkieModelArrayList);
+                }// Actualiza después de cargar cada imagen
+                //  } else {
                       /*  StorageReference storageRef = storage.getReference().child(documentSnapshot.getId());
                         final long ONE_MEGABYTE = 1024 * 1024;
 
@@ -133,14 +163,13 @@ public class UserkiesSearch extends Fragment {
                                             false,
                                             documentSnapshot.getBoolean("worldkie_private")
                                     );*/
-                               //     worldkieModelArrayList.add(worldkieModel);
-                                //    updateRecyclerView(worldkieModelArrayList); // Actualiza después de cargar cada imagen
+                //     worldkieModelArrayList.add(worldkieModel);
+                //    updateRecyclerView(worldkieModelArrayList); // Actualiza después de cargar cada imagen
                               /*  })
                                 .addOnFailureListener(exception -> {
                                     Log.e("Error", "Error al cargar imagen: " + exception.getMessage());
                                 });*/
-                    }
-                }
+            }
 
                // updateRecyclerView(worldkieModelArrayList); // Actualiza el RecyclerView después de procesar todos los documentos
             }); /*else {
@@ -150,6 +179,19 @@ public class UserkiesSearch extends Fragment {
             }*/
         //});
         return view;
+    }
+    private void safeAddToList(ArrayList<UserkieModel> list, int index, UserkieModel item) {
+        if (index >= 0 && index <= list.size()) {
+            list.add(index, item);
+        } else {
+            list.add(item); // Fallback: añade al final
+        }
+    }
+
+    private void safeSetToList(ArrayList<UserkieModel> list, int index, UserkieModel item) {
+        if (index >= 0 && index < list.size()) {
+            list.set(index, item);
+        }
     }
     private void updateRecyclerView(ArrayList<UserkieModel> userkieModelArrayList) {
         UserkieSearchAdapter userkieSearchAdapter = new UserkieSearchAdapter(userkieModelArrayList, getContext(), getParentFragmentManager());

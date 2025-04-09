@@ -1,12 +1,40 @@
 package com.example.buuktu;
 
+import static android.widget.Toast.LENGTH_LONG;
+
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Toast;
+
+import com.example.buuktu.models.NoteItem;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.sql.Time;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,11 +47,16 @@ public class Note extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    String note_id;
+    EditText et_title_note,et_content_note;
+    FirebaseFirestore db;
+    CollectionReference collectionNotekies;
+    NoteItem noteItem;
+    ImageButton ib_save_note;
+    FirebaseAuth auth;
+    String UID_USER;
+    Map<String, Object> notekieData;
+    Timestamp timestampNow;
     public Note() {
         // Required empty public constructor
     }
@@ -50,8 +83,7 @@ public class Note extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            note_id = getArguments().getString("note_id");
         }
     }
 
@@ -59,6 +91,90 @@ public class Note extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_note, container, false);
+        View view = inflater.inflate(R.layout.fragment_note, container, false);
+        et_title_note = view.findViewById(R.id.et_title_note);
+        et_content_note = view.findViewById(R.id.et_content_note);
+        ib_save_note = view.findViewById(R.id.ib_save_note);
+        db = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
+        UID_USER = auth.getUid();
+        notekieData = new HashMap<>();
+
+        collectionNotekies = db.collection("Notekies");
+        noteItem = new NoteItem();
+        if(note_id!=null) {
+            collectionNotekies.document(note_id).addSnapshotListener((queryDocumentSnapshot, e) -> {
+                if (e != null) {
+                    Log.e("Error", e.getMessage());
+                    Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
+                    return;
+                }
+                if (queryDocumentSnapshot.exists()) {
+                    String title = queryDocumentSnapshot.getString("title");
+                    if (!title.isEmpty()) {
+                        noteItem.setTitle(title);
+                        et_title_note.setText(noteItem.getTitle());
+                    } else {
+                        noteItem.setTitle("(Sin titulo)");
+                        et_title_note.setHint(noteItem.getTitle());
+                    }
+                    noteItem.setContent(queryDocumentSnapshot.getString("text"));
+                    et_content_note.setText(noteItem.getContent());
+                }
+                });
+        }
+        else{
+            noteItem.setTitle("");
+            noteItem.setContent("");
+        }
+        ib_save_note.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if ((!et_content_note.getText().equals(noteItem.getContent()) || !et_title_note.getText().equals(noteItem.getTitle())) && (!et_title_note.getText().equals("") || !et_content_note.getText().equals(""))) {
+                    timestampNow = Timestamp.now();
+                    if(et_title_note.getText().equals("")){
+                        notekieData.put("title","");
+                    }else{
+                        notekieData.put("title", et_title_note.getText().toString());
+                    }
+                    notekieData.put("text", et_content_note.getText().toString()); // Corrección clave
+                    notekieData.put("last_update", timestampNow);
+                    if (note_id != null) {
+                        editDataFirestore();
+                    }else{
+                        notekieData.put("UID_USER", UID_USER);
+                        addDataToFirestore();
+
+                    }
+                }
+            }
+        });
+
+        return view;
+    }
+    private void addDataToFirestore() {
+       // mostrarBarraProgreso();
+    ///    barraProgreso.incrementProgressBy(25);
+        collectionNotekies.add(notekieData).addOnSuccessListener(new   OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                note_id = documentReference.getId();
+                //barraProgreso.incrementProgressBy(25);
+              //  Toast.makeText(createWorldkie, "Your Course has been added to Firebase Firestore", Toast.LENGTH_SHORT).show()
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+               /* Log.e("Error", e.getMessage().toString());
+                Toast.makeText(createWorldkie, e.getMessage().toString(), Toast.LENGTH_LONG).show();*/
+            }
+        });
+    }
+    private void editDataFirestore() {
+        collectionNotekies.document(note_id).update(notekieData).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+            }
+        });
     }
 }

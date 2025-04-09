@@ -27,6 +27,7 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -91,7 +92,7 @@ public class Notikies extends Fragment {
         db = FirebaseFirestore.getInstance();
         notikiesCollection = db.collection("Notikies");
         notikieModelArrayList = new ArrayList<>();
-        notikiesCollection.addSnapshotListener((queryDocumentSnapshots, e) -> {
+        notikiesCollection.orderBy("date", Query.Direction.DESCENDING).addSnapshotListener((queryDocumentSnapshots, e) -> {
             if (e != null) {
                 Log.e("Error", e.getMessage());
                 Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();

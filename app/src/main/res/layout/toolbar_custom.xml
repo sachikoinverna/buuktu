@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     android:background="#5f5a7c"
-    android:elevation="4dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
@@ -18,10 +17,10 @@
 
         <ImageButton
             android:id="@+id/iv_profileView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_centerInParent="true"
-            android:layout_marginTop="-30dp"
+            android:layout_marginTop="-32dp"
             android:background="@null"
             android:src="@android:color/transparent" />
 
@@ -37,6 +36,18 @@
             android:scaleType="fitCenter"
             android:src="@drawable/twotone_info_24"
             android:tint="#FFFFFF" />
+
+        <ImageButton
+            android:id="@+id/ib_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="false"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tint="#FFFFFF"
+            app:srcCompat="@drawable/twotone_keyboard_arrow_left_24" />
 
     </RelativeLayout>
 

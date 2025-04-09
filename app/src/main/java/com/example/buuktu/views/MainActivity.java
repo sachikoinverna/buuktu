@@ -58,6 +58,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.Calendar;
+import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnDialogInfoClickListener {
 
@@ -74,6 +75,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FloatingActionButton floatingActionButton;
     InfoWorldkiesDialog infoWorldkiesDialog;
     InfoFutureFunctionDialog infoFutureFunctionDialog;
+    private Stack<Fragment> fragmentStack = new Stack<>();
+    private int currentBottomNavItemId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -211,14 +215,21 @@ new Thread(new Runnable() {
                   //  periodWordsDialog.show();
                   //  PeriodNumbersDialog periodNumbersDialog = new PeriodNumbersDialog(MainActivity.this);
                   //  periodNumbersDialog.show();
-                    //replaceFragment(new Notes());
-                    replaceFragment(new Notikies());
+                    replaceFragment(new Notes());
+                    //replaceFragment(new Notikies());
                     //Intent intent = new Intent(MainActivity.this, Notes.class);
                    // startActivity(intent);
                     //infoFutureFunctionDialog.show();
                 } else if (id == R.id.messages){
                     infoFutureFunctionDialog.show();
                 }
+              /*  if (id != currentBottomNavItemId) {
+                    currentBottomNavItemId = id;
+                    fragmentStack.clear(); // Limpia la pila al cambiar de elemento
+                    // Carga el Fragment correspondiente al item seleccionado.
+                    loadFragment(getFragmentForItemId(id));
+                    return true;
+                }*/
                 return true;
             }
         });
@@ -227,6 +238,8 @@ new Thread(new Runnable() {
         if (savedInstanceState == null) {
             replaceFragment(new Home());
         }
+     //   currentBottomNavItemId = R.id.home;
+      //  loadFragment(getFragmentForItemId(currentBottomNavItemId));
     }
     public void obtenerImagen(){
         if (userkieModel.isPhoto_default()) {
@@ -334,6 +347,37 @@ new Thread(new Runnable() {
             }
         };
     }
+    /*public void showBackButton(boolean show) {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(show);
+        }
+    }*/
+   /* private Fragment getFragmentForItemId(int itemId) {
+        // Implementa la lógica para obtener el Fragment correspondiente al ID del menú
+        if (itemId == R.id.home) {
+            return new Home();
+        } else if (itemId == R.id.search) {
+            return new Search();
+            //Toast.makeText(MainActivity.this, "Home selected", Toast.LENGTH_SHORT).show();
+        } else if (itemId == R.id.inspo) {
+            return new Inspo();
+            //infoFutureFunctionDialog.show();
+        } *//*else if (itemId == R.id.notifications) {
+            //  PeriodWordsDialog periodWordsDialog = new PeriodWordsDialog(MainActivity.this);
+            //  periodWordsDialog.show();
+            //  PeriodNumbersDialog periodNumbersDialog = new PeriodNumbersDialog(MainActivity.this);
+            //  periodNumbersDialog.show();
+            return new Notes();
+            //replaceFragment(new Notikies());
+            //Intent intent = new Intent(MainActivity.this, Notes.class);
+            // startActivity(intent);
+            //infoFutureFunctionDialog.show();
+        }/* else if (itemId == R.id.messages){
+            infoFutureFunctionDialog.show();
+        }*/
+     //   return null;
+   // }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.nav_settings) {
@@ -355,7 +399,28 @@ new Thread(new Runnable() {
             super.onBackPressed();
         }
     }
-
+  //  private void loadFragment(Fragment fragment) {
+  /*      getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit();
+        fragmentStack.push(fragment);
+        updateBackButtonVisibility();
+    }
+    public void updateBackButtonVisibility() {
+        if (fragmentStack.size() > 1) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        } else {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        }
+    }
+    public void navigateToFragment(Fragment fragment){
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit();
+        fragmentStack.push(fragment);
+        updateBackButtonVisibility();
+    }*/
     @Override
     public void onAccept() {
 
