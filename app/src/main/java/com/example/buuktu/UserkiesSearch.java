@@ -109,42 +109,46 @@ public class UserkiesSearch extends Fragment {
                         for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
                             DocumentSnapshot doc = dc.getDocument();                    //if (docum
                             //if (documentSnapshot.getBoolean("photo_default")) {
-                           // if(newText)
-                            if (!doc.getId().equals(firebaseAuth.getUid())) {
 
-                                Drawable drawable = getResources().getDrawable(R.drawable.worldkie_default);
-                                UserkieModel userkieModel = new UserkieModel(
-                                        doc.getId(),
-                                        doc.getString("name"),
-                                        R.drawable.cloudlogin,
-                                        doc.getString("username"),
-                                        true, doc.getBoolean("private")
-                                );
-                                switch (dc.getType()) {
-                                    case ADDED:
-                                        safeAddToList(userkieModelArrayList, dc.getNewIndex(), userkieModel);
-                                        userkieSearchAdapter.notifyItemInserted(dc.getNewIndex());
-                                        break;
+                            if (!newText.isEmpty() && doc.getString("name").toLowerCase().contains(newText.toLowerCase())) {
+                                if (!doc.getId().equals(firebaseAuth.getUid())) {
 
-                                    case MODIFIED:
-                                        safeSetToList(userkieModelArrayList, dc.getOldIndex(), userkieModel);
-                                        userkieSearchAdapter.notifyItemChanged(dc.getOldIndex());
-                                        break;
+                                    Drawable drawable = getResources().getDrawable(R.drawable.worldkie_default);
+                                    UserkieModel userkieModel = new UserkieModel(
+                                            doc.getId(),
+                                            doc.getString("name"),
+                                            R.drawable.cloudlogin,
+                                            doc.getString("username"),
+                                            true, doc.getBoolean("private")
+                                    );
+                                    switch (dc.getType()) {
+                                        case ADDED:
+                                            safeAddToList(userkieModelArrayList, dc.getNewIndex(), userkieModel);
+                                            userkieSearchAdapter.notifyItemInserted(dc.getNewIndex());
+                                            break;
 
-                                    case REMOVED:
-                                        if (dc.getOldIndex() >= 0 && dc.getOldIndex() < userkieModelArrayList.size()) {
-                                            userkieModelArrayList.remove(dc.getOldIndex());
-                                            userkieSearchAdapter.notifyItemRemoved(dc.getOldIndex());
-                                        }
-                                        break;
-                                });
+                                        case MODIFIED:
+                                            safeSetToList(userkieModelArrayList, dc.getOldIndex(), userkieModel);
+                                            userkieSearchAdapter.notifyItemChanged(dc.getOldIndex());
+                                            break;
+
+                                        case REMOVED:
+                                            if (dc.getOldIndex() >= 0 && dc.getOldIndex() < userkieModelArrayList.size()) {
+                                                userkieModelArrayList.remove(dc.getOldIndex());
+                                                userkieSearchAdapter.notifyItemRemoved(dc.getOldIndex());
+                                            }
+                                            break;
+                                    }
+                                    ;
+                                }
+
                             }
-                return false;
-            };
-        };
-                        }}
-                                          });
-        collectionUserkies.addSnapshotListener((queryDocumentSnapshots, e) -> {
+                        }
+                        ;
+                    }
+                    ;
+                });
+        /*collectionUserkies.addSnapshotListener((queryDocumentSnapshots, e) -> {
             if (e != null) {
                 Log.e("Error", e.getMessage());
                 Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
@@ -186,11 +190,11 @@ public class UserkiesSearch extends Fragment {
                                 }
                                 break;
                         }
-                    }
+                    }*/
 
-                    //  userkieModelArrayList.add(userkieModel);
-                    // updateRecyclerView(userkieModelArrayList);
-                }// Actualiza después de cargar cada imagen
+                //  userkieModelArrayList.add(userkieModel);
+                // updateRecyclerView(userkieModelArrayList);
+                // }// Actualiza después de cargar cada imagen
                 //  } else {
                       /*  StorageReference storageRef = storage.getReference().child(documentSnapshot.getId());
                         final long ONE_MEGABYTE = 1024 * 1024;
@@ -215,15 +219,17 @@ public class UserkiesSearch extends Fragment {
                                 .addOnFailureListener(exception -> {
                                     Log.e("Error", "Error al cargar imagen: " + exception.getMessage());
                                 });*/
-            }
 
-               // updateRecyclerView(worldkieModelArrayList); // Actualiza el RecyclerView después de procesar todos los documentos
-            }); /*else {
+
+                // updateRecyclerView(worldkieModelArrayList); // Actualiza el RecyclerView después de procesar todos los documentos
+                //}); /*else {
                 // Si no hay documentos, limpia la lista y actualiza el RecyclerView
-                worldkieModelArrayList.clear();
-                updateRecyclerView(worldkieModelArrayList);
-            }*/
-        //});
+                // worldkieModelArrayList.clear();
+                // updateRecyclerView(worldkieModelArrayList);
+                //}*/
+                //});
+            }
+        });
         return view;
     }
     private void safeAddToList(ArrayList<UserkieModel> list, int index, UserkieModel item) {
