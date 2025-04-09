@@ -1,4 +1,4 @@
-package com.example.buuktu.views;
+package com.example.buuktu;
 
 import android.os.Bundle;
 
@@ -8,14 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.buuktu.R;
-
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link SocialInspoFragment#newInstance} factory method to
+ * Use the {@link StuffkieView#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SocialInspoFragment extends Fragment {
+public class StuffkieView extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +24,7 @@ public class SocialInspoFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public SocialInspoFragment() {
+    public StuffkieView() {
         // Required empty public constructor
     }
 
@@ -36,11 +34,11 @@ public class SocialInspoFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment SocialInspoFragment.
+     * @return A new instance of fragment StuffkieView.
      */
     // TODO: Rename and change types and number of parameters
-    public static SocialInspoFragment newInstance(String param1, String param2) {
-        SocialInspoFragment fragment = new SocialInspoFragment();
+    public static StuffkieView newInstance(String param1, String param2) {
+        StuffkieView fragment = new StuffkieView();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -61,6 +59,6 @@ public class SocialInspoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_social_inspo, container, false);
+        return inflater.inflate(R.layout.fragment_stuffkie_view, container, false);
     }
 }

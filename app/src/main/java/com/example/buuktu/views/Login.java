@@ -57,9 +57,6 @@ public class Login extends AppCompatActivity {
         editTextPasswordLogin = findViewById(R.id.et_passwordLogin);
         LoginController loginController = new LoginController(this);
         bt_loginToRegister.setOnClickListener(loginController);
-        /*Typeface birchLeaf = Typeface.createFromAsset(this.getAssets(), "font/birchleaf.ttf");
-        TextView textView = findViewById(R.id.textView);
-        textView.setTypeface(birchLeaf);*/
         ib_login.setOnClickListener(loginController);
     }
     public TextInputEditText getEt_emailLogin() {

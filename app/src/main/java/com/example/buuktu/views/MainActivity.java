@@ -45,6 +45,8 @@ import com.example.buuktu.dialogs.InfoWorldkiesDialog;
 import com.example.buuktu.listeners.OnDialogInfoClickListener;
 import com.example.buuktu.models.UserkieModel;
 import com.example.buuktu.utils.BitmapUtils;
+import com.example.buuktu.utils.DrawableUtils;
+import com.example.buuktu.utils.FirebaseAuthUtils;
 import com.example.buuktu.utils.PermissionUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -64,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private DrawerLayout drawerLayout;
     private BottomNavigationView bottomNavigationView;
-    private ImageButton iv_profileView,ib_info;
+    private ImageButton ib_info,ib_back,ib_self_profile;
     FirebaseAuth firebaseAuth;
     FirebaseAuth.AuthStateListener authStateListener;
     private String UID;
@@ -72,11 +74,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FirebaseFirestore db;
     private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-users");
     private UserkieModel userkieModel;
-    FloatingActionButton floatingActionButton;
     InfoWorldkiesDialog infoWorldkiesDialog;
     InfoFutureFunctionDialog infoFutureFunctionDialog;
     private Stack<Fragment> fragmentStack = new Stack<>();
     private int currentBottomNavItemId;
+    NavigationView navigationView;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,9 +91,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return insets;
         });
         inicialize();
+        initComponents();
+        scheduleDailyNotification();
         // Configuración de la Toolbar
-        floatingActionButton = findViewById(R.id.floatingActionButton);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+        int colorEntero = Color.parseColor("#5f5a7c");
+
+        DrawableUtils.personalizarImagenCircleButton(this,DrawableUtils.drawableToBitmap(ib_self_profile.getDrawable()),ib_self_profile,colorEntero);
+        ib_self_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), ProfileView.class));
@@ -98,9 +105,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
        /* Intent intent = new Intent(this, WordNotificationReceiver.class);
         sendBroadcast(intent);*/
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        iv_profileView = findViewById(R.id.iv_profileView);
-        ib_info = findViewById(R.id.ib_info);
         infoFutureFunctionDialog = new InfoFutureFunctionDialog(this);
         UID = FirebaseAuth.getInstance().getUid();
         db = FirebaseFirestore.getInstance();
@@ -122,17 +126,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     final long ONE_MEGABYTE = 1024 * 1024;
                     storageReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(bytes -> {
                         Bitmap bitmap = BitmapUtils.convertCompressedByteArrayToBitmap(bytes);
-                        Bitmap bitmap1 = Bitmap.createScaledBitmap(bitmap, 100, 100, false);
+                        Bitmap bitmap1 = Bitmap.createScaledBitmap(bitmap, 80, 80, false);
                         //ib_profileView.setImageBitmap(bitmap1);
-                        personalizarImagen(bitmap1);
-                        int strokeWidth = 5;
-                        int strokeColor = Color.parseColor("#03dc13");
-                        int fillColor = Color.parseColor("#ff0000");
-                        GradientDrawable gD = new GradientDrawable();
-                        gD.setColor(fillColor);
-                        gD.setShape(GradientDrawable.OVAL);
-                        gD.setStroke(strokeWidth, strokeColor);
-                        floatingActionButton.setBackground(gD);
+                        //personalizarImagen(bitmap1);
+                       // DrawableUtils.personalizarImagenCircleButton();
+                       // int strokeWidth = 5;
+                       // int strokeColor = Color.parseColor("#03dc13");
+                       // int fillColor = Color.parseColor("#ff0000");
+                       // GradientDrawable gD = new GradientDrawable();
+                       // gD.setColor(fillColor);
+                       // gD.setShape(GradientDrawable.OVAL);
+                       // gD.setStroke(strokeWidth, strokeColor);
+                        //floatingActionButton.setBackground(gD);
                         //iv_profileView.set(drawable);
                     }).addOnFailureListener(exception ->
                             Toast.makeText(getApplicationContext(), "Error al cargar imagen", Toast.LENGTH_SHORT).show()
@@ -140,8 +145,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 //}
             //}
         //});
-        Animation rotation = AnimationUtils.loadAnimation(this, R.anim.rotate);
-        iv_profileView.startAnimation(rotation);
+       // Animation rotation = AnimationUtils.loadAnimation(this, R.anim.rotate);
+       // iv_profileView.startAnimation(rotation);
        // scheduleDailyNotification();
         scheduleTestNotification();
         /*
@@ -168,26 +173,29 @@ new Thread(new Runnable() {
          */
        // PermissionUtils.NotifyPermission(this);
        // PermissionUtils.NotifyWordOfTheyDay(this);
-        iv_profileView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Pulsado",Toast.LENGTH_SHORT).show();
-            }
-        });
-        ib_info = findViewById(R.id.ib_info);
         infoWorldkiesDialog = new InfoWorldkiesDialog(this);
         infoWorldkiesDialog.setOnDialogClickListener(this);
         infoFutureFunctionDialog.setOnDialogClickListener(this);
         ib_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mostrarInfoWorldkies(v);
+                Fragment fragment  = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                if(fragment instanceof Home){
+
+                    mostrarInfoWorldkies(v);
+                } else if (fragment instanceof Search) {
+
+                } else if (fragment instanceof Inspo){
+
+                } else if (fragment instanceof Notikies) {
+
+                } else if (fragment instanceof Notes){
+
+                }
             }
         });
         setSupportActionBar(toolbar);
         // Inicialización del DrawerLayout y NavigationView
-        drawerLayout = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         // Configuración del ActionBarDrawerToggle
@@ -206,7 +214,6 @@ new Thread(new Runnable() {
                     replaceFragment(new Home());
                 }else if (id == R.id.search) {
                     replaceFragment(new Search());
-                    //Toast.makeText(MainActivity.this, "Home selected", Toast.LENGTH_SHORT).show();
                 } else if (id == R.id.inspo) {
                     replaceFragment(new Inspo());
                     //infoFutureFunctionDialog.show();
@@ -240,6 +247,20 @@ new Thread(new Runnable() {
         }
      //   currentBottomNavItemId = R.id.home;
       //  loadFragment(getFragmentForItemId(currentBottomNavItemId));
+    }
+    private void initComponents(){
+        ib_self_profile = findViewById(R.id.ib_self_profile);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        ib_info = findViewById(R.id.ib_info);
+        navigationView = findViewById(R.id.nav_view);
+        toolbar = findViewById(R.id.toolbar);
+        ib_info = findViewById(R.id.ib_info);
+        ib_back = findViewById(R.id.ib_back);
+        String nombreRecurso = getResources().getResourceEntryName(2131951617);
+        Log.d("ID_RECURSO", "El ID 2131951617 corresponde a: " + nombreRecurso);
+    }
+    public ImageButton getBackButton(){
+        return ib_back;
     }
     public void obtenerImagen(){
         if (userkieModel.isPhoto_default()) {
@@ -303,7 +324,7 @@ new Thread(new Runnable() {
         Log.d("NotiTest", "Alarma programada para: " + calendar.getTime().toString());
     }
 
-    public void personalizarImagen(Bitmap bitmap){
+   /* public void personalizarImagen(Bitmap bitmap){
         //Canvas canvas = new Canvas(circularBitmap);
         //bt_chooseImage.setBor
 
@@ -318,7 +339,7 @@ new Thread(new Runnable() {
         floatingActionButton.setPadding(15, 15, 15, 15); // Añadir padding para el borde visible
         floatingActionButton.setScaleType(ImageView.ScaleType.CENTER_CROP); // Ajusta la imagen para que quede dentro del borde
         //bt_chooseImage.set
-    }
+    }*/
 
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -329,6 +350,24 @@ new Thread(new Runnable() {
     private void mostrarInfoWorldkies(View view){
         infoWorldkiesDialog.show();
     }
+   /* private void mostrarInfoInspo(View view){
+        infoInspoDialog.show();
+    }
+    private void mostrarInfoChallenge(View view){
+        infoChallengeDialog.show();
+    }
+    private void mostrarNotekieChallenge(View view){
+        infoNotekieDialog.show();
+    }
+    private void mostrarNotikieChallenge(View view){
+        infoNotikieDialog.show();
+    }*/
+    /*private void mostrarInfoInspo(View view){
+        infoInspoDialog.show();
+    }
+    private void mostrarInfoInspo(View view){
+        infoInspoDialog.show();
+    }*/
     private void mostrarFutureFunction(View view){
         infoWorldkiesDialog.show();
     }
@@ -383,7 +422,8 @@ new Thread(new Runnable() {
         if (item.getItemId() == R.id.nav_settings) {
             replaceFragment(new SettingsFragment());
         }else if (item.getItemId() == R.id.nav_logout) {
-            firebaseAuth.signOut();
+            FirebaseAuthUtils.signOut();
+            //firebaseAuth.signOut();
             finishAffinity();
             startActivity(new Intent(this, Login.class));
         }

@@ -43,6 +43,9 @@ dependencies {
     implementation(libs.firebase.storage)
     implementation (libs.activity.v170)
     implementation(libs.appcompat)
+    implementation (libs.lottie) // o la versión más reciente
+    implementation (libs.rxandroid) // o la versión más reciente
+    implementation (libs.rxjava)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
@@ -53,7 +56,13 @@ dependencies {
     implementation(libs.navigation.ui)
     implementation(libs.cardview) // Usa la versión actual de androidx.cardview
     implementation(libs.gridlayout)
+    implementation(libs.preference)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+}
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
 }

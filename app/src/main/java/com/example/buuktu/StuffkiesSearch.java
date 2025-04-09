@@ -3,7 +3,6 @@ package com.example.buuktu;
 import static android.widget.Toast.LENGTH_LONG;
 
 import android.graphics.drawable.Drawable;
-import android.health.connect.datatypes.Vo2MaxRecord;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,13 +13,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.buuktu.adapters.StuffkieSearchAdapter;
-import com.example.buuktu.adapters.UserkieSearchAdapter;
 import com.example.buuktu.models.StuffkieModel;
-import com.example.buuktu.models.UserkieModel;
-import com.example.buuktu.models.WorldkieModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
@@ -36,21 +33,17 @@ import java.util.ArrayList;
  */
 public class StuffkiesSearch extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     private ArrayList<StuffkieModel> stuffkieModelArrayList;
     CollectionReference collectionStuffkies;
     private FirebaseFirestore db;
     FirebaseAuth firebaseAuth;
     RecyclerView rc_stuffkies_search;
     StuffkieSearchAdapter stuffkieSearchAdapter;
-    public StuffkiesSearch() {
+    static SearchView searchView;
+    public StuffkiesSearch(SearchView searchView) {
         // Required empty public constructor
     }
 
@@ -64,10 +57,8 @@ public class StuffkiesSearch extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
     public static StuffkiesSearch newInstance(String param1, String param2) {
-        StuffkiesSearch fragment = new StuffkiesSearch();
+        StuffkiesSearch fragment = new StuffkiesSearch(searchView);
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -76,8 +67,6 @@ public class StuffkiesSearch extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 

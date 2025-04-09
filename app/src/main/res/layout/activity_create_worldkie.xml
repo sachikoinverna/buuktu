@@ -21,98 +21,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/imageButton5"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:background="@android:color/transparent"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/twotone_arrow_circle_left_24" />
-
-                <ImageButton
-                    android:id="@+id/ib_select_img_create_worldkie"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_marginTop="16dp"
-                    android:onClick="selectImage"
-                    app:srcCompat="@drawable/worldkie_default" />
-
-                <ImageButton
-                    android:id="@+id/ib_delete_img_create_wordlkie"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    app:srcCompat="@drawable/ic_launcher_foreground" />
-            </LinearLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/et_nameWorldkieCreateFull"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="50dp"
-                android:layout_marginRight="10dp"
-                android:hint="@string/name"
-                android:textAlignment="center"
-                app:boxCornerRadiusBottomEnd="58dp"
-                app:boxCornerRadiusBottomStart="58dp"
-                app:boxCornerRadiusTopEnd="58dp"
-                app:boxCornerRadiusTopStart="58dp"
-                app:counterEnabled="true"
-                app:counterMaxLength="50"
-                app:errorEnabled="false"
-                app:startIconDrawable="@drawable/outline_person_24">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_nameWorldkieCreate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:gravity="center"
-                    android:inputType="text"
-                    android:maxLength="50"
-                    android:textAlignment="center"
-                    android:textColorHint="@color/brownMaroon" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Switch
-                android:id="@+id/tb_worldkiePrivacity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Private worldkie"
-                android:thumb="@drawable/thumb_custom"
-                android:track="@drawable/track_custom" />
+                android:orientation="horizontal"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/bt_ok_addWordlkie"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:layout_marginLeft="100dp"
-                    android:background="@android:color/transparent"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/twotone_check_circle_24"
-                    android:tint="#00A900" />
-
-                <ImageButton
-                    android:id="@+id/bt_cancel_addWordlkie"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:layout_marginLeft="100dp"
-                    android:background="@android:color/transparent"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/twotone_cancel_24"
-                    android:tint="#5A1102" />
-
-            </LinearLayout>
+                android:orientation="horizontal"/>
         </LinearLayout>
     </ScrollView>
 

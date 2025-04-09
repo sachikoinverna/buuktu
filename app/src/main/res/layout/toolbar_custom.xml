@@ -16,15 +16,6 @@
         <!-- ImageButton centrado y sobresaliendo de la Toolbar -->
 
         <ImageButton
-            android:id="@+id/iv_profileView"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="-32dp"
-            android:background="@null"
-            android:src="@android:color/transparent" />
-
-        <ImageButton
             android:id="@+id/ib_info"
             android:layout_width="60dp"
             android:layout_height="60dp"

@@ -13,12 +13,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.buuktu.adapters.CharacterkieSearchAdapter;
-import com.example.buuktu.adapters.StuffkieSearchAdapter;
 import com.example.buuktu.models.Characterkie;
-import com.example.buuktu.models.StuffkieModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -46,9 +45,10 @@ public class CharacterkiesSearch extends Fragment {
     private FirebaseFirestore db;
     FirebaseAuth firebaseAuth;
     RecyclerView rc_characterkies_search;
-
-    public CharacterkiesSearch() {
+    static SearchView searchView;
+    public CharacterkiesSearch(SearchView searchView) {
         // Required empty public constructor
+        this.searchView = searchView;
     }
 
     /**
@@ -61,7 +61,7 @@ public class CharacterkiesSearch extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
     public static CharacterkiesSearch newInstance(String param1, String param2) {
-        CharacterkiesSearch fragment = new CharacterkiesSearch();
+        CharacterkiesSearch fragment = new CharacterkiesSearch(searchView);
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

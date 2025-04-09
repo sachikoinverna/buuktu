@@ -7,29 +7,41 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import com.example.buuktu.R;
-import com.example.buuktu.listeners.OnDialogInfoClickListener;
+import com.example.buuktu.views.Home;
 
 public class DeleteNotekieDialog extends Dialog implements View.OnClickListener {
-    ImageButton ib_next_incorrect,ib_home_incorrect,ib_close_dialog ;
-    private OnDialogInfoClickListener listener;
+    ImageButton ib_accept_dialog,ib_close_dialog ;
+    Context context;
+    public interface OnDialogDelClickListener {
+        void onAccept();
+        void onCancel();
+    }
+    private OnDialogDelClickListener listener;
     public DeleteNotekieDialog(@NonNull Context context) {
         super(context);
+        this.context=context;
     }
-    public void setOnDialogClickListener(OnDialogInfoClickListener listener) {
+    public void setOnDialogClickListener(OnDialogDelClickListener listener) {
         this.listener = listener;
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.info_characterkies_dialog);
+       /* if (context instanceof Fragment)
+        {
+        }*/
+            setContentView(R.layout.delete_notekie_dialog);
         //   ib_next_incorrect = findViewById(R.id.ib_next_incorrect);
         //ib_home_incorrect = findViewById(R.id.ib_home_incorrect);
         ib_close_dialog = findViewById(R.id.ib_close_dialog);
+        ib_accept_dialog = findViewById(R.id.ib_accept_dialog);
         //ib_next_incorrect.setOnClickListener(this);
        // ib_home_incorrect.setOnClickListener(this);
         ib_close_dialog.setOnClickListener(this);
+        ib_accept_dialog.setOnClickListener(this);
         setCanceledOnTouchOutside(false);
         setCancelable(false);
         //if (!nextLevelUnlocked) {
@@ -40,21 +52,15 @@ public class DeleteNotekieDialog extends Dialog implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-        //  if (v.getId() == R.id.ib_next_incorrect) {
-        //   if (listener != null) {
-        //       listener.onNext();
-        //    }
-        //    dismiss();
         if (v.getId() == R.id.ib_close_dialog) {
             if (listener != null) {
                 listener.onCancel();
             }
             dismiss();
-        }// else if (v.getId() == R.id.ib_retry_incorrect) {
-          /*  if (listener != null) {
-                listener.onRetry();
+        } else if (v.getId() == R.id.ib_accept_dialog) {
+            if (listener != null) {
+                listener.onAccept();
             }
-            dismiss();
-        }*/
+        }
     }
 }

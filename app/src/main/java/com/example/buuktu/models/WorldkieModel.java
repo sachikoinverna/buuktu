@@ -18,7 +18,7 @@ public class WorldkieModel implements Serializable {
     private boolean photo_default;
     private boolean worldkie_private;
     private int drawable;
-    private boolean borrador;
+    private boolean draft;
 
     public WorldkieModel() {
     }
@@ -119,5 +119,17 @@ public class WorldkieModel implements Serializable {
     }
     public void setPhoto_default(boolean photo_default) {
         this.photo_default = photo_default;
+    }
+
+    public void setDrawable(int drawable) {
+        this.drawable = drawable;
+    }
+
+    public boolean isDraft() {
+        return draft;
+    }
+
+    public void setDraft(boolean draft) {
+        this.draft = draft;
     }
 }

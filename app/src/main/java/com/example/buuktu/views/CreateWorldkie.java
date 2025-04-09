@@ -76,11 +76,8 @@ public class CreateWorldkie extends AppCompatActivity {
             return insets;
         });
         tb_worldkiePrivacity = findViewById(R.id.tb_worldkiePrivacity);
-        bt_cancel = findViewById(R.id.bt_cancel_addWordlkie);
-        bt_ok = findViewById(R.id.bt_ok_addWordlkie);
         et_nameWorldkieCreate = findViewById(R.id.et_nameWorldkieCreate);
         bt_chooseImage = findViewById(R.id.ib_select_img_create_worldkie);
-        bt_deleteImageRegister = findViewById(R.id.ib_delete_img_create_wordlkie);
         bt_deleteImageRegister.setVisibility(View.INVISIBLE);
         CreateWorldkieController createWorldkieController=null;
         Intent intent = getIntent();

@@ -2,8 +2,6 @@ package com.example.buuktu;
 
 import static android.widget.Toast.LENGTH_LONG;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -15,22 +13,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.Toast;
 
-import com.example.buuktu.adapters.StuffkieSearchAdapter;
 import com.example.buuktu.adapters.UserkieSearchAdapter;
-import com.example.buuktu.adapters.WorldkieAdapter;
-import com.example.buuktu.adapters.WorldkieSearchAdapter;
 import com.example.buuktu.models.UserkieModel;
-import com.example.buuktu.models.WorldkieModel;
-import com.example.buuktu.utils.BitmapUtils;
-import com.example.buuktu.utils.FirebaseAuthUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -46,17 +38,14 @@ public class UserkiesSearch extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     RecyclerView rc_userkies_search;
     private FirebaseFirestore db;
     FirebaseAuth firebaseAuth;
     private ArrayList<UserkieModel> userkieModelArrayList;
     CollectionReference collectionUserkies;
     UserkieSearchAdapter userkieSearchAdapter;
-
-    public UserkiesSearch() {
+    static SearchView searchView;
+    public UserkiesSearch(SearchView searchView) {
         // Required empty public constructor
     }
 
@@ -70,7 +59,7 @@ public class UserkiesSearch extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
     public static UserkiesSearch newInstance(String param1, String param2) {
-        UserkiesSearch fragment = new UserkiesSearch();
+        UserkiesSearch fragment = new UserkiesSearch(searchView);
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -82,8 +71,6 @@ public class UserkiesSearch extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -98,6 +85,65 @@ public class UserkiesSearch extends Fragment {
         userkieSearchAdapter = new UserkieSearchAdapter(userkieModelArrayList, getContext(), getParentFragmentManager());
         rc_userkies_search.setAdapter(userkieSearchAdapter);
         rc_userkies_search.setLayoutManager(new LinearLayoutManager(getContext()));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                collectionUserkies.addSnapshotListener((queryDocumentSnapshots, e) -> {
+                    if (e != null) {
+                        Log.e("Error", e.getMessage());
+                        Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
+                        return;
+                    }
+
+                    if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
+                        userkieModelArrayList.clear(); // Limpia la lista antes de agregar nuevos datos
+
+                        //for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                        for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
+                            DocumentSnapshot doc = dc.getDocument();                    //if (docum
+                            //if (documentSnapshot.getBoolean("photo_default")) {
+                           // if(newText)
+                            if (!doc.getId().equals(firebaseAuth.getUid())) {
+
+                                Drawable drawable = getResources().getDrawable(R.drawable.worldkie_default);
+                                UserkieModel userkieModel = new UserkieModel(
+                                        doc.getId(),
+                                        doc.getString("name"),
+                                        R.drawable.cloudlogin,
+                                        doc.getString("username"),
+                                        true, doc.getBoolean("private")
+                                );
+                                switch (dc.getType()) {
+                                    case ADDED:
+                                        safeAddToList(userkieModelArrayList, dc.getNewIndex(), userkieModel);
+                                        userkieSearchAdapter.notifyItemInserted(dc.getNewIndex());
+                                        break;
+
+                                    case MODIFIED:
+                                        safeSetToList(userkieModelArrayList, dc.getOldIndex(), userkieModel);
+                                        userkieSearchAdapter.notifyItemChanged(dc.getOldIndex());
+                                        break;
+
+                                    case REMOVED:
+                                        if (dc.getOldIndex() >= 0 && dc.getOldIndex() < userkieModelArrayList.size()) {
+                                            userkieModelArrayList.remove(dc.getOldIndex());
+                                            userkieSearchAdapter.notifyItemRemoved(dc.getOldIndex());
+                                        }
+                                        break;
+                                });
+                            }
+                return false;
+            };
+        };
+                        }}
+                                          });
         collectionUserkies.addSnapshotListener((queryDocumentSnapshots, e) -> {
             if (e != null) {
                 Log.e("Error", e.getMessage());

@@ -31,9 +31,6 @@ public class SettingsFragment extends Fragment implements SettingsAdapter.ItemCl
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     private SettingsAdapter adapter;
     private RecyclerView rc_settings;
     private ArrayList<SettingModel> dataSet = new ArrayList<SettingModel>();
@@ -65,8 +62,6 @@ public class SettingsFragment extends Fragment implements SettingsAdapter.ItemCl
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 

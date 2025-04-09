@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -67,6 +68,9 @@ public class WorldkieMenu extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_worldkie_menu, container, false);
+        MainActivity mainActivity = (MainActivity) getActivity();
+        ImageButton backButton = mainActivity.getBackButton();
+        backButton.setVisibility(View.VISIBLE);
         tv_characterkiesAdd = view.findViewById( R.id.tv_characterkies);
         fragmentManager = getParentFragmentManager();
         tv_characterkiesAdd.setOnClickListener(new View.OnClickListener() {

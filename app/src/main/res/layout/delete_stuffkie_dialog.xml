@@ -25,24 +25,27 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_lvl_nam4r3r"
+                android:id="@+id/tv_title_stuffkie_del"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Stuffkie"
+                android:text="Atencion"
                 android:textColor="@color/black"
                 android:textSize="24sp" />
 
             <ImageView
-                android:id="@+id/imageView4234"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:srcCompat="@mipmap/img_del_notes" />
+                android:id="@+id/iv_photo_stuffkie_del"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                app:srcCompat="@mipmap/img_del_stuffkie" />
 
             <TextView
-                android:id="@+id/textView464234"
+                android:id="@+id/tv_text_stuffkie_del"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="¿Que es un worldkie?"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:gravity="center"
+                android:text="¿Deseas eliminar el stuffkie? No podras recuperarlo."
                 android:textSize="20sp" />
 
             <LinearLayout
@@ -51,6 +54,15 @@
                 android:layout_marginBottom="5dp"
                 android:gravity="center"
                 android:orientation="horizontal">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/anim_del_stuffkie"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:visibility="gone"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_rawRes="@raw/reading_anim" />
 
                 <ImageButton
                     android:id="@+id/ib_accept_dialog"

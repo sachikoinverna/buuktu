@@ -13,13 +13,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.Toast;
 
-import com.example.buuktu.adapters.StuffkieSearchAdapter;
-import com.example.buuktu.adapters.UserkieSearchAdapter;
 import com.example.buuktu.adapters.WorldkieSearchAdapter;
-import com.example.buuktu.models.StuffkieModel;
-import com.example.buuktu.models.UserkieModel;
 import com.example.buuktu.models.WorldkieModel;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
@@ -40,16 +37,13 @@ public class WorldkiesSearch extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     RecyclerView rc_worldkies_search;
     private FirebaseFirestore db;
     private ArrayList<WorldkieModel> worldkieModelArrayList;
     CollectionReference collectionWorldkies;
     WorldkieSearchAdapter worldkieSearchAdapter;
-
-    public WorldkiesSearch() {
+    static SearchView searchView;
+    public WorldkiesSearch(SearchView searchView) {
         // Required empty public constructor
     }
 
@@ -63,7 +57,7 @@ public class WorldkiesSearch extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
     public static WorldkiesSearch newInstance(String param1, String param2) {
-        WorldkiesSearch fragment = new WorldkiesSearch();
+        WorldkiesSearch fragment = new WorldkiesSearch(searchView);
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -75,8 +69,6 @@ public class WorldkiesSearch extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 

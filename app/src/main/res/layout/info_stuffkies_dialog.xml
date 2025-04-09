@@ -25,7 +25,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_lvl_nam4r3r"
+                android:id="@+id/tv_lvl_title_del"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Stuffkie"
@@ -33,13 +33,13 @@
                 android:textSize="24sp" />
 
             <ImageView
-                android:id="@+id/imageView4234"
+                android:id="@+id/iv_photo_del"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:srcCompat="@mipmap/img_info_stuffkies" />
 
             <TextView
-                android:id="@+id/textView464234"
+                android:id="@+id/tv_lvl_text_del"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="¿Que es un worldkie?"

@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ import com.example.buuktu.adapters.StuffkieSearchAdapter;
 import com.example.buuktu.models.CardItem;
 import com.example.buuktu.models.NotikieModel;
 import com.example.buuktu.models.StuffkieModel;
+import com.example.buuktu.views.MainActivity;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -44,9 +46,6 @@ public class Notikies extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     RecyclerView rc_notikies_list;
    NotikieListAdapter notikieListAdapter;
    FirebaseFirestore db;
@@ -78,8 +77,6 @@ public class Notikies extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -88,6 +85,9 @@ public class Notikies extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_notikies, container, false);
+        MainActivity mainActivity = (MainActivity) getActivity();
+        ImageButton backButton = mainActivity.getBackButton();
+        backButton.setVisibility(View.GONE);
         rc_notikies_list = view.findViewById(R.id.rc_notikies_list);
         db = FirebaseFirestore.getInstance();
         notikiesCollection = db.collection("Notikies");

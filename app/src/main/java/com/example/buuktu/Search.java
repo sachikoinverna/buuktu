@@ -11,8 +11,11 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.SearchView;
 
 import com.example.buuktu.adapters.PageAdapter;
+import com.example.buuktu.views.MainActivity;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -34,6 +37,7 @@ public class Search extends Fragment {
     private TabLayout tabLayout;
     private ViewPager2 viewPager;
     private PageAdapter pageAdapter;
+    SearchView sv_search_main;
     public Search() {
         // Required empty public constructor
     }
@@ -69,8 +73,10 @@ public class Search extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
-        tabLayout = view.findViewById(R.id.tbl_search);
-        viewPager = view.findViewById(R.id.vp_search);
+        MainActivity mainActivity = (MainActivity) getActivity();
+        ImageButton backButton = mainActivity.getBackButton();
+        backButton.setVisibility(View.GONE);
+        initComponents(view);
         viewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
         viewPager.setUserInputEnabled(false);
         viewPager.setPageTransformer(new ViewPager2.PageTransformer() {
@@ -80,7 +86,6 @@ public class Search extends Fragment {
             }
         });
 
-        pageAdapter = new PageAdapter(requireActivity());
         viewPager.setAdapter(pageAdapter);
         viewPager.setUserInputEnabled(true);
 
@@ -103,5 +108,12 @@ public class Search extends Fragment {
         viewPager.setPageTransformer(null);
 
         return view;
+    }
+    private void initComponents(View view){
+        sv_search_main = view.findViewById(R.id.sv_search_main);
+        tabLayout = view.findViewById(R.id.tbl_search);
+        viewPager = view.findViewById(R.id.vp_search);
+        pageAdapter = new PageAdapter(requireActivity(),sv_search_main);
+
     }
 }

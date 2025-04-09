@@ -20,6 +20,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.buuktu.models.NoteItem;
+import com.example.buuktu.views.MainActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.Timestamp;
@@ -92,6 +93,9 @@ public class Note extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_note, container, false);
+        MainActivity mainActivity = (MainActivity) getActivity();
+        ImageButton backButton = mainActivity.getBackButton();
+        backButton.setVisibility(View.VISIBLE);
         et_title_note = view.findViewById(R.id.et_title_note);
         et_content_note = view.findViewById(R.id.et_content_note);
         ib_save_note = view.findViewById(R.id.ib_save_note);

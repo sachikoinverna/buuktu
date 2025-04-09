@@ -25,17 +25,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/worldkie_default" />
 
-            <ImageButton
-                android:id="@+id/ib_delete_img_create_characterkie"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="58dp"
-                android:background="@android:color/transparent"
-                android:scaleType="centerCrop"
-                app:layout_constraintStart_toEndOf="@+id/ib_select_img_create_characterkie"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/twotone_delete_sweep_24" />
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/et_nameCharacterkieCreateFull"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -123,23 +112,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
                 android:clickable="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:srcCompat="@drawable/twotone_more_24" />
 
-            <ImageButton
-                android:id="@+id/ib_back_create"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="27dp"
-                android:layout_marginTop="89dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/twotone_arrow_circle_left_24" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>

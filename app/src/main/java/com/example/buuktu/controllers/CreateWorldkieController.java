@@ -207,18 +207,7 @@ public class CreateWorldkieController implements View.OnClickListener {
     }
 
     @Override
-    public void onClick(View view) {
-        if (view.getId() == R.id.ib_delete_img_create_wordlkie){
-            putDefaultImage();
-        } else if (view.getId()==R.id.bt_ok_addWordlkie) {
-            Toast.makeText(createWorldkie,String.valueOf(create),Toast.LENGTH_SHORT).show();
-            if(create) {
-                addDataToFirestore();
-            }else{
-                editDataFirestore();
-            }
-        } else if (view.getId()==R.id.bt_cancel_addWordlkie) {
-            createWorldkie.finish();
-        }
+    public void onClick(View v) {
+
     }
 }

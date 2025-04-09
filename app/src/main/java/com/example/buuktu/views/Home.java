@@ -10,15 +10,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buuktu.R;
 import com.example.buuktu.adapters.WorldkieAdapter;
-import com.example.buuktu.controllers.HomeController;
 import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.utils.BitmapUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -32,6 +33,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,9 +49,8 @@ public class Home extends Fragment {
     private RecyclerView rc_worldkies;
     private FloatingActionButton fb_parent, fb_add;
     private boolean isAllFabsVisible;
-    private HomeController homeController;
     private WorldkieAdapter worldkieAdapter;
-
+    CollectionReference dbWorldkies;
     //private ListenerRegistration firestoreListener;
     public Home() {
         // Required empty public constructor
@@ -67,27 +68,42 @@ public class Home extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-
-        // Inicializa las vistas
-        fb_parent = view.findViewById(R.id.fb_parentWorldkies);
-        fb_add = view.findViewById(R.id.fb_addWorldkie);
+        MainActivity mainActivity = (MainActivity) getActivity();
+        ImageButton backButton = mainActivity.getBackButton();
+        backButton.setVisibility(View.GONE);
+        initComponents(view);
         fb_add.setVisibility(View.GONE);
+            fb_parent.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!isAllFabsVisible) {
+                        fb_add.setVisibility(View.VISIBLE);
+                        isAllFabsVisible = true;
+                    } else {
+                        fb_add.setVisibility(View.GONE);
+                        isAllFabsVisible = false;
+                    }
+                }
+            });
         isAllFabsVisible = false;
-        homeController = new HomeController(this);
-        fb_add.setOnClickListener(homeController);
-        fb_parent.setOnClickListener(homeController);
-
-        rc_worldkies = view.findViewById(R.id.rc_worldkies);
+        fb_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CreateEditWorldkie createEditWorldkie = new CreateEditWorldkie();
+                FragmentManager fragmentManager = getParentFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.fragment_container, createEditWorldkie) .addToBackStack(null) // Permite regresar atrás con el botón de retroceso
+                        .commit();
+            }
+        });
 
         db = FirebaseFirestore.getInstance();
         UID = auth.getCurrentUser().getUid();
 
         Toast.makeText(getContext(), UID, Toast.LENGTH_SHORT).show();
-        worldkieModelArrayList = new ArrayList<>();
         rc_worldkies.setLayoutManager(new LinearLayoutManager(getContext()));
         worldkieAdapter = new WorldkieAdapter(worldkieModelArrayList, getContext(), getParentFragmentManager());
         rc_worldkies.setAdapter(worldkieAdapter);
-        CollectionReference dbWorldkies = db.collection("Worldkies");
+        dbWorldkies = db.collection("Worldkies");
         /*dbWorldkies.whereEqualTo("UID_AUTHOR", UID)
                 .orderBy("last_update")
                 .get()
@@ -150,75 +166,24 @@ public class Home extends Fragment {
 
                         for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
                             DocumentSnapshot doc = dc.getDocument();
-                            if (doc.getBoolean("photo_default")) {
-                                Drawable drawable = getResources().getDrawable(R.drawable.worldkie_default);
-                                WorldkieModel worldkieModel = new WorldkieModel(
-                                        doc.getId(),
-                                        doc.getString("UID_AUTHOR"),
-                                        doc.getString("name"),
-                                        drawable,
-                                        true,doc.getBoolean("worldkie_private")
-                                );
-                                switch (dc.getType()) {
-                                    case ADDED:
-                                        safeAddToList(worldkieModelArrayList, dc.getNewIndex(), worldkieModel);
-                                        worldkieAdapter.notifyItemInserted(dc.getNewIndex());
-                                        break;
+                            WorldkieModel worldkieModel = createWorldkieModelFromDocument(doc); // Crea el modelo inicial
+                            switch (dc.getType()) {
+                                case ADDED:
+                                    safeAddToList(worldkieModelArrayList, dc.getNewIndex(), worldkieModel);
+                                    worldkieAdapter.notifyItemInserted(dc.getNewIndex());
+                                    break;
+                                case MODIFIED:
+                                    safeSetToList(worldkieModelArrayList, dc.getOldIndex(), worldkieModel);
+                                    worldkieAdapter.notifyItemChanged(dc.getOldIndex());
+                                    break;
+                                case REMOVED:
+                                    safeRemoveFromList(worldkieModelArrayList, dc.getOldIndex());
+                                    worldkieAdapter.notifyItemRemoved(dc.getOldIndex());
+                                    break;
+                            }
 
-                                    case MODIFIED:
-                                        safeSetToList(worldkieModelArrayList, dc.getOldIndex(), worldkieModel);
-                                        worldkieAdapter.notifyItemChanged(dc.getOldIndex());
-                                        break;
-
-                                    case REMOVED:
-                                        if (dc.getOldIndex() >= 0 && dc.getOldIndex() < worldkieModelArrayList.size()) {
-                                            worldkieModelArrayList.remove(dc.getOldIndex());
-                                            worldkieAdapter.notifyItemRemoved(dc.getOldIndex());
-                                        }
-                                        break;
-                                }
-                               // worldkieModelArrayList.add(worldkieModel);
-                            } else {
-                                StorageReference storageRef = storage.getReference().child(doc.getId());
-                                final long ONE_MEGABYTE = 1024 * 1024;
-
-                                storageRef.getBytes(ONE_MEGABYTE)
-                                        .addOnSuccessListener(bytes -> {
-                                            Bitmap bitmap = BitmapUtils.convertCompressedByteArrayToBitmap(bytes);
-                                            Drawable drawable = new BitmapDrawable(getResources(), bitmap);
-
-                                            WorldkieModel worldkieModel = new WorldkieModel(
-                                                    doc.getId(),
-                                                    doc.getString("UID_AUTHOR"),
-                                                    doc.getString("name"),
-                                                    drawable,
-                                                    false,
-                                                    doc.getBoolean("worldkie_private")
-                                            );
-                                            switch (dc.getType()) {
-                                                case ADDED:
-                                                    safeAddToList(worldkieModelArrayList, dc.getNewIndex(), worldkieModel);
-                                                    worldkieAdapter.notifyItemInserted(dc.getNewIndex());
-                                                    break;
-
-                                                case MODIFIED:
-                                                    safeAddToList(worldkieModelArrayList, dc.getNewIndex(), worldkieModel);
-                                                    worldkieAdapter.notifyItemChanged(dc.getOldIndex());
-                                                    break;
-
-                                                case REMOVED:
-                                                    if (dc.getOldIndex() >= 0 && dc.getOldIndex() < worldkieModelArrayList.size()) {
-                                                        worldkieModelArrayList.remove(dc.getOldIndex());
-                                                        worldkieAdapter.notifyItemRemoved(dc.getOldIndex());
-                                                    }
-                                                    break;
-                                            }
-                                            // worldkieModelArrayList.add(worldkieModel);
-                                           // updateRecyclerView(worldkieModelArrayList); // Actualiza después de cargar cada imagen
-                                        })
-                                        .addOnFailureListener(exception -> {
-                                            Log.e("Error", "Error al cargar imagen: " + exception.getMessage());
-                                        });
+                            if (!doc.getBoolean("photo_default")) {
+                                loadAndSetImage(doc.getId(), worldkieModel);
                             }
                         }
 
@@ -229,6 +194,26 @@ public class Home extends Fragment {
                     }
                 });
         return view;
+    }
+    public void initComponents(View view){
+        fb_parent = view.findViewById(R.id.fb_parentWorldkies);
+        fb_add = view.findViewById(R.id.fb_addWorldkie);
+        rc_worldkies = view.findViewById(R.id.rc_worldkies);
+        worldkieModelArrayList = new ArrayList<>();
+    }
+    private void loadAndSetImage(String documentId, WorldkieModel worldkieModel) {
+        /*StorageReference storageRef = storage.getReference().child(documentId);
+        final long ONE_MEGABYTE = 1024 * 1024;
+        storageRef.getBytes(ONE_MEGABYTE)
+                .addOnSuccessListener(bytes -> {
+                    Bitmap bitmap = BitmapUtils.convertCompressedByteArrayToBitmap(bytes);
+                    Drawable drawable = new BitmapDrawable(getResources(), bitmap);
+                    worldkieModel.setDrawable(R.drawable.worldkie_default);
+                    worldkieAdapter.notifyDataSetChanged(); // Notifica el cambio después de cargar la imagen
+                })
+                .addOnFailureListener(exception -> {
+                    Log.e("Error", "Error al cargar imagen: " + exception.getMessage());
+                });*/
     }
     private void safeAddToList(ArrayList<WorldkieModel> list, int index, WorldkieModel item) {
         if (index >= 0 && index <= list.size()) {
@@ -243,28 +228,36 @@ public class Home extends Fragment {
             list.set(index, item);
         }
     }
-
+    private void safeRemoveFromList(ArrayList<WorldkieModel> list, int index) {
+        if (index >= 0 && index < list.size()) {
+            list.remove(index);
+        }
+    }
     private WorldkieModel createWorldkieModelFromDocument(DocumentSnapshot doc) {
-        if (doc.getBoolean("photo_default")) {
-            Drawable drawable = getResources().getDrawable(R.drawable.worldkie_default);
+            /*public WorldkieModel(String UID, String UID_AUTHOR,int drawable, String name, Date
+        creation_date,boolean photo_default,Date last_update, boolean worldkie_private) {
+*/
+      //  if (doc.getBoolean("photo_default")) {
+            //Drawable drawable = getResources().getDrawable(R.drawable.worldkie_default);
             return new WorldkieModel(
                     doc.getId(),
-                    doc.getString("UID_AUTHOR"),
+                    doc.getString("UID_AUTHOR"), R.drawable.twotone_lightbulb_24,
                     doc.getString("name"),
-                    drawable,
+                    doc.getTimestamp("creation_date").toDate(),
                     true,
-                    doc.getBoolean("worldkie_private")
-            );
-        } else {
-            return new WorldkieModel(
+                    doc.getTimestamp("last_update").toDate(),
+                    doc.getBoolean("worldkie_private"));
+          //  );
+      //  } /*else {
+          /*  return new WorldkieModel(
                     doc.getId(),
                     doc.getString("UID_AUTHOR"),
-                    doc.getString("name"),
-                    null, // Placeholder, la imagen se carga asincrónicamente
+                    doc.getString("name"),R.mipmap.img_del_stuffkie,
                     false,
                     doc.getBoolean("worldkie_private")
-            );
-        }
+            );*/
+       //}*/
+        //return null;
     }
 
     public FloatingActionButton getFb_parent() {
