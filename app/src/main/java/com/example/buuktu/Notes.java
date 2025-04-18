@@ -13,14 +13,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-
-import com.example.buuktu.Note;
-import com.example.buuktu.R;
 import com.example.buuktu.adapters.NoteAdapter;
-import com.example.buuktu.listeners.OnDialogDelClickListener;
 import com.example.buuktu.models.NoteItem;
 import com.example.buuktu.views.MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -33,7 +28,7 @@ import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 
-public class Notes extends Fragment implements OnDialogDelClickListener {
+public class Notes extends Fragment {
 
     private RecyclerView recyclerView;
     private NoteAdapter noteAdapter;
@@ -48,12 +43,7 @@ public class Notes extends Fragment implements OnDialogDelClickListener {
     public Notes() {}
 
     public static Notes newInstance(String param1, String param2) {
-        Notes fragment = new Notes();
-        Bundle args = new Bundle();
-        args.putString("param1", param1);
-        args.putString("param2", param2);
-        fragment.setArguments(args);
-        return fragment;
+        return new Notes();
     }
 
     @Override
@@ -198,13 +188,4 @@ public class Notes extends Fragment implements OnDialogDelClickListener {
         inflater.inflate(R.menu.note_preview_menu, menu);
     }
 
-    @Override
-    public void onAccept() {
-        // Puedes implementar esto según sea necesario
-    }
-
-    @Override
-    public void onCancel() {
-        // Puedes implementar esto según sea necesario
-    }
 }

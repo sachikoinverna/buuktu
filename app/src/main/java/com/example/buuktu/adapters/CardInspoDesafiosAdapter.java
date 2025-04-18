@@ -1,7 +1,6 @@
 package com.example.buuktu.adapters;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,25 +8,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.buuktu.InspoDesafios;
 import com.example.buuktu.Notes;
 import com.example.buuktu.R;
+import com.example.buuktu.dialogs.PeriodNumbersDialog;
+import com.example.buuktu.dialogs.PeriodWordsDialog;
 import com.example.buuktu.models.CardItem;
-import com.example.buuktu.models.FieldItem;
 import com.example.buuktu.views.Inspo;
-import com.example.buuktu.views.Register;
-import com.google.android.gms.dynamic.IFragmentWrapper;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CardInspoAdapter extends RecyclerView.Adapter<CardInspoAdapter.ViewHolder> implements View.OnClickListener {
+public class CardInspoDesafiosAdapter extends RecyclerView.Adapter<CardInspoDesafiosAdapter.ViewHolder> implements View.OnClickListener {
 
     // Modelo de datos, por ejemplo:
     private List<CardItem> dataSet;
@@ -39,7 +35,7 @@ public class CardInspoAdapter extends RecyclerView.Adapter<CardInspoAdapter.View
     }
 
 
-    public CardInspoAdapter(Context context, List<CardItem> dataSet, FragmentManager fragmentManager) {
+    public CardInspoDesafiosAdapter(Context context, List<CardItem> dataSet, FragmentManager fragmentManager) {
         this.context = context;
         this.dataSet = dataSet;
         this.fragmentManager = fragmentManager;
@@ -54,22 +50,19 @@ public class CardInspoAdapter extends RecyclerView.Adapter<CardInspoAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CardInspoAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CardInspoDesafiosAdapter.ViewHolder holder, int position) {
         String text = dataSet.get(position).getText();
         holder.getIcon().setImageResource(dataSet.get(position).getIconResId());
         holder.getText().setText(text);
-
         holder.getCardView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(text.equals("Notekies")){
-                    Notes notes = new Notes();
-                    fragmentManager.beginTransaction().replace(R.id.fragment_container, notes) .addToBackStack(null) // Permite regresar atrás con el botón de retroceso
-                            .commit();
-                } else if (text.equals("Desafios")) {
-                    InspoDesafios inspoDesafios = new InspoDesafios();
-                    fragmentManager.beginTransaction().replace(R.id.fragment_container, inspoDesafios) .addToBackStack(null) // Permite regresar atrás con el botón de retroceso
-                            .commit();
+                if(text.equals("Wordkie of the day")){
+                    PeriodWordsDialog periodWordsDialog = new PeriodWordsDialog(v.getContext());
+                    periodWordsDialog.show();
+                } else if (text.equals("Numberkie of the day")) {
+                    PeriodNumbersDialog periodNumbersDialog = new PeriodNumbersDialog(v.getContext());
+                    periodNumbersDialog.show();
                 }
             }
         });

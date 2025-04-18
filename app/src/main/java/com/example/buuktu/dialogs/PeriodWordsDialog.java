@@ -39,17 +39,10 @@ public class PeriodWordsDialog extends Dialog implements View.OnClickListener{
         handler = new Handler();
         tv_period_word = findViewById(R.id.tv_period_word);
         tv_period_word_title = findViewById(R.id.tv_period_word_title);
-        //   ib_next_incorrect = findViewById(R.id.ib_next_incorrect);
-        //ib_home_incorrect = findViewById(R.id.ib_home_incorrect);
         ib_close_period_word_dialog = findViewById(R.id.ib_close_period_word_dialog);
-        //ib_next_incorrect.setOnClickListener(this);
-       // ib_home_incorrect.setOnClickListener(this);
         ib_close_period_word_dialog.setOnClickListener(this);
         setCanceledOnTouchOutside(false);
         setCancelable(false);
-        //if (!nextLevelUnlocked) {
-        //    ib_next_incorrect.setVisibility(View.GONE);
-        //}
 
         getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         updateWordOfTheDay(tv_period_word);
@@ -79,21 +72,11 @@ public class PeriodWordsDialog extends Dialog implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        //  if (v.getId() == R.id.ib_next_incorrect) {
-        //   if (listener != null) {
-        //       listener.onNext();
-        //    }
-        //    dismiss();
         if (v.getId() == R.id.ib_close_period_word_dialog) {
             if (listener != null) {
                 listener.onCancel();
             }
             dismiss();
-        }// else if (v.getId() == R.id.ib_retry_incorrect) {
-          /*  if (listener != null) {
-                listener.onRetry();
-            }
-            dismiss();
-        }*/
+        }
     }
 }

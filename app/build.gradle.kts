@@ -58,6 +58,8 @@ dependencies {
     implementation(libs.gridlayout)
     implementation(libs.preference)
     testImplementation(libs.junit)
+    implementation(libs.glide) // Usa la versión más reciente
+    annotationProcessor(libs.compiler) // Si usas Annotation Processing
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 }

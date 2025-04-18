@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -14,14 +15,21 @@ import com.example.buuktu.R;
 public class DeleteGeneralDialog extends Dialog implements View.OnClickListener {
     ImageButton ib_accept_dialog,ib_close_dialog ;
     Context context;
+    String mode;
+    TextView tv_title_del, tv_text_del;
+    static String modeNotekie = "notekie";
+    static String modeStuffkie = "stuffkie";
+    static String modeWorldkie = "worldkie";
+    static String modeCharacterkie = "characterkie";
     public interface OnDialogDelClickListener {
         void onAccept();
         void onCancel();
     }
     private OnDialogDelClickListener listener;
-    public DeleteGeneralDialog(@NonNull Context context) {
+    public DeleteGeneralDialog(@NonNull Context context, String mode) {
         super(context);
         this.context=context;
+        this.mode=mode;
     }
     public void setOnDialogClickListener(OnDialogDelClickListener listener) {
         this.listener = listener;
@@ -32,20 +40,25 @@ public class DeleteGeneralDialog extends Dialog implements View.OnClickListener 
        /* if (context instanceof Fragment)
         {
         }*/
-            setContentView(R.layout.delete_notekie_dialog);
-        //   ib_next_incorrect = findViewById(R.id.ib_next_incorrect);
-        //ib_home_incorrect = findViewById(R.id.ib_home_incorrect);
+        setContentView(R.layout.delete_general_dialog);
         ib_close_dialog = findViewById(R.id.ib_close_dialog);
         ib_accept_dialog = findViewById(R.id.ib_accept_dialog);
-        //ib_next_incorrect.setOnClickListener(this);
-       // ib_home_incorrect.setOnClickListener(this);
+        //tv_text_del = findViewById(R.id.tv);
+        if(mode.equals(modeNotekie)){
+
+        } else if (mode.equals(modeStuffkie)) {
+
+        } else if (mode.equals(modeWorldkie)) {
+
+        } else if (mode.equals(modeCharacterkie)) {
+
+        }
+        //tv_text_del = findViewById(R.id.tv);
         ib_close_dialog.setOnClickListener(this);
         ib_accept_dialog.setOnClickListener(this);
         setCanceledOnTouchOutside(false);
         setCancelable(false);
-        //if (!nextLevelUnlocked) {
-        //    ib_next_incorrect.setVisibility(View.GONE);
-        //}
+
         getWindow().setBackgroundDrawableResource(android.R.color.transparent);
     }
 

@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card_view_setting_list_one"
+        android:id="@+id/card_view_setting_list_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -22,66 +22,82 @@
         card_view:strokeColor="#8B6F47"
         card_view:strokeWidth="5dp">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/tv_name_setting"
+                android:id="@+id/tv_name_setting_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
                 android:fontFamily="@font/alegreya"
                 android:gravity="center"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:id="@+id/iv_photo_setting_profile"
+                android:layout_width="115dp"
+                android:layout_height="115dp"
+                android:layout_marginTop="8dp"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@+id/tv_name_setting_profile"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ib_enterToAWorldkie"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
                 android:background="@android:color/transparent"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:scaleType="fitCenter"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toStartOf="@+id/ib_editAWorldkie"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@+id/iv_photo_setting_profile"
+                card_view:srcCompat="@drawable/twotone_door_sliding_24" />
 
-                <ImageView
-                    android:id="@+id/iv_photo_setting"
-                    android:layout_width="115dp"
-                    android:layout_height="115dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginBottom="20dp"
-                    tools:srcCompat="@tools:sample/avatars" />
+            <ImageButton
+                android:id="@+id/ib_editAWorldkie"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toStartOf="@+id/ib_deleteAWorldkie"
+                card_view:layout_constraintStart_toEndOf="@+id/ib_enterToAWorldkie"
+                card_view:layout_constraintTop_toBottomOf="@+id/iv_photo_setting_profile"
+                card_view:srcCompat="@drawable/twotone_edit_note_24" />
 
-                <ImageButton
-                    android:id="@+id/ib_enterToAWorldkie"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:background="@android:color/transparent"
-                    android:scaleType="fitCenter"
-                    card_view:srcCompat="@drawable/twotone_door_sliding_24" />
-
-                <ImageButton
-                    android:id="@+id/ib_editAWorldkie"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="5dp"
-                    android:background="@android:color/transparent"
-                    android:scaleType="fitCenter"
-                    card_view:srcCompat="@drawable/twotone_edit_note_24" />
-
-                <ImageButton
-                    android:id="@+id/ib_deleteAWorldkie"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="5dp"
-                    android:background="@android:color/transparent"
-                    android:scaleType="fitCenter"
-                    card_view:srcCompat="@drawable/twotone_delete_sweep_24" />
-
-            </LinearLayout>
-
-
-        </LinearLayout>
+            <ImageButton
+                android:id="@+id/ib_deleteAWorldkie"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintStart_toEndOf="@+id/ib_editAWorldkie"
+                card_view:layout_constraintTop_toBottomOf="@+id/iv_photo_setting_profile"
+                card_view:srcCompat="@drawable/twotone_delete_sweep_24" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
 

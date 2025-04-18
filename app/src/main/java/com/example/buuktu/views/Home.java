@@ -89,69 +89,21 @@ public class Home extends Fragment {
         fb_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CreateEditWorldkie createEditWorldkie = new CreateEditWorldkie();
+                /*CreateEditWorldkie createEditWorldkie = new CreateEditWorldkie();
                 FragmentManager fragmentManager = getParentFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.fragment_container, createEditWorldkie) .addToBackStack(null) // Permite regresar atrás con el botón de retroceso
-                        .commit();
+                        .commit();*/
+                navigateToNextFragment();
             }
         });
 
         db = FirebaseFirestore.getInstance();
         UID = auth.getCurrentUser().getUid();
-
-        Toast.makeText(getContext(), UID, Toast.LENGTH_SHORT).show();
         rc_worldkies.setLayoutManager(new LinearLayoutManager(getContext()));
         worldkieAdapter = new WorldkieAdapter(worldkieModelArrayList, getContext(), getParentFragmentManager());
         rc_worldkies.setAdapter(worldkieAdapter);
         dbWorldkies = db.collection("Worldkies");
-        /*dbWorldkies.whereEqualTo("UID_AUTHOR", UID)
-                .orderBy("last_update")
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    if (!queryDocumentSnapshots.isEmpty()) {
-                        final int totalDocuments = queryDocumentSnapshots.size();
 
-                        for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
-                            if (documentSnapshot.getBoolean("photo_default")) {
-                                Drawable drawable = getResources().getDrawable(R.drawable.worldkie_default);
-                                WorldkieModel worldkieModel = new WorldkieModel(
-                                        documentSnapshot.getId(), documentSnapshot.getString("UID_AUTHOR"),
-                                        documentSnapshot.getString("name"),
-                                        drawable, true
-                                );
-                                worldkieModelArrayList.add(worldkieModel);
-                                updateRecyclerView(worldkieModelArrayList); // Call after processing each document (default image)
-                            } else {
-                                StorageReference storageRef = storage.getReference().child(documentSnapshot.getId());
-                                final long ONE_MEGABYTE = 1024 * 1024;
-
-                                storageRef.getBytes(ONE_MEGABYTE)
-                                        .addOnSuccessListener(bytes -> {
-                                            Bitmap bitmap = BitmapUtils.convertCompressedByteArrayToBitmap(bytes);
-                                            Drawable drawable = new BitmapDrawable(getResources(), bitmap);
-
-                                            WorldkieModel worldkieModel = new WorldkieModel(
-                                                    documentSnapshot.getId(),
-                                                    documentSnapshot.getString("UID_AUTHOR"),
-                                                    documentSnapshot.getString("name"),
-                                                    drawable, false
-                                            );
-                                            worldkieModelArrayList.add(worldkieModel);
-                                            updateRecyclerView(worldkieModelArrayList); // Call after processing each document (custom image)
-                                        })
-                                        .addOnFailureListener(exception ->
-                                                Toast.makeText(getContext(), "Error al cargar imagen", Toast.LENGTH_SHORT).show()
-                                        );
-                            }
-                        }
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.e("Error", e.getMessage().toString());
-                        Toast.makeText(getContext(), e.getMessage().toString(), LENGTH_LONG).show();
-                    }
-                });*/
         dbWorldkies.whereEqualTo("UID_AUTHOR", UID)
                 .orderBy("last_update", Query.Direction.DESCENDING)
                 .addSnapshotListener((queryDocumentSnapshots, e) -> {
@@ -182,8 +134,9 @@ public class Home extends Fragment {
                                     break;
                             }
 
-                            if (!doc.getBoolean("photo_default")) {
-                                loadAndSetImage(doc.getId(), worldkieModel);
+                            if (doc.getBoolean("photo_default")) {
+                            } else {
+                                //loadAndSetImage(doc.getId(), worldkieModel);
                             }
                         }
 
@@ -201,20 +154,47 @@ public class Home extends Fragment {
         rc_worldkies = view.findViewById(R.id.rc_worldkies);
         worldkieModelArrayList = new ArrayList<>();
     }
-    private void loadAndSetImage(String documentId, WorldkieModel worldkieModel) {
-        /*StorageReference storageRef = storage.getReference().child(documentId);
+    private void navigateToNextFragment() {
+        // Obtén el FragmentManager
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+
+        // Crea una nueva instancia del siguiente fragmento
+        Fragment fragment = new CreateEditWorldkie();
+
+        // Usa el FragmentTransaction para reemplazar el fragmento actual por el siguiente
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, fragment) // El contenedor donde se muestra el fragmento
+                .addToBackStack(null) // Añade la transacción a la pila para que se pueda volver atrás
+                .commit();
+    }
+    private void goBackToPreviousFragment() {
+        // Verifica si hay un fragmento en la pila de retroceso
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            // Si hay fragmentos en la pila de retroceso, navega hacia atrás
+            fragmentManager.popBackStack(); // Retrocede al fragmento anterior
+        } else {
+            // Si no hay fragmentos en la pila, puede que quieras cerrar la actividad o hacer alguna otra acción
+            // Por ejemplo, cerrar la actividad:
+            requireActivity().onBackPressed(); // Realiza el retroceso por defecto (salir de la actividad)
+        }
+    }
+
+    /*private void loadAndSetImage(String documentId, WorldkieModel worldkieModel) {
+        StorageReference storageRef = storage.getReference().child(documentId);
         final long ONE_MEGABYTE = 1024 * 1024;
         storageRef.getBytes(ONE_MEGABYTE)
                 .addOnSuccessListener(bytes -> {
                     Bitmap bitmap = BitmapUtils.convertCompressedByteArrayToBitmap(bytes);
                     Drawable drawable = new BitmapDrawable(getResources(), bitmap);
-                    worldkieModel.setDrawable(R.drawable.worldkie_default);
+                    worldkieModel.setPhoto(drawable);
                     worldkieAdapter.notifyDataSetChanged(); // Notifica el cambio después de cargar la imagen
                 })
                 .addOnFailureListener(exception -> {
                     Log.e("Error", "Error al cargar imagen: " + exception.getMessage());
-                });*/
-    }
+                });
+    }*/
     private void safeAddToList(ArrayList<WorldkieModel> list, int index, WorldkieModel item) {
         if (index >= 0 && index <= list.size()) {
             list.add(index, item);
@@ -244,7 +224,7 @@ public class Home extends Fragment {
                     doc.getString("UID_AUTHOR"), R.drawable.twotone_lightbulb_24,
                     doc.getString("name"),
                     doc.getTimestamp("creation_date").toDate(),
-                    true,
+                    doc.getBoolean("photo_default"),
                     doc.getTimestamp("last_update").toDate(),
                     doc.getBoolean("worldkie_private"));
           //  );

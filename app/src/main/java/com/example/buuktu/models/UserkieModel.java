@@ -16,6 +16,16 @@ public class UserkieModel {
     private boolean profile_private;
     private String surname;
     private int drawable;
+    private String photo_id;
+
+    public String getPhoto_id() {
+        return photo_id;
+    }
+
+    public void setPhoto_id(String photo_id) {
+        this.photo_id = photo_id;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -99,6 +109,18 @@ public class UserkieModel {
     public UserkieModel() {
     }
 
+    public UserkieModel(String email, String UID, String name, String pronouns, Date birthday, String username, String number, boolean photo_default, boolean profile_private,String photo_id) {
+        this.email = email;
+        this.UID = UID;
+        this.name = name;
+        this.pronouns = pronouns;
+        this.birthday = birthday;
+        this.username = username;
+        this.number = number;
+        this.photo_default = photo_default;
+        this.profile_private = profile_private;
+        this.photo_id = photo_id;
+    }
     public UserkieModel(String email, String UID, String name, String pronouns, Date birthday, String username, String number, boolean photo_default, boolean profile_private) {
         this.email = email;
         this.UID = UID;

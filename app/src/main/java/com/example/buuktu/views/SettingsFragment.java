@@ -24,18 +24,13 @@ import java.util.ArrayList;
  * Use the {@link SettingsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SettingsFragment extends Fragment implements SettingsAdapter.ItemClickListener {
+public class SettingsFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private SettingsAdapter adapter;
     private RecyclerView rc_settings;
     private ArrayList<SettingModel> dataSet = new ArrayList<SettingModel>();
     private SearchView searchView;
-    private ArrayList<SettingModel> filteredDataSet = new ArrayList<SettingModel>();;
+    private ArrayList<SettingModel> filteredDataSet = new ArrayList<SettingModel>();
+    SettingsAdapter settingsAdapter;
     public SettingsFragment() {
         // Required empty public constructor
     }
@@ -44,18 +39,10 @@ public class SettingsFragment extends Fragment implements SettingsAdapter.ItemCl
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment SettingsFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static SettingsFragment newInstance(String param1, String param2) {
-        SettingsFragment fragment = new SettingsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public static SettingsFragment newInstance() {
+        return new SettingsFragment();
     }
 
     @Override
@@ -72,14 +59,15 @@ public class SettingsFragment extends Fragment implements SettingsAdapter.ItemCl
          rc_settings = v.findViewById(R.id.rc_settings);
          searchView = v.findViewById(R.id.searchView);
         searchView.setIconifiedByDefault(false); // Para que el SearchView esté expandido por defecto
+        dataSet.clear();
+        filteredDataSet.clear();
         Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.twotone_manage_accounts_24);
         dataSet.add(new SettingModel("Perfil",drawable));
         dataSet.add(new SettingModel("Cuenta",drawable));
-        SettingsAdapter settingsAdapter = new SettingsAdapter(dataSet,getContext());
-        rc_settings.setAdapter(settingsAdapter);
-        rc_settings.setLayoutManager(new LinearLayoutManager(getContext()));
-        settingsAdapter.setOnClickListener(this);
-        adapter = new SettingsAdapter(dataSet,getContext());
+
+        //settingsAdapter.setOnClickListener(this);
+        //adapter = new SettingsAdapter(dataSet,getContext());
+        updateRecyclerView(dataSet);
         filteredDataSet.addAll(dataSet);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -108,20 +96,17 @@ public class SettingsFragment extends Fragment implements SettingsAdapter.ItemCl
             for (SettingModel item : dataSet) {
                 if (item.getName().toLowerCase().contains(query.toLowerCase())) {
                     filteredDataSet.add(item);
+
                 }
             }
         }
-
+        updateRecyclerView(filteredDataSet);
         // Notificar al adaptador que los datos han cambiado
-        adapter.notifyDataSetChanged();
+        settingsAdapter.notifyDataSetChanged();
     }
-
-    @Override
-    public void onClick(View view, int position) {
-        if (dataSet.get(position).getName().equals("Perfil")){
-            System.out.println("Perfil");
-        } else if (dataSet.get(position).getName().equals("Account")) {
-            System.out.println("Account");
-        }
+    private void updateRecyclerView(ArrayList<SettingModel> settingModels){
+        settingsAdapter = new SettingsAdapter(settingModels,getContext(),getParentFragmentManager());
+        rc_settings.setAdapter(settingsAdapter);
+        rc_settings.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 }

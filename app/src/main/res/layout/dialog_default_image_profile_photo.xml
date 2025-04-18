@@ -12,131 +12,161 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         card_view:cardCornerRadius="10dp"
         card_view:cardElevation="10dp">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/ib_back_default_photo_profile"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="left"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                card_view:srcCompat="@drawable/twotone_arrow_circle_left_24" />
 
-                <ImageButton
-                    android:id="@+id/ib_prf_imgOne"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:background="@null"
-                    tools:srcCompat="@mipmap/photoprofileone" />
+            <ImageButton
+                android:id="@+id/ib_prf_imgOne"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@null"
+                app:layout_constraintStart_toEndOf="@+id/ib_back_default_photo_profile"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@mipmap/photoprofileone" />
 
-                <ImageButton
-                    android:id="@+id/ib_prf_imgTwo"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:background="@null"
-                    tools:srcCompat="@mipmap/photoprofiletwo" />
+            <ImageButton
+                android:id="@+id/ib_prf_imgTwo"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@null"
+                app:layout_constraintStart_toEndOf="@+id/ib_prf_imgOne"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@mipmap/photoprofiletwo" />
 
-                <ImageButton
-                    android:id="@+id/ib_prf_imgThree"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:background="@null"
-                    tools:srcCompat="@mipmap/photoprofilethree" />
+            <ImageButton
+                android:id="@+id/ib_prf_imgThree"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@null"
+                app:layout_constraintStart_toEndOf="@+id/ib_prf_imgTwo"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@mipmap/photoprofilethree" />
 
-            </LinearLayout>
+            <ImageButton
+                android:id="@+id/ib_prf_imgFour"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@null"
+                app:layout_constraintStart_toEndOf="@+id/ib_back_default_photo_profile"
+                app:layout_constraintTop_toBottomOf="@+id/ib_prf_imgOne"
+                tools:srcCompat="@mipmap/photoprofilefour" />
 
-                <ImageButton
-                    android:id="@+id/ib_prf_imgFour"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:background="@null"
+            <ImageButton
+                android:id="@+id/ib_prf_imgFive"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="16dp"
 
-                    tools:srcCompat="@mipmap/photoprofilefour" />
+                android:layout_marginTop="16dp"
+                android:background="@null"
+                app:layout_constraintStart_toEndOf="@+id/ib_prf_imgFour"
+                app:layout_constraintTop_toBottomOf="@+id/ib_prf_imgTwo"
+                tools:srcCompat="@mipmap/photoprofilefive" />
 
-                <ImageButton
-                    android:id="@+id/ib_prf_imgFive"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:background="@null"
+            <ImageButton
+                android:id="@+id/ib_prf_imgSix"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="16dp"
 
-                    tools:srcCompat="@mipmap/photoprofilefive" />
+                android:layout_marginTop="16dp"
+                android:background="@null"
+                app:layout_constraintStart_toEndOf="@+id/ib_prf_imgFive"
+                app:layout_constraintTop_toBottomOf="@+id/ib_prf_imgThree"
+                tools:srcCompat="@mipmap/photoprofilesix" />
 
-                <ImageButton
-                    android:id="@+id/ib_prf_imgSix"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:background="@null"
+            <ImageButton
+                android:id="@+id/ib_prf_imgSeven"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="16dp"
 
-                    tools:srcCompat="@mipmap/photoprofilesix" />
-            </LinearLayout>
+                android:layout_marginTop="16dp"
+                android:background="@null"
+                app:layout_constraintStart_toEndOf="@+id/ib_back_default_photo_profile"
+                app:layout_constraintTop_toBottomOf="@+id/ib_prf_imgFour"
+                tools:srcCompat="@mipmap/photoprofileseven" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/ib_prf_imgEight"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="16dp"
 
-                <ImageButton
-                    android:id="@+id/ib_prf_imgSeven"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:background="@null"
+                android:layout_marginTop="16dp"
+                android:background="@null"
+                app:layout_constraintStart_toEndOf="@+id/ib_prf_imgSeven"
+                app:layout_constraintTop_toBottomOf="@+id/ib_prf_imgFive"
+                tools:srcCompat="@mipmap/photoprofileeight" />
 
-                    tools:srcCompat="@mipmap/photoprofileseven" />
+            <ImageButton
+                android:id="@+id/ib_prf_imgNine"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="16dp"
 
-                <ImageButton
-                    android:id="@+id/ib_prf_imgEight"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:background="@null"
+                android:layout_marginTop="16dp"
+                android:background="@null"
+                app:layout_constraintStart_toEndOf="@+id/ib_prf_imgEight"
+                app:layout_constraintTop_toBottomOf="@+id/ib_prf_imgSix"
+                tools:srcCompat="@mipmap/photoprofilenine" />
 
-                    tools:srcCompat="@mipmap/photoprofileeight" />
+            <ImageButton
+                android:id="@+id/ib_prf_imgTen"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
 
-                <ImageButton
-                    android:id="@+id/ib_prf_imgNine"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:background="@null"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@null"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ib_back_default_photo_profile"
+                app:layout_constraintTop_toBottomOf="@+id/ib_prf_imgSeven"
+                tools:srcCompat="@mipmap/photoprofileten" />
 
-                    tools:srcCompat="@mipmap/photoprofilenine" />
-            </LinearLayout>
+            <ImageButton
+                android:id="@+id/ib_prf_imgEleven"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/ib_prf_imgTen"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:background="@null"
-
-                    tools:srcCompat="@mipmap/photoprofileten" />
-
-                <ImageButton
-                    android:id="@+id/ib_prf_imgEleven"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:background="@null"
-
-                    tools:srcCompat="@mipmap/photoprofileeleven" />
-            </LinearLayout>
-
-        </LinearLayout>
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@null"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ib_prf_imgTen"
+                app:layout_constraintTop_toBottomOf="@+id/ib_prf_imgNine"
+                tools:srcCompat="@mipmap/photoprofileeleven" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

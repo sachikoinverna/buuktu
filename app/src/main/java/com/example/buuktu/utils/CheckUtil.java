@@ -1,6 +1,7 @@
 package com.example.buuktu.utils;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.Patterns;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +40,11 @@ public class CheckUtil {
         });
         return exists[0];
     }
+    public static boolean checkSpecialChar(String text)
+    {
+//        return text.matches("[\\p{Punct}&&[^_]]\\p{Cntrl}\\p{S}\\s");
+
+        return text.matches("[!@#$%&*()+=|<>?{}.,]");    }
     public static boolean checkNumbers(String text){
             return text.matches(".*\\d.*"); // Verifica si hay algún dígito en el texto
 
@@ -53,7 +59,10 @@ public class CheckUtil {
             return password.length()<8;
     }
     public static boolean checkUppercase(String password){
-        return password != null && password.chars().anyMatch(Character::isUpperCase);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return password != null && password.chars().anyMatch(Character::isUpperCase);
+        }
+        return false;
     }
     public static boolean checkSpecialCharacter(String password){
         return password != null && password.matches(".*[\\W_].*");

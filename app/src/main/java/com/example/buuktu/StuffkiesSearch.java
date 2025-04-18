@@ -16,7 +16,9 @@ import android.view.ViewGroup;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.example.buuktu.adapters.SettingsAdapter;
 import com.example.buuktu.adapters.StuffkieSearchAdapter;
+import com.example.buuktu.models.SettingModel;
 import com.example.buuktu.models.StuffkieModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -32,10 +34,8 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class StuffkiesSearch extends Fragment {
+    private ArrayList<StuffkieModel> filteredDataSet = new ArrayList<StuffkieModel>();
 
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-
-    // TODO: Rename and change types of parameters
     private ArrayList<StuffkieModel> stuffkieModelArrayList;
     CollectionReference collectionStuffkies;
     private FirebaseFirestore db;
@@ -51,12 +51,10 @@ public class StuffkiesSearch extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment StuffkiesSearch.
      */
     // TODO: Rename and change types and number of parameters
-    public static StuffkiesSearch newInstance(String param1, String param2) {
+    public static StuffkiesSearch newInstance() {
         StuffkiesSearch fragment = new StuffkiesSearch(searchView);
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -158,7 +156,45 @@ public class StuffkiesSearch extends Fragment {
                 updateRecyclerView(worldkieModelArrayList);
             }*/
         //});
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                filterList(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterList(newText);
+                return true;
+            }
+        });
         return view;
+    }
+    private void filterList(String query) {
+        filteredDataSet.clear();
+
+        // Filtrar los elementos de la lista
+        if (query.isEmpty()) {
+            // Si el campo de búsqueda está vacío, muestra todos los elementos
+            filteredDataSet.addAll(stuffkieModelArrayList);
+        } else {
+            // Filtrar los elementos que contienen el texto de la búsqueda
+            for (StuffkieModel item : stuffkieModelArrayList) {
+                if (item.getName().toLowerCase().contains(query.toLowerCase())) {
+                    filteredDataSet.add(item);
+
+                }
+            }
+        }
+        updateRecyclerView(filteredDataSet);
+        // Notificar al adaptador que los datos han cambiado
+        stuffkieSearchAdapter.notifyDataSetChanged();
+    }
+    private void updateRecyclerView(ArrayList<StuffkieModel> settingModels){
+        stuffkieSearchAdapter = new StuffkieSearchAdapter(settingModels,getContext(),getParentFragmentManager());
+        rc_stuffkies_search.setAdapter(stuffkieSearchAdapter);
+        rc_stuffkies_search.setLayoutManager(new LinearLayoutManager(getContext()));
     }
     private void safeAddToList(ArrayList<StuffkieModel> list, int index, StuffkieModel item) {
         if (index >= 0 && index <= list.size()) {
@@ -172,8 +208,5 @@ public class StuffkiesSearch extends Fragment {
         if (index >= 0 && index < list.size()) {
             list.set(index, item);
         }
-    }
-    private void updateRecyclerView(ArrayList<StuffkieModel> stuffkieModelArrayList) {
-
     }
 }

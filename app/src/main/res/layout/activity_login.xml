@@ -12,7 +12,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/materialCardView"
         android:layout_width="350dp"
-        android:layout_height="400dp"
+        android:layout_height="350dp"
         android:layout_marginTop="150dp"
         android:background="@drawable/loginborders"
         app:cardCornerRadius="40dp"
@@ -90,19 +90,6 @@
                         android:textAlignment="center" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <TextView
-                    android:id="@+id/tv_loginButton"
-                    android:layout_width="120dp"
-                    android:layout_height="50dp"
-                    android:background="@drawable/button_backgground"
-                    android:foreground="@drawable/twotone_auto_awesome_24"
-                    android:foregroundGravity="left|center"
-                    android:foregroundTint="#FFFFFF"
-                    android:gravity="center"
-                    android:text="Iniciar sesion"
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold" />
-
             </LinearLayout>
         </ScrollView>
     </com.google.android.material.card.MaterialCardView>
@@ -130,9 +117,28 @@
         android:foregroundGravity="left|center"
         android:foregroundTint="#FFFFFF"
         android:gravity="center"
+        android:onClick="handlerGoToRegister"
         android:text="@string/register"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_loginButton"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/button_backgground"
+        android:foreground="@drawable/twotone_auto_awesome_24"
+        android:foregroundGravity="left|center"
+        android:foregroundTint="#FFFFFF"
+        android:gravity="center"
+        android:onClick="handlerLogin"
+        android:text="Iniciar sesion"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -32,7 +32,7 @@ public class PageAdapter
                 case 2:
                     return new StuffkiesSearch(searchView);
                 case 3:
-                    return new UserkiesSearch(searchView);
+                    return new UserkiesSearch();
             }
             return new WorldkiesSearch(searchView);
         }

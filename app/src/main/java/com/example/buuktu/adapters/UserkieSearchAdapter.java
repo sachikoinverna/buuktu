@@ -1,24 +1,35 @@
 package com.example.buuktu.adapters;
 
+import static android.widget.Toast.LENGTH_LONG;
+
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.buuktu.ProfileView;
 import com.example.buuktu.R;
 import com.example.buuktu.models.UserkieModel;
 import com.example.buuktu.utils.DrawableUtils;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -101,74 +112,54 @@ public class UserkieSearchAdapter extends RecyclerView.Adapter<UserkieSearchAdap
         holder.getCv_userkie_search().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ProfileView profileView = new ProfileView();
+                Bundle bundle = new Bundle();
+                bundle.putString("mode","other");
+                bundle.putString("UID",dataSet.get(holder.getAdapterPosition()).getUID());
+                profileView.setArguments(bundle);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, profileView)
+                        .addToBackStack(null)
+                        .commit();
             }
         });
         ;
         Color color = Color.valueOf(context.getColor(R.color.brownBrown));
-        DrawableUtils.personalizarImagenCircle(context,DrawableUtils.drawableToBitmap(holder.iv_userkie_photo_search.getDrawable()),holder.getIv_userkie_photo_search(),R.color.brownMaroon);
-        /*holder.getIb_enterToAWorldkie().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                menuWorldkie = new WorldkieMenu();
-                Bundle bundle = new Bundle();
-                bundle.putString("worlkie_id",dataSet.get(holder.getAdapterPosition()).getUID());
-                menuWorldkie.setArguments(bundle);
-                fragmentManager.beginTransaction().replace(R.id.fragment_container, menuWorldkie) .addToBackStack(null) // Permite regresar atrás con el botón de retroceso
-                        .commit();
-                //Intent intent = new Intent(holder.itemView.getContext(), Worldkie.class);
-                //   holder.
-                // Intent intent = new Intent(holder.itemView.getContext(), WorldkieMenu.class);
-                // holder.itemView.getContext().startActivity(intent);
-            }
-        });*/
-      /*  holder.getIb_editAWorldkie().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(holder.itemView.getContext(), CreateWorldkie.class);
-                intent.putExtra("create",false);
-                //  intent.putExtra("worldkie",new WorldkieModel(dataSet.get(holder.getAdapterPosition()).getUID(),dataSet.get(holder.getAdapterPosition()).getName(),dataSet.get(holder.getAdapterPosition()).isPhoto_default(),dataSet.get(holder.getAdapterPosition()).isWorldkie_private()));
-                holder.itemView.getContext().startActivity(intent);
-            }
-        });*/
-       /* holder.getIb_deleteAWorldkie().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                holder.getDb().collection("Worldkies").document(dataSet.get(holder.getAdapterPosition()).getUID()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        holder.getFirebaseStorage().getReference().child(dataSet.get(holder.getAdapterPosition()).getUID()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
+        if(dataSet.get(holder.getAdapterPosition()).isPhoto_default()) {
+            FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+            firebaseFirestore.collection("Users").document(dataSet.get(holder.getAdapterPosition()).getUID()).addSnapshotListener((queryDocumentSnapshot, e) -> {
+                       /* if (e != null) {
+                            Log.e("Error", e.getMessage());
+                            Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
+                            return;
+                        }*/
+                //boolean photo_default = queryDocumentSnapshot.getBoolean("photo_default");
+                String id_photo = queryDocumentSnapshot.getString("photo_id");
+                int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
 
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
+                if (resId != 0) {
+                    Drawable drawable = ContextCompat.getDrawable(context, resId);
+                    holder.getIv_userkie_photo_search().setImageDrawable(drawable);
+                    DrawableUtils.personalizarImagenCircle(context, DrawableUtils.drawableToBitmap(drawable), holder.getIv_userkie_photo_search(), R.color.brownMaroon);
+                }
+            });
+        } else {
+                            StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-users").getReference(dataSet.get(holder.getAdapterPosition()).getUID());
 
-                            }
-                        });
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
-                    }
-                });
-            }
-        });*/
-        //De esra forma establacemos las imagenes de la lista
-        //String uri = "@drawable/" + dataSet.get(position).getPhoto();  // where myresource (without the extension) is the file
-        //int imageResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
-        //Drawable res =  context.getResources().getDrawable(imageResource);
-        //  holder.getIv_photo_wordlkie().setImageDrawable(dataSet.get(holder.getAdapterPosition()).getPhoto());
-        //  Bitmap bitmap = DrawableUtils.drawableToBitmap(dataSet.get(holder.getAdapterPosition()).getPhoto());
-        //  int colorRGB = Color.rgb(139, 111, 71);
-        //8B6F47
-        //  Color color = Color.valueOf(colorRGB);
-
-        // DrawableUtils.personalizarImagenCuadrado(context,bitmap,holder.getIv_photo_wordlkie(),color);
-    }
+                            userFolderRef.listAll().addOnSuccessListener(listResult -> {
+                                for (StorageReference item : listResult.getItems()) {
+                                    if (item.getName().startsWith("profile")) {
+                                        item.getBytes(5 * 1024 * 1024).addOnSuccessListener(bytes -> {
+                                            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                            Bitmap bitmapScaled = Bitmap.createScaledBitmap(bitmap, 80, 80, false);
+                                            DrawableUtils.personalizarImagenCircle(context, bitmapScaled, holder.getIv_userkie_photo_search(), R.color.brownMaroon);
+                                        });
+                                        break;
+                                    }
+                                }
+                            });
+                        }
+        }
 
 
     // Devolvemos el numero de items de nuestro arraylist, lo invoca automaticamente el layout manager

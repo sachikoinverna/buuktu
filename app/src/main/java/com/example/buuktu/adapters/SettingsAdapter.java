@@ -1,27 +1,22 @@
 package com.example.buuktu.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.buuktu.AccountSettings;
+import com.example.buuktu.ProfileSettings;
 import com.example.buuktu.R;
 import com.example.buuktu.models.SettingModel;
-import com.example.buuktu.models.WorldkieModel;
-import com.example.buuktu.views.CreateWorldkie;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 
@@ -32,14 +27,8 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
 
     }
     private ArrayList<SettingModel> dataSet;
-    private ItemClickListener clicListener;
-
     private Context context;
-
-    public interface ItemClickListener {
-        public void onClick(View view, int position);
-    }
-
+    FragmentManager fragmentManager;
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView iv_photo_setting;
         private TextView tv_name_setting;
@@ -48,9 +37,9 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
         //private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         public ViewHolder(View view) {
             super(view);
-            iv_photo_setting =  view.findViewById(R.id.iv_photo_setting);
-            tv_name_setting= view.findViewById(R.id.tv_name_setting);
-            card_view_setting_list_one = view.findViewById(R.id.card_view_setting_list_one);
+            iv_photo_setting =  view.findViewById(R.id.iv_photo_setting_profile);
+            tv_name_setting= view.findViewById(R.id.tv_name_setting_profile);
+            card_view_setting_list_one = view.findViewById(R.id.card_view_setting_list_profile);
         }
 
         public TextView getTv_name_setting() {
@@ -66,12 +55,10 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
     }
 
     //Constructor donde pasamos la lista de productos y el contexto
-    public SettingsAdapter(ArrayList<SettingModel> dataSet, Context ctx) {
+    public SettingsAdapter(ArrayList<SettingModel> dataSet, Context ctx,FragmentManager fragmentManager) {
         this.dataSet = dataSet;
         this.context = ctx;
-    }
-    public void setOnClickListener(ItemClickListener clicListener){
-        this.clicListener = clicListener;
+        this.fragmentManager=fragmentManager;
     }
 
 
@@ -86,12 +73,23 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull SettingsAdapter.ViewHolder holder, int position) {
-            holder.getTv_name_setting().setText(dataSet.get(holder.getAdapterPosition()).getName());
+        String name = dataSet.get(holder.getAdapterPosition()).getName();
+            holder.getTv_name_setting().setText(name);
          holder.getIv_photo_setting().setImageDrawable(dataSet.get(holder.getAdapterPosition()).getDrawable());
          holder.getCard_view_setting_list_one().setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 Toast.makeText(context,"Hola",Toast.LENGTH_SHORT).show();
+                 if (name.equals("Perfil")) {
+                     ProfileSettings profileSettings = new ProfileSettings();
+                     fragmentManager.beginTransaction().replace(R.id.fragment_container, profileSettings) .addToBackStack(null) // Permite regresar atrás con el botón de retroceso
+                             .commit();
+                 } else if (name.equals("Cuenta")) {
+                     AccountSettings accountSettings = new AccountSettings();
+                     fragmentManager.beginTransaction().replace(R.id.fragment_container, accountSettings) .addToBackStack(null) // Permite regresar atrás con el botón de retroceso
+                             .commit();
+                     // Toast.makeText(context, "Cuenta", Toast.LENGTH_SHORT).show();
+
+                 }
              }
          });
     }

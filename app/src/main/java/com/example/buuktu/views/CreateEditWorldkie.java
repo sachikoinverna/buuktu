@@ -19,11 +19,15 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.buuktu.DataBinderMapperImpl;
 import com.example.buuktu.R;
+import com.example.buuktu.dialogs.CreateEditGeneralDialog;
+import com.example.buuktu.dialogs.DeleteNotekieDialog;
 import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.utils.BitmapUtils;
 import com.example.buuktu.utils.DrawableUtils;
@@ -43,6 +47,11 @@ import com.google.firebase.storage.UploadTask;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -68,6 +77,7 @@ public class CreateEditWorldkie extends Fragment {
     TextInputEditText et_nameWorldkieCreate;
     Switch tb_worldkiePrivacity,tb_worldkieDraft;
     ImageButton bt_saveWorldkie,ib_select_img_create_worldkie,ib_back;
+    CreateEditGeneralDialog dialog;
     public CreateEditWorldkie() {
         // Required empty public constructor
     }
@@ -106,13 +116,8 @@ public class CreateEditWorldkie extends Fragment {
         MainActivity mainActivity = (MainActivity) getActivity();
         ib_back = mainActivity.getBackButton();
         ib_back.setVisibility(View.VISIBLE);
-
-        et_nameWorldkieCreateFull = view.findViewById(R.id.et_nameWorldkieCreateFull);
-        et_nameWorldkieCreate = view.findViewById(R.id.et_nameWorldkieCreate);
-        tb_worldkiePrivacity = view.findViewById(R.id.tb_worldkiePrivacity);
-        tb_worldkieDraft = view.findViewById(R.id.tb_worldkieDraft);
-        bt_saveWorldkie = view.findViewById(R.id.bt_saveWorldkie);
-        ib_select_img_create_worldkie = view.findViewById(R.id.ib_select_img_create_worldkie);
+        initComponents(view);
+        dialog = new CreateEditGeneralDialog(getContext());
         db = FirebaseFirestore.getInstance();
         collectionWorldkie = db.collection("Worldkies");
         worldkieModel = new WorldkieModel();
@@ -190,6 +195,7 @@ public class CreateEditWorldkie extends Fragment {
         }
         obtenerImagen();
     }
+
     private void obtenerImagen(){
         if (worldkieModel.isPhoto_default()) {
             putDefaultImage();
@@ -257,6 +263,37 @@ public class CreateEditWorldkie extends Fragment {
                         }
                     });
                 }*/
+                CreateEditGeneralDialog dialog = new CreateEditGeneralDialog(getContext());
+                TextView tv_text = dialog.findViewById(R.id.tv_text_create_edit);
+                tv_text.setText("Creando worldkie...");
+                LottieAnimationView animationView = dialog.findViewById(R.id.anim_del_notekie);
+                animationView.setAnimation(R.raw.reading_anim);
+                animationView.playAnimation();
+
+               /* collectionNotekies.document(item.getUID()).delete()
+                        .addOnSuccessListener(unused -> {
+                            animationView.setAnimation(R.raw.success_anim);
+                            animationView.playAnimation();
+                            Completable.timer(5, TimeUnit.SECONDS)
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(() -> {
+                                        animationView.setVisibility(View.GONE);
+                                        dialog.dismiss();
+                                    });
+                        })
+                        .addOnFailureListener(e -> {
+                            animationView.setAnimation(R.raw.fail_anim);
+                            animationView.playAnimation();
+                            Completable.timer(5, TimeUnit.SECONDS)
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(() -> {
+                                        animationView.setVisibility(View.GONE);
+                                        dialog.dismiss();
+                                    });
+                        });*/
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -331,6 +368,14 @@ public class CreateEditWorldkie extends Fragment {
         barraProgreso.setMax(10);
         barraProgreso.show();*/
 
+    }
+    private void initComponents(View view){
+        et_nameWorldkieCreateFull = view.findViewById(R.id.et_nameWorldkieCreateFull);
+        et_nameWorldkieCreate = view.findViewById(R.id.et_nameWorldkieCreate);
+        tb_worldkiePrivacity = view.findViewById(R.id.tb_worldkiePrivacity);
+        tb_worldkieDraft = view.findViewById(R.id.tb_worldkieDraft);
+        bt_saveWorldkie = view.findViewById(R.id.bt_saveWorldkie);
+        ib_select_img_create_worldkie = view.findViewById(R.id.ib_select_img_create_worldkie);
     }
 
 

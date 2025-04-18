@@ -1,9 +1,12 @@
 package com.example.buuktu.adapters;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.graphics.YuvImage;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +23,14 @@ import com.example.buuktu.NotekieDiffCallback;
 import com.example.buuktu.R;
 import com.example.buuktu.dialogs.DeleteNotekieDialog;
 import com.example.buuktu.models.NoteItem;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -127,11 +135,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         }
 
         private void deleteNoteItem(NoteItem item, DeleteNotekieDialog dialog) {
-            TextView tv_title = dialog.findViewById(R.id.tv_lvl_title_del);
+            TextView tv_title = dialog.findViewById(R.id.tv_title_del);
             tv_title.setText("Cuidado");
-            TextView tv_text = dialog.findViewById(R.id.tv_lvl_text_del);
+            TextView tv_text = dialog.findViewById(R.id.tv_text_del);
             tv_text.setText("Cuidado");
-
             ImageView iv_photo = dialog.findViewById(R.id.iv_photo_del);
             iv_photo.setImageAlpha(R.mipmap.img_del_characterkie);
             ImageButton ib_close = dialog.findViewById(R.id.ib_close_dialog);
@@ -146,7 +153,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             animationView.setVisibility(View.VISIBLE);
             animationView.setAnimation(R.raw.reading_anim);
             animationView.playAnimation();
-
             collectionNotekies.document(item.getUID()).delete()
                     .addOnSuccessListener(unused -> {
                         animationView.setAnimation(R.raw.success_anim);

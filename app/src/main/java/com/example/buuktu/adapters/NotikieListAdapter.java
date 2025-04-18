@@ -129,7 +129,7 @@ public class NotikieListAdapter extends RecyclerView.Adapter<NotikieListAdapter.
     }
 private String getTimeAgo(long seconds, long minutes, long hours, long days) {
     if (days > 0) {
-        return days + " día" + (days > 1 ? "s" : "") + "atrás.";
+        return days + " día" + (days > 1 ? "s" : "") + " atrás.";
     } else if (hours > 0) {
         return  hours + " hora" + (hours > 1 ? "s" : "") + " atrás";
     } else if (minutes > 0) {

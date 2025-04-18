@@ -26,9 +26,6 @@ public class WorldkieMenu extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     private TextView tv_characterkiesAdd;
     private FragmentManager fragmentManager;
     private Fragment createCharacterkie;
@@ -58,8 +55,6 @@ public class WorldkieMenu extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -71,7 +66,13 @@ public class WorldkieMenu extends Fragment {
         MainActivity mainActivity = (MainActivity) getActivity();
         ImageButton backButton = mainActivity.getBackButton();
         backButton.setVisibility(View.VISIBLE);
-        tv_characterkiesAdd = view.findViewById( R.id.tv_characterkies);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goBackToPreviousFragment();
+            }
+        });
+        initComponents(view);
         fragmentManager = getParentFragmentManager();
         tv_characterkiesAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,8 +84,39 @@ public class WorldkieMenu extends Fragment {
 
                 fragmentManager.beginTransaction().replace(R.id.fragment_container, createCharacterkie) .addToBackStack(null) // Permite regresar atrás con el botón de retroceso
                         .commit();
+                navigateToNextFragment();
             }
         });
         return view;
+    }
+    private void initComponents(View view){
+        tv_characterkiesAdd = view.findViewById( R.id.tv_characterkies);
+
+    }
+    private void navigateToNextFragment() {
+        // Obtén el FragmentManager
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+
+        // Crea una nueva instancia del siguiente fragmento
+        Fragment fragment = new CreateCharacterkie();
+
+        // Usa el FragmentTransaction para reemplazar el fragmento actual por el siguiente
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, fragment) // El contenedor donde se muestra el fragmento
+                .addToBackStack(null) // Añade la transacción a la pila para que se pueda volver atrás
+                .commit();
+    }
+    private void goBackToPreviousFragment() {
+        // Verifica si hay un fragmento en la pila de retroceso
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            // Si hay fragmentos en la pila de retroceso, navega hacia atrás
+            fragmentManager.popBackStack(); // Retrocede al fragmento anterior
+        } else {
+            // Si no hay fragmentos en la pila, puede que quieras cerrar la actividad o hacer alguna otra acción
+            // Por ejemplo, cerrar la actividad:
+            requireActivity().onBackPressed(); // Realiza el retroceso por defecto (salir de la actividad)
+        }
     }
 }
