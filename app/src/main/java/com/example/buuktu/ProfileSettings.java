@@ -11,6 +11,7 @@ import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,6 +30,7 @@ import com.example.buuktu.dialogs.InfoFutureFunctionDialog;
 import com.example.buuktu.models.SettingModel;
 import com.example.buuktu.models.UserkieModel;
 import com.example.buuktu.utils.DrawableUtils;
+import com.example.buuktu.views.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -56,6 +58,7 @@ public class ProfileSettings extends Fragment {
     String UID;
     FirebaseAuth firebaseAuth;
     UserkieModel userkieModel;
+    ImageButton backButton,ib_save;
     private final CompoundButton.OnCheckedChangeListener switchListener = (buttonView, isChecked) -> {
         Map<String, Object> worldkieData = new HashMap<>();
         worldkieData.put("private", isChecked);
@@ -93,7 +96,17 @@ public class ProfileSettings extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         UID = firebaseAuth.getUid();
         userkie = userkies.document(UID);
-
+        MainActivity mainActivity = (MainActivity) getActivity();
+        backButton = mainActivity.getBackButton();
+        backButton.setVisibility(View.VISIBLE);
+        ib_save = mainActivity.getIb_save();
+        ib_save.setVisibility(View.GONE);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goBackToPreviousFragment();
+            }
+        });
         initComponents(view);
 
         // 🔁 Listener para cambios en Firestore
@@ -144,5 +157,18 @@ public class ProfileSettings extends Fragment {
     }
     private void updateRecyclerView() {
         settingAdapter.notifyDataSetChanged();
+    }
+    private void goBackToPreviousFragment() {
+        // Verifica si hay un fragmento en la pila de retroceso
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            // Si hay fragmentos en la pila de retroceso, navega hacia atrás
+            fragmentManager.popBackStack(); // Retrocede al fragmento anterior
+        } else {
+            // Si no hay fragmentos en la pila, puede que quieras cerrar la actividad o hacer alguna otra acción
+            // Por ejemplo, cerrar la actividad:
+            requireActivity().onBackPressed(); // Realiza el retroceso por defecto (salir de la actividad)
+        }
     }
 }

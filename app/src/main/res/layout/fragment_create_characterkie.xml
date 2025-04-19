@@ -19,11 +19,11 @@
                 android:id="@+id/ib_select_img_create_characterkie"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:layout_marginStart="106dp"
                 android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/worldkie_default" />
+                app:srcCompat="@mipmap/photocharacterkieone" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/et_nameCharacterkieCreateFull"
@@ -61,37 +61,15 @@
                 android:id="@+id/tb_CharacterkiePrivacity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:gravity="center"
                 android:text="Private worldkie"
                 android:thumb="@drawable/thumb_custom"
                 android:track="@drawable/track_custom"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/et_nameCharacterkieCreateFull" />
-
-            <ImageButton
-                android:id="@+id/bt_ok_addCharacterkie"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_marginStart="100dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                android:src="@drawable/twotone_check_circle_24"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tb_CharacterkiePrivacity"
-                app:tint="#00A900" />
-
-            <ImageButton
-                android:id="@+id/bt_cancel_addCharacterkie"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_marginEnd="100dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                android:src="@drawable/twotone_cancel_24"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tb_CharacterkiePrivacity"
-                app:tint="#5A1102" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fb_add_field_createCharacterkie"

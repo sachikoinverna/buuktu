@@ -15,10 +15,8 @@ import com.example.buuktu.WorldkiesSearch;
 
 public class PageAdapter
         extends FragmentStateAdapter {
-    SearchView searchView;
-    public PageAdapter(@NonNull FragmentActivity fragmentActivity, SearchView searchView) {
+    public PageAdapter(@NonNull FragmentActivity fragmentActivity ) {
         super(fragmentActivity);
-        this.searchView=searchView;
     }
         @NonNull
         @Override
@@ -26,15 +24,15 @@ public class PageAdapter
             // Determine which fragment to show based on position
             switch (position) {
                 case 0:
-                    return new WorldkiesSearch(searchView); // First page
+                    return new WorldkiesSearch(); // First page
                 case 1:
-                    return new CharacterkiesSearch(searchView); // Second page
+                    return new CharacterkiesSearch(); // Second page
                 case 2:
-                    return new StuffkiesSearch(searchView);
+                    return new StuffkiesSearch();
                 case 3:
                     return new UserkiesSearch();
             }
-            return new WorldkiesSearch(searchView);
+            return new WorldkiesSearch();
         }
         @Override
         public int getItemCount() {

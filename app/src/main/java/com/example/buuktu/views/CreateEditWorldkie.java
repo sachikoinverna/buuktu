@@ -2,19 +2,27 @@ package com.example.buuktu.views;
 
 import static android.widget.Toast.LENGTH_LONG;
 
+import android.animation.Animator;
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
@@ -24,8 +32,12 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.buuktu.DataBinderMapperImpl;
 import com.example.buuktu.R;
+import com.example.buuktu.adapters.RoundedBorderTransformation;
+import com.example.buuktu.bottomsheet.BottomSheetProfilePhoto;
 import com.example.buuktu.dialogs.CreateEditGeneralDialog;
 import com.example.buuktu.dialogs.DeleteNotekieDialog;
 import com.example.buuktu.models.WorldkieModel;
@@ -59,13 +71,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  * create an instance of this fragment.
  */
 public class CreateEditWorldkie extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
     private FirebaseFirestore db;
     CollectionReference collectionWorldkie;
     private FirebaseAuth firebaseAuth;
@@ -76,8 +81,11 @@ public class CreateEditWorldkie extends Fragment {
     TextInputLayout et_nameWorldkieCreateFull;
     TextInputEditText et_nameWorldkieCreate;
     Switch tb_worldkiePrivacity,tb_worldkieDraft;
-    ImageButton bt_saveWorldkie,ib_select_img_create_worldkie,ib_back;
+    ImageButton ib_save,ib_select_img_create_worldkie,ib_back;
     CreateEditGeneralDialog dialog;
+    Uri image;
+    BottomSheetProfilePhoto bottomSheetProfilePhoto;
+    String source;
     public CreateEditWorldkie() {
         // Required empty public constructor
     }
@@ -86,25 +94,18 @@ public class CreateEditWorldkie extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment CreateEditWorldkie.
      */
     // TODO: Rename and change types and number of parameters
-    public static CreateEditWorldkie newInstance(String param1, String param2) {
-        CreateEditWorldkie fragment = new CreateEditWorldkie();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public static CreateEditWorldkie newInstance() {
+        return new CreateEditWorldkie();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            worldkie_id = getArguments().getString("worldkie_id");
+            this.worldkie_id = getArguments().getString("worldkie_id");
         }
     }
 
@@ -115,9 +116,30 @@ public class CreateEditWorldkie extends Fragment {
         View view = inflater.inflate(R.layout.fragment_create_edit_worldkie, container, false);
         MainActivity mainActivity = (MainActivity) getActivity();
         ib_back = mainActivity.getBackButton();
+        ib_save = mainActivity.getIb_save();
+        ib_save.setVisibility(View.VISIBLE);
+        ib_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(worldkie_id == null){
+                    addDataToFirestore();
+                }else{
+                    editDataFirestore();
+                }
+            }
+        });
         ib_back.setVisibility(View.VISIBLE);
+        ib_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goBackToPreviousFragment();
+            }
+        });
         initComponents(view);
         dialog = new CreateEditGeneralDialog(getContext());
+        source = "app";
+        bottomSheetProfilePhoto = new BottomSheetProfilePhoto();
+
         db = FirebaseFirestore.getInstance();
         collectionWorldkie = db.collection("Worldkies");
         worldkieModel = new WorldkieModel();
@@ -139,8 +161,9 @@ public class CreateEditWorldkie extends Fragment {
                         boolean draft = queryDocumentSnapshot.getBoolean("draft");
                         worldkieModel.setDraft(draft);
                     }
-                    boolean photo_default = queryDocumentSnapshot.getBoolean("creation_date");
+                    boolean photo_default = queryDocumentSnapshot.getBoolean("photo_default");
                     worldkieModel.setPhoto_default(photo_default);
+                       getImage();
                     /*if (!title.isEmpty()) {
                         noteItem.setTitle(title);
                         et_title_note.setText(noteItem.getTitle());
@@ -156,6 +179,12 @@ public class CreateEditWorldkie extends Fragment {
 
             editMode(worldkieModel);
         }
+        ib_select_img_create_worldkie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectImage();
+            }
+        });
         tb_worldkiePrivacity.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -166,19 +195,72 @@ public class CreateEditWorldkie extends Fragment {
                 }
             }
         });
-        bt_saveWorldkie.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(worldkie_id == null){
-                    addDataToFirestore();
-                }else{
-                    editDataFirestore();
-                }
-            }
-        });
-        DrawableUtils.personalizarImagenCuadradoButton(getContext(),DrawableUtils.drawableToBitmap(ib_select_img_create_worldkie.getDrawable()),ib_select_img_create_worldkie,R.color.greenWhatever);
+    //    DrawableUtils.personalizarImagenCuadradoButton(getContext(),DrawableUtils.drawableToBitmap(ib_select_img_create_worldkie.getDrawable()),ib_select_img_create_worldkie,R.color.greenWhatever);
 
         return view;
+    }
+    private void goBackToPreviousFragment() {
+        // Verifica si hay un fragmento en la pila de retroceso
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            // Si hay fragmentos en la pila de retroceso, navega hacia atrás
+            fragmentManager.popBackStack(); // Retrocede al fragmento anterior
+        } else {
+            // Si no hay fragmentos en la pila, puede que quieras cerrar la actividad o hacer alguna otra acción
+            // Por ejemplo, cerrar la actividad:
+            requireActivity().onBackPressed(); // Realiza el retroceso por defecto (salir de la actividad)
+        }
+    }
+    private void getImage(){
+        if(worldkieModel.isPhoto_default()){
+        collectionWorldkie.document(worldkie_id).addSnapshotListener((queryDocumentSnapshot, e) -> {
+                       /* if (e != null) {
+                            Log.e("Error", e.getMessage());
+                            Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
+                            return;
+                        }*/
+            //boolean photo_default = queryDocumentSnapshot.getBoolean("photo_default");
+            String id_photo = queryDocumentSnapshot.getString("photo_id");
+            int resId = getContext().getResources().getIdentifier(id_photo, "mipmap", getContext().getPackageName());
+
+            if (resId != 0) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), resId);
+                ib_select_img_create_worldkie.setImageDrawable(drawable);
+                DrawableUtils.personalizarImagenCuadrado(getContext(), DrawableUtils.drawableToBitmap(drawable), ib_select_img_create_worldkie, R.color.brownMaroon);
+            }
+        });
+    } else {
+            ib_select_img_create_worldkie.setVisibility(View.INVISIBLE);
+        StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-worldkies").getReference(worldkie_id);
+
+        userFolderRef.listAll().addOnSuccessListener(listResult -> {
+            for (StorageReference item : listResult.getItems()) {
+                if (item.getName().startsWith("cover")) {
+                    item.getDownloadUrl().addOnSuccessListener(uri -> {
+                        int cornerRadius = 150 / 6; // Ejemplo de radio
+                        int borderWidth = 7; // Ejemplo de grosor del borde
+                        int borderColor = getContext().getResources().getColor(R.color.brownMaroon, null); // Asegúrate de que el color sea correcto
+
+                        RequestOptions requestOptions = new RequestOptions()
+                                //.override(150, 150)
+                                .centerCrop()
+                                .transform(new RoundedBorderTransformation(cornerRadius,borderWidth,borderColor));
+
+                        Glide.with(getContext())
+                                .load(uri)
+                                .apply(requestOptions)
+                                .into(ib_select_img_create_worldkie);
+                        ib_select_img_create_worldkie.setVisibility(View.VISIBLE);
+                        startCircularReveal(ib_select_img_create_worldkie.getDrawable());
+                        // Para el borde con Glide, necesitarías una transformación personalizada más compleja
+                        // o dibujar el borde alrededor del ImageView en su contenedor.
+                    });
+                }
+            }
+            ;
+        });
+    }
     }
     public void createMode(){
         et_nameWorldkieCreate.setText("");
@@ -186,6 +268,60 @@ public class CreateEditWorldkie extends Fragment {
         tb_worldkieDraft.setVisibility(View.GONE);
         putDefaultImage();
     }
+    public void setSelectedProfilePhoto(Drawable image){
+      /*  Bitmap bitmap = Bitmap.createBitmap(
+                image.getIntrinsicWidth(),
+                image.getIntrinsicHeight(),
+                Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        image.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        image.draw(canvas);*/
+        int cornerRadius = 150 / 6; // Ejemplo de radio
+        int borderWidth = 7; // Ejemplo de grosor del borde
+        int borderColor = getContext().getResources().getColor(R.color.brownMaroon, null); // Asegúrate de que el color sea correcto
+//        Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+        //ib_select_img_create_worldkie.setImageDrawable(image);
+
+        RequestOptions requestOptions = new RequestOptions()
+               // .override(150, 150)
+                .centerCrop()
+                .transform(new RoundedBorderTransformation(cornerRadius,borderWidth,borderColor));
+
+        Glide.with(getContext())
+                .load(DrawableUtils.drawableToBitmap(image))
+                .apply(requestOptions)
+                .into(ib_select_img_create_worldkie);
+    }
+    public void setSelectedProfilePhoto(@DrawableRes int imageResId){
+        int cornerRadius = 150 / 6;
+        int borderWidth = 7;
+        int borderColor = ContextCompat.getColor(getContext(), R.color.brownMaroon);
+
+        RequestOptions requestOptions = new RequestOptions()
+               //.override(150, 150)
+                .centerCrop()
+                .transform(new RoundedBorderTransformation(cornerRadius, borderWidth, borderColor));
+
+        Glide.with(getContext())
+                .load(imageResId) // 👍 Esto sí pasa por la transformación
+                .apply(requestOptions)
+                .into(ib_select_img_create_worldkie);
+    }
+
+    public Drawable getSelectedProfilePhoto()
+    {
+        return ib_select_img_create_worldkie.getDrawable();
+    }
+    public void setSource(String source) {
+        this.source = source;
+    }
+    public void selectImage(){
+        bottomSheetProfilePhoto.show(getChildFragmentManager(),"BottomSheetProfilePhoto");
+    }
+    public ImageButton getIb_select_img_create_worldkie() {
+        return ib_select_img_create_worldkie;
+    }
+
     public void editMode(WorldkieModel worldkieModel){
         et_nameWorldkieCreate.setText(worldkieModel.getName());
         tb_worldkiePrivacity.setChecked(worldkieModel.isWorldkie_private());
@@ -193,31 +329,53 @@ public class CreateEditWorldkie extends Fragment {
         if(!worldkieModel.isWorldkie_private()){
             tb_worldkieDraft.setVisibility(View.GONE);
         }
-        obtenerImagen();
+        //obtenerImagen();
+    }
+    public void setImageUri(Uri image){
+        this.image=image;
     }
 
-    private void obtenerImagen(){
-        if (worldkieModel.isPhoto_default()) {
-            putDefaultImage();
-        } else {
-            StorageReference storageRef = storage.getReference().child(worldkieModel.getUID());
-            final long ONE_MEGABYTE = 1024 * 1024;
-            storageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(bytes -> {
-                Bitmap bitmap = BitmapUtils.convertCompressedByteArrayToBitmap(bytes);
-                Drawable drawable = new BitmapDrawable(getResources(), bitmap);
-                ib_select_img_create_worldkie.setImageDrawable(drawable);
-                worldkieModel.setPhoto(drawable);
-            }).addOnFailureListener(exception ->
-                    Toast.makeText(getContext(), "Error al cargar imagen", Toast.LENGTH_SHORT).show()
-            );
+    private void putDefaultImage(){
+        int cornerRadius = 150 / 7; // Ejemplo de radio
+        int borderWidth = 2; // Ejemplo de grosor del borde
+        int borderColor = getContext().getResources().getColor(R.color.brownMaroon, null); // Asegúrate de que el color sea correcto
+        Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+        ib_select_img_create_worldkie.setImageDrawable(drawable);
+
+        RequestOptions requestOptions = new RequestOptions()
+                .override(150, 150)
+                .centerCrop()
+                .transform(new RoundedBorderTransformation(cornerRadius,borderWidth,borderColor));
+
+        Glide.with(getContext())
+                .load(drawable)
+                .apply(requestOptions)
+                .into(ib_select_img_create_worldkie);
+    }
+    private void startCircularReveal(Drawable finalDrawable) {
+        ib_select_img_create_worldkie.setImageDrawable(finalDrawable);
+        ib_select_img_create_worldkie.setAlpha(1f);
+
+        // Solo ejecutar la animación en dispositivos con API 21+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // Obtener el centro del ImageButton
+            int centerX = ib_select_img_create_worldkie.getWidth() / 2;
+            int centerY = ib_select_img_create_worldkie.getHeight() / 2;
+
+            // Calcular el radio final (el círculo más grande que puede caber dentro del ImageButton)
+            float finalRadius = Math.max(ib_select_img_create_worldkie.getWidth(), ib_select_img_create_worldkie.getHeight());
+
+            // Crear el Animator para la revelación circular
+            Animator circularReveal = ViewAnimationUtils.createCircularReveal(
+                    ib_select_img_create_worldkie, centerX, centerY, 0, finalRadius);
+            circularReveal.setDuration(500); // Duración de la animación en milisegundos
+
+            // Iniciar la animación
+            circularReveal.start();
         }
     }
-    private void putDefaultImage(){
-        ib_select_img_create_worldkie.setImageResource(R.drawable.worldkie_default);
-        DrawableUtils.personalizarImagenCuadradoButton(getContext(),DrawableUtils.drawableToBitmap(ib_select_img_create_worldkie.getDrawable()),ib_select_img_create_worldkie,R.color.greenWhatever);
-    }
     private void addDataToFirestore() {
-        mostrarBarraProgreso();
+   //     mostrarBarraProgreso();
         Date creation_date = new Date();
         Map<String, Object> worldkieData = new HashMap<>();
         worldkieData.put("UID_AUTHOR", firebaseAuth.getUid());
@@ -359,22 +517,11 @@ public class CreateEditWorldkie extends Fragment {
             }
         });*/
     }
-    private void mostrarBarraProgreso(){
-       /* barraProgreso = new ProgressDialog(createWorldkie);
-        barraProgreso.setTitle("Buscando...");
-        barraProgreso.setMessage("Progreso...");
-        barraProgreso.setProgressStyle(barraProgreso.STYLE_HORIZONTAL);
-        barraProgreso.setProgress(0);
-        barraProgreso.setMax(10);
-        barraProgreso.show();*/
-
-    }
     private void initComponents(View view){
         et_nameWorldkieCreateFull = view.findViewById(R.id.et_nameWorldkieCreateFull);
         et_nameWorldkieCreate = view.findViewById(R.id.et_nameWorldkieCreate);
         tb_worldkiePrivacity = view.findViewById(R.id.tb_worldkiePrivacity);
         tb_worldkieDraft = view.findViewById(R.id.tb_worldkieDraft);
-        bt_saveWorldkie = view.findViewById(R.id.bt_saveWorldkie);
         ib_select_img_create_worldkie = view.findViewById(R.id.ib_select_img_create_worldkie);
     }
 

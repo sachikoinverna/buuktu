@@ -63,18 +63,20 @@
                     android:id="@+id/ib_select_img_create_worldkie"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@android:color/transparent"
                     android:onClick="selectImage"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/bt_saveWorldkie"
-                    app:srcCompat="@drawable/worldkie_default" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@mipmap/photoworldkieone" />
 
                 <Switch
                     android:id="@+id/tb_worldkiePrivacity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="16dp"
                     android:gravity="center"
                     android:switchPadding="8dp"
                     android:text="Private worldkie"
@@ -90,7 +92,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="16dp"
                     android:gravity="center"
                     android:switchPadding="8dp"
                     android:text="Borrador"
@@ -100,19 +102,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/tb_worldkiePrivacity"
                     app:layout_constraintTop_toBottomOf="@+id/et_nameWorldkieCreateFull" />
-
-                <ImageButton
-                    android:id="@+id/bt_saveWorldkie"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@android:color/transparent"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/twotone_save_24"
-                    android:tint="#00A900"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/ib_select_img_create_worldkie"
-                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

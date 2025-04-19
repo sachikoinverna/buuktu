@@ -32,7 +32,7 @@ public class Inspo extends Fragment {
 
     RecyclerView rc_buttons_inspo;
     private CardInspoAdapter adapter;
-    ImageButton ib_back;
+    ImageButton ib_back,ib_save;
     public Inspo() {
         // Required empty public constructor
     }
@@ -64,6 +64,8 @@ public class Inspo extends Fragment {
         rc_buttons_inspo.setLayoutManager(new GridLayoutManager(getContext(), 2));
         MainActivity mainActivity = (MainActivity) getActivity();
         ib_back = mainActivity.getBackButton();
+        ib_save = mainActivity.getIb_save();
+        ib_save.setVisibility(View.GONE);
         ArrayList<CardItem> items = new ArrayList<>();
         items.add(new CardItem(R.drawable.twotone_sticky_note_2_24, "Notekies"));
         items.add(new CardItem(R.drawable.twotone_military_tech_24, "Desafios"));

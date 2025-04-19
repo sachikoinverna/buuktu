@@ -5,10 +5,12 @@ import static com.example.buuktu.R.*;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.NinePatch;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.FileObserver;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +22,12 @@ import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
+import com.example.buuktu.CreateCharacterkie;
+import com.example.buuktu.CreateEditStuffkie;
 import com.example.buuktu.R;
 import com.example.buuktu.utils.DrawableUtils;
+import com.example.buuktu.views.CreateEditWorldkie;
+import com.example.buuktu.views.MainActivity;
 import com.example.buuktu.views.Register;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.transition.FadeThroughProvider;
@@ -34,6 +40,9 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
     Bitmap selectedBitmap;
     Register register;
     ArrayList<ImageButton> imageButtons;
+    CreateEditWorldkie createEditWorldkie;
+    CreateCharacterkie createCharacterkie;
+    CreateEditStuffkie createEditStuffkie;
     public BottomSheetProfilePhotoDefault(){
     }
     @Override
@@ -42,6 +51,15 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
         View v = inflater.inflate(R.layout.dialog_default_image_profile_photo,
                 container, false);
         initComponents(v);
+        if(getActivity() instanceof MainActivity){
+            if(getParentFragment() instanceof CreateEditWorldkie){
+                createEditWorldkie = (CreateEditWorldkie) getParentFragment();
+                Log.d("BottomSheet", "createEditWorldkie detectado");
+
+            } else if (getParentFragment() instanceof CreateCharacterkie) {
+                createCharacterkie = (CreateCharacterkie) getParentFragment();
+            }
+        }
         imageButtons = new ArrayList<>();
         imageButtons.add(ib_prf_imgOne);
         imageButtons.add(ib_prf_imgTwo);
@@ -58,18 +76,48 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
             register = (Register) getActivity();
         }
         context = getContext();
-        ib_prf_imgOne.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoprofileone));
-        ib_prf_imgTwo.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoprofiletwo));
-        ib_prf_imgThree.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoprofilethree));
-        ib_prf_imgFour.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoprofilefour));
-        ib_prf_imgFive.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoprofilefive));
-        ib_prf_imgSix.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoprofilesix));
-        ib_prf_imgSeven.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoprofileseven));
-        ib_prf_imgEight.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoprofileeight));
-        ib_prf_imgNine.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoprofilenine));
-        ib_prf_imgTen.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoprofileten));
-        ib_prf_imgEleven.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoprofileeleven));
+        if(register !=null) {
+            ib_prf_imgOne.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoprofileone));
+            ib_prf_imgTwo.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoprofiletwo));
+            ib_prf_imgThree.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoprofilethree));
+            ib_prf_imgFour.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoprofilefour));
+            ib_prf_imgFive.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoprofilefive));
+            ib_prf_imgSix.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoprofilesix));
+            ib_prf_imgSeven.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoprofileseven));
+            ib_prf_imgEight.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoprofileeight));
+            ib_prf_imgNine.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoprofilenine));
+            ib_prf_imgTen.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoprofileten));
+            ib_prf_imgEleven.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoprofileeleven));
+        }
+        if(createEditWorldkie!=null){
+            ib_prf_imgOne.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoworldkieone));
+            ib_prf_imgTwo.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoworldkietwo));
+            ib_prf_imgThree.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoworldkiethree));
+            ib_prf_imgFour.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoworldkiefour));
+            ib_prf_imgFive.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoworldkiefive));
+            ib_prf_imgSix.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoworldkiesix));
+            ib_prf_imgSeven.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoworldkieseven));
+            ib_prf_imgEight.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoworldkieeight));
+            ib_prf_imgNine.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoworldkienine));
+            ib_prf_imgTen.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoworldkieten));
+            ib_prf_imgEleven.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoworldkieeleven));
+        }
+        if(createCharacterkie!=null){
+            ib_prf_imgOne.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photocharacterkieone));
+            ib_prf_imgTwo.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photocharacterkietwo));
+            ib_prf_imgThree.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photocharacterkiethree));
+            ib_prf_imgFour.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photocharacterkiefour));
+            ib_prf_imgFive.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photocharacterkiefive));
+            ib_prf_imgSix.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photocharacterkiesix));
+            ib_prf_imgSeven.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photocharacterkieseven));
+            ib_prf_imgEight.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoworldkieeight));
+            ib_prf_imgNine.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoworldkienine));
+            ib_prf_imgTen.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoworldkieten));
+            ib_prf_imgEleven.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoworldkieeleven));
+        }
+        if(createEditStuffkie!=null){
 
+        }
         setListeners();
         setImageBottomSheetOpen();
         return v;
@@ -97,76 +145,274 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.ib_prf_imgOne) {
-            register.setSelectedProfilePhoto(ib_prf_imgOne.getDrawable());
+            if(register != null) {
+                register.setSelectedProfilePhoto(ib_prf_imgOne.getDrawable());
+            } else if (createEditWorldkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+                createEditWorldkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
+            } else if (createCharacterkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+                createCharacterkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
+            } else if (createEditStuffkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+                //createEditStuffkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
+            }
         } else if (v.getId() == R.id.ib_prf_imgTwo) {
-            setSelectedImage(ib_prf_imgTwo.getDrawable(),ib_prf_imgTwo);
-            register.setSelectedProfilePhoto(ib_prf_imgTwo.getDrawable());
+            if(register != null) {
+                register.setSelectedProfilePhoto(ib_prf_imgTwo.getDrawable());
+            } else if (createEditWorldkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkietwo);
+                createEditWorldkie.setSelectedProfilePhoto(R.mipmap.photoworldkietwo);
+            }else if (createCharacterkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+                createCharacterkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
+            }else if (createEditStuffkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+                //createEditStuffkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
+            }
 
         } else if (v.getId() == R.id.ib_prf_imgThree) {
-            register.setSelectedProfilePhoto(ib_prf_imgThree.getDrawable());
-
+            if(register != null) {
+                register.setSelectedProfilePhoto(ib_prf_imgThree.getDrawable());
+            } else if (createEditWorldkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkiethree);
+                createEditWorldkie.setSelectedProfilePhoto(R.mipmap.photoworldkiethree);
+            }else if (createCharacterkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+                createCharacterkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
+            }else if (createEditStuffkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+                //createEditStuffkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
+            }
         } else if (v.getId() == R.id.ib_prf_imgFour) {
-            register.setSelectedProfilePhoto(ib_prf_imgFour.getDrawable());
-
+            if(register != null) {
+                register.setSelectedProfilePhoto(ib_prf_imgFour.getDrawable());
+            } else if (createEditWorldkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkiefour);
+                createEditWorldkie.setSelectedProfilePhoto(R.mipmap.photoworldkiefour);
+            }else if (createCharacterkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+                createCharacterkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
+            }else if (createEditStuffkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+                //createEditStuffkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
+            }
         } else if (v.getId() == R.id.ib_prf_imgFive) {
-            register.setSelectedProfilePhoto(ib_prf_imgFive.getDrawable());
+            if(register != null) {
+                register.setSelectedProfilePhoto(ib_prf_imgFive.getDrawable());
+            } else if (createEditWorldkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkiefive);
 
+                createEditWorldkie.setSelectedProfilePhoto(R.mipmap.photoworldkiefive);
+            }else if (createCharacterkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+                createCharacterkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
+            }else if (createEditStuffkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+                //createEditStuffkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
+            }
         } else if (v.getId() == R.id.ib_prf_imgSix) {
-            register.setSelectedProfilePhoto(ib_prf_imgSix.getDrawable());
-
+            if(register != null) {
+                register.setSelectedProfilePhoto(ib_prf_imgSix.getDrawable());
+            } else if (createEditWorldkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkiesix);
+                createEditWorldkie.setSelectedProfilePhoto(R.mipmap.photoworldkiesix);
+            }else if (createCharacterkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+                createCharacterkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
+            }else if (createEditStuffkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+                //createEditStuffkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
+            }
         } else if (v.getId() == R.id.ib_prf_imgSeven) {
-            register.setSelectedProfilePhoto(ib_prf_imgSeven.getDrawable());
-
+            if(register != null) {
+                register.setSelectedProfilePhoto(ib_prf_imgSeven.getDrawable());
+            } else if (createEditWorldkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieseven);
+                createEditWorldkie.setSelectedProfilePhoto(R.mipmap.photoworldkieseven);
+            }else if (createCharacterkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+                createCharacterkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
+            }else if (createEditStuffkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+                //createEditStuffkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
+            }
 
         } else if (v.getId() == R.id.ib_prf_imgEight) {
-            register.setSelectedProfilePhoto(ib_prf_imgEight.getDrawable());
-
-
+            if(register != null) {
+                register.setSelectedProfilePhoto(ib_prf_imgEight.getDrawable());
+            } else if (createEditWorldkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieeight);
+                createEditWorldkie.setSelectedProfilePhoto(R.mipmap.photoworldkieeight);
+            }else if (createCharacterkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+                createCharacterkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
+            }
+            else if (createEditStuffkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+                //createEditStuffkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
+            }
         } else if (v.getId() == R.id.ib_prf_imgNine) {
-            register.setSelectedProfilePhoto(ib_prf_imgNine.getDrawable());
+            if(register != null) {
+                register.setSelectedProfilePhoto(ib_prf_imgNine.getDrawable());
+            } else if (createEditWorldkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkienine);
 
-
+                createEditWorldkie.setSelectedProfilePhoto(R.mipmap.photoworldkienine);
+            }else if (createCharacterkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+                createCharacterkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
+            }
+            else if (createEditStuffkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+                //createEditStuffkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
+            }
         } else if (v.getId() == R.id.ib_prf_imgTen) {
-            register.setSelectedProfilePhoto(ib_prf_imgTen.getDrawable());
-
-
+            if(register != null) {
+                register.setSelectedProfilePhoto(ib_prf_imgTen.getDrawable());
+            } else if (createEditWorldkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieten);
+                createEditWorldkie.setSelectedProfilePhoto(R.mipmap.photoworldkieten);
+            }else if (createCharacterkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+                createCharacterkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
+            }
+            else if (createEditStuffkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+                //createEditStuffkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
+            }
         } else if (v.getId() == R.id.ib_prf_imgEleven)
         {
-            register.setSelectedProfilePhoto(ib_prf_imgEleven.getDrawable());
-
+            if(register != null) {
+                register.setSelectedProfilePhoto(ib_prf_imgEleven.getDrawable());
+            } else if (createEditWorldkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieeleven);
+                createEditWorldkie.setSelectedProfilePhoto(R.mipmap.photoworldkieeleven);
+            }else if (createCharacterkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+                createCharacterkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
+            }else if (createEditStuffkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+                //createEditStuffkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
+            }
         } else if(v.getId() == R.id.ib_back_default_photo_profile){
             goBackBottomSheetOptionsPhotoProfile();
         }
     }
     private void setSelectedImage(Drawable drawable,ImageButton imageButton){
-        if(!drawable.equals(register.getSelectedProfilePhoto())){
-            for (ImageButton button: imageButtons){
-                if(button.getDrawable().equals(drawable)){
-                    DrawableUtils.personalizarImagenCircleButton(context,DrawableUtils.drawableToBitmap(button.getDrawable()),button, R.color.greenWhatever,true);
-                }
-                else{
-                    DrawableUtils.personalizarImagenCircleButton(context,DrawableUtils.drawableToBitmap(button.getDrawable()),button, R.color.redError,false);
+        if(register!=null) {
+            if (!drawable.equals(register.getSelectedProfilePhoto())) {
+                for (ImageButton button : imageButtons) {
+                    if (button.getDrawable().equals(drawable)) {
+                        DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, R.color.greenWhatever, true);
+                    } else {
+                        DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, R.color.redError, false);
 
+                    }
                 }
+                register.setSource("app");
+                DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(drawable), imageButton, R.color.brownMaroon, false);
             }
-            register.setSource("app");
-        DrawableUtils.personalizarImagenCircleButton(context,DrawableUtils.drawableToBitmap(drawable),imageButton, R.color.brownMaroon,false);
+        } else if (createEditWorldkie != null) {
+            if (!drawable.equals(createEditWorldkie.getSelectedProfilePhoto())) {
+                for (ImageButton button : imageButtons) {
+                    if (button.getDrawable().equals(drawable)) {
+                        DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, R.color.greenWhatever, true);
+                    } else {
+                        DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, R.color.redError, false);
+
+                    }
+                }
+                createEditWorldkie.setSource("app");
+                DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(drawable), imageButton, R.color.brownMaroon, false);
+            }
+
+        }else if (createCharacterkie != null) {
+            if (!drawable.equals(createCharacterkie.getSelectedProfilePhoto())) {
+                for (ImageButton button : imageButtons) {
+                    if (button.getDrawable().equals(drawable)) {
+                        DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, R.color.greenWhatever, true);
+                    } else {
+                        DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, R.color.redError, false);
+
+                    }
+                }
+                createCharacterkie.setSource("app");
+                DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(drawable), imageButton, R.color.brownMaroon, false);
+            }
+
+        }else if (createEditStuffkie != null) {
+            //if (!drawable.equals(createEditStuffkie.getSelectedProfilePhoto())) {
+                for (ImageButton button : imageButtons) {
+                    if (button.getDrawable().equals(drawable)) {
+                  //      DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, R.color.greenWhatever, true);
+                    } else {
+                    //    DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, R.color.redError, false);
+
+                    }
+               // }
+                    createEditStuffkie.setSource("app");
+                //DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(drawable), imageButton, R.color.brownMaroon, false);
+            }
+
         }
     }
     private void setImageBottomSheetOpen(){
-        for(ImageButton button:imageButtons){
-            if(button.getDrawable().equals(register.getSelectedProfilePhoto())){
-                DrawableUtils.personalizarImagenCircleButton(context,DrawableUtils.drawableToBitmap(button.getDrawable()),button, color.greenWhatever,true);
+       if(register !=null) {
+           for (ImageButton button : imageButtons) {
+               if (button.getDrawable().equals(register.getSelectedProfilePhoto())) {
+                   DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, color.greenWhatever, true);
 
-            }else{
-                DrawableUtils.personalizarImagenCircleButton(context,DrawableUtils.drawableToBitmap(button.getDrawable()),button, color.greenWhatever,false);
+               } else {
+                   DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, color.greenWhatever, false);
 
-            }
-        }
+               }
+           }
+       } else if (createEditWorldkie!=null) {
+           for (ImageButton button : imageButtons) {
+               if (button.getDrawable().equals(createEditWorldkie.getSelectedProfilePhoto())) {
+
+                   DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, color.greenWhatever, true);
+
+               } else {
+                   DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, color.greenWhatever, false);
+
+               }
+           }
+       }else if (createCharacterkie!=null) {
+           for (ImageButton button : imageButtons) {
+               if (button.getDrawable().equals(createCharacterkie.getSelectedProfilePhoto())) {
+
+                   DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, color.greenWhatever, true);
+
+               } else {
+                   DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, color.greenWhatever, false);
+
+               }
+           }
+       }else if (createEditStuffkie!=null) {
+           for (ImageButton button : imageButtons) {
+               /*if (button.getDrawable().equals(createEditStuffkie.getSelectedProfilePhoto())) {
+
+                   DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, color.greenWhatever, true);
+
+               } else {
+                   DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, color.greenWhatever, false);
+
+               }*/
+           }
+       }
+
     }
     public void goBackBottomSheetOptionsPhotoProfile(){
-        BottomSheetProfilePhoto bottomSheetProfilePhoto = new BottomSheetProfilePhoto();
-        bottomSheetProfilePhoto.show(getParentFragmentManager(),"BottomSheetProfilePhoto");
+        if(register!=null) {
+            BottomSheetProfilePhoto bottomSheetProfilePhoto = new BottomSheetProfilePhoto();
+            bottomSheetProfilePhoto.show(getParentFragmentManager(), "BottomSheetProfilePhoto");
+        } else if (createEditWorldkie !=null || createCharacterkie !=null || createEditStuffkie !=null) {
+            Log.d("BottomSheet", "createEditWorldkie detectado");
+            BottomSheetProfilePhoto bottomSheetProfilePhoto = new BottomSheetProfilePhoto();
+            bottomSheetProfilePhoto.show(getChildFragmentManager(), "BottomSheetProfilePhoto");
+        }
         dismiss();
     }
 

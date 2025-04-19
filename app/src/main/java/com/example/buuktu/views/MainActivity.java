@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements OnDialogInfoClick
 
     private DrawerLayout drawerLayout;
     private BottomNavigationView bottomNavigationView;
-    private ImageButton ib_info,ib_back,ib_self_profile;
+    private ImageButton ib_info,ib_back,ib_self_profile,ib_save;
     FirebaseAuth firebaseAuth;
     FirebaseAuth.AuthStateListener authStateListener;
     private String UID;
@@ -255,10 +255,16 @@ int colorEntero;
         toolbar = findViewById(R.id.toolbar);
         ib_info = findViewById(R.id.ib_info);
         ib_back = findViewById(R.id.ib_back);
+        ib_save = findViewById(R.id.ib_save);
     }
     public ImageButton getBackButton(){
         return ib_back;
     }
+
+    public ImageButton getIb_save() {
+        return ib_save;
+    }
+
     private void scheduleDailyNotification() {
         Intent intent = new Intent(this, WordNotificationReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);

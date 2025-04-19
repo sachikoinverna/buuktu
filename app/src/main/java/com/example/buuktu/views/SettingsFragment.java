@@ -11,9 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.SearchView;
 
 import com.example.buuktu.R;
+import com.example.buuktu.adapters.InspoMainAdapter;
 import com.example.buuktu.adapters.SettingsAdapter;
 import com.example.buuktu.models.SettingModel;
 
@@ -31,6 +33,7 @@ public class SettingsFragment extends Fragment {
     private SearchView searchView;
     private ArrayList<SettingModel> filteredDataSet = new ArrayList<SettingModel>();
     SettingsAdapter settingsAdapter;
+    ImageButton backButton,ib_save;
     public SettingsFragment() {
         // Required empty public constructor
     }
@@ -64,7 +67,11 @@ public class SettingsFragment extends Fragment {
         Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.twotone_manage_accounts_24);
         dataSet.add(new SettingModel("Perfil",drawable));
         dataSet.add(new SettingModel("Cuenta",drawable));
-
+        MainActivity mainActivity = (MainActivity) getActivity();
+        backButton = mainActivity.getBackButton();
+        backButton.setVisibility(View.GONE);
+        ib_save = mainActivity.getIb_save();
+        ib_save.setVisibility(View.GONE);
         //settingsAdapter.setOnClickListener(this);
         //adapter = new SettingsAdapter(dataSet,getContext());
         updateRecyclerView(dataSet);

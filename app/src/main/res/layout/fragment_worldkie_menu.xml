@@ -9,49 +9,25 @@
     tools:context=".views.WorldkieMenu">
 
     <TextView
-        android:id="@+id/textView10"
-        android:layout_width="123dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="86dp"
-        android:layout_marginEnd="144dp"
-        android:background="@drawable/button_backgground"
-        android:gravity="center"
-        android:text="Waykies"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
-    <TextView
         android:id="@+id/textView5"
         android:layout_width="123dp"
         android:layout_height="50dp"
-        android:layout_marginTop="49dp"
-        android:layout_marginEnd="62dp"
+        android:layout_marginTop="68dp"
         android:background="@drawable/button_backgground"
         android:foreground="@drawable/twotone_map_24"
         android:foregroundGravity="left|center"
         android:foregroundTint="#FFFFFF"
         android:gravity="center"
-        android:text="Regionkies"
+        android:text="Scenariokies"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scaleType="fitCenter"
-        app:srcCompat="@drawable/twotone_catching_pokemon_24"
-        tools:layout_editor_absoluteX="120dp"
-        tools:layout_editor_absoluteY="282dp" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="123dp"
         android:layout_height="50dp"
-        android:layout_marginTop="200dp"
-        android:layout_marginEnd="32dp"
         android:background="@drawable/button_backgground"
         android:foreground="@drawable/twotone_catching_pokemon_24"
         android:foregroundGravity="left|center"
@@ -59,15 +35,16 @@
         android:gravity="center"
         android:text="Stuffikies"
         android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/tv_characterkies"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.454" />
 
     <TextView
         android:id="@+id/tv_characterkies"
         android:layout_width="130dp"
         android:layout_height="51dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="188dp"
         android:background="@drawable/button_backgground"
         android:foreground="@drawable/twotone_face_retouching_natural_24"
         android:foregroundGravity="left|center"
@@ -75,25 +52,11 @@
         android:gravity="center"
         android:text="Characterkies"
         android:textColor="@color/white"
-        app:layout_constraintStart_toEndOf="@+id/imageView3"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scaleType="fitCenter"
-        app:srcCompat="@drawable/twotone_face_retouching_natural_24"
-        tools:layout_editor_absoluteX="18dp"
-        tools:layout_editor_absoluteY="101dp" />
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scaleType="fitCenter"
-        app:srcCompat="@drawable/twotone_map_24"
-        tools:layout_editor_absoluteX="32dp"
-        tools:layout_editor_absoluteY="188dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/textView8"
+        app:layout_constraintHorizontal_bias="0.419"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.455" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,10 +45,6 @@ import java.util.Map;
  */
 public class Note extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
     String note_id;
     EditText et_title_note,et_content_note;
     FirebaseFirestore db;
@@ -58,6 +55,7 @@ public class Note extends Fragment {
     String UID_USER;
     Map<String, Object> notekieData;
     Timestamp timestampNow;
+    ImageButton ib_save;
     public Note() {
         // Required empty public constructor
     }
@@ -66,18 +64,11 @@ public class Note extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment Note.
      */
     // TODO: Rename and change types and number of parameters
-    public static Note newInstance(String param1, String param2) {
-        Note fragment = new Note();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public static Note newInstance() {
+        return new Note();
     }
 
     @Override
@@ -94,11 +85,18 @@ public class Note extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_note, container, false);
         MainActivity mainActivity = (MainActivity) getActivity();
+        ib_save = mainActivity.getIb_save();
+        ib_save.setVisibility(View.VISIBLE);
         ImageButton backButton = mainActivity.getBackButton();
         backButton.setVisibility(View.VISIBLE);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goBackToPreviousFragment();
+            }
+        });
         et_title_note = view.findViewById(R.id.et_title_note);
         et_content_note = view.findViewById(R.id.et_content_note);
-        ib_save_note = view.findViewById(R.id.ib_save_note);
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
         UID_USER = auth.getUid();
@@ -131,7 +129,7 @@ public class Note extends Fragment {
             noteItem.setTitle("");
             noteItem.setContent("");
         }
-        ib_save_note.setOnClickListener(new View.OnClickListener() {
+        ib_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if ((!et_content_note.getText().equals(noteItem.getContent()) || !et_title_note.getText().equals(noteItem.getTitle())) && (!et_title_note.getText().equals("") || !et_content_note.getText().equals(""))) {
@@ -155,6 +153,19 @@ public class Note extends Fragment {
         });
 
         return view;
+    }
+    private void goBackToPreviousFragment() {
+        // Verifica si hay un fragmento en la pila de retroceso
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            // Si hay fragmentos en la pila de retroceso, navega hacia atrás
+            fragmentManager.popBackStack(); // Retrocede al fragmento anterior
+        } else {
+            // Si no hay fragmentos en la pila, puede que quieras cerrar la actividad o hacer alguna otra acción
+            // Por ejemplo, cerrar la actividad:
+            requireActivity().onBackPressed(); // Realiza el retroceso por defecto (salir de la actividad)
+        }
     }
     private void addDataToFirestore() {
        // mostrarBarraProgreso();

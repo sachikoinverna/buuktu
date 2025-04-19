@@ -40,6 +40,20 @@
             android:tint="#FFFFFF"
             app:srcCompat="@drawable/twotone_keyboard_arrow_left_24" />
 
+        <ImageButton
+            android:id="@+id/ib_save"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="false"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/ib_info"
+            android:background="@android:color/transparent"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            android:tint="#FFFFFF"
+            app:srcCompat="@drawable/twotone_save_24" />
+
     </RelativeLayout>
 
 </androidx.appcompat.widget.Toolbar>

@@ -110,10 +110,7 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
         });
         source = "app";
         bt_chooseImage = findViewById(R.id.bt_chooseImageRegister);
-        Bitmap originalBitmap = ((BitmapDrawable) bt_chooseImage.getDrawable()).getBitmap();
-        //personalizarImagen(originalBitmap);
         tb_privateAccountRegister = findViewById(R.id.tb_privateAccountRegister);
-       // bt_deleteImageRegister = findViewById(R.id.bt_deleteImageRegister);
         auth = FirebaseAuth.getInstance();
         initComponents();
         CheckUtil.setErrorMessage(null, tv_nameRegister);
@@ -125,12 +122,10 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
         CheckUtil.setErrorMessage("", tv_pronounsRegister);
         CheckUtil.setErrorMessage(null, tv_usernameRegister);
         CheckUtil.setErrorMessage(null, tv_telephoneRegister);
-       // imageButtonActualBottomSheet = findViewById(R.id.ib_prf_imgOne);
         et_nameRegister.setOnFocusChangeListener(this);
         et_password.setOnFocusChangeListener(this);
         et_passwordRepeat.setOnFocusChangeListener(this);
         db = FirebaseFirestore.getInstance();
-       // bt_deleteImageRegister.setOnClickListener(registerController);
         if (auth.getCurrentUser()!=null){
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
@@ -146,9 +141,6 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
 
         DrawableUtils.personalizarImagenCircleButton(this,DrawableUtils.drawableToBitmap(bt_chooseImage.getDrawable()),bt_chooseImage,R.color.brownBrown);
     }
-    //public ImageButton getBt_deleteImageRegister(){
-    //    return bt_deleteImageRegister;
-    //}
 
     public void setSource(String source) {
         this.source = source;
@@ -211,30 +203,8 @@ public Drawable getSelectedProfilePhoto()
     public ImageButton getIB_profile_photo(){
         return bt_chooseImage;
     }
-    public Uri getImage(){
-        return image;
-    }
     public void selectImage(View view){
        bottomSheetProfilePhoto.show(getSupportFragmentManager(),"BottomSheetProfilePhoto");
-    }
-    public void selectImageGallery(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_MEDIA_IMAGES}, REQUEST_CODE);
-                return; // Esperar hasta que el usuario otorgue permisos
-            }
-        } else {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE);
-                return; // Esperar hasta que el usuario otorgue permisos
-            }
-        }String mimeType = "image/gif";
-            pickMedia.launch(new PickVisualMediaRequest.Builder()
-                    .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
-                    .build());
-
-
-
     }
 
     @Override

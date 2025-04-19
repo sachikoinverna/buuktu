@@ -5,6 +5,7 @@ import static android.widget.Toast.LENGTH_LONG;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -51,6 +52,7 @@ public class Home extends Fragment {
     private boolean isAllFabsVisible;
     private WorldkieAdapter worldkieAdapter;
     CollectionReference dbWorldkies;
+    ImageButton ib_save;
     //private ListenerRegistration firestoreListener;
     public Home() {
         // Required empty public constructor
@@ -71,6 +73,8 @@ public class Home extends Fragment {
         MainActivity mainActivity = (MainActivity) getActivity();
         ImageButton backButton = mainActivity.getBackButton();
         backButton.setVisibility(View.GONE);
+        ib_save = mainActivity.getIb_save();
+        ib_save.setVisibility(View.GONE);
         initComponents(view);
         fb_add.setVisibility(View.GONE);
             fb_parent.setOnClickListener(new View.OnClickListener() {

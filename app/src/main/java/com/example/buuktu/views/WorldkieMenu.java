@@ -21,11 +21,6 @@ import com.example.buuktu.R;
  */
 public class WorldkieMenu extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
     private TextView tv_characterkiesAdd;
     private FragmentManager fragmentManager;
     private Fragment createCharacterkie;
@@ -43,12 +38,7 @@ public class WorldkieMenu extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
     public static WorldkieMenu newInstance(String param1, String param2) {
-        WorldkieMenu fragment = new WorldkieMenu();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+        return new WorldkieMenu();
     }
 
     @Override
@@ -84,7 +74,6 @@ public class WorldkieMenu extends Fragment {
 
                 fragmentManager.beginTransaction().replace(R.id.fragment_container, createCharacterkie) .addToBackStack(null) // Permite regresar atrás con el botón de retroceso
                         .commit();
-                navigateToNextFragment();
             }
         });
         return view;
@@ -92,19 +81,6 @@ public class WorldkieMenu extends Fragment {
     private void initComponents(View view){
         tv_characterkiesAdd = view.findViewById( R.id.tv_characterkies);
 
-    }
-    private void navigateToNextFragment() {
-        // Obtén el FragmentManager
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-
-        // Crea una nueva instancia del siguiente fragmento
-        Fragment fragment = new CreateCharacterkie();
-
-        // Usa el FragmentTransaction para reemplazar el fragmento actual por el siguiente
-        fragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, fragment) // El contenedor donde se muestra el fragmento
-                .addToBackStack(null) // Añade la transacción a la pila para que se pueda volver atrás
-                .commit();
     }
     private void goBackToPreviousFragment() {
         // Verifica si hay un fragmento en la pila de retroceso

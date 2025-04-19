@@ -1,12 +1,8 @@
 package com.example.buuktu.adapters;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,7 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.buuktu.R;
 import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.utils.DrawableUtils;
-import com.example.buuktu.views.CreateWorldkie;
+import com.example.buuktu.views.CreateEditWorldkie;
 import com.example.buuktu.views.WorldkieMenu;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -118,7 +114,7 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
             public void onClick(View v) {
                 menuWorldkie = new WorldkieMenu();
                 Bundle bundle = new Bundle();
-                bundle.putString("worlkie_id", dataSet.get(holder.getAdapterPosition()).getUID());
+                bundle.putString("worldkie_id", dataSet.get(holder.getAdapterPosition()).getUID());
                 menuWorldkie.setArguments(bundle);
                 fragmentManager.beginTransaction().replace(R.id.fragment_container, menuWorldkie).addToBackStack(null) // Permite regresar atrás con el botón de retroceso
                         .commit();
@@ -127,10 +123,11 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
         holder.getIb_editAWorldkie().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(holder.itemView.getContext(), CreateWorldkie.class);
-                intent.putExtra("create", false);
-                intent.putExtra("worldkie", new WorldkieModel(dataSet.get(holder.getAdapterPosition()).getUID(), dataSet.get(holder.getAdapterPosition()).getName(), dataSet.get(holder.getAdapterPosition()).isPhoto_default(), dataSet.get(holder.getAdapterPosition()).isWorldkie_private()));
-                holder.itemView.getContext().startActivity(intent);
+                CreateEditWorldkie createEditWorldkie = new CreateEditWorldkie();
+                Bundle bundle = new Bundle();
+                bundle.putString("worldkie_id",dataSet.get(holder.getAdapterPosition()).getUID());
+                createEditWorldkie.setArguments(bundle);
+                fragmentManager.beginTransaction().replace(R.id.fragment_container,createEditWorldkie).addToBackStack(null).commit();
             }
         });
         holder.getIb_deleteAWorldkie().setOnClickListener(new View.OnClickListener() {
@@ -185,11 +182,11 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
                     if (item.getName().startsWith("cover")) {
                         item.getDownloadUrl().addOnSuccessListener(uri -> {
                             int cornerRadius = 115 / 7; // Ejemplo de radio
-                            int borderWidth = 2; // Ejemplo de grosor del borde
+                            int borderWidth = 7; // Ejemplo de grosor del borde
                             int borderColor = context.getResources().getColor(R.color.brownMaroon, null); // Asegúrate de que el color sea correcto
 
                             RequestOptions requestOptions = new RequestOptions()
-                                    .override(115, 115)
+                                   // .override(150, 150)
                                     .centerCrop()
                                     .transform(new RoundedBorderTransformation(cornerRadius,borderWidth,borderColor));
 

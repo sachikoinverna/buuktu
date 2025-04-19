@@ -29,6 +29,7 @@ import com.example.buuktu.models.StuffkieModel;
 import com.example.buuktu.models.UserkieModel;
 import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.utils.DrawableUtils;
+import com.example.buuktu.views.MainActivity;
 import com.google.android.gms.common.util.UidVerifier;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -66,6 +67,7 @@ public class ProfileView extends Fragment {
     FirebaseAuth firebaseAuth;
     String UID;
     UserkieModel userkieModel;
+    ImageButton ib_save;
     public ProfileView() {
         // Required empty public constructor
     }
@@ -95,6 +97,9 @@ public class ProfileView extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile_view, container, false);
         firebaseAuth = FirebaseAuth.getInstance();
+        MainActivity mainActivity = (MainActivity)getActivity();
+        ib_save = mainActivity.getIb_save();
+        ib_save.setVisibility(View.GONE);
         rc_worldkiePreviewUserSelf = view.findViewById(R.id.rc_worldkiePreviewUserSelf);
         rc_stuffkiePreviewUserSelf = view.findViewById(R.id.rc_stuffkiePreviewUserSelf);
         rc_characterkiePreviewUserSelf = view.findViewById(R.id.rc_characterkiePreviewUserSelf);
@@ -162,7 +167,7 @@ public class ProfileView extends Fragment {
             }
 
             if (documentSnapshot != null) {
-                UserkieModel userkieModel = new UserkieModel(firebaseAuth.getUid(),documentSnapshot.getString("name"),R.drawable.add_button,documentSnapshot.getString("username"),documentSnapshot.getBoolean("photo_default"),true);
+                userkieModel = new UserkieModel(firebaseAuth.getUid(),documentSnapshot.getString("name"),R.drawable.add_button,documentSnapshot.getString("username"),documentSnapshot.getBoolean("photo_default"),true);
                 tv_nameProfileView.setText(userkieModel.getName());
                 tv_usernameProfileView.setText(userkieModel.getUsername());
             }

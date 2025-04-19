@@ -3,6 +3,7 @@ package com.example.buuktu;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -60,16 +61,15 @@ public class InspoDesafios extends Fragment {
         rc_buttons_inspo_desafio.setLayoutManager(new GridLayoutManager(getContext(), 2));
         MainActivity mainActivity = (MainActivity) getActivity();
         ib_back = mainActivity.getBackButton();
-        ArrayList<CardItem> items = new ArrayList<>();
-        items.add(new CardItem(R.drawable.twotone_abc_24,"Wordkie of the day"));
-        items.add(new CardItem(R.drawable.twotone_pin_24,"Numberkie of the day"));
         ib_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getParentFragmentManager().popBackStack("inspo", 0);
-
+                goBackToPreviousFragment();
             }
         });
+        ArrayList<CardItem> items = new ArrayList<>();
+        items.add(new CardItem(R.drawable.twotone_abc_24,"Wordkie of the day"));
+        items.add(new CardItem(R.drawable.twotone_pin_24,"Numberkie of the day"));
         ib_back.setVisibility(View.VISIBLE);
 
         updateRecyclerView(items);
@@ -79,5 +79,18 @@ public class InspoDesafios extends Fragment {
         adapter = new CardInspoDesafiosAdapter(getContext(),cardItems,getParentFragmentManager());
         rc_buttons_inspo_desafio.setAdapter(adapter);
         rc_buttons_inspo_desafio.setLayoutManager(new GridLayoutManager(getContext(),2));
+    }
+    private void goBackToPreviousFragment() {
+        // Verifica si hay un fragmento en la pila de retroceso
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            // Si hay fragmentos en la pila de retroceso, navega hacia atrás
+            fragmentManager.popBackStack(); // Retrocede al fragmento anterior
+        } else {
+            // Si no hay fragmentos en la pila, puede que quieras cerrar la actividad o hacer alguna otra acción
+            // Por ejemplo, cerrar la actividad:
+            requireActivity().onBackPressed(); // Realiza el retroceso por defecto (salir de la actividad)
+        }
     }
 }

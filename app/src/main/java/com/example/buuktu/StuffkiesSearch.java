@@ -42,8 +42,7 @@ public class StuffkiesSearch extends Fragment {
     FirebaseAuth firebaseAuth;
     RecyclerView rc_stuffkies_search;
     StuffkieSearchAdapter stuffkieSearchAdapter;
-    static SearchView searchView;
-    public StuffkiesSearch(SearchView searchView) {
+    public StuffkiesSearch() {
         // Required empty public constructor
     }
 
@@ -55,10 +54,7 @@ public class StuffkiesSearch extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
     public static StuffkiesSearch newInstance() {
-        StuffkiesSearch fragment = new StuffkiesSearch(searchView);
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+        return new StuffkiesSearch();
     }
 
     @Override
@@ -156,7 +152,7 @@ public class StuffkiesSearch extends Fragment {
                 updateRecyclerView(worldkieModelArrayList);
             }*/
         //});
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+       /* searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 filterList(query);
@@ -168,7 +164,7 @@ public class StuffkiesSearch extends Fragment {
                 filterList(newText);
                 return true;
             }
-        });
+        });*/
         return view;
     }
     private void filterList(String query) {
