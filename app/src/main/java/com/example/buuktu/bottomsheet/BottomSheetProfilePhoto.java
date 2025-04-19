@@ -28,6 +28,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.buuktu.CreateCharacterkie;
+import com.example.buuktu.CreateEditScenariokie;
 import com.example.buuktu.CreateEditStuffkie;
 import com.example.buuktu.R;
 import com.example.buuktu.utils.DrawableUtils;
@@ -51,6 +52,7 @@ public class BottomSheetProfilePhoto extends BottomSheetDialogFragment implement
     CreateEditWorldkie createEditWorldkie;
     CreateCharacterkie createCharacterkie;
     CreateEditStuffkie createEditStuffkie;
+    CreateEditScenariokie createEditScenariokie;
     public BottomSheetProfilePhoto (){
     }
     @Override

@@ -23,6 +23,7 @@ import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
 import com.example.buuktu.CreateCharacterkie;
+import com.example.buuktu.CreateEditScenariokie;
 import com.example.buuktu.CreateEditStuffkie;
 import com.example.buuktu.R;
 import com.example.buuktu.utils.DrawableUtils;
@@ -43,6 +44,8 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
     CreateEditWorldkie createEditWorldkie;
     CreateCharacterkie createCharacterkie;
     CreateEditStuffkie createEditStuffkie;
+    CreateEditScenariokie createEditScenariokie;
+
     public BottomSheetProfilePhotoDefault(){
     }
     @Override
@@ -56,8 +59,12 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
                 createEditWorldkie = (CreateEditWorldkie) getParentFragment();
                 Log.d("BottomSheet", "createEditWorldkie detectado");
 
-            } else if (getParentFragment() instanceof CreateCharacterkie) {
+            } else if (getParentFragment() instanceof CreateEditScenariokie) {
+                createEditScenariokie = (CreateEditScenariokie) getParentFragment();
+            }else if (getParentFragment() instanceof CreateCharacterkie) {
                 createCharacterkie = (CreateCharacterkie) getParentFragment();
+            }else if (getParentFragment() instanceof CreateEditStuffkie) {
+                createEditStuffkie = (CreateEditStuffkie) getParentFragment();
             }
         }
         imageButtons = new ArrayList<>();
@@ -116,7 +123,30 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
             ib_prf_imgEleven.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoworldkieeleven));
         }
         if(createEditStuffkie!=null){
-
+            ib_prf_imgOne.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photocharacterkieone));
+            ib_prf_imgTwo.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photocharacterkietwo));
+            ib_prf_imgThree.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photocharacterkiethree));
+            ib_prf_imgFour.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photocharacterkiefour));
+            ib_prf_imgFive.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photocharacterkiefive));
+            ib_prf_imgSix.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photocharacterkiesix));
+            ib_prf_imgSeven.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photocharacterkieseven));
+            ib_prf_imgEight.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoworldkieeight));
+            ib_prf_imgNine.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoworldkienine));
+            ib_prf_imgTen.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoworldkieten));
+            ib_prf_imgEleven.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoworldkieeleven));
+        }
+        if(createEditScenariokie!=null){
+            ib_prf_imgOne.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photocharacterkieone));
+            ib_prf_imgTwo.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photocharacterkietwo));
+            ib_prf_imgThree.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photocharacterkiethree));
+            ib_prf_imgFour.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photocharacterkiefour));
+            ib_prf_imgFive.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photocharacterkiefive));
+            ib_prf_imgSix.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photocharacterkiesix));
+            ib_prf_imgSeven.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photocharacterkieseven));
+            ib_prf_imgEight.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoworldkieeight));
+            ib_prf_imgNine.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoworldkienine));
+            ib_prf_imgTen.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoworldkieten));
+            ib_prf_imgEleven.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.photoworldkieeleven));
         }
         setListeners();
         setImageBottomSheetOpen();
@@ -156,6 +186,9 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
             } else if (createEditStuffkie !=null) {
                 Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
                 //createEditStuffkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
+            }else if (createEditScenariokie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+                //createEditStuffkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
             }
         } else if (v.getId() == R.id.ib_prf_imgTwo) {
             if(register != null) {
@@ -167,6 +200,9 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
                 Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
                 createCharacterkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
             }else if (createEditStuffkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+                //createEditStuffkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
+            }else if (createEditScenariokie !=null) {
                 Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
                 //createEditStuffkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
             }
@@ -183,6 +219,9 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
             }else if (createEditStuffkie !=null) {
                 Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
                 //createEditStuffkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
+            }else if (createEditScenariokie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+                //createEditStuffkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
             }
         } else if (v.getId() == R.id.ib_prf_imgFour) {
             if(register != null) {
@@ -194,6 +233,9 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
                 Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
                 createCharacterkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
             }else if (createEditStuffkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+                //createEditStuffkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
+            }else if (createEditScenariokie !=null) {
                 Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
                 //createEditStuffkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
             }
@@ -210,6 +252,9 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
             }else if (createEditStuffkie !=null) {
                 Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
                 //createEditStuffkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
+            }else if (createEditScenariokie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+                //createEditStuffkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
             }
         } else if (v.getId() == R.id.ib_prf_imgSix) {
             if(register != null) {
@@ -223,6 +268,9 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
             }else if (createEditStuffkie !=null) {
                 Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
                 //createEditStuffkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
+            }else if (createEditScenariokie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+                //createEditStuffkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
             }
         } else if (v.getId() == R.id.ib_prf_imgSeven) {
             if(register != null) {
@@ -234,6 +282,9 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
                 Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
                 createCharacterkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
             }else if (createEditStuffkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+                //createEditStuffkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
+            }else if (createEditScenariokie !=null) {
                 Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
                 //createEditStuffkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
             }
@@ -251,6 +302,9 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
             else if (createEditStuffkie !=null) {
                 Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
                 //createEditStuffkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
+            }else if (createEditScenariokie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+                //createEditStuffkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
             }
         } else if (v.getId() == R.id.ib_prf_imgNine) {
             if(register != null) {
@@ -264,6 +318,9 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
                 createCharacterkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
             }
             else if (createEditStuffkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+                //createEditStuffkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
+            }else if (createEditScenariokie !=null) {
                 Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
                 //createEditStuffkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
             }
@@ -280,6 +337,9 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
             else if (createEditStuffkie !=null) {
                 Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
                 //createEditStuffkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
+            }else if (createEditScenariokie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+                //createEditStuffkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
             }
         } else if (v.getId() == R.id.ib_prf_imgEleven)
         {
@@ -292,6 +352,9 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
                 Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
                 createCharacterkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
             }else if (createEditStuffkie !=null) {
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+                //createEditStuffkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
+            }else if (createEditScenariokie !=null) {
                 Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
                 //createEditStuffkie.setSelectedProfilePhoto(R.mipmap.photoworldkieone);
             }
@@ -352,6 +415,20 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
                     }
                // }
                     createEditStuffkie.setSource("app");
+                //DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(drawable), imageButton, R.color.brownMaroon, false);
+            }
+
+        }else if (createEditScenariokie != null) {
+            //if (!drawable.equals(createEditStuffkie.getSelectedProfilePhoto())) {
+            for (ImageButton button : imageButtons) {
+                if (button.getDrawable().equals(drawable)) {
+                    //      DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, R.color.greenWhatever, true);
+                } else {
+                    //    DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, R.color.redError, false);
+
+                }
+                // }
+                //createEditScenariokie.setSource("app");
                 //DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(drawable), imageButton, R.color.brownMaroon, false);
             }
 
