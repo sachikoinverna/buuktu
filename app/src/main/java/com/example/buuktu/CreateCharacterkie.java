@@ -69,7 +69,7 @@ public class CreateCharacterkie extends Fragment implements View.OnClickListener
     TextInputLayout et_nameCharacterkieCreateFull;
     ConstraintLayout constraintLayout;
     Context context;
-    FloatingActionButton fb_add_field_createCharacterkie,fb_more_createScenariokie;
+    FloatingActionButton fb_add_field_createCharacterkie,fb_more_createCharacterkie;
     public CreateCharacterkie() {
         // Required empty public constructor
     }
@@ -126,7 +126,7 @@ public class CreateCharacterkie extends Fragment implements View.OnClickListener
         tb_characterkieDraft=view.findViewById(R.id.tb_characterkieDraft);
         tb_characterkiePrivacity=view.findViewById(R.id.tb_CharacterkiePrivacity);
         fb_add_field_createCharacterkie = view.findViewById(R.id.fb_add_field_createCharacterkie);
-        fb_more_createScenariokie = view.findViewById(R.id.fb_more_createScenariokie);
+        fb_more_createCharacterkie = view.findViewById(R.id.fb_more_createCharacterkie);
         textInputEditText = view.findViewById(R.id.et_nameCharacterkieCreate);
         et_nameCharacterkieCreateFull = view.findViewById(R.id.et_nameCharacterkieCreateFull);
         constraintLayout = view.findViewById(R.id.constraint_create_characterkie);
@@ -146,7 +146,8 @@ public class CreateCharacterkie extends Fragment implements View.OnClickListener
     private void setListeners(){
         ib_select_img_create_characterkie.setOnClickListener(this);
         ib_save.setOnClickListener(this);
-
+        fb_add_field_createCharacterkie.setOnClickListener(this);
+        fb_more_createCharacterkie.setOnClickListener(this);
     }
     public Drawable getSelectedProfilePhoto()
     {

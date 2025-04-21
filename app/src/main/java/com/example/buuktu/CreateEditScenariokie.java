@@ -1,10 +1,12 @@
 package com.example.buuktu;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.DrawableRes;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -20,11 +22,14 @@ import android.widget.Switch;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.buuktu.adapters.RoundedBorderSquareTransformation;
+import com.example.buuktu.bottomsheet.BottomSheetChooseComponents;
 import com.example.buuktu.bottomsheet.BottomSheetProfilePhoto;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.NavigationUtils;
 import com.example.buuktu.views.MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.IOException;
 
@@ -41,7 +46,11 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
     FragmentManager fragmentManager;
     FragmentActivity activity;
     Switch tb_scenariokiePrivacity,tb_scenariokieDraft;
-    FloatingActionButton fb_add_field_createScenariokie;
+    FloatingActionButton fb_add_field_createScenariokie,fb_more_createScenariokie;
+    Context context;
+    ConstraintLayout constraintLayout;
+    TextInputEditText textInputEditText;
+    TextInputLayout et_nameCharacterkieCreateFull;
     public CreateEditScenariokie() {
         // Required empty public constructor
     }
@@ -74,6 +83,7 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
         ib_back.setVisibility(View.VISIBLE);
         ib_save = mainActivity.getIb_save();
         ib_save.setVisibility(View.VISIBLE);
+        context = getContext();
         initComponents(view);
         fragmentManager = requireActivity().getSupportFragmentManager();
         activity = requireActivity();
@@ -92,6 +102,8 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
         fb_add_field_createScenariokie = view.findViewById(R.id.fb_add_field_createScenariokie);
         tb_scenariokiePrivacity = view.findViewById(R.id.tb_scenariokiePrivacity);
         tb_scenariokieDraft = view.findViewById(R.id.tb_scenariokieDraft);
+        constraintLayout = view.findViewById(R.id.constraint_create_scenariokie);
+        fb_more_createScenariokie = view.findViewById(R.id.fb_more_createScenariokie);
     }
     public Drawable getSelectedProfilePhoto()
     {
@@ -139,6 +151,8 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
         ib_select_img_create_scenariokie.setOnClickListener(this);
         ib_back.setOnClickListener(this);
         ib_save.setOnClickListener(this);
+        fb_add_field_createScenariokie.setOnClickListener(this);
+        fb_more_createScenariokie.setOnClickListener(this);
         tb_scenariokiePrivacity.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -166,6 +180,9 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
                 }else{
                     editDataFirestore();
                 }*/
+        }else if (v.getId()==R.id.fb_add_field_createCharacterkie) {
+          //  BottomSheetChooseComponents bottomSheetFragment = new BottomSheetChooseComponents(context, constraintLayout, this, fieldsNotAdded);
+          //  bottomSheetFragment.show(getChildFragmentManager(), bottomSheetFragment.getTag());
         }
     }
 }

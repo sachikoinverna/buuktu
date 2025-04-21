@@ -9,22 +9,27 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.buuktu.CreateCharacterkie;
 import com.example.buuktu.CreateEditScenariokie;
+import com.example.buuktu.CreateEditStuffkie;
 import com.example.buuktu.R;
+import com.example.buuktu.utils.ComponentsUtils;
+import com.example.buuktu.utils.NavigationUtils;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link WorldkieMenu#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class WorldkieMenu extends Fragment {
-
-    private TextView tv_characterkiesAdd,textView5;
-    private FragmentManager fragmentManager;
-    private Fragment createCharacterkie,createScenariokie;
+public class WorldkieMenu extends Fragment implements View.OnClickListener {
+    FragmentManager fragmentManager;
+    FragmentActivity activity;
+    private TextView tv_characterkiesAdd,textView5,textView8;
+    private Fragment createCharacterkie,createScenariokie,createStuffkie;
+    ImageButton backButton;
     public WorldkieMenu() {
         // Required empty public constructor
     }
@@ -33,12 +38,10 @@ public class WorldkieMenu extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment WorldkieMenu.
      */
     // TODO: Rename and change types and number of parameters
-    public static WorldkieMenu newInstance(String param1, String param2) {
+    public static WorldkieMenu newInstance() {
         return new WorldkieMenu();
     }
 
@@ -55,53 +58,47 @@ public class WorldkieMenu extends Fragment {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_worldkie_menu, container, false);
         MainActivity mainActivity = (MainActivity) getActivity();
-        ImageButton backButton = mainActivity.getBackButton();
+        backButton = mainActivity.getBackButton();
         backButton.setVisibility(View.VISIBLE);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goBackToPreviousFragment();
-            }
-        });
-        initComponents(view);
-        fragmentManager = getParentFragmentManager();
-        tv_characterkiesAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createCharacterkie = new CreateCharacterkie();
-                // Bundle bundle = new Bundle();
-                //bundle.putString("worlkie_id",dataSet.get(holder.getAdapterPosition()).getUID());
-                //createCharacterkie.setArguments(bundle);
 
-                fragmentManager.beginTransaction().replace(R.id.fragment_container, createCharacterkie) .addToBackStack(null) // Permite regresar atrás con el botón de retroceso
-                        .commit();
-            }
-        });
-        textView5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createScenariokie = new CreateEditScenariokie();
-                fragmentManager.beginTransaction().replace(R.id.fragment_container, createScenariokie) .addToBackStack(null) // Permite regresar atrás con el botón de retroceso
-                        .commit();
-            }
-        });
+        initComponents(view);
+        setListeners();
+        fragmentManager = requireActivity().getSupportFragmentManager();
+        activity = requireActivity();        
         return view;
     }
     private void initComponents(View view){
         tv_characterkiesAdd = view.findViewById( R.id.tv_characterkies);
         textView5 = view.findViewById(R.id.textView5);
+        textView8 = view.findViewById(R.id.textView8);
     }
-    private void goBackToPreviousFragment() {
-        // Verifica si hay un fragmento en la pila de retroceso
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+    private void setListeners(){
+        backButton.setOnClickListener(this);
+        tv_characterkiesAdd.setOnClickListener(this);
+        textView5.setOnClickListener(this);
+        textView8.setOnClickListener(this);
+    }
 
-        if (fragmentManager.getBackStackEntryCount() > 0) {
-            // Si hay fragmentos en la pila de retroceso, navega hacia atrás
-            fragmentManager.popBackStack(); // Retrocede al fragmento anterior
-        } else {
-            // Si no hay fragmentos en la pila, puede que quieras cerrar la actividad o hacer alguna otra acción
-            // Por ejemplo, cerrar la actividad:
-            requireActivity().onBackPressed(); // Realiza el retroceso por defecto (salir de la actividad)
+    @Override
+    public void onClick(View v) {
+        if(v.getId()==R.id.ib_back){
+            NavigationUtils.goBack(fragmentManager,activity);
+        } else if (v.getId()==R.id.tv_characterkies) {
+            createCharacterkie = new CreateCharacterkie();
+            // Bundle bundle = new Bundle();
+            //bundle.putString("worlkie_id",dataSet.get(holder.getAdapterPosition()).getUID());
+            //createCharacterkie.setArguments(bundle);
+
+            fragmentManager.beginTransaction().replace(R.id.fragment_container, createCharacterkie) .addToBackStack(null) // Permite regresar atrás con el botón de retroceso
+                    .commit();
+        } else if (v.getId()==R.id.textView5) {
+            createScenariokie = new CreateEditScenariokie();
+            fragmentManager.beginTransaction().replace(R.id.fragment_container, createScenariokie) .addToBackStack(null) // Permite regresar atrás con el botón de retroceso
+                    .commit();
+        } else if (v.getId()==R.id.textView8) {
+            createStuffkie = new CreateEditStuffkie();
+            fragmentManager.beginTransaction().replace(R.id.fragment_container, createStuffkie) .addToBackStack(null) // Permite regresar atrás con el botón de retroceso
+                    .commit();
         }
     }
 }
