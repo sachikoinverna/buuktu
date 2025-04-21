@@ -1,14 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CreateEditScenariokie">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:strokeColor="#953F3F"
+        app:strokeWidth="3dp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fb_add_field_createScenariokie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:clickable="true"
+                    app:layout_constraintBottom_toTopOf="@+id/fb_more_createScenariokie"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:srcCompat="@drawable/twotone_add_circle_24" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fb_more_createScenariokie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginEnd="10dp"
+                    android:clickable="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:srcCompat="@drawable/twotone_more_24" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/et_nameScenariokieCreateFull"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:hint="@string/name"
+                    android:textAlignment="center"
+                    app:boxCornerRadiusBottomEnd="58dp"
+                    app:boxCornerRadiusBottomStart="58dp"
+                    app:boxCornerRadiusTopEnd="58dp"
+                    app:boxCornerRadiusTopStart="58dp"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="50"
+                    app:errorEnabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ib_select_img_create_scenariokie"
+                    app:startIconDrawable="@drawable/outline_person_24">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_nameScenariokieCreate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:inputType="text"
+                        android:maxLength="50"
+                        android:textAlignment="center"
+                        android:textColorHint="@color/brownMaroon" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageButton
+                    android:id="@+id/ib_select_img_create_scenariokie"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@android:color/transparent"
+                    android:onClick="selectImage"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@mipmap/photoworldkieone" />
+
+                <Switch
+                    android:id="@+id/tb_scenariokiePrivacity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:gravity="center"
+                    android:switchPadding="8dp"
+                    android:text="Private worldkie"
+                    android:thumb="@drawable/thumb_custom"
+                    android:track="@drawable/track_custom"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/tb_scenariokieDraft"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_nameScenariokieCreateFull" />
+
+                <Switch
+                    android:id="@+id/tb_scenariokieDraft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:gravity="center"
+                    android:switchPadding="8dp"
+                    android:text="Borrador"
+                    android:thumb="@drawable/thumb_custom"
+                    android:track="@drawable/track_custom"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tb_scenariokiePrivacity"
+                    app:layout_constraintTop_toBottomOf="@+id/et_nameScenariokieCreateFull" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </com.google.android.material.card.MaterialCardView>
 
 </FrameLayout>

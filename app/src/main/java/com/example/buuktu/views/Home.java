@@ -171,19 +171,6 @@ public class Home extends Fragment {
                 .addToBackStack(null) // Añade la transacción a la pila para que se pueda volver atrás
                 .commit();
     }
-    private void goBackToPreviousFragment() {
-        // Verifica si hay un fragmento en la pila de retroceso
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-
-        if (fragmentManager.getBackStackEntryCount() > 0) {
-            // Si hay fragmentos en la pila de retroceso, navega hacia atrás
-            fragmentManager.popBackStack(); // Retrocede al fragmento anterior
-        } else {
-            // Si no hay fragmentos en la pila, puede que quieras cerrar la actividad o hacer alguna otra acción
-            // Por ejemplo, cerrar la actividad:
-            requireActivity().onBackPressed(); // Realiza el retroceso por defecto (salir de la actividad)
-        }
-    }
 
     /*private void loadAndSetImage(String documentId, WorldkieModel worldkieModel) {
         StorageReference storageRef = storage.getReference().child(documentId);

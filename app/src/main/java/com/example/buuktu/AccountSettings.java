@@ -3,6 +3,7 @@ package com.example.buuktu;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +15,7 @@ import android.widget.ImageButton;
 
 import com.example.buuktu.adapters.SettingAdapter;
 import com.example.buuktu.models.SettingModel;
+import com.example.buuktu.utils.NavigationUtils;
 import com.example.buuktu.views.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -24,7 +26,7 @@ import java.util.ArrayList;
  * Use the {@link AccountSettings#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AccountSettings extends Fragment {
+public class AccountSettings extends Fragment implements View.OnClickListener {
     SettingAdapter settingAdapter;
     private RecyclerView rv_settings_profile;
     private ArrayList<SettingModel> dataSet = new ArrayList<SettingModel>();
@@ -32,6 +34,8 @@ public class AccountSettings extends Fragment {
     FirebaseAuth firebaseAuth;
     RecyclerView rv_account_settings;
     ImageButton backButton;
+    FragmentManager fragmentManager;
+    FragmentActivity activity;
     public AccountSettings() {
         // Required empty public constructor
     }
@@ -66,37 +70,31 @@ public class AccountSettings extends Fragment {
         MainActivity mainActivity = (MainActivity) getActivity();
         backButton = mainActivity.getBackButton();
         backButton.setVisibility(View.VISIBLE);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goBackToPreviousFragment();
-            }
-        });
-
+        fragmentManager = requireActivity().getSupportFragmentManager();
+        activity = requireActivity();
+        setListeners();
         dataSet.add(new SettingModel("Correo electronico",firebaseAuth.getCurrentUser().getEmail()));
         dataSet.add(new SettingModel("Password","*******"));
         updateRecyclerView(dataSet);
         return view;
     }
+    private void setListeners(){
+        backButton.setOnClickListener(this);
+
+    }
     private void initComponents(View view){
         rv_account_settings = view.findViewById(R.id.rv_account_settings);
-    }
-    private void goBackToPreviousFragment() {
-        // Verifica si hay un fragmento en la pila de retroceso
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-
-        if (fragmentManager.getBackStackEntryCount() > 0) {
-            // Si hay fragmentos en la pila de retroceso, navega hacia atrás
-            fragmentManager.popBackStack(); // Retrocede al fragmento anterior
-        } else {
-            // Si no hay fragmentos en la pila, puede que quieras cerrar la actividad o hacer alguna otra acción
-            // Por ejemplo, cerrar la actividad:
-            requireActivity().onBackPressed(); // Realiza el retroceso por defecto (salir de la actividad)
-        }
     }
     private void updateRecyclerView(ArrayList<SettingModel> settingModels){
         settingAdapter = new SettingAdapter(settingModels,getContext(),UID);
         rv_account_settings.setAdapter(settingAdapter);
         rv_account_settings.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId()==R.id.ib_back){
+            NavigationUtils.goBack(fragmentManager,activity);
+        }
     }
 }

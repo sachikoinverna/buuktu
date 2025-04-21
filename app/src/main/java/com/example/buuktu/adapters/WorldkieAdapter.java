@@ -29,6 +29,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHolder> implements View.OnClickListener {
@@ -171,7 +172,11 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
                 if (resId != 0) {
                     Drawable drawable = ContextCompat.getDrawable(context, resId);
                     holder.getIv_photo_wordlkie().setImageDrawable(drawable);
-                    DrawableUtils.personalizarImagenCuadrado(context, DrawableUtils.drawableToBitmap(drawable), holder.getIv_photo_wordlkie(), R.color.brownMaroon);
+                    try {
+                        DrawableUtils.personalizarImagenCuadradoButton(context,115/6,7,R.color.brownMaroon,drawable, holder.getIv_photo_wordlkie());
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
             });
         } else {
@@ -181,22 +186,11 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
                 for (StorageReference item : listResult.getItems()) {
                     if (item.getName().startsWith("cover")) {
                         item.getDownloadUrl().addOnSuccessListener(uri -> {
-                            int cornerRadius = 115 / 7; // Ejemplo de radio
-                            int borderWidth = 7; // Ejemplo de grosor del borde
-                            int borderColor = context.getResources().getColor(R.color.brownMaroon, null); // Asegúrate de que el color sea correcto
-
-                            RequestOptions requestOptions = new RequestOptions()
-                                   // .override(150, 150)
-                                    .centerCrop()
-                                    .transform(new RoundedBorderTransformation(cornerRadius,borderWidth,borderColor));
-
-                            Glide.with(context)
-                                    .load(uri)
-                                    .apply(requestOptions)
-                                    .into(holder.getIv_photo_wordlkie());
-
-                            // Para el borde con Glide, necesitarías una transformación personalizada más compleja
-                            // o dibujar el borde alrededor del ImageView en su contenedor.
+                            try {
+                                DrawableUtils.personalizarImagenCuadradoButton(context,115/7,7, R.color.greenWhatever,uri,holder.getIv_photo_wordlkie());
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
                         });
                     }
                 }

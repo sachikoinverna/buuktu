@@ -10,6 +10,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.util.Log;
@@ -21,6 +22,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.buuktu.models.NoteItem;
+import com.example.buuktu.utils.NavigationUtils;
 import com.example.buuktu.views.MainActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -43,19 +45,21 @@ import java.util.Map;
  * Use the {@link Note#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Note extends Fragment {
+public class Note extends Fragment implements View.OnClickListener {
 
     String note_id;
     EditText et_title_note,et_content_note;
     FirebaseFirestore db;
     CollectionReference collectionNotekies;
     NoteItem noteItem;
-    ImageButton ib_save_note;
+    ImageButton ib_save_note,backButton;
     FirebaseAuth auth;
     String UID_USER;
     Map<String, Object> notekieData;
     Timestamp timestampNow;
     ImageButton ib_save;
+    FragmentManager fragmentManager;
+    FragmentActivity activity;
     public Note() {
         // Required empty public constructor
     }
@@ -87,14 +91,8 @@ public class Note extends Fragment {
         MainActivity mainActivity = (MainActivity) getActivity();
         ib_save = mainActivity.getIb_save();
         ib_save.setVisibility(View.VISIBLE);
-        ImageButton backButton = mainActivity.getBackButton();
+        backButton = mainActivity.getBackButton();
         backButton.setVisibility(View.VISIBLE);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goBackToPreviousFragment();
-            }
-        });
         et_title_note = view.findViewById(R.id.et_title_note);
         et_content_note = view.findViewById(R.id.et_content_note);
         db = FirebaseFirestore.getInstance();
@@ -151,21 +149,15 @@ public class Note extends Fragment {
                 }
             }
         });
-
+        fragmentManager = requireActivity().getSupportFragmentManager();
+        activity = requireActivity();
+        setListeners();
         return view;
     }
-    private void goBackToPreviousFragment() {
-        // Verifica si hay un fragmento en la pila de retroceso
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
 
-        if (fragmentManager.getBackStackEntryCount() > 0) {
-            // Si hay fragmentos en la pila de retroceso, navega hacia atrás
-            fragmentManager.popBackStack(); // Retrocede al fragmento anterior
-        } else {
-            // Si no hay fragmentos en la pila, puede que quieras cerrar la actividad o hacer alguna otra acción
-            // Por ejemplo, cerrar la actividad:
-            requireActivity().onBackPressed(); // Realiza el retroceso por defecto (salir de la actividad)
-        }
+    private void setListeners(){
+        backButton.setOnClickListener(this);
+        ib_save.setOnClickListener(this);
     }
     private void addDataToFirestore() {
        // mostrarBarraProgreso();
@@ -191,5 +183,30 @@ public class Note extends Fragment {
             public void onSuccess(Void unused) {
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId()==R.id.ib_back){
+            NavigationUtils.goBack(fragmentManager,activity);
+        }else if (v.getId()==R.id.ib_save) {
+                if ((!et_content_note.getText().equals(noteItem.getContent()) || !et_title_note.getText().equals(noteItem.getTitle())) && (!et_title_note.getText().equals("") || !et_content_note.getText().equals(""))) {
+                    timestampNow = Timestamp.now();
+                    if(et_title_note.getText().equals("")){
+                        notekieData.put("title","");
+                    }else{
+                        notekieData.put("title", et_title_note.getText().toString());
+                    }
+                    notekieData.put("text", et_content_note.getText().toString()); // Corrección clave
+                    notekieData.put("last_update", timestampNow);
+                    if (note_id != null) {
+                        editDataFirestore();
+                    }else{
+                        notekieData.put("UID_USER", UID_USER);
+                        addDataToFirestore();
+
+                    }
+                }
+            }
     }
 }

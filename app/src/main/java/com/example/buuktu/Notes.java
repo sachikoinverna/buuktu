@@ -12,11 +12,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import com.example.buuktu.adapters.NoteAdapter;
 import com.example.buuktu.models.NoteItem;
+import com.example.buuktu.utils.NavigationUtils;
 import com.example.buuktu.views.MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,7 +30,7 @@ import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 
-public class Notes extends Fragment {
+public class Notes extends Fragment implements View.OnClickListener {
 
     private RecyclerView recyclerView;
     private NoteAdapter noteAdapter;
@@ -36,10 +38,11 @@ public class Notes extends Fragment {
     private FirebaseFirestore db;
     private CollectionReference collectionNotekies;
     private String UID;
-    ImageButton ib_save;
+    ImageButton ib_save,backButton;
     private FloatingActionButton fbMoreOptions, fbAddNote;
     private boolean isAllFabsVisible = false;
-
+    FragmentManager fragmentManager;
+    FragmentActivity activity;
     public Notes() {}
 
     public static Notes newInstance(String param1, String param2) {
@@ -51,16 +54,11 @@ public class Notes extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_notes, container, false);
         MainActivity mainActivity = (MainActivity) getActivity();
-        ImageButton backButton = mainActivity.getBackButton();
+        backButton = mainActivity.getBackButton();
         backButton.setVisibility(View.VISIBLE);
         ib_save = mainActivity.getIb_save();
         ib_save.setVisibility(View.GONE);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goBackToPreviousFragment();
-            }
-        });
+
         // Inicialización
         recyclerView = view.findViewById(R.id.rc_all_notes_adapter);
         fbAddNote = view.findViewById(R.id.fb_add_note_list_notes);
@@ -103,24 +101,16 @@ public class Notes extends Fragment {
                     .addToBackStack(null)
                     .commit();
         });
-
+        fragmentManager = requireActivity().getSupportFragmentManager();
+        activity = requireActivity();
+        setListeners();
         // Escucha en Firestore
         setupFirestoreListener();
 
         return view;
     }
-    private void goBackToPreviousFragment() {
-        // Verifica si hay un fragmento en la pila de retroceso
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-
-        if (fragmentManager.getBackStackEntryCount() > 0) {
-            // Si hay fragmentos en la pila de retroceso, navega hacia atrás
-            fragmentManager.popBackStack(); // Retrocede al fragmento anterior
-        } else {
-            // Si no hay fragmentos en la pila, puede que quieras cerrar la actividad o hacer alguna otra acción
-            // Por ejemplo, cerrar la actividad:
-            requireActivity().onBackPressed(); // Realiza el retroceso por defecto (salir de la actividad)
-        }
+    private void setListeners(){
+        backButton.setOnClickListener(this);
     }
     private void toggleFabs() {
         if (!isAllFabsVisible) {
@@ -208,4 +198,10 @@ public class Notes extends Fragment {
         inflater.inflate(R.menu.note_preview_menu, menu);
     }
 
+    @Override
+    public void onClick(View v) {
+        if(v.getId()==R.id.ib_back){
+            NavigationUtils.goBack(fragmentManager,activity);
+        }
+    }
 }

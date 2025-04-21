@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,7 +29,9 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -137,17 +140,17 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-    holder.getCollectionUserkies().document(dataSet.get(holder.getAdapterPosition()).getUID_AUTHOR()).addSnapshotListener((documentSnapshot, e) -> {
-                if (e != null) {
-                    Log.e("Error", e.getMessage());
-                    Toast.makeText(context, "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
-                    return;
-                }
+        holder.getCollectionUserkies().document(dataSet.get(holder.getAdapterPosition()).getUID_AUTHOR()).addSnapshotListener((documentSnapshot, e) -> {
+            if (e != null) {
+                Log.e("Error", e.getMessage());
+                Toast.makeText(context, "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
+                return;
+            }
 
-                if (documentSnapshot != null) {
-                    holder.getTv_worldkie_username_search().setText(documentSnapshot.getString("username"));
-                }
-            });
+            if (documentSnapshot != null) {
+                holder.getTv_worldkie_username_search().setText(documentSnapshot.getString("username"));
+            }
+        });
         holder.getTv_date_last_update_search_worldkie_title().setVisibility(View.GONE);
         holder.getTv_date_last_update_search_worldkie().setVisibility(View.GONE);
         holder.getTv_date_creation_search_worldkie_title().setVisibility(View.GONE);
@@ -156,11 +159,11 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
         holder.getTv_worldkie_name_search().setText(dataSet.get(holder.getAdapterPosition()).getName());
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         holder.getTv_date_last_update_search_worldkie().setText(simpleDateFormat.format(dataSet.get(holder.getAdapterPosition()).getLast_update()));
-        holder.getTv_date_creation_search_worldkie().setText(simpleDateFormat.format( dataSet.get(holder.getAdapterPosition()).getCreation_date()));
+        holder.getTv_date_creation_search_worldkie().setText(simpleDateFormat.format(dataSet.get(holder.getAdapterPosition()).getCreation_date()));
 
-        if(dataSet.get(holder.getAdapterPosition()).isWorldkie_private()){
+        if (dataSet.get(holder.getAdapterPosition()).isWorldkie_private()) {
             holder.getIv_worldkie_private_search().setImageAlpha(R.drawable.twotone_lock_24);
-        }else{
+        } else {
             holder.getIv_worldkie_private_search().setImageAlpha(R.drawable.twotone_lock_open_24);
         }
 
@@ -173,14 +176,14 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
         holder.getIb_show_more_details_worldkie_search().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(holder.moreDetailsShowed){
+                if (holder.moreDetailsShowed) {
                     holder.getTv_date_last_update_search_worldkie_title().setVisibility(View.GONE);
                     holder.getTv_date_last_update_search_worldkie().setVisibility(View.GONE);
                     holder.getTv_date_creation_search_worldkie_title().setVisibility(View.GONE);
                     holder.getTv_date_creation_search_worldkie().setVisibility(View.GONE);
                     holder.moreDetailsShowed = false;
                     holder.getIb_show_more_details_worldkie_search().setImageResource(R.drawable.twotone_arrow_drop_down_circle_24);
-                }else{
+                } else {
                     holder.getTv_date_last_update_search_worldkie_title().setVisibility(View.VISIBLE);
                     holder.getTv_date_last_update_search_worldkie().setVisibility(View.VISIBLE);
                     holder.getTv_date_creation_search_worldkie_title().setVisibility(View.VISIBLE);
@@ -191,19 +194,48 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
             }
         });
         ;
-        DrawableUtils.personalizarImagenCuadrado(context,DrawableUtils.drawableToBitmap(holder.getIv_worldkie_photo_search().getDrawable()),holder.getIv_worldkie_photo_search(),R.color.brownMaroon);
-        //De esra forma establacemos las imagenes de la lista
-        //String uri = "@drawable/" + dataSet.get(position).getPhoto();  // where myresource (without the extension) is the file
-        //int imageResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
-        //Drawable res =  context.getResources().getDrawable(imageResource);
-        //  holder.getIv_photo_wordlkie().setImageDrawable(dataSet.get(holder.getAdapterPosition()).getPhoto());
-        //  Bitmap bitmap = DrawableUtils.drawableToBitmap(dataSet.get(holder.getAdapterPosition()).getPhoto());
-        //  int colorRGB = Color.rgb(139, 111, 71);
-        //8B6F47
-        //  Color color = Color.valueOf(colorRGB);
+        if (dataSet.get(holder.getAdapterPosition()).isPhoto_default()) {
+            FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+            firebaseFirestore.collection("Worldkies").document(dataSet.get(holder.getAdapterPosition()).getUID()).addSnapshotListener((queryDocumentSnapshot, e) -> {
+                       /* if (e != null) {
+                            Log.e("Error", e.getMessage());
+                            Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
+                            return;
+                        }*/
+                //boolean photo_default = queryDocumentSnapshot.getBoolean("photo_default");
+                String id_photo = queryDocumentSnapshot.getString("photo_id");
+                int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
 
-        // DrawableUtils.personalizarImagenCuadrado(context,bitmap,holder.getIv_photo_wordlkie(),color);
+                if (resId != 0) {
+                    Drawable drawable = ContextCompat.getDrawable(context, resId);
+                    holder.getIv_worldkie_photo_search().setImageDrawable(drawable);
+                    try {
+                        DrawableUtils.personalizarImagenCuadradoButton(context, 115 / 6, 7, R.color.brownMaroon, drawable, holder.getIv_worldkie_photo_search());
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            });
+        } else {
+            StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-worldkies").getReference(dataSet.get(holder.getAdapterPosition()).getUID());
+
+            userFolderRef.listAll().addOnSuccessListener(listResult -> {
+                for (StorageReference item : listResult.getItems()) {
+                    if (item.getName().startsWith("cover")) {
+                        item.getDownloadUrl().addOnSuccessListener(uri -> {
+                            try {
+                                DrawableUtils.personalizarImagenCuadradoButton(context, 115 / 7, 7, R.color.greenWhatever, uri, holder.getIv_worldkie_photo_search());
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
+                    }
+                }
+                ;
+            });
+        }
     }
+
 
 
     // Devolvemos el numero de items de nuestro arraylist, lo invoca automaticamente el layout manager

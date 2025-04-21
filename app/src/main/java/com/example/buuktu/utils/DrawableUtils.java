@@ -4,31 +4,26 @@ package com.example.buuktu.utils;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.LayerDrawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.OvalShape;
-import android.graphics.drawable.shapes.RoundRectShape;
-import android.media.Image;
+import android.net.Uri;
 import android.util.Log;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
+import android.util.TypedValue;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
+import androidx.annotation.ColorRes;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.buuktu.R;
+import com.example.buuktu.adapters.RoundedBorderSquareTransformation;
+
+import java.io.IOException;
 
 public class DrawableUtils {
     public static Bitmap drawableToBitmap(Drawable drawable) {
@@ -48,100 +43,70 @@ public class DrawableUtils {
 
         return bitmap;
     }
-    public static void personalizarImagenCuadrado(Context context, Bitmap bitmap, ImageView imageView, int color) {
-        int size = Math.min(bitmap.getWidth(), bitmap.getHeight());
-        int x = (bitmap.getWidth() - size) / 2;
-        int y = (bitmap.getHeight() - size) / 2;
-        Bitmap squaredBitmap = Bitmap.createBitmap(bitmap, x, y, size, size);
 
-        float cornerRadius = size / 6f;
-        int borderWidth = 12; // Grosor del borde (ajusta según necesites)
+    public static void personalizarImagenCuadradoButton(Context context, int cornerRadius,int borderWidth,@ColorRes int idColor, int mipmap, ImageButton imageButton) {
+        int borderColor = ContextCompat.getColor(context, idColor);
 
-        // Crear un Bitmap mutable para dibujar la imagen con el borde
-        Bitmap borderedBitmap = Bitmap.createBitmap(squaredBitmap.getWidth() + borderWidth * 2,
-                squaredBitmap.getHeight() + borderWidth * 2, squaredBitmap.getConfig());
-        Canvas canvas = new Canvas(borderedBitmap);
-        Paint paint = new Paint();
-        paint.setAntiAlias(true);
 
-        // Dibujar el fondo redondeado (opcional, si quieres un fondo del color del borde)
-        // paint.setColor(color);
-        // paint.setStyle(Paint.Style.FILL);
-        // canvas.drawRoundRect(new RectF(0, 0, borderedBitmap.getWidth(), borderedBitmap.getHeight()), cornerRadius + borderWidth / 2f, cornerRadius + borderWidth / 2f, paint);
+        RequestOptions requestOptions = new RequestOptions()
+                .centerCrop()
+                .transform(new RoundedBorderSquareTransformation(cornerRadius, borderWidth, borderColor));
 
-        // Dibujar la imagen redondeada centrada
-        Path path = new Path();
-        path.addRoundRect(new RectF(borderWidth, borderWidth, borderedBitmap.getWidth() - borderWidth, borderedBitmap.getHeight() - borderWidth), cornerRadius, cornerRadius, Path.Direction.CW);
-        canvas.clipPath(path);
-        canvas.drawBitmap(squaredBitmap, borderWidth, borderWidth, null);
-        canvas.clipPath(new Path()); // Limpiar el clip
-
-        // Dibujar el borde redondeado
-        paint.setColor(color);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(borderWidth);
-        canvas.drawRoundRect(new RectF(borderWidth, borderWidth, borderedBitmap.getWidth() - borderWidth, borderedBitmap.getHeight() - borderWidth), cornerRadius, cornerRadius, paint);
-
-        imageView.setImageBitmap(borderedBitmap);
-
-        ViewGroup.LayoutParams params = imageView.getLayoutParams();
-        int margin = 15;
-        if (params instanceof LinearLayout.LayoutParams) {
-            ((LinearLayout.LayoutParams) params).setMargins(margin, margin, margin, margin);
-        } else if (params instanceof FrameLayout.LayoutParams) {
-            ((FrameLayout.LayoutParams) params).setMargins(margin, margin, margin, margin);
-        } else if (params instanceof RelativeLayout.LayoutParams) {
-            ((RelativeLayout.LayoutParams) params).setMargins(margin, margin, margin, margin);
-        }
-        imageView.setLayoutParams(params);
+        Glide.with(context)
+                .load(mipmap) // 👍 Esto sí pasa por la transformación
+                .apply(requestOptions)
+                .into(imageButton);
     }
+    public static void personalizarImagenCuadradoButton(Context context, int cornerRadius, int borderWidth, @ColorRes int idColor, Uri uri, ImageView imageView) throws IOException {
+        int borderColor = ContextCompat.getColor(context, idColor);
 
-    public static void personalizarImagenCuadradoButton(Context context, Bitmap bitmap, ImageButton imageButton, int color) {
-        // Asegurar que la imagen sea cuadrada y centrada
-        int size = Math.min(bitmap.getWidth(), bitmap.getHeight());
-        int x = (bitmap.getWidth() - size) / 2;
-        int y = (bitmap.getHeight() - size) / 2;
-        Bitmap squaredBitmap = Bitmap.createBitmap(bitmap, x, y, size, size);
+        // 3. Escalar al tamaño deseado (opcional, por ejemplo 150x150
+        RequestOptions requestOptions = new RequestOptions()
+                .centerCrop()
+                .transform(new RoundedBorderSquareTransformation(cornerRadius, borderWidth, borderColor));
 
-        // Crear drawable con bordes redondeados para la imagen
-        RoundedBitmapDrawable roundedDrawable = RoundedBitmapDrawableFactory.create(context.getResources(), squaredBitmap);
-        float cornerRadius = size / 6f; // Bordes redondeados (ajustable)
-        roundedDrawable.setCornerRadius(cornerRadius);
+        Glide.with(context)
+                .load(uri) // 👍 Esto sí pasa por la transformación
+                .apply(requestOptions)
+                .into(imageView);
+    }
+    public static void personalizarImagenCuadradoButton(Context context, int cornerRadius, int borderWidth, @ColorRes int idColor, Drawable drawable, ImageView imageView) throws IOException {
+        int borderColor = ContextCompat.getColor(context, idColor);
 
-        // Crear un borde redondeado con ShapeDrawable
-        ShapeDrawable borderDrawable = new ShapeDrawable(new RoundRectShape(
-                new float[]{cornerRadius, cornerRadius, cornerRadius, cornerRadius,
-                        cornerRadius, cornerRadius, cornerRadius, cornerRadius}, // Radios de los bordes
-                null, null
-        ));
-        borderDrawable.getPaint().setColor(color); // Color del borde
-        borderDrawable.getPaint().setStyle(Paint.Style.STROKE);
-        borderDrawable.getPaint().setStrokeWidth(12); // 🔥 Grosor del borde aumentado
+        RequestOptions requestOptions = new RequestOptions()
+                .centerCrop()
+                .transform(new RoundedBorderSquareTransformation(cornerRadius, borderWidth, borderColor));
 
-        // Usar LayerDrawable para combinar la imagen con el borde
-        Drawable[] layers = new Drawable[2];
-        layers[0] = roundedDrawable; // Imagen redondeada
-        layers[1] = borderDrawable;  // Borde redondeado
+        Glide.with(context)
+                .load(drawable) // 👍 Esto sí pasa por la transformación
+                .apply(requestOptions)
+                .into(imageView);
+    }
+    public static void personalizarImagenCuadradoButton(Context context, int cornerRadius, int borderWidth,@ColorRes int idColor, Uri uri, ImageButton imageButton) {
+        int borderColor = ContextCompat.getColor(context, idColor);
+        RequestOptions requestOptions = new RequestOptions()
+                .centerCrop() // << 👈 evita el recorte
+                .transform(new RoundedBorderSquareTransformation(cornerRadius, borderWidth, borderColor));
+        Glide.with(context)
+                .load(uri) // 👍 Esto sí pasa por la transformación
+                .apply(requestOptions)
+                .into(imageButton);
+    }
+    public static void personalizarImagenCuadradoButton(Context context, int cornerRadius, int borderWidth, @ColorRes int idColor, Bitmap bitmap, ImageButton imageButton) {
+        int borderColor = ContextCompat.getColor(context, idColor);
 
-        LayerDrawable layerDrawable = new LayerDrawable(layers);
+        RequestOptions requestOptions = new RequestOptions()
+                .centerCrop()
+                .transform(new RoundedBorderSquareTransformation(cornerRadius, borderWidth, borderColor));
 
-        // Ajustar LayoutParams correctamente según el ViewGroup padre
-        ViewGroup.LayoutParams params = imageButton.getLayoutParams();
-        if (params instanceof LinearLayout.LayoutParams) {
-            ((LinearLayout.LayoutParams) params).setMargins(15, 15, 15, 15); // Márgenes más amplios
-        } else if (params instanceof FrameLayout.LayoutParams) {
-            ((FrameLayout.LayoutParams) params).setMargins(15, 15, 15, 15);
-        } else if (params instanceof RelativeLayout.LayoutParams) {
-            ((RelativeLayout.LayoutParams) params).setMargins(15, 15, 15, 15);
-        }
-
-        imageButton.setLayoutParams(params);
-        imageButton.setImageDrawable(layerDrawable); // Aplicar la imagen con el borde como una capa
+        Glide.with(context)
+                .load(bitmap)
+                .apply(requestOptions)
+                .into(imageButton);
     }
 
 
-
-    public static void personalizarImagenCircle(Context context, Bitmap bitmap, ImageView imageView, int color) {
+    public static void personalizarImagenCircle(Context context, Bitmap bitmap, ImageView imageView,@ColorRes int color) {
         RoundedBitmapDrawable roundedDrawable = RoundedBitmapDrawableFactory.create(context.getResources(), bitmap);
         roundedDrawable.setCircular(true); // Ya hace la imagen circular, no necesita setCornerRadius()
         imageView.setImageDrawable(roundedDrawable);
@@ -157,7 +122,7 @@ public class DrawableUtils {
         }
 
     }
-    public static void personalizarImagenCircle(Context context, int mipmapResId, ImageView imageView, int color) {
+    public static void personalizarImagenCircle(Context context, int mipmapResId, ImageView imageView,@ColorRes int color) {
         // Cargar el drawable desde mipmap
         Drawable drawable = ContextCompat.getDrawable(context, mipmapResId);
         if (drawable == null) {
@@ -184,7 +149,7 @@ public class DrawableUtils {
         }
     }
 
-    public static void personalizarImagenCircleButton(Context context, Bitmap bitmap, ImageButton imageButton, int color) {
+    public static void personalizarImagenCircleButton(Context context, Bitmap bitmap, ImageButton imageButton,@ColorRes int color) {
         RoundedBitmapDrawable roundedDrawable = RoundedBitmapDrawableFactory.create(context.getResources(), bitmap);
         roundedDrawable.setCircular(true); // Ya hace la imagen circular, no necesita setCornerRadius()
         imageButton.setImageDrawable(roundedDrawable);
@@ -200,7 +165,7 @@ public class DrawableUtils {
         }
 
     }
-    public static void personalizarImagenCircleButton(Context context, Bitmap bitmap, ImageButton imageButton, int color, boolean pressed) {
+    public static void personalizarImagenCircleButton(Context context, Bitmap bitmap, ImageButton imageButton,@ColorRes int color, boolean pressed) {
         // Crea el drawable para la imagen circular
         RoundedBitmapDrawable roundedDrawable = RoundedBitmapDrawableFactory.create(context.getResources(), bitmap);
         roundedDrawable.setCircular(true);

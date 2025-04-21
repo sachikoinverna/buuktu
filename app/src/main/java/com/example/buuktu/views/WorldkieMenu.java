@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.buuktu.CreateCharacterkie;
+import com.example.buuktu.CreateEditScenariokie;
 import com.example.buuktu.R;
 
 /**
@@ -21,9 +22,9 @@ import com.example.buuktu.R;
  */
 public class WorldkieMenu extends Fragment {
 
-    private TextView tv_characterkiesAdd;
+    private TextView tv_characterkiesAdd,textView5;
     private FragmentManager fragmentManager;
-    private Fragment createCharacterkie;
+    private Fragment createCharacterkie,createScenariokie;
     public WorldkieMenu() {
         // Required empty public constructor
     }
@@ -76,11 +77,19 @@ public class WorldkieMenu extends Fragment {
                         .commit();
             }
         });
+        textView5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createScenariokie = new CreateEditScenariokie();
+                fragmentManager.beginTransaction().replace(R.id.fragment_container, createScenariokie) .addToBackStack(null) // Permite regresar atrás con el botón de retroceso
+                        .commit();
+            }
+        });
         return view;
     }
     private void initComponents(View view){
         tv_characterkiesAdd = view.findViewById( R.id.tv_characterkies);
-
+        textView5 = view.findViewById(R.id.textView5);
     }
     private void goBackToPreviousFragment() {
         // Verifica si hay un fragmento en la pila de retroceso

@@ -11,6 +11,7 @@ import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,6 +31,7 @@ import com.example.buuktu.dialogs.InfoFutureFunctionDialog;
 import com.example.buuktu.models.SettingModel;
 import com.example.buuktu.models.UserkieModel;
 import com.example.buuktu.utils.DrawableUtils;
+import com.example.buuktu.utils.NavigationUtils;
 import com.example.buuktu.views.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -47,7 +49,7 @@ import java.util.Map;
  * Use the {@link ProfileSettings#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProfileSettings extends Fragment {
+public class ProfileSettings extends Fragment implements View.OnClickListener {
     private SettingAdapter settingAdapter;
     private RecyclerView rv_settings_profile;
     private ArrayList<SettingModel> dataSet = new ArrayList<SettingModel>();
@@ -59,6 +61,8 @@ public class ProfileSettings extends Fragment {
     FirebaseAuth firebaseAuth;
     UserkieModel userkieModel;
     ImageButton backButton,ib_save;
+    FragmentManager fragmentManager;
+    FragmentActivity activity;
     private final CompoundButton.OnCheckedChangeListener switchListener = (buttonView, isChecked) -> {
         Map<String, Object> worldkieData = new HashMap<>();
         worldkieData.put("private", isChecked);
@@ -100,13 +104,10 @@ public class ProfileSettings extends Fragment {
         backButton = mainActivity.getBackButton();
         backButton.setVisibility(View.VISIBLE);
         ib_save = mainActivity.getIb_save();
+        fragmentManager = requireActivity().getSupportFragmentManager();
+        activity = requireActivity();
+        setListeners();
         ib_save.setVisibility(View.GONE);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goBackToPreviousFragment();
-            }
-        });
         initComponents(view);
 
         // 🔁 Listener para cambios en Firestore
@@ -147,7 +148,9 @@ public class ProfileSettings extends Fragment {
         });
         return view;
     }
-
+    private void setListeners(){
+        backButton.setOnClickListener(this);
+    }
     private void initComponents(View view) {
         tb_profile_private_settings = view.findViewById(R.id.tb_profile_private_settings);
         rv_settings_profile = view.findViewById(R.id.rv_settings_profile);
@@ -158,17 +161,13 @@ public class ProfileSettings extends Fragment {
     private void updateRecyclerView() {
         settingAdapter.notifyDataSetChanged();
     }
-    private void goBackToPreviousFragment() {
-        // Verifica si hay un fragmento en la pila de retroceso
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
 
-        if (fragmentManager.getBackStackEntryCount() > 0) {
-            // Si hay fragmentos en la pila de retroceso, navega hacia atrás
-            fragmentManager.popBackStack(); // Retrocede al fragmento anterior
-        } else {
-            // Si no hay fragmentos en la pila, puede que quieras cerrar la actividad o hacer alguna otra acción
-            // Por ejemplo, cerrar la actividad:
-            requireActivity().onBackPressed(); // Realiza el retroceso por defecto (salir de la actividad)
-        }
+    @Override
+    public void onClick(View v) {
+        if(v.getId()==R.id.ib_back){
+            NavigationUtils.goBack(fragmentManager,activity);
+        }/* else if () {
+
+        }*/
     }
 }

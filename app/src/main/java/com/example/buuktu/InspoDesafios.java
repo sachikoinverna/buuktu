@@ -3,6 +3,7 @@ package com.example.buuktu;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +16,7 @@ import android.widget.ImageButton;
 import com.example.buuktu.adapters.CardInspoAdapter;
 import com.example.buuktu.adapters.CardInspoDesafiosAdapter;
 import com.example.buuktu.models.CardItem;
+import com.example.buuktu.utils.NavigationUtils;
 import com.example.buuktu.views.MainActivity;
 
 import java.util.ArrayList;
@@ -24,11 +26,13 @@ import java.util.ArrayList;
  * Use the {@link InspoDesafios#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class InspoDesafios extends Fragment {
+public class InspoDesafios extends Fragment implements View.OnClickListener {
 
     RecyclerView rc_buttons_inspo_desafio;
     private CardInspoDesafiosAdapter adapter;
     ImageButton ib_back;
+    FragmentManager fragmentManager;
+    FragmentActivity activity;
     public InspoDesafios() {
         // Required empty public constructor
     }
@@ -61,17 +65,14 @@ public class InspoDesafios extends Fragment {
         rc_buttons_inspo_desafio.setLayoutManager(new GridLayoutManager(getContext(), 2));
         MainActivity mainActivity = (MainActivity) getActivity();
         ib_back = mainActivity.getBackButton();
-        ib_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goBackToPreviousFragment();
-            }
-        });
+
         ArrayList<CardItem> items = new ArrayList<>();
         items.add(new CardItem(R.drawable.twotone_abc_24,"Wordkie of the day"));
         items.add(new CardItem(R.drawable.twotone_pin_24,"Numberkie of the day"));
         ib_back.setVisibility(View.VISIBLE);
-
+        fragmentManager = requireActivity().getSupportFragmentManager();
+        activity = requireActivity();
+        setListeners();
         updateRecyclerView(items);
         return view;
     }
@@ -80,17 +81,14 @@ public class InspoDesafios extends Fragment {
         rc_buttons_inspo_desafio.setAdapter(adapter);
         rc_buttons_inspo_desafio.setLayoutManager(new GridLayoutManager(getContext(),2));
     }
-    private void goBackToPreviousFragment() {
-        // Verifica si hay un fragmento en la pila de retroceso
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+    private void setListeners(){
+        ib_back.setOnClickListener(this);
+    }
 
-        if (fragmentManager.getBackStackEntryCount() > 0) {
-            // Si hay fragmentos en la pila de retroceso, navega hacia atrás
-            fragmentManager.popBackStack(); // Retrocede al fragmento anterior
-        } else {
-            // Si no hay fragmentos en la pila, puede que quieras cerrar la actividad o hacer alguna otra acción
-            // Por ejemplo, cerrar la actividad:
-            requireActivity().onBackPressed(); // Realiza el retroceso por defecto (salir de la actividad)
+    @Override
+    public void onClick(View v) {
+        if(v.getId()==R.id.ib_back){
+            NavigationUtils.goBack(fragmentManager,activity);
         }
     }
 }

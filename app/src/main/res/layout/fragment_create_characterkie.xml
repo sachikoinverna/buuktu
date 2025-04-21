@@ -6,96 +6,122 @@
     android:layout_height="match_parent"
     tools:context=".CreateCharacterkie">
 
-    <ScrollView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:strokeColor="#6D2525"
+        app:strokeWidth="3dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraint_create_characterkie"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageButton
-                android:id="@+id/ib_select_img_create_characterkie"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_marginTop="24dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@mipmap/photocharacterkieone" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/et_nameCharacterkieCreateFull"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraint_create_characterkie"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="42dp"
-                android:hint="@string/name"
-                app:boxCornerRadiusBottomEnd="58dp"
-                app:boxCornerRadiusBottomStart="58dp"
-                app:boxCornerRadiusTopEnd="58dp"
-                app:boxCornerRadiusTopStart="58dp"
-                app:counterEnabled="true"
-                app:counterMaxLength="50"
-                app:errorEnabled="false"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ib_select_img_create_characterkie"
-                app:startIconDrawable="@drawable/outline_person_24">
+                android:layout_height="match_parent">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_nameCharacterkieCreate"
+                <ImageButton
+                    android:id="@+id/ib_select_img_create_characterkie"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@mipmap/photocharacterkieone" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/et_nameCharacterkieCreateFull"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="10"
+                    android:layout_marginTop="42dp"
+                    android:hint="@string/name"
+                    app:boxCornerRadiusBottomEnd="58dp"
+                    app:boxCornerRadiusBottomStart="58dp"
+                    app:boxCornerRadiusTopEnd="58dp"
+                    app:boxCornerRadiusTopStart="58dp"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="50"
+                    app:errorEnabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ib_select_img_create_characterkie"
+                    app:startIconDrawable="@drawable/outline_person_24">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_nameCharacterkieCreate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:inputType="text"
+                        android:maxLength="50"
+                        android:textAlignment="center"
+                        android:textColorHint="@color/brownMaroon" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Switch
+                    android:id="@+id/tb_CharacterkiePrivacity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
                     android:gravity="center"
-                    android:inputType="text"
-                    android:maxLength="50"
-                    android:textAlignment="center"
-                    android:textColorHint="@color/brownMaroon" />
+                    android:text="Private worldkie"
+                    android:thumb="@drawable/thumb_custom"
+                    android:track="@drawable/track_custom"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/tb_characterkieDraft"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_nameCharacterkieCreateFull" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+                <Switch
+                    android:id="@+id/tb_characterkieDraft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:gravity="center"
+                    android:switchPadding="8dp"
+                    android:text="Borrador"
+                    android:thumb="@drawable/thumb_custom"
+                    android:track="@drawable/track_custom"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tb_CharacterkiePrivacity"
+                    app:layout_constraintTop_toBottomOf="@+id/et_nameCharacterkieCreateFull" />
 
-            <Switch
-                android:id="@+id/tb_CharacterkiePrivacity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:gravity="center"
-                android:text="Private worldkie"
-                android:thumb="@drawable/thumb_custom"
-                android:track="@drawable/track_custom"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_nameCharacterkieCreateFull" />
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fb_add_field_createCharacterkie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:clickable="true"
+                    app:layout_constraintBottom_toTopOf="@+id/fb_more_createCharacterkie"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:srcCompat="@drawable/twotone_add_circle_24" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fb_add_field_createCharacterkie"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:clickable="true"
-                android:onClick="openBottomSheet"
-                app:layout_constraintBottom_toTopOf="@+id/fb_more_createCharacterkie"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:srcCompat="@drawable/twotone_add_circle_24" />
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fb_more_createCharacterkie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginEnd="10dp"
+                    android:clickable="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:srcCompat="@drawable/twotone_more_24" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fb_more_createCharacterkie"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginEnd="10dp"
-                android:clickable="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:srcCompat="@drawable/twotone_more_24" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </com.google.android.material.card.MaterialCardView>
 
-    </ScrollView>
 </FrameLayout>

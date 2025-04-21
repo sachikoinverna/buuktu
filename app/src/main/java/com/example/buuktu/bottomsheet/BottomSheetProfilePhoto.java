@@ -17,12 +17,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.ColorRes;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -72,14 +74,19 @@ public class BottomSheetProfilePhoto extends BottomSheetDialogFragment implement
             createCharacterkie = (CreateCharacterkie) getParentFragment();
         } else if (getParentFragment() instanceof CreateEditStuffkie) {
             createEditStuffkie = (CreateEditStuffkie) getParentFragment();
+        }else if (getParentFragment() instanceof CreateEditScenariokie) {
+            createEditScenariokie = (CreateEditScenariokie) getParentFragment();
         }
     }
         initSelector();
+        setListeners();
 
 
+        return v;
+    }
+    private void setListeners(){
         tv_choose_photo_default.setOnClickListener(this);
         tv_choose_photo_gallery.setOnClickListener(this);
-        return v;
     }
     private void initSelector(){
         imagePickerLauncher = registerForActivityResult(
@@ -114,8 +121,10 @@ public class BottomSheetProfilePhoto extends BottomSheetDialogFragment implement
                                     DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(drawable), register.getIB_profile_photo(), R.color.brownMaroon);
                                     register.setSource("device");
                                 } else if (createEditWorldkie!=null) {
-                                    createEditWorldkie.getIb_select_img_create_worldkie().setImageDrawable(drawable);
-                                    DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(drawable), createEditWorldkie.getIb_select_img_create_worldkie(), R.color.brownMaroon);
+                                 //   createEditWorldkie.getIb_select_img_create_worldkie().setImageDrawable(drawable);
+                                    DrawableUtils.personalizarImagenCuadradoButton(context,150/6,7,R.color.brownMaroon,uri, createEditWorldkie.getIb_select_img_create_worldkie());
+
+                                      //  DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(drawable), createEditWorldkie.getIb_select_img_create_worldkie(), R.color.brownMaroon);
                                     createEditWorldkie.setSource("device");
                                 } else if (createCharacterkie!=null) {
                                     createCharacterkie.getIb_select_img_create_worldkie().setImageDrawable(drawable);
