@@ -97,8 +97,8 @@ public class StuffkiesSearch extends Fragment {
                         StuffkieModel stuffkieModel = new StuffkieModel(
                                 doc.getId(),
                                 doc.getString("name"),
-                                Boolean.TRUE.equals(doc.getBoolean("stuffkie_private")),
-                                R.drawable.baseline_diversity_1_24
+                                doc.getBoolean("stuffkie_private"),
+                                doc.getBoolean("photo_default")
                         );
                         switch (dc.getType()) {
                             case ADDED:

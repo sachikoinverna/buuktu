@@ -26,7 +26,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
  */
 public class Search extends Fragment {
 
-    ImageButton ib_save;
+    ImageButton ib_save,ib_profile_superior;
     private TabLayout tabLayout;
     private ViewPager2 viewPager;
     private PageAdapter pageAdapter;
@@ -62,6 +62,9 @@ public class Search extends Fragment {
         backButton.setVisibility(View.GONE);
         ib_save = mainActivity.getIb_save();
         ib_save.setVisibility(View.GONE);
+        ib_profile_superior = mainActivity.getIb_self_profile();
+        ib_profile_superior.setVisibility(View.VISIBLE);
+
         initComponents(view);
         viewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
         viewPager.setUserInputEnabled(false);

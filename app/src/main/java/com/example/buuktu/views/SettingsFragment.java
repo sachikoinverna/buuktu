@@ -33,7 +33,7 @@ public class SettingsFragment extends Fragment {
     private SearchView searchView;
     private ArrayList<SettingModel> filteredDataSet = new ArrayList<SettingModel>();
     SettingsAdapter settingsAdapter;
-    ImageButton backButton,ib_save;
+    ImageButton backButton,ib_save,ib_profile_superior;
     public SettingsFragment() {
         // Required empty public constructor
     }
@@ -72,6 +72,8 @@ public class SettingsFragment extends Fragment {
         backButton.setVisibility(View.GONE);
         ib_save = mainActivity.getIb_save();
         ib_save.setVisibility(View.GONE);
+        ib_profile_superior = mainActivity.getIb_self_profile();
+        ib_profile_superior.setVisibility(View.VISIBLE);
         //settingsAdapter.setOnClickListener(this);
         //adapter = new SettingsAdapter(dataSet,getContext());
         updateRecyclerView(dataSet);

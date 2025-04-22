@@ -40,12 +40,7 @@ import java.util.Date;
  * create an instance of this fragment.
  */
 public class Notikies extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
+    ImageButton ib_profile_superior;
     RecyclerView rc_notikies_list;
    NotikieListAdapter notikieListAdapter;
    FirebaseFirestore db;
@@ -59,18 +54,11 @@ public class Notikies extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment Notikies.
      */
     // TODO: Rename and change types and number of parameters
-    public static Notikies newInstance(String param1, String param2) {
-        Notikies fragment = new Notikies();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public static Notikies newInstance() {
+        return new Notikies();
     }
 
     @Override
@@ -88,6 +76,8 @@ public class Notikies extends Fragment {
         MainActivity mainActivity = (MainActivity) getActivity();
         ImageButton backButton = mainActivity.getBackButton();
         backButton.setVisibility(View.GONE);
+        ib_profile_superior = mainActivity.getIb_self_profile();
+        ib_profile_superior.setVisibility(View.VISIBLE);
         rc_notikies_list = view.findViewById(R.id.rc_notikies_list);
         db = FirebaseFirestore.getInstance();
         notikiesCollection = db.collection("Notikies");

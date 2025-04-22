@@ -33,7 +33,7 @@ public class AccountSettings extends Fragment implements View.OnClickListener {
     String UID;
     FirebaseAuth firebaseAuth;
     RecyclerView rv_account_settings;
-    ImageButton backButton;
+    ImageButton backButton,ib_profile_superior;
     FragmentManager fragmentManager;
     FragmentActivity activity;
     public AccountSettings() {
@@ -70,6 +70,8 @@ public class AccountSettings extends Fragment implements View.OnClickListener {
         MainActivity mainActivity = (MainActivity) getActivity();
         backButton = mainActivity.getBackButton();
         backButton.setVisibility(View.VISIBLE);
+        ib_profile_superior = mainActivity.getIb_self_profile();
+        ib_profile_superior.setVisibility(View.VISIBLE);
         fragmentManager = requireActivity().getSupportFragmentManager();
         activity = requireActivity();
         setListeners();

@@ -69,7 +69,7 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
     TextInputLayout et_nameWorldkieCreateFull;
     TextInputEditText et_nameWorldkieCreate;
     Switch tb_worldkiePrivacity,tb_worldkieDraft;
-    ImageButton ib_save,ib_select_img_create_worldkie,ib_back;
+    ImageButton ib_save,ib_select_img_create_worldkie,ib_back,ib_profile_superior;
     CreateEditGeneralDialog dialog;
     Uri image;
     BottomSheetProfilePhoto bottomSheetProfilePhoto;
@@ -108,6 +108,8 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
         ib_back = mainActivity.getBackButton();
         ib_save = mainActivity.getIb_save();
         ib_save.setVisibility(View.VISIBLE);
+        ib_profile_superior = mainActivity.getIb_self_profile();
+        ib_profile_superior.setVisibility(View.VISIBLE);
         ib_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -60,7 +60,7 @@ public class ProfileSettings extends Fragment implements View.OnClickListener {
     String UID;
     FirebaseAuth firebaseAuth;
     UserkieModel userkieModel;
-    ImageButton backButton,ib_save;
+    ImageButton backButton,ib_save,ib_profile_superior;
     FragmentManager fragmentManager;
     FragmentActivity activity;
     private final CompoundButton.OnCheckedChangeListener switchListener = (buttonView, isChecked) -> {
@@ -103,6 +103,8 @@ public class ProfileSettings extends Fragment implements View.OnClickListener {
         MainActivity mainActivity = (MainActivity) getActivity();
         backButton = mainActivity.getBackButton();
         backButton.setVisibility(View.VISIBLE);
+        ib_profile_superior = mainActivity.getIb_self_profile();
+        ib_profile_superior.setVisibility(View.VISIBLE);
         ib_save = mainActivity.getIb_save();
         fragmentManager = requireActivity().getSupportFragmentManager();
         activity = requireActivity();

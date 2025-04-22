@@ -45,7 +45,7 @@ public class Home extends Fragment implements View.OnClickListener {
     private boolean isAllFabsVisible;
     private WorldkieAdapter worldkieAdapter;
     CollectionReference dbWorldkies;
-    ImageButton ib_save;
+    ImageButton ib_save,ib_profile_superior;
     FragmentManager fragmentManager;
 
     //private ListenerRegistration firestoreListener;
@@ -70,6 +70,8 @@ public class Home extends Fragment implements View.OnClickListener {
         backButton.setVisibility(View.GONE);
         ib_save = mainActivity.getIb_save();
         ib_save.setVisibility(View.GONE);
+        ib_profile_superior = mainActivity.getIb_self_profile();
+        ib_profile_superior.setVisibility(View.VISIBLE);
         initComponents(view);
         fb_add.setVisibility(View.GONE);
         isAllFabsVisible = false;

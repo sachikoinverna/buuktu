@@ -22,6 +22,7 @@ import com.example.buuktu.WorldkieView;
 import com.example.buuktu.models.Characterkie;
 import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.utils.DrawableUtils;
+import com.example.buuktu.utils.NavigationUtils;
 import com.example.buuktu.views.Worldkie;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -47,8 +48,8 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView iv_worldkie_preview_worldkie;
-        private TextView tv_worldkie_preview_worldkie;
+        private ImageView iv_worldkie_preview_worldkie,iv_stuffkie_private_preview;
+        private TextView tv_worldkie_preview_worldkie,tv_worldkie_preview_draft;
         CardView cv_worldkie_preview;
         //private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
         //private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
@@ -58,6 +59,8 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
             iv_worldkie_preview_worldkie =  view.findViewById(R.id.iv_worldkie_preview_worldkie);
             tv_worldkie_preview_worldkie= view.findViewById(R.id.tv_worldkie_preview_worldkie);
             cv_worldkie_preview = view.findViewById(R.id.cv_worldkie_preview);
+            iv_stuffkie_private_preview = view.findViewById(R.id.iv_stuffkie_private_preview);
+            tv_worldkie_preview_draft = view.findViewById(R.id.tv_worldkie_preview_draft);
         }
 
         public ImageView getIv_worldkie_preview_worldkie() {
@@ -70,6 +73,14 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
 
         public CardView getCv_worldkie_preview() {
             return cv_worldkie_preview;
+        }
+
+        public TextView getTv_worldkie_preview_draft() {
+            return tv_worldkie_preview_draft;
+        }
+
+        public ImageView getIv_stuffkie_private_preview() {
+            return iv_stuffkie_private_preview;
         }
     }
 
@@ -108,10 +119,7 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
                 bundle.putString("UID",dataSet.get(holder.getAdapterPosition()).getUID());
                 bundle.putString("UID_AUTHOR",dataSet.get(holder.getAdapterPosition()).getUID_AUTHOR());
                 worldkieView.setArguments(bundle);
-                fragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container, worldkieView)
-                        .addToBackStack(null)
-                        .commit();
+                NavigationUtils.goNewFragment(fragmentManager,worldkieView);
             }
         });
         if (dataSet.get(holder.getAdapterPosition()).isPhoto_default()) {

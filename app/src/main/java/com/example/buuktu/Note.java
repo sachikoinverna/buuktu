@@ -52,7 +52,7 @@ public class Note extends Fragment implements View.OnClickListener {
     FirebaseFirestore db;
     CollectionReference collectionNotekies;
     NoteItem noteItem;
-    ImageButton ib_save_note,backButton;
+    ImageButton ib_save_note,backButton,ib_profile_superior;
     FirebaseAuth auth;
     String UID_USER;
     Map<String, Object> notekieData;
@@ -93,6 +93,8 @@ public class Note extends Fragment implements View.OnClickListener {
         ib_save.setVisibility(View.VISIBLE);
         backButton = mainActivity.getBackButton();
         backButton.setVisibility(View.VISIBLE);
+        ib_profile_superior = mainActivity.getIb_self_profile();
+        ib_profile_superior.setVisibility(View.VISIBLE);
         et_title_note = view.findViewById(R.id.et_title_note);
         et_content_note = view.findViewById(R.id.et_content_note);
         db = FirebaseFirestore.getInstance();

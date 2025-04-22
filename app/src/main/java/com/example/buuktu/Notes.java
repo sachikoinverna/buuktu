@@ -38,7 +38,7 @@ public class Notes extends Fragment implements View.OnClickListener {
     private FirebaseFirestore db;
     private CollectionReference collectionNotekies;
     private String UID;
-    ImageButton ib_save,backButton;
+    ImageButton ib_save,backButton,ib_profile_superior;
     private FloatingActionButton fbMoreOptions, fbAddNote;
     private boolean isAllFabsVisible = false;
     FragmentManager fragmentManager;
@@ -58,7 +58,8 @@ public class Notes extends Fragment implements View.OnClickListener {
         backButton.setVisibility(View.VISIBLE);
         ib_save = mainActivity.getIb_save();
         ib_save.setVisibility(View.GONE);
-
+        ib_profile_superior = mainActivity.getIb_self_profile();
+        ib_profile_superior.setVisibility(View.VISIBLE);
         // Inicialización
         recyclerView = view.findViewById(R.id.rc_all_notes_adapter);
         fbAddNote = view.findViewById(R.id.fb_add_note_list_notes);

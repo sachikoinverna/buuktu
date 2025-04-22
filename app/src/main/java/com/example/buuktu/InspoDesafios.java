@@ -30,7 +30,7 @@ public class InspoDesafios extends Fragment implements View.OnClickListener {
 
     RecyclerView rc_buttons_inspo_desafio;
     private CardInspoDesafiosAdapter adapter;
-    ImageButton ib_back;
+    ImageButton ib_back,ib_profile_superior;
     FragmentManager fragmentManager;
     FragmentActivity activity;
     public InspoDesafios() {
@@ -65,7 +65,8 @@ public class InspoDesafios extends Fragment implements View.OnClickListener {
         rc_buttons_inspo_desafio.setLayoutManager(new GridLayoutManager(getContext(), 2));
         MainActivity mainActivity = (MainActivity) getActivity();
         ib_back = mainActivity.getBackButton();
-
+        ib_profile_superior = mainActivity.getIb_self_profile();
+        ib_profile_superior.setVisibility(View.VISIBLE);
         ArrayList<CardItem> items = new ArrayList<>();
         items.add(new CardItem(R.drawable.twotone_abc_24,"Wordkie of the day"));
         items.add(new CardItem(R.drawable.twotone_pin_24,"Numberkie of the day"));

@@ -42,7 +42,9 @@ import com.example.buuktu.dialogs.InfoFutureFunctionDialog;
 import com.example.buuktu.dialogs.InfoWorldkiesDialog;
 import com.example.buuktu.listeners.OnDialogInfoClickListener;
 import com.example.buuktu.utils.DrawableUtils;
+import com.example.buuktu.utils.EfectsUtils;
 import com.example.buuktu.utils.FirebaseAuthUtils;
+import com.example.buuktu.utils.NavigationUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
@@ -147,25 +149,15 @@ int colorEntero;
                 int id = item.getItemId();
 
                 if (id == R.id.home) {
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.fragment_container, new Home())
-                            .addToBackStack(null)
-                            .commit();
+
+                    NavigationUtils.goNewFragment(fragmentManager, new Home());
+
                 } else if (id == R.id.search) {
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.fragment_container, new Search())
-                            .addToBackStack(null)
-                            .commit();
+                    NavigationUtils.goNewFragment(fragmentManager, new Search());
                 } else if (id == R.id.inspo) {
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.fragment_container, new Inspo())
-                            .addToBackStack(null)
-                            .commit();
+                    NavigationUtils.goNewFragment(fragmentManager, new Inspo());
                 } else if (id == R.id.notifications) {
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.fragment_container, new Notikies())
-                            .addToBackStack(null)
-                            .commit();
+                    NavigationUtils.goNewFragment(fragmentManager, new Notikies());
                 } else if (id == R.id.messages) {
                    infoFutureFunctionDialog.show();
                 }
@@ -194,7 +186,7 @@ int colorEntero;
                 if (resId != 0) {
                     Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), resId);
                     ib_self_profile.setVisibility(View.VISIBLE); // Hacerlo ligeramente transparente al principio
-                    startCircularReveal(drawable);
+                    EfectsUtils.startCircularReveal(drawable,ib_self_profile);
                     ib_self_profile.setImageDrawable(drawable);
                     DrawableUtils.personalizarImagenCircleButton(this, DrawableUtils.drawableToBitmap(drawable), ib_self_profile, colorEntero, false);
 
@@ -214,7 +206,7 @@ int colorEntero;
                                 RoundedBitmapDrawable circularDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmapScaled);
                                 circularDrawable.setCircular(true); // Esto hace que la imagen sea circular
                                 ib_self_profile.setVisibility(View.VISIBLE); // Hacerlo ligeramente transparente al principio
-                                startCircularReveal(circularDrawable);
+                                EfectsUtils.startCircularReveal(circularDrawable,ib_self_profile);
                                 DrawableUtils.personalizarImagenCircleButton(this, bitmapScaled, ib_self_profile, colorEntero, false);
                             });
                             break;
@@ -224,28 +216,6 @@ int colorEntero;
 
             }
         });
-    }
-    private void startCircularReveal(Drawable finalDrawable) {
-        ib_self_profile.setImageDrawable(finalDrawable);
-        ib_self_profile.setAlpha(1f);
-
-        // Solo ejecutar la animación en dispositivos con API 21+
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // Obtener el centro del ImageButton
-            int centerX = ib_self_profile.getWidth() / 2;
-            int centerY = ib_self_profile.getHeight() / 2;
-
-            // Calcular el radio final (el círculo más grande que puede caber dentro del ImageButton)
-            float finalRadius = Math.max(ib_self_profile.getWidth(), ib_self_profile.getHeight());
-
-            // Crear el Animator para la revelación circular
-            Animator circularReveal = ViewAnimationUtils.createCircularReveal(
-                    ib_self_profile, centerX, centerY, 0, finalRadius);
-            circularReveal.setDuration(500); // Duración de la animación en milisegundos
-
-            // Iniciar la animación
-            circularReveal.start();
-        }
     }
     private void initComponents(){
         ib_self_profile = findViewById(R.id.ib_self_profile);
@@ -263,6 +233,10 @@ int colorEntero;
 
     public ImageButton getIb_save() {
         return ib_save;
+    }
+
+    public ImageButton getIb_self_profile() {
+        return ib_self_profile;
     }
 
     private void scheduleDailyNotification() {
@@ -315,10 +289,13 @@ int colorEntero;
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.nav_settings) {
-            fragmentManager.beginTransaction()
+           /* fragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, new SettingsFragment())
                     .addToBackStack(null)
-                    .commit();        } else if (item.getItemId() == R.id.nav_logout) {
+                    .commit();*/
+            NavigationUtils.goNewFragment(fragmentManager, new SettingsFragment());
+
+        } else if (item.getItemId() == R.id.nav_logout) {
             FirebaseAuthUtils.signOut();
             finishAffinity();
             startActivity(new Intent(this, Login.class));

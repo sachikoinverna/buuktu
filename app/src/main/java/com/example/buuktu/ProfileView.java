@@ -2,11 +2,9 @@ package com.example.buuktu;
 
 import static android.widget.Toast.LENGTH_LONG;
 
-import android.animation.Animator;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
@@ -19,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -28,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.buuktu.adapters.CharacterkiesUserPreviewAdapter;
+import com.example.buuktu.adapters.StuffkiesUserPreviewAdapter;
 import com.example.buuktu.adapters.WorldkiesUserPreviewAdapter;
 import com.example.buuktu.dialogs.InfoFutureFunctionDialog;
 import com.example.buuktu.models.Characterkie;
@@ -38,7 +36,6 @@ import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.EfectsUtils;
 import com.example.buuktu.utils.NavigationUtils;
 import com.example.buuktu.views.MainActivity;
-import com.google.android.gms.common.util.UidVerifier;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -56,7 +53,7 @@ import java.util.ArrayList;
  */
 public class ProfileView extends Fragment implements View.OnClickListener {
     String mode;
-    private ImageButton ib_profileView,ib_profileViewEdit,ib_save,ib_back;
+    private ImageButton ib_profileView,ib_profileViewEdit,ib_save,ib_back,ib_profile_superior;
     ImageView iv_locked_profile;
     private TextView tv_usernameProfileView,tv_nameProfileView,tv_worldkiesPreviewUserkie,tv_stuffkiesPreviewUserkie,tv_characterkiesPreviewUserkie,tv_locked_profile;
     ScrollView sv_pa;
@@ -111,6 +108,7 @@ public class ProfileView extends Fragment implements View.OnClickListener {
         MainActivity mainActivity = (MainActivity) getActivity();
         ib_save = mainActivity.getIb_save();
         ib_back = mainActivity.getBackButton();
+        ib_profile_superior = mainActivity.getIb_self_profile();
         ib_save.setVisibility(View.GONE);
         fragmentManager = requireActivity().getSupportFragmentManager();
         activity = requireActivity();
@@ -119,12 +117,15 @@ public class ProfileView extends Fragment implements View.OnClickListener {
             case "self":
                 firebaseAuth = FirebaseAuth.getInstance();
                 UID = firebaseAuth.getUid();
+                ib_profile_superior.setVisibility(View.INVISIBLE);
                 ib_profileViewEdit.setVisibility(View.VISIBLE);
                 ib_profileViewEdit.setOnClickListener(this);
                 ib_back.setVisibility(View.GONE);
                 break;
             case "other":
                 UID = getArguments().getString("UID");
+                ib_profile_superior.setVisibility(View.VISIBLE);
+
                 ib_profileViewEdit.setVisibility(View.INVISIBLE);
                 ib_back.setOnClickListener(this);
                 ib_back.setVisibility(View.VISIBLE);
@@ -182,8 +183,8 @@ public class ProfileView extends Fragment implements View.OnClickListener {
                                     StuffkieModel stuffkieModel = new StuffkieModel(
                                             doc.getId(),
                                             doc.getString("name"),
-                                            Boolean.TRUE.equals(doc.getBoolean("stuffkie_private")),
-                                            R.drawable.thumb_custom
+                                            doc.getBoolean("stuffkie_private"),
+                                            doc.getBoolean("photo_default")
                                     );
                                     Log.d("StuffkiesSearch", "Stuffkie encontrado: " + doc.getString("name"));
 
@@ -226,7 +227,7 @@ public class ProfileView extends Fragment implements View.OnClickListener {
                                             doc.getString("UID_AUTHOR"),
                                             R.drawable.thumb_custom,
                                             doc.getString("name"), doc.getDate("creation_date"),
-                                            true, doc.getDate("last_update"), doc.getBoolean("worldkie_private")
+                                            doc.getBoolean("photo_default"), doc.getDate("last_update"), doc.getBoolean("worldkie_private")
                                     );
                                     Log.d("StuffkiesSearch", "Stuffkie encontrado: " + documentSnapshot.getString("name"));
 

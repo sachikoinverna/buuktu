@@ -3,8 +3,6 @@ package com.example.buuktu;
 import static android.widget.Toast.LENGTH_LONG;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -26,7 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.buuktu.adapters.CharacterkiesUserPreviewAdapter;
-import com.example.buuktu.adapters.WorldkiesUserPreviewAdapter;
+import com.example.buuktu.adapters.StuffkiesUserPreviewAdapter;
 import com.example.buuktu.dialogs.InfoFutureFunctionDialog;
 import com.example.buuktu.models.Characterkie;
 import com.example.buuktu.models.StuffkieModel;
@@ -198,8 +196,8 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
                                     StuffkieModel stuffkieModel = new StuffkieModel(
                                             doc.getId(),
                                             doc.getString("name"),
-                                            Boolean.TRUE.equals(doc.getBoolean("stuffkie_private")),
-                                            R.drawable.thumb_custom
+                                            doc.getBoolean("stuffkie_private"),
+                                            doc.getBoolean("photo_default")
                                     );
                                     Log.d("StuffkiesSearch", "Stuffkie encontrado: " + doc.getString("name"));
 

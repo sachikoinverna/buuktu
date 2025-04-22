@@ -5,7 +5,6 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.buuktu.R;
-import com.example.buuktu.views.CreateEditWorldkie;
 
 public class NavigationUtils {
     public static void goBack(FragmentManager fragmentManager, FragmentActivity activity) {
@@ -16,5 +15,11 @@ public class NavigationUtils {
             // Por ejemplo, cerrar la actividad:
             activity.onBackPressed();
         }
+    }
+    public static void goNewFragment(FragmentManager fragmentManager, Fragment fragment) {
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 }

@@ -10,11 +10,13 @@ public class StuffkieModel {
     private boolean borrador;
     private boolean stuffkie_private;
     private int drawable;
-    public StuffkieModel(String UID, String name, boolean stuffkie_private, int drawable){
+    private boolean photo_default;
+
+    public StuffkieModel(String UID, String name, boolean stuffkie_private,boolean photo_default){
         this.UID=UID;
         this.name=name;
         this.stuffkie_private=stuffkie_private;
-        this.drawable = drawable;
+        this.stuffkie_private = photo_default;
     }
 
     public String getUID() {
@@ -43,5 +45,9 @@ public class StuffkieModel {
 
     public int getDrawable() {
         return drawable;
+    }
+
+    public boolean isPhoto_default() {
+        return photo_default;
     }
 }

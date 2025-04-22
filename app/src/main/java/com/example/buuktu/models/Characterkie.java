@@ -15,11 +15,28 @@ public class Characterkie {
     private boolean alive;
     private boolean photo_default;
     private Drawable photo;
-    private boolean borrador;
+    private boolean draft;
+    boolean characterkiePrivate;
+
+    public boolean isCharacterkiePrivate() {
+        return characterkiePrivate;
+    }
+
+    public void setCharacterkiePrivate(boolean characterkiePrivate) {
+        this.characterkiePrivate = characterkiePrivate;
+    }
 
     public Characterkie(String UID, String name) {
         this.UID=UID;
         this.name=name;
+    }
+
+    public boolean isDraft() {
+        return draft;
+    }
+
+    public void setDraft(boolean draft) {
+        this.draft = draft;
     }
 
     public boolean isAlive() {
