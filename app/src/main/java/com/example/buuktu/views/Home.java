@@ -2,10 +2,6 @@ package com.example.buuktu.views;
 
 import static android.widget.Toast.LENGTH_LONG;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.buuktu.R;
 import com.example.buuktu.adapters.WorldkieAdapter;
 import com.example.buuktu.models.WorldkieModel;
-import com.example.buuktu.utils.BitmapUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -31,17 +26,15 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link Home#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Home extends Fragment {
+public class Home extends Fragment implements View.OnClickListener {
     private String UID;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private FirebaseFirestore db;
@@ -53,6 +46,8 @@ public class Home extends Fragment {
     private WorldkieAdapter worldkieAdapter;
     CollectionReference dbWorldkies;
     ImageButton ib_save;
+    FragmentManager fragmentManager;
+
     //private ListenerRegistration firestoreListener;
     public Home() {
         // Required empty public constructor
@@ -77,36 +72,15 @@ public class Home extends Fragment {
         ib_save.setVisibility(View.GONE);
         initComponents(view);
         fb_add.setVisibility(View.GONE);
-            fb_parent.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!isAllFabsVisible) {
-                        fb_add.setVisibility(View.VISIBLE);
-                        isAllFabsVisible = true;
-                    } else {
-                        fb_add.setVisibility(View.GONE);
-                        isAllFabsVisible = false;
-                    }
-                }
-            });
         isAllFabsVisible = false;
-        fb_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /*CreateEditWorldkie createEditWorldkie = new CreateEditWorldkie();
-                FragmentManager fragmentManager = getParentFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.fragment_container, createEditWorldkie) .addToBackStack(null) // Permite regresar atrás con el botón de retroceso
-                        .commit();*/
-                navigateToNextFragment();
-            }
-        });
-
+        setListeners();
         db = FirebaseFirestore.getInstance();
         UID = auth.getCurrentUser().getUid();
         rc_worldkies.setLayoutManager(new LinearLayoutManager(getContext()));
         worldkieAdapter = new WorldkieAdapter(worldkieModelArrayList, getContext(), getParentFragmentManager());
         rc_worldkies.setAdapter(worldkieAdapter);
         dbWorldkies = db.collection("Worldkies");
+        fragmentManager = requireActivity().getSupportFragmentManager();
 
         dbWorldkies.whereEqualTo("UID_AUTHOR", UID)
                 .orderBy("last_update", Query.Direction.DESCENDING)
@@ -152,6 +126,10 @@ public class Home extends Fragment {
                 });
         return view;
     }
+    private void setListeners(){
+        fb_add.setOnClickListener(this);
+        fb_parent.setOnClickListener(this);
+    }
     public void initComponents(View view){
         fb_parent = view.findViewById(R.id.fb_parentWorldkies);
         fb_add = view.findViewById(R.id.fb_addWorldkie);
@@ -159,33 +137,13 @@ public class Home extends Fragment {
         worldkieModelArrayList = new ArrayList<>();
     }
     private void navigateToNextFragment() {
-        // Obtén el FragmentManager
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-
-        // Crea una nueva instancia del siguiente fragmento
-        Fragment fragment = new CreateEditWorldkie();
-
-        // Usa el FragmentTransaction para reemplazar el fragmento actual por el siguiente
+        CreateEditWorldkie createEditWorldkie = new CreateEditWorldkie();
         fragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, fragment) // El contenedor donde se muestra el fragmento
+                .replace(R.id.fragment_container, createEditWorldkie) // El contenedor donde se muestra el fragmento
                 .addToBackStack(null) // Añade la transacción a la pila para que se pueda volver atrás
                 .commit();
     }
 
-    /*private void loadAndSetImage(String documentId, WorldkieModel worldkieModel) {
-        StorageReference storageRef = storage.getReference().child(documentId);
-        final long ONE_MEGABYTE = 1024 * 1024;
-        storageRef.getBytes(ONE_MEGABYTE)
-                .addOnSuccessListener(bytes -> {
-                    Bitmap bitmap = BitmapUtils.convertCompressedByteArrayToBitmap(bytes);
-                    Drawable drawable = new BitmapDrawable(getResources(), bitmap);
-                    worldkieModel.setPhoto(drawable);
-                    worldkieAdapter.notifyDataSetChanged(); // Notifica el cambio después de cargar la imagen
-                })
-                .addOnFailureListener(exception -> {
-                    Log.e("Error", "Error al cargar imagen: " + exception.getMessage());
-                });
-    }*/
     private void safeAddToList(ArrayList<WorldkieModel> list, int index, WorldkieModel item) {
         if (index >= 0 && index <= list.size()) {
             list.add(index, item);
@@ -231,21 +189,6 @@ public class Home extends Fragment {
         //return null;
     }
 
-    public FloatingActionButton getFb_parent() {
-        return fb_parent;
-    }
-
-    public FloatingActionButton getFb_add() {
-        return fb_add;
-    }
-    public boolean isAllFabsVisible(){
-        return isAllFabsVisible;
-    }
-
-    public void setAllFabsVisible(boolean allFabsVisible) {
-        isAllFabsVisible = allFabsVisible;
-    }
-
     // Helper method to update the RecyclerView
         private void updateRecyclerView(ArrayList<WorldkieModel> worldkieModelArrayList) {
             WorldkieAdapter worldkieAdapter = new WorldkieAdapter(worldkieModelArrayList, getContext(), getParentFragmentManager());
@@ -258,5 +201,20 @@ public class Home extends Fragment {
        /* if (firestoreListener != null) {
             firestoreListener.remove();
         }*/
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId()==R.id.fb_parentWorldkies){
+                if (!isAllFabsVisible) {
+                    fb_add.setVisibility(View.VISIBLE);
+                    isAllFabsVisible = true;
+                } else {
+                    fb_add.setVisibility(View.GONE);
+                    isAllFabsVisible = false;
+                }
+            } else if (v.getId()==R.id.fb_addWorldkie) {
+            navigateToNextFragment();
+        }
     }
 }

@@ -131,14 +131,14 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
             photosStuffkies.add(mipmap.photostuffkieone);
             photosStuffkies.add(mipmap.photostuffkietwo);
             photosStuffkies.add(mipmap.photostuffkiethree);
-            photosStuffkies.add(R.mipmap.photocharacterkiefour);
-            photosStuffkies.add(R.mipmap.photocharacterkiefive);
-            photosStuffkies.add(R.mipmap.photocharacterkiesix);
-            photosStuffkies.add(R.mipmap.photocharacterkieseven);
-            photosStuffkies.add(R.mipmap.photoworldkienine);
-            photosStuffkies.add(R.mipmap.photoworldkieeight);
-            photosStuffkies.add(R.mipmap.photoworldkieten);
-            photosStuffkies.add(R.mipmap.photoworldkieeleven);
+            photosStuffkies.add(mipmap.photostuffkiefour);
+            photosStuffkies.add(mipmap.photostuffkiefive);
+            photosStuffkies.add(mipmap.photostuffkiesix);
+            photosStuffkies.add(mipmap.photostuffkieseven);
+            photosStuffkies.add(mipmap.photostuffkieeight);
+            photosStuffkies.add(mipmap.photostuffkienine);
+            photosStuffkies.add(mipmap.photostuffkieten);
+            photosStuffkies.add(mipmap.photostuffkieeleven);
         }else if(createEditScenariokie!=null){
             photosScenariokies.add(mipmap.photoscenariokieone);
             photosScenariokies.add(mipmap.photoscenariokietwo);
@@ -212,7 +212,7 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
             createCharacterkie.setSelectedProfilePhoto(imageButton.getDrawable());
         } else if (createEditStuffkie !=null) {
           //  Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
-         //   createEditStuffkie.setSelectedProfilePhoto(imageButton.getDrawable());
+            createEditStuffkie.setSelectedProfilePhoto(imageButton.getDrawable());
         }else if (createEditScenariokie !=null) {
             createEditScenariokie.setSelectedProfilePhoto(imageButton.getDrawable());
         }

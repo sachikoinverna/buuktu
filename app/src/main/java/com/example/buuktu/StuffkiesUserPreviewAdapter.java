@@ -78,13 +78,10 @@ public class StuffkiesUserPreviewAdapter extends RecyclerView.Adapter<StuffkiesU
     public void onBindViewHolder(@NonNull StuffkiesUserPreviewAdapter.ViewHolder holder, int position) {
         holder.getTv_stuffkie_preview_worldkie().setText(dataSet.get(holder.getAdapterPosition()).getName());
         // holder.getIv_characterkie_preview_worldkie().setImageDrawable(dataSet.get(holder.getAdapterPosition()).getPhoto());
-        Drawable drawable = context.getDrawable(R.drawable.cloudlogin);
+        Drawable drawable = context.getDrawable(R.drawable.thumb_custom);
       //  Drawable drawable = dataSet.get(holder.getAdapterPosition()).getPhoto();
 
         Bitmap bitmap = DrawableUtils.drawableToBitmap(drawable);
-        int colorInt = ContextCompat.getColor(context, R.color.redError);
-        Color color = Color.valueOf(colorInt);
-
         DrawableUtils.personalizarImagenCircle(context,bitmap,holder.getIv_stuffkie_preview_worldkie(),R.color.brownBrown);
     }
 

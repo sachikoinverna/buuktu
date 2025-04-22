@@ -103,10 +103,8 @@ public class UserkieSearchAdapter extends RecyclerView.Adapter<UserkieSearchAdap
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.getTv_userkie_username_search().setText(dataSet.get(holder.getAdapterPosition()).getUsername());
         holder.getTv_userkie_name_search().setText(dataSet.get(holder.getAdapterPosition()).getName());
-        if(dataSet.get(holder.getAdapterPosition()).isProfile_private()){
-            holder.getIv_userkie_private_search().setImageAlpha(R.drawable.twotone_lock_24);
-        }else{
-            holder.getIv_userkie_private_search().setImageAlpha(R.drawable.twotone_lock_open_24);
+        if(!dataSet.get(holder.getAdapterPosition()).isProfile_private()){
+            holder.getIv_userkie_private_search().setVisibility(View.INVISIBLE);
         }
 
         holder.getCv_userkie_search().setOnClickListener(new View.OnClickListener() {
@@ -124,7 +122,6 @@ public class UserkieSearchAdapter extends RecyclerView.Adapter<UserkieSearchAdap
             }
         });
         ;
-        Color color = Color.valueOf(context.getColor(R.color.brownBrown));
         if(dataSet.get(holder.getAdapterPosition()).isPhoto_default()) {
             FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
             firebaseFirestore.collection("Users").document(dataSet.get(holder.getAdapterPosition()).getUID()).addSnapshotListener((queryDocumentSnapshot, e) -> {

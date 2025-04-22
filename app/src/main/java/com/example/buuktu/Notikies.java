@@ -106,7 +106,7 @@ public class Notikies extends Fragment {
                     //if (documentSnapshot.getBoolean("photo_default")) {
                     //    if (!documentSnapshot.getId().equals(firebaseAuth.getUid())) {
 
-                    Drawable drawable = getResources().getDrawable(R.drawable.worldkie_default);
+                    Drawable drawable = getResources().getDrawable(R.drawable.thumb_custom);
                     NotikieModel notikieModel = new NotikieModel(
                             documentSnapshot.getString("message"),
                             documentSnapshot.getTimestamp("date"), // Usamos getTimestamp para obtener el campo como un Timestamp

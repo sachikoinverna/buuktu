@@ -1,8 +1,10 @@
 package com.example.buuktu;
 
+import android.animation.Animator;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.DrawableRes;
@@ -14,6 +16,7 @@ import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
@@ -146,6 +149,28 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
     }
     public ImageButton getIb_select_img_create_worldkie() {
         return ib_select_img_create_scenariokie;
+    }
+    private void startCircularReveal(Drawable finalDrawable) {
+        ib_select_img_create_scenariokie.setImageDrawable(finalDrawable);
+        ib_select_img_create_scenariokie.setAlpha(1f);
+
+        // Solo ejecutar la animación en dispositivos con API 21+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // Obtener el centro del ImageButton
+            int centerX = ib_select_img_create_scenariokie.getWidth() / 2;
+            int centerY = ib_select_img_create_scenariokie.getHeight() / 2;
+
+            // Calcular el radio final (el círculo más grande que puede caber dentro del ImageButton)
+            float finalRadius = Math.max(ib_select_img_create_scenariokie.getWidth(), ib_select_img_create_scenariokie.getHeight());
+
+            // Crear el Animator para la revelación circular
+            Animator circularReveal = ViewAnimationUtils.createCircularReveal(
+                    ib_select_img_create_scenariokie, centerX, centerY, 0, finalRadius);
+            circularReveal.setDuration(500); // Duración de la animación en milisegundos
+
+            // Iniciar la animación
+            circularReveal.start();
+        }
     }
     private void setListeners(){
         ib_select_img_create_scenariokie.setOnClickListener(this);

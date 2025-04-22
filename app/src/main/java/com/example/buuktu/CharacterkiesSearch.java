@@ -17,9 +17,12 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.buuktu.adapters.CharacterkieSearchAdapter;
+import com.example.buuktu.adapters.StuffkieSearchAdapter;
 import com.example.buuktu.models.Characterkie;
+import com.example.buuktu.models.StuffkieModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -35,8 +38,9 @@ public class CharacterkiesSearch extends Fragment {
     CollectionReference collectionCharacterkies;
     private FirebaseFirestore db;
     FirebaseAuth firebaseAuth;
+    String UID;
     RecyclerView rc_characterkies_search;
-    static SearchView searchView;
+    CharacterkieSearchAdapter characterkieSearchAdapter;
     public CharacterkiesSearch() {
     }
 
@@ -44,8 +48,6 @@ public class CharacterkiesSearch extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment CharacterkiesSearch.
      */
     // TODO: Rename and change types and number of parameters
@@ -66,8 +68,12 @@ public class CharacterkiesSearch extends Fragment {
         View view = inflater.inflate(R.layout.fragment_characterkies_search, container, false);
         rc_characterkies_search = view.findViewById(R.id.rc_characterkies_search);
         db = FirebaseFirestore.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+        UID = firebaseAuth.getUid();
         characterkieModelArrayList = new ArrayList<>();
         collectionCharacterkies = db.collection("Characterkies");
+        characterkieSearchAdapter = new CharacterkieSearchAdapter(characterkieModelArrayList, getContext(), getParentFragmentManager());
+        rc_characterkies_search.setAdapter(characterkieSearchAdapter);
         collectionCharacterkies.addSnapshotListener((queryDocumentSnapshots, e) -> {
             if (e != null) {
                 Log.e("Error", e.getMessage());
@@ -76,60 +82,58 @@ public class CharacterkiesSearch extends Fragment {
             }
 
             if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
-                characterkieModelArrayList.clear(); // Limpia la lista antes de agregar nuevos datos
+                //stuffkieModelArrayList.clear(); // Limpia la lista antes de agregar nuevos datos
 
-                for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
-                    //if (documentSnapshot.getBoolean("photo_default")) {
-                    //    if (!documentSnapshot.getId().equals(firebaseAuth.getUid())) {
+                for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
+                    DocumentSnapshot doc = dc.getDocument();                    //if (documentSnapshot.getBoolean("photo_default")) {
+                    if (!doc.getString("UID_AUTHOR").equals(UID)) {
 
-                    Drawable drawable = getResources().getDrawable(R.drawable.worldkie_default);
+                        Drawable drawable = getResources().getDrawable(R.drawable.thumb_custom);
                     /*StuffkieModel stuffkieModel = new StuffkieModel(
                             documentSnapshot.getId(),
                             documentSnapshot.getString("name"),
                             Boolean.TRUE.equals(documentSnapshot.getBoolean("stuffkie_private")),
                             R.drawable.cloudlogin
                     );*/
-                    Characterkie characterkie = new Characterkie(documentSnapshot.getId(),documentSnapshot.getString("name"));
-                    Log.d("StuffkiesSearch", "Stuffkie encontrado: " + documentSnapshot.getString("name"));
+                        Characterkie characterkie = new Characterkie(doc.getId(), doc.getString("name"));
+                        Log.d("StuffkiesSearch", "Stuffkie encontrado: " + doc.getString("name"));
+                        switch (dc.getType()) {
+                            case ADDED:
+                                safeAddToList(characterkieModelArrayList, dc.getNewIndex(), characterkie);
+                                characterkieSearchAdapter.notifyItemInserted(dc.getNewIndex());
+                                break;
 
-                    characterkieModelArrayList.add(characterkie);
-                    updateRecyclerView(characterkieModelArrayList);
-                    //}// Actualiza después de cargar cada imagen
-                    //  } else {
-                      /*  StorageReference storageRef = storage.getReference().child(documentSnapshot.getId());
-                        final long ONE_MEGABYTE = 1024 * 1024;
+                            case MODIFIED:
+                                safeSetToList(characterkieModelArrayList, dc.getOldIndex(), characterkie);
+                                characterkieSearchAdapter.notifyItemChanged(dc.getOldIndex());
+                                break;
 
-                        storageRef.getBytes(ONE_MEGABYTE)
-                                .addOnSuccessListener(bytes -> {*/
-                                 /*   Bitmap bitmap = BitmapUtils.convertCompressedByteArrayToBitmap(bytes);
-                                    Drawable drawable = new BitmapDrawable(getResources(), bitmap);
-
-                                    WorldkieModel worldkieModel = new WorldkieModel(
-                                            documentSnapshot.getId(),
-                                            documentSnapshot.getString("name"),
-                                            R.
-                                            documentSnapshot.getString("username"),
-                                            drawable,
-                                            false,
-                                            documentSnapshot.getBoolean("worldkie_private")
-                                    );*/
-                    //     worldkieModelArrayList.add(worldkieModel);
-                    //    updateRecyclerView(worldkieModelArrayList); // Actualiza después de cargar cada imagen
-                              /*  })
-                                .addOnFailureListener(exception -> {
-                                    Log.e("Error", "Error al cargar imagen: " + exception.getMessage());
-                                });*/
+                            case REMOVED:
+                                if (dc.getOldIndex() >= 0 && dc.getOldIndex() < characterkieModelArrayList.size()) {
+                                    characterkieModelArrayList.remove(dc.getOldIndex());
+                                    characterkieSearchAdapter.notifyItemRemoved(dc.getOldIndex());
+                                }
+                                break;
+                        }
+                    }
                 }
             }
 
-            // updateRecyclerView(worldkieModelArrayList); // Actualiza el RecyclerView después de procesar todos los documentos
-        }); /*else {
-                // Si no hay documentos, limpia la lista y actualiza el RecyclerView
-                worldkieModelArrayList.clear();
-                updateRecyclerView(worldkieModelArrayList);
-            }*/
-        //});
+        });
         return view;
+    }
+    private void safeAddToList(ArrayList<Characterkie> list, int index, Characterkie item) {
+        if (index >= 0 && index <= list.size()) {
+            list.add(index, item);
+        } else {
+            list.add(item); // Fallback: añade al final
+        }
+    }
+
+    private void safeSetToList(ArrayList<Characterkie> list, int index, Characterkie item) {
+        if (index >= 0 && index < list.size()) {
+            list.set(index, item);
+        }
     }
     private void updateRecyclerView(ArrayList<Characterkie> characterkieArrayList) {
         CharacterkieSearchAdapter characterkieSearchAdapter = new CharacterkieSearchAdapter(characterkieArrayList, getContext(), getParentFragmentManager());

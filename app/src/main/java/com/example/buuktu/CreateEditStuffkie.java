@@ -1,10 +1,13 @@
 package com.example.buuktu;
 
+import android.animation.Animator;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.DrawableRes;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -13,9 +16,13 @@ import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.example.buuktu.adapters.RoundedBorderSquareTransformation;
 import com.example.buuktu.bottomsheet.BottomSheetChooseComponents;
 import com.example.buuktu.bottomsheet.BottomSheetProfilePhoto;
 import com.example.buuktu.utils.DrawableUtils;
@@ -117,6 +124,56 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
     }
     public void selectImage(){
         bottomSheetProfilePhoto.show(getChildFragmentManager(),"BottomSheetProfilePhoto");
+    }
+    public void setSelectedProfilePhoto(Drawable image){
+      /*  Bitmap bitmap = Bitmap.createBitmap(
+                image.getIntrinsicWidth(),
+                image.getIntrinsicHeight(),
+                Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        image.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        image.draw(canvas);*/
+        int cornerRadius = 150 / 6; // Ejemplo de radio
+        int borderWidth = 7; // Ejemplo de grosor del borde
+        int borderColor = getContext().getResources().getColor(R.color.brownMaroon, null); // Asegúrate de que el color sea correcto
+//        Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
+        //ib_select_img_create_worldkie.setImageDrawable(image);
+
+        RequestOptions requestOptions = new RequestOptions()
+                // .override(150, 150)
+                .centerCrop()
+                .transform(new RoundedBorderSquareTransformation(cornerRadius,borderWidth,borderColor));
+
+        Glide.with(getContext())
+                .load(DrawableUtils.drawableToBitmap(image))
+                .apply(requestOptions)
+                .into(ib_select_img_create_stuffkie);
+    }
+    public void setSelectedProfilePhoto(@DrawableRes int imageResId){
+        DrawableUtils.personalizarImagenCuadradoButton(getContext(),150/6,7,R.color.brownMaroon,imageResId,ib_select_img_create_stuffkie);
+
+    }
+    private void startCircularReveal(Drawable finalDrawable) {
+        ib_select_img_create_stuffkie.setImageDrawable(finalDrawable);
+        ib_select_img_create_stuffkie.setAlpha(1f);
+
+        // Solo ejecutar la animación en dispositivos con API 21+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // Obtener el centro del ImageButton
+            int centerX = ib_select_img_create_stuffkie.getWidth() / 2;
+            int centerY = ib_select_img_create_stuffkie.getHeight() / 2;
+
+            // Calcular el radio final (el círculo más grande que puede caber dentro del ImageButton)
+            float finalRadius = Math.max(ib_select_img_create_stuffkie.getWidth(), ib_select_img_create_stuffkie.getHeight());
+
+            // Crear el Animator para la revelación circular
+            Animator circularReveal = ViewAnimationUtils.createCircularReveal(
+                    ib_select_img_create_stuffkie, centerX, centerY, 0, finalRadius);
+            circularReveal.setDuration(500); // Duración de la animación en milisegundos
+
+            // Iniciar la animación
+            circularReveal.start();
+        }
     }
     @Override
     public void onClick(View v) {

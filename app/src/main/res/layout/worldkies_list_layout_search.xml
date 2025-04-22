@@ -38,7 +38,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/iv_worldkie_private_search"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@mipmap/photoprofilefive" />
+                app:srcCompat="@mipmap/photoworldkieone" />
 
             <TextView
                 android:id="@+id/tv_worldkie_name_search"

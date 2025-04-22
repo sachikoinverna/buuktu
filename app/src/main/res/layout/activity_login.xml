@@ -13,14 +13,13 @@
         android:id="@+id/materialCardView"
         android:layout_width="350dp"
         android:layout_height="350dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="100dp"
         android:background="@drawable/loginborders"
         app:cardCornerRadius="40dp"
         app:cardElevation="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -98,11 +97,11 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="170dp"
         android:text="@string/login"
         android:textSize="60sp"
-        app:layout_constraintBottom_toTopOf="@+id/materialCardView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -110,8 +109,8 @@
         android:id="@+id/tv_loginToRegisterButton"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="37dp"
+        android:layout_marginEnd="50dp"
         android:background="@drawable/button_backgground"
         android:foreground="@drawable/twotone_bubble_chart_24"
         android:foregroundGravity="left|center"
@@ -127,7 +126,7 @@
         android:id="@+id/tv_loginButton"
         android:layout_width="120dp"
         android:layout_height="50dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/button_backgground"
         android:foreground="@drawable/twotone_auto_awesome_24"
         android:foregroundGravity="left|center"

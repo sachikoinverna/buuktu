@@ -126,7 +126,7 @@ public class ProfileSettings extends Fragment implements View.OnClickListener {
                 userkieModel = new UserkieModel(
                         UID,
                         documentSnapshot.getString("name"),
-                        R.drawable.add_button,
+                        R.drawable.thumb_custom,
                         documentSnapshot.getString("username"),
                         documentSnapshot.getBoolean("photo_default"),
                         isPrivate

@@ -35,6 +35,7 @@ import com.example.buuktu.bottomsheet.BottomSheetProfilePhoto;
 import com.example.buuktu.dialogs.CreateEditGeneralDialog;
 import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.utils.DrawableUtils;
+import com.example.buuktu.utils.EfectsUtils;
 import com.example.buuktu.utils.NavigationUtils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -155,16 +156,6 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
                     boolean photo_default = queryDocumentSnapshot.getBoolean("photo_default");
                     worldkieModel.setPhoto_default(photo_default);
                        getImage();
-                    /*if (!title.isEmpty()) {
-                        noteItem.setTitle(title);
-                        et_title_note.setText(noteItem.getTitle());
-                    } else {
-                        noteItem.setTitle("(Sin titulo)");
-                        et_title_note.setHint(noteItem.getTitle());
-                    }*/
-
-                //    noteItem.setContent(queryDocumentSnapshot.getString("text"));
-                //    et_content_note.setText(noteItem.getContent());
                 }
             });
 
@@ -234,7 +225,7 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
                                 .into(ib_select_img_create_worldkie);*/
                             DrawableUtils.personalizarImagenCuadradoButton(getContext(),150/6,7,R.color.brownMaroon,uri,ib_select_img_create_worldkie);
                         ib_select_img_create_worldkie.setVisibility(View.VISIBLE);
-                        startCircularReveal(ib_select_img_create_worldkie.getDrawable());
+                        EfectsUtils.startCircularReveal(ib_select_img_create_worldkie.getDrawable(),ib_select_img_create_worldkie);
 
                         // Para el borde con Glide, necesitarías una transformación personalizada más compleja
                         // o dibujar el borde alrededor del ImageView en su contenedor.
@@ -312,28 +303,6 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
         DrawableUtils.personalizarImagenCuadradoButton(getContext(),115/6,7,R.color.brownMaroon,drawable, ib_select_img_create_worldkie);
 
     }
-    private void startCircularReveal(Drawable finalDrawable) {
-        ib_select_img_create_worldkie.setImageDrawable(finalDrawable);
-        ib_select_img_create_worldkie.setAlpha(1f);
-
-        // Solo ejecutar la animación en dispositivos con API 21+
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // Obtener el centro del ImageButton
-            int centerX = ib_select_img_create_worldkie.getWidth() / 2;
-            int centerY = ib_select_img_create_worldkie.getHeight() / 2;
-
-            // Calcular el radio final (el círculo más grande que puede caber dentro del ImageButton)
-            float finalRadius = Math.max(ib_select_img_create_worldkie.getWidth(), ib_select_img_create_worldkie.getHeight());
-
-            // Crear el Animator para la revelación circular
-            Animator circularReveal = ViewAnimationUtils.createCircularReveal(
-                    ib_select_img_create_worldkie, centerX, centerY, 0, finalRadius);
-            circularReveal.setDuration(500); // Duración de la animación en milisegundos
-
-            // Iniciar la animación
-            circularReveal.start();
-        }
-    }
     private void addDataToFirestore() {
    //     mostrarBarraProgreso();
         Date creation_date = new Date();
@@ -342,7 +311,7 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
         worldkieData.put("name", et_nameWorldkieCreate.getText().toString()); // Corrección clave
         worldkieData.put("creation_date", creation_date);
         worldkieData.put("last_update", creation_date);
-        worldkieData.put("photo_default", ib_select_img_create_worldkie.getDrawable().equals(R.drawable.worldkie_default));
+        worldkieData.put("photo_default", ib_select_img_create_worldkie.getDrawable().equals(R.drawable.baseline_diversity_1_24));
         worldkieData.put("worldkie_private", tb_worldkiePrivacity.isChecked());
         barraProgreso.incrementProgressBy(25);
         db.collection("Worldkies").add(worldkieData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -430,8 +399,8 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
         }
         worldkieData.put("last_update", last_update);
         //boolean isDefaultImage = (boolean) createWorldkie.getIB_profile_photo().getTag(R.drawable.worldkie_default);
-        if (worldkieModel.isPhoto_default() != ib_select_img_create_worldkie.getDrawable().equals(R.drawable.worldkie_default)) {
-            worldkieData.put("photo_default", ib_select_img_create_worldkie.getDrawable().equals(R.drawable.worldkie_default));
+        if (worldkieModel.isPhoto_default() != ib_select_img_create_worldkie.getDrawable().equals(R.drawable.baseline_diversity_1_24)) {
+            worldkieData.put("photo_default", ib_select_img_create_worldkie.getDrawable().equals(R.drawable.baseline_diversity_1_24));
         }
         if(worldkieModel.isWorldkie_private() != tb_worldkiePrivacity.isChecked()){
             worldkieData.put("worldkie_private", tb_worldkiePrivacity.isChecked());
@@ -496,7 +465,6 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
                     }else{
                         editDataFirestore();
                     }
-
         } else if (v.getId()==R.id.ib_back) {
             NavigationUtils.goBack(fragmentManager,activity);
         }

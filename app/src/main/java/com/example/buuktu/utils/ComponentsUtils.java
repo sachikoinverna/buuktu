@@ -35,7 +35,6 @@ import java.util.Map;
 
 public class ComponentsUtils {
     public static int lastAddedFieldId = -1; // Registro del último campo añadido
-
     public static void setLastAddedFieldId(int lastAddedFieldId) {
         ComponentsUtils.lastAddedFieldId = lastAddedFieldId;
     }
@@ -192,8 +191,6 @@ public class ComponentsUtils {
                     constraintSet2.clone(constraintLayout);
                     if(child.getId() == R.id.ib_select_img_create_characterkie){
                         constraintSet2.connect(child.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 24);
-                    }else if(child.getId() == R.id.ib_delete_img_create_characterkie){
-                        constraintSet2.connect(child.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 58);
                     }
                     constraintSet2.connect(child.getId(), ConstraintSet.TOP, previousId, ConstraintSet.BOTTOM, 16);
                     constraintSet2.applyTo(constraintLayout);
@@ -223,11 +220,9 @@ public class ComponentsUtils {
             View child = layout.getChildAt(i);
 
             // Excluir botones fijos, el switch y botones flotantes
-            if (child.getId() == R.id.bt_cancel_addCharacterkie ||
-                    child.getId() == R.id.bt_ok_addCharacterkie ||
+            if (
                     child.getId() == R.id.fb_more_createCharacterkie ||
                     child.getId() == R.id.fb_add_field_createCharacterkie ||
-                    child.getId() == R.id.ib_back_create ||
                     child.getId() == R.id.ib_select_img_create_characterkie ||
                     child.getId() == switchId) continue;
 
@@ -298,12 +293,6 @@ public class ComponentsUtils {
         ConstraintSet btnSet = new ConstraintSet();
         btnSet.clone(layout);
 
-        btnSet.clear(R.id.bt_ok_addCharacterkie, ConstraintSet.TOP);
-        btnSet.connect(R.id.bt_ok_addCharacterkie, ConstraintSet.TOP, switchId, ConstraintSet.BOTTOM, 10);
-
-        btnSet.clear(R.id.bt_cancel_addCharacterkie, ConstraintSet.TOP);
-        btnSet.connect(R.id.bt_cancel_addCharacterkie, ConstraintSet.TOP, switchId, ConstraintSet.BOTTOM, 10);
-
         btnSet.clear(R.id.fb_more_createCharacterkie, ConstraintSet.END);
         btnSet.clear(R.id.fb_more_createCharacterkie, ConstraintSet.BOTTOM);
         btnSet.connect(R.id.fb_more_createCharacterkie, ConstraintSet.END, ConstraintLayout.LayoutParams.PARENT_ID, ConstraintSet.END, 10);
@@ -313,11 +302,6 @@ public class ComponentsUtils {
         btnSet.clear(R.id.fb_add_field_createCharacterkie, ConstraintSet.BOTTOM);
         btnSet.connect(R.id.fb_add_field_createCharacterkie, ConstraintSet.END, ConstraintLayout.LayoutParams.PARENT_ID, ConstraintSet.END, 10);
         btnSet.connect(R.id.fb_add_field_createCharacterkie, ConstraintSet.BOTTOM, R.id.fb_more_createCharacterkie, ConstraintSet.TOP, 10);
-
-        btnSet.clear(R.id.ib_back_create, ConstraintSet.TOP);
-        btnSet.clear(R.id.ib_back_create, ConstraintSet.START);
-        btnSet.connect(R.id.ib_back_create, ConstraintSet.TOP, ConstraintLayout.LayoutParams.PARENT_ID, ConstraintSet.TOP, 89);
-        btnSet.connect(R.id.ib_back_create, ConstraintSet.START, ConstraintLayout.LayoutParams.PARENT_ID, ConstraintSet.START, 27);
 
         btnSet.clear(R.id.ib_select_img_create_characterkie, ConstraintSet.TOP);
         btnSet.clear(R.id.ib_select_img_create_characterkie, ConstraintSet.START);

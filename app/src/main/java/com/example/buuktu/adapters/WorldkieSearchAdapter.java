@@ -5,6 +5,7 @@ import static android.widget.Toast.LENGTH_LONG;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +21,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.buuktu.ProfileView;
 import com.example.buuktu.R;
+import com.example.buuktu.WorldkieView;
 import com.example.buuktu.models.UserkieModel;
 import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.utils.DrawableUtils;
@@ -162,15 +165,24 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
         holder.getTv_date_creation_search_worldkie().setText(simpleDateFormat.format(dataSet.get(holder.getAdapterPosition()).getCreation_date()));
 
         if (dataSet.get(holder.getAdapterPosition()).isWorldkie_private()) {
-            holder.getIv_worldkie_private_search().setImageAlpha(R.drawable.twotone_lock_24);
+            holder.getIv_worldkie_private_search().setVisibility(View.VISIBLE);
         } else {
-            holder.getIv_worldkie_private_search().setImageAlpha(R.drawable.twotone_lock_open_24);
+            holder.getIv_worldkie_private_search().setVisibility(View.INVISIBLE);
         }
 
         holder.getCv_worldkie_search().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                WorldkieView worldkieView = new WorldkieView();
+                Bundle bundle = new Bundle();
+                bundle.putString("mode","other");
+                bundle.putString("UID",dataSet.get(holder.getAdapterPosition()).getUID());
+                bundle.putString("UID_AUTHOR",dataSet.get(holder.getAdapterPosition()).getUID_AUTHOR());
+                worldkieView.setArguments(bundle);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, worldkieView)
+                        .addToBackStack(null)
+                        .commit();
             }
         });
         holder.getIb_show_more_details_worldkie_search().setOnClickListener(new View.OnClickListener() {
@@ -197,12 +209,6 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
         if (dataSet.get(holder.getAdapterPosition()).isPhoto_default()) {
             FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
             firebaseFirestore.collection("Worldkies").document(dataSet.get(holder.getAdapterPosition()).getUID()).addSnapshotListener((queryDocumentSnapshot, e) -> {
-                       /* if (e != null) {
-                            Log.e("Error", e.getMessage());
-                            Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
-                            return;
-                        }*/
-                //boolean photo_default = queryDocumentSnapshot.getBoolean("photo_default");
                 String id_photo = queryDocumentSnapshot.getString("photo_id");
                 int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
 
@@ -210,7 +216,7 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
                     Drawable drawable = ContextCompat.getDrawable(context, resId);
                     holder.getIv_worldkie_photo_search().setImageDrawable(drawable);
                     try {
-                        DrawableUtils.personalizarImagenCuadradoButton(context, 115 / 6, 7, R.color.brownMaroon, drawable, holder.getIv_worldkie_photo_search());
+                        DrawableUtils.personalizarImagenCuadradoButton(context,115/6,7,R.color.brownMaroon,drawable, holder.getIv_worldkie_photo_search());
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -224,7 +230,7 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
                     if (item.getName().startsWith("cover")) {
                         item.getDownloadUrl().addOnSuccessListener(uri -> {
                             try {
-                                DrawableUtils.personalizarImagenCuadradoButton(context, 115 / 7, 7, R.color.greenWhatever, uri, holder.getIv_worldkie_photo_search());
+                                DrawableUtils.personalizarImagenCuadradoButton(context,115/7,7, R.color.greenWhatever,uri,holder.getIv_worldkie_photo_search());
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }

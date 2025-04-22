@@ -93,10 +93,8 @@ public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
        // holder.getTv_stuffkie_username_search().setText(dataSet.get(holder.getAdapterPosition()).getUsername());
         holder.getTv_stuffkie_name_search().setText(dataSet.get(holder.getAdapterPosition()).getName());
-        if(dataSet.get(holder.getAdapterPosition()).isStuffkie_private()){
-            holder.getIv_stuffkie_private_search().setImageAlpha(R.drawable.twotone_lock_24);
-        }else{
-            holder.getIv_stuffkie_private_search().setImageAlpha(R.drawable.twotone_lock_open_24);
+        if(!dataSet.get(holder.getAdapterPosition()).isStuffkie_private()){
+            holder.getIv_stuffkie_private_search().setVisibility(View.INVISIBLE);
         }
 
         holder.getCv_stuffkie_search().setOnClickListener(new View.OnClickListener() {
@@ -106,7 +104,7 @@ public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAd
             }
         });
         ;
-        Color color = Color.valueOf(context.getColor(R.color.brownBrown));
+
         DrawableUtils.personalizarImagenCircle(context,DrawableUtils.drawableToBitmap(holder.iv_stuffkie_photo_search.getDrawable()),holder.getIv_stuffkie_photo_search(),R.color.brownMaroon);
         /*holder.getIb_enterToAWorldkie().setOnClickListener(new View.OnClickListener() {
             @Override

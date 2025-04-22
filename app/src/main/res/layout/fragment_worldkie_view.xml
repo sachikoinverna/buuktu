@@ -8,7 +8,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:backgroundTint="#FFFFFF">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cv_info_worldkie"
@@ -31,21 +33,34 @@
                 android:layout_height="match_parent">
 
                 <ImageButton
-                    android:id="@+id/ib_profileView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/ib_worldkieView"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:layout_marginTop="8dp"
+                    android:background="@android:color/transparent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/cloudlogin" />
+                    app:srcCompat="@mipmap/photoworldkieone" />
 
                 <TextView
-                    android:id="@+id/tv_nameProfileView"
-                    android:layout_width="match_parent"
+                    android:id="@+id/tv_nameUserWorldkieView"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="TextView"
+                    android:textColor="#FFFFFF"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_at"
+                    app:layout_constraintStart_toEndOf="@+id/textView21"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_nameWorldkieView" />
+
+                <TextView
+                    android:id="@+id/tv_nameWorldkieView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
                     android:gravity="center"
                     android:text="Nombre"
@@ -54,33 +69,88 @@
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ib_profileView" />
+                    app:layout_constraintTop_toBottomOf="@+id/ib_worldkieView" />
 
                 <TextView
-                    android:id="@+id/textView14"
+                    android:id="@+id/tv_at"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
                     android:text="@string/at_symbol"
                     android:textColor="#FFFFFF"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/tv_usernameProfileView"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_nameProfileView" />
+                    app:layout_constraintStart_toEndOf="@+id/tv_nameUserWorldkieView"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_nameWorldkieView" />
 
                 <TextView
-                    android:id="@+id/tv_usernameProfileView"
+                    android:id="@+id/tv_usernameWorldkieView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
                     android:gravity="center"
                     android:text="Nombre de usuario"
                     android:textColor="#FFFFFF"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tv_at"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_nameWorldkieView" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="100dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Creacion"
+                    android:textColor="#FFFFFF"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_nameProfileView" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_usernameWorldkieView" />
+
+                <TextView
+                    android:id="@+id/tv_creationDateWorldkieView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="TextView"
+                    android:textColor="#FFFFFF"
+                    app:layout_constraintStart_toEndOf="@+id/textView4"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_usernameWorldkieView" />
+
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="100dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Ultima actualizacion"
+                    android:textColor="#FFFFFF"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+                <TextView
+                    android:id="@+id/tv_lastUpdateWorldkieView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="TextView"
+                    android:textColor="#FFFFFF"
+                    app:layout_constraintStart_toEndOf="@+id/textView11"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_creationDateWorldkieView" />
+
+                <TextView
+                    android:id="@+id/textView21"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="100dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="Creador:"
+                    android:textColor="#FFFFFF"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_nameUserWorldkieView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_nameWorldkieView" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
@@ -89,23 +159,53 @@
             android:id="@+id/sv_pa"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="32dp"
             android:background="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cv_info_self_profile">
+            app:layout_constraintTop_toBottomOf="@+id/cv_info_worldkie">
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardView2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:strokeColor="#642D2D"
+                app:strokeWidth="3dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
+                    <ImageView
+                        android:id="@+id/iv_locked_worldkie"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="8dp"
+                        android:src="@drawable/twotone_lock_24"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
                     <TextView
-                        android:id="@+id/textView12"
+                        android:id="@+id/tv_locked_worldkie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="TextView"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/iv_locked_worldkie" />
+
+                    <TextView
+                        android:id="@+id/tv_characterkiesPreviewWorldkie"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -116,21 +216,21 @@
                         tools:layout_editor_absoluteX="8dp" />
 
                     <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/cv_characterkiesPreviewUserSelf"
+                        android:id="@+id/cv_characterkiesPreviewWorldkie"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView12">
+                        app:layout_constraintTop_toBottomOf="@+id/tv_characterkiesPreviewWorldkie">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
 
                             <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/rc_characterkiePreviewUserSelf"
+                                android:id="@+id/rc_characterkiesPrevieWorldkie"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="8dp"
@@ -141,40 +241,40 @@
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/textView12" />
+                                app:layout_constraintTop_toBottomOf="@+id/tv_characterkiesPreviewWorldkie" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </com.google.android.material.card.MaterialCardView>
 
                     <TextView
-                        android:id="@+id/textView13"
+                        android:id="@+id/tv_stuffkiesPreviewWorldkie"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
                         android:gravity="center"
                         android:text="Objetos"
                         android:textSize="16sp"
                         android:textStyle="bold"
+                        android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/cv_characterkiesPreviewUserSelf" />
+                        app:layout_constraintTop_toBottomOf="@+id/cv_characterkiesPreviewWorldkie" />
 
                     <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/cv_stuffkiesPreviewUserSelf"
+                        android:id="@+id/cv_stuffkiesPreviewWorldkie"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView13">
+                        app:layout_constraintTop_toBottomOf="@+id/tv_stuffkiesPreviewWorldkie">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
                             <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/rc_stuffkiePreviewUserSelf"
+                                android:id="@+id/rc_stuffkiesPreviewWorldkie"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="8dp"
@@ -185,7 +285,7 @@
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/textView13" />
+                                app:layout_constraintTop_toBottomOf="@+id/tv_stuffkiesPreviewWorldkie" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -193,7 +293,7 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
         </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

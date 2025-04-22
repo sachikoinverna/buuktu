@@ -81,7 +81,7 @@ public class UserkiesSearch extends Fragment {
                     UserkieModel user = new UserkieModel(
                             doc.getId(),
                             doc.getString("name"),
-                            R.drawable.cloudlogin, // imagen por defecto
+                            R.drawable.thumb_custom, // imagen por defecto
                             doc.getString("username"),
                             doc.getBoolean("photo_default"),
                             doc.getBoolean("private")

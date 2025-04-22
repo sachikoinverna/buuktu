@@ -40,6 +40,7 @@ public class StuffkiesSearch extends Fragment {
     CollectionReference collectionStuffkies;
     private FirebaseFirestore db;
     FirebaseAuth firebaseAuth;
+    String UID;
     RecyclerView rc_stuffkies_search;
     StuffkieSearchAdapter stuffkieSearchAdapter;
     public StuffkiesSearch() {
@@ -72,6 +73,8 @@ public class StuffkiesSearch extends Fragment {
         rc_stuffkies_search = view.findViewById(R.id.rc_stuffkies_search);
         db = FirebaseFirestore.getInstance();
         stuffkieModelArrayList = new ArrayList<>();
+        firebaseAuth = FirebaseAuth.getInstance();
+        UID = firebaseAuth.getUid();
         collectionStuffkies = db.collection("Stuffkies");
         stuffkieSearchAdapter = new StuffkieSearchAdapter(stuffkieModelArrayList, getContext(), getParentFragmentManager());
         rc_stuffkies_search.setAdapter(stuffkieSearchAdapter);
@@ -88,104 +91,38 @@ public class StuffkiesSearch extends Fragment {
 
                 for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
                     DocumentSnapshot doc = dc.getDocument();                    //if (documentSnapshot.getBoolean("photo_default")) {
-                //    if (!documentSnapshot.getId().equals(firebaseAuth.getUid())) {
+                    if (!doc.getString("UID_AUTHOR").equals(UID)) {
 
-                        Drawable drawable = getResources().getDrawable(R.drawable.worldkie_default);
+                        Drawable drawable = getResources().getDrawable(R.drawable.thumb_custom);
                         StuffkieModel stuffkieModel = new StuffkieModel(
                                 doc.getId(),
                                 doc.getString("name"),
                                 Boolean.TRUE.equals(doc.getBoolean("stuffkie_private")),
-                                R.drawable.cloudlogin
+                                R.drawable.baseline_diversity_1_24
                         );
-                    switch (dc.getType()) {
-                        case ADDED:
-                            safeAddToList(stuffkieModelArrayList, dc.getNewIndex(), stuffkieModel);
-                            stuffkieSearchAdapter.notifyItemInserted(dc.getNewIndex());
-                            break;
+                        switch (dc.getType()) {
+                            case ADDED:
+                                safeAddToList(stuffkieModelArrayList, dc.getNewIndex(), stuffkieModel);
+                                stuffkieSearchAdapter.notifyItemInserted(dc.getNewIndex());
+                                break;
 
-                        case MODIFIED:
-                            safeSetToList(stuffkieModelArrayList, dc.getOldIndex(), stuffkieModel);
-                            stuffkieSearchAdapter.notifyItemChanged(dc.getOldIndex());
-                            break;
+                            case MODIFIED:
+                                safeSetToList(stuffkieModelArrayList, dc.getOldIndex(), stuffkieModel);
+                                stuffkieSearchAdapter.notifyItemChanged(dc.getOldIndex());
+                                break;
 
-                        case REMOVED:
-                            if (dc.getOldIndex() >= 0 && dc.getOldIndex() < stuffkieModelArrayList.size()) {
-                                stuffkieModelArrayList.remove(dc.getOldIndex());
-                                stuffkieSearchAdapter.notifyItemRemoved(dc.getOldIndex());
-                            }
-                            break;
+                            case REMOVED:
+                                if (dc.getOldIndex() >= 0 && dc.getOldIndex() < stuffkieModelArrayList.size()) {
+                                    stuffkieModelArrayList.remove(dc.getOldIndex());
+                                    stuffkieSearchAdapter.notifyItemRemoved(dc.getOldIndex());
+                                }
+                                break;
+                        }
                     }
-                  //  stuffkieModelArrayList.add(stuffkieModel);
-                  //      updateRecyclerView(stuffkieModelArrayList);
-                    //}// Actualiza después de cargar cada imagen
-                    //  } else {
-                      /*  StorageReference storageRef = storage.getReference().child(documentSnapshot.getId());
-                        final long ONE_MEGABYTE = 1024 * 1024;
-
-                        storageRef.getBytes(ONE_MEGABYTE)
-                                .addOnSuccessListener(bytes -> {*/
-                                 /*   Bitmap bitmap = BitmapUtils.convertCompressedByteArrayToBitmap(bytes);
-                                    Drawable drawable = new BitmapDrawable(getResources(), bitmap);
-
-                                    WorldkieModel worldkieModel = new WorldkieModel(
-                                            documentSnapshot.getId(),
-                                            documentSnapshot.getString("name"),
-                                            R.
-                                            documentSnapshot.getString("username"),
-                                            drawable,
-                                            false,
-                                            documentSnapshot.getBoolean("worldkie_private")
-                                    );*/
-                    //     worldkieModelArrayList.add(worldkieModel);
-                    //    updateRecyclerView(worldkieModelArrayList); // Actualiza después de cargar cada imagen
-                              /*  })
-                                .addOnFailureListener(exception -> {
-                                    Log.e("Error", "Error al cargar imagen: " + exception.getMessage());
-                                });*/
                 }
             }
-
-            // updateRecyclerView(worldkieModelArrayList); // Actualiza el RecyclerView después de procesar todos los documentos
-        }); /*else {
-                // Si no hay documentos, limpia la lista y actualiza el RecyclerView
-                worldkieModelArrayList.clear();
-                updateRecyclerView(worldkieModelArrayList);
-            }*/
-        //});
-       /* searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                filterList(query);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                filterList(newText);
-                return true;
-            }
-        });*/
+        });
         return view;
-    }
-    private void filterList(String query) {
-        filteredDataSet.clear();
-
-        // Filtrar los elementos de la lista
-        if (query.isEmpty()) {
-            // Si el campo de búsqueda está vacío, muestra todos los elementos
-            filteredDataSet.addAll(stuffkieModelArrayList);
-        } else {
-            // Filtrar los elementos que contienen el texto de la búsqueda
-            for (StuffkieModel item : stuffkieModelArrayList) {
-                if (item.getName().toLowerCase().contains(query.toLowerCase())) {
-                    filteredDataSet.add(item);
-
-                }
-            }
-        }
-        updateRecyclerView(filteredDataSet);
-        // Notificar al adaptador que los datos han cambiado
-        stuffkieSearchAdapter.notifyDataSetChanged();
     }
     private void updateRecyclerView(ArrayList<StuffkieModel> settingModels){
         stuffkieSearchAdapter = new StuffkieSearchAdapter(settingModels,getContext(),getParentFragmentManager());

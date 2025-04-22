@@ -276,11 +276,6 @@ public class CreateCharacterkie extends Fragment implements View.OnClickListener
 
     }
 
-    public void openBottomSheet(View view) {
-        BottomSheetChooseComponents bottomSheetFragment = new BottomSheetChooseComponents(context, constraintLayout, this, fieldsNotAdded);
-        bottomSheetFragment.show(getChildFragmentManager(), bottomSheetFragment.getTag());
-    }
-
     public void removeFieldBottomSheet(FieldItem item){
         fieldsNotAdded.remove(item);
     }

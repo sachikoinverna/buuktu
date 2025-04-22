@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,15 +12,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buuktu.R;
+import com.example.buuktu.WorldkieView;
 import com.example.buuktu.models.Characterkie;
 import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.views.Worldkie;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesUserPreviewAdapter.ViewHolder> implements View.OnClickListener {
@@ -30,6 +38,7 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
     }
     private ArrayList<WorldkieModel> dataSet;
     private ItemClickListener clicListener;
+    private FragmentManager fragmentManager;
 
     private Context context;
 
@@ -40,6 +49,7 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView iv_worldkie_preview_worldkie;
         private TextView tv_worldkie_preview_worldkie;
+        CardView cv_worldkie_preview;
         //private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
         //private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
@@ -47,6 +57,7 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
             super(view);
             iv_worldkie_preview_worldkie =  view.findViewById(R.id.iv_worldkie_preview_worldkie);
             tv_worldkie_preview_worldkie= view.findViewById(R.id.tv_worldkie_preview_worldkie);
+            cv_worldkie_preview = view.findViewById(R.id.cv_worldkie_preview);
         }
 
         public ImageView getIv_worldkie_preview_worldkie() {
@@ -56,12 +67,17 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
         public TextView getTv_worldkie_preview_worldkie() {
             return tv_worldkie_preview_worldkie;
         }
+
+        public CardView getCv_worldkie_preview() {
+            return cv_worldkie_preview;
+        }
     }
 
     //Constructor donde pasamos la lista de productos y el contexto
-    public WorldkiesUserPreviewAdapter(ArrayList<WorldkieModel> dataSet, Context ctx) {
+    public WorldkiesUserPreviewAdapter(ArrayList<WorldkieModel> dataSet, Context ctx, FragmentManager fragmentManager) {
         this.dataSet = dataSet;
         this.context = ctx;
+        this.fragmentManager = fragmentManager;
     }
     public void setOnClickListener(ItemClickListener clicListener){
         this.clicListener = clicListener;
@@ -79,15 +95,65 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
     @Override
     public void onBindViewHolder(@NonNull WorldkiesUserPreviewAdapter.ViewHolder holder, int position) {
         holder.getTv_worldkie_preview_worldkie().setText(dataSet.get(holder.getAdapterPosition()).getName());
-        // holder.getIv_characterkie_preview_worldkie().setImageDrawable(dataSet.get(holder.getAdapterPosition()).getPhoto());
-        Drawable drawable = context.getDrawable(R.drawable.cloudlogin);
-      //  Drawable drawable = dataSet.get(holder.getAdapterPosition()).getPhoto();
+        // holder.getIv_characterkie_preview_worldkie().setImageDrawable(dataSet.get(holder.getAdapterPosition()).getPhoto());//  Drawable drawable = dataSet.get(holder.getAdapterPosition()).getPhoto();
+        if(!dataSet.get(holder.getAdapterPosition()).isWorldkie_private()) {
+            holder.getIv_worldkie_preview_worldkie().setVisibility(View.INVISIBLE);
+        }
+        holder.getCv_worldkie_preview().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WorldkieView worldkieView = new WorldkieView();
+                Bundle bundle = new Bundle();
+                bundle.putString("mode","other");
+                bundle.putString("UID",dataSet.get(holder.getAdapterPosition()).getUID());
+                bundle.putString("UID_AUTHOR",dataSet.get(holder.getAdapterPosition()).getUID_AUTHOR());
+                worldkieView.setArguments(bundle);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, worldkieView)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+        if (dataSet.get(holder.getAdapterPosition()).isPhoto_default()) {
+            FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+            firebaseFirestore.collection("Worldkies").document(dataSet.get(holder.getAdapterPosition()).getUID()).addSnapshotListener((queryDocumentSnapshot, e) -> {
+                       /* if (e != null) {
+                            Log.e("Error", e.getMessage());
+                            Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
+                            return;
+                        }*/
+                //boolean photo_default = queryDocumentSnapshot.getBoolean("photo_default");
+                String id_photo = queryDocumentSnapshot.getString("photo_id");
+                int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
 
-        Bitmap bitmap = DrawableUtils.drawableToBitmap(drawable);
-        int colorInt = ContextCompat.getColor(context, R.color.redError);
-        Color color = Color.valueOf(colorInt);
+                if (resId != 0) {
+                    Drawable drawable = ContextCompat.getDrawable(context, resId);
+                    holder.getIv_worldkie_preview_worldkie().setImageDrawable(drawable);
+                    try {
+                        DrawableUtils.personalizarImagenCuadradoButton(context,115/6,7,R.color.brownMaroon,drawable, holder.getIv_worldkie_preview_worldkie());
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            });
+        } else {
+            StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-worldkies").getReference(dataSet.get(holder.getAdapterPosition()).getUID());
 
-        DrawableUtils.personalizarImagenCircle(context,bitmap,holder.getIv_worldkie_preview_worldkie(),R.color.brownBrown);
+            userFolderRef.listAll().addOnSuccessListener(listResult -> {
+                for (StorageReference item : listResult.getItems()) {
+                    if (item.getName().startsWith("cover")) {
+                        item.getDownloadUrl().addOnSuccessListener(uri -> {
+                            try {
+                                DrawableUtils.personalizarImagenCuadradoButton(context,115/7,7, R.color.greenWhatever,uri,holder.getIv_worldkie_preview_worldkie());
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
+                    }
+                }
+                ;
+            });
+        }
     }
 
     // Devolvemos el numero de items de nuestro arraylist, lo invoca automaticamente el layout manager
