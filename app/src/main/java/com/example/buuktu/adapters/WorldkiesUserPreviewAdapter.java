@@ -1,8 +1,6 @@
 package com.example.buuktu.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,11 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buuktu.R;
 import com.example.buuktu.WorldkieView;
-import com.example.buuktu.models.Characterkie;
 import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.NavigationUtils;
-import com.example.buuktu.views.Worldkie;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;

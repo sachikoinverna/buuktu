@@ -78,6 +78,10 @@ public class SettingsFragment extends Fragment {
         //adapter = new SettingsAdapter(dataSet,getContext());
         updateRecyclerView(dataSet);
         filteredDataSet.addAll(dataSet);
+        setListeners();
+        return v;
+    }
+    private void setListeners(){
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -91,7 +95,6 @@ public class SettingsFragment extends Fragment {
                 return true;
             }
         });
-        return v;
     }
     private void filterList(String query) {
         filteredDataSet.clear();

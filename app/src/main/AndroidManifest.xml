@@ -28,26 +28,6 @@
         android:theme="@style/Theme.Buuktu"
         tools:targetApi="31">
         <receiver android:name=".broadcastReceiver.WordNotificationReceiver"/>
-
-        <activity
-            android:name=".views.CreateCharacterkie"
-            android:exported="false" />
-        <activity
-            android:name=".CharacterkiesWorldkie"
-            android:exported="false"
-            android:theme="@style/Theme.Buuktu" />
-        <activity
-            android:name=".views.ConfigPersonalData"
-            android:exported="false" />
-        <activity
-            android:name=".views.ProfileView"
-            android:exported="false" />
-        <activity
-            android:name=".views.CreateWorldkie"
-            android:exported="false" />
-        <activity
-            android:name=".views.Worldkie"
-            android:exported="false" />
         <activity
             android:name=".views.Login"
             android:exported="false" />
