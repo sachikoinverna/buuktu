@@ -159,7 +159,12 @@ public class ProfileView extends Fragment implements View.OnClickListener {
             }
 
             if (documentSnapshot != null) {
-                userkieModel = new UserkieModel(firebaseAuth.getUid(), documentSnapshot.getString("name"), R.drawable.thumb_custom, documentSnapshot.getString("username"), documentSnapshot.getBoolean("photo_default"), documentSnapshot.getBoolean("private"));
+                if(documentSnapshot.getBoolean("photo_default")) {
+                    userkieModel = new UserkieModel(documentSnapshot.getString("name"), documentSnapshot.getString("username"), documentSnapshot.getBoolean("profile_private"), documentSnapshot.getBoolean("photo_default"),documentSnapshot.getString("photo_id"));
+                }else{
+                    userkieModel = new UserkieModel(documentSnapshot.getString("name"), documentSnapshot.getString("username"), documentSnapshot.getBoolean("profile_private"), documentSnapshot.getBoolean("photo_default"));
+
+                }
                 tv_nameProfileView.setText(userkieModel.getName());
                 tv_usernameProfileView.setText(userkieModel.getUsername());
                 if ((!userkieModel.isProfile_private() && mode.equals("other")) || (mode.equals("self"))){

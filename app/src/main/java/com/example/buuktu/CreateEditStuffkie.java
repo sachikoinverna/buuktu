@@ -106,6 +106,7 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
         et_nameStuffkieCreate = view.findViewById(R.id.et_nameStuffkieCreate);
         constraintLayout = view.findViewById(R.id.constraint_create_stuffkie);
     }
+
     private void setListeners(){
         ib_save.setOnClickListener(this);
         ib_back.setOnClickListener(this);
@@ -115,6 +116,11 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
     public void setImageUri(Uri image){
         this.image=image;
     }
+
+    public String getSource() {
+        return source;
+    }
+
     public void setSource(String source) {
         this.source = source;
     }

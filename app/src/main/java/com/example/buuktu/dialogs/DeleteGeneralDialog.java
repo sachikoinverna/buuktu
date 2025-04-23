@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ public class DeleteGeneralDialog extends Dialog implements View.OnClickListener 
     Context context;
     String mode;
     TextView tv_title_del, tv_text_del;
+    ImageView iv_photo_del;
     static String modeNotekie = "notekie";
     static String modeStuffkie = "stuffkie";
     static String modeWorldkie = "worldkie";

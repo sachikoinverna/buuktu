@@ -12,85 +12,89 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/materialCardView"
         android:layout_width="350dp"
-        android:layout_height="350dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:background="@drawable/loginborders"
         app:cardCornerRadius="40dp"
         app:cardElevation="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:strokeColor="#7E3535"
+        app:strokeWidth="3dp">
 
-        <ScrollView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/et_emailLoginFilled"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:hint="@string/email"
+                android:textAlignment="center"
+                app:boxCornerRadiusBottomEnd="58dp"
+                app:boxCornerRadiusBottomStart="58dp"
+                app:boxCornerRadiusTopEnd="58dp"
+                app:boxCornerRadiusTopStart="58dp"
+                app:counterEnabled="true"
+                app:counterMaxLength="50"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:startIconDrawable="@drawable/twotone_email_24">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/et_emailLoginFilled"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_emailLogin"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="50dp"
-                    android:layout_marginRight="10dp"
-                    android:hint="@string/email"
-                    android:textAlignment="center"
-                    app:boxCornerRadiusBottomEnd="58dp"
-                    app:boxCornerRadiusBottomStart="58dp"
-                    app:boxCornerRadiusTopEnd="58dp"
-                    app:boxCornerRadiusTopStart="58dp"
-                    app:counterEnabled="true"
-                    app:counterMaxLength="50"
-                    app:startIconDrawable="@drawable/twotone_email_24">
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:inputType="textEmailAddress"
+                    android:maxLength="50"
+                    android:textAlignment="center" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_emailLogin"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:inputType="textEmailAddress"
-                        android:maxLength="50"
-                        android:textAlignment="center" />
-                </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/et_passwordLoginFilled"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
+                android:hint="@string/user_password"
+                android:textAlignment="center"
+                app:boxCornerRadiusBottomEnd="58dp"
+                app:boxCornerRadiusBottomStart="58dp"
+                app:boxCornerRadiusTopEnd="58dp"
+                app:boxCornerRadiusTopStart="58dp"
+                app:counterEnabled="true"
+                app:counterMaxLength="50"
+                app:endIconMode="password_toggle"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_emailLoginFilled"
+                app:startIconDrawable="@drawable/twotone_keyboard_24">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/et_passwordLoginFilled"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_passwordLogin"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="50dp"
-                    android:layout_marginRight="10dp"
-                    android:hint="@string/user_password"
-                    android:textAlignment="center"
-                    app:boxCornerRadiusBottomEnd="58dp"
-                    app:boxCornerRadiusBottomStart="58dp"
-                    app:boxCornerRadiusTopEnd="58dp"
-                    app:boxCornerRadiusTopStart="58dp"
-                    app:counterEnabled="true"
-                    app:counterMaxLength="50"
-                    app:endIconMode="password_toggle"
-                    app:startIconDrawable="@drawable/twotone_keyboard_24">
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:inputType="textPassword"
+                    android:maxLength="50"
+                    android:textAlignment="center" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_passwordLogin"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:gravity="center"
-                        android:inputType="textPassword"
-                        android:maxLength="50"
-                        android:textAlignment="center" />
-                </com.google.android.material.textfield.TextInputLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </LinearLayout>
-        </ScrollView>
     </com.google.android.material.card.MaterialCardView>
 
     <TextView

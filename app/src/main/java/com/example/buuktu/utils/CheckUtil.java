@@ -13,14 +13,17 @@ import com.example.buuktu.views.Register;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class CheckUtil {
     private static FirebaseFirestore db= FirebaseFirestore.getInstance();
+    private static FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     public static Boolean checkExistentUsername(String username){
         final Boolean[] exists = {false};
         CollectionReference dbUsers = db.collection("Users");
@@ -36,6 +39,20 @@ public class CheckUtil {
             @Override
             public void onFailure(@NonNull Exception e) {
                 exists[0] = true;
+            }
+        });
+        return exists[0];
+    }
+    public static Boolean checkExistentEmail(String email){
+        final Boolean[] exists = {false};
+        firebaseAuth.fetchSignInMethodsForEmail(email).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                List<String> signInMethods = task.getResult().getSignInMethods();
+                if (signInMethods != null && !signInMethods.isEmpty()) {
+                    exists[0] = true;
+                } else {
+                    exists[0] = false;
+                }
             }
         });
         return exists[0];

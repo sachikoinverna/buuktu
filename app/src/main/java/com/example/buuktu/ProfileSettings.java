@@ -33,6 +33,7 @@ import com.example.buuktu.models.UserkieModel;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.NavigationUtils;
 import com.example.buuktu.views.MainActivity;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -123,24 +124,19 @@ public class ProfileSettings extends Fragment implements View.OnClickListener {
             if (documentSnapshot != null) {
                 dataSet.clear();
 
-                boolean isPrivate = documentSnapshot.getBoolean("private") != null && documentSnapshot.getBoolean("private");
+                    userkieModel = new UserkieModel(
+                            documentSnapshot.getString("name"),
+                            documentSnapshot.getString("pronouns"),
+                            documentSnapshot.getBoolean("profile_private"));
 
-                userkieModel = new UserkieModel(
-                        UID,
-                        documentSnapshot.getString("name"),
-                        R.drawable.thumb_custom,
-                        documentSnapshot.getString("username"),
-                        documentSnapshot.getBoolean("photo_default"),
-                        isPrivate
-                );
 
                 // 🧠 Evitar bucle al cambiar el estado desde código
                 tb_profile_private_settings.setOnCheckedChangeListener(null);
-                tb_profile_private_settings.setChecked(isPrivate);
+                tb_profile_private_settings.setChecked(userkieModel.isProfile_private());
                 tb_profile_private_settings.setOnCheckedChangeListener(switchListener);
 
                 dataSet.add(new SettingModel("Nombre", userkieModel.getName()));
-                dataSet.add(new SettingModel("Pronombres", "She/her"));
+                dataSet.add(new SettingModel("Pronombres", userkieModel.getPronouns()));
                 updateRecyclerView();
             }
             ;

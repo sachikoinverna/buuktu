@@ -203,52 +203,63 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
         }
         ib_back_default_photo_profile.setOnClickListener(this);
     }
-    private void setSelectedPhoto(ImageButton imageButton){
+    private void setSelectedPhoto(ImageButton imageButton,int index){
         if(register != null) {
             register.setSelectedProfilePhoto(imageButton.getDrawable());
+            register.getIB_profile_photo().setTag(getMipmapName(photosUserkies.get(index)));
         } else if (createEditWorldkie !=null) {
             createEditWorldkie.setSelectedProfilePhoto(imageButton.getDrawable());
+            createEditWorldkie.getIb_select_img_create_worldkie().setTag(getMipmapName(photosWorldkies.get(index)));
+
         } else if (createCharacterkie !=null) {
             createCharacterkie.setSelectedProfilePhoto(imageButton.getDrawable());
+            createCharacterkie.getIb_select_img_create_worldkie().setTag(getMipmapName(photosCharacterkies.get(index)));
+
         } else if (createEditStuffkie !=null) {
           //  Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
             createEditStuffkie.setSelectedProfilePhoto(imageButton.getDrawable());
+            //createEditStuffkie.get().setTag(getMipmapName(photosStuffkies.get(index)));
+
         }else if (createEditScenariokie !=null) {
             createEditScenariokie.setSelectedProfilePhoto(imageButton.getDrawable());
+            createEditScenariokie.getIb_select_img_create_worldkie().setTag(getMipmapName(photosStuffkies.get(index)));
         }
+    }
+    private String getMipmapName(int id){
+        return getResources().getResourceName(id);
     }
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.ib_prf_imgOne) {
-            setSelectedPhoto(ib_prf_imgOne);
+            setSelectedPhoto(ib_prf_imgOne,0);
         } else if (v.getId() == R.id.ib_prf_imgTwo) {
-            setSelectedPhoto(ib_prf_imgTwo);
+            setSelectedPhoto(ib_prf_imgTwo,1);
         } else if (v.getId() == R.id.ib_prf_imgThree) {
-            setSelectedPhoto(ib_prf_imgThree);
+            setSelectedPhoto(ib_prf_imgThree,2);
         } else if (v.getId() == R.id.ib_prf_imgFour) {
-            setSelectedPhoto(ib_prf_imgFour);
+            setSelectedPhoto(ib_prf_imgFour,3);
 
         } else if (v.getId() == R.id.ib_prf_imgFive) {
-            setSelectedPhoto(ib_prf_imgFive);
+            setSelectedPhoto(ib_prf_imgFive,4);
 
         } else if (v.getId() == R.id.ib_prf_imgSix) {
-            setSelectedPhoto(ib_prf_imgSix);
+            setSelectedPhoto(ib_prf_imgSix,5);
 
         } else if (v.getId() == R.id.ib_prf_imgSeven) {
-            setSelectedPhoto(ib_prf_imgSeven);
+            setSelectedPhoto(ib_prf_imgSeven,6);
 
         } else if (v.getId() == R.id.ib_prf_imgEight) {
-            setSelectedPhoto(ib_prf_imgEight);
+            setSelectedPhoto(ib_prf_imgEight,7);
 
         } else if (v.getId() == R.id.ib_prf_imgNine) {
-            setSelectedPhoto(ib_prf_imgNine);
+            setSelectedPhoto(ib_prf_imgNine,8);
 
         } else if (v.getId() == R.id.ib_prf_imgTen) {
-            setSelectedPhoto(ib_prf_imgTen);
+            setSelectedPhoto(ib_prf_imgTen,9);
 
         } else if (v.getId() == R.id.ib_prf_imgEleven)
         {
-            setSelectedPhoto(ib_prf_imgEleven);
+            setSelectedPhoto(ib_prf_imgEleven,10);
 
         } else if(v.getId() == R.id.ib_back_default_photo_profile){
             goBackBottomSheetOptionsPhotoProfile();
@@ -327,7 +338,7 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
         }
     }
     private void setImageBottomSheetOpen(){
-       if(register !=null) {
+       if(register !=null && register.getSource().equals("app")) {
            for (ImageButton button : imageButtons) {
                if (button.getDrawable().equals(register.getSelectedProfilePhoto())) {
                    DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, color.greenWhatever, true);
@@ -337,7 +348,7 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
 
                }
            }
-       } else if (createEditWorldkie!=null) {
+       } else if (createEditWorldkie!=null && createEditWorldkie.getSource().equals("app")) {
            for (ImageButton button : imageButtons) {
                if (button.getDrawable().equals(createEditWorldkie.getSelectedProfilePhoto())) {
 
@@ -349,7 +360,7 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
                }
            }
        }
-       else if (createCharacterkie!=null) {
+       else if (createCharacterkie!=null && createCharacterkie.getSource().equals("app")) {
            for (ImageButton button : imageButtons) {
                if (button.getDrawable().equals(createCharacterkie.getSelectedProfilePhoto())) {
 
@@ -360,7 +371,7 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
 
                }
            }
-       }else if (createEditStuffkie!=null) {
+       }else if (createEditStuffkie!=null && createEditStuffkie.getSource().equals("app")) {
            for (ImageButton button : imageButtons) {
                /*if (button.getDrawable().equals(createEditStuffkie.getSelectedProfilePhoto())) {
 

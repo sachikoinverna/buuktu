@@ -1,21 +1,17 @@
 package com.example.buuktu.models;
 
-import android.graphics.drawable.Drawable;
-
-import java.util.Date;
+import com.google.firebase.Timestamp;
 
 public class UserkieModel {
     private String name;
     private String pronouns;
-    private Date birthday;
+    private Timestamp birthday;
     private String username;
     private String number;
     private String UID;
     private String email;
     private boolean photo_default;
     private boolean profile_private;
-    private String surname;
-    private int drawable;
     private String photo_id;
 
     public String getPhoto_id() {
@@ -28,14 +24,6 @@ public class UserkieModel {
 
     public String getEmail() {
         return email;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
     }
 
     public void setEmail(String email) {
@@ -66,11 +54,11 @@ public class UserkieModel {
         this.username = username;
     }
 
-    public Date getBirthday() {
+    public Timestamp getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(Timestamp birthday) {
         this.birthday = birthday;
     }
 
@@ -109,35 +97,61 @@ public class UserkieModel {
     public UserkieModel() {
     }
 
-    public UserkieModel(String email, String UID, String name, String pronouns, Date birthday, String username, String number, boolean photo_default, boolean profile_private,String photo_id) {
+    public UserkieModel(String photo_id, boolean profile_private, boolean photo_default, String email, String number, String username, Timestamp birthday, String pronouns, String name) {
+        this.photo_id = photo_id;
+        this.profile_private = profile_private;
+        this.photo_default = photo_default;
         this.email = email;
-        this.UID = UID;
+        this.number = number;
+        this.username = username;
+        this.birthday = birthday;
+        this.pronouns = pronouns;
+        this.name = name;
+    }
+
+    public UserkieModel(String name, String pronouns, boolean profile_private) {
         this.name = name;
         this.pronouns = pronouns;
-        this.birthday = birthday;
-        this.username = username;
-        this.number = number;
-        this.photo_default = photo_default;
         this.profile_private = profile_private;
+    }
+
+    public UserkieModel(String name, String username, boolean profile_private, boolean photo_default, String photo_id) {
+        this.name = name;
+        this.username = username;
+        this.profile_private = profile_private;
+        this.photo_default = photo_default;
         this.photo_id = photo_id;
     }
-    public UserkieModel(String email, String UID, String name, String pronouns, Date birthday, String username, String number, boolean photo_default, boolean profile_private) {
-        this.email = email;
+    public UserkieModel(String name, String username, boolean profile_private, boolean photo_default) {
+        this.name = name;
+        this.username = username;
+        this.profile_private = profile_private;
+        this.photo_default = photo_default;
+    }
+    public UserkieModel(String UID,String name, String username, boolean profile_private, boolean photo_default, String photo_id) {
         this.UID = UID;
+        this.name = name;
+        this.username = username;
+        this.profile_private = profile_private;
+        this.photo_default = photo_default;
+        this.photo_id = photo_id;
+    }
+    public UserkieModel(String UID,String name, String username, boolean profile_private, boolean photo_default) {
+        this.UID=UID;
+        this.name = name;
+        this.username = username;
+        this.profile_private = profile_private;
+        this.photo_default = photo_default;
+    }
+    public UserkieModel(String name, String pronouns, Timestamp birthday, String username, String number, String email, boolean photo_default, boolean profile_private) {
         this.name = name;
         this.pronouns = pronouns;
         this.birthday = birthday;
         this.username = username;
         this.number = number;
+        this.email = email;
         this.photo_default = photo_default;
         this.profile_private = profile_private;
     }
-    public UserkieModel(String UID, String name, int drawable, String username, boolean photo_default, boolean profile_private) {
-        this.UID = UID;
-        this.name = name;
-        this.username = username;
-        this.photo_default = photo_default;
-        this.profile_private = profile_private;
-        this.drawable = drawable;
-    }
+
 }

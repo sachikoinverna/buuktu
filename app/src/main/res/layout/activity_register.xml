@@ -20,446 +20,443 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardview_register"
         android:layout_width="350dp"
-        android:layout_height="500dp"
+        android:layout_height="525dp"
         android:layout_marginTop="150dp"
         android:background="@drawable/cardview_border"
         app:cardCornerRadius="40dp"
         app:cardElevation="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="@color/black"
+        app:strokeWidth="3dp">
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/bt_chooseImageRegister"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/border_register"
+                    android:onClick="selectImage"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@mipmap/photoprofileone" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/et_nameRegisterFilled"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:hint="@string/name"
+                    android:textAlignment="center"
+                    app:boxCornerRadiusBottomEnd="58dp"
+                    app:boxCornerRadiusBottomStart="58dp"
+                    app:boxCornerRadiusTopEnd="58dp"
+                    app:boxCornerRadiusTopStart="58dp"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="50"
+                    app:errorEnabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/bt_chooseImageRegister"
+                    app:startIconDrawable="@drawable/twotone_supervised_user_circle_24">
 
-                    <ImageButton
-                        android:id="@+id/bt_chooseImageRegister"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/border_register"
-                        android:onClick="selectImage"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@mipmap/photoprofileone" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/et_nameRegisterFilled"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_nameRegister"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:hint="@string/name"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:inputType="text"
+                        android:maxLength="50"
                         android:textAlignment="center"
-                        app:boxCornerRadiusBottomEnd="58dp"
-                        app:boxCornerRadiusBottomStart="58dp"
-                        app:boxCornerRadiusTopEnd="58dp"
-                        app:boxCornerRadiusTopStart="58dp"
-                        app:counterEnabled="true"
-                        app:counterMaxLength="50"
-                        app:errorEnabled="false"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/bt_chooseImageRegister"
-                        app:startIconDrawable="@drawable/twotone_supervised_user_circle_24">
+                        android:textColorHint="@color/brownMaroon" />
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_nameRegister"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:gravity="center"
-                            android:inputType="text"
-                            android:maxLength="50"
-                            android:textAlignment="center"
-                            android:textColorHint="@color/brownMaroon" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                    </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    android:id="@+id/tv_errorNameRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="TextView"
+                    android:textAlignment="center"
+                    android:textColor="@color/redError"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_nameRegisterFilled" />
 
-                    <TextView
-                        android:id="@+id/tv_errorNameRegister"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/et_pronounsRegisterFilled"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:hint="@string/pronouns"
+                    android:textAlignment="center"
+                    app:boxCornerRadiusBottomEnd="58dp"
+                    app:boxCornerRadiusBottomStart="58dp"
+                    app:boxCornerRadiusTopEnd="58dp"
+                    app:boxCornerRadiusTopStart="58dp"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="50"
+                    app:errorEnabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_errorNameRegister"
+                    app:startIconDrawable="@drawable/outline_person_24">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_pronounsRegister"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_weight="1"
-                        android:text="TextView"
+                        android:gravity="center"
+                        android:inputType="text"
+                        android:maxLength="50"
                         android:textAlignment="center"
-                        android:textColor="@color/redError"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/et_nameRegisterFilled" />
+                        android:textColorHint="@color/brownMaroon" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/et_pronounsRegisterFilled"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:hint="@string/pronouns"
-                        android:textAlignment="center"
-                        app:boxCornerRadiusBottomEnd="58dp"
-                        app:boxCornerRadiusBottomStart="58dp"
-                        app:boxCornerRadiusTopEnd="58dp"
-                        app:boxCornerRadiusTopStart="58dp"
-                        app:counterEnabled="true"
-                        app:counterMaxLength="50"
-                        app:errorEnabled="false"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_errorNameRegister"
-                        app:startIconDrawable="@drawable/outline_person_24">
+                <TextView
+                    android:id="@+id/tv_errorPronounsRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="TextView"
+                    android:textAlignment="center"
+                    android:textColor="@color/redError"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_pronounsRegisterFilled" />
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_pronounsRegister"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:inputType="text"
-                            android:maxLength="50"
-                            android:textAlignment="center"
-                            android:textColorHint="@color/brownMaroon" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/dp_birthdayFilled"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:gravity="center"
+                    android:hint="@string/birthday"
+                    android:textAlignment="center"
+                    app:boxCornerRadiusBottomEnd="58dp"
+                    app:boxCornerRadiusBottomStart="58dp"
+                    app:boxCornerRadiusTopEnd="58dp"
+                    app:boxCornerRadiusTopStart="58dp"
+                    app:errorEnabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_errorPronounsRegister"
+                    app:startIconDrawable="@drawable/twotone_cake_24">
 
-                    <TextView
-                        android:id="@+id/tv_errorPronounsRegister"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/dp_birthday"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_weight="1"
-                        android:text="TextView"
-                        android:textAlignment="center"
-                        android:textColor="@color/redError"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/et_pronounsRegisterFilled" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/dp_birthdayFilled"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
+                        android:cursorVisible="false"
+                        android:ems="10"
                         android:focusable="false"
+                        android:focusableInTouchMode="true"
                         android:gravity="center"
-                        android:hint="@string/birthday"
+                        android:inputType="none"
+                        android:onClick="showDatePickerDialog"
                         android:textAlignment="center"
-                        app:boxCornerRadiusBottomEnd="58dp"
-                        app:boxCornerRadiusBottomStart="58dp"
-                        app:boxCornerRadiusTopEnd="58dp"
-                        app:boxCornerRadiusTopStart="58dp"
-                        app:errorEnabled="false"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_errorPronounsRegister"
-                        app:startIconDrawable="@drawable/twotone_cake_24">
+                        android:textColorHint="@color/brownMaroon" />
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/dp_birthday"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:editable="false"
-                            android:ems="10"
-                            android:focusable="false"
-                            android:gravity="center"
-                            android:onClick="showDatePickerDialog"
-                            android:textAlignment="center"
-                            android:textColorHint="@color/brownMaroon" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                    </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    android:id="@+id/tv_birthdayError"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="TextView"
+                    android:textAlignment="center"
+                    android:textColor="@color/redError"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dp_birthdayFilled" />
 
-                    <TextView
-                        android:id="@+id/tv_birthdayError"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/et_userRegisterFilled"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:hint="@string/username"
+                    android:textAlignment="center"
+                    app:boxCornerRadiusBottomEnd="58dp"
+                    app:boxCornerRadiusBottomStart="58dp"
+                    app:boxCornerRadiusTopEnd="58dp"
+                    app:boxCornerRadiusTopStart="58dp"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="20"
+                    app:errorEnabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_birthdayError"
+                    app:startIconDrawable="@drawable/outline_person_24">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_userRegister"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="TextView"
-                        android:textAlignment="center"
-                        android:textColor="@color/redError"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/dp_birthdayFilled" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/et_userRegisterFilled"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:hint="@string/username"
-                        android:textAlignment="center"
-                        app:boxCornerRadiusBottomEnd="58dp"
-                        app:boxCornerRadiusBottomStart="58dp"
-                        app:boxCornerRadiusTopEnd="58dp"
-                        app:boxCornerRadiusTopStart="58dp"
-                        app:counterEnabled="true"
-                        app:counterMaxLength="20"
-                        app:errorEnabled="false"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_birthdayError"
-                        app:startIconDrawable="@drawable/outline_person_24">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_userRegister"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:inputType="text"
-                            android:maxLength="20"
-                            android:textAlignment="center" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <TextView
-                        android:id="@+id/tv_errorUsernameRegister"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_weight="1"
-                        android:text="TextView"
-                        android:textAlignment="center"
-                        android:textColor="@color/redError"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/et_userRegisterFilled" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/et_emailRegisterFilled"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:hint="@string/email"
-                        android:textAlignment="center"
-                        app:boxCornerRadiusBottomEnd="58dp"
-                        app:boxCornerRadiusBottomStart="58dp"
-                        app:boxCornerRadiusTopEnd="58dp"
-                        app:boxCornerRadiusTopStart="58dp"
-                        app:counterEnabled="true"
-                        app:counterMaxLength="50"
-                        app:errorEnabled="false"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_errorUsernameRegister"
-                        app:startIconDrawable="@drawable/twotone_email_24">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_emailRegister"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:inputType="textEmailAddress"
-                            android:maxLength="50"
-                            android:textAlignment="center" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <TextView
-                        android:id="@+id/tv_errorEmailRegister"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_weight="1"
-                        android:text="TextView"
-                        android:textAlignment="center"
-                        android:textColor="@color/redError"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/et_userRegisterFilled" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/et_telephoneRegisterFilled"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:hint="@string/numberphone"
-                        android:textAlignment="center"
-                        app:boxCornerRadiusBottomEnd="58dp"
-                        app:boxCornerRadiusBottomStart="58dp"
-                        app:boxCornerRadiusTopEnd="58dp"
-                        app:boxCornerRadiusTopStart="58dp"
-                        app:counterEnabled="true"
-                        app:counterMaxLength="50"
-                        app:errorEnabled="false"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/et_emailRegisterFilled"
-                        app:startIconDrawable="@drawable/twotone_phone_24">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_telephoneRegister"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:gravity="center"
-                            android:inputType="phone"
-                            android:maxLength="6"
-                            android:textAlignment="center" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <TextView
-                        android:id="@+id/tv_errorNumberRegister"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="TextView"
-                        android:textAlignment="center"
-                        android:textColor="@color/redError"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/et_userRegisterFilled" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/et_passwordFilled"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:hint="@string/user_password"
-                        android:textAlignment="center"
-                        app:boxCornerRadiusBottomEnd="58dp"
-                        app:boxCornerRadiusBottomStart="58dp"
-                        app:boxCornerRadiusTopEnd="58dp"
-                        app:boxCornerRadiusTopStart="58dp"
-                        app:counterEnabled="true"
-                        app:counterMaxLength="50"
-                        app:endIconMode="password_toggle"
-                        app:errorEnabled="true"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/et_telephoneRegisterFilled"
-                        app:startIconDrawable="@drawable/outline_password_24">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_password"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="TextView"
-                            android:textAlignment="center"
-                            android:textColor="@color/redError" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <TextView
-                        android:id="@+id/tv_errorPasswordRegister"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_weight="1"
                         android:gravity="center"
-                        android:text="TextView"
-                        android:textColor="@color/redError"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/et_passwordFilled" />
+                        android:inputType="text"
+                        android:maxLength="20"
+                        android:textAlignment="center" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/et_passwordRepeatRegisterFilled"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:hint="@string/repeatPassword"
-                        android:textAlignment="center"
-                        app:boxCornerRadiusBottomEnd="58dp"
-                        app:boxCornerRadiusBottomStart="58dp"
-                        app:boxCornerRadiusTopEnd="58dp"
-                        app:boxCornerRadiusTopStart="58dp"
-                        app:counterEnabled="true"
-                        app:counterMaxLength="50"
-                        app:endIconMode="password_toggle"
-                        app:errorEnabled="false"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_errorPasswordRegister"
-                        app:startIconDrawable="@drawable/outline_password_24">
+                <TextView
+                    android:id="@+id/tv_errorUsernameRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="TextView"
+                    android:textAlignment="center"
+                    android:textColor="@color/redError"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_userRegisterFilled" />
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_passwordRepeat"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:inputType="textPassword"
-                            android:maxLength="50"
-                            android:textAlignment="center" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/et_emailRegisterFilled"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:hint="@string/email"
+                    android:textAlignment="center"
+                    app:boxCornerRadiusBottomEnd="58dp"
+                    app:boxCornerRadiusBottomStart="58dp"
+                    app:boxCornerRadiusTopEnd="58dp"
+                    app:boxCornerRadiusTopStart="58dp"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="50"
+                    app:errorEnabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_errorUsernameRegister"
+                    app:startIconDrawable="@drawable/twotone_email_24">
 
-                    <TextView
-                        android:id="@+id/tv_errorPasswordRepeatRegister"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_emailRegister"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
                         android:gravity="center"
-                        android:text="TextView"
-                        android:textColor="@color/redError"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/et_passwordRepeatRegisterFilled" />
+                        android:inputType="textEmailAddress"
+                        android:maxLength="50"
+                        android:textAlignment="center" />
 
-                    <Switch
-                        android:id="@+id/tb_privateAccountRegister"
-                        android:layout_width="wrap_content"
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/tv_errorEmailRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="TextView"
+                    android:textAlignment="center"
+                    android:textColor="@color/redError"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_userRegisterFilled" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/et_telephoneRegisterFilled"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:hint="@string/numberphone"
+                    android:textAlignment="center"
+                    app:boxCornerRadiusBottomEnd="58dp"
+                    app:boxCornerRadiusBottomStart="58dp"
+                    app:boxCornerRadiusTopEnd="58dp"
+                    app:boxCornerRadiusTopStart="58dp"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="50"
+                    app:errorEnabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_emailRegisterFilled"
+                    app:startIconDrawable="@drawable/twotone_phone_24">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_telephoneRegister"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="32dp"
-                        android:switchPadding="16dp"
-                        android:text="Cuenta privada"
-                        android:thumb="@drawable/thumb_custom"
-                        android:track="@drawable/track_custom"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_errorPasswordRepeatRegister" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        android:ems="10"
+                        android:gravity="center"
+                        android:inputType="phone"
+                        android:maxLength="6"
+                        android:textAlignment="center" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/tv_errorNumberRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="TextView"
+                    android:textAlignment="center"
+                    android:textColor="@color/redError"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_userRegisterFilled" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/et_passwordFilled"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:hint="@string/user_password"
+                    android:textAlignment="center"
+                    app:boxCornerRadiusBottomEnd="58dp"
+                    app:boxCornerRadiusBottomStart="58dp"
+                    app:boxCornerRadiusTopEnd="58dp"
+                    app:boxCornerRadiusTopStart="58dp"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="50"
+                    app:endIconMode="password_toggle"
+                    app:errorEnabled="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_telephoneRegisterFilled"
+                    app:startIconDrawable="@drawable/outline_password_24">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@color/redError" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/tv_errorPasswordRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:gravity="center"
+                    android:text="TextView"
+                    android:textColor="@color/redError"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_passwordFilled" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/et_passwordRepeatRegisterFilled"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:hint="@string/repeatPassword"
+                    android:textAlignment="center"
+                    app:boxCornerRadiusBottomEnd="58dp"
+                    app:boxCornerRadiusBottomStart="58dp"
+                    app:boxCornerRadiusTopEnd="58dp"
+                    app:boxCornerRadiusTopStart="58dp"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="50"
+                    app:endIconMode="password_toggle"
+                    app:errorEnabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_errorPasswordRegister"
+                    app:startIconDrawable="@drawable/outline_password_24">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_passwordRepeat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:inputType="textPassword"
+                        android:maxLength="50"
+                        android:textAlignment="center" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/tv_errorPasswordRepeatRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:gravity="center"
+                    android:text="TextView"
+                    android:textColor="@color/redError"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_passwordRepeatRegisterFilled" />
+
+                <Switch
+                    android:id="@+id/tb_privateAccountRegister"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="32dp"
+                    android:switchPadding="16dp"
+                    android:text="Cuenta privada"
+                    android:thumb="@drawable/thumb_custom"
+                    android:track="@drawable/track_custom"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_errorPasswordRepeatRegister" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </ScrollView>
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
     <TextView
         android:id="@+id/tv_registerToLoginButton"

@@ -78,22 +78,20 @@ public class UserkiesSearch extends Fragment {
                 String currentUserId = firebaseAuth.getUid();
 
                 if (!doc.getId().equals(currentUserId)) {
-                    UserkieModel user = new UserkieModel(
-                            doc.getId(),
-                            doc.getString("name"),
-                            R.drawable.thumb_custom, // imagen por defecto
-                            doc.getString("username"),
-                            doc.getBoolean("photo_default"),
-                            doc.getBoolean("private")
-                    );
+                    UserkieModel userkieModel;
+                    if(doc.getBoolean("photo_default")) {
+                        userkieModel = new UserkieModel(doc.getId(),doc.getString("name"), doc.getString("username"), doc.getBoolean("profile_private"), doc.getBoolean("photo_default"),doc.getString("photo_id"));
+                    }else{
+                        userkieModel = new UserkieModel(doc.getId(),doc.getString("name"), doc.getString("username"), doc.getBoolean("profile_private"), doc.getBoolean("photo_default"));
 
+                    }
                     switch (dc.getType()) {
                         case ADDED:
-                            safeAddToList(userkieModelArrayList, dc.getNewIndex(), user);
+                            safeAddToList(userkieModelArrayList, dc.getNewIndex(), userkieModel);
                             userkieSearchAdapter.notifyItemInserted(dc.getNewIndex());
                             break;
                         case MODIFIED:
-                            safeSetToList(userkieModelArrayList, dc.getOldIndex(), user);
+                            safeSetToList(userkieModelArrayList, dc.getOldIndex(), userkieModel);
                             userkieSearchAdapter.notifyItemChanged(dc.getOldIndex());
                             break;
                         case REMOVED:

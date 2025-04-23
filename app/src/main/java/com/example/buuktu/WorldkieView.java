@@ -44,6 +44,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import kotlinx.coroutines.channels.ChannelSegment;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link WorldkieView#newInstance} factory method to
@@ -165,18 +167,22 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
                         worldkieModel.setWorldkie_private(documentSnapshot.getBoolean("worldkie_private"));
             }
         });
-        collectionUserkies.document(UID_AUTHOR).addSnapshotListener((documentSnapshot, exx) -> {
+        collectionUserkies.document(UID_AUTHOR).addSnapshotListener((document, exx) -> {
             if (exx != null) {
                 Log.e("Error", exx.getMessage());
                 Toast.makeText(getContext(), "Error al escuchar cambios: " + exx.getMessage(), LENGTH_LONG).show();
                 return;
             }
 
-            if (documentSnapshot != null) {
-                userkieModel = new UserkieModel(firebaseAuth.getUid(),documentSnapshot.getString("name"),R.drawable.thumb_custom,documentSnapshot.getString("username"),documentSnapshot.getBoolean("photo_default"),true);
-                tv_nameUserWorldkieView.setText(userkieModel.getName());
+            if (document != null) {
+                if(document.getBoolean("photo_default")) {
+                    userkieModel = new UserkieModel(document.getId(),document.getString("name"), document.getString("username"), document.getBoolean("profile_private"), document.getBoolean("photo_default"),document.getString("photo_id"));
+                }else{
+                    userkieModel = new UserkieModel(document.getId(),document.getString("name"), document.getString("username"), document.getBoolean("profile_private"), document.getBoolean("photo_default"));
+
+                }                tv_nameUserWorldkieView.setText(userkieModel.getName());
                 tv_usernameWorldkieView.setText(userkieModel.getUsername());
-                if((!worldkieModel.isWorldkie_private() && mode.equals("other")) || (worldkieModel.isWorldkie_private() && mode.equals("self"))){
+                if((!worldkieModel.isWorldkie_private() && mode.equals("other") && !userkieModel.isProfile_private()) || (worldkieModel.isWorldkie_private() && mode.equals("self"))){
                     collectionStuffkies.addSnapshotListener((queryDocumentSnapshots, e) -> {
                         if (e != null) {
                             Log.e("Error", e.getMessage());
@@ -238,9 +244,8 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
                                 //if (documentSnapshot.getBoolean("photo_default")) {
                                 if (doc.getString("UID_WORLDKIE").equals(UID)) {
 
-                                    Drawable drawable = getResources().getDrawable(R.drawable.thumb_custom);
                                     Characterkie characterkieModel = new Characterkie(
-                                            documentSnapshot.getId(),
+                                            doc.getId(),
                                             doc.getString("name")
                                     );
                                     Log.d("StuffkiesSearch", "Stuffkie encontrado: " + doc.getString("name"));
@@ -262,7 +267,15 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
                             cv_characterkiesPreviewWorldkie.setVisibility(View.GONE);
                         }
                     });
-                } else if(worldkieModel.isWorldkie_private() && mode.equals("other")){
+                } else if(!worldkieModel.isWorldkie_private() && userkieModel.isProfile_private() && mode.equals("other")){
+                    tv_locked_worldkie.setVisibility(View.VISIBLE);
+                    iv_locked_worldkie.setVisibility(View.VISIBLE);
+                    tv_characterkiesPreviewWorldkie.setVisibility(View.GONE);
+                    cv_characterkiesPreviewWorldkie.setVisibility(View.GONE);
+                    tv_stuffkiesPreviewWorldkie.setVisibility(View.GONE);
+                    cv_stuffkiesPreviewWorldkie.setVisibility(View.GONE);
+                }
+                    else if(worldkieModel.isWorldkie_private() && mode.equals("other")){
                     tv_locked_worldkie.setVisibility(View.VISIBLE);
                     iv_locked_worldkie.setVisibility(View.VISIBLE);
                     tv_characterkiesPreviewWorldkie.setVisibility(View.GONE);

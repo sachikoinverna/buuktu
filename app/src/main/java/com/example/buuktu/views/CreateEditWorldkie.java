@@ -273,6 +273,10 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
 
     }
 
+    public String getSource() {
+        return source;
+    }
+
     public Drawable getSelectedProfilePhoto()
     {
         return ib_select_img_create_worldkie.getDrawable();
