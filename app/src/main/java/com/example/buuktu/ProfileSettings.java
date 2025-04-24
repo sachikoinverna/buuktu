@@ -54,6 +54,7 @@ public class ProfileSettings extends Fragment implements View.OnClickListener {
     private SettingAdapter settingAdapter;
     private RecyclerView rv_settings_profile;
     private ArrayList<SettingModel> dataSet = new ArrayList<SettingModel>();
+    Boolean lastValueProfilePrivate=false;
     Switch tb_profile_private_settings;
     FirebaseFirestore db;
     CollectionReference userkies;
@@ -65,9 +66,12 @@ public class ProfileSettings extends Fragment implements View.OnClickListener {
     FragmentManager fragmentManager;
     FragmentActivity activity;
     private final CompoundButton.OnCheckedChangeListener switchListener = (buttonView, isChecked) -> {
-        Map<String, Object> worldkieData = new HashMap<>();
-        worldkieData.put("private", isChecked);
-        userkie.update(worldkieData);
+        if(!lastValueProfilePrivate.equals(isChecked)) {
+            Map<String, Object> worldkieData = new HashMap<>();
+            worldkieData.put("private", isChecked);
+            userkie.update(worldkieData);
+            lastValueProfilePrivate=isChecked;
+        }
     };
 
     public ProfileSettings() {

@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.buuktu.R;
 import com.example.buuktu.models.StuffkieModel;
 import com.example.buuktu.utils.DrawableUtils;
+import com.example.buuktu.utils.EfectsUtils;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -40,6 +41,7 @@ public class StuffkiesUserPreviewAdapter extends RecyclerView.Adapter<StuffkiesU
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        String lastPhotoId="";
         private ImageView iv_stuffkie_preview_worldkie,iv_stuffkie_private_preview;
         private TextView tv_stuffkie_preview_worldkie,tv_stuffkie_preview_draft;
         CardView cv_stuffkie_preview;
@@ -74,6 +76,14 @@ public class StuffkiesUserPreviewAdapter extends RecyclerView.Adapter<StuffkiesU
         public CardView getCv_stuffkie_preview() {
             return cv_stuffkie_preview;
         }
+
+        public String getLastPhotoId() {
+            return lastPhotoId;
+        }
+
+        public void setLastPhotoId(String lastPhotoId) {
+            this.lastPhotoId = lastPhotoId;
+        }
     }
 
     //Constructor donde pasamos la lista de productos y el contexto
@@ -96,6 +106,7 @@ public class StuffkiesUserPreviewAdapter extends RecyclerView.Adapter<StuffkiesU
     }
     @Override
     public void onBindViewHolder(@NonNull StuffkiesUserPreviewAdapter.ViewHolder holder, int position) {
+        holder.getIv_stuffkie_preview_worldkie().setVisibility(View.INVISIBLE);
         holder.getTv_stuffkie_preview_worldkie().setText(dataSet.get(holder.getAdapterPosition()).getName());
         if(!dataSet.get(holder.getAdapterPosition()).isBorrador()){
             holder.getTv_stuffkie_preview_draft().setVisibility(View.INVISIBLE);
@@ -106,16 +117,10 @@ public class StuffkiesUserPreviewAdapter extends RecyclerView.Adapter<StuffkiesU
         if (dataSet.get(holder.getAdapterPosition()).isPhoto_default()) {
             FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
             firebaseFirestore.collection("Stuffkies").document(dataSet.get(holder.getAdapterPosition()).getUID()).addSnapshotListener((queryDocumentSnapshot, e) -> {
-                       /* if (e != null) {
-                            Log.e("Error", e.getMessage());
-                            Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
-                            return;
-                        }*/
-                //boolean photo_default = queryDocumentSnapshot.getBoolean("photo_default");
                 String id_photo = queryDocumentSnapshot.getString("photo_id");
                 int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
 
-                if (resId != 0) {
+                if (resId != 0 && (!holder.getLastPhotoId().equals(id_photo))) {
                     Drawable drawable = ContextCompat.getDrawable(context, resId);
                     holder.getIv_stuffkie_preview_worldkie().setImageDrawable(drawable);
                     try {
@@ -123,6 +128,10 @@ public class StuffkiesUserPreviewAdapter extends RecyclerView.Adapter<StuffkiesU
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
+                    holder.setLastPhotoId(id_photo);
+                    holder.getIv_stuffkie_private_preview().setVisibility(View.VISIBLE);
+                    EfectsUtils.startCircularReveal(drawable,holder.getIv_stuffkie_preview_worldkie());
+
                 }
             });
         } else {
@@ -133,15 +142,20 @@ public class StuffkiesUserPreviewAdapter extends RecyclerView.Adapter<StuffkiesU
                     if (item.getName().startsWith("cover")) {
                         item.getDownloadUrl().addOnSuccessListener(uri -> {
                             try {
-                                DrawableUtils.personalizarImagenCuadradoButton(context,115/7,7, R.color.greenWhatever,uri,holder.getIv_stuffkie_preview_worldkie());
+                                DrawableUtils.personalizarImagenCuadradoButton(context,115/7,7, R.color.greenWhatever,uri,holder.getIv_stuffkie_preview_worldkie(),R.mipmap.photostuffkieone);
+                                holder.getIv_stuffkie_private_preview().setVisibility(View.VISIBLE);
+                                EfectsUtils.startCircularReveal(context,uri,holder.getIv_stuffkie_preview_worldkie());
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
                         });
+
                     }
                 }
                 ;
             });
+
+
         }
     }
 

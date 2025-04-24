@@ -19,14 +19,16 @@ public class EditNamePronounsUserDialog extends Dialog implements View.OnClickLi
     TextInputLayout et_namepronounsFull;
     TextInputEditText et_namepronouns;
     String type;
+    String value;
     OnDialogEditClickListener listener;
     public interface OnDialogEditClickListener {
         void onAccept();
         void onCancel();
     }
-    public EditNamePronounsUserDialog(@NonNull Context context, String type) {
+    public EditNamePronounsUserDialog(@NonNull Context context, String type,String value) {
         super(context);
         this.type=type;
+        this.value=value;
     }
     public void setOnDialogClickListener(OnDialogEditClickListener listener) {
         this.listener = listener;
@@ -57,6 +59,7 @@ public class EditNamePronounsUserDialog extends Dialog implements View.OnClickLi
             et_namepronounsFull.setStartIconDrawable(R.drawable.twotone_email_24);
 
         }
+        et_namepronouns.setText(value);
         getWindow().setBackgroundDrawableResource(android.R.color.transparent);
     }
 

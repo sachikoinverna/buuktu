@@ -92,6 +92,7 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
         activity = requireActivity();
         source = "app";
         bottomSheetProfilePhoto = new BottomSheetProfilePhoto();
+        tb_scenariokieDraft.setVisibility(View.INVISIBLE);
         ib_select_img_create_scenariokie = view.findViewById(R.id.ib_select_img_create_scenariokie);
         setListeners();
         try {
@@ -184,7 +185,7 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
                 if(isChecked){
                     tb_scenariokieDraft.setVisibility(View.VISIBLE);
                 }else{
-                    tb_scenariokieDraft.setVisibility(View.GONE);
+                    tb_scenariokieDraft.setVisibility(View.INVISIBLE);
                 }
             }
         });

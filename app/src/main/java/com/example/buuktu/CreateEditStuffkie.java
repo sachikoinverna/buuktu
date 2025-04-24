@@ -18,7 +18,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.Switch;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -51,6 +53,7 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
     ConstraintLayout constraintLayout;
     TextInputEditText et_nameStuffkieCreate;
     TextInputLayout et_nameStuffkieCreateFull;
+    Switch tb_stuffkiePrivacity,tb_stuffkieDraft;
     public CreateEditStuffkie() {
         // Required empty public constructor
     }
@@ -61,7 +64,6 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
      *
      * @return A new instance of fragment CreateEditStuffkie.
      */
-    // TODO: Rename and change types and number of parameters
     public static CreateEditStuffkie newInstance() {
         return new CreateEditStuffkie();
     }
@@ -90,6 +92,7 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
         context = getContext();
         setListeners();
         source = "app";
+        tb_stuffkieDraft.setVisibility(View.INVISIBLE);
         bottomSheetProfilePhoto = new BottomSheetProfilePhoto();
         try {
             putDefaultImage();
@@ -105,13 +108,26 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
         et_nameStuffkieCreateFull = view.findViewById(R.id.et_nameStuffkieCreateFull);
         et_nameStuffkieCreate = view.findViewById(R.id.et_nameStuffkieCreate);
         constraintLayout = view.findViewById(R.id.constraint_create_stuffkie);
+        tb_stuffkiePrivacity = view.findViewById(R.id.tb_stuffkiePrivacity);
+        tb_stuffkieDraft = view.findViewById(R.id.tb_stuffkieDraft);
     }
 
     private void setListeners(){
         ib_save.setOnClickListener(this);
         ib_back.setOnClickListener(this);
+        ib_select_img_create_stuffkie.setOnClickListener(this);
         fb_add_field_createStuffkie.setOnClickListener(this);
         fb_more_createStuffkie.setOnClickListener(this);
+        tb_stuffkiePrivacity.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    tb_stuffkieDraft.setVisibility(View.VISIBLE);
+                }else{
+                    tb_stuffkieDraft.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
     }
     public void setImageUri(Uri image){
         this.image=image;
@@ -125,11 +141,9 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
         this.source = source;
     }
     private void putDefaultImage() throws IOException {
-        Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photostuffkieone);
-        DrawableUtils.personalizarImagenCircleButton(getContext(),DrawableUtils.drawableToBitmap(drawable),ib_select_img_create_stuffkie,R.color.brownMaroon);
-    }
-    public void selectImage(){
-        bottomSheetProfilePhoto.show(getChildFragmentManager(),"BottomSheetProfilePhoto");
+//        Drawable drawable = ContextCompat.getDrawable(context, R.mipmap.photostuffkieone);
+       // DrawableUtils.personalizarImagenCuadradoButton(get);
+        DrawableUtils.personalizarImagenCuadradoButton(context,150/7,7,R.color.brownMaroon,R.mipmap.photostuffkieone,ib_select_img_create_stuffkie);
     }
     public void setSelectedProfilePhoto(Drawable image){
       /*  Bitmap bitmap = Bitmap.createBitmap(
@@ -144,7 +158,7 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
         int borderColor = getContext().getResources().getColor(R.color.brownMaroon, null); // Asegúrate de que el color sea correcto
 //        Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
         //ib_select_img_create_worldkie.setImageDrawable(image);
-
+    //       DrawableUtils.
         RequestOptions requestOptions = new RequestOptions()
                 // .override(150, 150)
                 .centerCrop()
@@ -195,7 +209,7 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
         //    BottomSheetChooseComponents bottomSheetFragment = new BottomSheetChooseComponents(context, constraintLayout, this, fieldsNotAdded);
          //   bottomSheetFragment.show(getChildFragmentManager(), bottomSheetFragment.getTag());
         } else if (v.getId()==R.id.ib_select_img_create_stuffkie) {
-            selectImage();
+            bottomSheetProfilePhoto.show(getChildFragmentManager(),"BottomSheetProfilePhoto");
         }
     }
 }

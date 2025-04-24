@@ -41,6 +41,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:background="@null"
+                android:scaleType="fitCenter"
                 app:layout_constraintStart_toEndOf="@+id/ib_back_default_photo_profile"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@mipmap/photoprofileone" />
@@ -52,6 +53,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:background="@null"
+                android:scaleType="fitCenter"
                 app:layout_constraintStart_toEndOf="@+id/ib_prf_imgOne"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@mipmap/photoprofiletwo" />
@@ -63,6 +65,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:background="@null"
+                android:scaleType="fitCenter"
                 app:layout_constraintStart_toEndOf="@+id/ib_prf_imgTwo"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@mipmap/photoprofilethree" />
@@ -75,6 +78,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:background="@null"
+                android:scaleType="fitCenter"
                 app:layout_constraintStart_toEndOf="@+id/ib_back_default_photo_profile"
                 app:layout_constraintTop_toBottomOf="@+id/ib_prf_imgOne"
                 tools:srcCompat="@mipmap/photoprofilefour" />
@@ -87,6 +91,7 @@
 
                 android:layout_marginTop="16dp"
                 android:background="@null"
+                android:scaleType="fitCenter"
                 app:layout_constraintStart_toEndOf="@+id/ib_prf_imgFour"
                 app:layout_constraintTop_toBottomOf="@+id/ib_prf_imgTwo"
                 tools:srcCompat="@mipmap/photoprofilefive" />
@@ -99,6 +104,7 @@
 
                 android:layout_marginTop="16dp"
                 android:background="@null"
+                android:scaleType="fitCenter"
                 app:layout_constraintStart_toEndOf="@+id/ib_prf_imgFive"
                 app:layout_constraintTop_toBottomOf="@+id/ib_prf_imgThree"
                 tools:srcCompat="@mipmap/photoprofilesix" />
@@ -111,6 +117,7 @@
 
                 android:layout_marginTop="16dp"
                 android:background="@null"
+                android:scaleType="fitCenter"
                 app:layout_constraintStart_toEndOf="@+id/ib_back_default_photo_profile"
                 app:layout_constraintTop_toBottomOf="@+id/ib_prf_imgFour"
                 tools:srcCompat="@mipmap/photoprofileseven" />
@@ -123,6 +130,7 @@
 
                 android:layout_marginTop="16dp"
                 android:background="@null"
+                android:scaleType="fitCenter"
                 app:layout_constraintStart_toEndOf="@+id/ib_prf_imgSeven"
                 app:layout_constraintTop_toBottomOf="@+id/ib_prf_imgFive"
                 tools:srcCompat="@mipmap/photoprofileeight" />
@@ -135,6 +143,7 @@
 
                 android:layout_marginTop="16dp"
                 android:background="@null"
+                android:scaleType="fitCenter"
                 app:layout_constraintStart_toEndOf="@+id/ib_prf_imgEight"
                 app:layout_constraintTop_toBottomOf="@+id/ib_prf_imgSix"
                 tools:srcCompat="@mipmap/photoprofilenine" />
@@ -148,6 +157,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:background="@null"
+                android:scaleType="fitCenter"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/ib_back_default_photo_profile"
                 app:layout_constraintTop_toBottomOf="@+id/ib_prf_imgSeven"
@@ -162,6 +172,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:background="@null"
+                android:scaleType="fitCenter"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/ib_prf_imgTen"
                 app:layout_constraintTop_toBottomOf="@+id/ib_prf_imgNine"

@@ -10,6 +10,8 @@ import android.provider.Settings;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+//import com.example.buuktu.Manifest;
+
 public class PermissionUtils {
     public static void NotifyPermission(Context context){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // API 33 (Android 13)
@@ -29,4 +31,13 @@ public class PermissionUtils {
         context.startActivity(intent);
 
     }
+    /*public static void GeolocationPermission(Context context){
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.A)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(context,
+                    new String[]{Manifest.permission.},
+                    REQUEST_CODE_LOCATION_PERMISSION);
+        }
+
+    }*/
 }

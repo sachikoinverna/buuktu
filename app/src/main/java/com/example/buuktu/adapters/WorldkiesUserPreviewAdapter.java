@@ -19,6 +19,7 @@ import com.example.buuktu.R;
 import com.example.buuktu.WorldkieView;
 import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.utils.DrawableUtils;
+import com.example.buuktu.utils.EfectsUtils;
 import com.example.buuktu.utils.NavigationUtils;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -44,6 +45,7 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        String lastPhotoId="";
         private ImageView iv_worldkie_preview_worldkie,iv_stuffkie_private_preview;
         private TextView tv_worldkie_preview_worldkie,tv_worldkie_preview_draft;
         CardView cv_worldkie_preview;
@@ -78,6 +80,14 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
         public ImageView getIv_stuffkie_private_preview() {
             return iv_stuffkie_private_preview;
         }
+
+        public String getLastPhotoId() {
+            return lastPhotoId;
+        }
+
+        public void setLastPhotoId(String lastPhotoId) {
+            this.lastPhotoId = lastPhotoId;
+        }
     }
 
     //Constructor donde pasamos la lista de productos y el contexto
@@ -101,6 +111,7 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
     }
     @Override
     public void onBindViewHolder(@NonNull WorldkiesUserPreviewAdapter.ViewHolder holder, int position) {
+        holder.getIv_stuffkie_private_preview().setVisibility(View.INVISIBLE);
         holder.getTv_worldkie_preview_worldkie().setText(dataSet.get(holder.getAdapterPosition()).getName());
         // holder.getIv_characterkie_preview_worldkie().setImageDrawable(dataSet.get(holder.getAdapterPosition()).getPhoto());//  Drawable drawable = dataSet.get(holder.getAdapterPosition()).getPhoto();
         if(!dataSet.get(holder.getAdapterPosition()).isWorldkie_private()) {
@@ -130,7 +141,7 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
                 String id_photo = queryDocumentSnapshot.getString("photo_id");
                 int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
 
-                if (resId != 0) {
+                if (resId != 0 && (!holder.getLastPhotoId().equals(id_photo))) {
                     Drawable drawable = ContextCompat.getDrawable(context, resId);
                     holder.getIv_worldkie_preview_worldkie().setImageDrawable(drawable);
                     try {
@@ -138,6 +149,9 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
+                    holder.setLastPhotoId(id_photo);
+                    holder.getIv_stuffkie_private_preview().setVisibility(View.VISIBLE);
+                    EfectsUtils.startCircularReveal(drawable,holder.getIv_worldkie_preview_worldkie());
                 }
             });
         } else {
@@ -148,7 +162,9 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
                     if (item.getName().startsWith("cover")) {
                         item.getDownloadUrl().addOnSuccessListener(uri -> {
                             try {
-                                DrawableUtils.personalizarImagenCuadradoButton(context,115/7,7, R.color.greenWhatever,uri,holder.getIv_worldkie_preview_worldkie());
+                                DrawableUtils.personalizarImagenCuadradoButton(context,115/7,7, R.color.greenWhatever,uri,holder.getIv_worldkie_preview_worldkie(),R.mipmap.photoprofileone);
+                                holder.getIv_stuffkie_private_preview().setVisibility(View.VISIBLE);
+                                EfectsUtils.startCircularReveal(context,uri,holder.getIv_worldkie_preview_worldkie());
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }

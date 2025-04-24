@@ -1,10 +1,10 @@
 package com.example.buuktu.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +32,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import java.util.jar.Attributes;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
@@ -55,6 +54,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.ViewHold
     TextInputEditText et_namepronouns;
     EditNamePronounsUserDialog editNamePronounsUserDialog;
     public class ViewHolder extends RecyclerView.ViewHolder {
+        String lastName="", lastPronouns="",lastEmail="";
         private TextView tv_name_setting_profile,tv_value_setting_profile;
         private CardView card_view_setting_list_profile;
         //private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
@@ -68,6 +68,22 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.ViewHold
 
         public CardView getCard_view_setting_list_profile() {
             return card_view_setting_list_profile;
+        }
+
+        public String getLastName() {
+            return lastName;
+        }
+
+        public void setLastName(String lastName) {
+            this.lastName = lastName;
+        }
+
+        public String getLastPronouns() {
+            return lastPronouns;
+        }
+
+        public void setLastPronouns(String lastPronouns) {
+            this.lastPronouns = lastPronouns;
         }
 
         public TextView getTv_value_setting_profile() {
@@ -103,14 +119,31 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull SettingAdapter.ViewHolder holder, int position) {
         String name = dataSet.get(holder.getAdapterPosition()).getName();
-         holder.getTv_name_setting_profile().setText(name);
-        holder.getTv_value_setting_profile().setText(dataSet.get(holder.getAdapterPosition()).getValue());
+        String value = dataSet.get(holder.getAdapterPosition()).getValue();
+        switch (name.toLowerCase()){
+            case "nombre":
+                if(!holder.getLastName().equals(value)){
+                    holder.getTv_value_setting_profile().setText(value);
+                }
+                break;
+            case "pronombres":
+                if(!holder.getLastPronouns().equals(value)){
+                    holder.getTv_value_setting_profile().setText(value);
+                }
+                break;
+            case "correo electronico":
+                if(!holder.getLastPronouns().equals(value)){
+                    holder.getTv_value_setting_profile().setText(value);
+                }
+                break;
+        }
+        holder.getTv_value_setting_profile().setText(value);
          holder.getCard_view_setting_list_profile().setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
                  switch (name.toLowerCase()) {
                      case "nombre":
-                         editNamePronounsUserDialog = new EditNamePronounsUserDialog(v.getContext(),"Nombre");
+                         editNamePronounsUserDialog = new EditNamePronounsUserDialog(v.getContext(),"Nombre",value);
                      editNamePronounsUserDialog.setOnDialogClickListener(new EditNamePronounsUserDialog.OnDialogEditClickListener() {
                          @Override
                          public void onAccept() {
@@ -126,7 +159,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.ViewHold
                      Toast.makeText(context, "Perfil", Toast.LENGTH_SHORT).show();
                      break;
                      case "pronombres":
-                         EditNamePronounsUserDialog editNamePronounsUserDialogPronouns = new EditNamePronounsUserDialog(v.getContext(),"Pronombres");
+                         EditNamePronounsUserDialog editNamePronounsUserDialogPronouns = new EditNamePronounsUserDialog(v.getContext(),"Pronombres",value);
                          editNamePronounsUserDialogPronouns.setOnDialogClickListener(new EditNamePronounsUserDialog.OnDialogEditClickListener() {
                              @Override
                              public void onAccept() {
@@ -142,7 +175,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.ViewHold
                      Toast.makeText(context, "Cuenta", Toast.LENGTH_SHORT).show();
                      break;
                      case "correo electronico":
-                         EditNamePronounsUserDialog editNamePronounsUserDialogEmail = new EditNamePronounsUserDialog(v.getContext(),"Correo electronico");
+                         EditNamePronounsUserDialog editNamePronounsUserDialogEmail = new EditNamePronounsUserDialog(v.getContext(),"Correo electronico",value);
                          editNamePronounsUserDialogEmail.setOnDialogClickListener(new EditNamePronounsUserDialog.OnDialogEditClickListener() {
                              @Override
                              public void onAccept() {
@@ -178,6 +211,7 @@ break;
     }
         private void editEmail(EditNamePronounsUserDialog dialog){
             et_namepronouns = dialog.findViewById(R.id.et_namepronouns);
+
             tv_edittext_general_dialog_error = dialog.findViewById(R.id.tv_edittext_general_dialog_error);
             tv_edittext_general_dialog_error.setText("");
 
@@ -229,7 +263,7 @@ break;
     private void editName(EditNamePronounsUserDialog dialog){
         et_namepronouns = dialog.findViewById(R.id.et_namepronouns);
         tv_edittext_general_dialog_error = dialog.findViewById(R.id.tv_edittext_general_dialog_error);
-        tv_edittext_general_dialog_error.setText("");
+        tv_edittext_general_dialog_error.setText(null);
 
         //ImageView iv_photo = dialog.findViewById(R.id.iv_photo_del);
         //iv_photo.setImageAlpha(R.mipmap.img_del_characterkie);
@@ -330,6 +364,7 @@ break;
         TextInputEditText et_oldpassword = dialog.findViewById(R.id.et_oldpassword);
         TextInputEditText et_newPassword = dialog.findViewById(R.id.et_newPassword);
         TextInputEditText et_newPasswordRepeat = dialog.findViewById(R.id.et_newPasswordRepeat);
+        //Log.d("SettingAdapter", "Valor recibido: " + dataSet.get(position).getValue());
 
         //ImageView iv_photo = dialog.findViewById(R.id.iv_photo_del);
         //iv_photo.setImageAlpha(R.mipmap.img_del_characterkie);

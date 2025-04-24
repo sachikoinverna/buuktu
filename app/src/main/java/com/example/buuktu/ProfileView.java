@@ -71,7 +71,7 @@ public class ProfileView extends Fragment implements View.OnClickListener {
     CollectionReference collectionStuffkies;
     CollectionReference collectionCharacterkies;
     FirebaseAuth firebaseAuth;
-    String UID;
+    String UID,lastPhotoId=null;
     UserkieModel userkieModel;
     FragmentManager fragmentManager;
     FragmentActivity activity;
@@ -342,10 +342,11 @@ public class ProfileView extends Fragment implements View.OnClickListener {
                 String id_photo = queryDocumentSnapshot.getString("photo_id");
                 int resId = getResources().getIdentifier(id_photo, "mipmap", getContext().getPackageName());
 
-                if (resId != 0) {
+                if (resId != 0 && (!lastPhotoId.equals(id_photo))) {
                     Drawable drawable = ContextCompat.getDrawable(getContext(), resId);
                     ib_profileView.setImageDrawable(drawable);
                     DrawableUtils.personalizarImagenCircleButton(getContext(), DrawableUtils.drawableToBitmap(drawable), ib_profileView, R.color.brownMaroon);
+                    lastPhotoId=id_photo;
                 }
 
             } else {

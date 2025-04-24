@@ -52,7 +52,6 @@ import kotlinx.coroutines.channels.ChannelSegment;
  * create an instance of this fragment.
  */
 public class WorldkieView extends Fragment implements View.OnClickListener {
-    String mode;
     ArrayList<Characterkie> characterkieArrayList;
     ArrayList<StuffkieModel> stuffkieArrayList;
     FirebaseFirestore db;
@@ -62,8 +61,7 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
     CardView cv_characterkiesPreviewWorldkie,cv_stuffkiesPreviewWorldkie;
     RecyclerView rc_characterkiesPrevieWorldkie,rc_stuffkiesPreviewWorldkie;
     FirebaseAuth firebaseAuth;
-    String UID;
-    String UID_AUTHOR;
+    String UID,UID_AUTHOR,lastPhotoId="",mode;
     UserkieModel userkieModel;
     FragmentManager fragmentManager;
     FragmentActivity activity;
@@ -326,10 +324,9 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
                             return;
                         }*/
                     //boolean photo_default = queryDocumentSnapshot.getBoolean("photo_default");
-                  //  String id_photo = queryDocumentSnapshot.getString("photo_id");*/
                     int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
 
-                    if (resId != 0) {
+                    if (resId != 0 && (!lastPhotoId.equals(id_photo))) {
                         Drawable drawable = ContextCompat.getDrawable(context, resId);
                         ib_worldkieView.setImageDrawable(drawable);
                         try {
@@ -337,6 +334,7 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);
                         }
+                        lastPhotoId=id_photo;
                     }
                 }//);
             //}

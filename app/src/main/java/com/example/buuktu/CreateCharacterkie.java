@@ -131,14 +131,14 @@ public class CreateCharacterkie extends Fragment implements View.OnClickListener
         et_nameCharacterkieCreateFull = view.findViewById(R.id.et_nameCharacterkieCreateFull);
         constraintLayout = view.findViewById(R.id.constraint_create_characterkie);
         source = "app";
-        tb_characterkieDraft.setVisibility(View.GONE);
+        tb_characterkieDraft.setVisibility(View.INVISIBLE);
         tb_characterkiePrivacity.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     tb_characterkieDraft.setVisibility(View.VISIBLE);
                 }else{
-                    tb_characterkieDraft.setVisibility(View.GONE);
+                    tb_characterkieDraft.setVisibility(View.INVISIBLE);
                 }
             }
         });

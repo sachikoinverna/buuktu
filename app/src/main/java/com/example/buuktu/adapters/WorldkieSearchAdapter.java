@@ -27,6 +27,7 @@ import com.example.buuktu.WorldkieView;
 import com.example.buuktu.models.UserkieModel;
 import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.utils.DrawableUtils;
+import com.example.buuktu.utils.EfectsUtils;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -49,6 +50,7 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
     private Context context;
     private Fragment menuWorldkie;
     public class ViewHolder extends RecyclerView.ViewHolder {
+        String lastPhotoId="",lastName="";
         private ImageView iv_worldkie_photo_search,iv_worldkie_private_search;
         ImageButton ib_show_more_details_worldkie_search;
         MaterialCardView cv_worldkie_search;
@@ -74,6 +76,14 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
             collectionUserkies = db.collection("Users");
 
             moreDetailsShowed = false;
+        }
+
+        public String getLastName() {
+            return lastName;
+        }
+
+        public void setLastName(String lastName) {
+            this.lastName = lastName;
         }
 
         public FirebaseStorage getFirebaseStorage() {
@@ -122,6 +132,14 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
             return ib_show_more_details_worldkie_search;
         }
 
+        public String getLastPhotoId() {
+            return lastPhotoId;
+        }
+
+        public void setLastPhotoId(String lastPhotoId) {
+            this.lastPhotoId = lastPhotoId;
+        }
+
         public CollectionReference getCollectionUserkies() {
             return collectionUserkies;
         }
@@ -143,6 +161,7 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.getIv_worldkie_photo_search().setVisibility(View.INVISIBLE);
         holder.getCollectionUserkies().document(dataSet.get(holder.getAdapterPosition()).getUID_AUTHOR()).addSnapshotListener((documentSnapshot, e) -> {
             if (e != null) {
                 Log.e("Error", e.getMessage());
@@ -158,8 +177,12 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
         holder.getTv_date_last_update_search_worldkie().setVisibility(View.GONE);
         holder.getTv_date_creation_search_worldkie_title().setVisibility(View.GONE);
         holder.getTv_date_creation_search_worldkie().setVisibility(View.GONE);
+        String name = dataSet.get(holder.getAdapterPosition()).getName();
 
-        holder.getTv_worldkie_name_search().setText(dataSet.get(holder.getAdapterPosition()).getName());
+        if (!holder.getLastName().equals(name)){
+            holder.getTv_worldkie_name_search().setText(name);
+            holder.setLastName(name);
+    }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         holder.getTv_date_last_update_search_worldkie().setText(simpleDateFormat.format(dataSet.get(holder.getAdapterPosition()).getLast_update()));
         holder.getTv_date_creation_search_worldkie().setText(simpleDateFormat.format(dataSet.get(holder.getAdapterPosition()).getCreation_date()));
@@ -212,7 +235,7 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
                 String id_photo = queryDocumentSnapshot.getString("photo_id");
                 int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
 
-                if (resId != 0) {
+                if (resId != 0 && (!holder.getLastPhotoId().equals(id_photo))) {
                     Drawable drawable = ContextCompat.getDrawable(context, resId);
                     holder.getIv_worldkie_photo_search().setImageDrawable(drawable);
                     try {
@@ -220,6 +243,9 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
+                    holder.setLastPhotoId(id_photo);
+                    holder.getIv_worldkie_photo_search().setVisibility(View.VISIBLE);
+                    EfectsUtils.startCircularReveal(drawable,holder.getIv_worldkie_photo_search());
                 }
             });
         } else {
@@ -230,7 +256,9 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
                     if (item.getName().startsWith("cover")) {
                         item.getDownloadUrl().addOnSuccessListener(uri -> {
                             try {
-                                DrawableUtils.personalizarImagenCuadradoButton(context,115/7,7, R.color.greenWhatever,uri,holder.getIv_worldkie_photo_search());
+                                DrawableUtils.personalizarImagenCuadradoButton(context,115/7,7, R.color.greenWhatever,uri,holder.getIv_worldkie_photo_search(),R.mipmap.photoworldkieone);
+                                holder.getIv_worldkie_photo_search().setVisibility(View.VISIBLE);
+                                EfectsUtils.startCircularReveal(context,uri,holder.getIv_worldkie_photo_search());
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }

@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements OnDialogInfoClick
     NavigationView navigationView;
     Toolbar toolbar;
 int colorEntero;
+    private String lastPhotoId = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,7 +130,6 @@ int colorEntero;
         ib_self_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DrawableUtils.personalizarImagenCircleButton(getApplicationContext(), DrawableUtils.drawableToBitmap(ib_self_profile.getDrawable()), ib_self_profile, colorEntero,true);
                 ProfileView profileView = new ProfileView();
                 Bundle bundle = new Bundle();
                 bundle.putString("mode","self");
@@ -182,13 +182,13 @@ int colorEntero;
             if(photo_default) {
                 String id_photo = queryDocumentSnapshot.getString("photo_id");
                 int resId = getResources().getIdentifier(id_photo, "mipmap", getPackageName());
-
-                if (resId != 0) {
+                if (resId != 0 && (!lastPhotoId.equals(id_photo))) {
                     Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), resId);
                     ib_self_profile.setVisibility(View.VISIBLE); // Hacerlo ligeramente transparente al principio
                     EfectsUtils.startCircularReveal(drawable,ib_self_profile);
                     ib_self_profile.setImageDrawable(drawable);
                     DrawableUtils.personalizarImagenCircleButton(this, DrawableUtils.drawableToBitmap(drawable), ib_self_profile, colorEntero, false);
+                    lastPhotoId=id_photo;
 
                 } else {
                     Log.e("DRAWABLE", "Recurso no encontrado: " + id_photo);

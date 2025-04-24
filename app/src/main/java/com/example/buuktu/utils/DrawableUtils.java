@@ -20,6 +20,7 @@ import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.example.buuktu.R;
 import com.example.buuktu.adapters.RoundedBorderSquareTransformation;
 
@@ -57,7 +58,7 @@ public class DrawableUtils {
                 .apply(requestOptions)
                 .into(imageButton);
     }
-    public static void personalizarImagenCuadradoButton(Context context, int cornerRadius, int borderWidth, @ColorRes int idColor, Uri uri, ImageView imageView) throws IOException {
+    public static void personalizarImagenCuadradoButton(Context context, int cornerRadius, int borderWidth, @ColorRes int idColor, Uri uri, ImageView imageView, int mipmapError) throws IOException {
         int borderColor = ContextCompat.getColor(context, idColor);
 
         // 3. Escalar al tamaño deseado (opcional, por ejemplo 150x150
@@ -66,7 +67,8 @@ public class DrawableUtils {
                 .transform(new RoundedBorderSquareTransformation(cornerRadius, borderWidth, borderColor));
 
         Glide.with(context)
-                .load(uri) // 👍 Esto sí pasa por la transformación
+                .load(uri).signature(new ObjectKey(System.currentTimeMillis())).error(mipmapError) // Cambia la firma para forzar la recarga
+                // 👍 Esto sí pasa por la transformación
                 .apply(requestOptions)
                 .into(imageView);
     }
@@ -78,7 +80,8 @@ public class DrawableUtils {
                 .transform(new RoundedBorderSquareTransformation(cornerRadius, borderWidth, borderColor));
 
         Glide.with(context)
-                .load(drawable) // 👍 Esto sí pasa por la transformación
+                .load(drawable) // Cambia la firma para forzar la recarga
+                // 👍 Esto sí pasa por la transformación
                 .apply(requestOptions)
                 .into(imageView);
     }
@@ -88,7 +91,8 @@ public class DrawableUtils {
                 .centerCrop() // << 👈 evita el recorte
                 .transform(new RoundedBorderSquareTransformation(cornerRadius, borderWidth, borderColor));
         Glide.with(context)
-                .load(uri) // 👍 Esto sí pasa por la transformación
+                .load(uri).signature(new ObjectKey(System.currentTimeMillis())) // Cambia la firma para forzar la recarga
+                // 👍 Esto sí pasa por la transformación
                 .apply(requestOptions)
                 .into(imageButton);
     }

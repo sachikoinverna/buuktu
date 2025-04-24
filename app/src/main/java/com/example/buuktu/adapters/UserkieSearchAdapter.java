@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +27,7 @@ import com.example.buuktu.ProfileView;
 import com.example.buuktu.R;
 import com.example.buuktu.models.UserkieModel;
 import com.example.buuktu.utils.DrawableUtils;
+import com.example.buuktu.utils.EfectsUtils;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -44,6 +46,8 @@ public class UserkieSearchAdapter extends RecyclerView.Adapter<UserkieSearchAdap
     private Context context;
     private Fragment menuWorldkie;
     public class ViewHolder extends RecyclerView.ViewHolder {
+        String lastPhotoId="",lastName="",lastUsername="";
+        boolean lastPrivacity=false;
         private ImageView iv_userkie_photo_search,iv_userkie_private_search;
         MaterialCardView cv_userkie_search;
         TextView tv_userkie_name_search, tv_userkie_username_search;
@@ -83,6 +87,38 @@ public class UserkieSearchAdapter extends RecyclerView.Adapter<UserkieSearchAdap
         public ImageView getIv_userkie_private_search() {
             return iv_userkie_private_search;
         }
+
+        public String getLastPhotoId() {
+            return lastPhotoId;
+        }
+
+        public void setLastPhotoId(String lastPhotoId) {
+            this.lastPhotoId = lastPhotoId;
+        }
+
+        public String getLastName() {
+            return lastName;
+        }
+
+        public void setLastName(String lastName) {
+            this.lastName = lastName;
+        }
+
+        public String getLastUsername() {
+            return lastUsername;
+        }
+
+        public void setLastUsername(String lastUsername) {
+            this.lastUsername = lastUsername;
+        }
+
+        public boolean isLastPrivacity() {
+            return lastPrivacity;
+        }
+
+        public void setLastPrivacity(boolean lastPrivacity) {
+            this.lastPrivacity = lastPrivacity;
+        }
     }
     //Constructor donde pasamos la lista de productos y el contexto
     public UserkieSearchAdapter(ArrayList<UserkieModel> dataSet, Context ctx, FragmentManager fragmentManager) {
@@ -101,8 +137,17 @@ public class UserkieSearchAdapter extends RecyclerView.Adapter<UserkieSearchAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.getTv_userkie_username_search().setText(dataSet.get(holder.getAdapterPosition()).getUsername());
-        holder.getTv_userkie_name_search().setText(dataSet.get(holder.getAdapterPosition()).getName());
+        holder.getIv_userkie_photo_search().setVisibility(View.INVISIBLE);
+        String username = dataSet.get(holder.getAdapterPosition()).getUsername();
+        if(!holder.getLastUsername().equals(username)){
+            holder.getTv_userkie_username_search().setText(username);
+            holder.setLastUsername(username);
+        }
+        String name = dataSet.get(holder.getAdapterPosition()).getName();
+        if(!holder.getLastName().equals(name)) {
+            holder.getTv_userkie_name_search().setText(name);
+            holder.setLastName(name);
+        }
         if(!dataSet.get(holder.getAdapterPosition()).isProfile_private()){
             holder.getIv_userkie_private_search().setVisibility(View.INVISIBLE);
         }
@@ -134,10 +179,13 @@ public class UserkieSearchAdapter extends RecyclerView.Adapter<UserkieSearchAdap
                 String id_photo = queryDocumentSnapshot.getString("photo_id");
                 int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
 
-                if (resId != 0) {
+                if (resId != 0 && (!holder.getLastPhotoId().equals(id_photo))) {
                     Drawable drawable = ContextCompat.getDrawable(context, resId);
                     holder.getIv_userkie_photo_search().setImageDrawable(drawable);
                     DrawableUtils.personalizarImagenCircle(context, DrawableUtils.drawableToBitmap(drawable), holder.getIv_userkie_photo_search(), R.color.brownMaroon);
+                    holder.setLastPhotoId(id_photo);
+                    holder.getIv_userkie_photo_search().setVisibility(View.VISIBLE);
+                    EfectsUtils.startCircularReveal(drawable,holder.getIv_userkie_photo_search());
                 }
             });
         } else {
@@ -150,6 +198,11 @@ public class UserkieSearchAdapter extends RecyclerView.Adapter<UserkieSearchAdap
                                             Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                                             Bitmap bitmapScaled = Bitmap.createScaledBitmap(bitmap, 80, 80, false);
                                             DrawableUtils.personalizarImagenCircle(context, bitmapScaled, holder.getIv_userkie_photo_search(), R.color.brownMaroon);
+                                            Drawable drawable = new BitmapDrawable(context.getResources(), bitmapScaled);
+
+                                            holder.getIv_userkie_photo_search().setVisibility(View.VISIBLE);
+
+                                            EfectsUtils.startCircularReveal(drawable,holder.getIv_userkie_photo_search());
                                         });
                                         break;
                                     }
