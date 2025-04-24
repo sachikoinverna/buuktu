@@ -192,14 +192,6 @@ public class Notes extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v,
-                                    ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater inflater = requireActivity().getMenuInflater();
-        inflater.inflate(R.menu.note_preview_menu, menu);
-    }
-
-    @Override
     public void onClick(View v) {
         if(v.getId()==R.id.ib_back){
             NavigationUtils.goBack(fragmentManager,activity);
