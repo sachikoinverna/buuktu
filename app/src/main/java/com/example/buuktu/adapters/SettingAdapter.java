@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +18,7 @@ import com.example.buuktu.R;
 import com.example.buuktu.dialogs.EditNamePronounsUserDialog;
 import com.example.buuktu.dialogs.EditPasswordUserDialog;
 import com.example.buuktu.models.SettingModel;
+import com.example.buuktu.utils.CheckUtil;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
@@ -49,6 +51,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.ViewHold
     DocumentReference documentReference;
     FirebaseAuth firebaseAuth;
     String UID;
+    TextView tv_edittext_general_dialog_error;
     TextInputEditText et_namepronouns;
     EditNamePronounsUserDialog editNamePronounsUserDialog;
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -175,6 +178,9 @@ break;
     }
         private void editEmail(EditNamePronounsUserDialog dialog){
             et_namepronouns = dialog.findViewById(R.id.et_namepronouns);
+            tv_edittext_general_dialog_error = dialog.findViewById(R.id.tv_edittext_general_dialog_error);
+            tv_edittext_general_dialog_error.setText("");
+
             //ImageView iv_photo = dialog.findViewById(R.id.iv_photo_del);
             //iv_photo.setImageAlpha(R.mipmap.img_del_characterkie);
             ImageButton ib_close = dialog.findViewById(R.id.ib_close_dialog);
@@ -222,6 +228,9 @@ break;
         }
     private void editName(EditNamePronounsUserDialog dialog){
         et_namepronouns = dialog.findViewById(R.id.et_namepronouns);
+        tv_edittext_general_dialog_error = dialog.findViewById(R.id.tv_edittext_general_dialog_error);
+        tv_edittext_general_dialog_error.setText("");
+
         //ImageView iv_photo = dialog.findViewById(R.id.iv_photo_del);
         //iv_photo.setImageAlpha(R.mipmap.img_del_characterkie);
         ImageButton ib_close = dialog.findViewById(R.id.ib_close_dialog);
@@ -236,10 +245,9 @@ break;
         animationView.setVisibility(View.VISIBLE);
         animationView.setAnimation(R.raw.reading_anim);
         animationView.playAnimation();
-        String newName = et_namepronouns.getText().toString();
-        if(!newName.equals("")) {
+        if(CheckUtil.handlerCheckName(context,et_namepronouns,tv_edittext_general_dialog_error)) {
             Map<String, Object> worldkieData = new HashMap<>();
-            worldkieData.put("name", newName);
+            worldkieData.put("name", et_namepronouns.getText().toString());
             documentReference.update(worldkieData).addOnCompleteListener(updateTask -> {
                     if (updateTask.isSuccessful()) {
                         animationView.setAnimation(R.raw.success_anim);
@@ -269,6 +277,8 @@ break;
         }
     private void editPronouns(EditNamePronounsUserDialog dialog){
         et_namepronouns = dialog.findViewById(R.id.et_namepronouns);
+        tv_edittext_general_dialog_error = dialog.findViewById(R.id.tv_edittext_general_dialog_error);
+        tv_edittext_general_dialog_error.setText("");
         //ImageView iv_photo = dialog.findViewById(R.id.iv_photo_del);
         //iv_photo.setImageAlpha(R.mipmap.img_del_characterkie);
         ImageButton ib_close = dialog.findViewById(R.id.ib_close_dialog);
@@ -284,7 +294,7 @@ break;
         animationView.setAnimation(R.raw.reading_anim);
         animationView.playAnimation();
         String newPronouns = et_namepronouns.getText().toString();
-        if(!newPronouns.equals("")) {
+        if(CheckUtil.handlerCheckPronouns(context,et_namepronouns,tv_edittext_general_dialog_error)) {
             Map<String, Object> worldkieData = new HashMap<>();
             worldkieData.put("pronouns", newPronouns);
             documentReference.update(worldkieData).addOnCompleteListener(updateTask -> {
@@ -338,6 +348,7 @@ break;
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String newPassword = et_newPassword.getText().toString();
         String newPasswordRepeat = et_newPasswordRepeat.getText().toString();
+       // if(CheckUtil.handlerCheckPassword(context,et_newPassword,))
         if (newPassword.equals(newPasswordRepeat)) {
             String email = user.getEmail();
 

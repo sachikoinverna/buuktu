@@ -12,22 +12,22 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/register"
         android:textSize="60sp"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toTopOf="@+id/cardview_register"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardview_register"
         android:layout_width="350dp"
-        android:layout_height="525dp"
-        android:layout_marginTop="150dp"
+        android:layout_height="550dp"
         android:background="@drawable/cardview_border"
         app:cardCornerRadius="40dp"
         app:cardElevation="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -71,6 +71,7 @@
                     app:counterEnabled="true"
                     app:counterMaxLength="50"
                     app:errorEnabled="false"
+                    app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/bt_chooseImageRegister"
@@ -85,7 +86,8 @@
                         android:inputType="text"
                         android:maxLength="50"
                         android:textAlignment="center"
-                        android:textColorHint="@color/brownMaroon" />
+                        android:textColorHint="@color/brownMaroon"
+                        android:textSize="20sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -120,6 +122,7 @@
                     app:counterEnabled="true"
                     app:counterMaxLength="50"
                     app:errorEnabled="false"
+                    app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_errorNameRegister"
@@ -133,7 +136,8 @@
                         android:inputType="text"
                         android:maxLength="50"
                         android:textAlignment="center"
-                        android:textColorHint="@color/brownMaroon" />
+                        android:textColorHint="@color/brownMaroon"
+                        android:textSize="20sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
@@ -166,6 +170,7 @@
                     app:boxCornerRadiusTopEnd="58dp"
                     app:boxCornerRadiusTopStart="58dp"
                     app:errorEnabled="false"
+                    app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_errorPronounsRegister"
@@ -183,7 +188,8 @@
                         android:inputType="none"
                         android:onClick="showDatePickerDialog"
                         android:textAlignment="center"
-                        android:textColorHint="@color/brownMaroon" />
+                        android:textColorHint="@color/brownMaroon"
+                        android:textSize="20sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -218,6 +224,7 @@
                     app:counterEnabled="true"
                     app:counterMaxLength="20"
                     app:errorEnabled="false"
+                    app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_birthdayError"
@@ -230,7 +237,8 @@
                         android:gravity="center"
                         android:inputType="text"
                         android:maxLength="20"
-                        android:textAlignment="center" />
+                        android:textAlignment="center"
+                        android:textSize="20sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
@@ -264,6 +272,7 @@
                     app:counterEnabled="true"
                     app:counterMaxLength="50"
                     app:errorEnabled="false"
+                    app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_errorUsernameRegister"
@@ -276,7 +285,8 @@
                         android:gravity="center"
                         android:inputType="textEmailAddress"
                         android:maxLength="50"
-                        android:textAlignment="center" />
+                        android:textAlignment="center"
+                        android:textSize="20sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -292,7 +302,7 @@
                     android:textColor="@color/redError"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_userRegisterFilled" />
+                    app:layout_constraintTop_toBottomOf="@+id/et_emailRegisterFilled" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/et_telephoneRegisterFilled"
@@ -311,9 +321,10 @@
                     app:counterEnabled="true"
                     app:counterMaxLength="50"
                     app:errorEnabled="false"
+                    app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_emailRegisterFilled"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_errorEmailRegister"
                     app:startIconDrawable="@drawable/twotone_phone_24">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -324,7 +335,8 @@
                         android:gravity="center"
                         android:inputType="phone"
                         android:maxLength="6"
-                        android:textAlignment="center" />
+                        android:textAlignment="center"
+                        android:textSize="20sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
@@ -339,7 +351,7 @@
                     android:textColor="@color/redError"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_userRegisterFilled" />
+                    app:layout_constraintTop_toBottomOf="@+id/et_telephoneRegisterFilled" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/et_passwordFilled"
@@ -359,9 +371,10 @@
                     app:counterMaxLength="50"
                     app:endIconMode="password_toggle"
                     app:errorEnabled="true"
+                    app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_telephoneRegisterFilled"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_errorNumberRegister"
                     app:startIconDrawable="@drawable/outline_password_24">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -370,7 +383,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@color/redError" />
+                        android:textColor="@color/redError"
+                        android:textSize="20sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -406,6 +420,7 @@
                     app:counterMaxLength="50"
                     app:endIconMode="password_toggle"
                     app:errorEnabled="false"
+                    app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_errorPasswordRegister"
@@ -418,7 +433,8 @@
                         android:gravity="center"
                         android:inputType="textPassword"
                         android:maxLength="50"
-                        android:textAlignment="center" />
+                        android:textAlignment="center"
+                        android:textSize="20sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
@@ -443,8 +459,11 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="32dp"
+                    android:fontFamily="@font/alegreya"
                     android:switchPadding="16dp"
+                    android:switchTextAppearance="@style/SwitchTextAppearance"
                     android:text="Cuenta privada"
+                    android:textSize="20sp"
                     android:thumb="@drawable/thumb_custom"
                     android:track="@drawable/track_custom"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -460,7 +479,7 @@
 
     <TextView
         android:id="@+id/tv_registerToLoginButton"
-        android:layout_width="100dp"
+        android:layout_width="180dp"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
@@ -472,12 +491,14 @@
         android:onClick="handlerGoToRegister"
         android:text="@string/login"
         android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_registerButton"
-        android:layout_width="120dp"
+        android:layout_width="180dp"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/button_backgground"
@@ -488,6 +509,8 @@
         android:onClick="addDataToFirestore"
         android:text="Registro"
         android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardview_register" />

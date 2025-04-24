@@ -12,6 +12,9 @@
         <item name="android:textColor">@color/redError</item>
         <item name="android:textSize">12sp</item>
     </style>
+    <style name="SwitchTextAppearance" parent="@android:style/TextAppearance">
+        <item name="android:fontFamily">@font/alegreya</item>
+    </style>
     <!--for Normal FAB-->
     <style name="customNormalFAB">
 

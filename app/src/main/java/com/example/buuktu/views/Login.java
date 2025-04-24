@@ -17,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.buuktu.R;
 import com.example.buuktu.utils.CheckUtil;
+import com.example.buuktu.utils.UIUtils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -47,6 +48,7 @@ public class Login extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        UIUtils.hideSystemUI(this);
         initComponents();
 
     }
@@ -67,7 +69,7 @@ public class Login extends AppCompatActivity {
     }
 
     public void handlerLogin(View view) {
-        if (!CheckUtil.checkTextEmpty(editTextEmailLogin) && !CheckUtil.checkTextEmpty(editTextPasswordLogin)) {
+        if (!editTextEmailLogin.getText().toString().isEmpty() && !editTextPasswordLogin.getText().toString().isEmpty()) {
             password = editTextPasswordLogin.getText().toString();
             if(editTextEmailLogin.getText().toString().contains("@")){
                 email = editTextEmailLogin.getText().toString();
@@ -107,5 +109,10 @@ public class Login extends AppCompatActivity {
 
             }
         });
+    }
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        UIUtils.onWindowFocusChanged(this, hasFocus);
     }
 }

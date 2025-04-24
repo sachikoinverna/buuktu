@@ -7,6 +7,9 @@
         <item name="android:fontFamily">@font/alegreya</item>
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
+    <style name="SwitchTextAppearance" parent="@android:style/TextAppearance">
+        <item name="android:fontFamily">@font/alegreya</item>
+    </style>
     <!--for Normal FAB-->
     <style name="customNormalFAB">
 

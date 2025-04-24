@@ -126,7 +126,7 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
 
         initComponents(view);
         ib_select_img_create_worldkie.setVisibility(View.INVISIBLE);
-        dialog = new CreateEditGeneralDialog(getContext());
+        dialog = new CreateEditGeneralDialog(getContext(),"Hola");
         source = "app";
         bottomSheetProfilePhoto = new BottomSheetProfilePhoto();
 
@@ -356,7 +356,7 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
                         }
                     });
                 }*/
-                CreateEditGeneralDialog dialog = new CreateEditGeneralDialog(getContext());
+                CreateEditGeneralDialog dialog = new CreateEditGeneralDialog(getContext(),"Hola");
                 TextView tv_text = dialog.findViewById(R.id.tv_text_create_edit);
                 tv_text.setText("Creando worldkie...");
                 LottieAnimationView animationView = dialog.findViewById(R.id.anim_del_notekie);
