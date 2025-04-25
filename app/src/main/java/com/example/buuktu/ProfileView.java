@@ -168,7 +168,7 @@ public class ProfileView extends Fragment implements View.OnClickListener {
                 tv_nameProfileView.setText(userkieModel.getName());
                 tv_usernameProfileView.setText(userkieModel.getUsername());
                 if ((!userkieModel.isProfile_private() && mode.equals("other")) || (mode.equals("self"))){
-                    collectionStuffkies.addSnapshotListener((queryDocumentSnapshots, ex) -> {
+                    collectionStuffkies.whereEqualTo("UID_AUTHOR",UID).addSnapshotListener((queryDocumentSnapshots, ex) -> {
                         if (ex != null) {
                             Log.e("Error", ex.getMessage());
                             Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
@@ -182,7 +182,6 @@ public class ProfileView extends Fragment implements View.OnClickListener {
 
                             for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
                                 //if (documentSnapshot.getBoolean("photo_default")) {
-                                if (doc.getString("UID_AUTHOR").equals(UID)) {
 
                                     Drawable drawable = getResources().getDrawable(R.drawable.thumb_custom);
                                     StuffkieModel stuffkieModel = new StuffkieModel(
@@ -196,7 +195,6 @@ public class ProfileView extends Fragment implements View.OnClickListener {
                                     stuffkieArrayList.add(stuffkieModel);
                                     foundData = true; // Set the flag to true if data is found
 
-                                }
                             }
                             if (foundData) {
                                 tv_stuffkiesPreviewUserkie.setVisibility(View.VISIBLE);
@@ -211,7 +209,7 @@ public class ProfileView extends Fragment implements View.OnClickListener {
 
                         }
                     });
-                    collectionWorldkies.addSnapshotListener((queryDocumentSnapshots, ex) -> {
+                    collectionWorldkies.whereEqualTo("UID_AUTHOR",UID).addSnapshotListener((queryDocumentSnapshots, ex) -> {
                         if (ex != null) {
                             Log.e("Error", ex.getMessage());
                             Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
@@ -223,8 +221,6 @@ public class ProfileView extends Fragment implements View.OnClickListener {
                             boolean foundData = false; // Add a flag
 
                             for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
-                                //if (documentSnapshot.getBoolean("photo_default")) {
-                                if (doc.getString("UID_AUTHOR").equals(UID)) {
 
                                     Drawable drawable = getResources().getDrawable(R.drawable.thumb_custom);
                                     WorldkieModel worldkieModel = new WorldkieModel(
@@ -239,7 +235,6 @@ public class ProfileView extends Fragment implements View.OnClickListener {
                                     worldkieArrayList.add(worldkieModel);
                                     foundData = true; // Set the flag to true if data is found
                                 }
-                            }
                             if (foundData) {
                                 tv_worldkiesPreviewUserkie.setVisibility(View.VISIBLE);
                                 cv_worldkiesPreviewUserkie.setVisibility(View.VISIBLE);
@@ -255,7 +250,7 @@ public class ProfileView extends Fragment implements View.OnClickListener {
                             updateRecyclerViewWorldkies(new ArrayList<>());
                         }
                     });
-                    collectionCharacterkies.addSnapshotListener((queryDocumentSnapshots, ex) -> {
+                    collectionCharacterkies.whereEqualTo("UID_AUTHOR",UID).addSnapshotListener((queryDocumentSnapshots, ex) -> {
                         if (ex != null) {
                             Log.e("Error", e.getMessage());
                             Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
@@ -268,7 +263,6 @@ public class ProfileView extends Fragment implements View.OnClickListener {
 
                             for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
                                 //if (documentSnapshot.getBoolean("photo_default")) {
-                                if (doc.getString("UID_AUTHOR").equals(UID)) {
 
                                     Drawable drawable = getResources().getDrawable(R.drawable.thumb_custom);
                                     Characterkie characterkieModel = new Characterkie(
@@ -279,7 +273,6 @@ public class ProfileView extends Fragment implements View.OnClickListener {
 
                                     characterkieArrayList.add(characterkieModel);
                                     foundData = true; // Set the flag to true if data is found
-                                }
                             }
                             if (foundData) {
                                 tv_characterkiesPreviewUserkie.setVisibility(View.VISIBLE);

@@ -43,6 +43,7 @@ public class Notes extends Fragment implements View.OnClickListener {
     private boolean isAllFabsVisible = false;
     FragmentManager fragmentManager;
     FragmentActivity activity;
+    MainActivity mainActivity;
     public Notes() {}
 
     public static Notes newInstance(String param1, String param2) {
@@ -53,18 +54,7 @@ public class Notes extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_notes, container, false);
-        MainActivity mainActivity = (MainActivity) getActivity();
-        backButton = mainActivity.getBackButton();
-        backButton.setVisibility(View.VISIBLE);
-        ib_save = mainActivity.getIb_save();
-        ib_save.setVisibility(View.GONE);
-        ib_profile_superior = mainActivity.getIb_self_profile();
-        ib_profile_superior.setVisibility(View.VISIBLE);
-        // Inicialización
-        recyclerView = view.findViewById(R.id.rc_all_notes_adapter);
-        fbAddNote = view.findViewById(R.id.fb_add_note_list_notes);
-        fbMoreOptions = view.findViewById(R.id.fb_more_options_list_notes);
-
+        initComponents(view);
         fbAddNote.setVisibility(View.GONE);
         isAllFabsVisible = false;
 
@@ -93,8 +83,7 @@ public class Notes extends Fragment implements View.OnClickListener {
         recyclerView.setAdapter(noteAdapter);
 
         // FAB lógica
-        fbMoreOptions.setOnClickListener(v -> toggleFabs());
-        fbAddNote.setOnClickListener(this);
+
         fragmentManager = requireActivity().getSupportFragmentManager();
         activity = requireActivity();
         setListeners();
@@ -103,8 +92,24 @@ public class Notes extends Fragment implements View.OnClickListener {
 
         return view;
     }
+    private void initComponents(View view){
+        mainActivity = (MainActivity) getActivity();
+        backButton = mainActivity.getBackButton();
+        backButton.setVisibility(View.VISIBLE);
+        ib_save = mainActivity.getIb_save();
+        ib_save.setVisibility(View.GONE);
+        ib_profile_superior = mainActivity.getIb_self_profile();
+        ib_profile_superior.setVisibility(View.VISIBLE);
+        // Inicialización
+        recyclerView = view.findViewById(R.id.rc_all_notes_adapter);
+        fbAddNote = view.findViewById(R.id.fb_add_note_list_notes);
+        fbMoreOptions = view.findViewById(R.id.fb_more_options_list_notes);
+
+    }
     private void setListeners(){
         backButton.setOnClickListener(this);
+        fbMoreOptions.setOnClickListener(v -> toggleFabs());
+        fbAddNote.setOnClickListener(this);
     }
     private void toggleFabs() {
         if (!isAllFabsVisible) {

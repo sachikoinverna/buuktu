@@ -1,6 +1,7 @@
 package com.example.buuktu.utils;
 
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -10,6 +11,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.util.Log;
 import android.util.TypedValue;
+import android.webkit.MimeTypeMap;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -84,6 +86,15 @@ public class DrawableUtils {
                 // 👍 Esto sí pasa por la transformación
                 .apply(requestOptions)
                 .into(imageView);
+    }
+    public static String getMipmapName(Context context,int id){
+        return context.getResources().getResourceName(id);
+    }
+    public static String getExtensionFromUri(Context context, Uri uri) {
+        ContentResolver cr = context.getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        String type = cr.getType(uri);
+        return "." + mime.getExtensionFromMimeType(type);
     }
     public static void personalizarImagenCuadradoButton(Context context, int cornerRadius, int borderWidth,@ColorRes int idColor, Uri uri, ImageButton imageButton) {
         int borderColor = ContextCompat.getColor(context, idColor);

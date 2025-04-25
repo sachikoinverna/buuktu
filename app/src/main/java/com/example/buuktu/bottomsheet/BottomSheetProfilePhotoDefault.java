@@ -206,14 +206,14 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
     private void setSelectedPhoto(ImageButton imageButton,int index){
         if(register != null) {
             register.setSelectedProfilePhoto(imageButton.getDrawable());
-            register.getIB_profile_photo().setTag(getMipmapName(photosUserkies.get(index)));
+            register.getIB_profile_photo().setTag(DrawableUtils.getMipmapName(context,photosUserkies.get(index)));
         } else if (createEditWorldkie !=null) {
             createEditWorldkie.setSelectedProfilePhoto(imageButton.getDrawable());
-            createEditWorldkie.getIb_select_img_create_worldkie().setTag(getMipmapName(photosWorldkies.get(index)));
+            createEditWorldkie.getIb_select_img_create_worldkie().setTag(DrawableUtils.getMipmapName(context,photosWorldkies.get(index)));
 
         } else if (createCharacterkie !=null) {
             createCharacterkie.setSelectedProfilePhoto(imageButton.getDrawable());
-            createCharacterkie.getIb_select_img_create_worldkie().setTag(getMipmapName(photosCharacterkies.get(index)));
+            createCharacterkie.getIb_select_img_create_worldkie().setTag(DrawableUtils.getMipmapName(context,photosCharacterkies.get(index)));
 
         } else if (createEditStuffkie !=null) {
           //  Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
@@ -222,11 +222,8 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
 
         }else if (createEditScenariokie !=null) {
             createEditScenariokie.setSelectedProfilePhoto(imageButton.getDrawable());
-            createEditScenariokie.getIb_select_img_create_worldkie().setTag(getMipmapName(photosStuffkies.get(index)));
+            createEditScenariokie.getIb_select_img_create_worldkie().setTag(DrawableUtils.getMipmapName(context,photosStuffkies.get(index)));
         }
-    }
-    private String getMipmapName(int id){
-        return getResources().getResourceName(id);
     }
     @Override
     public void onClick(View v) {

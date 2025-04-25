@@ -49,6 +49,7 @@
                     android:layout_marginTop="8dp"
                     android:background="@drawable/border_register"
                     android:onClick="selectImage"
+                    android:scaleType="centerCrop"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -319,7 +320,7 @@
                     app:boxCornerRadiusTopEnd="58dp"
                     app:boxCornerRadiusTopStart="58dp"
                     app:counterEnabled="true"
-                    app:counterMaxLength="50"
+                    app:counterMaxLength="9"
                     app:errorEnabled="false"
                     app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -334,7 +335,7 @@
                         android:ems="10"
                         android:gravity="center"
                         android:inputType="phone"
-                        android:maxLength="6"
+                        android:maxLength="9"
                         android:textAlignment="center"
                         android:textSize="20sp" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -381,6 +382,7 @@
                         android:id="@+id/et_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:inputType="textPassword"
                         android:gravity="center"
                         android:textAlignment="center"
                         android:textColor="@color/redError"

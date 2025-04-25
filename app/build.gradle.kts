@@ -10,7 +10,7 @@ android {
     defaultConfig {
         applicationId = "com.example.buuktu"
         minSdk = 23
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -36,6 +36,8 @@ android {
 }
 
 dependencies {
+    implementation (libs.firebase.functions)
+    implementation(libs.libphonenumber)
     implementation(libs.material) // Usa la versión más reciente de Material Components
     implementation(libs.swiperefreshlayout)
     implementation(libs.activity.v1101)
@@ -46,7 +48,6 @@ dependencies {
     implementation (libs.lottie) // o la versión más reciente
     implementation (libs.rxandroid) // o la versión más reciente
     implementation (libs.rxjava)
-    implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.firebase.database)

@@ -74,7 +74,7 @@ public class CharacterkiesSearch extends Fragment {
         collectionCharacterkies = db.collection("Characterkies");
         characterkieSearchAdapter = new CharacterkieSearchAdapter(characterkieModelArrayList, getContext(), getParentFragmentManager());
         rc_characterkies_search.setAdapter(characterkieSearchAdapter);
-        collectionCharacterkies.addSnapshotListener((queryDocumentSnapshots, e) -> {
+        collectionCharacterkies.whereNotEqualTo("UID_AUTHOR",UID).whereEqualTo("draft",false).addSnapshotListener((queryDocumentSnapshots, e) -> {
             if (e != null) {
                 Log.e("Error", e.getMessage());
                 Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
@@ -86,7 +86,6 @@ public class CharacterkiesSearch extends Fragment {
 
                 for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
                     DocumentSnapshot doc = dc.getDocument();                    //if (documentSnapshot.getBoolean("photo_default")) {
-                    if (!doc.getString("UID_AUTHOR").equals(UID)) {
 
                         Drawable drawable = getResources().getDrawable(R.drawable.thumb_custom);
                     /*StuffkieModel stuffkieModel = new StuffkieModel(
@@ -117,7 +116,6 @@ public class CharacterkiesSearch extends Fragment {
                         }
                     }
                 }
-            }
 
         });
         return view;

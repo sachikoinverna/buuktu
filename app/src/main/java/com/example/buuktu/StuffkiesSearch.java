@@ -79,7 +79,7 @@ public class StuffkiesSearch extends Fragment {
         stuffkieSearchAdapter = new StuffkieSearchAdapter(stuffkieModelArrayList, getContext(), getParentFragmentManager());
         rc_stuffkies_search.setAdapter(stuffkieSearchAdapter);
         rc_stuffkies_search.setLayoutManager(new LinearLayoutManager(getContext()));
-        collectionStuffkies.addSnapshotListener((queryDocumentSnapshots, e) -> {
+        collectionStuffkies.whereNotEqualTo("UID_AUTHOR",UID).whereEqualTo("draft",false).addSnapshotListener((queryDocumentSnapshots, e) -> {
             if (e != null) {
                 Log.e("Error", e.getMessage());
                 Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
@@ -91,9 +91,7 @@ public class StuffkiesSearch extends Fragment {
 
                 for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
                     DocumentSnapshot doc = dc.getDocument();                    //if (documentSnapshot.getBoolean("photo_default")) {
-                    if (!doc.getString("UID_AUTHOR").equals(UID)) {
 
-                        Drawable drawable = getResources().getDrawable(R.drawable.thumb_custom);
                         StuffkieModel stuffkieModel = new StuffkieModel(
                                 doc.getId(),
                                 doc.getString("name"),
@@ -120,7 +118,6 @@ public class StuffkiesSearch extends Fragment {
                         }
                     }
                 }
-            }
         });
         return view;
     }

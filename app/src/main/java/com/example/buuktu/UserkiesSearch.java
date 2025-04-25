@@ -21,9 +21,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Currency;
+import java.util.UUID;
 
 public class UserkiesSearch extends Fragment {
 
@@ -32,7 +35,7 @@ public class UserkiesSearch extends Fragment {
     private FirebaseAuth firebaseAuth;
     private ArrayList<UserkieModel> userkieModelArrayList;
     private UserkieSearchAdapter userkieSearchAdapter;
-
+    private String UID;
     public UserkiesSearch() {
         // Constructor vacío obligatorio
     }
@@ -48,6 +51,8 @@ public class UserkiesSearch extends Fragment {
         db = FirebaseFirestore.getInstance();
         userkieModelArrayList = new ArrayList<>();
         userkieSearchAdapter = new UserkieSearchAdapter(userkieModelArrayList, getContext(), getParentFragmentManager());
+        UID = firebaseAuth.getUid();
+
     }
 
     @Override
@@ -66,7 +71,7 @@ public class UserkiesSearch extends Fragment {
     private void loadUserkies() {
         CollectionReference collectionUserkies = db.collection("Users");
 
-        collectionUserkies.addSnapshotListener((queryDocumentSnapshots, e) -> {
+        collectionUserkies.whereNotEqualTo(FieldPath.documentId(), UID).addSnapshotListener((queryDocumentSnapshots, e) -> {
             if (e != null) {
                 Log.e("Firestore Error", e.getMessage());
                 Toast.makeText(getContext(), "Error al cargar usuarios", LENGTH_LONG).show();
@@ -75,10 +80,7 @@ public class UserkiesSearch extends Fragment {
 
             for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
                 DocumentSnapshot doc = dc.getDocument();
-                String currentUserId = firebaseAuth.getUid();
-
-                if (!doc.getId().equals(currentUserId)) {
-                    UserkieModel userkieModel;
+                 UserkieModel userkieModel;
                     if(doc.getBoolean("photo_default")) {
                         userkieModel = new UserkieModel(doc.getId(),doc.getString("name"), doc.getString("username"), doc.getBoolean("profile_private"), doc.getBoolean("photo_default"),doc.getString("photo_id"));
                     }else{
@@ -101,7 +103,6 @@ public class UserkiesSearch extends Fragment {
                             }
                             break;
                     }
-                }
             }
         });
     }

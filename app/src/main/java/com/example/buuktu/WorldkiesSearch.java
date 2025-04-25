@@ -76,7 +76,7 @@ public class WorldkiesSearch extends Fragment {
         worldkieSearchAdapter = new WorldkieSearchAdapter(worldkieModelArrayList, getContext(), getParentFragmentManager());
         rc_worldkies_search.setAdapter(worldkieSearchAdapter);
         rc_worldkies_search.setLayoutManager(new LinearLayoutManager(getContext()));
-        collectionWorldkies.addSnapshotListener((queryDocumentSnapshots, e) -> {
+        collectionWorldkies.whereNotEqualTo("UID_AUTHOR",UID).whereEqualTo("draft",false).addSnapshotListener((queryDocumentSnapshots, e) -> {
             if (e != null) {
                 Log.e("Error", e.getMessage());
                 Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
@@ -86,12 +86,9 @@ public class WorldkiesSearch extends Fragment {
             if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
                // worldkieModelArrayList.clear(); // Limpia la lista antes de agregar nuevos datos
 
-               // for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
                 for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
                     DocumentSnapshot doc = dc.getDocument();
-                    if(!doc.getString("UID_AUTHOR").equals(UID)) {
                         //if (documentSnapshot.getBoolean("photo_default")) {
-                        Drawable drawable = getResources().getDrawable(R.drawable.thumb_custom);
                         WorldkieModel worldkieModel = new WorldkieModel(
                                 doc.getId(),
                                 doc.getString("UID_AUTHOR"),
@@ -101,21 +98,15 @@ public class WorldkiesSearch extends Fragment {
                         );
                         switch (dc.getType()) {
                             case ADDED:
-                                if ((!doc.getBoolean("worldkie_private")) || (doc.getBoolean("worldkie_private") && !doc.getBoolean("draft"))) {
                                     safeAddToList(worldkieModelArrayList, dc.getNewIndex(), worldkieModel);
                                     worldkieSearchAdapter.notifyItemInserted(dc.getNewIndex());
-                                }
                                 break;
 
                             case MODIFIED:
-                                if ((!doc.getBoolean("worldkie_private")) || (doc.getBoolean("worldkie_private") && !doc.getBoolean("draft"))) {
-                                    safeSetToList(worldkieModelArrayList, dc.getOldIndex(), worldkieModel);
-                                    worldkieSearchAdapter.notifyItemChanged(dc.getOldIndex());
-                                } else {
+
                                     if (dc.getOldIndex() >= 0 && dc.getOldIndex() < worldkieModelArrayList.size()) {
                                         worldkieModelArrayList.remove(dc.getOldIndex());
                                         worldkieSearchAdapter.notifyItemRemoved(dc.getOldIndex());
-                                    }
                                 }
                                 break;
 
@@ -131,7 +122,6 @@ public class WorldkiesSearch extends Fragment {
                     //updateRecyclerView(worldkieModelArrayList); // Actualiza después de cargar cada imagen
 
                 }
-            }
         });
         return view;
     }
