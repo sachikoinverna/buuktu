@@ -94,14 +94,7 @@ public class Notes extends Fragment implements View.OnClickListener {
 
         // FAB lógica
         fbMoreOptions.setOnClickListener(v -> toggleFabs());
-        fbAddNote.setOnClickListener(v -> {
-            Note note = new Note();
-            FragmentManager fragmentManager = getParentFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, note)
-                    .addToBackStack(null)
-                    .commit();
-        });
+        fbAddNote.setOnClickListener(this);
         fragmentManager = requireActivity().getSupportFragmentManager();
         activity = requireActivity();
         setListeners();
@@ -175,26 +168,17 @@ public class Notes extends Fragment implements View.OnClickListener {
                 });
     }
 
-    public FloatingActionButton getFb_parent() {
-        return fbMoreOptions;
-    }
-
-    public FloatingActionButton getFb_add() {
-        return fbAddNote;
-    }
-
-    public boolean isAllFabsVisible() {
-        return isAllFabsVisible;
-    }
-
-    public void setAllFabsVisible(boolean allFabsVisible) {
-        isAllFabsVisible = allFabsVisible;
-    }
-
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.ib_back){
             NavigationUtils.goBack(fragmentManager,activity);
+        } else if (v.getId()==R.id.fb_add_note_list_notes) {
+            Note note = new Note();
+            FragmentManager fragmentManager = getParentFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, note)
+                    .addToBackStack(null)
+                    .commit();
         }
     }
 }
