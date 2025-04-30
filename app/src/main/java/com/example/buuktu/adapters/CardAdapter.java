@@ -1,6 +1,7 @@
 package com.example.buuktu.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,72 +12,95 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buuktu.R;
-import com.example.buuktu.models.CardItem;
 import com.example.buuktu.models.FieldItem;
 import com.google.android.material.card.MaterialCardView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
-    // Modelo de datos, por ejemplo:
-    private List<FieldItem> fieldItems;
-    private Context context;
+    private final List<FieldItem> items = new ArrayList<>();
+    private final Context context;
     private OnItemClickListener listener;
 
     public interface OnItemClickListener {
         void onItemClick(FieldItem fieldItem, int position);
     }
 
-    public CardAdapter(Context context, List<FieldItem> fieldItems, OnItemClickListener listener) {
+    public CardAdapter(Context context, List<FieldItem> initialItems, OnItemClickListener listener) {
         this.context = context;
-        this.fieldItems = fieldItems;
         this.listener = listener;
+        setItems(initialItems);
+    }
+
+    public void setItems(List<FieldItem> newItems) {
+        items.clear();
+        if (newItems != null) items.addAll(newItems);
+        notifyDataSetChanged();
+    }
+
+    public void removeItem(int position) {
+        if (position >= 0 && position < items.size()) {
+            items.remove(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, items.size() - position);
+        } else {
+            Log.e("CardAdapter", "removeItem(): posición inválida " + position);
+        }
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Inflar el layout del item que contiene un CardView
-        View view = LayoutInflater.from(context).inflate(R.layout.card_item, parent, false);
+        View view = LayoutInflater.from(context)
+                .inflate(R.layout.card_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        FieldItem fieldItem = fieldItems.get(position);
-        holder.cardView.setOnClickListener(v  -> {
-            if(listener != null) {
-                listener.onItemClick(fieldItem, position);
+        FieldItem item = items.get(position);
+        holder.bind(item, context);
+        holder.cardView.setOnClickListener(v -> {
+            if (listener != null) {
+                int pos = holder.getAdapterPosition(); // getAdapterPosition() compatible
+                if (pos != RecyclerView.NO_POSITION) {
+                    listener.onItemClick(item, pos);
+                }
             }
         });
-        holder.bind(fieldItem, listener);
     }
 
     @Override
     public int getItemCount() {
-        return fieldItems.size();
+        return items.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         MaterialCardView cardView;
         ImageView icon;
         TextView text;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
-            // Asegúrate de que los IDs coincidan con los de tu layout XML (item_card.xml)
             cardView = itemView.findViewById(R.id.cv_bottomsheet_choose_components);
             icon = itemView.findViewById(R.id.iv_card_item_icon);
             text = itemView.findViewById(R.id.tv_card_item_name);
         }
 
-        public void bind(final FieldItem item, final OnItemClickListener listener) {
-            // Configurar los datos en el CardView
-            icon.setImageResource(item.getIcon());
-            text.setText(item.getName());
-            //cardView.setOnClickListener(v -> listener.onItemClick(item));
+        void bind(FieldItem item, Context context) {
+            String name = item.getName();
+            String iconName = item.getIcon();
+            if (iconName != null && !iconName.isEmpty()) {
+                int resId = context.getResources().getIdentifier(
+                        iconName, "drawable", context.getPackageName());
+                if (resId != 0) icon.setImageResource(resId);
+                else icon.setImageResource(R.drawable.twotone_email_24);
+            } else {
+                icon.setImageResource(R.drawable.twotone_email_24);
+            }
+            text.setText(name != null ? name : "");
         }
     }
 }
-

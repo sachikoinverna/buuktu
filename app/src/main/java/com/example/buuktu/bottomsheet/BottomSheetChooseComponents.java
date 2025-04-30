@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -16,93 +15,49 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.buuktu.R;
 import com.example.buuktu.adapters.CardAdapter;
 import com.example.buuktu.listeners.OnFieldDeletedListener;
-import com.example.buuktu.models.CardItem;
 import com.example.buuktu.models.FieldItem;
-import com.example.buuktu.utils.ComponentsUtils;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BottomSheetChooseComponents extends BottomSheetDialogFragment {
-    private RecyclerView recyclerView;
     private CardAdapter adapter;
-    private Context context;
-    private ConstraintLayout constraintLayout;
-    private OnFieldDeletedListener listener; // Agregar el listener
-    List<FieldItem> fieldItems;
-    public BottomSheetChooseComponents(Context context, ConstraintLayout constraintLayout, OnFieldDeletedListener listener, List<FieldItem> fieldItems) {
-        this.context = context;
-        this.constraintLayout = constraintLayout;
-        this.listener = listener; // Inicializar el listener
-        this.fieldItems = fieldItems; // Inicializar la lista de items
+    private OnFieldDeletedListener listener;
+    private List<FieldItem> fieldItems;
+
+    public BottomSheetChooseComponents(Context context,
+                                       ConstraintLayout constraintLayout,
+                                       OnFieldDeletedListener listener,
+                                       List<FieldItem> fieldItems) {
+        this.listener = listener;
+        this.fieldItems = fieldItems != null
+                ? new ArrayList<>(fieldItems)
+                : new ArrayList<>();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.bottomsheet_choose_components, container, false);
-        recyclerView = view.findViewById(R.id.recyclerViewBottomSheetChooseComponents);
+    public View onCreateView(LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
 
-        // Configurar RecyclerView con GridLayoutManager (2 columnas)
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        // Configurar el adaptador
-        if (fieldItems == null) {
-            fieldItems = new ArrayList<>(); // Evita que sea nulo
-        }
-        adapter = new CardAdapter(getContext(), fieldItems, new CardAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(FieldItem fieldItem, int position) {
-                Log.d("BottomSheet", "Removing item at position: " + position);
-                Log.d("BottomSheet", "List size before removal: " + fieldItems.size());
-                if (listener != null) {
-                    listener.onFieldDeleted(fieldItem);
-                }
-                if (position >= 0 && position < fieldItems.size()) {
-                    fieldItems.remove(position);
-                    adapter.notifyItemRemoved(position);
-                } else {
-                    Log.e("BottomSheet", "Invalid position for removal: " + position + ", list size: " + fieldItems.size());
-                    Toast.makeText(getContext(), "Error: Invalid item position", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        recyclerView.setAdapter(adapter);
+        View view = inflater.inflate(
+                R.layout.bottomsheet_choose_components,
+                container,
+                false);
 
+        RecyclerView rv = view.findViewById(
+                R.id.recyclerViewBottomSheetChooseComponents);
+        rv.setLayoutManager(new GridLayoutManager(getContext(), 2));
+
+        adapter = new CardAdapter(getContext(), fieldItems,
+                (fieldItem, position) -> {
+                    Log.d("BottomSheet", "Eliminando posición: " + position);
+                    if (listener != null) listener.onFieldDeleted(fieldItem);
+                    adapter.removeItem(position);
+                }
+        );
+        rv.setAdapter(adapter);
         return view;
     }
-      //  Button bt_add_pronouns_characterkie_create = v.findViewById(R.id.bt_add_pronouns_characterkie_create);
-       // Button bt_add_status_characterkie_create = v.findViewById(R.id.bt_add_status_characterkie_create);
-      //  Button img_def = v.findViewById(R.id.ib_default);
-
-       /* if (img_one != null) {
-            img_one.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(getContext(), "Imagen seleccionada", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }*/
-
-      /*  if (bt_add_pronouns_characterkie_create != null) {
-            bt_add_pronouns_characterkie_create.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(getContext(), "Galeria seleccionada", Toast.LENGTH_SHORT).show();
-                    //selectImageGallery();
-                }
-            });
-        }
-
-        if (bt_add_status_characterkie_create != null) {
-            bt_add_status_characterkie_create.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(getContext(), "Imagenes default seleccionada", Toast.LENGTH_SHORT).show();
-                    //dialog2.show();
-                }
-            });
-        }
-        return v;
-    }*/
-
 }

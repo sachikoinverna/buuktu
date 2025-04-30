@@ -45,14 +45,17 @@ public class DeleteGeneralDialog extends Dialog implements View.OnClickListener 
         setContentView(R.layout.delete_general_dialog);
         ib_close_dialog = findViewById(R.id.ib_close_dialog);
         ib_accept_dialog = findViewById(R.id.ib_accept_dialog);
+        iv_photo_del = findViewById(R.id.iv_photo_del);
         //tv_text_del = findViewById(R.id.tv);
         if(mode.equals(modeNotekie)){
-
+            iv_photo_del.setImageResource(R.mipmap.img_del_notes);
         } else if (mode.equals(modeStuffkie)) {
-
+            iv_photo_del.setImageResource(R.mipmap.img_del_stuffkie);
         } else if (mode.equals(modeWorldkie)) {
+            iv_photo_del.setImageResource(R.mipmap.img_del_worldkie);
 
         } else if (mode.equals(modeCharacterkie)) {
+            iv_photo_del.setImageResource(R.mipmap.img_del_characterkie);
 
         }
         //tv_text_del = findViewById(R.id.tv);

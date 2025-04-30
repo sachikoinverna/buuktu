@@ -358,6 +358,7 @@ public class CreateCharacterkie extends Fragment implements View.OnClickListener
                         String component = document.getString("component");
                         Log.e("Firestore", component.toString());
                         String kie = document.getString("kie");
+                        String name = document.getString("name");
                         String type = "";
                         List<String> options = Collections.emptyList();
                         if(component.equals("TextInputEditText")) {
@@ -367,20 +368,18 @@ public class CreateCharacterkie extends Fragment implements View.OnClickListener
 
                         }
                         String iconName = document.getString("icon");
-                        int icon = getResources().getIdentifier(iconName, "drawable", context.getPackageName());
-
-                        String uid = document.getId();
-
                         // Solo agrega los campos que no han sido añadidos
 
                             FieldItem fieldItem=null;
                             if (component.equals("RadioButton")) {
-                                fieldItem = new FieldItem(component, kie, options,icon);
+                                fieldItem = new FieldItem(component, kie, options,iconName,name);
                             }
                             else if (component.equals("EditText")){
-                                fieldItem = new FieldItem(component, kie, type,icon);
+                                fieldItem = new FieldItem(component, kie, type,iconName,name);
                             }
+                        if (fieldItem != null) {
                             fieldsNotAdded.add(fieldItem);
+                        }
                     }
                     cargarCamposEnBottomSheet(fieldsNotAdded);
                 }).addOnFailureListener(e -> {
@@ -396,20 +395,14 @@ public class CreateCharacterkie extends Fragment implements View.OnClickListener
         fieldsNotAdded.remove(item);
     }
     private void actualizarUIConCampo(FieldItem fieldItem) {
-        // Dependiendo del tipo de campo, añade la vista correcta
-        View nuevoCampo;
-        if (fieldItem.getComponent().equals("TextInputEditText")) {
-            //ComponentsUtils.createComponent(this,fieldItem,R.id.tb_CharacterkiePrivacity,constraintLayout);
-        } else if (fieldItem.getComponent().equals("RadioButton")) {
-            RadioButton radioButton = new RadioButton(context);
-            radioButton.setText(fieldItem.getName());
-            nuevoCampo = radioButton;
-        } else {
-            return;
-        }
-
-        // Agregar el nuevo campo al layout
-        // constraintLayout.addView(nuevoCampo);
+        // Descomenta y ajusta esta línea según tu utilidad:
+        ComponentsUtils.createComponent(
+                context,
+                fieldItem,
+                R.id.tb_CharacterkiePrivacity,
+                R.id.tb_characterkieDraft,
+                constraintLayout
+        );
     }
     private void actualizarBottomSheetConCampo(FieldItem fieldItem) {
         // Dependiendo del tipo de campo, añade la vista correcta

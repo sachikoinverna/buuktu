@@ -1,12 +1,8 @@
 package com.example.buuktu.adapters;
 
-import static android.content.ContentValues.TAG;
-
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.graphics.Typeface;
-import android.graphics.YuvImage;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,16 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.buuktu.NotekieDiffCallback;
 import com.example.buuktu.R;
-import com.example.buuktu.dialogs.DeleteNotekieDialog;
+import com.example.buuktu.dialogs.DeleteGeneralDialog;
 import com.example.buuktu.models.NoteItem;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -100,6 +89,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             collectionNotekies = db.collection("Notekies");
         }
 
+        @SuppressLint("ResourceAsColor")
         public void bind(final NoteItem item, final OnItemClickListener listener) {
             content.setText(item.getContent());
             if (!item.getTitle().isEmpty()) {
@@ -118,32 +108,34 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             });
 
             ib_delete_note_item.setOnClickListener(v -> {
-                DeleteNotekieDialog dialog = new DeleteNotekieDialog(itemView.getContext());
-                dialog.setOnDialogClickListener(new DeleteNotekieDialog.OnDialogDelClickListener() {
-                    @Override
-                    public void onAccept() {
-                        deleteNoteItem(item, dialog);
-                    }
+                DeleteGeneralDialog dialog = new DeleteGeneralDialog(
+                        v.getContext(),"notekie");
+                dialog.setOnDialogClickListener(new DeleteGeneralDialog.OnDialogDelClickListener() {
+                            @Override
+                            public void onAccept() {
+                                deleteNoteItem(item, dialog);
+                            }
 
-                    @Override
-                    public void onCancel() {
-                        dialog.dismiss();
-                    }
-                });
+                            @Override
+                            public void onCancel() {
+                                dialog.dismiss();
+                            }
+                        }
+                );
                 dialog.show();
             });
         }
 
-        private void deleteNoteItem(NoteItem item, DeleteNotekieDialog dialog) {
+        private void deleteNoteItem(NoteItem item, DeleteGeneralDialog dialog) {
             TextView tv_title = dialog.findViewById(R.id.tv_title_del);
             tv_title.setText("Cuidado");
             TextView tv_text = dialog.findViewById(R.id.tv_text_del);
             tv_text.setText("Cuidado");
             ImageView iv_photo = dialog.findViewById(R.id.iv_photo_del);
-            iv_photo.setImageAlpha(R.mipmap.img_del_characterkie);
+
             ImageButton ib_close = dialog.findViewById(R.id.ib_close_dialog);
             ImageButton ib_accept = dialog.findViewById(R.id.ib_accept_dialog);
-            LottieAnimationView animationView = dialog.findViewById(R.id.anim_del_notekie);
+            LottieAnimationView animationView = dialog.findViewById(R.id.anim_del);
 
             tv_title.setVisibility(View.GONE);
             tv_text.setVisibility(View.GONE);

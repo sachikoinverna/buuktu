@@ -8,10 +8,10 @@ public class FieldItem {
     private List<String> options;
     private String type;
     private String name;
-    private int icon;
+    private String icon;
 
     // Constructor para elementos con RadioButton
-    public FieldItem(String component, String kie, List<String> options,int icon) {
+    public FieldItem(String component, String kie, List<String> options,String icon, String name) {
         this.component = component;
         this.kie = kie;
         this.options = options;
@@ -19,7 +19,7 @@ public class FieldItem {
     }
 
     // Constructor para elementos EditText
-    public FieldItem(String component, String kie, String type, int icon) {
+    public FieldItem(String component, String kie, String type, String icon, String name) {
         this.component = component;
         this.kie = kie;
         this.type = type;
@@ -47,7 +47,7 @@ public class FieldItem {
         return name;
     }
 
-    public int getIcon() {
+    public String getIcon() {
         return icon;
     }
 }
