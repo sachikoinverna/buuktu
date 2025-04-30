@@ -25,7 +25,15 @@ public class FieldItem {
         this.type = type;
         this.icon = icon;
     }
-
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FieldItem fieldItem = (FieldItem) o;
+        // Compara por un identificador único, como el 'type' o 'name' si son únicos
+        return java.util.Objects.equals(type, fieldItem.type) &&
+                java.util.Objects.equals(name, fieldItem.name);
+    }
     // Getters y Setters
     public String getComponent() {
         return component;
