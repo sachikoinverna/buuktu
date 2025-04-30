@@ -232,7 +232,7 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
         if (dataSet.get(holder.getAdapterPosition()).isPhoto_default()) {
             FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
             firebaseFirestore.collection("Worldkies").document(dataSet.get(holder.getAdapterPosition()).getUID()).addSnapshotListener((queryDocumentSnapshot, e) -> {
-                String id_photo = queryDocumentSnapshot.getString("photo_id");
+                String id_photo = queryDocumentSnapshot.getString("id_photo");
                 int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
 
                 if (resId != 0 && (!holder.getLastPhotoId().equals(id_photo))) {

@@ -153,8 +153,8 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
             if (documentSnapshot != null) {
                 worldkieModel.setPhoto_default(documentSnapshot.getBoolean("photo_default"));
                 worldkieModel.setName(documentSnapshot.getString("name"));
-                worldkieModel.setCreation_date(documentSnapshot.getTimestamp("creation_date").toDate());
-                worldkieModel.setLast_update(documentSnapshot.getTimestamp("last_update").toDate());
+                worldkieModel.setCreation_date(documentSnapshot.getTimestamp("creation_date"));
+                worldkieModel.setLast_update(documentSnapshot.getTimestamp("last_update"));
 
                 //  userkieModel = new UserkieModel(firebaseAuth.getUid(),documentSnapshot.getString("name"),R.drawable.thumb_custom,documentSnapshot.getString("username"),documentSnapshot.getBoolean("photo_default"),true);
                 tv_nameWorldkieView.setText(worldkieModel.getName());

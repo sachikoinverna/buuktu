@@ -138,7 +138,7 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
                             return;
                         }*/
                 //boolean photo_default = queryDocumentSnapshot.getBoolean("photo_default");
-                String id_photo = queryDocumentSnapshot.getString("photo_id");
+                String id_photo = queryDocumentSnapshot.getString("id_photo");
                 int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
 
                 if (resId != 0 && (!holder.getLastPhotoId().equals(id_photo))) {

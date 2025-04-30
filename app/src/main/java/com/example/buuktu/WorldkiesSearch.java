@@ -88,13 +88,11 @@ public class WorldkiesSearch extends Fragment {
 
                 for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
                     DocumentSnapshot doc = dc.getDocument();
-                        //if (documentSnapshot.getBoolean("photo_default")) {
                         WorldkieModel worldkieModel = new WorldkieModel(
                                 doc.getId(),
-                                doc.getString("UID_AUTHOR"),
-                                R.drawable.thumb_custom,
-                                doc.getString("name"), doc.getDate("creation_date"),
-                                doc.getBoolean("photo_default"), doc.getDate("last_update"), doc.getBoolean("worldkie_private")
+                                doc.getString("UID_AUTHOR"), doc.getTimestamp("creation_date"),
+                                doc.getString("name"),
+                                doc.getBoolean("photo_default"),doc.getBoolean("worldkie_private"),doc.getTimestamp("last_update")
                         );
                         switch (dc.getType()) {
                             case ADDED:

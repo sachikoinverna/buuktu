@@ -38,7 +38,6 @@ public class Home extends Fragment implements View.OnClickListener {
     private String UID;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private FirebaseFirestore db;
-    private FirebaseStorage storage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
     private ArrayList<WorldkieModel> worldkieModelArrayList;
     private RecyclerView rc_worldkies;
     private FloatingActionButton fb_parent, fb_add;
@@ -48,7 +47,6 @@ public class Home extends Fragment implements View.OnClickListener {
     ImageButton ib_save,ib_profile_superior;
     FragmentManager fragmentManager;
 
-    //private ListenerRegistration firestoreListener;
     public Home() {
         // Required empty public constructor
     }
@@ -94,7 +92,6 @@ public class Home extends Fragment implements View.OnClickListener {
                     }
 
                     if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
-                      //  worldkieModelArrayList.clear(); // Limpia la lista antes de agregar nuevos datos
 
                         for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
                             DocumentSnapshot doc = dc.getDocument();
@@ -113,17 +110,8 @@ public class Home extends Fragment implements View.OnClickListener {
                                     worldkieAdapter.notifyItemRemoved(dc.getOldIndex());
                                     break;
                             }
-
-                            if (doc.getBoolean("photo_default")) {
-                            } else {
-                                //loadAndSetImage(doc.getId(), worldkieModel);
-                            }
                         }
 
-                    } else {
-                        // Si no hay documentos, limpia la lista y actualiza el RecyclerView
-                       // worldkieModelArrayList.clear();
-                       // updateRecyclerView(worldkieModelArrayList);
                     }
                 });
         return view;
@@ -165,30 +153,10 @@ public class Home extends Fragment implements View.OnClickListener {
         }
     }
     private WorldkieModel createWorldkieModelFromDocument(DocumentSnapshot doc) {
-            /*public WorldkieModel(String UID, String UID_AUTHOR,int drawable, String name, Date
-        creation_date,boolean photo_default,Date last_update, boolean worldkie_private) {
-*/
-      //  if (doc.getBoolean("photo_default")) {
-            //Drawable drawable = getResources().getDrawable(R.drawable.worldkie_default);
-            return new WorldkieModel(
-                    doc.getId(),
-                    doc.getString("UID_AUTHOR"), R.drawable.twotone_lightbulb_24,
-                    doc.getString("name"),
-                    doc.getTimestamp("creation_date").toDate(),
-                    doc.getBoolean("photo_default"),
-                    doc.getTimestamp("last_update").toDate(),
-                    doc.getBoolean("worldkie_private"));
-          //  );
-      //  } /*else {
-          /*  return new WorldkieModel(
-                    doc.getId(),
-                    doc.getString("UID_AUTHOR"),
-                    doc.getString("name"),R.mipmap.img_del_stuffkie,
-                    false,
-                    doc.getBoolean("worldkie_private")
-            );*/
-       //}*/
-        //return null;
+        return new WorldkieModel(doc.getId(),
+                doc.getString("name"),// Este es el ID del documento, no UID_AUTHOst_update
+                doc.getBoolean("photo_default")
+        );
     }
 
     // Helper method to update the RecyclerView
@@ -200,9 +168,6 @@ public class Home extends Fragment implements View.OnClickListener {
     @Override
     public void onStop() {
         super.onStop();
-       /* if (firestoreListener != null) {
-            firestoreListener.remove();
-        }*/
     }
 
     @Override

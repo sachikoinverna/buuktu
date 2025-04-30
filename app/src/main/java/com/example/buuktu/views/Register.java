@@ -305,113 +305,116 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
     }
     public void addDataToFirestore(View view) {
         if (checkAllFields()) {
-
-            username = et_userRegister.getText().toString();
-            email = et_emailRegister.getText().toString();
-
-            Task<QuerySnapshot> usernameTask = collectionReferenceUsers.whereEqualTo("username", username).limit(1).get();
-            Task<QuerySnapshot> emailTask = collectionReferenceUsers.whereEqualTo("email", email).limit(1).get();
-            Tasks.whenAllSuccess(usernameTask, emailTask).addOnSuccessListener(results -> {
-                QuerySnapshot usernameSnapshot = (QuerySnapshot) results.get(0);
-                QuerySnapshot emailSnapshot = (QuerySnapshot) results.get(1);
-                if (!usernameSnapshot.isEmpty()) {
-                    CheckUtil.setErrorMessage("Nombre de usuario existente", tv_usernameRegister);
-                }
-                if (!emailSnapshot.isEmpty()) {
-                    CheckUtil.setErrorMessage("Email existente", tv_emailRegister);
-                }
-                if (usernameSnapshot.isEmpty() && emailSnapshot.isEmpty()) {
-                                            // Puedes continuar con el registro
-
-                    CreateEditGeneralDialog dialog = new CreateEditGeneralDialog(this, "Hola");
-                    dialog.show();
-
-                    TextView tv_title = dialog.findViewById(R.id.tv_text_create_edit);
-
-                    LottieAnimationView animationView = dialog.findViewById(R.id.anim_create_edit);
-                    animationView.setAnimation(R.raw.reading_anim);
-                    animationView.playAnimation();
-                                            email = et_emailRegister.getText().toString();
-                                            password = et_password.getText().toString();
-                                            privateAccount = tb_privateAccountRegister.isChecked();
-                                            username = et_userRegister.getText().toString();
-                                            pronouns = et_pronounsRegister.getText().toString();
-                                            name = et_nameRegister.getText().toString();
-                                            number = et_telephoneRegister.getText().toString();
-                                                    PhoneNumberUtil photoNumberUtil = PhoneNumberUtil.getInstance();
-                                                    try {
-                                                        Phonenumber.PhoneNumber phoneNumber = photoNumberUtil.parse(number
-                                                        , "ES");
-                                                    number = photoNumberUtil.format(phoneNumber, PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL);
-
-                                                    } catch (NumberParseException e) {
-                                                System.err.println("NumberParseException was thrown: " + e.toString());
-                                            }
-                                            auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                                    if (task.isSuccessful()) {
+            CreateEditGeneralDialog dialog = new CreateEditGeneralDialog(this);
+            dialog.show();
 
 
-                                                        Toast.makeText(getApplicationContext(), "Signup Successful", Toast.LENGTH_SHORT).show();
-                                                        CollectionReference dbUsers = db.collection("Users");
-                                                        UserkieModel userkieModel;
-                                                        if (source.equals("app")) {
-                                                                photo_id = bt_chooseImage.getTag().toString();
-                                                            userkieModel = new UserkieModel(photo_id, privateAccount, true, email, number, username, new Timestamp(birthday), pronouns, name);
-                                                        } else {
-                                                            userkieModel = new UserkieModel(name, pronouns, new Timestamp(birthday), username, number, email, false, privateAccount);
+            LottieAnimationView animationView = dialog.findViewById(R.id.anim_create_edit);
+            animationView.setAnimation(R.raw.reading_anim);
+            animationView.playAnimation();
+            Completable.timer(3, TimeUnit.SECONDS)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(() -> {
+                                username = et_userRegister.getText().toString();
+                                email = et_emailRegister.getText().toString();
 
-                                                        }
-                                                        // below method is use to add data to Firebase Firestore.
-                                                        DocumentReference documentRef = dbUsers.document(task.getResult().getUser().getUid());
+                                Task<QuerySnapshot> usernameTask = collectionReferenceUsers.whereEqualTo("username", username).limit(1).get();
+                                Task<QuerySnapshot> emailTask = collectionReferenceUsers.whereEqualTo("email", email).limit(1).get();
+                                Tasks.whenAllSuccess(usernameTask, emailTask).addOnSuccessListener(results -> {
+                                    QuerySnapshot usernameSnapshot = (QuerySnapshot) results.get(0);
+                                    QuerySnapshot emailSnapshot = (QuerySnapshot) results.get(1);
+                                    if (!usernameSnapshot.isEmpty()) {
+                                        CheckUtil.setErrorMessage("Nombre de usuario existente", tv_usernameRegister);
+                                    }
+                                    if (!emailSnapshot.isEmpty()) {
+                                        CheckUtil.setErrorMessage("Email existente", tv_emailRegister);
+                                    }
+                                    if (usernameSnapshot.isEmpty() && emailSnapshot.isEmpty()) {
+                                        // Puedes continuar con el registro
 
-                                                        //.document(uid)
-                                                        documentRef.set(userkieModel).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                            @Override
-                                                            public void onSuccess(Void unused) {
-                                                                Toast.makeText(getApplicationContext(), "Your Course has been added to Firebase Firestore", Toast.LENGTH_SHORT).show();
 
-                                                                if (source.equals("device")) {
-                                                                    StorageReference userRef = storage.getReference().child(task.getResult().getUser().getUid());
-                                                                    userRef.child("profile" + DrawableUtils.getExtensionFromUri(getApplicationContext(),image)).putFile(image);
+                                        email = et_emailRegister.getText().toString();
+                                        password = et_password.getText().toString();
+                                        privateAccount = tb_privateAccountRegister.isChecked();
+                                        username = et_userRegister.getText().toString();
+                                        pronouns = et_pronounsRegister.getText().toString();
+                                        name = et_nameRegister.getText().toString();
+                                        number = et_telephoneRegister.getText().toString();
+                                        PhoneNumberUtil photoNumberUtil = PhoneNumberUtil.getInstance();
+                                        try {
+                                            Phonenumber.PhoneNumber phoneNumber = photoNumberUtil.parse(number
+                                                    , "ES");
+                                            number = photoNumberUtil.format(phoneNumber, PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL);
 
-                                                                }
-                                                                tv_title.setText("Creado");
-                                                                animationView.setAnimation(R.raw.success_anim);
-                                                                animationView.playAnimation();
-                                                                Completable.timer(5, TimeUnit.SECONDS)
-                                                                        .subscribeOn(Schedulers.io())
-                                                                        .observeOn(AndroidSchedulers.mainThread())
-                                                                        .subscribe(() -> {
-                                                                            animationView.setVisibility(View.GONE);
-                                                                            dialog.dismiss();
-                                                                        });
-                                                                clearFields();
-                                                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                                                            }
-
-                                                        }).addOnFailureListener(new OnFailureListener() {
-                                                            @Override
-                                                            public void onFailure(@NonNull Exception e) {
-                                                                animationView.setAnimation(R.raw.fail_anim);
-                                                                tv_title.setText("No creado");
-                                                                animationView.playAnimation();
-                                                                Completable.timer(5, TimeUnit.SECONDS)
-                                                                        .subscribeOn(Schedulers.io())
-                                                                        .observeOn(AndroidSchedulers.mainThread())
-                                                                        .subscribe(() -> {
-                                                                            animationView.setVisibility(View.GONE);
-                                                                            dialog.dismiss();
-                                                                        });
-                                                            }
-                                                        });
-                                                    }
-                                                }
-                                            });
+                                        } catch (NumberParseException e) {
+                                            System.err.println("NumberParseException was thrown: " + e.toString());
                                         }
-                                    });
-                        }
+                                        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                                if (task.isSuccessful()) {
+
+
+                                                    Toast.makeText(getApplicationContext(), "Signup Successful", Toast.LENGTH_SHORT).show();
+                                                    CollectionReference dbUsers = db.collection("Users");
+                                                    UserkieModel userkieModel;
+                                                    if (source.equals("app")) {
+                                                        photo_id = bt_chooseImage.getTag().toString();
+                                                        userkieModel = new UserkieModel(photo_id, privateAccount, true, email, number, username, new Timestamp(birthday), pronouns, name);
+                                                    } else {
+                                                        userkieModel = new UserkieModel(name, pronouns, new Timestamp(birthday), username, number, email, false, privateAccount);
+
+                                                    }
+                                                    // below method is use to add data to Firebase Firestore.
+                                                    DocumentReference documentRef = dbUsers.document(task.getResult().getUser().getUid());
+
+                                                    //.document(uid)
+                                                    documentRef.set(userkieModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void unused) {
+                                                            Toast.makeText(getApplicationContext(), "Your Course has been added to Firebase Firestore", Toast.LENGTH_SHORT).show();
+
+                                                            if (source.equals("device")) {
+                                                                StorageReference userRef = storage.getReference().child(task.getResult().getUser().getUid());
+                                                                userRef.child("profile" + DrawableUtils.getExtensionFromUri(getApplicationContext(), image)).putFile(image);
+
+                                                            }
+                                                            animationView.setAnimation(R.raw.success_anim);
+                                                            animationView.playAnimation();
+                                                            Completable.timer(3, TimeUnit.SECONDS)
+                                                                    .subscribeOn(Schedulers.io())
+                                                                    .observeOn(AndroidSchedulers.mainThread())
+                                                                    .subscribe(() -> {
+                                                                        animationView.setVisibility(View.GONE);
+                                                                        dialog.dismiss();
+                                                                    });
+                                                            clearFields();
+                                                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                                        }
+
+                                                    }).addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            animationView.setAnimation(R.raw.fail_anim);
+                                                            animationView.playAnimation();
+                                                            Completable.timer(3, TimeUnit.SECONDS)
+                                                                    .subscribeOn(Schedulers.io())
+                                                                    .observeOn(AndroidSchedulers.mainThread())
+                                                                    .subscribe(() -> {
+                                                                        animationView.setVisibility(View.GONE);
+                                                                        dialog.dismiss();
+                                                                    });
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                    );
+        }
         }
 
 

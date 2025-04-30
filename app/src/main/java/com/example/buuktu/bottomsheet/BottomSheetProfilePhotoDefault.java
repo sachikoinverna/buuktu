@@ -85,7 +85,6 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
         fillArrays();
         setImages();
         setListeners();
-        setImageBottomSheetOpen();
         return v;
     }
     private void fillArrays(){
@@ -334,54 +333,7 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
 
         }
     }
-    private void setImageBottomSheetOpen(){
-       if(register !=null && register.getSource().equals("app")) {
-           for (ImageButton button : imageButtons) {
-               if (button.getDrawable().equals(register.getSelectedProfilePhoto())) {
-                   DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, color.greenWhatever, true);
 
-               } else {
-                   DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, color.greenWhatever, false);
-
-               }
-           }
-       } else if (createEditWorldkie!=null && createEditWorldkie.getSource().equals("app")) {
-           for (ImageButton button : imageButtons) {
-               if (button.getDrawable().equals(createEditWorldkie.getSelectedProfilePhoto())) {
-
-                   DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, color.greenWhatever, true);
-
-               } else {
-                   DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, color.greenWhatever, false);
-
-               }
-           }
-       }
-       else if (createCharacterkie!=null && createCharacterkie.getSource().equals("app")) {
-           for (ImageButton button : imageButtons) {
-               if (button.getDrawable().equals(createCharacterkie.getSelectedProfilePhoto())) {
-
-                   DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, R.color.greenWhatever, true);
-
-               } else {
-                   DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, R.color.greenWhatever, false);
-
-               }
-           }
-       }else if (createEditStuffkie!=null && createEditStuffkie.getSource().equals("app")) {
-           for (ImageButton button : imageButtons) {
-               /*if (button.getDrawable().equals(createEditStuffkie.getSelectedProfilePhoto())) {
-
-                   DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, color.greenWhatever, true);
-
-               } else {
-                   DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, color.greenWhatever, false);
-
-               }*/
-           }
-       }
-
-    }
     public void goBackBottomSheetOptionsPhotoProfile(){
         FragmentManager fragmentManager = getParentFragment() != null
                 ? getParentFragment().getChildFragmentManager()

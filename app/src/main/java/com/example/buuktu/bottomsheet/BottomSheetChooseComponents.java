@@ -2,6 +2,7 @@ package com.example.buuktu.bottomsheet;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,11 +52,18 @@ public class BottomSheetChooseComponents extends BottomSheetDialogFragment {
         adapter = new CardAdapter(getContext(), fieldItems, new CardAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(FieldItem fieldItem, int position) {
+                Log.d("BottomSheet", "Removing item at position: " + position);
+                Log.d("BottomSheet", "List size before removal: " + fieldItems.size());
                 if (listener != null) {
-                    listener.onFieldDeleted(fieldItem); // Notifica a CreateCharacterkie
+                    listener.onFieldDeleted(fieldItem);
                 }
-                fieldItems.remove(position);
-                adapter.notifyItemRemoved(position);
+                if (position >= 0 && position < fieldItems.size()) {
+                    fieldItems.remove(position);
+                    adapter.notifyItemRemoved(position);
+                } else {
+                    Log.e("BottomSheet", "Invalid position for removal: " + position + ", list size: " + fieldItems.size());
+                    Toast.makeText(getContext(), "Error: Invalid item position", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         recyclerView.setAdapter(adapter);

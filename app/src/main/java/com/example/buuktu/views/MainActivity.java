@@ -48,7 +48,9 @@ import com.example.buuktu.utils.NavigationUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.storage.FirebaseStorage;
@@ -64,7 +66,6 @@ public class MainActivity extends AppCompatActivity implements OnDialogInfoClick
     FirebaseAuth firebaseAuth;
     FirebaseAuth.AuthStateListener authStateListener;
     private String UID;
-    private FirebaseAuth auth;
     private FirebaseFirestore db;
     private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-users");
     InfoWorldkiesDialog infoWorldkiesDialog;
@@ -86,39 +87,21 @@ int colorEntero;
         //inicialize();
         initComponents();
         scheduleDailyNotification();
-
         fragmentManager = getSupportFragmentManager();
          colorEntero = Color.parseColor("#5f5a7c");
         infoFutureFunctionDialog = new InfoFutureFunctionDialog(this);
+        firebaseAuth = FirebaseAuth.getInstance();
         UID = FirebaseAuth.getInstance().getUid();
         db = FirebaseFirestore.getInstance();
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
                 .setPersistenceEnabled(true)
                 .build();
         db.setFirestoreSettings(settings);
-
         scheduleDailyNotification();
         infoWorldkiesDialog = new InfoWorldkiesDialog(this);
         infoWorldkiesDialog.setOnDialogClickListener(this);
         infoFutureFunctionDialog.setOnDialogClickListener(this);
-        ib_info.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment fragment  = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-                if(fragment instanceof Home){
 
-                    mostrarInfoWorldkies(v);
-                } else if (fragment instanceof Search) {
-
-                } else if (fragment instanceof Inspo){
-
-                } else if (fragment instanceof Notikies) {
-
-                } else if (fragment instanceof Notes){
-
-                }
-            }
-        });
         setSupportActionBar(toolbar);
         getProfilePhoto();
         // Configuración del ActionBarDrawerToggle
@@ -127,20 +110,7 @@ int colorEntero;
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-        ib_self_profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ProfileView profileView = new ProfileView();
-                Bundle bundle = new Bundle();
-                bundle.putString("mode","self");
-                profileView.setArguments(bundle);
-                fragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container, profileView)
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
-
+        ib_self_profile.setVisibility(View.GONE);
         // Configuración del BottomNavigationView
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -173,7 +143,35 @@ int colorEntero;
             bottomNavigationView.setSelectedItemId(R.id.home); // Selecciona el item "Home" por defecto
         }
     }
+    public void getProfileUser(View view){
+                ProfileView profileView = new ProfileView();
+                Bundle bundle = new Bundle();
+                bundle.putString("mode","self");
+                profileView.setArguments(bundle);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, profileView)
+                        .addToBackStack(null)
+                        .commit();
+    }
+    public void getInfo(View view){
+        ib_info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment  = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                if(fragment instanceof Home){
+                    mostrarInfoWorldkies();
+                } else if (fragment instanceof Search) {
 
+                } else if (fragment instanceof Inspo){
+
+                } else if (fragment instanceof Notikies) {
+
+                } else if (fragment instanceof Notes){
+
+                }
+            }
+        });
+    }
     private void getProfilePhoto(){
 
         ib_self_profile.setVisibility(View.INVISIBLE); // Hacerlo ligeramente transparente al principio
@@ -184,10 +182,10 @@ int colorEntero;
                 int resId = getResources().getIdentifier(id_photo, "mipmap", getPackageName());
                 if (resId != 0 && (!lastPhotoId.equals(id_photo))) {
                     Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), resId);
+                    DrawableUtils.personalizarImagenCircleButton(this, DrawableUtils.drawableToBitmap(drawable), ib_self_profile, colorEntero, false);
                     ib_self_profile.setVisibility(View.VISIBLE); // Hacerlo ligeramente transparente al principio
                     EfectsUtils.startCircularReveal(drawable,ib_self_profile);
                     ib_self_profile.setImageDrawable(drawable);
-                    DrawableUtils.personalizarImagenCircleButton(this, DrawableUtils.drawableToBitmap(drawable), ib_self_profile, colorEntero, false);
                     lastPhotoId=id_photo;
 
                 } else {
@@ -205,9 +203,9 @@ int colorEntero;
 
                                 RoundedBitmapDrawable circularDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmapScaled);
                                 circularDrawable.setCircular(true); // Esto hace que la imagen sea circular
+                                DrawableUtils.personalizarImagenCircleButton(this, bitmapScaled, ib_self_profile, colorEntero, false);
                                 ib_self_profile.setVisibility(View.VISIBLE); // Hacerlo ligeramente transparente al principio
                                 EfectsUtils.startCircularReveal(circularDrawable,ib_self_profile);
-                                DrawableUtils.personalizarImagenCircleButton(this, bitmapScaled, ib_self_profile, colorEntero, false);
                             });
                             break;
                         }
@@ -262,7 +260,7 @@ int colorEntero;
             );
         }
     }
-    private void mostrarInfoWorldkies(View view){
+    private void mostrarInfoWorldkies(){
         infoWorldkiesDialog.show();
     }
    /* private void mostrarInfoInspo(View view){
@@ -312,4 +310,24 @@ int colorEntero;
     public void onCancel() {
         infoWorldkiesDialog.dismiss();
     }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Verifica si el usuario actual ya ha iniciado sesión
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        if (currentUser == null) {
+            // Si el usuario no ha iniciado sesión, redirige a la actividad de Login
+            Intent intent = new Intent(this, Login.class); // Reemplaza LoginActivity.class con el nombre de tu clase de Login
+            startActivity(intent);
+            finish(); // Cierra MainActivity para que el usuario no pueda volver atrás sin iniciar sesión
+        } else {
+            // El usuario ya ha iniciado sesión, puedes cargar la interfaz principal de la aplicación aquí
+            // Por ejemplo:
+            // Intent intent = new Intent(this, HomeActivity.class);
+            // startActivity(intent);
+            // finish();
+            // O simplemente realizar acciones en MainActivity si es la pantalla principal
+        }
+    }
+
 }

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -185,13 +184,7 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
         if (dataSet.get(holder.getAdapterPosition()).isPhoto_default()) {
             FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
             firebaseFirestore.collection("Worldkies").document(dataSet.get(holder.getAdapterPosition()).getUID()).addSnapshotListener((queryDocumentSnapshot, e) -> {
-                       /* if (e != null) {
-                            Log.e("Error", e.getMessage());
-                            Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
-                            return;
-                        }*/
-                //boolean photo_default = queryDocumentSnapshot.getBoolean("photo_default");
-                String id_photo = queryDocumentSnapshot.getString("photo_id");
+                String id_photo = queryDocumentSnapshot.getString("id_photo");
                 int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
 
                 if (resId != 0 && (!holder.getLastPhotoId().equals(id_photo))) {
@@ -217,14 +210,9 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
                 for (StorageReference item : listResult.getItems()) {
                     if (item.getName().startsWith("cover")) {
                         item.getDownloadUrl().addOnSuccessListener(uri -> {
-                            try {
-                                DrawableUtils.personalizarImagenCuadradoButton(context,115/7,7, R.color.greenWhatever,uri,holder.getIv_photo_wordlkie(),R.mipmap.photoworldkieone);
-                                holder.getIv_photo_wordlkie().setVisibility(View.VISIBLE);
-                                EfectsUtils.startCircularReveal(context,uri,holder.getIv_photo_wordlkie());
-
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
+                            DrawableUtils.personalizarImagenCuadradoImageView(context,150/6,7,R.color.brownMaroon,uri,holder.getIv_photo_wordlkie());
+                            holder.getIv_photo_wordlkie().setVisibility(View.VISIBLE);
+                            EfectsUtils.startCircularReveal(context,uri,holder.getIv_photo_wordlkie());
                         });
                     }
                 }

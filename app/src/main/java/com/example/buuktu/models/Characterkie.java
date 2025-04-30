@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import java.util.Date;
 
 public class Characterkie {
+    String UID_WORLDKIE;
     private String UID;
     private String name;
     private String surname;
@@ -24,6 +25,9 @@ public class Characterkie {
 
     public void setCharacterkiePrivate(boolean characterkiePrivate) {
         this.characterkiePrivate = characterkiePrivate;
+    }
+
+    public Characterkie() {
     }
 
     public Characterkie(String UID, String name) {

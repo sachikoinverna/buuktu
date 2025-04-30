@@ -224,11 +224,10 @@ public class ProfileView extends Fragment implements View.OnClickListener {
 
                                     Drawable drawable = getResources().getDrawable(R.drawable.thumb_custom);
                                     WorldkieModel worldkieModel = new WorldkieModel(
-                                            doc.getId(),
-                                            doc.getString("UID_AUTHOR"),
-                                            R.drawable.thumb_custom,
-                                            doc.getString("name"), doc.getDate("creation_date"),
-                                            doc.getBoolean("photo_default"), doc.getDate("last_update"), doc.getBoolean("worldkie_private")
+                                            doc.getId(),doc.getTimestamp("creation_date"), doc.getTimestamp("last_update"),
+                                            doc.getString("UID_AUTHOR"),doc.getBoolean("photo_default")
+
+                                            , doc.getBoolean("worldkie_private"),doc.getString("name")
                                     );
                                     Log.d("StuffkiesSearch", "Stuffkie encontrado: " + documentSnapshot.getString("name"));
 

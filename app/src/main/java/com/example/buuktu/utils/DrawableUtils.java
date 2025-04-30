@@ -107,6 +107,17 @@ public class DrawableUtils {
                 .apply(requestOptions)
                 .into(imageButton);
     }
+    public static void personalizarImagenCuadradoImageView(Context context, int cornerRadius, int borderWidth,@ColorRes int idColor, Uri uri, ImageView imageView) {
+        int borderColor = ContextCompat.getColor(context, idColor);
+        RequestOptions requestOptions = new RequestOptions()
+                .centerCrop() // << 👈 evita el recorte
+                .transform(new RoundedBorderSquareTransformation(cornerRadius, borderWidth, borderColor));
+        Glide.with(context)
+                .load(uri).signature(new ObjectKey(System.currentTimeMillis())) // Cambia la firma para forzar la recarga
+                // 👍 Esto sí pasa por la transformación
+                .apply(requestOptions)
+                .into(imageView);
+    }
     public static void personalizarImagenCuadradoButton(Context context, int cornerRadius, int borderWidth, @ColorRes int idColor, Bitmap bitmap, ImageButton imageButton) {
         int borderColor = ContextCompat.getColor(context, idColor);
 
