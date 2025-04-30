@@ -26,10 +26,11 @@ public class BottomSheetChooseComponents extends BottomSheetDialogFragment {
     private OnFieldDeletedListener listener;
     private List<FieldItem> fieldItems;
 
+    // En BottomSheetChooseComponents.java
     public BottomSheetChooseComponents(Context context,
-                                       ConstraintLayout constraintLayout,
                                        OnFieldDeletedListener listener,
                                        List<FieldItem> fieldItems) {
+        // 'context' tampoco es estrictamente necesario aquí si usas getContext() después
         this.listener = listener;
         this.fieldItems = fieldItems != null
                 ? new ArrayList<>(fieldItems)

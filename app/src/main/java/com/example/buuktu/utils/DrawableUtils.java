@@ -86,9 +86,11 @@ public class DrawableUtils {
                 .apply(requestOptions)
                 .into(imageView);
     }
-    public static String getMipmapName(Context context,int id){
-        return context.getResources().getResourceName(id);
+    public static String getMipmapName(Context context, int id) {
+        String fullName = context.getResources().getResourceName(id);
+        return fullName.substring(fullName.lastIndexOf("/") + 1);
     }
+
     public static String getExtensionFromUri(Context context, Uri uri) {
         ContentResolver cr = context.getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();

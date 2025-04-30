@@ -439,7 +439,7 @@ public class CreateCharacterkie extends Fragment implements View.OnClickListener
         } else if (v.getId()==R.id.ib_select_img_create_characterkie) {
             selectImage();
         } else if (v.getId()==R.id.fb_add_field_createCharacterkie) {
-            BottomSheetChooseComponents bottomSheetFragment = new BottomSheetChooseComponents(context, constraintLayout, this, fieldsNotAdded);
+            BottomSheetChooseComponents bottomSheetFragment = new BottomSheetChooseComponents(context, this, fieldsNotAdded);
             bottomSheetFragment.show(getChildFragmentManager(), bottomSheetFragment.getTag());
         } else if (v.getId()==R.id.fb_more_createCharacterkie) {
             if(isAllFabsVisible) {
