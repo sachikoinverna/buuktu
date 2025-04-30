@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.ImageDecoder;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -40,6 +41,7 @@ import com.example.buuktu.views.Register;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -104,10 +106,14 @@ public class BottomSheetProfilePhoto extends BottomSheetDialogFragment implement
                             } else if (createEditStuffkie!=null) {
                                 createEditStuffkie.setImageUri(uri);
                             }
+                            Bitmap bitmap;
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                                 ImageDecoder.Source source = ImageDecoder.createSource(context.getContentResolver(), uri);
-                                Drawable drawable = ImageDecoder.decodeDrawable(source);
-                                drawable.setBounds(0, 0, 100, 100);
+                                bitmap = ImageDecoder.decodeBitmap(source);
+
+                            } else {
+                                bitmap =  BitmapFactory.decodeStream(context.getContentResolver().openInputStream(uri));
+                            }
                                 if(register!=null) {
                                     register.setImageUri(uri);
                                 } else if (createEditWorldkie!=null) {
@@ -117,8 +123,9 @@ public class BottomSheetProfilePhoto extends BottomSheetDialogFragment implement
                                 }
 
                                 if(register!=null) {
-                                    register.getIB_profile_photo().setImageDrawable(drawable);
-                                    DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(drawable), register.getIB_profile_photo(), R.color.brownMaroon);
+                                  //  register.getIB_profile_photo().setImageDrawable(drawable);
+                                    DrawableUtils.personalizarImagenCircleButton(context, uri, register.getIB_profile_photo(), R.color.brownMaroon);
+                                   // register.getIB_profile_photo().invalidate();
                                     register.setSource("device");
                                 } else if (createEditWorldkie!=null) {
                                  //   createEditWorldkie.getIb_select_img_create_worldkie().setImageDrawable(drawable);
@@ -127,8 +134,7 @@ public class BottomSheetProfilePhoto extends BottomSheetDialogFragment implement
                                       //  DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(drawable), createEditWorldkie.getIb_select_img_create_worldkie(), R.color.brownMaroon);
                                     createEditWorldkie.setSource("device");
                                 } else if (createCharacterkie!=null) {
-                                    createCharacterkie.getIb_select_img_create_worldkie().setImageDrawable(drawable);
-                                    DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(drawable), createCharacterkie.getIb_select_img_create_worldkie(), R.color.brownMaroon);
+                                    DrawableUtils.personalizarImagenCuadradoButton(context,150/6,7,R.color.brownMaroon,uri, createCharacterkie.getIb_select_img_create_worldkie());
                                     createCharacterkie.setSource("device");
                                 }else if (createEditStuffkie!=null) {
                                    // createEditStuffkie.getIb_select_img_create_worldkie().setImageDrawable(drawable);
@@ -136,9 +142,10 @@ public class BottomSheetProfilePhoto extends BottomSheetDialogFragment implement
                                     createEditStuffkie.setSource("device");
                                 }
                                 dismiss();
-                            }
+                            } catch (FileNotFoundException e) {
+                            throw new RuntimeException(e);
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            throw new RuntimeException(e);
                         }
                     }
                 }

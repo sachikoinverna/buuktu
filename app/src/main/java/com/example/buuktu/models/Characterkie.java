@@ -103,6 +103,14 @@ public class Characterkie {
         return UID;
     }
 
+    public String getUID_WORLDKIE() {
+        return UID_WORLDKIE;
+    }
+
+    public void setUID_WORLDKIE(String UID_WORLDKIE) {
+        this.UID_WORLDKIE = UID_WORLDKIE;
+    }
+
     public void setUID(String UID) {
         this.UID = UID;
     }

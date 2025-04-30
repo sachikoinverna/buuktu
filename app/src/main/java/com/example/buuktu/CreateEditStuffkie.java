@@ -50,6 +50,7 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
     FragmentManager fragmentManager;
     FragmentActivity activity;
     Context context;
+    boolean isAllFabsVisible;
     ConstraintLayout constraintLayout;
     TextInputEditText et_nameStuffkieCreate;
     TextInputLayout et_nameStuffkieCreateFull;
@@ -110,6 +111,8 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
         constraintLayout = view.findViewById(R.id.constraint_create_stuffkie);
         tb_stuffkiePrivacity = view.findViewById(R.id.tb_stuffkiePrivacity);
         tb_stuffkieDraft = view.findViewById(R.id.tb_stuffkieDraft);
+        isAllFabsVisible = false;
+        fb_add_field_createStuffkie.setVisibility(View.INVISIBLE);
     }
 
     private void setListeners(){
@@ -210,6 +213,14 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
          //   bottomSheetFragment.show(getChildFragmentManager(), bottomSheetFragment.getTag());
         } else if (v.getId()==R.id.ib_select_img_create_stuffkie) {
             bottomSheetProfilePhoto.show(getChildFragmentManager(),"BottomSheetProfilePhoto");
+        } else if (v.getId()==R.id.fb_more_createStuffkie) {
+            if (isAllFabsVisible) {
+                fb_add_field_createStuffkie.setVisibility(View.INVISIBLE);
+                isAllFabsVisible = false;
+            } else {
+                fb_add_field_createStuffkie.setVisibility(View.INVISIBLE);
+                isAllFabsVisible = true;
+            }
         }
     }
 }

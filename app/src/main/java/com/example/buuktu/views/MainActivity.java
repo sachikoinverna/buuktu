@@ -56,6 +56,7 @@ import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.BreakIterator;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements OnDialogInfoClickListener, NavigationView.OnNavigationItemSelectedListener {
@@ -193,19 +194,13 @@ int colorEntero;
                 }
             }else{
                 StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-users").getReference(UID);//.child().child(UID);
-
                 userFolderRef.listAll().addOnSuccessListener(listResult -> {
                     for (StorageReference item : listResult.getItems()) {
                         if (item.getName().startsWith("profile")) {
-                            item.getBytes(5 * 1024 * 1024).addOnSuccessListener(bytes -> {
-                                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                                Bitmap bitmapScaled = Bitmap.createScaledBitmap(bitmap, 80, 80, false);
-
-                                RoundedBitmapDrawable circularDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmapScaled);
-                                circularDrawable.setCircular(true); // Esto hace que la imagen sea circular
-                                DrawableUtils.personalizarImagenCircleButton(this, bitmapScaled, ib_self_profile, colorEntero, false);
+                            item.getDownloadUrl().addOnSuccessListener(uri -> {
+                                DrawableUtils.personalizarImagenCircleButton(this, uri, ib_self_profile, colorEntero, false);
                                 ib_self_profile.setVisibility(View.VISIBLE); // Hacerlo ligeramente transparente al principio
-                                EfectsUtils.startCircularReveal(circularDrawable,ib_self_profile);
+                                EfectsUtils.startCircularReveal(ib_self_profile.getDrawable(), ib_self_profile);
                             });
                             break;
                         }

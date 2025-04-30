@@ -184,8 +184,8 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
             holder.setLastName(name);
     }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        holder.getTv_date_last_update_search_worldkie().setText(simpleDateFormat.format(dataSet.get(holder.getAdapterPosition()).getLast_update()));
-        holder.getTv_date_creation_search_worldkie().setText(simpleDateFormat.format(dataSet.get(holder.getAdapterPosition()).getCreation_date()));
+        holder.getTv_date_last_update_search_worldkie().setText(simpleDateFormat.format(dataSet.get(holder.getAdapterPosition()).getLast_update().toDate()));
+        holder.getTv_date_creation_search_worldkie().setText(simpleDateFormat.format(dataSet.get(holder.getAdapterPosition()).getCreation_date().toDate()));
 
         if (dataSet.get(holder.getAdapterPosition()).isWorldkie_private()) {
             holder.getIv_worldkie_private_search().setVisibility(View.VISIBLE);

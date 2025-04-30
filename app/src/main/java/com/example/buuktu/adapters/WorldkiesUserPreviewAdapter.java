@@ -162,7 +162,7 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
                     if (item.getName().startsWith("cover")) {
                         item.getDownloadUrl().addOnSuccessListener(uri -> {
                             try {
-                                DrawableUtils.personalizarImagenCuadradoButton(context,115/7,7, R.color.greenWhatever,uri,holder.getIv_worldkie_preview_worldkie(),R.mipmap.photoprofileone);
+                                DrawableUtils.personalizarImagenCuadradoButton(context,100/6,7, R.color.greenWhatever,uri,holder.getIv_worldkie_preview_worldkie(),R.mipmap.photoprofileone);
                                 holder.getIv_stuffkie_private_preview().setVisibility(View.VISIBLE);
                                 EfectsUtils.startCircularReveal(context,uri,holder.getIv_worldkie_preview_worldkie());
                             } catch (IOException e) {

@@ -17,8 +17,7 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fb_parentWorldkies"
-        style="@style/customNormalFAB"
-        android:layout_width="wrap_content"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="24dp"
@@ -26,11 +25,10 @@
         android:src="@drawable/twotone_more_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:shapeAppearance="@style/customNormalFAB" />
+        app:shapeAppearance="?attr/floatingActionButtonStyle" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fb_addWorldkie"
-        style="@style/customNormalFAB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -39,6 +37,6 @@
         android:src="@drawable/twotone_add_circle_24"
         app:layout_constraintBottom_toTopOf="@+id/fb_parentWorldkies"
         app:layout_constraintEnd_toEndOf="parent"
-        app:shapeAppearanceOverlay="@style/customNormalFAB" />
+        app:shapeAppearance="?attr/floatingActionButtonStyle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

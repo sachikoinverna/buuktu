@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,7 +49,8 @@ public class UserkieSearchAdapter extends RecyclerView.Adapter<UserkieSearchAdap
     public class ViewHolder extends RecyclerView.ViewHolder {
         String lastPhotoId="",lastName="",lastUsername="";
         boolean lastPrivacity=false;
-        private ImageView iv_userkie_photo_search,iv_userkie_private_search;
+        private ImageView iv_userkie_private_search;
+        ImageButton iv_userkie_photo_search;
         MaterialCardView cv_userkie_search;
         TextView tv_userkie_name_search, tv_userkie_username_search;
         private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
@@ -81,7 +83,7 @@ public class UserkieSearchAdapter extends RecyclerView.Adapter<UserkieSearchAdap
             return cv_userkie_search;
         }
 
-        public ImageView getIv_userkie_photo_search() {
+        public ImageButton getIv_userkie_photo_search() {
             return iv_userkie_photo_search;
         }
         public ImageView getIv_userkie_private_search() {
@@ -167,48 +169,42 @@ public class UserkieSearchAdapter extends RecyclerView.Adapter<UserkieSearchAdap
             }
         });
         ;
-        if(dataSet.get(holder.getAdapterPosition()).isPhoto_default()) {
+        if (dataSet.get(holder.getAdapterPosition()).isPhoto_default()) {
             FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
             firebaseFirestore.collection("Users").document(dataSet.get(holder.getAdapterPosition()).getUID()).addSnapshotListener((queryDocumentSnapshot, e) -> {
-                       /* if (e != null) {
-                            Log.e("Error", e.getMessage());
-                            Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
-                            return;
-                        }*/
-                //boolean photo_default = queryDocumentSnapshot.getBoolean("photo_default");
                 String id_photo = queryDocumentSnapshot.getString("photo_id");
                 int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
 
                 if (resId != 0 && (!holder.getLastPhotoId().equals(id_photo))) {
                     Drawable drawable = ContextCompat.getDrawable(context, resId);
+                    holder.getIv_userkie_photo_search().setScaleType(ImageView.ScaleType.CENTER_CROP);
                     holder.getIv_userkie_photo_search().setImageDrawable(drawable);
-                    DrawableUtils.personalizarImagenCircle(context, DrawableUtils.drawableToBitmap(drawable), holder.getIv_userkie_photo_search(), R.color.brownMaroon);
+                    DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(drawable), holder.getIv_userkie_photo_search(), R.color.brownBrown);
                     holder.setLastPhotoId(id_photo);
                     holder.getIv_userkie_photo_search().setVisibility(View.VISIBLE);
-                    EfectsUtils.startCircularReveal(drawable,holder.getIv_userkie_photo_search());
+                    EfectsUtils.startCircularReveal(drawable, holder.getIv_userkie_photo_search());
                 }
             });
         } else {
-                            StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-users").getReference(dataSet.get(holder.getAdapterPosition()).getUID());
+            StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-users").getReference(dataSet.get(holder.getAdapterPosition()).getUID());
 
-                            userFolderRef.listAll().addOnSuccessListener(listResult -> {
-                                for (StorageReference item : listResult.getItems()) {
-                                    if (item.getName().startsWith("profile")) {
-                                        item.getBytes(5 * 1024 * 1024).addOnSuccessListener(bytes -> {
-                                            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                                            Bitmap bitmapScaled = Bitmap.createScaledBitmap(bitmap, 80, 80, false);
-                                            DrawableUtils.personalizarImagenCircle(context, bitmapScaled, holder.getIv_userkie_photo_search(), R.color.brownMaroon);
-                                            Drawable drawable = new BitmapDrawable(context.getResources(), bitmapScaled);
-
-                                            holder.getIv_userkie_photo_search().setVisibility(View.VISIBLE);
-
-                                            EfectsUtils.startCircularReveal(drawable,holder.getIv_userkie_photo_search());
-                                        });
-                                        break;
-                                    }
-                                }
-                            });
-                        }
+            userFolderRef.listAll().addOnSuccessListener(listResult -> {
+                for (StorageReference item : listResult.getItems()) {
+                    if (item.getName().startsWith("profile")) {
+                        item.getBytes(5 * 1024 * 1024).addOnSuccessListener(bytes -> {
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                            // Pass the original bitmap to DrawableUtils
+                            holder.getIv_userkie_photo_search().setScaleType(ImageView.ScaleType.CENTER_CROP);
+                            DrawableUtils.personalizarImagenCircleButton(context, bitmap, holder.getIv_userkie_photo_search(), R.color.brownBrown);
+                            Drawable drawable = new BitmapDrawable(context.getResources(), bitmap);
+                            holder.getIv_userkie_photo_search().setVisibility(View.VISIBLE);
+                            EfectsUtils.startCircularReveal(drawable, holder.getIv_userkie_photo_search());
+                        });
+                        break;
+                    }
+                }
+            });
+        }
         }
 
 

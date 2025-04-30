@@ -1,14 +1,8 @@
 package com.example.buuktu.models;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.security.keystore.SecureKeyImportUnavailableException;
-
 import com.google.firebase.Timestamp;
-import com.google.firebase.database.Exclude;
-
+import com.google.firebase.firestore.Exclude;
 import java.io.Serializable;
-import java.util.Date;
 
 public class WorldkieModel implements Serializable {
     private String UID;
@@ -17,7 +11,6 @@ public class WorldkieModel implements Serializable {
     private Timestamp creation_date;
     private Timestamp last_update;
     String id_photo;
-    private Drawable photo;
     private boolean photo_default;
     private boolean worldkie_private;
     private boolean draft;
@@ -161,6 +154,15 @@ public class WorldkieModel implements Serializable {
         this.id_photo = id_photo;
         this.draft = draft;
     }
+    public WorldkieModel(String UID,String UID_AUTHOR, Timestamp creation_date, Timestamp last_update, boolean photo_default, boolean worldkie_private, String name) {
+        this.UID=UID;
+        this.UID_AUTHOR = UID_AUTHOR;
+        this.creation_date = creation_date;
+        this.name = name;
+        this.photo_default = photo_default;
+        this.worldkie_private = worldkie_private;
+        this.last_update = last_update; // Inicializar last_update a la hora actual
+    }
     public boolean isWorldkie_private() {
         return worldkie_private;
     }
@@ -168,17 +170,12 @@ public class WorldkieModel implements Serializable {
     public void setWorldkie_private(boolean worldkie_private) {
         this.worldkie_private = worldkie_private;
     }
+    @Exclude
 
-    public Drawable getPhoto() {
-        return photo;
-    }
-    public void setPhoto(Drawable photo) {
-        this.photo = photo;
-    }
     public String getUID() {
         return UID;
     }
-
+    @Exclude
     public void setUID(String UID) {
         this.UID = UID;
     }

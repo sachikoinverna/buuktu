@@ -2,9 +2,7 @@ package com.example.buuktu.views;
 
 import static android.widget.Toast.LENGTH_LONG;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.DrawableRes;
@@ -33,7 +30,6 @@ import com.example.buuktu.adapters.RoundedBorderSquareTransformation;
 import com.example.buuktu.bottomsheet.BottomSheetProfilePhoto;
 import com.example.buuktu.dialogs.CreateEditGeneralDialog;
 import com.example.buuktu.models.WorldkieModel;
-import com.example.buuktu.utils.CheckUtil;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.EfectsUtils;
 import com.example.buuktu.utils.NavigationUtils;
@@ -221,11 +217,13 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
             for (StorageReference item : listResult.getItems()) {
                 if (item.getName().startsWith("cover")) {
                     item.getDownloadUrl().addOnSuccessListener(uri -> {
-                            DrawableUtils.personalizarImagenCuadradoButton(getContext(),150/6,7,R.color.brownMaroon,uri,ib_select_img_create_worldkie);
+
+                        DrawableUtils.personalizarImagenCuadradoButton(getContext(),150/6,7,R.color.brownMaroon,uri,ib_select_img_create_worldkie);
                         ib_select_img_create_worldkie.setVisibility(View.VISIBLE);
                         EfectsUtils.startCircularReveal(ib_select_img_create_worldkie.getDrawable(),ib_select_img_create_worldkie);
                         source = "device";
                     });
+                break;
                 }
             }
             ;
@@ -323,11 +321,11 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(() -> {
                         getValues();
-                        if (source.equals("app")) {
+                        if (source.equals("device")) {
                                     if (!privacity) {
-                                        worldkieModel = new WorldkieModel(UID, name, true, privacity, draft);
+                                        worldkieModel = new WorldkieModel(UID, name, false, privacity, draft);
                                     } else {
-                                        worldkieModel = new WorldkieModel(UID, name, true, privacity);
+                                        worldkieModel = new WorldkieModel(UID, name, false, privacity);
                                     }
                                 } else {
                                     if (!privacity) {
@@ -350,7 +348,7 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
                                             }
                                             animationView.setAnimation(R.raw.success_anim);
                                             animationView.playAnimation();
-                                            Completable.timer(3, TimeUnit.SECONDS)
+                                            Completable.timer(2, TimeUnit.SECONDS)
                                                     .subscribeOn(Schedulers.io())
                                                     .observeOn(AndroidSchedulers.mainThread())
                                                     .subscribe(() -> {

@@ -71,7 +71,7 @@ public class ProfileView extends Fragment implements View.OnClickListener {
     CollectionReference collectionStuffkies;
     CollectionReference collectionCharacterkies;
     FirebaseAuth firebaseAuth;
-    String UID,lastPhotoId=null;
+    String UID,lastPhotoId="";
     UserkieModel userkieModel;
     FragmentManager fragmentManager;
     FragmentActivity activity;
@@ -131,7 +131,6 @@ public class ProfileView extends Fragment implements View.OnClickListener {
                 ib_back.setVisibility(View.VISIBLE);
                 break;
         }
-        DrawableUtils.personalizarImagenCircleButton(getContext(), DrawableUtils.drawableToBitmap(ib_profileView.getDrawable()), ib_profileView, R.color.brownBrown);
         db = FirebaseFirestore.getInstance();
         characterkieArrayList = new ArrayList<>();
         characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList, getContext());
@@ -183,7 +182,6 @@ public class ProfileView extends Fragment implements View.OnClickListener {
                             for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
                                 //if (documentSnapshot.getBoolean("photo_default")) {
 
-                                    Drawable drawable = getResources().getDrawable(R.drawable.thumb_custom);
                                     StuffkieModel stuffkieModel = new StuffkieModel(
                                             doc.getId(),
                                             doc.getString("name"),
@@ -222,10 +220,9 @@ public class ProfileView extends Fragment implements View.OnClickListener {
 
                             for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
 
-                                    Drawable drawable = getResources().getDrawable(R.drawable.thumb_custom);
                                     WorldkieModel worldkieModel = new WorldkieModel(
-                                            doc.getId(),doc.getTimestamp("creation_date"), doc.getTimestamp("last_update"),
-                                            doc.getString("UID_AUTHOR"),doc.getBoolean("photo_default")
+                                            doc.getId(),UID,doc.getTimestamp("creation_date"), doc.getTimestamp("last_update")
+                                            ,doc.getBoolean("photo_default")
 
                                             , doc.getBoolean("worldkie_private"),doc.getString("name")
                                     );
@@ -263,7 +260,6 @@ public class ProfileView extends Fragment implements View.OnClickListener {
                             for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
                                 //if (documentSnapshot.getBoolean("photo_default")) {
 
-                                    Drawable drawable = getResources().getDrawable(R.drawable.thumb_custom);
                                     Characterkie characterkieModel = new Characterkie(
                                             doc.getId(),
                                             doc.getString("name")
@@ -339,19 +335,20 @@ public class ProfileView extends Fragment implements View.OnClickListener {
                     ib_profileView.setImageDrawable(drawable);
                     DrawableUtils.personalizarImagenCircleButton(getContext(), DrawableUtils.drawableToBitmap(drawable), ib_profileView, R.color.brownMaroon);
                     lastPhotoId=id_photo;
+                    ib_profileView.setVisibility(View.VISIBLE);
+                    EfectsUtils.startCircularReveal(ib_profileView.getDrawable(),ib_profileView);
                 }
 
             } else {
-                StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-users").getReference(UID);//.child().child(UID);
+                StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-users").getReference(UID);
 
                 userFolderRef.listAll().addOnSuccessListener(listResult -> {
                     for (StorageReference item : listResult.getItems()) {
                         if (item.getName().startsWith("profile")) {
-                            item.getBytes(5 * 1024 * 1024).addOnSuccessListener(bytes -> {
-                                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                                Bitmap bitmapScaled = Bitmap.createScaledBitmap(bitmap, 80, 80, false);
-                               // ib_profileView.setImageDrawable(bitmapScaled);
-                                DrawableUtils.personalizarImagenCircleButton(getContext(), bitmapScaled, ib_profileView, R.color.brownMaroon);
+                            item.getDownloadUrl().addOnSuccessListener(uri -> {
+                                DrawableUtils.personalizarImagenCircleButton(getContext(), uri, ib_profileView, R.color.brownMaroon);
+                                ib_profileView.setVisibility(View.VISIBLE);
+                                EfectsUtils.startCircularReveal(ib_profileView.getDrawable(),ib_profileView);
                             });
                             break;
                         }

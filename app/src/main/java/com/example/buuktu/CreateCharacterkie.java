@@ -77,7 +77,7 @@ public class CreateCharacterkie extends Fragment implements View.OnClickListener
     ConstraintLayout constraintLayout;
     Context context;
     String UID, worldkie_id, source,name,characterkie_id;
-    boolean privacity, draft;
+    boolean privacity, draft,isAllFabsVisible;
     FloatingActionButton fb_add_field_createCharacterkie,fb_more_createCharacterkie;
     Characterkie characterkie;
     public CreateCharacterkie() {
@@ -228,6 +228,8 @@ public class CreateCharacterkie extends Fragment implements View.OnClickListener
         tb_characterkiePrivacity=view.findViewById(R.id.tb_CharacterkiePrivacity);
         fb_add_field_createCharacterkie = view.findViewById(R.id.fb_add_field_createCharacterkie);
         fb_more_createCharacterkie = view.findViewById(R.id.fb_more_createCharacterkie);
+        fb_add_field_createCharacterkie.setVisibility(View.INVISIBLE);
+        isAllFabsVisible = false;
         et_nameCharacterkieCreate = view.findViewById(R.id.et_nameCharacterkieCreate);
         et_nameCharacterkieCreateFull = view.findViewById(R.id.et_nameCharacterkieCreateFull);
         constraintLayout = view.findViewById(R.id.constraint_create_characterkie);
@@ -381,7 +383,11 @@ public class CreateCharacterkie extends Fragment implements View.OnClickListener
                             fieldsNotAdded.add(fieldItem);
                         }
                     }
+
                     cargarCamposEnBottomSheet(fieldsNotAdded);
+                    if(fieldsNotAdded.isEmpty()){
+                        fb_more_createCharacterkie.setVisibility(View.INVISIBLE);
+                    }
                 }).addOnFailureListener(e -> {
                     Log.e("Firestore", "Error al obtener los campos", e);
                 });
@@ -435,6 +441,14 @@ public class CreateCharacterkie extends Fragment implements View.OnClickListener
         } else if (v.getId()==R.id.fb_add_field_createCharacterkie) {
             BottomSheetChooseComponents bottomSheetFragment = new BottomSheetChooseComponents(context, constraintLayout, this, fieldsNotAdded);
             bottomSheetFragment.show(getChildFragmentManager(), bottomSheetFragment.getTag());
+        } else if (v.getId()==R.id.fb_more_createCharacterkie) {
+            if(isAllFabsVisible) {
+                fb_add_field_createCharacterkie.setVisibility(View.INVISIBLE);
+                isAllFabsVisible = false;
+            }else{
+                fb_add_field_createCharacterkie.setVisibility(View.VISIBLE);
+                isAllFabsVisible = true;
+            }
         }
     }
 

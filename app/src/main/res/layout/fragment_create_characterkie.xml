@@ -120,8 +120,10 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="32dp"
             android:clickable="true"
+            app:backgroundTint="#B39DDB"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:shapeAppearance="?attr/floatingActionButtonStyle"
             app:srcCompat="@drawable/twotone_more_24" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -132,8 +134,10 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:clickable="true"
+            app:backgroundTint="#D1C4E9"
             app:layout_constraintBottom_toTopOf="@+id/fb_more_createCharacterkie"
             app:layout_constraintEnd_toEndOf="parent"
+            app:shapeAppearance="?attr/floatingActionButtonStyle"
             app:srcCompat="@drawable/twotone_add_circle_24" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

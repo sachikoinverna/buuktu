@@ -128,9 +128,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
         private void deleteNoteItem(NoteItem item, DeleteGeneralDialog dialog) {
             TextView tv_title = dialog.findViewById(R.id.tv_title_del);
-            tv_title.setText("Cuidado");
             TextView tv_text = dialog.findViewById(R.id.tv_text_del);
-            tv_text.setText("Cuidado");
             ImageView iv_photo = dialog.findViewById(R.id.iv_photo_del);
 
             ImageButton ib_close = dialog.findViewById(R.id.ib_close_dialog);

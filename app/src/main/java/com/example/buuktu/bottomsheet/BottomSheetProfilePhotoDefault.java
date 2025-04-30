@@ -167,14 +167,19 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
         int imageIndex = 0;
         for(ImageButton imageButton: imageButtons){
             if(register!=null) {
-                imageButton.setImageDrawable(ContextCompat.getDrawable(context,photosUserkies.get(imageIndex)));
+                DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(ContextCompat.getDrawable(context,photosUserkies.get(imageIndex))), imageButton, R.color.brownBrown);
             } else if (createCharacterkie!=null) {
                 Log.d("BottomSheet", "photosCharacterkies size in setImages: " + photosCharacterkies.size());
+                DrawableUtils.personalizarImagenCuadradoButton(context,80/6,7, color.greenWhatever, photosWorldkies.get(imageIndex),imageButton);
 
                 imageButton.setImageDrawable(ContextCompat.getDrawable(context,photosCharacterkies.get(imageIndex)));
             }else if (createEditScenariokie!=null) {
+                DrawableUtils.personalizarImagenCuadradoButton(context,80/6,7, color.greenWhatever, photosWorldkies.get(imageIndex),imageButton);
+
                 imageButton.setImageDrawable(ContextCompat.getDrawable(context, photosScenariokies.get(imageIndex)));
             }else if (createEditStuffkie!=null) {
+                DrawableUtils.personalizarImagenCuadradoButton(context,80/6,7, color.greenWhatever, photosWorldkies.get(imageIndex),imageButton);
+
                 imageButton.setImageDrawable(ContextCompat.getDrawable(context, photosStuffkies.get(imageIndex)));
             }else if(createEditWorldkie!=null){
                 DrawableUtils.personalizarImagenCuadradoButton(context,80/6,7, color.greenWhatever, photosWorldkies.get(imageIndex),imageButton);

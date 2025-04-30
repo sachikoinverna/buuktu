@@ -51,6 +51,7 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
     Switch tb_scenariokiePrivacity,tb_scenariokieDraft;
     FloatingActionButton fb_add_field_createScenariokie,fb_more_createScenariokie;
     Context context;
+    boolean isAllFabsVisible;
     ConstraintLayout constraintLayout;
     TextInputEditText textInputEditText;
     TextInputLayout et_nameCharacterkieCreateFull;
@@ -108,6 +109,8 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
         tb_scenariokieDraft = view.findViewById(R.id.tb_scenariokieDraft);
         constraintLayout = view.findViewById(R.id.constraint_create_scenariokie);
         fb_more_createScenariokie = view.findViewById(R.id.fb_more_createScenariokie);
+        fb_add_field_createScenariokie.setVisibility(View.INVISIBLE);
+        isAllFabsVisible = false;
     }
     public Drawable getSelectedProfilePhoto()
     {
@@ -209,6 +212,14 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
         }else if (v.getId()==R.id.fb_add_field_createCharacterkie) {
           //  BottomSheetChooseComponents bottomSheetFragment = new BottomSheetChooseComponents(context, constraintLayout, this, fieldsNotAdded);
           //  bottomSheetFragment.show(getChildFragmentManager(), bottomSheetFragment.getTag());
+        } else if(v.getId()==R.id.fb_more_createCharacterkie){
+            if(isAllFabsVisible){
+                fb_add_field_createScenariokie.setVisibility(View.VISIBLE);
+                isAllFabsVisible = false;
+            }else{
+                fb_add_field_createScenariokie.setVisibility(View.VISIBLE);
+                isAllFabsVisible = true;
+            }
         }
     }
 }

@@ -1,7 +1,6 @@
 package com.example.buuktu.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -108,7 +107,7 @@ public class StuffkiesUserPreviewAdapter extends RecyclerView.Adapter<StuffkiesU
     public void onBindViewHolder(@NonNull StuffkiesUserPreviewAdapter.ViewHolder holder, int position) {
         holder.getIv_stuffkie_preview_worldkie().setVisibility(View.INVISIBLE);
         holder.getTv_stuffkie_preview_worldkie().setText(dataSet.get(holder.getAdapterPosition()).getName());
-        if(!dataSet.get(holder.getAdapterPosition()).isBorrador()){
+        if(!dataSet.get(holder.getAdapterPosition()).isDraft()){
             holder.getTv_stuffkie_preview_draft().setVisibility(View.INVISIBLE);
         }
         if(!dataSet.get(holder.getAdapterPosition()).isStuffkie_private()){

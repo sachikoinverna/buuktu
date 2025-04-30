@@ -9,7 +9,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
-import android.util.Log;
 import android.util.TypedValue;
 import android.webkit.MimeTypeMap;
 import android.widget.ImageButton;
@@ -132,89 +131,122 @@ public class DrawableUtils {
     }
 
 
-    public static void personalizarImagenCircle(Context context, Bitmap bitmap, ImageView imageView,@ColorRes int color) {
+    public static void personalizarImagenCircle(Context context, Bitmap bitmap, ImageView imageView, @ColorRes int color) {
         RoundedBitmapDrawable roundedDrawable = RoundedBitmapDrawableFactory.create(context.getResources(), bitmap);
         roundedDrawable.setCircular(true); // Ya hace la imagen circular, no necesita setCornerRadius()
         imageView.setImageDrawable(roundedDrawable);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageView.setPadding(15, 15, 15, 15);
+        int pad = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                2,
+                context.getResources().getDisplayMetrics()
+        );
+        imageView.setPadding(pad, pad, pad, pad);
 
 
 // Obtener el drawable del borde de manera segura
-        Drawable drawableBorder = ContextCompat.getDrawable(context, R.drawable.border_register);
-        if (drawableBorder != null) {
-            drawableBorder.setTint(color);
-            imageView.setBackground(drawableBorder);
-        }
+        Drawable bg = ContextCompat.getDrawable(context, R.drawable.border_register);
+        bg.setTint(color);
+
+        imageView.setBackground(bg);
 
     }
-    public static void personalizarImagenCircle(Context context, int mipmapResId, ImageView imageView,@ColorRes int color) {
-        // Cargar el drawable desde mipmap
-        Drawable drawable = ContextCompat.getDrawable(context, mipmapResId);
-        if (drawable == null) {
-            Log.e("DrawableUtils", "Drawable no encontrado con ID: " + mipmapResId);
-            return;
-        }
+  public static void personalizarImagenCircleButton(Context context, Bitmap bitmap, ImageButton imageButton, @ColorRes int color) {
+      // 1) Configurar el padding mínimo para el borde
+      int pad = (int) TypedValue.applyDimension(
+              TypedValue.COMPLEX_UNIT_DIP, 2, context.getResources().getDisplayMetrics()
+      );
+      imageButton.setPadding(pad, pad, pad, pad);
 
-        // Convertir drawable a bitmap
-        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+      // 2) Fondo oval con trazo (borde)
+      Drawable drawableBorder = ContextCompat.getDrawable(context, R.drawable.border_register);
+      if (drawableBorder != null) {
+          drawableBorder.setTint(color);
+          imageButton.setBackground(drawableBorder);
+      }
+      imageButton.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-        // Crear drawable redondeado
-        RoundedBitmapDrawable roundedDrawable = RoundedBitmapDrawableFactory.create(context.getResources(), bitmap);
-        roundedDrawable.setCircular(true);
+      // 3) Glide sólo para recortar la imagen en círculo y volcarla en el ImageButton
+      Glide.with(context)
+              .asBitmap()
+              .load(bitmap)
+              .override(bitmap.getWidth(), bitmap.getHeight()) // conserva tamaño original
+              .circleCrop()
+              .into(imageButton);
+  }
+    public static void personalizarImagenCircleButton(Context context, Uri uri, ImageButton imageButton, @ColorRes int color) {
+        // 1) Configurar el padding mínimo para el borde
+        int pad = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, 2, context.getResources().getDisplayMetrics()
+        );
+        imageButton.setPadding(pad, pad, pad, pad);
 
-        imageView.setImageDrawable(roundedDrawable);
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageView.setPadding(15, 15, 15, 15);
-
-        // Aplicar borde si existe
-        Drawable drawableBorder = ContextCompat.getDrawable(context, R.drawable.border_register);
-        if (drawableBorder != null) {
-            drawableBorder.setTint(color);
-            imageView.setBackground(drawableBorder);
-        }
-    }
-
-    public static void personalizarImagenCircleButton(Context context, Bitmap bitmap, ImageButton imageButton,@ColorRes int color) {
-        RoundedBitmapDrawable roundedDrawable = RoundedBitmapDrawableFactory.create(context.getResources(), bitmap);
-        roundedDrawable.setCircular(true); // Ya hace la imagen circular, no necesita setCornerRadius()
-        imageButton.setImageDrawable(roundedDrawable);
-        imageButton.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageButton.setPadding(15, 15, 15, 15);
-
-
-// Obtener el drawable del borde de manera segura
+        // 2) Fondo oval con trazo (borde)
         Drawable drawableBorder = ContextCompat.getDrawable(context, R.drawable.border_register);
         if (drawableBorder != null) {
             drawableBorder.setTint(color);
             imageButton.setBackground(drawableBorder);
         }
-
-    }
-    public static void personalizarImagenCircleButton(Context context, Bitmap bitmap, ImageButton imageButton,@ColorRes int color, boolean pressed) {
-        // Crea el drawable para la imagen circular
-        RoundedBitmapDrawable roundedDrawable = RoundedBitmapDrawableFactory.create(context.getResources(), bitmap);
-        roundedDrawable.setCircular(true);
-        imageButton.setImageDrawable(roundedDrawable);
         imageButton.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageButton.setPadding(15, 15, 15, 15);
 
-        // Obtener el drawable del borde
-        GradientDrawable drawableBorder;
-        if (pressed) {
-            // Crear un nuevo GradientDrawable con el borde más grueso
-            drawableBorder = new GradientDrawable();
-            drawableBorder.setShape(GradientDrawable.OVAL);
-            drawableBorder.setStroke(40, color); // Usar el color proporcionado
-        } else {
-            // Crear un nuevo GradientDrawable con el borde original
-            drawableBorder = new GradientDrawable();
-            drawableBorder.setShape(GradientDrawable.OVAL);
-            drawableBorder.setStroke(20, color); // Usar el color proporcionado
-        }
-
-        imageButton.setBackground(drawableBorder);
+        // 3) Glide sólo para recortar la imagen en círculo y volcarla en el ImageButton
+        Glide.with(context)
+                .asBitmap()
+                .load(uri)
+             //   .override(bitmap.getWidth(), bitmap.getHeight()) // conserva tamaño original
+                .circleCrop()
+                .into(imageButton);
     }
+    public static void personalizarImagenCircleButton(Context context, Bitmap bitmap, ImageButton imageButton, @ColorRes int color, boolean pressed) {
+        // 1) Padding mínimo
+        int pad = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, 2, context.getResources().getDisplayMetrics()
+        );
+        imageButton.setPadding(pad, pad, pad, pad);
 
+        // 2) Fondo oval con trazo más grueso si está presionado
+        GradientDrawable drawableBorder = new GradientDrawable();
+        drawableBorder.setShape(GradientDrawable.OVAL);
+        int strokeWidthDp = pressed ? 40 : 20;
+        int strokePx = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, strokeWidthDp, context.getResources().getDisplayMetrics()
+        );
+        drawableBorder.setStroke(strokePx, color);
+        imageButton.setBackground(drawableBorder);
+        imageButton.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
+        // 3) Glide sólo para el circleCrop
+        Glide.with(context)
+                .asBitmap()
+                .load(bitmap)
+                .override(bitmap.getWidth(), bitmap.getHeight())
+                .circleCrop()
+                .into(imageButton);
+    }
+    public static void personalizarImagenCircleButton(Context context, Uri uri, ImageButton imageButton, @ColorRes int color, boolean pressed) {
+        // 1) Padding mínimo
+        int pad = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, 2, context.getResources().getDisplayMetrics()
+        );
+        imageButton.setPadding(pad, pad, pad, pad);
+
+        // 2) Fondo oval con trazo más grueso si está presionado
+        GradientDrawable drawableBorder = new GradientDrawable();
+        drawableBorder.setShape(GradientDrawable.OVAL);
+        int strokeWidthDp = pressed ? 40 : 20;
+        int strokePx = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, strokeWidthDp, context.getResources().getDisplayMetrics()
+        );
+        drawableBorder.setStroke(strokePx, color);
+        imageButton.setBackground(drawableBorder);
+        imageButton.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+        // 3) Glide sólo para el circleCrop
+        Glide.with(context)
+                .asBitmap()
+                .load(uri)
+            //    .override(bitmap.getWidth(), bitmap.getHeight())
+                .circleCrop()
+                .into(imageButton);
+    }
 }

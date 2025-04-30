@@ -46,17 +46,23 @@ public class DeleteGeneralDialog extends Dialog implements View.OnClickListener 
         ib_close_dialog = findViewById(R.id.ib_close_dialog);
         ib_accept_dialog = findViewById(R.id.ib_accept_dialog);
         iv_photo_del = findViewById(R.id.iv_photo_del);
+        tv_text_del = findViewById(R.id.tv_text_del);
+
         //tv_text_del = findViewById(R.id.tv);
+        tv_title_del = findViewById(R.id.tv_title_del);
+        tv_title_del.setText("Cuidado");
         if(mode.equals(modeNotekie)){
             iv_photo_del.setImageResource(R.mipmap.img_del_notes);
+            tv_text_del.setText("¿Deseas eliminar la nota? No podras recuperarla.");
         } else if (mode.equals(modeStuffkie)) {
             iv_photo_del.setImageResource(R.mipmap.img_del_stuffkie);
+            tv_text_del.setText("¿Deseas eliminar el stuffkie? No podras recuperarla.");
         } else if (mode.equals(modeWorldkie)) {
             iv_photo_del.setImageResource(R.mipmap.img_del_worldkie);
-
+            tv_text_del.setText("¿Deseas eliminar el worldkie? No podras recuperarla.");
         } else if (mode.equals(modeCharacterkie)) {
             iv_photo_del.setImageResource(R.mipmap.img_del_characterkie);
-
+            tv_text_del.setText("¿Deseas eliminar el characterkie? No podras recuperarla.");
         }
         //tv_text_del = findViewById(R.id.tv);
         ib_close_dialog.setOnClickListener(this);
