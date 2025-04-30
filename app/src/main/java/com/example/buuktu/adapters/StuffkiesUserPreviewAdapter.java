@@ -128,7 +128,7 @@ public class StuffkiesUserPreviewAdapter extends RecyclerView.Adapter<StuffkiesU
                         throw new RuntimeException(ex);
                     }
                     holder.setLastPhotoId(id_photo);
-                    holder.getIv_stuffkie_private_preview().setVisibility(View.VISIBLE);
+                    holder.getIv_stuffkie_preview_worldkie().setVisibility(View.VISIBLE);
                     EfectsUtils.startCircularReveal(drawable,holder.getIv_stuffkie_preview_worldkie());
 
                 }
@@ -142,7 +142,7 @@ public class StuffkiesUserPreviewAdapter extends RecyclerView.Adapter<StuffkiesU
                         item.getDownloadUrl().addOnSuccessListener(uri -> {
                             try {
                                 DrawableUtils.personalizarImagenCuadradoButton(context,115/7,7, R.color.greenWhatever,uri,holder.getIv_stuffkie_preview_worldkie(),R.mipmap.photostuffkieone);
-                                holder.getIv_stuffkie_private_preview().setVisibility(View.VISIBLE);
+                                holder.getIv_stuffkie_preview_worldkie().setVisibility(View.VISIBLE);
                                 EfectsUtils.startCircularReveal(context,uri,holder.getIv_stuffkie_preview_worldkie());
                             } catch (IOException e) {
                                 throw new RuntimeException(e);

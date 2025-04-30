@@ -150,7 +150,7 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
                         throw new RuntimeException(ex);
                     }
                     holder.setLastPhotoId(id_photo);
-                    holder.getIv_stuffkie_private_preview().setVisibility(View.VISIBLE);
+                    holder.getIv_worldkie_preview_worldkie().setVisibility(View.VISIBLE);
                     EfectsUtils.startCircularReveal(drawable,holder.getIv_worldkie_preview_worldkie());
                 }
             });
@@ -163,7 +163,7 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
                         item.getDownloadUrl().addOnSuccessListener(uri -> {
                             try {
                                 DrawableUtils.personalizarImagenCuadradoButton(context,100/6,7, R.color.greenWhatever,uri,holder.getIv_worldkie_preview_worldkie(),R.mipmap.photoprofileone);
-                                holder.getIv_stuffkie_private_preview().setVisibility(View.VISIBLE);
+                                holder.getIv_worldkie_preview_worldkie().setVisibility(View.VISIBLE);
                                 EfectsUtils.startCircularReveal(context,uri,holder.getIv_worldkie_preview_worldkie());
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
