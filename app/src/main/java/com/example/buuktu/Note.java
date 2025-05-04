@@ -60,6 +60,7 @@ public class Note extends Fragment implements View.OnClickListener {
     ImageButton ib_save;
     FragmentManager fragmentManager;
     FragmentActivity activity;
+    MainActivity mainActivity;
     public Note() {
         // Required empty public constructor
     }
@@ -88,15 +89,7 @@ public class Note extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_note, container, false);
-        MainActivity mainActivity = (MainActivity) getActivity();
-        ib_save = mainActivity.getIb_save();
-        ib_save.setVisibility(View.VISIBLE);
-        backButton = mainActivity.getBackButton();
-        backButton.setVisibility(View.VISIBLE);
-        ib_profile_superior = mainActivity.getIb_self_profile();
-        ib_profile_superior.setVisibility(View.VISIBLE);
-        et_title_note = view.findViewById(R.id.et_title_note);
-        et_content_note = view.findViewById(R.id.et_content_note);
+        initComponents(view);
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
         UID_USER = auth.getUid();
@@ -112,15 +105,13 @@ public class Note extends Fragment implements View.OnClickListener {
                     return;
                 }
                 if (queryDocumentSnapshot.exists()) {
-                    String title = queryDocumentSnapshot.getString("title");
-                    if (!title.isEmpty()) {
-                        noteItem.setTitle(title);
+                    NoteItem note = NoteItem.fromSnapshot(queryDocumentSnapshot);
+                    String title = note.getTitle();
+                    if (!title.equals("")) {
                         et_title_note.setText(noteItem.getTitle());
                     } else {
-                        noteItem.setTitle("(Sin titulo)");
                         et_title_note.setHint(noteItem.getTitle());
                     }
-                    noteItem.setContent(queryDocumentSnapshot.getString("text"));
                     et_content_note.setText(noteItem.getContent());
                 }
                 });
@@ -129,53 +120,38 @@ public class Note extends Fragment implements View.OnClickListener {
             noteItem.setTitle("");
             noteItem.setContent("");
         }
-        ib_save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if ((!et_content_note.getText().equals(noteItem.getContent()) || !et_title_note.getText().equals(noteItem.getTitle())) && (!et_title_note.getText().equals("") || !et_content_note.getText().equals(""))) {
-                    timestampNow = Timestamp.now();
-                    if(et_title_note.getText().equals("")){
-                        notekieData.put("title","");
-                    }else{
-                        notekieData.put("title", et_title_note.getText().toString());
-                    }
-                    notekieData.put("text", et_content_note.getText().toString()); // Corrección clave
-                    notekieData.put("last_update", timestampNow);
-                    if (note_id != null) {
-                        editDataFirestore();
-                    }else{
-                        notekieData.put("UID_USER", UID_USER);
-                        addDataToFirestore();
-
-                    }
-                }
-            }
-        });
         fragmentManager = requireActivity().getSupportFragmentManager();
         activity = requireActivity();
         setListeners();
         return view;
     }
-
+    private void initComponents(View view){
+        mainActivity = (MainActivity) getActivity();
+        ib_save = mainActivity.getIb_save();
+        backButton = mainActivity.getBackButton();
+        ib_profile_superior = mainActivity.getIb_self_profile();
+        et_title_note = view.findViewById(R.id.et_title_note);
+        et_content_note = view.findViewById(R.id.et_content_note);
+        setInitVisibility();
+    }
     private void setListeners(){
         backButton.setOnClickListener(this);
         ib_save.setOnClickListener(this);
     }
+    private void setInitVisibility(){
+        ib_save.setVisibility(View.GONE);
+        backButton.setVisibility(View.GONE);
+        ib_profile_superior.setVisibility(View.VISIBLE);
+    }
     private void addDataToFirestore() {
-       // mostrarBarraProgreso();
-    ///    barraProgreso.incrementProgressBy(25);
-        collectionNotekies.add(notekieData).addOnSuccessListener(new   OnSuccessListener<DocumentReference>() {
+        collectionNotekies.add(notekieData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
                 note_id = documentReference.getId();
-                //barraProgreso.incrementProgressBy(25);
-              //  Toast.makeText(createWorldkie, "Your Course has been added to Firebase Firestore", Toast.LENGTH_SHORT).show()
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-               /* Log.e("Error", e.getMessage().toString());
-                Toast.makeText(createWorldkie, e.getMessage().toString(), Toast.LENGTH_LONG).show();*/
             }
         });
     }
@@ -183,6 +159,7 @@ public class Note extends Fragment implements View.OnClickListener {
         collectionNotekies.document(note_id).update(notekieData).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
+
             }
         });
     }

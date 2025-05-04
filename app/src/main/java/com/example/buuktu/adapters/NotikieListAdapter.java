@@ -91,10 +91,11 @@ public class NotikieListAdapter extends RecyclerView.Adapter<NotikieListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.getTv_text_notikie_list_layout().setText(dataSet.get(holder.getAdapterPosition()).getMessage());
+        NotikieModel notikieModel = dataSet.get(position);
+        holder.getTv_text_notikie_list_layout().setText(notikieModel.getMessage());
         holder.getIv_icon_notikie_list_layout()
-                .setImageAlpha(dataSet.get(holder.getAdapterPosition()).getIcon());
-        Date date = dataSet.get(holder.getAdapterPosition()).getDate().toDate();
+                .setImageAlpha(notikieModel.getIcon());
+        Date date = notikieModel.getDate().toDate();
         long serverTimeMs = date.getTime();
         long current = DateUtils.currentMs();
         long timeDifference = DateUtils.getTimeDiference(current,serverTimeMs);

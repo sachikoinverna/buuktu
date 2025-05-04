@@ -111,10 +111,13 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
     }
     @Override
     public void onBindViewHolder(@NonNull WorldkiesUserPreviewAdapter.ViewHolder holder, int position) {
+        WorldkieModel worldkieModel = dataSet.get(position);
+        String UID = worldkieModel.getUID();
+        String UID_AUTHOR = worldkieModel.getUID_AUTHOR();
         holder.getIv_stuffkie_private_preview().setVisibility(View.INVISIBLE);
         holder.getTv_worldkie_preview_worldkie().setText(dataSet.get(holder.getAdapterPosition()).getName());
         // holder.getIv_characterkie_preview_worldkie().setImageDrawable(dataSet.get(holder.getAdapterPosition()).getPhoto());//  Drawable drawable = dataSet.get(holder.getAdapterPosition()).getPhoto();
-        if(!dataSet.get(holder.getAdapterPosition()).isWorldkie_private()) {
+        if(!worldkieModel.isWorldkie_private()) {
             holder.getIv_worldkie_preview_worldkie().setVisibility(View.INVISIBLE);
         }
         holder.getCv_worldkie_preview().setOnClickListener(new View.OnClickListener() {
@@ -123,15 +126,15 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
                 WorldkieView worldkieView = new WorldkieView();
                 Bundle bundle = new Bundle();
                 bundle.putString("mode","other");
-                bundle.putString("UID",dataSet.get(holder.getAdapterPosition()).getUID());
-                bundle.putString("UID_AUTHOR",dataSet.get(holder.getAdapterPosition()).getUID_AUTHOR());
+                bundle.putString("UID",UID);
+                bundle.putString("UID_AUTHOR",UID_AUTHOR);
                 worldkieView.setArguments(bundle);
                 NavigationUtils.goNewFragment(fragmentManager,worldkieView);
             }
         });
-        if (dataSet.get(holder.getAdapterPosition()).isPhoto_default()) {
+        if (worldkieModel.isPhoto_default()) {
             FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-            firebaseFirestore.collection("Worldkies").document(dataSet.get(holder.getAdapterPosition()).getUID()).addSnapshotListener((queryDocumentSnapshot, e) -> {
+            firebaseFirestore.collection("Worldkies").document(UID).addSnapshotListener((queryDocumentSnapshot, e) -> {
                        /* if (e != null) {
                             Log.e("Error", e.getMessage());
                             Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
@@ -155,7 +158,7 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
                 }
             });
         } else {
-            StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-worldkies").getReference(dataSet.get(holder.getAdapterPosition()).getUID());
+            StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-worldkies").getReference(UID);
 
             userFolderRef.listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {

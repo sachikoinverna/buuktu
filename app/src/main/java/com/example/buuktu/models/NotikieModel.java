@@ -1,6 +1,7 @@
 package com.example.buuktu.models;
 
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 public class NotikieModel {
     String message;
@@ -31,9 +32,17 @@ public class NotikieModel {
         this.icon = icon;
     }
 
-    public NotikieModel(String message, Timestamp date, int icon) {
-        this.message = message;
-        this.date = date;
-        this.icon = icon;
+    public NotikieModel() {
+    }
+
+    public static NotikieModel fromSnapshot(DocumentSnapshot document) {
+        if (document == null || !document.exists()) {
+            return null;
+        }
+        NotikieModel notikieModel = new NotikieModel();
+        notikieModel.setMessage(document.getString("message"));
+        notikieModel.setDate(document.getTimestamp("date"));
+        notikieModel.setIcon(Math.toIntExact(document.getLong("icon")));
+        return notikieModel;
     }
 }

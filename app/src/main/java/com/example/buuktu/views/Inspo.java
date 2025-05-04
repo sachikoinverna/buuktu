@@ -2,26 +2,20 @@ package com.example.buuktu.views;
 
 import android.os.Bundle;
 
-import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.example.buuktu.R;
-import com.example.buuktu.adapters.CardAdapter;
 import com.example.buuktu.adapters.CardInspoAdapter;
 import com.example.buuktu.models.CardItem;
-import com.example.buuktu.utils.ComponentsUtils;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,22 +54,27 @@ public class Inspo extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_inspo, container, false);
+        initComponents(view);
+        return view;
+
+    }
+    private void initComponents(View view){
         rc_buttons_inspo = view.findViewById(R.id.rc_buttons_inspo);
         rc_buttons_inspo.setLayoutManager(new GridLayoutManager(getContext(), 2));
         MainActivity mainActivity = (MainActivity) getActivity();
         ib_back = mainActivity.getBackButton();
         ib_profile_superior = mainActivity.getIb_self_profile();
-        ib_profile_superior.setVisibility(View.VISIBLE);
         ib_save = mainActivity.getIb_save();
-        ib_save.setVisibility(View.GONE);
         ArrayList<CardItem> items = new ArrayList<>();
         items.add(new CardItem(R.drawable.twotone_sticky_note_2_24, "Notekies"));
         items.add(new CardItem(R.drawable.twotone_military_tech_24, "Desafios"));
+        updateRecyclerView(items);
+        setInitVisibility();
+    }
+    private void setInitVisibility(){
+        ib_save.setVisibility(View.GONE);
         ib_back.setVisibility(View.GONE);
-
-       updateRecyclerView(items);
-        return view;
-
+        ib_profile_superior.setVisibility(View.VISIBLE);
     }
 public void updateRecyclerView(ArrayList<CardItem> cardItems){
     adapter = new CardInspoAdapter(getContext(),cardItems,getParentFragmentManager());

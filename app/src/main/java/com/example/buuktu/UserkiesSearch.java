@@ -80,13 +80,7 @@ public class UserkiesSearch extends Fragment {
 
             for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
                 DocumentSnapshot doc = dc.getDocument();
-                 UserkieModel userkieModel;
-                    if(doc.getBoolean("photo_default")) {
-                        userkieModel = new UserkieModel(doc.getId(),doc.getString("name"), doc.getString("username"), doc.getBoolean("profile_private"), doc.getBoolean("photo_default"),doc.getString("photo_id"));
-                    }else{
-                        userkieModel = new UserkieModel(doc.getId(),doc.getString("name"), doc.getString("username"), doc.getBoolean("profile_private"), doc.getBoolean("photo_default"));
-
-                    }
+                 UserkieModel userkieModel = UserkieModel.fromSnapshot(doc);
                     switch (dc.getType()) {
                         case ADDED:
                             safeAddToList(userkieModelArrayList, dc.getNewIndex(), userkieModel);

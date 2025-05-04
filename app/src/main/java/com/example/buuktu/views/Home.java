@@ -44,7 +44,7 @@ public class Home extends Fragment implements View.OnClickListener {
     private boolean isAllFabsVisible;
     private WorldkieAdapter worldkieAdapter;
     CollectionReference dbWorldkies;
-    ImageButton ib_save,ib_profile_superior;
+    ImageButton ib_save,ib_profile_superior,backButton;
     FragmentManager fragmentManager;
 
     public Home() {
@@ -64,15 +64,10 @@ public class Home extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         MainActivity mainActivity = (MainActivity) getActivity();
-        ImageButton backButton = mainActivity.getBackButton();
-        backButton.setVisibility(View.GONE);
+        backButton = mainActivity.getBackButton();
         ib_save = mainActivity.getIb_save();
-        ib_save.setVisibility(View.GONE);
         ib_profile_superior = mainActivity.getIb_self_profile();
-        ib_profile_superior.setVisibility(View.VISIBLE);
         initComponents(view);
-        fb_add.setVisibility(View.GONE);
-        isAllFabsVisible = false;
         setListeners();
         db = FirebaseFirestore.getInstance();
         UID = auth.getCurrentUser().getUid();
@@ -125,6 +120,14 @@ public class Home extends Fragment implements View.OnClickListener {
         fb_add = view.findViewById(R.id.fb_addWorldkie);
         rc_worldkies = view.findViewById(R.id.rc_worldkies);
         worldkieModelArrayList = new ArrayList<>();
+        setInitVisibility();
+    }
+    private void setInitVisibility(){
+        isAllFabsVisible = false;
+        ib_save.setVisibility(View.GONE);
+        backButton.setVisibility(View.GONE);
+        ib_profile_superior.setVisibility(View.VISIBLE);
+        fb_add.setVisibility(View.GONE);
     }
     private void navigateToNextFragment() {
         CreateEditWorldkie createEditWorldkie = new CreateEditWorldkie();
@@ -153,10 +156,7 @@ public class Home extends Fragment implements View.OnClickListener {
         }
     }
     private WorldkieModel createWorldkieModelFromDocument(DocumentSnapshot doc) {
-        return new WorldkieModel(doc.getId(),
-                doc.getString("name"),// Este es el ID del documento, no UID_AUTHOst_update
-                doc.getBoolean("photo_default")
-        );
+            return WorldkieModel.fromSnapshot(doc);
     }
 
     // Helper method to update the RecyclerView
@@ -175,12 +175,11 @@ public class Home extends Fragment implements View.OnClickListener {
         if(v.getId()==R.id.fb_parentWorldkies){
                 if (!isAllFabsVisible) {
                     fb_add.setVisibility(View.VISIBLE);
-                    isAllFabsVisible = true;
                 } else {
                     fb_add.setVisibility(View.GONE);
-                    isAllFabsVisible = false;
                 }
-            } else if (v.getId()==R.id.fb_addWorldkie) {
+            isAllFabsVisible = !isAllFabsVisible;
+        } else if (v.getId()==R.id.fb_addWorldkie) {
             navigateToNextFragment();
         }
     }

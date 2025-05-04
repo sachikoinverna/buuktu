@@ -12,15 +12,20 @@
         card_view:cardCornerRadius="10dp"
         card_view:cardElevation="10dp">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
             <RadioGroup
+                android:id="@+id/rg_birthday"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -29,7 +34,7 @@
                     android:orientation="horizontal">
 
                     <RadioButton
-                        android:id="@+id/radioButton4"
+                        android:id="@+id/rb_full_birthday"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:button="@drawable/radiobutton_custom"
@@ -37,7 +42,7 @@
                         android:text="DD/MM/YYYY" />
 
                     <RadioButton
-                        android:id="@+id/radioButton5"
+                        android:id="@+id/rb_day_month_birthday"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -46,13 +51,12 @@
                         android:text="DD/MM" />
 
                     <RadioButton
-                        android:id="@+id/radioButton6"
+                        android:id="@+id/rb_month_year_birthday"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
                         android:button="@drawable/radiobutton_custom"
                         android:buttonTint="#835959"
-                        android:text="DD/YY" />
+                        android:text="MM/YYYY" />
 
                 </LinearLayout>
 
@@ -63,15 +67,7 @@
                     android:orientation="horizontal">
 
                     <RadioButton
-                        android:id="@+id/radioButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:button="@drawable/radiobutton_custom"
-                        android:buttonTint="#835959"
-                        android:text="MM/YYYY" />
-
-                    <RadioButton
-                        android:id="@+id/radioButton2"
+                        android:id="@+id/rb_day_year_birthday"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -80,53 +76,85 @@
                         android:text="DD/YYYY" />
 
                     <RadioButton
-                        android:id="@+id/radioButton3"
+                        android:id="@+id/rb_unknown_birthday"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:button="@drawable/radiobutton_custom"
                         android:buttonTint="#835959"
                         android:text="Desconocida" />
+
+                    <RadioButton
+                        android:id="@+id/rb_day_birthday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@drawable/radiobutton_custom"
+                        android:text="Dia" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_month_birthday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:button="@drawable/radiobutton_custom"
+                        android:text="Mes" />
+
+                    <RadioButton
+                        android:id="@+id/rb_year_birthday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:button="@drawable/radiobutton_custom"
+                        android:text="Año" />
+
                 </LinearLayout>
             </RadioGroup>
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/sp_day_birthday"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/button_backgground"
+                android:dropDownWidth="100dp"
+                android:popupBackground="@drawable/button_backgground"
+                android:spinnerMode="dropdown"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rg_birthday" />  <!-- Cambia el color del texto aquí -->
+
+
+            <android.widget.DatePicker
+                android:id="@+id/datePicker"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sp_day_birthday" />
 
-                <RadioButton
-                    android:id="@+id/radioButton7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:button="@drawable/radiobutton_custom"
-                    android:text="Dia" />
-
-                <RadioButton
-                    android:id="@+id/radioButton8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:button="@drawable/radiobutton_custom"
-                    android:text="Mes" />
-
-                <RadioButton
-                    android:id="@+id/radioButton9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:button="@drawable/radiobutton_custom"
-                    android:text="Año" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal"/>
-
-        </LinearLayout>
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="22dp"
+                android:text="Dia"
+                app:layout_constraintEnd_toStartOf="@+id/sp_day_birthday"
+                app:layout_constraintTop_toBottomOf="@+id/rg_birthday" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
 

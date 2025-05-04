@@ -418,7 +418,6 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
         }
 
 
-
     public void showDatePickerDialog(View view) {
         DatePickerDialog date = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override

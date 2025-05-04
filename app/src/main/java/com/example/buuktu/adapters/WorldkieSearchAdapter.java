@@ -161,8 +161,11 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        WorldkieModel worldkieModel = dataSet.get(position);
+        String UID_AUTHOR = worldkieModel.getUID_AUTHOR();
+        String UID = worldkieModel.getUID();
         holder.getIv_worldkie_photo_search().setVisibility(View.INVISIBLE);
-        holder.getCollectionUserkies().document(dataSet.get(holder.getAdapterPosition()).getUID_AUTHOR()).addSnapshotListener((documentSnapshot, e) -> {
+        holder.getCollectionUserkies().document(UID_AUTHOR).addSnapshotListener((documentSnapshot, e) -> {
             if (e != null) {
                 Log.e("Error", e.getMessage());
                 Toast.makeText(context, "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
@@ -184,10 +187,10 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
             holder.setLastName(name);
     }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        holder.getTv_date_last_update_search_worldkie().setText(simpleDateFormat.format(dataSet.get(holder.getAdapterPosition()).getLast_update().toDate()));
-        holder.getTv_date_creation_search_worldkie().setText(simpleDateFormat.format(dataSet.get(holder.getAdapterPosition()).getCreation_date().toDate()));
+        holder.getTv_date_last_update_search_worldkie().setText(simpleDateFormat.format(worldkieModel.getLast_update().toDate()));
+        holder.getTv_date_creation_search_worldkie().setText(simpleDateFormat.format(worldkieModel.getCreation_date().toDate()));
 
-        if (dataSet.get(holder.getAdapterPosition()).isWorldkie_private()) {
+        if (worldkieModel.isWorldkie_private()) {
             holder.getIv_worldkie_private_search().setVisibility(View.VISIBLE);
         } else {
             holder.getIv_worldkie_private_search().setVisibility(View.INVISIBLE);
@@ -199,8 +202,8 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
                 WorldkieView worldkieView = new WorldkieView();
                 Bundle bundle = new Bundle();
                 bundle.putString("mode","other");
-                bundle.putString("UID",dataSet.get(holder.getAdapterPosition()).getUID());
-                bundle.putString("UID_AUTHOR",dataSet.get(holder.getAdapterPosition()).getUID_AUTHOR());
+                bundle.putString("UID",UID);
+                bundle.putString("UID_AUTHOR",UID_AUTHOR);
                 worldkieView.setArguments(bundle);
                 fragmentManager.beginTransaction()
                         .replace(R.id.fragment_container, worldkieView)
@@ -229,9 +232,9 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
             }
         });
         ;
-        if (dataSet.get(holder.getAdapterPosition()).isPhoto_default()) {
+        if (worldkieModel.isPhoto_default()) {
             FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-            firebaseFirestore.collection("Worldkies").document(dataSet.get(holder.getAdapterPosition()).getUID()).addSnapshotListener((queryDocumentSnapshot, e) -> {
+            firebaseFirestore.collection("Worldkies").document(UID).addSnapshotListener((queryDocumentSnapshot, e) -> {
                 String id_photo = queryDocumentSnapshot.getString("id_photo");
                 int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
 
@@ -249,7 +252,7 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
                 }
             });
         } else {
-            StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-worldkies").getReference(dataSet.get(holder.getAdapterPosition()).getUID());
+            StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-worldkies").getReference(UID);
 
             userFolderRef.listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {

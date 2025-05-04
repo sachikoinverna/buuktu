@@ -158,12 +158,7 @@ public class ProfileView extends Fragment implements View.OnClickListener {
             }
 
             if (documentSnapshot != null) {
-                if(documentSnapshot.getBoolean("photo_default")) {
-                    userkieModel = new UserkieModel(documentSnapshot.getString("name"), documentSnapshot.getString("username"), documentSnapshot.getBoolean("profile_private"), documentSnapshot.getBoolean("photo_default"),documentSnapshot.getString("photo_id"));
-                }else{
-                    userkieModel = new UserkieModel(documentSnapshot.getString("name"), documentSnapshot.getString("username"), documentSnapshot.getBoolean("profile_private"), documentSnapshot.getBoolean("photo_default"));
-
-                }
+                userkieModel = UserkieModel.fromSnapshot(documentSnapshot);
                 tv_nameProfileView.setText(userkieModel.getName());
                 tv_usernameProfileView.setText(userkieModel.getUsername());
                 if ((!userkieModel.isProfile_private() && mode.equals("other")) || (mode.equals("self"))){
@@ -219,16 +214,7 @@ public class ProfileView extends Fragment implements View.OnClickListener {
                             boolean foundData = false; // Add a flag
 
                             for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
-
-                                    WorldkieModel worldkieModel = new WorldkieModel(
-                                            doc.getId(),UID,doc.getTimestamp("creation_date"), doc.getTimestamp("last_update")
-                                            ,doc.getBoolean("photo_default")
-
-                                            , doc.getBoolean("worldkie_private"),doc.getString("name")
-                                    );
-                                    Log.d("StuffkiesSearch", "Stuffkie encontrado: " + documentSnapshot.getString("name"));
-
-                                    worldkieArrayList.add(worldkieModel);
+                                    worldkieArrayList.add(WorldkieModel.fromSnapshot(doc));
                                     foundData = true; // Set the flag to true if data is found
                                 }
                             if (foundData) {
@@ -319,15 +305,9 @@ public class ProfileView extends Fragment implements View.OnClickListener {
     }
     private void getProfilePhoto(){
         ib_profileView.setVisibility(View.INVISIBLE);
-        db.collection("Users").document(UID).addSnapshotListener((queryDocumentSnapshot, e) -> {
-            if (e != null) {
-                Log.e("Error", e.getMessage());
-                Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
-                return;
-            }
-            //boolean photo_default = queryDocumentSnapshot.getBoolean("photo_default");
+
             if(userkieModel.isPhoto_default()) {
-                String id_photo = queryDocumentSnapshot.getString("photo_id");
+                String id_photo = userkieModel.getPhoto_id();
                 int resId = getResources().getIdentifier(id_photo, "mipmap", getContext().getPackageName());
 
                 if (resId != 0 && (!lastPhotoId.equals(id_photo))) {
@@ -365,7 +345,6 @@ public class ProfileView extends Fragment implements View.OnClickListener {
 
             // }
             //}
-        });//)
     }
     private void updateRecyclerViewStuffkies(ArrayList<StuffkieModel> stuffkieArrayList) {
         stuffkiesUserPreviewAdapter = new StuffkiesUserPreviewAdapter(stuffkieArrayList,getContext());

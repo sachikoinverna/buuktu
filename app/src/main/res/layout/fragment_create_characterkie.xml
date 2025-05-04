@@ -14,22 +14,57 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="32dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            app:cardUseCompatPadding="true"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:strokeColor="#6D2525"
-            app:strokeWidth="3dp"
-            tools:layout_editor_absoluteX="8dp">
+            app:strokeWidth="3dp">
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:fillViewport="true">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraint_create_characterkie"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    android:clipChildren="false"
+                    android:clipToPadding="false">
+
+                    <Button
+                        android:id="@+id/bt_gender_characterkie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="34dp"
+                        android:layout_weight="1"
+                        android:drawableStart="@drawable/twotone_cake_24"
+                        android:text="Cumpleaños"
+                        app:icon="@drawable/twotone_cake_24"
+                        app:iconGravity="start"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/bt_pronouns_characterkie" />
+
+                    <Button
+                        android:id="@+id/bt_pronouns_characterkie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="34dp"
+                        android:layout_weight="1"
+                        android:drawableStart="@drawable/twotone_cake_24"
+                        android:text="Cumpleaños"
+                        app:icon="@drawable/twotone_cake_24"
+                        app:iconGravity="start"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/bt_birthday_characterkie" />
 
                     <ImageButton
                         android:id="@+id/ib_select_img_create_characterkie"
@@ -76,11 +111,35 @@
 
                     </com.google.android.material.textfield.TextInputLayout>
 
+                    <Button
+                        android:id="@+id/bt_birthday_characterkie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="34dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="1"
+                        android:drawableStart="@drawable/twotone_cake_24"
+                        android:text="Cumpleaños"
+                        app:icon="@drawable/twotone_cake_24"
+                        app:iconGravity="start"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/et_nameCharacterkieCreateFull" />
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="TextView"
+                        app:layout_constraintBottom_toTopOf="@+id/textView12"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/bt_birthday_characterkie"
+                        app:layout_constraintTop_toBottomOf="@+id/et_nameCharacterkieCreateFull" />
+
                     <Switch
                         android:id="@+id/tb_CharacterkiePrivacity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
+                        android:layout_marginBottom="16dp"
                         android:gravity="center"
                         android:switchPadding="8dp"
                         android:text="Private worldkie"
@@ -89,13 +148,12 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/tb_characterkieDraft"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/et_nameCharacterkieCreateFull" />
+                        app:layout_constraintTop_toBottomOf="@+id/bt_gender_characterkie" />
 
                     <Switch
                         android:id="@+id/tb_characterkieDraft"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
                         android:layout_marginBottom="16dp"
                         android:gravity="center"
                         android:switchPadding="8dp"
@@ -105,40 +163,33 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/tb_CharacterkiePrivacity"
-                        app:layout_constraintTop_toBottomOf="@+id/et_nameCharacterkieCreateFull" />
+                        app:layout_constraintTop_toBottomOf="@+id/bt_gender_characterkie" />
+
+                    <TextView
+                        android:id="@+id/textView12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="TextView"
+                        app:layout_constraintBottom_toTopOf="@+id/tb_characterkieDraft"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/bt_pronouns_characterkie"
+                        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+                    <TextView
+                        android:id="@+id/textView13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="TextView"
+                        app:layout_constraintBottom_toTopOf="@+id/tb_characterkieDraft"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/bt_gender_characterkie"
+                        app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </ScrollView>
         </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fb_more_createCharacterkie"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="32dp"
-            android:clickable="true"
-            app:backgroundTint="#B39DDB"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:shapeAppearance="?attr/floatingActionButtonStyle"
-            app:srcCompat="@drawable/twotone_more_24" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fb_add_field_createCharacterkie"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:clickable="true"
-            app:backgroundTint="#D1C4E9"
-            app:layout_constraintBottom_toTopOf="@+id/fb_more_createCharacterkie"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:shapeAppearance="?attr/floatingActionButtonStyle"
-            app:srcCompat="@drawable/twotone_add_circle_24" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

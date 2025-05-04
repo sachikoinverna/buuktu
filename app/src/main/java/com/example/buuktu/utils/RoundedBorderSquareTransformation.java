@@ -1,18 +1,12 @@
-package com.example.buuktu.adapters;
-
-import android.content.Context;
-import android.graphics.Bitmap;
-
-import com.bumptech.glide.load.Transformation;
+package com.example.buuktu.utils;
 
 import android.graphics.Bitmap;
+
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.RectF;
 import android.graphics.Shader;
-import android.os.Build;
 
 import androidx.annotation.NonNull;
 

@@ -9,7 +9,6 @@ import android.os.Bundle;
 
 import androidx.annotation.DrawableRes;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -24,8 +23,7 @@ import android.widget.Switch;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.buuktu.adapters.RoundedBorderSquareTransformation;
-import com.example.buuktu.bottomsheet.BottomSheetChooseComponents;
+import com.example.buuktu.utils.RoundedBorderSquareTransformation;
 import com.example.buuktu.bottomsheet.BottomSheetProfilePhoto;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.NavigationUtils;
@@ -43,7 +41,6 @@ import java.io.IOException;
  */
 public class CreateEditStuffkie extends Fragment implements View.OnClickListener{
     ImageButton ib_select_img_create_stuffkie,ib_back,ib_save;
-    FloatingActionButton fb_add_field_createStuffkie,fb_more_createStuffkie;
     Uri image;
     BottomSheetProfilePhoto bottomSheetProfilePhoto;
     String source;
@@ -103,24 +100,19 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
         return view;
     }
     private void initComponents(View view){
-        fb_add_field_createStuffkie = view.findViewById(R.id.fb_add_field_createStuffkie);
         ib_select_img_create_stuffkie = view.findViewById(R.id.ib_select_img_create_stuffkie);
-        fb_more_createStuffkie = view.findViewById(R.id.fb_more_createStuffkie);
         et_nameStuffkieCreateFull = view.findViewById(R.id.et_nameStuffkieCreateFull);
         et_nameStuffkieCreate = view.findViewById(R.id.et_nameStuffkieCreate);
         constraintLayout = view.findViewById(R.id.constraint_create_stuffkie);
         tb_stuffkiePrivacity = view.findViewById(R.id.tb_stuffkiePrivacity);
         tb_stuffkieDraft = view.findViewById(R.id.tb_stuffkieDraft);
         isAllFabsVisible = false;
-        fb_add_field_createStuffkie.setVisibility(View.INVISIBLE);
     }
 
     private void setListeners(){
         ib_save.setOnClickListener(this);
         ib_back.setOnClickListener(this);
         ib_select_img_create_stuffkie.setOnClickListener(this);
-        fb_add_field_createStuffkie.setOnClickListener(this);
-        fb_more_createStuffkie.setOnClickListener(this);
         tb_stuffkiePrivacity.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -208,19 +200,8 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
                 }*/
             }else if(v.getId()==R.id.ib_back){
             NavigationUtils.goBack(fragmentManager,activity);
-        }else if (v.getId()==R.id.fb_add_field_createStuffkie) {
-        //    BottomSheetChooseComponents bottomSheetFragment = new BottomSheetChooseComponents(context, constraintLayout, this, fieldsNotAdded);
-         //   bottomSheetFragment.show(getChildFragmentManager(), bottomSheetFragment.getTag());
-        } else if (v.getId()==R.id.ib_select_img_create_stuffkie) {
+        }else if (v.getId()==R.id.ib_select_img_create_stuffkie) {
             bottomSheetProfilePhoto.show(getChildFragmentManager(),"BottomSheetProfilePhoto");
-        } else if (v.getId()==R.id.fb_more_createStuffkie) {
-            if (isAllFabsVisible) {
-                fb_add_field_createStuffkie.setVisibility(View.INVISIBLE);
-                isAllFabsVisible = false;
-            } else {
-                fb_add_field_createStuffkie.setVisibility(View.INVISIBLE);
-                isAllFabsVisible = true;
-            }
         }
     }
 }

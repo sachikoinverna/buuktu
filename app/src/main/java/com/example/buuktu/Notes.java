@@ -55,8 +55,7 @@ public class Notes extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_notes, container, false);
         initComponents(view);
-        fbAddNote.setVisibility(View.GONE);
-        isAllFabsVisible = false;
+
 
         db = FirebaseFirestore.getInstance();
         UID = FirebaseAuth.getInstance().getUid();
@@ -95,16 +94,20 @@ public class Notes extends Fragment implements View.OnClickListener {
     private void initComponents(View view){
         mainActivity = (MainActivity) getActivity();
         backButton = mainActivity.getBackButton();
-        backButton.setVisibility(View.VISIBLE);
         ib_save = mainActivity.getIb_save();
-        ib_save.setVisibility(View.GONE);
         ib_profile_superior = mainActivity.getIb_self_profile();
-        ib_profile_superior.setVisibility(View.VISIBLE);
         // Inicialización
         recyclerView = view.findViewById(R.id.rc_all_notes_adapter);
         fbAddNote = view.findViewById(R.id.fb_add_note_list_notes);
         fbMoreOptions = view.findViewById(R.id.fb_more_options_list_notes);
 
+    }
+    private void setInitVisibility(){
+        backButton.setVisibility(View.VISIBLE);
+        ib_save.setVisibility(View.GONE);
+        ib_profile_superior.setVisibility(View.VISIBLE);
+        fbAddNote.setVisibility(View.GONE);
+        isAllFabsVisible = false;
     }
     private void setListeners(){
         backButton.setOnClickListener(this);
@@ -114,11 +117,10 @@ public class Notes extends Fragment implements View.OnClickListener {
     private void toggleFabs() {
         if (!isAllFabsVisible) {
             fbAddNote.setVisibility(View.VISIBLE);
-            isAllFabsVisible = true;
         } else {
             fbAddNote.setVisibility(View.GONE);
-            isAllFabsVisible = false;
         }
+        isAllFabsVisible = !isAllFabsVisible;
     }
 
     private void setupFirestoreListener() {
@@ -135,14 +137,7 @@ public class Notes extends Fragment implements View.OnClickListener {
                     if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
                         for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
                             DocumentSnapshot doc = dc.getDocument();
-                            NoteItem note = new NoteItem(
-                                    doc.getString("text"),
-                                    doc.getString("title"),
-                                    UID,
-                                    doc.getTimestamp("last_update"),
-                                    doc.getId()
-                            );
-
+                            NoteItem note = NoteItem.fromSnapshot(doc);
                             switch (dc.getType()) {
                                 case ADDED:
                                     items.add(dc.getNewIndex(), note);

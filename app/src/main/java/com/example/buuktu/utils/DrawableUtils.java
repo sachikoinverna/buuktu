@@ -23,7 +23,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.buuktu.R;
-import com.example.buuktu.adapters.RoundedBorderSquareTransformation;
 
 import java.io.IOException;
 

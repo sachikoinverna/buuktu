@@ -10,9 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
-import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -25,32 +25,31 @@ import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.buuktu.adapters.RoundedBorderSquareTransformation;
-import com.example.buuktu.bottomsheet.BottomSheetChooseComponents;
+import com.example.buuktu.bottomsheet.BottomSheetChooseBirthday;
+import com.example.buuktu.bottomsheet.BottomSheetChooseGender;
+import com.example.buuktu.bottomsheet.BottomSheetChoosePronouns;
 import com.example.buuktu.bottomsheet.BottomSheetProfilePhoto;
-import com.example.buuktu.listeners.OnFieldDeletedListener;
 import com.example.buuktu.models.CardItem;
 import com.example.buuktu.models.Characterkie;
 import com.example.buuktu.models.FieldItem;
-import com.example.buuktu.utils.ComponentsUtils;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.EfectsUtils;
 import com.example.buuktu.utils.NavigationUtils;
+import com.example.buuktu.utils.RoundedBorderSquareTransformation;
 import com.example.buuktu.views.MainActivity;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -58,12 +57,15 @@ import java.util.List;
  * Use the {@link CreateCharacterkie#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CreateCharacterkie extends Fragment implements View.OnClickListener, OnFieldDeletedListener {
+public class CreateCharacterkie extends Fragment implements View.OnClickListener {
     FragmentManager fragmentManager;
     FragmentActivity activity;
+    Button bt_birthday_characterkie,bt_pronouns_characterkie;
     ImageButton ib_select_img_create_characterkie,ib_back,ib_save;
     Uri image;
-    BottomSheetProfilePhoto bottomSheetProfilePhoto;
+    BottomSheetDialogFragment bottomSheetProfilePhoto;
+    BottomSheetChoosePronouns bottomSheetChoosePronouns;
+    BottomSheetChooseGender bottomSheetChooseGender;
     Switch tb_characterkiePrivacity,tb_characterkieDraft;
     List<FieldItem> fieldsAdded = new ArrayList<>();
     List<CardItem> cardItems = new ArrayList<>();
@@ -78,8 +80,10 @@ public class CreateCharacterkie extends Fragment implements View.OnClickListener
     Context context;
     String UID, worldkie_id, source,name,characterkie_id;
     boolean privacity, draft,isAllFabsVisible;
-    FloatingActionButton fb_add_field_createCharacterkie,fb_more_createCharacterkie;
     Characterkie characterkie;
+    private int ultimoIdAñadido = R.id.tb_CharacterkiePrivacity; // Empezar debajo del título
+    private int optionPronouns, optionBirthday;
+    String optionPronounsString, optionBirthdayString;
     public CreateCharacterkie() {
         // Required empty public constructor
     }
@@ -112,21 +116,17 @@ public class CreateCharacterkie extends Fragment implements View.OnClickListener
         View view = inflater.inflate(R.layout.fragment_create_characterkie, container, false);
         MainActivity mainActivity = (MainActivity) getActivity();
         ib_back = mainActivity.getBackButton();
-        ib_back.setVisibility(View.VISIBLE);
         ib_save = mainActivity.getIb_save();
-        ib_save.setVisibility(View.VISIBLE);
         context = getContext();
         firebaseAuth = FirebaseAuth.getInstance();
         UID = firebaseAuth.getUid();
         db = FirebaseFirestore.getInstance();
-        ComponentsUtils.setLastAddedFieldId(-1);
         fragmentManager = requireActivity().getSupportFragmentManager();
         activity = requireActivity();
         characterkie = new Characterkie();
         bottomSheetProfilePhoto = new BottomSheetProfilePhoto();
         initComponents(view);
         setListeners();
-        getFields();
         //fieldsNotAdded.add(new FieldItem("EditText","Characterky","Texto",R.drawable.sharp_emoji_nature_24));
         if(characterkie_id == null){
             try {
@@ -168,6 +168,10 @@ public class CreateCharacterkie extends Fragment implements View.OnClickListener
             throw new RuntimeException(e);
         }
         return view;
+    }
+    private void initVisibility(){
+        ib_back.setVisibility(View.VISIBLE);
+        ib_save.setVisibility(View.VISIBLE);
     }
     private void getImage(){
         if(characterkie.isPhoto_default()){
@@ -226,10 +230,8 @@ public class CreateCharacterkie extends Fragment implements View.OnClickListener
         ib_select_img_create_characterkie = view.findViewById(R.id.ib_select_img_create_characterkie);
         tb_characterkieDraft=view.findViewById(R.id.tb_characterkieDraft);
         tb_characterkiePrivacity=view.findViewById(R.id.tb_CharacterkiePrivacity);
-        fb_add_field_createCharacterkie = view.findViewById(R.id.fb_add_field_createCharacterkie);
-        fb_more_createCharacterkie = view.findViewById(R.id.fb_more_createCharacterkie);
-        fb_add_field_createCharacterkie.setVisibility(View.INVISIBLE);
-        isAllFabsVisible = false;
+        bt_birthday_characterkie = view.findViewById(R.id.bt_birthday_characterkie);
+        bt_pronouns_characterkie = view.findViewById(R.id.bt_pronouns_characterkie);
         et_nameCharacterkieCreate = view.findViewById(R.id.et_nameCharacterkieCreate);
         et_nameCharacterkieCreateFull = view.findViewById(R.id.et_nameCharacterkieCreateFull);
         constraintLayout = view.findViewById(R.id.constraint_create_characterkie);
@@ -247,12 +249,13 @@ public class CreateCharacterkie extends Fragment implements View.OnClickListener
         });
         characterkieCollection = db.collection("Characterkies");
         fieldkiesRef = db.collection("Fieldkies");
+        initVisibility();
     }
     private void setListeners(){
         ib_select_img_create_characterkie.setOnClickListener(this);
         ib_save.setOnClickListener(this);
-        fb_add_field_createCharacterkie.setOnClickListener(this);
-        fb_more_createCharacterkie.setOnClickListener(this);
+        bt_birthday_characterkie.setOnClickListener(this);
+        bt_pronouns_characterkie.setOnClickListener(this);
     }
     public Drawable getSelectedProfilePhoto()
     {
@@ -349,83 +352,7 @@ public class CreateCharacterkie extends Fragment implements View.OnClickListener
         }
         //obtenerImagen();
     }
-    private void getFields(){
-        fieldkiesRef.whereEqualTo("kie", "characterkie").get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    if (queryDocumentSnapshots == null || queryDocumentSnapshots.isEmpty()) {
-                        Log.e("Firestore", "No se encontraron documentos en Fieldkies");
-                        return;
-                    }
-                    for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) { // ← ¡Aquí está el cambio!
-                        String component = document.getString("component");
-                        Log.e("Firestore", component.toString());
-                        String kie = document.getString("kie");
-                        String name = document.getString("name");
-                        String type = "";
-                        List<String> options = Collections.emptyList();
-                        if(component.equals("TextInputEditText")) {
-                            type = document.getString("type");
-                        } else if (component.equals("RadioButton")) {
-                             options = (List<String>) document.get("options");
 
-                        }
-                        String iconName = document.getString("icon");
-                        // Solo agrega los campos que no han sido añadidos
-
-                            FieldItem fieldItem=null;
-                            if (component.equals("RadioButton")) {
-                                fieldItem = new FieldItem(component, kie, options,iconName,name);
-                            }
-                            else if (component.equals("EditText")){
-                                fieldItem = new FieldItem(component, kie, type,iconName,name);
-                            }
-                        if (fieldItem != null) {
-                            fieldsNotAdded.add(fieldItem);
-                        }
-                    }
-
-                    cargarCamposEnBottomSheet(fieldsNotAdded);
-                    if(fieldsNotAdded.isEmpty()){
-                        fb_more_createCharacterkie.setVisibility(View.INVISIBLE);
-                    }
-                }).addOnFailureListener(e -> {
-                    Log.e("Firestore", "Error al obtener los campos", e);
-                });
-    }
-    public void cargarCamposEnBottomSheet(List<FieldItem> camposList) {
-        // Recorrer los campos y añadirlos al BottomSheet
-
-    }
-
-    public void removeFieldBottomSheet(FieldItem item){
-        fieldsNotAdded.remove(item);
-    }
-    private void actualizarUIConCampo(FieldItem fieldItem) {
-        // Descomenta y ajusta esta línea según tu utilidad:
-        ComponentsUtils.createComponent(
-                context,
-                fieldItem,
-                R.id.tb_CharacterkiePrivacity,
-                R.id.tb_characterkieDraft,
-                constraintLayout
-        );
-    }
-    private void actualizarBottomSheetConCampo(FieldItem fieldItem) {
-        // Dependiendo del tipo de campo, añade la vista correcta
-        View nuevoCampo;
-        if (fieldItem.getComponent().equals("TextInputEditText")) {
-            ComponentsUtils.createComponent(context,fieldItem,R.id.tb_CharacterkiePrivacity,R.id.tb_characterkieDraft,constraintLayout);
-        } else if (fieldItem.getComponent().equals("RadioButton")) {
-            RadioButton radioButton = new RadioButton(context);
-            radioButton.setText(fieldItem.getName());
-            nuevoCampo = radioButton;
-        } else {
-            return;
-        }
-
-        // Agregar el nuevo campo al layout
-        // constraintLayout.addView(nuevoCampo);
-    }
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.ib_back){
@@ -438,26 +365,15 @@ public class CreateCharacterkie extends Fragment implements View.OnClickListener
                 }*/
         } else if (v.getId()==R.id.ib_select_img_create_characterkie) {
             selectImage();
-        } else if (v.getId()==R.id.fb_add_field_createCharacterkie) {
-            BottomSheetChooseComponents bottomSheetFragment = new BottomSheetChooseComponents(context, this, fieldsNotAdded);
-            bottomSheetFragment.show(getChildFragmentManager(), bottomSheetFragment.getTag());
-        } else if (v.getId()==R.id.fb_more_createCharacterkie) {
-            if(isAllFabsVisible) {
-                fb_add_field_createCharacterkie.setVisibility(View.INVISIBLE);
-                isAllFabsVisible = false;
-            }else{
-                fb_add_field_createCharacterkie.setVisibility(View.VISIBLE);
-                isAllFabsVisible = true;
-            }
-        }
-    }
-
-    @Override
-    public void onFieldDeleted(FieldItem fieldItem) {
-        if (!fieldsAdded.contains(fieldItem)) {
-            fieldsAdded.add(fieldItem);
-            fieldsNotAdded.remove(fieldItem);
-            actualizarUIConCampo(fieldItem);
+        } else if(v.getId()==R.id.bt_birthday_characterkie){
+            BottomSheetChooseBirthday bottomSheetChooseBirthday = new BottomSheetChooseBirthday(R.id.rb_unknown_birthday);
+            bottomSheetChooseBirthday.show(getChildFragmentManager(), bottomSheetChooseBirthday.getTag());
+        } else if (v.getId()==R.id.bt_pronouns_characterkie) {
+            bottomSheetChoosePronouns = new BottomSheetChoosePronouns(R.id.rb_other_characterkie);
+            bottomSheetChoosePronouns.show(getChildFragmentManager(), bottomSheetChoosePronouns.getTag());
+        } else if (v.getId()==R.id.bt_gender_characterkie) {
+            bottomSheetChooseGender = new BottomSheetChooseGender(R.id.rb_other_characterkie);
+            bottomSheetChooseGender.show(getChildFragmentManager(), bottomSheetChooseGender.getTag());
         }
     }
 }

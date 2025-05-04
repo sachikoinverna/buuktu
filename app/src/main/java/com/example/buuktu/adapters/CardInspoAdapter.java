@@ -55,8 +55,9 @@ public class CardInspoAdapter extends RecyclerView.Adapter<CardInspoAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull CardInspoAdapter.ViewHolder holder, int position) {
-        String text = dataSet.get(position).getText();
-        holder.getIcon().setImageResource(dataSet.get(position).getIconResId());
+        CardItem cardItem = dataSet.get(position);
+        String text = cardItem.getText();
+        holder.getIcon().setImageResource(cardItem.getIconResId());
         holder.getText().setText(text);
 
         holder.getCardView().setOnClickListener(new View.OnClickListener() {

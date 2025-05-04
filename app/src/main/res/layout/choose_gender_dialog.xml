@@ -13,78 +13,103 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+            <RadioButton
+                android:id="@+id/rb_man_chracterkie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:button="@drawable/radiobutton_custom"
+                android:text="Hombre"
+                app:layout_constraintEnd_toStartOf="@+id/rb_woman_chracterkie"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
+            <RadioButton
+                android:id="@+id/rb_woman_chracterkie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:button="@drawable/radiobutton_custom"
+                android:text="Mujer"
+                app:layout_constraintEnd_toStartOf="@+id/rb_gender_fluid_chracterkie"
+                app:layout_constraintStart_toEndOf="@+id/rb_man_chracterkie"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <RadioButton
+                android:id="@+id/rb_gender_fluid_chracterkie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:button="@drawable/radiobutton_custom"
+                android:text="Genero fluido"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/rb_woman_chracterkie"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <RadioButton
+                android:id="@+id/rb_no_binary_chracterkie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:button="@drawable/radiobutton_custom"
+                android:text="No binario"
+                app:layout_constraintEnd_toStartOf="@+id/rb_other_chracterkie"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rb_man_chracterkie" />
+
+            <RadioButton
+                android:id="@+id/rb_other_chracterkie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:button="@drawable/radiobutton_custom"
+                android:text="Otro"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/rb_no_binary_chracterkie"
+                app:layout_constraintTop_toBottomOf="@+id/rb_gender_fluid_chracterkie" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/et_otherGendersCharacterkieFilled"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal" >
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:hint="@string/name"
+                android:textAlignment="center"
+                app:boxCornerRadiusBottomEnd="58dp"
+                app:boxCornerRadiusBottomStart="58dp"
+                app:boxCornerRadiusTopEnd="58dp"
+                app:boxCornerRadiusTopStart="58dp"
+                app:counterEnabled="true"
+                app:counterMaxLength="50"
+                app:errorEnabled="false"
+                app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rb_no_binary_chracterkie"
+                app:startIconDrawable="@drawable/twotone_supervised_user_circle_24">
 
-                <RadioButton
-                    android:id="@+id/radioButton10"
-                    android:layout_width="wrap_content"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_otherGendersCharacterkie"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:button="@drawable/radiobutton_custom"
-                    android:text="Hombre" />
+                    android:ems="10"
+                    android:gravity="center"
+                    android:inputType="text"
+                    android:maxLength="50"
+                    android:textAlignment="center"
+                    android:textColorHint="@color/brownMaroon"
+                    android:textSize="20sp" />
 
-                <RadioButton
-                    android:id="@+id/radioButton11"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:button="@drawable/radiobutton_custom"
-                    android:text="Mujer" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                <RadioButton
-                    android:id="@+id/radioButton12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:button="@drawable/radiobutton_custom"
-                    android:text="Genero fluido" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal" >
-
-                <RadioButton
-                    android:id="@+id/radioButton13"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:button="@drawable/radiobutton_custom"
-                    android:text="No binario" />
-
-                <RadioButton
-                    android:id="@+id/radioButton14"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:button="@drawable/radiobutton_custom"
-                    android:text="Otro" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal" />
-
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
 

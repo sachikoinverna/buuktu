@@ -139,18 +139,20 @@ public class UserkieSearchAdapter extends RecyclerView.Adapter<UserkieSearchAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        UserkieModel userkieModel = dataSet.get(position);
         holder.getIv_userkie_photo_search().setVisibility(View.INVISIBLE);
-        String username = dataSet.get(holder.getAdapterPosition()).getUsername();
+        String username = userkieModel.getUsername();
+        String UID = userkieModel.getUID();
         if(!holder.getLastUsername().equals(username)){
             holder.getTv_userkie_username_search().setText(username);
             holder.setLastUsername(username);
         }
-        String name = dataSet.get(holder.getAdapterPosition()).getName();
+        String name = userkieModel.getName();
         if(!holder.getLastName().equals(name)) {
             holder.getTv_userkie_name_search().setText(name);
             holder.setLastName(name);
         }
-        if(!dataSet.get(holder.getAdapterPosition()).isProfile_private()){
+        if(!userkieModel.isProfile_private()){
             holder.getIv_userkie_private_search().setVisibility(View.INVISIBLE);
         }
 
@@ -160,7 +162,7 @@ public class UserkieSearchAdapter extends RecyclerView.Adapter<UserkieSearchAdap
                 ProfileView profileView = new ProfileView();
                 Bundle bundle = new Bundle();
                 bundle.putString("mode","other");
-                bundle.putString("UID",dataSet.get(holder.getAdapterPosition()).getUID());
+                bundle.putString("UID",UID);
                 profileView.setArguments(bundle);
                 fragmentManager.beginTransaction()
                         .replace(R.id.fragment_container, profileView)
@@ -169,12 +171,9 @@ public class UserkieSearchAdapter extends RecyclerView.Adapter<UserkieSearchAdap
             }
         });
         ;
-        if (dataSet.get(holder.getAdapterPosition()).isPhoto_default()) {
-            FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-            firebaseFirestore.collection("Users").document(dataSet.get(holder.getAdapterPosition()).getUID()).addSnapshotListener((queryDocumentSnapshot, e) -> {
-                String id_photo = queryDocumentSnapshot.getString("photo_id");
+        if (userkieModel.isPhoto_default()) {
+                String id_photo = userkieModel.getPhoto_id();
                 int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
-
                 if (resId != 0 && (!holder.getLastPhotoId().equals(id_photo))) {
                     Drawable drawable = ContextCompat.getDrawable(context, resId);
                     holder.getIv_userkie_photo_search().setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -184,9 +183,8 @@ public class UserkieSearchAdapter extends RecyclerView.Adapter<UserkieSearchAdap
                     holder.getIv_userkie_photo_search().setVisibility(View.VISIBLE);
                     EfectsUtils.startCircularReveal(drawable, holder.getIv_userkie_photo_search());
                 }
-            });
         } else {
-            StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-users").getReference(dataSet.get(holder.getAdapterPosition()).getUID());
+            StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-users").getReference(UID);
 
             userFolderRef.listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {

@@ -1,6 +1,7 @@
 package com.example.buuktu.models;
 
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 public class UserkieModel {
     private String name;
@@ -96,7 +97,22 @@ public class UserkieModel {
 
     public UserkieModel() {
     }
-
+    public static UserkieModel fromSnapshot(DocumentSnapshot document) {
+        if (document == null || !document.exists()) {
+            return null;
+        }
+        UserkieModel userkieModel = new UserkieModel();
+        userkieModel.setName(document.getString("name"));
+        userkieModel.setUID(document.getId());
+        userkieModel.setBirthday(document.getTimestamp("birthday"));
+        userkieModel.setEmail(document.getString("email"));
+        userkieModel.setPhoto_default(document.getBoolean("photo_default"));
+        userkieModel.setProfile_private(document.getBoolean("profile_private"));
+        userkieModel.setNumber(document.getString("number"));
+        userkieModel.setPhoto_id(document.getString("photo_id"));
+        userkieModel.setPronouns(document.getString("pronouns"));
+        return userkieModel;
+    }
     public UserkieModel(String photo_id, boolean profile_private, boolean photo_default, String email, String number, String username, Timestamp birthday, String pronouns, String name) {
         this.photo_id = photo_id;
         this.profile_private = profile_private;
@@ -115,19 +131,6 @@ public class UserkieModel {
         this.profile_private = profile_private;
     }
 
-    public UserkieModel(String name, String username, boolean profile_private, boolean photo_default, String photo_id) {
-        this.name = name;
-        this.username = username;
-        this.profile_private = profile_private;
-        this.photo_default = photo_default;
-        this.photo_id = photo_id;
-    }
-    public UserkieModel(String name, String username, boolean profile_private, boolean photo_default) {
-        this.name = name;
-        this.username = username;
-        this.profile_private = profile_private;
-        this.photo_default = photo_default;
-    }
     public UserkieModel(String UID,String name, String username, boolean profile_private, boolean photo_default, String photo_id) {
         this.UID = UID;
         this.name = name;

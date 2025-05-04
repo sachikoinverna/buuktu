@@ -136,7 +136,7 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
 
         //Creamos la vista de cada item a partir de nuestro layout
            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.worldkie_list_layout, viewGroup, false);
-        return new ViewHolder(view);
+         return new ViewHolder(view);
     }
     @Override
     public void onViewRecycled(@NonNull ViewHolder holder) {
@@ -146,8 +146,9 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull WorldkieAdapter.ViewHolder holder, int position) {
+        WorldkieModel worldkieModel = dataSet.get(position);
         holder.getIv_photo_wordlkie().setVisibility(View.INVISIBLE);
-        String name = dataSet.get(holder.getAdapterPosition()).getName();
+        String name = worldkieModel.getName();
         if(!holder.getLastName().equals(name)){
             holder.getTv_name_wordkie().setText(name);
             holder.setLastName(name);
@@ -243,7 +244,7 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
                 deleteGeneralDialog.show();
             }
         });
-        if (dataSet.get(holder.getAdapterPosition()).isPhoto_default()) {
+        if (worldkieModel.isPhoto_default()) {
             FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
             firebaseFirestore.collection("Worldkies").document(dataSet.get(holder.getAdapterPosition()).getUID()).addSnapshotListener((queryDocumentSnapshot, e) -> {
                 String id_photo = queryDocumentSnapshot.getString("id_photo");

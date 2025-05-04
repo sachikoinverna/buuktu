@@ -2,37 +2,27 @@ package com.example.buuktu;
 
 import static android.widget.Toast.LENGTH_LONG;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-
-import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.buuktu.adapters.NotikieListAdapter;
-import com.example.buuktu.adapters.StuffkieSearchAdapter;
-import com.example.buuktu.models.CardItem;
 import com.example.buuktu.models.NotikieModel;
-import com.example.buuktu.models.StuffkieModel;
 import com.example.buuktu.views.MainActivity;
-import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,7 +46,6 @@ public class Notikies extends Fragment {
      *
      * @return A new instance of fragment Notikies.
      */
-    // TODO: Rename and change types and number of parameters
     public static Notikies newInstance() {
         return new Notikies();
     }
@@ -64,8 +53,6 @@ public class Notikies extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
@@ -93,20 +80,7 @@ public class Notikies extends Fragment {
                 notikieModelArrayList.clear(); // Limpia la lista antes de agregar nuevos datos
 
                 for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
-                    //if (documentSnapshot.getBoolean("photo_default")) {
-                    //    if (!documentSnapshot.getId().equals(firebaseAuth.getUid())) {
-
-                    Drawable drawable = getResources().getDrawable(R.drawable.thumb_custom);
-                    NotikieModel notikieModel = new NotikieModel(
-                            documentSnapshot.getString("message"),
-                            documentSnapshot.getTimestamp("date"), // Usamos getTimestamp para obtener el campo como un Timestamp
-                            Math.toIntExact(documentSnapshot.getLong("icon"))
-                    );
-
-
-                    Log.d("StuffkiesSearch", "Stuffkie encontrado: " + documentSnapshot.getString("name"));
-
-                    notikieModelArrayList.add(notikieModel);
+                    notikieModelArrayList.add(NotikieModel.fromSnapshot(documentSnapshot));
                     updateRecyclerView(notikieModelArrayList);
                 }
             }

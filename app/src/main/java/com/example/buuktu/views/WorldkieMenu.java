@@ -1,6 +1,5 @@
 package com.example.buuktu.views;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +15,6 @@ import com.example.buuktu.CreateCharacterkie;
 import com.example.buuktu.CreateEditScenariokie;
 import com.example.buuktu.CreateEditStuffkie;
 import com.example.buuktu.R;
-import com.example.buuktu.utils.ComponentsUtils;
 import com.example.buuktu.utils.NavigationUtils;
 
 /**

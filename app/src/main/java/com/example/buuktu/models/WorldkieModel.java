@@ -1,8 +1,10 @@
 package com.example.buuktu.models;
 
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Exclude;
 import java.io.Serializable;
+import java.util.List;
 
 public class WorldkieModel implements Serializable {
     private String UID;
@@ -162,6 +164,29 @@ public class WorldkieModel implements Serializable {
         this.photo_default = photo_default;
         this.worldkie_private = worldkie_private;
         this.last_update = last_update; // Inicializar last_update a la hora actual
+    }
+    public static WorldkieModel fromSnapshot(DocumentSnapshot document) {
+        if (document == null || !document.exists()) {
+            return null;
+        }
+        WorldkieModel worldkieModel = new WorldkieModel();
+        worldkieModel.setName(document.getString("name"));
+        worldkieModel.setUID(document.getId());
+        worldkieModel.setUID_AUTHOR(document.getString("UID_AUTHOR"));
+        worldkieModel.setLast_update(document.getTimestamp("last_update"));
+        worldkieModel.setCreation_date(document.getTimestamp("creation_date"));
+        worldkieModel.setPhoto_default(document.getBoolean("photo_default"));
+        worldkieModel.setWorldkie_private(document.getBoolean("worldkie_private"));
+
+        if (document.contains("id_photo")) {
+            worldkieModel.setId_photo(document.getString("id_photo"));
+
+        }
+        // Verificar si el campo "options" existe en el documento antes de intentar obtenerlo
+        if (document.contains("draft")) {
+            worldkieModel.setDraft(document.getBoolean("draft"));
+        }
+        return worldkieModel;
     }
     public boolean isWorldkie_private() {
         return worldkie_private;
