@@ -22,7 +22,7 @@ import java.util.List;
 public class BottomSheetChoosePronouns extends BottomSheetDialogFragment {
     TextInputEditText et_otherPronounsCharacterkie;
     TextInputLayout et_otherPronounsCharacterkieFilled;
-    RadioButton rb_ella_la_le_a_characterkie,rb_el_lo_le_o_characterkie,rb_elle__le_e_characterkie,rb_ella_la_a_characterkie,rb_elle_le_characterkie,rb_ellx_lx_x_characterkie,rb_other_characterkie;
+    RadioButton rb_ella_la_le_a_characterkie,rb_el_lo_le_o_characterkie,rb_elle__le_e_characterkie,rb_ella_la_a_characterkie,rb_elle_le_characterkie,rb_ellx_lx_x_characterkie,rb_other_characterkie,rb_unknown_pronouns_characterkie;
     List<RadioButton> allRadioButtons = new ArrayList<>();
     Context context;
     CreateCharacterkie createCharacterkie;
@@ -55,6 +55,7 @@ public class BottomSheetChoosePronouns extends BottomSheetDialogFragment {
         rb_elle_le_characterkie= view.findViewById(R.id.rb_elle_le_characterkie);
         rb_ellx_lx_x_characterkie= view.findViewById(R.id.rb_ellx_lx_x_characterkie);
         rb_other_characterkie= view.findViewById(R.id.rb_other_characterkie);
+        rb_unknown_pronouns_characterkie = view.findViewById(R.id.rb_unknown_pronouns_characterkie);
         allRadioButtons.add(rb_el_lo_le_o_characterkie);
         allRadioButtons.add(rb_elle__le_e_characterkie);
         allRadioButtons.add(rb_ella_la_le_a_characterkie);
@@ -62,15 +63,15 @@ public class BottomSheetChoosePronouns extends BottomSheetDialogFragment {
         allRadioButtons.add(rb_elle_le_characterkie);
         allRadioButtons.add(rb_ellx_lx_x_characterkie);
         allRadioButtons.add(rb_other_characterkie);
-
+        allRadioButtons.add(rb_unknown_pronouns_characterkie);
         for (RadioButton rb : allRadioButtons) {
             rb.setOnClickListener(v -> {
                 for (RadioButton other : allRadioButtons) {
                     other.setChecked(false);
                 }
                 rb.setChecked(true);
-                createCharacterkie.setOptionGender(rb.getId());
-                createCharacterkie.setOptionGenderString(rb.getText().toString());
+                createCharacterkie.setOptionPronouns(rb.getId());
+                createCharacterkie.setOptionPronounsString(rb.getText().toString());
                 if(rb.getId()==R.id.rb_other_characterkie){
                     et_otherPronounsCharacterkieFilled.setVisibility(View.VISIBLE);
                     // activar el que se pulsó

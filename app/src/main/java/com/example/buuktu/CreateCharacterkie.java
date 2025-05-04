@@ -82,8 +82,8 @@ public class CreateCharacterkie extends Fragment implements View.OnClickListener
     boolean privacity, draft,isAllFabsVisible;
     Characterkie characterkie;
     private int ultimoIdAñadido = R.id.tb_CharacterkiePrivacity; // Empezar debajo del título
-    private int optionPronouns, optionBirthday,optionGender;
-    String optionPronounsString, optionBirthdayString,optionGenderString;
+    private int optionPronouns, optionBirthday,optionGender,optionStatus;
+    String optionPronounsString, optionBirthdayString,optionGenderString,optionStatusString;
     public CreateCharacterkie() {
         // Required empty public constructor
     }
@@ -223,7 +223,7 @@ public class CreateCharacterkie extends Fragment implements View.OnClickListener
         tb_characterkieDraft.setVisibility(View.GONE);
         putDefaultImage();
         source = "app";
-        optionPronouns = R.id.rb_other_characterkie;
+        optionPronouns = R.id.rb_unknown_pronouns_characterkie;
         optionBirthday = R.id.rb_unknown_birthday;
         optionGender = R.id.rb_unknown_gender_characterkie;
         ib_select_img_create_characterkie.setTag(DrawableUtils.getMipmapName(context,R.mipmap.photoworldkieone));

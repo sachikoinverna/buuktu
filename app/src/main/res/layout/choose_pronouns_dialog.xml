@@ -88,6 +88,13 @@
                     android:orientation="horizontal">
 
                     <RadioButton
+                        android:id="@+id/rb_unknown_pronouns_characterkie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@drawable/radiobutton_custom"
+                        android:text="Unknown" />
+
+                    <RadioButton
                         android:id="@+id/rb_other_characterkie"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

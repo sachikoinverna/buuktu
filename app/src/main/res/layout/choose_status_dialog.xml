@@ -26,28 +26,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="horizontal"><![CDATA[>
-
-
-
-            ]]>
-
+        android:orientation="horizontal">
             <RadioButton
-            android:id="@+id/radioButton21"
+            android:id="@+id/rb_alive_status_characterkie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:button="@drawable/radiobutton_custom"
             android:text="Vivo" />
 
             <RadioButton
-                android:id="@+id/radioButton22"
+                android:id="@+id/rb_dead_status_characterkie"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@drawable/radiobutton_custom"
                 android:text="Muerto" />
 
             <RadioButton
-                android:id="@+id/radioButton25"
+                android:id="@+id/rb_comatose_status_characterkie"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@drawable/radiobutton_custom"
@@ -62,18 +57,72 @@
                 android:orientation="horizontal">
 
                 <RadioButton
-                    android:id="@+id/radioButton24"
+                    android:id="@+id/rb_unknown_status_characterkie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/radiobutton_custom"
+                    android:text="Desconocido" />
+
+                <RadioButton
+                    android:id="@+id/rb_dissapeared_status_characterkie"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:button="@drawable/radiobutton_custom"
                     android:text="Desaparecido" />
 
                 <RadioButton
-                    android:id="@+id/radioButton23"
+                    android:id="@+id/rb_other_status_characterkie"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:button="@drawable/radiobutton_custom"
-                    android:text="Desconocido" />
+                    android:text="Otro" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/et_otherStatusCharacterkieFilled"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:hint="@string/name"
+                    android:textAlignment="center"
+                    app:boxCornerRadiusBottomEnd="58dp"
+                    app:boxCornerRadiusBottomStart="58dp"
+                    app:boxCornerRadiusTopEnd="58dp"
+                    app:boxCornerRadiusTopStart="58dp"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="50"
+                    app:errorEnabled="false"
+                    app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioGroup"
+                    app:startIconDrawable="@drawable/twotone_supervised_user_circle_24"
+                    card_view:layout_constraintBottom_toBottomOf="parent"
+                    card_view:layout_constraintEnd_toEndOf="parent"
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintTop_toBottomOf="@+id/radioGroup">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_otherStatusCharacterkie"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:inputType="text"
+                        android:maxLength="50"
+                        android:textAlignment="center"
+                        android:textColorHint="@color/brownMaroon"
+                        android:textSize="20sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
         </RadioGroup>

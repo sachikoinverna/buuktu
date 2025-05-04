@@ -84,7 +84,7 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment{
                     other.setChecked(false);
                 }
                 rb.setChecked(true);
-                createCharacterkie.setOptionGender(rb.getId());
+                createCharacterkie.setOptionBirthday(rb.getId());
                 createCharacterkie.setOptionGenderString(rb.getText().toString());
                 if(rb.getId()==R.id.rb_unknown_birthday){
                     datePicker.setVisibility(View.GONE);
