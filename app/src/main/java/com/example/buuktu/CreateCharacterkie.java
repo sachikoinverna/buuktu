@@ -229,6 +229,55 @@ public class CreateCharacterkie extends Fragment implements View.OnClickListener
         ib_select_img_create_characterkie.setTag(DrawableUtils.getMipmapName(context,R.mipmap.photoworldkieone));
 
     }
+
+    public int getOptionPronouns() {
+        return optionPronouns;
+    }
+
+    public void setOptionPronouns(int optionPronouns) {
+        this.optionPronouns = optionPronouns;
+    }
+
+    public int getOptionBirthday() {
+        return optionBirthday;
+    }
+
+    public void setOptionBirthday(int optionBirthday) {
+        this.optionBirthday = optionBirthday;
+    }
+
+    public int getOptionGender() {
+        return optionGender;
+    }
+
+    public void setOptionGender(int optionGender) {
+        this.optionGender = optionGender;
+    }
+
+    public String getOptionPronounsString() {
+        return optionPronounsString;
+    }
+
+    public void setOptionPronounsString(String optionPronounsString) {
+        this.optionPronounsString = optionPronounsString;
+    }
+
+    public String getOptionBirthdayString() {
+        return optionBirthdayString;
+    }
+
+    public void setOptionBirthdayString(String optionBirthdayString) {
+        this.optionBirthdayString = optionBirthdayString;
+    }
+
+    public String getOptionGenderString() {
+        return optionGenderString;
+    }
+
+    public void setOptionGenderString(String optionGenderString) {
+        this.optionGenderString = optionGenderString;
+    }
+
     private void initComponents(View view){
         ib_select_img_create_characterkie = view.findViewById(R.id.ib_select_img_create_characterkie);
         tb_characterkieDraft=view.findViewById(R.id.tb_characterkieDraft);

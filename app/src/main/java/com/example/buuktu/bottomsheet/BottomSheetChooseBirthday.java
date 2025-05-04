@@ -14,7 +14,9 @@ import android.widget.Spinner;
 
 import androidx.annotation.Nullable;
 
+import com.example.buuktu.CreateCharacterkie;
 import com.example.buuktu.R;
+import com.example.buuktu.views.MainActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -37,7 +39,7 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment{
     public BottomSheetChooseBirthday(int option) {
         this.option = option;
     }
-
+    CreateCharacterkie createCharacterkie;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable
     ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,6 +47,12 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment{
                 container, false);
         initComponents(v);
         setInitialOption();
+        context = getContext();
+        if(getActivity() instanceof MainActivity) {
+            if (getParentFragment() instanceof CreateCharacterkie) {
+                createCharacterkie = (CreateCharacterkie) getParentFragment();
+            }
+        }
         return v;
     }
     private void initComponents(View view){
@@ -76,6 +84,8 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment{
                     other.setChecked(false);
                 }
                 rb.setChecked(true);
+                createCharacterkie.setOptionGender(rb.getId());
+                createCharacterkie.setOptionGenderString(rb.getText().toString());
                 if(rb.getId()==R.id.rb_unknown_birthday){
                     datePicker.setVisibility(View.GONE);
                     // activar el que se pulsó

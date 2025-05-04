@@ -9,7 +9,11 @@ import android.widget.RadioButton;
 
 import androidx.annotation.Nullable;
 
+import com.example.buuktu.CreateCharacterkie;
 import com.example.buuktu.R;
+import com.example.buuktu.views.CreateEditWorldkie;
+import com.example.buuktu.views.MainActivity;
+import com.example.buuktu.views.Register;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -23,6 +27,7 @@ public class BottomSheetChooseGender extends BottomSheetDialogFragment {
     RadioButton rb_man_chracterkie,rb_woman_chracterkie,rb_gender_fluid_chracterkie,rb_no_binary_chracterkie,rb_other_gender_characterkie,rb_unknown_gender_characterkie;
     List<RadioButton> allRadioButtons = new ArrayList<>();
     Context context;
+    CreateCharacterkie createCharacterkie;
     int option;
     public BottomSheetChooseGender(int option) {
         this.option = option;
@@ -33,6 +38,12 @@ public class BottomSheetChooseGender extends BottomSheetDialogFragment {
         View v = inflater.inflate(R.layout.choose_gender_dialog,
                 container, false);
         initComponents(v);
+        context = getContext();
+        if(getActivity() instanceof MainActivity) {
+            if (getParentFragment() instanceof CreateCharacterkie) {
+                createCharacterkie = (CreateCharacterkie) getParentFragment();
+            }
+        }
         return v;
     }
     private void initComponents(View view){
@@ -57,6 +68,8 @@ public class BottomSheetChooseGender extends BottomSheetDialogFragment {
                     other.setChecked(false);
                 }
                 rb.setChecked(true);
+                createCharacterkie.setOptionGender(rb.getId());
+                createCharacterkie.setOptionGenderString(rb.getText().toString());
                 if(rb.getId()==R.id.rb_other_gender_characterkie){
                     et_otherGendersCharacterkieFilled.setVisibility(View.VISIBLE);
                     // activar el que se pulsó

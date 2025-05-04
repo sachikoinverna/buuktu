@@ -9,7 +9,9 @@ import android.widget.RadioButton;
 
 import androidx.annotation.Nullable;
 
+import com.example.buuktu.CreateCharacterkie;
 import com.example.buuktu.R;
+import com.example.buuktu.views.MainActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -23,6 +25,8 @@ public class BottomSheetChoosePronouns extends BottomSheetDialogFragment {
     RadioButton rb_ella_la_le_a_characterkie,rb_el_lo_le_o_characterkie,rb_elle__le_e_characterkie,rb_ella_la_a_characterkie,rb_elle_le_characterkie,rb_ellx_lx_x_characterkie,rb_other_characterkie;
     List<RadioButton> allRadioButtons = new ArrayList<>();
     Context context;
+    CreateCharacterkie createCharacterkie;
+
     int option;
     public BottomSheetChoosePronouns(int option) {
         this.option = option;
@@ -33,6 +37,12 @@ public class BottomSheetChoosePronouns extends BottomSheetDialogFragment {
         View v = inflater.inflate(R.layout.choose_pronouns_dialog,
                 container, false);
         initComponents(v);
+        context = getContext();
+        if(getActivity() instanceof MainActivity) {
+            if (getParentFragment() instanceof CreateCharacterkie) {
+                createCharacterkie = (CreateCharacterkie) getParentFragment();
+            }
+        }
         return v;
     }
     private void initComponents(View view){
@@ -59,6 +69,8 @@ public class BottomSheetChoosePronouns extends BottomSheetDialogFragment {
                     other.setChecked(false);
                 }
                 rb.setChecked(true);
+                createCharacterkie.setOptionGender(rb.getId());
+                createCharacterkie.setOptionGenderString(rb.getText().toString());
                 if(rb.getId()==R.id.rb_other_characterkie){
                     et_otherPronounsCharacterkieFilled.setVisibility(View.VISIBLE);
                     // activar el que se pulsó
