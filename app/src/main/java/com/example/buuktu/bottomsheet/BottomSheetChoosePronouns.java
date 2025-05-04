@@ -52,6 +52,7 @@ public class BottomSheetChoosePronouns extends BottomSheetDialogFragment {
         allRadioButtons.add(rb_elle_le_characterkie);
         allRadioButtons.add(rb_ellx_lx_x_characterkie);
         allRadioButtons.add(rb_other_characterkie);
+
         for (RadioButton rb : allRadioButtons) {
             rb.setOnClickListener(v -> {
                 for (RadioButton other : allRadioButtons) {
@@ -59,12 +60,18 @@ public class BottomSheetChoosePronouns extends BottomSheetDialogFragment {
                 }
                 rb.setChecked(true);
                 if(rb.getId()==R.id.rb_other_characterkie){
-                    et_otherPronounsCharacterkieFilled.setVisibility(View.GONE);
+                    et_otherPronounsCharacterkieFilled.setVisibility(View.VISIBLE);
                     // activar el que se pulsó
                 }else {
-                    et_otherPronounsCharacterkieFilled.setVisibility(View.VISIBLE);
+                    et_otherPronounsCharacterkieFilled.setVisibility(View.GONE);
                 }
             });
+            if(rb.getId()==option){
+                rb.setChecked(true);
+            }
+        }
+        if(option==R.id.rb_other_characterkie){
+            et_otherPronounsCharacterkieFilled.setVisibility(View.GONE);
         }
     }
 }

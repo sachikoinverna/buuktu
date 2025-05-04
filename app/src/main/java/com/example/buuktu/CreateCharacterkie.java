@@ -60,7 +60,7 @@ import java.util.List;
 public class CreateCharacterkie extends Fragment implements View.OnClickListener {
     FragmentManager fragmentManager;
     FragmentActivity activity;
-    Button bt_birthday_characterkie,bt_pronouns_characterkie;
+    Button bt_birthday_characterkie,bt_pronouns_characterkie,bt_gender_characterkie;
     ImageButton ib_select_img_create_characterkie,ib_back,ib_save;
     Uri image;
     BottomSheetDialogFragment bottomSheetProfilePhoto;
@@ -82,8 +82,8 @@ public class CreateCharacterkie extends Fragment implements View.OnClickListener
     boolean privacity, draft,isAllFabsVisible;
     Characterkie characterkie;
     private int ultimoIdAñadido = R.id.tb_CharacterkiePrivacity; // Empezar debajo del título
-    private int optionPronouns, optionBirthday;
-    String optionPronounsString, optionBirthdayString;
+    private int optionPronouns, optionBirthday,optionGender;
+    String optionPronounsString, optionBirthdayString,optionGenderString;
     public CreateCharacterkie() {
         // Required empty public constructor
     }
@@ -223,6 +223,9 @@ public class CreateCharacterkie extends Fragment implements View.OnClickListener
         tb_characterkieDraft.setVisibility(View.GONE);
         putDefaultImage();
         source = "app";
+        optionPronouns = R.id.rb_other_characterkie;
+        optionBirthday = R.id.rb_unknown_birthday;
+        optionGender = R.id.rb_unknown_gender_characterkie;
         ib_select_img_create_characterkie.setTag(DrawableUtils.getMipmapName(context,R.mipmap.photoworldkieone));
 
     }
@@ -232,6 +235,7 @@ public class CreateCharacterkie extends Fragment implements View.OnClickListener
         tb_characterkiePrivacity=view.findViewById(R.id.tb_CharacterkiePrivacity);
         bt_birthday_characterkie = view.findViewById(R.id.bt_birthday_characterkie);
         bt_pronouns_characterkie = view.findViewById(R.id.bt_pronouns_characterkie);
+        bt_gender_characterkie = view.findViewById(R.id.bt_gender_characterkie);
         et_nameCharacterkieCreate = view.findViewById(R.id.et_nameCharacterkieCreate);
         et_nameCharacterkieCreateFull = view.findViewById(R.id.et_nameCharacterkieCreateFull);
         constraintLayout = view.findViewById(R.id.constraint_create_characterkie);
@@ -256,6 +260,7 @@ public class CreateCharacterkie extends Fragment implements View.OnClickListener
         ib_save.setOnClickListener(this);
         bt_birthday_characterkie.setOnClickListener(this);
         bt_pronouns_characterkie.setOnClickListener(this);
+        bt_gender_characterkie.setOnClickListener(this);
     }
     public Drawable getSelectedProfilePhoto()
     {
@@ -366,13 +371,13 @@ public class CreateCharacterkie extends Fragment implements View.OnClickListener
         } else if (v.getId()==R.id.ib_select_img_create_characterkie) {
             selectImage();
         } else if(v.getId()==R.id.bt_birthday_characterkie){
-            BottomSheetChooseBirthday bottomSheetChooseBirthday = new BottomSheetChooseBirthday(R.id.rb_unknown_birthday);
+            BottomSheetChooseBirthday bottomSheetChooseBirthday = new BottomSheetChooseBirthday(optionBirthday);
             bottomSheetChooseBirthday.show(getChildFragmentManager(), bottomSheetChooseBirthday.getTag());
         } else if (v.getId()==R.id.bt_pronouns_characterkie) {
-            bottomSheetChoosePronouns = new BottomSheetChoosePronouns(R.id.rb_other_characterkie);
+            bottomSheetChoosePronouns = new BottomSheetChoosePronouns(optionPronouns);
             bottomSheetChoosePronouns.show(getChildFragmentManager(), bottomSheetChoosePronouns.getTag());
         } else if (v.getId()==R.id.bt_gender_characterkie) {
-            bottomSheetChooseGender = new BottomSheetChooseGender(R.id.rb_other_characterkie);
+            bottomSheetChooseGender = new BottomSheetChooseGender(optionGender);
             bottomSheetChooseGender.show(getChildFragmentManager(), bottomSheetChooseGender.getTag());
         }
     }
