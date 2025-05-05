@@ -106,7 +106,7 @@ public class CharacterkiesWorldkiePreviewAdapter extends RecyclerView.Adapter<Ch
     @Override
     public void onBindViewHolder(@NonNull CharacterkiesWorldkiePreviewAdapter.ViewHolder holder, int position) {
         holder.getTv_characterkie_preview_worldkie().setText(dataSet.get(holder.getAdapterPosition()).getName());
-        if(!dataSet.get(holder.getAdapterPosition()).isCharacterkiePrivate()) {
+        if(!dataSet.get(holder.getAdapterPosition()).isCharacterkie_private()) {
             holder.getIv_characterkie_private_preview().setVisibility(View.INVISIBLE);
         }
        /* holder.getCv_characterkie_preview().setOnClickListener(new View.OnClickListener() {

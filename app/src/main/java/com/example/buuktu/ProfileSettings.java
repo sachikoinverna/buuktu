@@ -128,11 +128,7 @@ public class ProfileSettings extends Fragment implements View.OnClickListener {
             if (documentSnapshot != null) {
                 dataSet.clear();
 
-                    userkieModel = new UserkieModel(
-                            documentSnapshot.getString("name"),
-                            documentSnapshot.getString("pronouns"),
-                            documentSnapshot.getBoolean("profile_private"));
-
+                    userkieModel = UserkieModel.fromSnapshot(documentSnapshot);
 
                 // 🧠 Evitar bucle al cambiar el estado desde código
                 tb_profile_private_settings.setOnCheckedChangeListener(null);

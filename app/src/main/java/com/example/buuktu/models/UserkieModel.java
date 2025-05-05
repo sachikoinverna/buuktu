@@ -125,27 +125,6 @@ public class UserkieModel {
         this.name = name;
     }
 
-    public UserkieModel(String name, String pronouns, boolean profile_private) {
-        this.name = name;
-        this.pronouns = pronouns;
-        this.profile_private = profile_private;
-    }
-
-    public UserkieModel(String UID,String name, String username, boolean profile_private, boolean photo_default, String photo_id) {
-        this.UID = UID;
-        this.name = name;
-        this.username = username;
-        this.profile_private = profile_private;
-        this.photo_default = photo_default;
-        this.photo_id = photo_id;
-    }
-    public UserkieModel(String UID,String name, String username, boolean profile_private, boolean photo_default) {
-        this.UID=UID;
-        this.name = name;
-        this.username = username;
-        this.profile_private = profile_private;
-        this.photo_default = photo_default;
-    }
     public UserkieModel(String name, String pronouns, Timestamp birthday, String username, String number, String email, boolean photo_default, boolean profile_private) {
         this.name = name;
         this.pronouns = pronouns;

@@ -21,16 +21,18 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BottomSheetChooseGender extends BottomSheetDialogFragment {
+public class BottomSheetChooseGender extends BottomSheetDialogFragment implements View.OnClickListener {
     TextInputLayout et_otherGendersCharacterkieFilled;
     TextInputEditText et_otherGendersCharacterkie;
-    RadioButton rb_man_chracterkie,rb_woman_chracterkie,rb_gender_fluid_chracterkie,rb_no_binary_chracterkie,rb_other_gender_characterkie,rb_unknown_gender_characterkie;
+    RadioButton rb_man_chracterkie,rb_woman_chracterkie,rb_gender_fluid_chracterkie,rb_no_binary_chracterkie,rb_other_gender_characterkie,rb_unknown_gender_characterkie,rb_checked;
     List<RadioButton> allRadioButtons = new ArrayList<>();
     Context context;
     CreateCharacterkie createCharacterkie;
     int option;
-    public BottomSheetChooseGender(int option) {
+    String optionString;
+    public BottomSheetChooseGender(int option, String optionString) {
         this.option = option;
+        this.optionString = optionString;
     }
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable
@@ -68,8 +70,7 @@ public class BottomSheetChooseGender extends BottomSheetDialogFragment {
                     other.setChecked(false);
                 }
                 rb.setChecked(true);
-                createCharacterkie.setOptionGender(rb.getId());
-                createCharacterkie.setOptionGenderString(rb.getText().toString());
+                rb_checked = view.findViewById(rb.getId());
                 if(rb.getId()==R.id.rb_other_gender_characterkie){
                     et_otherGendersCharacterkieFilled.setVisibility(View.VISIBLE);
                     // activar el que se pulsó
@@ -83,6 +84,18 @@ public class BottomSheetChooseGender extends BottomSheetDialogFragment {
         }
         if(option==R.id.rb_unknown_gender_characterkie){
             et_otherGendersCharacterkieFilled.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == R.id.bt_save_status_characterkie){
+            if(rb_other_gender_characterkie.isChecked()){
+                createCharacterkie.setOptionGenderString(et_otherGendersCharacterkie.getText().toString());
+            }else {
+                createCharacterkie.setOptionGenderString(rb_checked.getText().toString());
+            }
+            createCharacterkie.setOptionGender(rb_checked.getId());
         }
     }
 }

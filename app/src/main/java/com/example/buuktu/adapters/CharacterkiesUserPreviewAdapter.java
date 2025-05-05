@@ -95,7 +95,8 @@ public class CharacterkiesUserPreviewAdapter extends RecyclerView.Adapter<Charac
         if(!dataSet.get(holder.getAdapterPosition()).isDraft()){
             holder.getTv_characterkie_preview_draft().setVisibility(View.INVISIBLE);
         }
-        if(!dataSet.get(holder.getAdapterPosition()).isCharacterkiePrivate()){
+        if(!dataSet.get(holder.getAdapterPosition())
+                .isCharacterkie_private()){
             holder.getIv_characterkie_preview_worldkie().setVisibility(View.GONE);
         }
         if (dataSet.get(holder.getAdapterPosition()).isPhoto_default()) {

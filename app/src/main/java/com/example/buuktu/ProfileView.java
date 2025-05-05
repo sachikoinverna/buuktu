@@ -159,6 +159,7 @@ public class ProfileView extends Fragment implements View.OnClickListener {
 
             if (documentSnapshot != null) {
                 userkieModel = UserkieModel.fromSnapshot(documentSnapshot);
+                getProfilePhoto();
                 tv_nameProfileView.setText(userkieModel.getName());
                 tv_usernameProfileView.setText(userkieModel.getUsername());
                 if ((!userkieModel.isProfile_private() && mode.equals("other")) || (mode.equals("self"))){
@@ -175,16 +176,12 @@ public class ProfileView extends Fragment implements View.OnClickListener {
                             boolean foundData = false; // Add a flag
 
                             for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
-                                //if (documentSnapshot.getBoolean("photo_default")) {
-
                                     StuffkieModel stuffkieModel = new StuffkieModel(
                                             doc.getId(),
                                             doc.getString("name"),
                                             doc.getBoolean("stuffkie_private"),
                                             doc.getBoolean("photo_default")
                                     );
-                                    Log.d("StuffkiesSearch", "Stuffkie encontrado: " + doc.getString("name"));
-
                                     stuffkieArrayList.add(stuffkieModel);
                                     foundData = true; // Set the flag to true if data is found
 
@@ -282,7 +279,6 @@ public class ProfileView extends Fragment implements View.OnClickListener {
             }
         });
 
-        getProfilePhoto();
         return view;
 
     }

@@ -77,8 +77,7 @@
                         android:onClick="selectImage"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@mipmap/photoscenariokieone" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <Switch
                         android:id="@+id/tb_scenariokiePrivacity"

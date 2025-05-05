@@ -44,8 +44,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-import kotlinx.coroutines.channels.ChannelSegment;
-
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link WorldkieView#newInstance} factory method to
@@ -151,18 +149,13 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
             }
 
             if (documentSnapshot != null) {
-                worldkieModel.setPhoto_default(documentSnapshot.getBoolean("photo_default"));
-                worldkieModel.setName(documentSnapshot.getString("name"));
-                worldkieModel.setCreation_date(documentSnapshot.getTimestamp("creation_date"));
-                worldkieModel.setLast_update(documentSnapshot.getTimestamp("last_update"));
-
+               worldkieModel = WorldkieModel.fromSnapshot(documentSnapshot);
                 //  userkieModel = new UserkieModel(firebaseAuth.getUid(),documentSnapshot.getString("name"),R.drawable.thumb_custom,documentSnapshot.getString("username"),documentSnapshot.getBoolean("photo_default"),true);
                 tv_nameWorldkieView.setText(worldkieModel.getName());
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-                tv_creationDateWorldkieView.setText(simpleDateFormat.format(worldkieModel.getCreation_date()));
-                        tv_lastUpdateWorldkieView.setText(simpleDateFormat.format(worldkieModel.getLast_update()));
-                        worldkieModel.setWorldkie_private(documentSnapshot.getBoolean("worldkie_private"));
+                tv_creationDateWorldkieView.setText(simpleDateFormat.format(worldkieModel.getCreation_date().toDate()));
+                        tv_lastUpdateWorldkieView.setText(simpleDateFormat.format(worldkieModel.getLast_update().toDate()));
             }
         });
         collectionUserkies.document(UID_AUTHOR).addSnapshotListener((document, exx) -> {
@@ -173,12 +166,8 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
             }
 
             if (document != null) {
-                if(document.getBoolean("photo_default")) {
-                    userkieModel = new UserkieModel(document.getId(),document.getString("name"), document.getString("username"), document.getBoolean("profile_private"), document.getBoolean("photo_default"),document.getString("photo_id"));
-                }else{
-                    userkieModel = new UserkieModel(document.getId(),document.getString("name"), document.getString("username"), document.getBoolean("profile_private"), document.getBoolean("photo_default"));
-
-                }                tv_nameUserWorldkieView.setText(userkieModel.getName());
+                UserkieModel userkieModel = UserkieModel.fromSnapshot(document);
+                tv_nameUserWorldkieView.setText(userkieModel.getName());
                 tv_usernameWorldkieView.setText(userkieModel.getUsername());
                 if((!worldkieModel.isWorldkie_private() && mode.equals("other") && !userkieModel.isProfile_private()) || (worldkieModel.isWorldkie_private() && mode.equals("self"))){
                     collectionStuffkies.addSnapshotListener((queryDocumentSnapshots, e) -> {
@@ -193,10 +182,8 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
 
                             boolean foundData = false; // Add a flag
                             for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
-                                //if (documentSnapshot.getBoolean("photo_default")) {
                                 if (doc.getString("UID_WORLDKIE").equals(UID)) {
 
-                                    Drawable drawable = getResources().getDrawable(R.drawable.thumb_custom);
                                     StuffkieModel stuffkieModel = new StuffkieModel(
                                             doc.getId(),
                                             doc.getString("name"),
@@ -305,17 +292,8 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
         tv_stuffkiesPreviewWorldkie = view.findViewById(R.id.tv_stuffkiesPreviewWorldkie);
         tv_characterkiesPreviewWorldkie = view.findViewById(R.id.tv_characterkiesPreviewWorldkie);
     }
-    private void getProfilePhoto(){
-        db.collection("Worldkies").document(UID).addSnapshotListener((queryDocumentSnapshot, e) -> {
-          //  if (e != null) {
-           //     Log.e("Error", e.getMessage());
-           //     Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
-           //     return;
-          //  }
-            boolean photo_default = queryDocumentSnapshot.getBoolean("photo_default");
-            if (photo_default) {
-                String id_photo = queryDocumentSnapshot.getString("photo_id");
-
+    private void getProfilePhoto() {
+        if (worldkieModel.isPhoto_default()) {
                /* FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
                 firebaseFirestore.collection("Worldkies").document(UID).addSnapshotListener((queryDocumentSnapshot, e) -> {
                        /* if (e != null) {
@@ -323,50 +301,48 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
                             Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
                             return;
                         }*/
-                    //boolean photo_default = queryDocumentSnapshot.getBoolean("photo_default");
-                    int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
+            String id_photo = worldkieModel.getId_photo();
+            int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
 
-                    if (resId != 0 && (!lastPhotoId.equals(id_photo))) {
-                        Drawable drawable = ContextCompat.getDrawable(context, resId);
-                        ib_worldkieView.setImageDrawable(drawable);
-                        try {
-                            DrawableUtils.personalizarImagenCuadradoButton(context,115/6,7,R.color.brownMaroon,drawable, ib_worldkieView);
-                        } catch (IOException ex) {
-                            throw new RuntimeException(ex);
-                        }
-                        lastPhotoId=id_photo;
-                    }
-                }//);
-            //}
-            else {
-                StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-worldkies").getReference(UID);
-
-                userFolderRef.listAll().addOnSuccessListener(listResult -> {
-                    for (StorageReference item : listResult.getItems()) {
-                        if (item.getName().startsWith("cover")) {
-                            item.getDownloadUrl().addOnSuccessListener(uri -> {
-                               // try {
-                                    DrawableUtils.personalizarImagenCuadradoButton(context,115/7,7, R.color.greenWhatever,uri,ib_worldkieView);
-                                //} catch (IOException e) {
-                                //    throw new RuntimeException(e);
-                               // }
-                            });
-                        }
-                    }
-                    ;
-                });
+            if (resId != 0 && (!lastPhotoId.equals(id_photo))) {
+                Drawable drawable = ContextCompat.getDrawable(context, resId);
+                ib_worldkieView.setImageDrawable(drawable);
+                try {
+                    DrawableUtils.personalizarImagenCuadradoButton(context, 115 / 6, 7, R.color.brownMaroon, drawable, ib_worldkieView);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                lastPhotoId = id_photo;
             }
+        }//);
+        //}
+        else {
+            StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-worldkies").getReference(UID);
+
+            userFolderRef.listAll().addOnSuccessListener(listResult -> {
+                for (StorageReference item : listResult.getItems()) {
+                    if (item.getName().startsWith("cover")) {
+                        item.getDownloadUrl().addOnSuccessListener(uri -> {
+                            // try {
+                            DrawableUtils.personalizarImagenCuadradoButton(context, 115 / 7, 7, R.color.greenWhatever, uri, ib_worldkieView);
+                            //} catch (IOException e) {
+                            //    throw new RuntimeException(e);
+                            // }
+                        });
+                    }
+                }
+                ;
+            });
 /*.addOnFailureListener(e -> {
                     Toast.makeText(this, "Error al buscar imagen", Toast.LENGTH_SHORT).show();
                     Log.e("Storage", "Error listando archivos: " + e.getMessage());
-                })*/;
+                })*/
+            ;
 
 
             // }
             //}
-        });//)
-        DrawableUtils.personalizarImagenCircleButton(getContext(), DrawableUtils.drawableToBitmap(ib_worldkieView.getDrawable()), ib_worldkieView, R.color.brownBrown);
-
+        }
     }
     private void updateRecyclerViewCharacterkies(ArrayList<Characterkie> characterkieArrayList) {
         characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList,getContext());

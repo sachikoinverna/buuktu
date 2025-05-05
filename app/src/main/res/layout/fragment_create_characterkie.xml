@@ -12,10 +12,10 @@
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_gravity="center"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="32dp"
             android:clipChildren="false"
@@ -40,31 +40,79 @@
                     android:clipChildren="false"
                     android:clipToPadding="false">
 
+                    <ImageView
+                        android:id="@+id/iv_background_basic_info_characterkie"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:src="@drawable/button_backgground"
+                        android:tint="#9FA8DA"
+                        android:tintMode="multiply"
+                        app:layout_constraintBottom_toTopOf="@+id/tb_CharacterkiePrivacity"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
+                    <Button
+                        android:id="@+id/bt_state_characterkie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="#9FA8DA"
+                        android:drawableStart="@drawable/twotone_cake_24"
+                        android:text="Cumpleaños"
+                        android:textColor="#FFFFFF"
+                        app:icon="@drawable/twotone_cake_24"
+                        app:iconGravity="start"
+                        app:layout_constraintBottom_toTopOf="@+id/tb_CharacterkiePrivacity"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_status_characterkie"
+                        app:strokeColor="#FFFFFF"
+                        app:strokeWidth="3dp" />
+
                     <Button
                         android:id="@+id/bt_gender_characterkie"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="34dp"
+                        android:layout_marginTop="8dp"
                         android:layout_weight="1"
+                        android:backgroundTint="#9FA8DA"
                         android:drawableStart="@drawable/twotone_cake_24"
                         android:text="Cumpleaños"
+                        android:textColor="#FFFFFF"
                         app:icon="@drawable/twotone_cake_24"
                         app:iconGravity="start"
+                        app:iconTint="#FFFFFF"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/bt_pronouns_characterkie" />
+                        app:layout_constraintTop_toBottomOf="@+id/tv_gender_characterkie"
+                        app:strokeColor="#FFFFFF"
+                        app:strokeWidth="3dp" />
 
                     <Button
                         android:id="@+id/bt_pronouns_characterkie"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="34dp"
+                        android:layout_marginTop="8dp"
                         android:layout_weight="1"
+                        android:backgroundTint="#9FA8DA"
                         android:drawableStart="@drawable/twotone_cake_24"
                         android:text="Cumpleaños"
+                        android:textColor="#FFFFFF"
                         app:icon="@drawable/twotone_cake_24"
                         app:iconGravity="start"
+                        app:iconTint="#FFFFFF"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/bt_birthday_characterkie" />
+                        app:layout_constraintTop_toBottomOf="@+id/tv_pronouns_characterkie"
+                        app:strokeColor="#FFFFFF"
+                        app:strokeWidth="3dp" />
 
                     <ImageButton
                         android:id="@+id/ib_select_img_create_characterkie"
@@ -74,8 +122,7 @@
                         android:scaleType="fitCenter"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@mipmap/photocharacterkieone" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/et_nameCharacterkieCreateFull"
@@ -113,32 +160,41 @@
 
                     <Button
                         android:id="@+id/bt_birthday_characterkie"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="34dp"
                         android:layout_marginTop="8dp"
                         android:layout_weight="1"
                         android:drawableStart="@drawable/twotone_cake_24"
                         android:text="Cumpleaños"
+                        android:textColor="#FFFFFF"
+                        app:backgroundTint="#9FA8DA"
                         app:icon="@drawable/twotone_cake_24"
                         app:iconGravity="start"
+                        app:iconTint="#FFFFFF"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/et_nameCharacterkieCreateFull" />
+                        app:layout_constraintTop_toBottomOf="@+id/tv_birthday_characterkie"
+                        app:strokeColor="#FFFFFF"
+                        app:strokeWidth="3dp" />
 
                     <TextView
-                        android:id="@+id/textView3"
+                        android:id="@+id/tv_birthday_characterkie"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="TextView"
-                        app:layout_constraintBottom_toTopOf="@+id/textView12"
+                        android:layout_marginTop="16dp"
+                        android:text="Cumple"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/bt_birthday_characterkie"
-                        app:layout_constraintTop_toBottomOf="@+id/et_nameCharacterkieCreateFull" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
                     <Switch
                         android:id="@+id/tb_CharacterkiePrivacity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
                         android:layout_marginBottom="16dp"
                         android:gravity="center"
                         android:switchPadding="8dp"
@@ -148,12 +204,13 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/tb_characterkieDraft"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/bt_gender_characterkie" />
+                        app:layout_constraintTop_toBottomOf="@+id/bt_state_characterkie" />
 
                     <Switch
                         android:id="@+id/tb_characterkieDraft"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
                         android:layout_marginBottom="16dp"
                         android:gravity="center"
                         android:switchPadding="8dp"
@@ -163,27 +220,96 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/tb_CharacterkiePrivacity"
+                        app:layout_constraintTop_toBottomOf="@+id/iv_background_basic_info_characterkie" />
+
+                    <TextView
+                        android:id="@+id/tv_status_characterkie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Estado"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/bt_gender_characterkie" />
 
                     <TextView
-                        android:id="@+id/textView12"
+                        android:id="@+id/tv_gender_characterkie"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="TextView"
-                        app:layout_constraintBottom_toTopOf="@+id/tb_characterkieDraft"
+                        android:layout_marginTop="8dp"
+                        android:text="Genero"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/bt_pronouns_characterkie"
-                        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/bt_pronouns_characterkie" />
 
                     <TextView
-                        android:id="@+id/textView13"
+                        android:id="@+id/tv_pronouns_characterkie"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="TextView"
-                        app:layout_constraintBottom_toTopOf="@+id/tb_characterkieDraft"
+                        android:layout_marginTop="8dp"
+                        android:text="Prononombres"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/bt_gender_characterkie"
-                        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/bt_birthday_characterkie" />
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:foregroundTint="#9FA8DA"
+                        android:src="@drawable/button_backgground"
+                        android:tint="#7D83A9"
+                        android:tintMode="multiply"
+                        app:layout_constraintBottom_toTopOf="@+id/textView16"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/et_nameCharacterkieCreateFull" />
+
+                    <TextView
+                        android:id="@+id/tv_basic_info_characterkies"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Datos basicos"
+                        android:textColor="#FFFFFF"
+                        android:textSize="24sp"
+                        android:textStyle="bold|italic"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/et_nameCharacterkieCreateFull" />
+
+                    <ImageButton
+                        android:id="@+id/bt_basic_info_characterkies"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@android:color/transparent"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/twotone_arrow_drop_down_circle_24"
+                        android:tint="#FFFFFF"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/et_nameCharacterkieCreateFull" />
+
+                    <TextView
+                        android:id="@+id/textView16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="------------------★-------------------"
+                        android:textColor="#9FA8DA"
+                        android:textSize="24sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_basic_info_characterkies" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

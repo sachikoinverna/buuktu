@@ -159,6 +159,7 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
                 menuWorldkie = new WorldkieMenu();
                 Bundle bundle = new Bundle();
                 bundle.putString("worldkie_id", dataSet.get(holder.getAdapterPosition()).getUID());
+                bundle.putString("userkie_id",dataSet.get(holder.getAdapterPosition()).getUID_AUTHOR());
                 menuWorldkie.setArguments(bundle);
                 fragmentManager.beginTransaction().replace(R.id.fragment_container, menuWorldkie).addToBackStack(null) // Permite regresar atrás con el botón de retroceso
                         .commit();

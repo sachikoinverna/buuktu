@@ -19,17 +19,18 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BottomSheetChoosePronouns extends BottomSheetDialogFragment {
+public class BottomSheetChoosePronouns extends BottomSheetDialogFragment implements View.OnClickListener {
     TextInputEditText et_otherPronounsCharacterkie;
     TextInputLayout et_otherPronounsCharacterkieFilled;
-    RadioButton rb_ella_la_le_a_characterkie,rb_el_lo_le_o_characterkie,rb_elle__le_e_characterkie,rb_ella_la_a_characterkie,rb_elle_le_characterkie,rb_ellx_lx_x_characterkie,rb_other_characterkie,rb_unknown_pronouns_characterkie;
+    RadioButton rb_ella_la_le_a_characterkie,rb_el_lo_le_o_characterkie,rb_elle__le_e_characterkie,rb_ella_la_a_characterkie,rb_elle_le_characterkie,rb_ellx_lx_x_characterkie,rb_other_characterkie,rb_unknown_pronouns_characterkie,rb_checked;
     List<RadioButton> allRadioButtons = new ArrayList<>();
     Context context;
     CreateCharacterkie createCharacterkie;
-
+    String optionString;
     int option;
-    public BottomSheetChoosePronouns(int option) {
+    public BottomSheetChoosePronouns(int option, String optionString) {
         this.option = option;
+        this.optionString = optionString;
     }
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable
@@ -64,14 +65,14 @@ public class BottomSheetChoosePronouns extends BottomSheetDialogFragment {
         allRadioButtons.add(rb_ellx_lx_x_characterkie);
         allRadioButtons.add(rb_other_characterkie);
         allRadioButtons.add(rb_unknown_pronouns_characterkie);
+
         for (RadioButton rb : allRadioButtons) {
             rb.setOnClickListener(v -> {
                 for (RadioButton other : allRadioButtons) {
                     other.setChecked(false);
                 }
                 rb.setChecked(true);
-                createCharacterkie.setOptionPronouns(rb.getId());
-                createCharacterkie.setOptionPronounsString(rb.getText().toString());
+                rb_checked = view.findViewById(rb.getId());
                 if(rb.getId()==R.id.rb_other_characterkie){
                     et_otherPronounsCharacterkieFilled.setVisibility(View.VISIBLE);
                     // activar el que se pulsó
@@ -82,9 +83,32 @@ public class BottomSheetChoosePronouns extends BottomSheetDialogFragment {
             if(rb.getId()==option){
                 rb.setChecked(true);
             }
+            if(option==R.id.rb_other_characterkie){
+                et_otherPronounsCharacterkie.setText(optionString);
+            }
         }
-        if(option==R.id.rb_other_characterkie){
+        if(option==R.id.rb_unknown_gender_characterkie){
             et_otherPronounsCharacterkieFilled.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == R.id.bt_save_status_characterkie) {
+            String stringEditText = et_otherPronounsCharacterkie.getText().toString();
+            int idChecked = rb_checked.getId();
+            if (idChecked != option) {
+                if (idChecked == R.id.rb_other_characterkie) {
+                    createCharacterkie.setOptionStatusString(stringEditText);
+                } else {
+                    createCharacterkie.setOptionPronounsString(rb_checked.getText().toString());
+                }
+                createCharacterkie.setOptionPronouns(idChecked);
+            } else {
+                if (idChecked == R.id.rb_other_characterkie && !optionString.equals(stringEditText)) {
+                    createCharacterkie.setOptionStatusString(stringEditText);
+                }
+            }
         }
     }
 }

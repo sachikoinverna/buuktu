@@ -170,15 +170,15 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
                 DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(ContextCompat.getDrawable(context,photosUserkies.get(imageIndex))), imageButton, R.color.brownBrown);
             } else if (createCharacterkie!=null) {
                 Log.d("BottomSheet", "photosCharacterkies size in setImages: " + photosCharacterkies.size());
-                DrawableUtils.personalizarImagenCuadradoButton(context,80/6,7, color.greenWhatever, photosWorldkies.get(imageIndex),imageButton);
+                DrawableUtils.personalizarImagenCircleButton(context,DrawableUtils.drawableToBitmap(ContextCompat.getDrawable(context,photosCharacterkies.get(imageIndex))),imageButton, color.greenWhatever);
 
                 imageButton.setImageDrawable(ContextCompat.getDrawable(context,photosCharacterkies.get(imageIndex)));
             }else if (createEditScenariokie!=null) {
-                DrawableUtils.personalizarImagenCuadradoButton(context,80/6,7, color.greenWhatever, photosWorldkies.get(imageIndex),imageButton);
+                DrawableUtils.personalizarImagenCuadradoButton(context,80/6,7, color.greenWhatever, photosScenariokies.get(imageIndex),imageButton);
 
                 imageButton.setImageDrawable(ContextCompat.getDrawable(context, photosScenariokies.get(imageIndex)));
             }else if (createEditStuffkie!=null) {
-                DrawableUtils.personalizarImagenCuadradoButton(context,80/6,7, color.greenWhatever, photosWorldkies.get(imageIndex),imageButton);
+                DrawableUtils.personalizarImagenCuadradoButton(context,80/6,7, color.greenWhatever, photosStuffkies.get(imageIndex),imageButton);
 
                 imageButton.setImageDrawable(ContextCompat.getDrawable(context, photosStuffkies.get(imageIndex)));
             }else if(createEditWorldkie!=null){
@@ -266,78 +266,7 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
             goBackBottomSheetOptionsPhotoProfile();
         }
     }
-    private void setSelectedImage(Drawable drawable,ImageButton imageButton){
-        if(register!=null) {
-            if (!drawable.equals(register.getSelectedProfilePhoto())) {
-                for (ImageButton button : imageButtons) {
-                    if (button.getDrawable().equals(drawable)) {
-                        DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, R.color.greenWhatever, true);
-                    } else {
-                        DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, R.color.redError, false);
 
-                    }
-                }
-                register.setSource("app");
-                DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(drawable), imageButton, R.color.brownMaroon, false);
-            }
-        } else if (createEditWorldkie != null) {
-            if (!drawable.equals(createEditWorldkie.getSelectedProfilePhoto())) {
-                for (ImageButton button : imageButtons) {
-                    if (button.getDrawable().equals(drawable)) {
-                        DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, R.color.greenWhatever, true);
-                    } else {
-                        DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, R.color.redError, false);
-
-                    }
-                }
-                createEditWorldkie.setSource("app");
-                DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(drawable), imageButton, R.color.brownMaroon, false);
-            }
-
-        }else if (createCharacterkie != null) {
-            if (!drawable.equals(createCharacterkie.getSelectedProfilePhoto())) {
-                for (ImageButton button : imageButtons) {
-                    if (button.getDrawable().equals(drawable)) {
-                        DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, R.color.greenWhatever, true);
-                    } else {
-                        DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, R.color.redError, false);
-
-                    }
-                }
-                createCharacterkie.setSource("app");
-                DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(drawable), imageButton, R.color.brownMaroon, false);
-            }
-
-        }else if (createEditStuffkie != null) {
-            //if (!drawable.equals(createEditStuffkie.getSelectedProfilePhoto())) {
-                for (ImageButton button : imageButtons) {
-                    if (button.getDrawable().equals(drawable)) {
-                  //      DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, R.color.greenWhatever, true);
-                    } else {
-                    //    DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, R.color.redError, false);
-
-                    }
-               // }
-                    createEditStuffkie.setSource("app");
-                //DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(drawable), imageButton, R.color.brownMaroon, false);
-            }
-
-        }else if (createEditScenariokie != null) {
-            //if (!drawable.equals(createEditStuffkie.getSelectedProfilePhoto())) {
-            for (ImageButton button : imageButtons) {
-                if (button.getDrawable().equals(drawable)) {
-                    //      DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, R.color.greenWhatever, true);
-                } else {
-                    //    DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(button.getDrawable()), button, R.color.redError, false);
-
-                }
-                // }
-                //createEditScenariokie.setSource("app");
-                //DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(drawable), imageButton, R.color.brownMaroon, false);
-            }
-
-        }
-    }
 
     public void goBackBottomSheetOptionsPhotoProfile(){
         FragmentManager fragmentManager = getParentFragment() != null

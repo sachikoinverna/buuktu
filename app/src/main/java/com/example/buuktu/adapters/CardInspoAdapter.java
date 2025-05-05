@@ -1,7 +1,6 @@
 package com.example.buuktu.adapters;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,13 +15,8 @@ import com.example.buuktu.InspoDesafios;
 import com.example.buuktu.Notes;
 import com.example.buuktu.R;
 import com.example.buuktu.models.CardItem;
-import com.example.buuktu.models.FieldItem;
-import com.example.buuktu.views.Inspo;
-import com.example.buuktu.views.Register;
-import com.google.android.gms.dynamic.IFragmentWrapper;
 import com.google.android.material.card.MaterialCardView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CardInspoAdapter extends RecyclerView.Adapter<CardInspoAdapter.ViewHolder> implements View.OnClickListener {

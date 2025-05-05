@@ -28,7 +28,7 @@ public class WorldkieMenu extends Fragment implements View.OnClickListener {
     private TextView tv_characterkiesAdd,textView5,textView8;
     private Fragment createCharacterkie,createScenariokie,createStuffkie;
     ImageButton backButton,ib_profile_superior;
-   String worldkie_id;
+   String worldkie_id, userkie_id;
     public WorldkieMenu() {
         // Required empty public constructor
     }
@@ -49,6 +49,7 @@ public class WorldkieMenu extends Fragment implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             this.worldkie_id = getArguments().getString("worldkie_id");
+            this.userkie_id = getArguments().getString("userkie_id");
 
         }
     }
@@ -89,6 +90,7 @@ public class WorldkieMenu extends Fragment implements View.OnClickListener {
             createCharacterkie = new CreateCharacterkie();
             Bundle bundle = new Bundle();
             bundle.putString("worlkie_id",worldkie_id);
+            bundle.putString("userkie_id",userkie_id);
             createCharacterkie.setArguments(bundle);
 
             fragmentManager.beginTransaction().replace(R.id.fragment_container, createCharacterkie) .addToBackStack(null) // Permite regresar atrás con el botón de retroceso

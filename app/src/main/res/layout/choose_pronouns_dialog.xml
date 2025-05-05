@@ -4,114 +4,143 @@
     android:layout_height="match_parent"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/tools">
+
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         card_view:cardCornerRadius="10dp"
-        card_view:cardElevation="10dp">
+        card_view:cardElevation="10dp"
+        card_view:layout_constraintBottom_toBottomOf="parent"
+        card_view:layout_constraintEnd_toEndOf="parent"
+        card_view:layout_constraintStart_toStartOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <RadioGroup
-                android:id="@+id/radioGroup"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+            <ImageButton
+                android:id="@+id/bt_save_pronouns_characterkie"
+                android:layout_width="33dp"
+                android:layout_height="33dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent"
+                card_view:srcCompat="@drawable/twotone_save_24" />
+
+            <RadioButton
+                android:id="@+id/rb_ella_la_le_a_characterkie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                card_view:layout_constraintEnd_toEndOf="parent"
+                android:button="@drawable/radiobutton_custom"
+                android:text="Ella/la/le/-a"
+                card_view:layout_constraintEnd_toStartOf="@+id/rb_elle__le_e_characterkie"
                 card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toTopOf="parent">
+                card_view:layout_constraintTop_toBottomOf="@+id/bt_save_pronouns_characterkie" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/rb_elle__le_e_characterkie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:button="@drawable/radiobutton_custom"
+                android:text="Elle/le/-e"
+                card_view:layout_constraintEnd_toStartOf="@+id/rb_el_lo_le_o_characterkie"
+                card_view:layout_constraintStart_toEndOf="@+id/rb_ella_la_le_a_characterkie"
+                card_view:layout_constraintTop_toBottomOf="@+id/bt_save_pronouns_characterkie" />
 
-                    <RadioButton
-                        android:id="@+id/rb_ella_la_le_a_characterkie"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:button="@drawable/radiobutton_custom"
-                        android:text="Ella/la/le/-a" />
+            <RadioButton
+                android:id="@+id/rb_el_lo_le_o_characterkie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:button="@drawable/radiobutton_custom"
+                android:text="El/lo/le/-o"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintStart_toEndOf="@+id/rb_elle__le_e_characterkie"
+                card_view:layout_constraintTop_toBottomOf="@+id/bt_save_pronouns_characterkie" />
 
-                    <RadioButton
-                        android:id="@+id/rb_el_lo_le_o_characterkie"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:button="@drawable/radiobutton_custom"
-                        android:text="El/lo/le/-o" />
+            <RadioButton
+                android:id="@+id/rb_ella_la_a_characterkie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:button="@drawable/radiobutton_custom"
+                android:text="Ell@/la@/-@"
+                card_view:layout_constraintEnd_toStartOf="@+id/rb_elle_le_characterkie"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@+id/rb_ella_la_le_a_characterkie" />
 
-                    <RadioButton
-                        android:id="@+id/rb_elle__le_e_characterkie"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:button="@drawable/radiobutton_custom"
-                        android:text="Elle/le/-e" />
-                </LinearLayout>
+            <RadioButton
+                android:id="@+id/rb_elle_le_characterkie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:button="@drawable/radiobutton_custom"
+                android:text="Elle/le/-e"
+                card_view:layout_constraintEnd_toStartOf="@+id/rb_ellx_lx_x_characterkie"
+                card_view:layout_constraintStart_toEndOf="@+id/rb_ella_la_a_characterkie"
+                card_view:layout_constraintTop_toBottomOf="@+id/rb_elle__le_e_characterkie" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/rb_ellx_lx_x_characterkie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:button="@drawable/radiobutton_custom"
+                android:text="Ellx/lx/-x"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintStart_toEndOf="@+id/rb_elle_le_characterkie"
+                card_view:layout_constraintTop_toBottomOf="@+id/rb_el_lo_le_o_characterkie" />
 
-                    <RadioButton
-                        android:id="@+id/rb_ella_la_a_characterkie"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:button="@drawable/radiobutton_custom"
-                        android:text="Ell@/la@/-@" />
+            <RadioButton
+                android:id="@+id/rb_other_characterkie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:button="@drawable/radiobutton_custom"
+                android:text="Otro"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintStart_toEndOf="@+id/rb_unknown_pronouns_characterkie"
+                card_view:layout_constraintTop_toBottomOf="@+id/rb_elle_le_characterkie" />
 
-                    <RadioButton
-                        android:id="@+id/rb_elle_le_characterkie"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:button="@drawable/radiobutton_custom"
-                        android:text="Elle/le/-e" />
-
-                    <RadioButton
-                        android:id="@+id/rb_ellx_lx_x_characterkie"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:button="@drawable/radiobutton_custom"
-                        android:text="Ellx/lx/-x" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/rb_unknown_pronouns_characterkie"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:button="@drawable/radiobutton_custom"
-                        android:text="Unknown" />
-
-                    <RadioButton
-                        android:id="@+id/rb_other_characterkie"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:button="@drawable/radiobutton_custom"
-                        android:text="Otro" />
-                </LinearLayout>
-
-            </RadioGroup>
+            <RadioButton
+                android:id="@+id/rb_unknown_pronouns_characterkie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:button="@drawable/radiobutton_custom"
+                android:text="Unknown"
+                card_view:layout_constraintEnd_toStartOf="@+id/rb_other_characterkie"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@+id/rb_ella_la_a_characterkie" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/et_otherPronounsCharacterkieFilled"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
                 android:hint="@string/name"
                 android:textAlignment="center"
@@ -123,14 +152,11 @@
                 app:counterMaxLength="50"
                 app:errorEnabled="false"
                 app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/radioGroup"
                 app:startIconDrawable="@drawable/twotone_supervised_user_circle_24"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toBottomOf="@+id/radioGroup">
+                card_view:layout_constraintTop_toBottomOf="@+id/rb_unknown_pronouns_characterkie">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_otherPronounsCharacterkie"

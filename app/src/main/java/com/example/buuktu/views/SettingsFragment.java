@@ -15,7 +15,6 @@ import android.widget.ImageButton;
 import android.widget.SearchView;
 
 import com.example.buuktu.R;
-import com.example.buuktu.adapters.InspoMainAdapter;
 import com.example.buuktu.adapters.SettingsAdapter;
 import com.example.buuktu.models.SettingModel;
 

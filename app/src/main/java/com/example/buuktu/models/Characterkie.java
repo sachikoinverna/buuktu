@@ -2,31 +2,24 @@ package com.example.buuktu.models;
 
 import android.graphics.drawable.Drawable;
 
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.Exclude;
+
 import java.util.Date;
 
 public class Characterkie {
     String UID_WORLDKIE;
+    String UID_AUTHOR;
     private String UID;
     private String name;
-    private String surname;
     private String pronouns;
     private String birthday;
-    private String horoscope;
-    private Date deathday;
-    private boolean alive;
     private boolean photo_default;
-    private Drawable photo;
     private boolean draft;
-    boolean characterkiePrivate;
-
-    public boolean isCharacterkiePrivate() {
-        return characterkiePrivate;
-    }
-
-    public void setCharacterkiePrivate(boolean characterkiePrivate) {
-        this.characterkiePrivate = characterkiePrivate;
-    }
-
+    boolean characterkie_private;
+    private String photo_id;
+    private String status;
+    private String gender;
     public Characterkie() {
     }
 
@@ -35,36 +28,83 @@ public class Characterkie {
         this.name=name;
     }
 
+    public Characterkie(String UID_WORLDKIE, String UID_AUTHOR, String name, String pronouns, String birthday, boolean photo_default, boolean draft, boolean characterkie_private, String photo_id, String status, String gender) {
+        this.UID_WORLDKIE = UID_WORLDKIE;
+        this.UID_AUTHOR = UID_AUTHOR;
+        this.name = name;
+        this.pronouns = pronouns;
+        this.birthday = birthday;
+        this.photo_default = photo_default;
+        this.draft = draft;
+        this.characterkie_private = characterkie_private;
+        this.photo_id = photo_id;
+        this.status = status;
+        this.gender = gender;
+    }
+
+    public static Characterkie fromSnapshot(DocumentSnapshot document) {
+        if (document == null || !document.exists()) {
+            return null;
+        }
+        Characterkie characterkie = new Characterkie();
+        characterkie.setName(document.getString("name"));
+        characterkie.setUID(document.getId());
+
+        characterkie.setBirthday(document.getString("birthday"));
+        characterkie.setPhoto_default(document.getBoolean("photo_default"));
+        characterkie.setDraft(document.getBoolean("draft"));
+        characterkie.setCharacterkie_private(document.getBoolean("characterkie_private"));
+        characterkie.setPhoto_id(document.getString("photo_id"));
+        characterkie.setPronouns(document.getString("pronouns"));
+        return characterkie;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public void setPhoto_id(String photo_id) {
+        this.photo_id = photo_id;
+    }
+
+    public String getPhoto_id() {
+        return photo_id;
+    }
+
+    public String getUID_AUTHOR() {
+        return UID_AUTHOR;
+    }
+
+    public void setUID_AUTHOR(String UID_AUTHOR) {
+        this.UID_AUTHOR = UID_AUTHOR;
+    }
+
+    public boolean isCharacterkie_private() {
+        return characterkie_private;
+    }
+
+    public void setCharacterkie_private(boolean characterkie_private) {
+        this.characterkie_private = characterkie_private;
+    }
+
     public boolean isDraft() {
         return draft;
     }
 
     public void setDraft(boolean draft) {
         this.draft = draft;
-    }
-
-    public boolean isAlive() {
-        return alive;
-    }
-
-    public void setAlive(boolean alive) {
-        this.alive = alive;
-    }
-
-    public Date getDeathday() {
-        return deathday;
-    }
-
-    public void setDeathday(Date deathday) {
-        this.deathday = deathday;
-    }
-
-    public String getHoroscope() {
-        return horoscope;
-    }
-
-    public void setHoroscope(String horoscope) {
-        this.horoscope = horoscope;
     }
 
     public String getBirthday() {
@@ -83,14 +123,6 @@ public class Characterkie {
         this.pronouns = pronouns;
     }
 
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
     public String getName() {
         return name;
     }
@@ -99,6 +131,7 @@ public class Characterkie {
         this.name = name;
     }
 
+    @Exclude
     public String getUID() {
         return UID;
     }
@@ -107,10 +140,11 @@ public class Characterkie {
         return UID_WORLDKIE;
     }
 
+
     public void setUID_WORLDKIE(String UID_WORLDKIE) {
         this.UID_WORLDKIE = UID_WORLDKIE;
     }
-
+    @Exclude
     public void setUID(String UID) {
         this.UID = UID;
     }
@@ -119,11 +153,5 @@ public class Characterkie {
     }
     public void setPhoto_default(boolean photo_default) {
         this.photo_default = photo_default;
-    }
-    public Drawable getPhoto() {
-        return photo;
-    }
-    public void setPhoto(Drawable photo) {
-        this.photo = photo;
     }
 }
