@@ -31,6 +31,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.buuktu.bottomsheet.BottomSheetChooseBirthday;
 import com.example.buuktu.bottomsheet.BottomSheetChooseGender;
+import com.example.buuktu.bottomsheet.BottomSheetChooseMonth;
 import com.example.buuktu.bottomsheet.BottomSheetChoosePronouns;
 import com.example.buuktu.bottomsheet.BottomSheetChooseState;
 import com.example.buuktu.bottomsheet.BottomSheetProfilePhoto;
@@ -581,8 +582,11 @@ ImageButton bt_basic_info_characterkies;
             bottomSheetChooseGender = new BottomSheetChooseGender(optionGender,optionGenderString);
             bottomSheetChooseGender.show(getChildFragmentManager(), bottomSheetChooseGender.getTag());
         } else if(v.getId()==R.id.bt_state_characterkie){
-            bottomSheetChooseState = new BottomSheetChooseState(optionStatus,optionStatusString);
-            bottomSheetChooseState.show(getChildFragmentManager(), bottomSheetChooseState.getTag());
+        //    bottomSheetChooseState = new BottomSheetChooseState(optionStatus,optionStatusString);
+        //    bottomSheetChooseState.show(getChildFragmentManager(), bottomSheetChooseState.getTag());
+            BottomSheetChooseMonth bottomSheetChooseMonth =  new BottomSheetChooseMonth(2);
+            bottomSheetChooseMonth.show(getChildFragmentManager(),bottomSheetChooseMonth.getTag());
+
         } else if (v.getId()==R.id.bt_basic_info_characterkies) {
             showHideBasicInfo();
         }
