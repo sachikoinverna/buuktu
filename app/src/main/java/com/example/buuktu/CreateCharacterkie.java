@@ -93,6 +93,7 @@ ImageButton bt_basic_info_characterkies;
     Characterkie characterkie;
     private int optionPronouns, optionBirthday,optionGender,optionStatus;
     String optionPronounsString, optionBirthdayString,optionGenderString,optionStatusString;
+    int year,day,month;
     CreateEditGeneralDialog dialog;
     private final FirebaseStorage storage = FirebaseStorage.getInstance("gs://buuk-tu-characterkies");
 
@@ -484,6 +485,31 @@ ImageButton bt_basic_info_characterkies;
                     );
         }
         }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
     private void editDataFirestore(){
        /* if(!et_nameWorldkieCreate.getText().toString().equals("")) {
             dialog.show();
@@ -570,7 +596,7 @@ ImageButton bt_basic_info_characterkies;
         } else if (v.getId()==R.id.ib_select_img_create_characterkie) {
             selectImage();
         } else if(v.getId()==R.id.bt_birthday_characterkie){
-            BottomSheetChooseBirthday bottomSheetChooseBirthday = new BottomSheetChooseBirthday(optionBirthday);
+            BottomSheetChooseBirthday bottomSheetChooseBirthday = new BottomSheetChooseBirthday(optionBirthday,1,1,1);
             bottomSheetChooseBirthday.show(getChildFragmentManager(), bottomSheetChooseBirthday.getTag());
         } else if (v.getId()==R.id.bt_pronouns_characterkie) {
             bottomSheetChoosePronouns = new BottomSheetChoosePronouns(optionPronouns,optionPronounsString);
