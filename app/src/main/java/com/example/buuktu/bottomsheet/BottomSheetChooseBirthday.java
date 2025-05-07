@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.ListPopupWindow;
 import android.widget.RadioButton;
 import android.widget.Spinner;
@@ -30,17 +31,14 @@ import java.util.List;
 import java.util.Locale;
 
 public class BottomSheetChooseBirthday extends BottomSheetDialogFragment implements View.OnClickListener{
-    RadioButton rb_unknown_birthday,rb_full_birthday,rb_day_month_birthday,rb_month_year_birthday,rb_day_year_birthday,rb_day_birthday,rb_month_birthday,rb_year_birthday,rb_checked;
+    RadioButton rb_unknown_birthday,rb_full_birthday,rb_day_month_birthday,rb_month_year_birthday,rb_month_birthday,rb_year_birthday,rb_checked;
+    ImageButton bt_day_1,bt_day_2,bt_day_3,bt_day_4,bt_day_5,bt_day_6,bt_day_7,bt_day_8,bt_day_9,bt_day_10,bt_day_11,bt_day_12,bt_day_13,bt_day_14,bt_day_15,bt_day_16,bt_day_17,bt_day_18,bt_day_19,bt_day_20,bt_day_21,bt_day_22,bt_day_23,bt_day_24,bt_day_25,bt_day_26,bt_day_27,bt_day_28,bt_day_29,bt_day_30,bt_day_31,bt_previous_month_birthday_selector,bt_next_month_birthday_selector,bt_show_day_month_birthday_selector,bt_show_year_selector;
     int option;
     Context context;
-    DatePicker datePicker;
     List<RadioButton> allRadioButtons = new ArrayList<>();
-    Spinner sp_day_birthday;
-    TextInputLayout et_birthdayCreateCharacterkieFull;
-    TextInputEditText et_birthdayCreateCharacterkie;
-    String[] days = new String[]{"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
+    TextInputLayout et_yearBirthdayCreateFull;
+    TextInputEditText et_yearBirthdayCreate;
     String optionString;
-    Button bt_prueba;
     public BottomSheetChooseBirthday(int option) {
         this.option = option;
     }
@@ -68,9 +66,8 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
         rb_month_year_birthday= view.findViewById(R.id.rb_month_year_birthday);
         rb_month_birthday= view.findViewById(R.id.rb_month_birthday);
         rb_year_birthday= view.findViewById(R.id.rb_year_birthday);
-
-        bt_prueba = view.findViewById(R.id.bt_prueba);
-
+        et_yearBirthdayCreateFull = view.findViewById(R.id.et_yearBirthdayCreateFull);
+        et_yearBirthdayCreate = view.findViewById(R.id.et_yearBirthdayCreate);
          allRadioButtons.add(rb_full_birthday);
         allRadioButtons.add(rb_day_month_birthday);
         allRadioButtons.add(rb_unknown_birthday);
@@ -85,11 +82,8 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
                 rb.setChecked(true);
                 rb_checked = view.findViewById(rb.getId());
                 if(rb.getId()==R.id.rb_unknown_birthday){
-                    datePicker.setVisibility(View.GONE);
                     // activar el que se pulsó
                 }else {
-                    datePicker.setVisibility(View.VISIBLE);
-                    hideField(datePicker,getFormatForSelectedOption(rb.getId()));
                 }
             });
         }
@@ -113,7 +107,6 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
     private void setInitialOption(){
         if(option==R.id.rb_unknown_birthday){
             rb_unknown_birthday.setChecked(true);
-            datePicker.setVisibility(View.GONE);
         } else if (option==R.id.rb_full_birthday) {
             rb_full_birthday.setChecked(true);
         }else if(option==R.id.rb_day_month_birthday){
@@ -158,7 +151,7 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
         }
         return result;
     }
-    private void hideField(DatePicker datePicker, int formatType) {
+    private void hideShowField(DatePicker datePicker, int formatType) {
         // Aquí podemos ocultar el campo de fecha según el tipo de formato seleccionado
         try {
             // Reflexión para acceder a las vistas internas del DatePicker

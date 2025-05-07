@@ -1,1072 +1,1178 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/tools">
-
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        card_view:cardCornerRadius="10dp"
-        card_view:cardElevation="10dp">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-
-                    <ImageView
-                        android:id="@+id/imageView3"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:tint="#555F1D"
-                        android:tintMode="multiply"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView10"
-                        app:layout_constraintVertical_bias="0.0"
-                        app:srcCompat="@drawable/button_backgground" />
-
-                    <TextView
-                        android:id="@+id/textView64"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/thirty"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        card_view:layout_editor_absoluteX="181dp"
-                        card_view:layout_editor_absoluteY="365dp" />
-
-                    <ImageButton
-                        android:id="@+id/bt_day_43"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:tint="#9FA8DA"
-                        android:tintMode="multiply"
-                        app:srcCompat="@drawable/button_backgground"
-                        card_view:layout_editor_absoluteX="139dp"
-                        card_view:layout_editor_absoluteY="351dp" />
-
-                    <ImageButton
-                        android:id="@+id/bt_day_25"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:tint="#9FA8DA"
-                        android:tintMode="multiply"
-                        app:srcCompat="@drawable/button_backgground"
-                        card_view:layout_editor_absoluteX="126dp"
-                        card_view:layout_editor_absoluteY="205dp" />
-
-                    <TextView
-                        android:id="@+id/textView49"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/twentyfive"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/bt_day_25"
-                        app:layout_constraintEnd_toEndOf="@+id/bt_day_25"
-                        app:layout_constraintStart_toStartOf="@+id/bt_day_25"
-                        app:layout_constraintTop_toTopOf="@+id/bt_day_25" />
-
-                    <ImageButton
-                        android:id="@+id/bt_day_24"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:tint="#9FA8DA"
-                        android:tintMode="multiply"
-                        app:srcCompat="@drawable/button_backgground"
-                        card_view:layout_editor_absoluteX="239dp"
-                        card_view:layout_editor_absoluteY="353dp" />
-
-                    <TextView
-                        android:id="@+id/textView48"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/twentyfour"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/bt_day_24"
-                        app:layout_constraintEnd_toEndOf="@+id/bt_day_24"
-                        app:layout_constraintStart_toStartOf="@+id/bt_day_24"
-                        app:layout_constraintTop_toTopOf="@+id/bt_day_24" />
-
-                    <ImageButton
-                        android:id="@+id/bt_day_23"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:tint="#9FA8DA"
-                        android:tintMode="multiply"
-                        app:srcCompat="@drawable/button_backgground"
-                        card_view:layout_editor_absoluteX="169dp"
-                        card_view:layout_editor_absoluteY="165dp" />
-
-                    <TextView
-                        android:id="@+id/textView47"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/twentythree"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/bt_day_23"
-                        app:layout_constraintEnd_toEndOf="@+id/bt_day_23"
-                        app:layout_constraintStart_toStartOf="@+id/bt_day_23"
-                        app:layout_constraintTop_toTopOf="@+id/bt_day_23" />
-
-                    <TextView
-                        android:id="@+id/textView45"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/twentytwo"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        card_view:layout_editor_absoluteX="128dp"
-                        card_view:layout_editor_absoluteY="179dp" />
-
-                    <ImageButton
-                        android:id="@+id/bt_day_22"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:tint="#9FA8DA"
-                        android:tintMode="multiply"
-                        app:srcCompat="@drawable/button_backgground"
-                        card_view:layout_editor_absoluteX="88dp"
-                        card_view:layout_editor_absoluteY="165dp" />
-
-                    <TextView
-                        android:id="@+id/textView52"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/twentytwo"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/bt_day_22"
-                        app:layout_constraintEnd_toEndOf="@+id/bt_day_22"
-                        app:layout_constraintStart_toStartOf="@+id/bt_day_22"
-                        app:layout_constraintTop_toTopOf="@+id/bt_day_22" />
-
-                    <ImageButton
-                        android:id="@+id/bt_day_21"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:tint="#9FA8DA"
-                        android:tintMode="multiply"
-                        app:srcCompat="@drawable/button_backgground"
-                        card_view:layout_editor_absoluteX="5dp"
-                        card_view:layout_editor_absoluteY="179dp" />
-
-                    <TextView
-                        android:id="@+id/textView44"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/twentyone"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/bt_day_21"
-                        app:layout_constraintEnd_toEndOf="@+id/bt_day_21"
-                        app:layout_constraintStart_toStartOf="@+id/bt_day_21"
-                        app:layout_constraintTop_toTopOf="@+id/bt_day_21" />
-
-                    <ImageButton
-                        android:id="@+id/bt_day_20"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:tint="#9FA8DA"
-                        android:tintMode="multiply"
-                        app:layout_constraintStart_toEndOf="@+id/bt_day_19"
-                        app:srcCompat="@drawable/button_backgground"
-                        card_view:layout_editor_absoluteY="332dp" />
-
-                    <TextView
-                        android:id="@+id/textView43"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/twenty"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/bt_day_20"
-                        app:layout_constraintEnd_toEndOf="@+id/bt_day_20"
-                        app:layout_constraintStart_toStartOf="@+id/bt_day_20"
-                        app:layout_constraintTop_toTopOf="@+id/bt_day_20" />
-
-                    <ImageButton
-                        android:id="@+id/bt_day_19"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:tint="#9FA8DA"
-                        android:tintMode="multiply"
-                        app:layout_constraintTop_toBottomOf="@+id/bt_day_10"
-                        app:srcCompat="@drawable/button_backgground"
-                        card_view:layout_editor_absoluteX="18dp" />
-
-                    <TextView
-                        android:id="@+id/textView42"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/nineteen"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/bt_day_19"
-                        app:layout_constraintEnd_toEndOf="@+id/bt_day_19"
-                        app:layout_constraintStart_toStartOf="@+id/bt_day_19"
-                        app:layout_constraintTop_toTopOf="@+id/bt_day_19" />
-
-                    <ImageButton
-                        android:id="@+id/bt_day_18"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:tint="#9FA8DA"
-                        android:tintMode="multiply"
-                        app:layout_constraintEnd_toEndOf="@+id/imageView3"
-                        app:layout_constraintStart_toEndOf="@+id/bt_day_17"
-                        app:layout_constraintTop_toBottomOf="@+id/bt_day_9"
-                        app:srcCompat="@drawable/button_backgground" />
-
-                    <TextView
-                        android:id="@+id/textView41"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/eightteen"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/bt_day_18"
-                        app:layout_constraintEnd_toEndOf="@+id/bt_day_18"
-                        app:layout_constraintStart_toStartOf="@+id/bt_day_18"
-                        app:layout_constraintTop_toTopOf="@+id/bt_day_18" />
-
-                    <ImageButton
-                        android:id="@+id/bt_day_17"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:tint="#9FA8DA"
-                        android:tintMode="multiply"
-                        app:layout_constraintStart_toEndOf="@+id/bt_day_16"
-                        app:layout_constraintEnd_toStartOf="@id/bt_day_18"
-                        app:layout_constraintTop_toBottomOf="@+id/bt_day_8"
-                        app:srcCompat="@drawable/button_backgground" />
-
-                    <TextView
-                        android:id="@+id/textView38"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/seventeen"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/bt_day_17"
-                        app:layout_constraintEnd_toEndOf="@+id/bt_day_17"
-                        app:layout_constraintStart_toStartOf="@+id/bt_day_17"
-                        app:layout_constraintTop_toTopOf="@+id/bt_day_17" />
-
-                    <TextView
-                        android:id="@+id/textView39"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/fiveteen"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        card_view:layout_editor_absoluteX="61dp"
-                        card_view:layout_editor_absoluteY="212dp" />
-
-                    <ImageButton
-                        android:id="@+id/bt_day_16"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:tint="#9FA8DA"
-                        android:tintMode="multiply"
-                        app:layout_constraintStart_toEndOf="@+id/bt_day_15"
-                        app:layout_constraintEnd_toStartOf="@id/bt_day_17"
-                        app:layout_constraintTop_toBottomOf="@+id/bt_day_7"
-                        app:srcCompat="@drawable/button_backgground" />
-
-                    <TextView
-                        android:id="@+id/textView40"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/sixteen"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/bt_day_16"
-                        app:layout_constraintEnd_toEndOf="@+id/bt_day_16"
-                        app:layout_constraintStart_toStartOf="@+id/bt_day_16"
-                        app:layout_constraintTop_toTopOf="@+id/bt_day_16" />
-
-                    <ImageButton
-                        android:id="@+id/bt_day_14"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:tint="#9FA8DA"
-                        android:tintMode="multiply"
-                        app:layout_constraintStart_toEndOf="@+id/bt_day_13"
-                        app:layout_constraintEnd_toStartOf="@id/bt_day_15"
-                        app:layout_constraintTop_toBottomOf="@+id/bt_day_5"
-                        app:srcCompat="@drawable/button_backgground" />
-
-                    <TextView
-                        android:id="@+id/textView37"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/fourteen"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/bt_day_14"
-                        app:layout_constraintEnd_toEndOf="@+id/bt_day_14"
-                        app:layout_constraintStart_toStartOf="@+id/bt_day_14"
-                        app:layout_constraintTop_toTopOf="@+id/bt_day_14" />
-
-                    <ImageButton
-                        android:id="@+id/bt_day_15"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:tint="#9FA8DA"
-                        android:tintMode="multiply"
-                        app:layout_constraintStart_toEndOf="@+id/bt_day_14"
-                        app:layout_constraintEnd_toStartOf="@id/bt_day_16"
-                        app:layout_constraintTop_toBottomOf="@+id/bt_day_6"
-                        app:srcCompat="@drawable/button_backgground" />
-
-                    <TextView
-                        android:id="@+id/textView51"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/fiveteen"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/bt_day_15"
-                        app:layout_constraintEnd_toEndOf="@+id/bt_day_15"
-                        app:layout_constraintStart_toStartOf="@+id/bt_day_15"
-                        app:layout_constraintTop_toTopOf="@+id/bt_day_15" />
-
-                    <ImageButton
-                        android:id="@+id/bt_day_12"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:tint="#9FA8DA"
-                        android:tintMode="multiply"
-                        app:layout_constraintStart_toEndOf="@+id/bt_day_11"
-                        app:layout_constraintEnd_toStartOf="@id/bt_day_13"
-                        app:layout_constraintTop_toBottomOf="@+id/bt_day_3"
-                        app:srcCompat="@drawable/button_backgground" />
-
-                    <TextView
-                        android:id="@+id/textView36"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/twelve"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/bt_day_12"
-                        app:layout_constraintEnd_toEndOf="@+id/bt_day_12"
-                        app:layout_constraintStart_toStartOf="@+id/bt_day_12"
-                        app:layout_constraintTop_toTopOf="@+id/bt_day_12" />
-
-                    <ImageButton
-                        android:id="@+id/bt_day_11"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:tint="#9FA8DA"
-                        android:tintMode="multiply"
-                        app:layout_constraintStart_toEndOf="@+id/bt_day_10"
-                        app:layout_constraintEnd_toStartOf="@id/bt_day_12"
-                        app:layout_constraintTop_toBottomOf="@+id/bt_day_2"
-                        app:srcCompat="@drawable/button_backgground" />
-
-                    <TextView
-                        android:id="@+id/textView35"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/eleven"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/bt_day_11"
-                        app:layout_constraintEnd_toEndOf="@+id/bt_day_11"
-                        app:layout_constraintStart_toStartOf="@+id/bt_day_11"
-                        app:layout_constraintTop_toTopOf="@+id/bt_day_11" />
-
-                    <ImageButton
-                        android:id="@+id/bt_day_10"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:tint="#9FA8DA"
-                        android:tintMode="multiply"
-                        app:layout_constraintEnd_toStartOf="@id/bt_day_11"
-                        app:layout_constraintStart_toStartOf="@+id/imageView3"
-                        app:layout_constraintTop_toBottomOf="@+id/bt_day_1"
-                        app:srcCompat="@drawable/button_backgground" />
-
-                    <TextView
-                        android:id="@+id/textView34"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/ten"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/bt_day_10"
-                        app:layout_constraintEnd_toEndOf="@+id/bt_day_10"
-                        app:layout_constraintStart_toStartOf="@+id/bt_day_10"
-                        app:layout_constraintTop_toTopOf="@+id/bt_day_10" />
-
-                    <ImageButton
-                        android:id="@+id/bt_day_13"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:tint="#9FA8DA"
-                        android:tintMode="multiply"
-                        app:layout_constraintStart_toEndOf="@+id/bt_day_12"
-                        app:layout_constraintEnd_toStartOf="@id/bt_day_14"
-                        app:layout_constraintTop_toBottomOf="@+id/bt_day_4"
-                        app:srcCompat="@drawable/button_backgground" />
-
-                    <TextView
-                        android:id="@+id/textView33"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/thirdteen"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/bt_day_13"
-                        app:layout_constraintEnd_toEndOf="@+id/bt_day_13"
-                        app:layout_constraintStart_toStartOf="@+id/bt_day_13"
-                        app:layout_constraintTop_toTopOf="@+id/bt_day_13" />
-
-                    <ImageButton
-                        android:id="@+id/bt_day_8"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:tint="#9FA8DA"
-                        android:tintMode="multiply"
-                        app:layout_constraintEnd_toStartOf="@id/bt_day_9"
-                        app:layout_constraintStart_toEndOf="@+id/bt_day_7"
-                        app:layout_constraintTop_toBottomOf="@+id/imageButton3"
-                        app:srcCompat="@drawable/button_backgground" />
-
-                    <TextView
-                        android:id="@+id/textView31"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/eight"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/bt_day_8"
-                        app:layout_constraintEnd_toEndOf="@+id/bt_day_8"
-                        app:layout_constraintStart_toStartOf="@+id/bt_day_8"
-                        app:layout_constraintTop_toTopOf="@+id/bt_day_8" />
-
-                    <ImageButton
-                        android:id="@+id/bt_day_9"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:tint="#9FA8DA"
-                        android:tintMode="multiply"
-                        app:layout_constraintEnd_toEndOf="@+id/imageView3"
-                        app:layout_constraintStart_toEndOf="@+id/bt_day_8"
-                        app:layout_constraintTop_toBottomOf="@+id/imageButton3"
-                        app:srcCompat="@drawable/button_backgground" />
-
-                    <TextView
-                        android:id="@+id/textView32"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/nine"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/bt_day_9"
-                        app:layout_constraintEnd_toEndOf="@+id/bt_day_9"
-                        app:layout_constraintHorizontal_bias="0.518"
-                        app:layout_constraintStart_toStartOf="@+id/bt_day_9"
-                        app:layout_constraintTop_toTopOf="@+id/bt_day_9" />
-
-                    <ImageButton
-                        android:id="@+id/bt_day_6"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:tint="#9FA8DA"
-                        android:tintMode="multiply"
-                        app:layout_constraintEnd_toStartOf="@+id/bt_day_7"
-                        app:layout_constraintStart_toEndOf="@+id/bt_day_5"
-                        app:layout_constraintTop_toBottomOf="@+id/imageButton3"
-                        app:srcCompat="@drawable/button_backgground" />
-
-                    <TextView
-                        android:id="@+id/textView30"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/six"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/bt_day_6"
-                        app:layout_constraintEnd_toEndOf="@+id/bt_day_6"
-                        app:layout_constraintStart_toStartOf="@+id/bt_day_6"
-                        app:layout_constraintTop_toTopOf="@+id/bt_day_6" />
-
-                    <ImageButton
-                        android:id="@+id/bt_day_5"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:tint="#9FA8DA"
-                        android:tintMode="multiply"
-                        app:layout_constraintEnd_toStartOf="@id/bt_day_6"
-                        app:layout_constraintStart_toEndOf="@+id/bt_day_4"
-                        app:layout_constraintTop_toBottomOf="@+id/imageButton3"
-                        app:srcCompat="@drawable/button_backgground" />
-
-                    <TextView
-                        android:id="@+id/textView24"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/five"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/bt_day_5"
-                        app:layout_constraintEnd_toEndOf="@+id/bt_day_5"
-                        app:layout_constraintStart_toStartOf="@+id/bt_day_5"
-                        app:layout_constraintTop_toTopOf="@+id/bt_day_5" />
-
-                    <ImageButton
-                        android:id="@+id/bt_day_4"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:tint="#9FA8DA"
-                        android:tintMode="multiply"
-                        app:layout_constraintEnd_toStartOf="@+id/bt_day_5"
-                        app:layout_constraintStart_toEndOf="@+id/bt_day_3"
-                        app:layout_constraintTop_toBottomOf="@+id/imageButton3"
-                        app:srcCompat="@drawable/button_backgground" />
-
-                    <TextView
-                        android:id="@+id/textView28"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="2dp"
-                        android:layout_marginBottom="2dp"
-                        android:text="@string/four"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/bt_day_4"
-                        app:layout_constraintEnd_toEndOf="@+id/bt_day_4"
-                        app:layout_constraintHorizontal_bias="0.423"
-                        app:layout_constraintStart_toStartOf="@+id/bt_day_4"
-                        app:layout_constraintTop_toTopOf="@+id/bt_day_4" />
-
-                    <ImageButton
-                        android:id="@+id/bt_day_7"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:tint="#9FA8DA"
-                        android:tintMode="multiply"
-                        app:layout_constraintEnd_toStartOf="@+id/bt_day_8"
-                        app:layout_constraintStart_toEndOf="@+id/bt_day_6"
-
-                        app:layout_constraintTop_toBottomOf="@+id/imageButton3"
-                        app:srcCompat="@drawable/button_backgground" />
-
-                    <TextView
-                        android:id="@+id/textView29"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/seven"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/bt_day_7"
-                        app:layout_constraintEnd_toEndOf="@+id/bt_day_7"
-                        app:layout_constraintStart_toStartOf="@+id/bt_day_7"
-                        app:layout_constraintTop_toTopOf="@+id/bt_day_7" />
-
-                    <ImageButton
-                        android:id="@+id/bt_day_2"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:tint="#9FA8DA"
-                        android:tintMode="multiply"
-                        app:layout_constraintEnd_toStartOf="@+id/bt_day_3"
-                        app:layout_constraintStart_toEndOf="@+id/bt_day_1"
-                        app:layout_constraintTop_toBottomOf="@+id/imageButton3"
-                        app:srcCompat="@drawable/button_backgground" />
-
-                    <TextView
-                        android:id="@+id/textView26"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/two"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/bt_day_2"
-                        app:layout_constraintEnd_toEndOf="@+id/bt_day_2"
-                        app:layout_constraintStart_toStartOf="@+id/bt_day_2"
-                        app:layout_constraintTop_toTopOf="@+id/bt_day_2" />
-
-                    <ImageButton
-                        android:id="@+id/bt_day_1"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:tint="#9FA8DA"
-                        android:tintMode="multiply"
-                        app:layout_constraintEnd_toStartOf="@+id/bt_day_2"
-                        app:layout_constraintStart_toStartOf="@+id/imageView3"
-                        app:layout_constraintTop_toBottomOf="@+id/imageButton3"
-                        app:srcCompat="@drawable/button_backgground" />
-
-                    <TextView
-                        android:id="@+id/textView25"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/one"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/bt_day_1"
-                        app:layout_constraintEnd_toEndOf="@+id/bt_day_1"
-                        app:layout_constraintStart_toStartOf="@+id/bt_day_1"
-                        app:layout_constraintTop_toTopOf="@+id/bt_day_1" />
-
-                    <ImageButton
-                        android:id="@+id/bt_day_26"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:tint="#9FA8DA"
-                        android:tintMode="multiply"
-                        app:srcCompat="@drawable/button_backgground"
-                        card_view:layout_editor_absoluteX="273dp"
-                        card_view:layout_editor_absoluteY="226dp" />
-
-                    <ImageButton
-                        android:id="@+id/bt_day_27"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:tint="#9FA8DA"
-                        android:tintMode="multiply"
-                        app:srcCompat="@drawable/button_backgground"
-                        card_view:layout_editor_absoluteX="330dp"
-                        card_view:layout_editor_absoluteY="344dp" />
-
-                    <TextView
-                        android:id="@+id/textView23"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/twentyseven"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/bt_day_27"
-                        app:layout_constraintEnd_toEndOf="@+id/bt_day_27"
-                        app:layout_constraintStart_toStartOf="@+id/bt_day_27"
-                        app:layout_constraintTop_toTopOf="@+id/bt_day_27" />
-
-                    <TextView
-                        android:id="@+id/textView22"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/twentysix"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/bt_day_26"
-                        app:layout_constraintEnd_toEndOf="@+id/bt_day_26"
-                        app:layout_constraintStart_toStartOf="@+id/bt_day_26"
-                        app:layout_constraintTop_toTopOf="@+id/bt_day_26" />
-
-                    <ImageButton
-                        android:id="@+id/bt_day_3"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:tint="#9FA8DA"
-                        android:tintMode="multiply"
-                        app:layout_constraintEnd_toStartOf="@+id/bt_day_4"
-                        app:layout_constraintStart_toEndOf="@+id/bt_day_2"
-                        app:layout_constraintTop_toBottomOf="@+id/imageButton3"
-                        app:srcCompat="@drawable/button_backgground" />
-
-                    <TextView
-                        android:id="@+id/textView27"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/three"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/bt_day_3"
-                        app:layout_constraintEnd_toEndOf="@+id/bt_day_3"
-                        app:layout_constraintStart_toStartOf="@+id/bt_day_3"
-                        app:layout_constraintTop_toTopOf="@+id/bt_day_3" />
-
-                    <ImageButton
-                        android:id="@+id/bt_day_28"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:tint="#9FA8DA"
-                        android:tintMode="multiply"
-                        app:srcCompat="@drawable/button_backgground"
-                        card_view:layout_editor_absoluteX="73dp"
-                        card_view:layout_editor_absoluteY="351dp" />
-
-                    <TextView
-                        android:id="@+id/textView20"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/twentyeight"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/bt_day_28"
-                        app:layout_constraintEnd_toEndOf="@+id/bt_day_28"
-                        app:layout_constraintStart_toStartOf="@+id/bt_day_28"
-                        app:layout_constraintTop_toTopOf="@+id/bt_day_28" />
-
-                    <ImageButton
-                        android:id="@+id/bt_day_29"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:tint="#9FA8DA"
-                        android:tintMode="multiply"
-                        app:srcCompat="@drawable/button_backgground"
-                        card_view:layout_editor_absoluteX="278dp"
-                        card_view:layout_editor_absoluteY="332dp" />
-
-                    <TextView
-                        android:id="@+id/textView19"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/twentynine"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/bt_day_29"
-                        app:layout_constraintEnd_toEndOf="@+id/bt_day_29"
-                        app:layout_constraintStart_toStartOf="@+id/bt_day_29"
-                        app:layout_constraintTop_toTopOf="@+id/bt_day_29" />
-
-                    <ImageButton
-                        android:id="@+id/bt_day_30"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:tint="#9FA8DA"
-                        android:tintMode="multiply"
-                        app:srcCompat="@drawable/button_backgground"
-                        card_view:layout_editor_absoluteX="106dp"
-                        card_view:layout_editor_absoluteY="126dp" />
-
-                    <TextView
-                        android:id="@+id/textView18"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/thirty"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/bt_day_30"
-                        app:layout_constraintEnd_toEndOf="@+id/bt_day_30"
-                        app:layout_constraintStart_toStartOf="@+id/bt_day_30"
-                        app:layout_constraintTop_toTopOf="@+id/bt_day_30" />
-
-                    <ImageButton
-                        android:id="@+id/bt_day_31"
-                        android:layout_width="30dp"
-                        android:layout_height="33dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:tint="#9FA8DA"
-                        android:tintMode="multiply"
-                        app:srcCompat="@drawable/button_backgground"
-                        card_view:layout_editor_absoluteX="112dp"
-                        card_view:layout_editor_absoluteY="338dp" />
-
-                    <TextView
-                        android:id="@+id/textView17"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/thirtyone"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/bt_day_31"
-                        app:layout_constraintEnd_toEndOf="@+id/bt_day_31"
-                        app:layout_constraintStart_toStartOf="@+id/bt_day_31"
-                        app:layout_constraintTop_toTopOf="@+id/bt_day_31" />
-
-
-                    <ImageButton
-                        android:id="@+id/ib_save_day_dialog"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/twotone_save_24" />
-
-                    <ImageButton
-                        android:id="@+id/ib_back_day_dialog"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/twotone_arrow_circle_left_24" />
-
-                    <RadioButton
-                        android:id="@+id/rb_full_birthday"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:button="@drawable/radiobutton_custom"
-                        android:buttonTint="#835959"
-                        android:text="DD/MM/YYYY"
-                        app:layout_constraintEnd_toStartOf="@+id/rb_day_month_birthday"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/ib_save_day_dialog" />
-
-                    <RadioButton
-                        android:id="@+id/rb_day_month_birthday"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="21dp"
-                        android:button="@drawable/radiobutton_custom"
-                        android:buttonTint="#835959"
-                        android:text="DD/MM"
-                        app:layout_constraintEnd_toStartOf="@+id/rb_month_year_birthday"
-                        app:layout_constraintStart_toEndOf="@+id/rb_full_birthday"
-                        app:layout_constraintTop_toBottomOf="@+id/ib_save_day_dialog" />
-
-                    <RadioButton
-                        android:id="@+id/rb_month_year_birthday"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:button="@drawable/radiobutton_custom"
-                        android:buttonTint="#835959"
-                        android:text="MM/YYYY"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/rb_day_month_birthday"
-                        app:layout_constraintTop_toBottomOf="@+id/ib_save_day_dialog" />
-
-                    <RadioButton
-                        android:id="@+id/rb_unknown_birthday"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:button="@drawable/radiobutton_custom"
-                        android:buttonTint="#835959"
-                        android:text="Desconocida"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/rb_year_birthday"
-                        app:layout_constraintTop_toBottomOf="@+id/rb_month_year_birthday" />
-
-                    <RadioButton
-                        android:id="@+id/rb_month_birthday"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:button="@drawable/radiobutton_custom"
-                        android:text="Mes"
-                        app:layout_constraintEnd_toStartOf="@+id/rb_year_birthday"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/rb_full_birthday" />
-
-                    <RadioButton
-                        android:id="@+id/rb_year_birthday"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:button="@drawable/radiobutton_custom"
-                        android:text="Año"
-                        app:layout_constraintEnd_toStartOf="@+id/rb_unknown_birthday"
-                        app:layout_constraintStart_toEndOf="@+id/rb_month_birthday"
-                        app:layout_constraintTop_toBottomOf="@+id/rb_day_month_birthday" />
-
-                    <ImageView
-                        android:id="@+id/imageView2"
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:foregroundTint="#9FA8DA"
-                        android:src="@drawable/button_backgground"
-                        android:tint="#7D83A9"
-                        android:tintMode="multiply"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/rb_year_birthday" />
-
-                    <TextView
-                        android:id="@+id/textView10"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="------------------★-------------------"
-                        android:textColor="#9FA8DA"
-                        android:textSize="24sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-
-                    <TextView
-                        android:id="@+id/textView15"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="32dp"
-                        android:layout_marginTop="8dp"
-                        android:text="Dia"
-                        android:textColor="#FFFFFF"
-                        android:textSize="24sp"
-                        app:layout_constraintStart_toStartOf="@+id/imageView2"
-                        app:layout_constraintTop_toBottomOf="@+id/rb_year_birthday" />
-
-                    <ImageButton
-                        android:id="@+id/imageButton4"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="16dp"
-                        android:background="@android:color/transparent"
-                        android:tint="#FFFFFF"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/imageView2"
-                        app:srcCompat="@drawable/twotone_arrow_drop_down_circle_24" />
-
-                    <ImageButton
-                        android:id="@+id/imageButton3"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        app:layout_constraintStart_toStartOf="@+id/imageView3"
-                        app:layout_constraintTop_toBottomOf="@+id/textView10"
-                        app:srcCompat="@drawable/twotone_arrow_circle_left_24" />
-
-                    <ImageButton
-                        android:id="@+id/imageButton5"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        app:layout_constraintEnd_toEndOf="@+id/imageView3"
-                        app:layout_constraintTop_toBottomOf="@+id/textView10"
-                        app:srcCompat="@drawable/twotone_arrow_circle_right_24" />
-
-                    <TextView
-                        android:id="@+id/textView65"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="TextView"
-                        android:textColor="#FFFFFF"
-                        android:textSize="20sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/imageButton3"
-                        app:layout_constraintEnd_toStartOf="@+id/imageButton5"
-                        app:layout_constraintStart_toEndOf="@+id/imageButton3"
-                        app:layout_constraintTop_toBottomOf="@+id/textView10" />
-
-                    <!-- Cambia el color del texto aquí -->
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </com.google.android.material.card.MaterialCardView>
+    android:foregroundTint="#A07F7F">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="600dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            card_view:cardCornerRadius="10dp"
+            card_view:cardElevation="10dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+
+                        <ImageView
+                            android:id="@+id/imageView9"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:foregroundTint="#9FA8DA"
+                            android:src="@drawable/button_backgground"
+                            android:tint="#7D83A9"
+                            android:tintMode="multiply"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="1.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+                        <TextView
+                            android:id="@+id/tv_head_year_birthday_selector"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="32dp"
+                            android:layout_marginTop="8dp"
+                            android:text="Dia"
+                            android:textColor="#FFFFFF"
+                            android:textSize="24sp"
+                            app:layout_constraintStart_toStartOf="@+id/imageView9"
+                            app:layout_constraintTop_toTopOf="@+id/imageView9" />
+
+                        <ImageButton
+                            android:id="@+id/bt_show_year_selector"
+                            android:layout_width="33dp"
+                            android:layout_height="33dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="16dp"
+                            android:background="@android:color/transparent"
+                            android:tint="#FFFFFF"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/imageView9"
+                            app:srcCompat="@drawable/twotone_arrow_drop_down_circle_24" />
+
+                        <TextView
+                            android:id="@+id/textView12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="------------------★-------------------"
+                            android:textColor="#9FA8DA"
+                            android:textSize="24sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.607"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/imageView9" />
+
+                        <ImageView
+                            android:id="@+id/imageView3"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:tint="#555F1D"
+                            android:tintMode="multiply"
+                            app:layout_constraintBottom_toBottomOf="@+id/bt_day_31"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView10"
+                            app:layout_constraintVertical_bias="0.0"
+                            app:srcCompat="@drawable/button_backgground" />
+
+                        <ImageButton
+                            android:id="@+id/bt_day_25"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:tint="#9FA8DA"
+                            android:tintMode="multiply"
+                            app:layout_constraintEnd_toStartOf="@+id/bt_day_26"
+                            app:layout_constraintStart_toEndOf="@+id/bt_day_24"
+                            app:layout_constraintTop_toBottomOf="@+id/bt_day_14"
+                            app:srcCompat="@drawable/button_backgground" />
+
+                        <TextView
+                            android:id="@+id/textView49"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/twentyfive"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/bt_day_25"
+                            app:layout_constraintEnd_toEndOf="@+id/bt_day_25"
+                            app:layout_constraintStart_toStartOf="@+id/bt_day_25"
+                            app:layout_constraintTop_toTopOf="@+id/bt_day_25" />
+
+                        <ImageButton
+                            android:id="@+id/bt_day_24"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:tint="#9FA8DA"
+                            android:tintMode="multiply"
+                            app:layout_constraintEnd_toStartOf="@+id/bt_day_25"
+                            app:layout_constraintStart_toEndOf="@+id/bt_day_23"
+                            app:layout_constraintTop_toBottomOf="@+id/bt_day_13"
+                            app:srcCompat="@drawable/button_backgground" />
+
+                        <TextView
+                            android:id="@+id/textView48"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/twentyfour"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/bt_day_24"
+                            app:layout_constraintEnd_toEndOf="@+id/bt_day_24"
+                            app:layout_constraintStart_toStartOf="@+id/bt_day_24"
+                            app:layout_constraintTop_toTopOf="@+id/bt_day_24" />
+
+                        <ImageButton
+                            android:id="@+id/bt_day_23"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:tint="#9FA8DA"
+                            android:tintMode="multiply"
+                            app:layout_constraintEnd_toStartOf="@+id/bt_day_24"
+                            app:layout_constraintStart_toEndOf="@+id/bt_day_12"
+                            app:layout_constraintTop_toBottomOf="@+id/bt_day_12"
+                            app:srcCompat="@drawable/button_backgground" />
+
+                        <TextView
+                            android:id="@+id/textView47"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/twentythree"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/bt_day_23"
+                            app:layout_constraintEnd_toEndOf="@+id/bt_day_23"
+                            app:layout_constraintStart_toStartOf="@+id/bt_day_23"
+                            app:layout_constraintTop_toTopOf="@+id/bt_day_23" />
+
+                        <ImageButton
+                            android:id="@+id/bt_day_22"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:tint="#9FA8DA"
+                            android:tintMode="multiply"
+                            app:layout_constraintEnd_toEndOf="@+id/imageView3"
+                            app:layout_constraintStart_toEndOf="@+id/bt_day_21"
+                            app:layout_constraintTop_toBottomOf="@+id/bt_day_11"
+                            app:srcCompat="@drawable/button_backgground" />
+
+                        <TextView
+                            android:id="@+id/textView52"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/twentytwo"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/bt_day_22"
+                            app:layout_constraintEnd_toEndOf="@+id/bt_day_22"
+                            app:layout_constraintStart_toStartOf="@+id/bt_day_22"
+                            app:layout_constraintTop_toTopOf="@+id/bt_day_22" />
+
+                        <ImageButton
+                            android:id="@+id/bt_day_21"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:tint="#9FA8DA"
+                            android:tintMode="multiply"
+                            app:layout_constraintEnd_toStartOf="@id/bt_day_22"
+                            app:layout_constraintStart_toEndOf="@+id/bt_day_20"
+                            app:layout_constraintTop_toBottomOf="@+id/bt_day_10"
+                            app:srcCompat="@drawable/button_backgground" />
+
+                        <TextView
+                            android:id="@+id/textView44"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/twentyone"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/bt_day_21"
+                            app:layout_constraintEnd_toEndOf="@+id/bt_day_21"
+                            app:layout_constraintStart_toStartOf="@+id/bt_day_21"
+                            app:layout_constraintTop_toTopOf="@+id/bt_day_21" />
+
+                        <ImageButton
+                            android:id="@+id/bt_day_20"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:tint="#9FA8DA"
+                            android:tintMode="multiply"
+                            app:layout_constraintEnd_toStartOf="@id/bt_day_21"
+                            app:layout_constraintStart_toEndOf="@+id/bt_day_19"
+                            app:layout_constraintTop_toBottomOf="@+id/bt_day_9"
+                            app:srcCompat="@drawable/button_backgground" />
+
+                        <TextView
+                            android:id="@+id/textView43"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/twenty"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/bt_day_20"
+                            app:layout_constraintEnd_toEndOf="@+id/bt_day_20"
+                            app:layout_constraintStart_toStartOf="@+id/bt_day_20"
+                            app:layout_constraintTop_toTopOf="@+id/bt_day_20" />
+
+                        <ImageButton
+                            android:id="@+id/bt_day_19"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:tint="#9FA8DA"
+                            android:tintMode="multiply"
+                            app:layout_constraintEnd_toStartOf="@id/bt_day_20"
+                            app:layout_constraintStart_toEndOf="@+id/bt_day_18"
+                            app:layout_constraintTop_toBottomOf="@+id/bt_day_8"
+                            app:srcCompat="@drawable/button_backgground" />
+
+                        <TextView
+                            android:id="@+id/textView42"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/nineteen"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/bt_day_19"
+                            app:layout_constraintEnd_toEndOf="@+id/bt_day_19"
+                            app:layout_constraintStart_toStartOf="@+id/bt_day_19"
+                            app:layout_constraintTop_toTopOf="@+id/bt_day_19" />
+
+                        <ImageButton
+                            android:id="@+id/bt_day_18"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:tint="#9FA8DA"
+                            android:tintMode="multiply"
+                            app:layout_constraintEnd_toStartOf="@id/bt_day_19"
+                            app:layout_constraintStart_toEndOf="@+id/bt_day_17"
+                            app:layout_constraintTop_toBottomOf="@+id/bt_day_7"
+                            app:srcCompat="@drawable/button_backgground" />
+
+                        <TextView
+                            android:id="@+id/textView41"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/eightteen"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/bt_day_18"
+                            app:layout_constraintEnd_toEndOf="@+id/bt_day_18"
+                            app:layout_constraintStart_toStartOf="@+id/bt_day_18"
+                            app:layout_constraintTop_toTopOf="@+id/bt_day_18" />
+
+                        <ImageButton
+                            android:id="@+id/bt_day_17"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:tint="#9FA8DA"
+                            android:tintMode="multiply"
+                            app:layout_constraintEnd_toStartOf="@id/bt_day_18"
+                            app:layout_constraintStart_toEndOf="@+id/bt_day_16"
+                            app:layout_constraintTop_toBottomOf="@+id/bt_day_6"
+                            app:srcCompat="@drawable/button_backgground" />
+
+                        <TextView
+                            android:id="@+id/textView38"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/seventeen"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/bt_day_17"
+                            app:layout_constraintEnd_toEndOf="@+id/bt_day_17"
+                            app:layout_constraintStart_toStartOf="@+id/bt_day_17"
+                            app:layout_constraintTop_toTopOf="@+id/bt_day_17" />
+
+                        <ImageButton
+                            android:id="@+id/bt_day_16"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:tint="#9FA8DA"
+                            android:tintMode="multiply"
+                            app:layout_constraintEnd_toStartOf="@id/bt_day_17"
+                            app:layout_constraintStart_toEndOf="@+id/bt_day_15"
+                            app:layout_constraintTop_toBottomOf="@+id/bt_day_5"
+                            app:srcCompat="@drawable/button_backgground" />
+
+                        <TextView
+                            android:id="@+id/textView40"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/sixteen"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/bt_day_16"
+                            app:layout_constraintEnd_toEndOf="@+id/bt_day_16"
+                            app:layout_constraintStart_toStartOf="@+id/bt_day_16"
+                            app:layout_constraintTop_toTopOf="@+id/bt_day_16" />
+
+                        <ImageButton
+                            android:id="@+id/bt_day_14"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:tint="#9FA8DA"
+                            android:tintMode="multiply"
+                            app:layout_constraintEnd_toStartOf="@id/bt_day_15"
+                            app:layout_constraintStart_toEndOf="@+id/bt_day_13"
+                            app:layout_constraintTop_toBottomOf="@+id/bt_day_3"
+                            app:srcCompat="@drawable/button_backgground" />
+
+                        <TextView
+                            android:id="@+id/textView37"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/fourteen"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/bt_day_14"
+                            app:layout_constraintEnd_toEndOf="@+id/bt_day_14"
+                            app:layout_constraintStart_toStartOf="@+id/bt_day_14"
+                            app:layout_constraintTop_toTopOf="@+id/bt_day_14" />
+
+                        <ImageButton
+                            android:id="@+id/bt_day_15"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:tint="#9FA8DA"
+                            android:tintMode="multiply"
+                            app:layout_constraintEnd_toStartOf="@id/bt_day_16"
+                            app:layout_constraintStart_toEndOf="@+id/bt_day_14"
+                            app:layout_constraintTop_toBottomOf="@+id/bt_day_4"
+                            app:srcCompat="@drawable/button_backgground" />
+
+                        <TextView
+                            android:id="@+id/textView51"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/fiveteen"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/bt_day_15"
+                            app:layout_constraintEnd_toEndOf="@+id/bt_day_15"
+                            app:layout_constraintStart_toStartOf="@+id/bt_day_15"
+                            app:layout_constraintTop_toTopOf="@+id/bt_day_15" />
+
+                        <ImageButton
+                            android:id="@+id/bt_day_12"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:tint="#9FA8DA"
+                            android:tintMode="multiply"
+                            app:layout_constraintEnd_toStartOf="@id/bt_day_13"
+                            app:layout_constraintStart_toStartOf="@+id/imageView3"
+                            app:layout_constraintTop_toBottomOf="@+id/bt_day_1"
+                            app:srcCompat="@drawable/button_backgground" />
+
+                        <TextView
+                            android:id="@+id/textView36"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/twelve"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/bt_day_12"
+                            app:layout_constraintEnd_toEndOf="@+id/bt_day_12"
+                            app:layout_constraintStart_toStartOf="@+id/bt_day_12"
+                            app:layout_constraintTop_toTopOf="@+id/bt_day_12" />
+
+                        <ImageButton
+                            android:id="@+id/bt_day_11"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:tint="#9FA8DA"
+                            android:tintMode="multiply"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/bt_day_10"
+                            app:layout_constraintTop_toBottomOf="@+id/bt_previous_month_birthday_selector"
+                            app:srcCompat="@drawable/button_backgground" />
+
+                        <TextView
+                            android:id="@+id/textView35"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/eleven"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/bt_day_11"
+                            app:layout_constraintEnd_toEndOf="@+id/bt_day_11"
+                            app:layout_constraintStart_toStartOf="@+id/bt_day_11"
+                            app:layout_constraintTop_toTopOf="@+id/bt_day_11" />
+
+                        <ImageButton
+                            android:id="@+id/bt_day_10"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:tint="#9FA8DA"
+                            android:tintMode="multiply"
+                            app:layout_constraintEnd_toStartOf="@id/bt_day_11"
+                            app:layout_constraintStart_toEndOf="@+id/bt_day_9"
+                            app:layout_constraintTop_toBottomOf="@+id/bt_previous_month_birthday_selector"
+                            app:srcCompat="@drawable/button_backgground" />
+
+                        <TextView
+                            android:id="@+id/textView34"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/ten"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/bt_day_10"
+                            app:layout_constraintEnd_toEndOf="@+id/bt_day_10"
+                            app:layout_constraintStart_toStartOf="@+id/bt_day_10"
+                            app:layout_constraintTop_toTopOf="@+id/bt_day_10" />
+
+                        <ImageButton
+                            android:id="@+id/bt_day_13"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:tint="#9FA8DA"
+                            android:tintMode="multiply"
+                            app:layout_constraintEnd_toStartOf="@id/bt_day_14"
+                            app:layout_constraintStart_toEndOf="@+id/bt_day_12"
+                            app:layout_constraintTop_toBottomOf="@+id/bt_day_2"
+                            app:srcCompat="@drawable/button_backgground" />
+
+                        <TextView
+                            android:id="@+id/textView33"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/thirdteen"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/bt_day_13"
+                            app:layout_constraintEnd_toEndOf="@+id/bt_day_13"
+                            app:layout_constraintStart_toStartOf="@+id/bt_day_13"
+                            app:layout_constraintTop_toTopOf="@+id/bt_day_13" />
+
+                        <ImageButton
+                            android:id="@+id/bt_day_8"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:tint="#9FA8DA"
+                            android:tintMode="multiply"
+                            app:layout_constraintEnd_toStartOf="@id/bt_day_9"
+                            app:layout_constraintStart_toEndOf="@+id/bt_day_7"
+                            app:layout_constraintTop_toBottomOf="@+id/bt_previous_month_birthday_selector"
+                            app:srcCompat="@drawable/button_backgground" />
+
+                        <TextView
+                            android:id="@+id/textView31"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/eight"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/bt_day_8"
+                            app:layout_constraintEnd_toEndOf="@+id/bt_day_8"
+                            app:layout_constraintStart_toStartOf="@+id/bt_day_8"
+                            app:layout_constraintTop_toTopOf="@+id/bt_day_8" />
+
+                        <ImageButton
+                            android:id="@+id/bt_day_9"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:tint="#9FA8DA"
+                            android:tintMode="multiply"
+                            app:layout_constraintEnd_toStartOf="@id/bt_day_10"
+                            app:layout_constraintStart_toEndOf="@+id/bt_day_8"
+                            app:layout_constraintTop_toBottomOf="@+id/bt_previous_month_birthday_selector"
+                            app:srcCompat="@drawable/button_backgground" />
+
+                        <TextView
+                            android:id="@+id/textView32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/nine"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/bt_day_9"
+                            app:layout_constraintEnd_toEndOf="@+id/bt_day_9"
+                            app:layout_constraintHorizontal_bias="0.518"
+                            app:layout_constraintStart_toStartOf="@+id/bt_day_9"
+                            app:layout_constraintTop_toTopOf="@+id/bt_day_9" />
+
+                        <ImageButton
+                            android:id="@+id/bt_day_6"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:tint="#9FA8DA"
+                            android:tintMode="multiply"
+                            app:layout_constraintEnd_toStartOf="@+id/bt_day_7"
+                            app:layout_constraintStart_toEndOf="@+id/bt_day_5"
+                            app:layout_constraintTop_toBottomOf="@+id/bt_previous_month_birthday_selector"
+                            app:srcCompat="@drawable/button_backgground" />
+
+                        <TextView
+                            android:id="@+id/textView30"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/six"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/bt_day_6"
+                            app:layout_constraintEnd_toEndOf="@+id/bt_day_6"
+                            app:layout_constraintStart_toStartOf="@+id/bt_day_6"
+                            app:layout_constraintTop_toTopOf="@+id/bt_day_6" />
+
+                        <ImageButton
+                            android:id="@+id/bt_day_5"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:tint="#9FA8DA"
+                            android:tintMode="multiply"
+                            app:layout_constraintEnd_toStartOf="@id/bt_day_6"
+                            app:layout_constraintStart_toEndOf="@+id/bt_day_4"
+                            app:layout_constraintTop_toBottomOf="@+id/bt_previous_month_birthday_selector"
+                            app:srcCompat="@drawable/button_backgground" />
+
+                        <TextView
+                            android:id="@+id/textView24"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/five"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/bt_day_5"
+                            app:layout_constraintEnd_toEndOf="@+id/bt_day_5"
+                            app:layout_constraintStart_toStartOf="@+id/bt_day_5"
+                            app:layout_constraintTop_toTopOf="@+id/bt_day_5" />
+
+                        <ImageButton
+                            android:id="@+id/bt_day_4"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:tint="#9FA8DA"
+                            android:tintMode="multiply"
+                            app:layout_constraintEnd_toStartOf="@+id/bt_day_5"
+                            app:layout_constraintStart_toEndOf="@+id/bt_day_3"
+                            app:layout_constraintTop_toBottomOf="@+id/bt_previous_month_birthday_selector"
+                            app:srcCompat="@drawable/button_backgground" />
+
+                        <TextView
+                            android:id="@+id/textView28"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginBottom="2dp"
+                            android:text="@string/four"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/bt_day_4"
+                            app:layout_constraintEnd_toEndOf="@+id/bt_day_4"
+                            app:layout_constraintHorizontal_bias="0.423"
+                            app:layout_constraintStart_toStartOf="@+id/bt_day_4"
+                            app:layout_constraintTop_toTopOf="@+id/bt_day_4" />
+
+                        <ImageButton
+                            android:id="@+id/bt_day_7"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:tint="#9FA8DA"
+                            android:tintMode="multiply"
+                            app:layout_constraintEnd_toStartOf="@+id/bt_day_8"
+
+                            app:layout_constraintStart_toEndOf="@+id/bt_day_6"
+                            app:layout_constraintTop_toBottomOf="@+id/bt_previous_month_birthday_selector"
+                            app:srcCompat="@drawable/button_backgground" />
+
+                        <TextView
+                            android:id="@+id/textView29"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/seven"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/bt_day_7"
+                            app:layout_constraintEnd_toEndOf="@+id/bt_day_7"
+                            app:layout_constraintStart_toStartOf="@+id/bt_day_7"
+                            app:layout_constraintTop_toTopOf="@+id/bt_day_7" />
+
+                        <ImageButton
+                            android:id="@+id/bt_day_2"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:tint="#9FA8DA"
+                            android:tintMode="multiply"
+                            app:layout_constraintEnd_toStartOf="@+id/bt_day_3"
+                            app:layout_constraintStart_toEndOf="@+id/bt_day_1"
+                            app:layout_constraintTop_toBottomOf="@+id/bt_previous_month_birthday_selector"
+                            app:srcCompat="@drawable/button_backgground" />
+
+                        <TextView
+                            android:id="@+id/textView26"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/two"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/bt_day_2"
+                            app:layout_constraintEnd_toEndOf="@+id/bt_day_2"
+                            app:layout_constraintStart_toStartOf="@+id/bt_day_2"
+                            app:layout_constraintTop_toTopOf="@+id/bt_day_2" />
+
+                        <ImageButton
+                            android:id="@+id/bt_day_1"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:tint="#9FA8DA"
+                            android:tintMode="multiply"
+                            app:layout_constraintEnd_toStartOf="@+id/bt_day_2"
+                            app:layout_constraintStart_toStartOf="@+id/imageView3"
+                            app:layout_constraintTop_toBottomOf="@+id/bt_previous_month_birthday_selector"
+                            app:srcCompat="@drawable/button_backgground" />
+
+                        <TextView
+                            android:id="@+id/textView25"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/one"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/bt_day_1"
+                            app:layout_constraintEnd_toEndOf="@+id/bt_day_1"
+                            app:layout_constraintStart_toStartOf="@+id/bt_day_1"
+                            app:layout_constraintTop_toTopOf="@+id/bt_day_1" />
+
+                        <ImageButton
+                            android:id="@+id/bt_day_26"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:tint="#9FA8DA"
+                            android:tintMode="multiply"
+                            app:layout_constraintEnd_toStartOf="@+id/bt_day_27"
+                            app:layout_constraintStart_toEndOf="@+id/bt_day_25"
+                            app:layout_constraintTop_toBottomOf="@+id/bt_day_15"
+                            app:srcCompat="@drawable/button_backgground" />
+
+                        <ImageButton
+                            android:id="@+id/bt_day_27"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:tint="#9FA8DA"
+                            android:tintMode="multiply"
+                            app:layout_constraintEnd_toStartOf="@+id/bt_day_28"
+                            app:layout_constraintStart_toEndOf="@+id/bt_day_26"
+                            app:layout_constraintTop_toBottomOf="@+id/bt_day_16"
+                            app:srcCompat="@drawable/button_backgground" />
+
+                        <TextView
+                            android:id="@+id/textView23"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/twentyseven"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/bt_day_27"
+                            app:layout_constraintEnd_toEndOf="@+id/bt_day_27"
+                            app:layout_constraintStart_toStartOf="@+id/bt_day_27"
+                            app:layout_constraintTop_toTopOf="@+id/bt_day_27" />
+
+                        <TextView
+                            android:id="@+id/textView22"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/twentysix"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/bt_day_26"
+                            app:layout_constraintEnd_toEndOf="@+id/bt_day_26"
+                            app:layout_constraintStart_toStartOf="@+id/bt_day_26"
+                            app:layout_constraintTop_toTopOf="@+id/bt_day_26" />
+
+                        <ImageButton
+                            android:id="@+id/bt_day_3"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:tint="#9FA8DA"
+                            android:tintMode="multiply"
+                            app:layout_constraintEnd_toStartOf="@+id/bt_day_4"
+                            app:layout_constraintStart_toEndOf="@+id/bt_day_2"
+                            app:layout_constraintTop_toBottomOf="@+id/bt_previous_month_birthday_selector"
+                            app:srcCompat="@drawable/button_backgground" />
+
+                        <TextView
+                            android:id="@+id/textView27"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/three"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/bt_day_3"
+                            app:layout_constraintEnd_toEndOf="@+id/bt_day_3"
+                            app:layout_constraintStart_toStartOf="@+id/bt_day_3"
+                            app:layout_constraintTop_toTopOf="@+id/bt_day_3" />
+
+                        <ImageButton
+                            android:id="@+id/bt_day_28"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:tint="#9FA8DA"
+                            android:tintMode="multiply"
+                            app:layout_constraintEnd_toStartOf="@+id/bt_day_29"
+                            app:layout_constraintStart_toEndOf="@+id/bt_day_27"
+                            app:layout_constraintTop_toBottomOf="@+id/bt_day_17"
+                            app:srcCompat="@drawable/button_backgground" />
+
+                        <TextView
+                            android:id="@+id/textView20"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/twentyeight"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/bt_day_28"
+                            app:layout_constraintEnd_toEndOf="@+id/bt_day_28"
+                            app:layout_constraintStart_toStartOf="@+id/bt_day_28"
+                            app:layout_constraintTop_toTopOf="@+id/bt_day_28" />
+
+                        <ImageButton
+                            android:id="@+id/bt_day_29"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:tint="#9FA8DA"
+                            android:tintMode="multiply"
+                            app:layout_constraintEnd_toStartOf="@+id/bt_day_30"
+                            app:layout_constraintStart_toEndOf="@+id/bt_day_28"
+                            app:layout_constraintTop_toBottomOf="@+id/bt_day_18"
+                            app:srcCompat="@drawable/button_backgground" />
+
+                        <TextView
+                            android:id="@+id/textView19"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/twentynine"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/bt_day_29"
+                            app:layout_constraintEnd_toEndOf="@+id/bt_day_29"
+                            app:layout_constraintStart_toStartOf="@+id/bt_day_29"
+                            app:layout_constraintTop_toTopOf="@+id/bt_day_29" />
+
+                        <ImageButton
+                            android:id="@+id/bt_day_30"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:tint="#9FA8DA"
+                            android:tintMode="multiply"
+                            app:layout_constraintEnd_toStartOf="@id/bt_day_31"
+                            app:layout_constraintStart_toEndOf="@+id/bt_day_29"
+                            app:layout_constraintTop_toBottomOf="@+id/bt_day_19"
+                            app:srcCompat="@drawable/button_backgground" />
+
+                        <TextView
+                            android:id="@+id/textView18"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/thirty"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/bt_day_30"
+                            app:layout_constraintEnd_toEndOf="@+id/bt_day_30"
+                            app:layout_constraintStart_toStartOf="@+id/bt_day_30"
+                            app:layout_constraintTop_toTopOf="@+id/bt_day_30" />
+
+                        <ImageButton
+                            android:id="@+id/bt_day_31"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:tint="#9FA8DA"
+                            android:tintMode="multiply"
+                            app:layout_constraintBottom_toBottomOf="@id/imageView3"
+                            app:layout_constraintEnd_toEndOf="@+id/bt_day_21"
+                            app:layout_constraintStart_toEndOf="@+id/bt_day_30"
+                            app:layout_constraintTop_toBottomOf="@+id/bt_day_20"
+                            app:srcCompat="@drawable/button_backgground" />
+
+                        <TextView
+                            android:id="@+id/textView17"
+                            android:layout_width="13dp"
+                            android:layout_height="16dp"
+                            android:text="@string/thirtyone"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/bt_day_31"
+                            app:layout_constraintEnd_toEndOf="@+id/bt_day_31"
+                            app:layout_constraintStart_toStartOf="@+id/bt_day_31"
+                            app:layout_constraintTop_toTopOf="@+id/bt_day_31" />
+
+
+                        <ImageButton
+                            android:id="@+id/ib_save_day_dialog"
+                            android:layout_width="33dp"
+                            android:layout_height="33dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/twotone_save_24" />
+
+                        <ImageButton
+                            android:id="@+id/ib_back_day_dialog"
+                            android:layout_width="33dp"
+                            android:layout_height="33dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/twotone_arrow_circle_left_24" />
+
+                        <RadioButton
+                            android:id="@+id/rb_full_birthday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/radiobutton_custom"
+                            android:buttonTint="#835959"
+                            android:text="DD/MM/YYYY"
+                            app:layout_constraintEnd_toStartOf="@+id/rb_day_month_birthday"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/ib_save_day_dialog" />
+
+                        <RadioButton
+                            android:id="@+id/rb_day_month_birthday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="21dp"
+                            android:button="@drawable/radiobutton_custom"
+                            android:buttonTint="#835959"
+                            android:text="DD/MM"
+                            app:layout_constraintEnd_toStartOf="@+id/rb_month_year_birthday"
+                            app:layout_constraintStart_toEndOf="@+id/rb_full_birthday"
+                            app:layout_constraintTop_toBottomOf="@+id/ib_save_day_dialog" />
+
+                        <RadioButton
+                            android:id="@+id/rb_month_year_birthday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/radiobutton_custom"
+                            android:buttonTint="#835959"
+                            android:text="MM/YYYY"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/rb_day_month_birthday"
+                            app:layout_constraintTop_toBottomOf="@+id/ib_save_day_dialog" />
+
+                        <RadioButton
+                            android:id="@+id/rb_unknown_birthday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/radiobutton_custom"
+                            android:buttonTint="#835959"
+                            android:text="Desconocida"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/rb_year_birthday"
+                            app:layout_constraintTop_toBottomOf="@+id/rb_month_year_birthday" />
+
+                        <RadioButton
+                            android:id="@+id/rb_month_birthday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/radiobutton_custom"
+                            android:text="Mes"
+                            app:layout_constraintEnd_toStartOf="@+id/rb_year_birthday"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/rb_full_birthday" />
+
+                        <RadioButton
+                            android:id="@+id/rb_year_birthday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/radiobutton_custom"
+                            android:text="Año"
+                            app:layout_constraintEnd_toStartOf="@+id/rb_unknown_birthday"
+                            app:layout_constraintStart_toEndOf="@+id/rb_month_birthday"
+                            app:layout_constraintTop_toBottomOf="@+id/rb_day_month_birthday" />
+
+                        <ImageView
+                            android:id="@+id/imageView2"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:foregroundTint="#9FA8DA"
+                            android:src="@drawable/button_backgground"
+                            android:tint="#7D83A9"
+                            android:tintMode="multiply"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/rb_year_birthday" />
+
+                        <TextView
+                            android:id="@+id/textView10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="------------------★-------------------"
+                            android:textColor="#9FA8DA"
+                            android:textSize="24sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+                        <TextView
+                            android:id="@+id/tv_head_day_month_birthday_selector"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="32dp"
+                            android:layout_marginTop="8dp"
+                            android:text="Dia"
+                            android:textColor="#FFFFFF"
+                            android:textSize="24sp"
+                            app:layout_constraintStart_toStartOf="@+id/imageView2"
+                            app:layout_constraintTop_toBottomOf="@+id/rb_year_birthday" />
+
+                        <ImageButton
+                            android:id="@+id/bt_show_day_month_birthday_selector"
+                            android:layout_width="33dp"
+                            android:layout_height="33dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="16dp"
+                            android:background="@android:color/transparent"
+                            android:tint="#FFFFFF"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/imageView2"
+                            app:srcCompat="@drawable/twotone_arrow_drop_down_circle_24" />
+
+                        <ImageButton
+                            android:id="@+id/bt_previous_month_birthday_selector"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="16dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            app:layout_constraintEnd_toStartOf="@+id/tv_current_month_birthday_selector"
+                            app:layout_constraintTop_toBottomOf="@+id/textView10"
+                            app:srcCompat="@drawable/twotone_arrow_circle_left_24" />
+
+                        <ImageButton
+                            android:id="@+id/bt_next_month_birthday_selector"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            app:layout_constraintStart_toEndOf="@+id/tv_current_month_birthday_selector"
+                            app:layout_constraintTop_toBottomOf="@+id/textView10"
+                            app:srcCompat="@drawable/twotone_arrow_circle_right_24" />
+
+                        <TextView
+                            android:id="@+id/tv_current_month_birthday_selector"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="TextView"
+                            android:textColor="#FFFFFF"
+                            android:textSize="20sp"
+                            app:layout_constraintBottom_toTopOf="@+id/bt_day_6"
+                            app:layout_constraintEnd_toEndOf="@+id/imageView3"
+                            app:layout_constraintStart_toStartOf="@+id/imageView3"
+                            app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+                        <!-- Cambia el color del texto aquí -->
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/et_yearBirthdayCreateFull"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:hint="@string/name"
+                            app:boxCornerRadiusBottomEnd="58dp"
+                            app:boxCornerRadiusBottomStart="58dp"
+                            app:boxCornerRadiusTopEnd="58dp"
+                            app:boxCornerRadiusTopStart="58dp"
+                            app:counterEnabled="true"
+                            app:counterMaxLength="50"
+                            app:errorEnabled="false"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView12"
+                            app:startIconDrawable="@drawable/outline_person_24">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/et_yearBirthdayCreate"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:ems="10"
+                                    android:gravity="center"
+                                    android:inputType="text"
+                                    android:maxLength="50"
+                                    android:textAlignment="center"
+                                    android:textColorHint="@color/brownMaroon" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            card_view:layout_editor_absoluteX="152dp"
+                            card_view:layout_editor_absoluteY="589dp">
+
+                        </com.google.android.material.chip.ChipGroup>
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip"
+                            style="@style/Widget.Material3.Chip.Input.Icon.Elevated"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="118dp"
+                            android:buttonTint="#9FA8DA"
+                            android:buttonTintMode="multiply"
+                            android:text="hola"
+                            android:textColor="#BF6565"
+                            app:checkedIcon="@drawable/twotone_check_circle_24"
+                            app:checkedIconTint="#9FA8DA"
+                            app:checkedIconVisible="true"
+                            app:chipCornerRadius="50dp"
+                            app:chipIconSize="20dp"
+                            app:chipIconTint="#B39DDB"
+                            app:chipStrokeColor="#B39DDB"
+                            app:chipStrokeWidth="3dp"
+                            app:chipSurfaceColor="#B39DDB"
+                            app:closeIconVisible="false"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/et_yearBirthdayCreateFull" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
