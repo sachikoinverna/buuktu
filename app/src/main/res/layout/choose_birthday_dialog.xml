@@ -78,16 +78,14 @@
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
-                            android:paddingBottom="8dp"
                             android:tint="#555F1D"
                             android:tintMode="multiply"
                             app:layout_constraintBottom_toBottomOf="@+id/bt_day_27"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.0"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/tv_separator_day_month_birthday_selector"
-                            app:layout_constraintVertical_bias="0.0"
                             app:srcCompat="@drawable/button_backgground" />
 
                         <ImageButton

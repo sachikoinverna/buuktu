@@ -2,7 +2,6 @@ package com.example.buuktu.bottomsheet;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +21,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +33,6 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
     TextInputLayout et_yearBirthdayCreateFull;
     TextInputEditText et_yearBirthdayCreate;
     TextView tv_current_month_birthday_selector,tv_head_day_month_birthday_selector,tv_head_year_birthday_selector,tv_separator_year_birthday_selector,tv_separator_day_month_birthday_selector;
-    String optionString;
     int month,day,year;
     ImageButton[] dayButtons;
     ImageView iv_head_day_month_birthday_selector,iv_head_year_birthday_selector,iv_background_day_month_selector;
@@ -167,6 +164,9 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
         bt_show_day_month_birthday_selector.setImageDrawable(daysMonthsSelectorVisible ? arrow_up:arrow_down);
 
     }
+    private void initValues(){
+
+    }
     private int getDaysMonth(){
         if(month==1 || month==3 || month==5 || month==7||month==8||month==10||month==12){
             return 31;
@@ -274,9 +274,12 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
         bt_next_month_birthday_selector.setVisibility(month == 12 ? View.GONE : View.VISIBLE);
     }
     private void saveData(){
-        createCharacterkie.setDay(day);
-        createCharacterkie.setMonth(month);
-      //  createCharacterkie.setYear();
+        if(rb_checked.getId()!=R.id.rb_unknown_birthday){
+            createCharacterkie.setDay(day);
+            createCharacterkie.setMonth(month);
+            createCharacterkie.setYear(year);
+        }
+        createCharacterkie.setDate();
     }
     @Override
     public void onClick(View v) {

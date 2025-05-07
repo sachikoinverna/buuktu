@@ -379,7 +379,21 @@ ImageButton bt_basic_info_characterkies;
     public void setSelectedProfilePhoto(Drawable image){
         ib_select_img_create_characterkie.setImageDrawable(image);
     }
-
+    public void setDate(){
+        if(optionBirthday == R.id.rb_unknown_birthday){
+            bt_birthday_characterkie.setText("Unknown");
+            optionPronounsString = "Unknown";
+        } else if (optionBirthday==R.id.rb_full_birthday) {
+            optionBirthdayString = day+"/"+month+"/"+year;
+        }else if (optionBirthday==R.id.rb_month_year_birthday) {
+            optionBirthdayString = month+"/"+year;
+        }else if (optionBirthday==R.id.rb_month_birthday) {
+            optionBirthdayString = String.valueOf(month);
+        }else if (optionBirthday==R.id.rb_year_birthday) {
+            optionBirthdayString = String.valueOf(year);
+        }
+        bt_birthday_characterkie.setText(optionPronounsString);
+    }
     public String getSource() {
         return source;
     }
@@ -427,6 +441,7 @@ ImageButton bt_basic_info_characterkies;
         tv_gender_characterkie.setVisibility(View.GONE);
         tv_birthday_characterkie.setVisibility(View.GONE);
     }
+
     private void addDataToFirestore(){
         String name = et_nameCharacterkieCreate.getText().toString();
         if(!name.equals("")){

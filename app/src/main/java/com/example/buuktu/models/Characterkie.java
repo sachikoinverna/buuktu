@@ -1,6 +1,7 @@
 package com.example.buuktu.models;
 
 import android.graphics.drawable.Drawable;
+import android.renderscript.ScriptIntrinsicYuvToRGB;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Exclude;
@@ -13,7 +14,7 @@ public class Characterkie {
     private String UID;
     private String name;
     private String pronouns;
-    private String birthday;
+    private  String birthday;
     private boolean photo_default;
     private boolean draft;
     boolean characterkie_private;
