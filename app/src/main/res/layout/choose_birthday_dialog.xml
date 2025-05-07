@@ -14,48 +14,40 @@
         card_view:cardCornerRadius="10dp"
         card_view:cardElevation="10dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:tint="#D9DBCD"
-                android:tintMode="multiply"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/scrollView2"
-                app:layout_constraintStart_toStartOf="@+id/scrollView2"
-                app:layout_constraintTop_toTopOf="@+id/scrollView2"
-                app:srcCompat="@drawable/button_backgground" />
 
-            <ImageView
-                android:id="@+id/imageView9"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:tint="#D9DBCD"
-                android:tintMode="multiply"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView3"
-                app:layout_constraintTop_toBottomOf="@+id/textView10"
-                app:srcCompat="@drawable/button_backgground" />
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:tint="#555F1D"
+                        android:tintMode="multiply"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView10"
+                        app:layout_constraintVertical_bias="0.0"
+                        app:srcCompat="@drawable/button_backgground" />
 
-            <ScrollView
-                android:id="@+id/scrollView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView10">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/textView64"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/thirty"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        card_view:layout_editor_absoluteX="181dp"
+                        card_view:layout_editor_absoluteY="365dp" />
 
                     <ImageButton
-                        android:id="@+id/bt_day_38"
+                        android:id="@+id/bt_day_43"
                         android:layout_width="33dp"
                         android:layout_height="33dp"
                         android:background="@android:color/transparent"
@@ -65,17 +57,6 @@
                         app:srcCompat="@drawable/button_backgground"
                         card_view:layout_editor_absoluteX="139dp"
                         card_view:layout_editor_absoluteY="351dp" />
-
-                    <TextView
-                        android:id="@+id/textView50"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/thirty"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        card_view:layout_editor_absoluteX="181dp"
-                        card_view:layout_editor_absoluteY="365dp" />
 
                     <ImageButton
                         android:id="@+id/bt_day_25"
@@ -111,8 +92,8 @@
                         android:tint="#9FA8DA"
                         android:tintMode="multiply"
                         app:srcCompat="@drawable/button_backgground"
-                        card_view:layout_editor_absoluteX="146dp"
-                        card_view:layout_editor_absoluteY="302dp" />
+                        card_view:layout_editor_absoluteX="239dp"
+                        card_view:layout_editor_absoluteY="353dp" />
 
                     <TextView
                         android:id="@+id/textView48"
@@ -221,9 +202,9 @@
                         android:scaleType="fitCenter"
                         android:tint="#9FA8DA"
                         android:tintMode="multiply"
+                        app:layout_constraintStart_toEndOf="@+id/bt_day_19"
                         app:srcCompat="@drawable/button_backgground"
-                        card_view:layout_editor_absoluteX="187dp"
-                        card_view:layout_editor_absoluteY="231dp" />
+                        card_view:layout_editor_absoluteY="332dp" />
 
                     <TextView
                         android:id="@+id/textView43"
@@ -233,21 +214,22 @@
                         android:textColor="#FFFFFF"
                         android:textSize="14sp"
                         android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/bt_day_20"
                         app:layout_constraintEnd_toEndOf="@+id/bt_day_20"
                         app:layout_constraintStart_toStartOf="@+id/bt_day_20"
                         app:layout_constraintTop_toTopOf="@+id/bt_day_20" />
 
                     <ImageButton
                         android:id="@+id/bt_day_19"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"
                         android:tint="#9FA8DA"
                         android:tintMode="multiply"
+                        app:layout_constraintTop_toBottomOf="@+id/bt_day_10"
                         app:srcCompat="@drawable/button_backgground"
-                        card_view:layout_editor_absoluteX="27dp"
-                        card_view:layout_editor_absoluteY="159dp" />
+                        card_view:layout_editor_absoluteX="18dp" />
 
                     <TextView
                         android:id="@+id/textView42"
@@ -264,15 +246,17 @@
 
                     <ImageButton
                         android:id="@+id/bt_day_18"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="8dp"
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"
                         android:tint="#9FA8DA"
                         android:tintMode="multiply"
-                        app:srcCompat="@drawable/button_backgground"
-                        card_view:layout_editor_absoluteX="160dp"
-                        card_view:layout_editor_absoluteY="126dp" />
+                        app:layout_constraintEnd_toEndOf="@+id/imageView3"
+                        app:layout_constraintStart_toEndOf="@+id/bt_day_17"
+                        app:layout_constraintTop_toBottomOf="@+id/bt_day_9"
+                        app:srcCompat="@drawable/button_backgground" />
 
                     <TextView
                         android:id="@+id/textView41"
@@ -291,13 +275,15 @@
                         android:id="@+id/bt_day_17"
                         android:layout_width="33dp"
                         android:layout_height="33dp"
+                        android:layout_marginTop="8dp"
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"
                         android:tint="#9FA8DA"
                         android:tintMode="multiply"
-                        app:srcCompat="@drawable/button_backgground"
-                        card_view:layout_editor_absoluteX="83dp"
-                        card_view:layout_editor_absoluteY="126dp" />
+                        app:layout_constraintStart_toEndOf="@+id/bt_day_16"
+                        app:layout_constraintEnd_toStartOf="@id/bt_day_18"
+                        app:layout_constraintTop_toBottomOf="@+id/bt_day_8"
+                        app:srcCompat="@drawable/button_backgground" />
 
                     <TextView
                         android:id="@+id/textView38"
@@ -327,13 +313,15 @@
                         android:id="@+id/bt_day_16"
                         android:layout_width="33dp"
                         android:layout_height="33dp"
+                        android:layout_marginTop="8dp"
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"
                         android:tint="#9FA8DA"
                         android:tintMode="multiply"
-                        app:srcCompat="@drawable/button_backgground"
-                        card_view:layout_editor_absoluteX="8dp"
-                        card_view:layout_editor_absoluteY="126dp" />
+                        app:layout_constraintStart_toEndOf="@+id/bt_day_15"
+                        app:layout_constraintEnd_toStartOf="@id/bt_day_17"
+                        app:layout_constraintTop_toBottomOf="@+id/bt_day_7"
+                        app:srcCompat="@drawable/button_backgground" />
 
                     <TextView
                         android:id="@+id/textView40"
@@ -352,13 +340,15 @@
                         android:id="@+id/bt_day_14"
                         android:layout_width="33dp"
                         android:layout_height="33dp"
+                        android:layout_marginTop="8dp"
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"
                         android:tint="#9FA8DA"
                         android:tintMode="multiply"
-                        app:srcCompat="@drawable/button_backgground"
-                        card_view:layout_editor_absoluteX="65dp"
-                        card_view:layout_editor_absoluteY="302dp" />
+                        app:layout_constraintStart_toEndOf="@+id/bt_day_13"
+                        app:layout_constraintEnd_toStartOf="@id/bt_day_15"
+                        app:layout_constraintTop_toBottomOf="@+id/bt_day_5"
+                        app:srcCompat="@drawable/button_backgground" />
 
                     <TextView
                         android:id="@+id/textView37"
@@ -377,13 +367,15 @@
                         android:id="@+id/bt_day_15"
                         android:layout_width="33dp"
                         android:layout_height="33dp"
+                        android:layout_marginTop="8dp"
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"
                         android:tint="#9FA8DA"
                         android:tintMode="multiply"
-                        app:srcCompat="@drawable/button_backgground"
-                        card_view:layout_editor_absoluteX="71dp"
-                        card_view:layout_editor_absoluteY="205dp" />
+                        app:layout_constraintStart_toEndOf="@+id/bt_day_14"
+                        app:layout_constraintEnd_toStartOf="@id/bt_day_16"
+                        app:layout_constraintTop_toBottomOf="@+id/bt_day_6"
+                        app:srcCompat="@drawable/button_backgground" />
 
                     <TextView
                         android:id="@+id/textView51"
@@ -402,13 +394,15 @@
                         android:id="@+id/bt_day_12"
                         android:layout_width="33dp"
                         android:layout_height="33dp"
+                        android:layout_marginTop="8dp"
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"
                         android:tint="#9FA8DA"
                         android:tintMode="multiply"
-                        app:srcCompat="@drawable/button_backgground"
-                        card_view:layout_editor_absoluteX="154dp"
-                        card_view:layout_editor_absoluteY="72dp" />
+                        app:layout_constraintStart_toEndOf="@+id/bt_day_11"
+                        app:layout_constraintEnd_toStartOf="@id/bt_day_13"
+                        app:layout_constraintTop_toBottomOf="@+id/bt_day_3"
+                        app:srcCompat="@drawable/button_backgground" />
 
                     <TextView
                         android:id="@+id/textView36"
@@ -427,13 +421,15 @@
                         android:id="@+id/bt_day_11"
                         android:layout_width="33dp"
                         android:layout_height="33dp"
+                        android:layout_marginTop="8dp"
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"
                         android:tint="#9FA8DA"
                         android:tintMode="multiply"
-                        app:srcCompat="@drawable/button_backgground"
-                        card_view:layout_editor_absoluteX="106dp"
-                        card_view:layout_editor_absoluteY="72dp" />
+                        app:layout_constraintStart_toEndOf="@+id/bt_day_10"
+                        app:layout_constraintEnd_toStartOf="@id/bt_day_12"
+                        app:layout_constraintTop_toBottomOf="@+id/bt_day_2"
+                        app:srcCompat="@drawable/button_backgground" />
 
                     <TextView
                         android:id="@+id/textView35"
@@ -450,15 +446,17 @@
 
                     <ImageButton
                         android:id="@+id/bt_day_10"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="8dp"
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"
                         android:tint="#9FA8DA"
                         android:tintMode="multiply"
-                        app:srcCompat="@drawable/button_backgground"
-                        card_view:layout_editor_absoluteX="61dp"
-                        card_view:layout_editor_absoluteY="72dp" />
+                        app:layout_constraintEnd_toStartOf="@id/bt_day_11"
+                        app:layout_constraintStart_toStartOf="@+id/imageView3"
+                        app:layout_constraintTop_toBottomOf="@+id/bt_day_1"
+                        app:srcCompat="@drawable/button_backgground" />
 
                     <TextView
                         android:id="@+id/textView34"
@@ -477,13 +475,15 @@
                         android:id="@+id/bt_day_13"
                         android:layout_width="33dp"
                         android:layout_height="33dp"
+                        android:layout_marginTop="8dp"
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"
                         android:tint="#9FA8DA"
                         android:tintMode="multiply"
-                        app:srcCompat="@drawable/button_backgground"
-                        card_view:layout_editor_absoluteX="165dp"
-                        card_view:layout_editor_absoluteY="205dp" />
+                        app:layout_constraintStart_toEndOf="@+id/bt_day_12"
+                        app:layout_constraintEnd_toStartOf="@id/bt_day_14"
+                        app:layout_constraintTop_toBottomOf="@+id/bt_day_4"
+                        app:srcCompat="@drawable/button_backgground" />
 
                     <TextView
                         android:id="@+id/textView33"
@@ -500,15 +500,16 @@
 
                     <ImageButton
                         android:id="@+id/bt_day_8"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"
                         android:tint="#9FA8DA"
                         android:tintMode="multiply"
-                        app:srcCompat="@drawable/button_backgground"
-                        card_view:layout_editor_absoluteX="78dp"
-                        card_view:layout_editor_absoluteY="246dp" />
+                        app:layout_constraintEnd_toStartOf="@id/bt_day_9"
+                        app:layout_constraintStart_toEndOf="@+id/bt_day_7"
+                        app:layout_constraintTop_toBottomOf="@+id/imageButton3"
+                        app:srcCompat="@drawable/button_backgground" />
 
                     <TextView
                         android:id="@+id/textView31"
@@ -525,15 +526,16 @@
 
                     <ImageButton
                         android:id="@+id/bt_day_9"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"
                         android:tint="#9FA8DA"
                         android:tintMode="multiply"
-                        app:srcCompat="@drawable/button_backgground"
-                        card_view:layout_editor_absoluteX="16dp"
-                        card_view:layout_editor_absoluteY="72dp" />
+                        app:layout_constraintEnd_toEndOf="@+id/imageView3"
+                        app:layout_constraintStart_toEndOf="@+id/bt_day_8"
+                        app:layout_constraintTop_toBottomOf="@+id/imageButton3"
+                        app:srcCompat="@drawable/button_backgground" />
 
                     <TextView
                         android:id="@+id/textView32"
@@ -551,15 +553,16 @@
 
                     <ImageButton
                         android:id="@+id/bt_day_6"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"
                         android:tint="#9FA8DA"
                         android:tintMode="multiply"
-                        app:srcCompat="@drawable/button_backgground"
-                        card_view:layout_editor_absoluteX="16dp"
-                        card_view:layout_editor_absoluteY="246dp" />
+                        app:layout_constraintEnd_toStartOf="@+id/bt_day_7"
+                        app:layout_constraintStart_toEndOf="@+id/bt_day_5"
+                        app:layout_constraintTop_toBottomOf="@+id/imageButton3"
+                        app:srcCompat="@drawable/button_backgground" />
 
                     <TextView
                         android:id="@+id/textView30"
@@ -576,16 +579,15 @@
 
                     <ImageButton
                         android:id="@+id/bt_day_5"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:layout_marginTop="24dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"
                         android:tint="#9FA8DA"
                         android:tintMode="multiply"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/bt_day_6"
                         app:layout_constraintStart_toEndOf="@+id/bt_day_4"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imageButton3"
                         app:srcCompat="@drawable/button_backgground" />
 
                     <TextView
@@ -603,22 +605,23 @@
 
                     <ImageButton
                         android:id="@+id/bt_day_4"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:layout_marginTop="24dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"
                         android:tint="#9FA8DA"
                         android:tintMode="multiply"
                         app:layout_constraintEnd_toStartOf="@+id/bt_day_5"
                         app:layout_constraintStart_toEndOf="@+id/bt_day_3"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imageButton3"
                         app:srcCompat="@drawable/button_backgground" />
 
                     <TextView
                         android:id="@+id/textView28"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginBottom="2dp"
                         android:text="@string/four"
                         android:textColor="#FFFFFF"
                         android:textSize="14sp"
@@ -631,15 +634,17 @@
 
                     <ImageButton
                         android:id="@+id/bt_day_7"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"
                         android:tint="#9FA8DA"
                         android:tintMode="multiply"
-                        app:srcCompat="@drawable/button_backgground"
-                        card_view:layout_editor_absoluteX="16dp"
-                        card_view:layout_editor_absoluteY="290dp" />
+                        app:layout_constraintEnd_toStartOf="@+id/bt_day_8"
+                        app:layout_constraintStart_toEndOf="@+id/bt_day_6"
+
+                        app:layout_constraintTop_toBottomOf="@+id/imageButton3"
+                        app:srcCompat="@drawable/button_backgground" />
 
                     <TextView
                         android:id="@+id/textView29"
@@ -656,16 +661,15 @@
 
                     <ImageButton
                         android:id="@+id/bt_day_2"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:layout_marginTop="24dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"
                         android:tint="#9FA8DA"
                         android:tintMode="multiply"
                         app:layout_constraintEnd_toStartOf="@+id/bt_day_3"
                         app:layout_constraintStart_toEndOf="@+id/bt_day_1"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imageButton3"
                         app:srcCompat="@drawable/button_backgground" />
 
                     <TextView
@@ -683,16 +687,15 @@
 
                     <ImageButton
                         android:id="@+id/bt_day_1"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:layout_marginTop="24dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"
                         android:tint="#9FA8DA"
                         android:tintMode="multiply"
                         app:layout_constraintEnd_toStartOf="@+id/bt_day_2"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/imageView3"
+                        app:layout_constraintTop_toBottomOf="@+id/imageButton3"
                         app:srcCompat="@drawable/button_backgground" />
 
                     <TextView
@@ -717,8 +720,8 @@
                         android:tint="#9FA8DA"
                         android:tintMode="multiply"
                         app:srcCompat="@drawable/button_backgground"
-                        card_view:layout_editor_absoluteX="181dp"
-                        card_view:layout_editor_absoluteY="316dp" />
+                        card_view:layout_editor_absoluteX="273dp"
+                        card_view:layout_editor_absoluteY="226dp" />
 
                     <ImageButton
                         android:id="@+id/bt_day_27"
@@ -729,8 +732,8 @@
                         android:tint="#9FA8DA"
                         android:tintMode="multiply"
                         app:srcCompat="@drawable/button_backgground"
-                        card_view:layout_editor_absoluteX="98dp"
-                        card_view:layout_editor_absoluteY="316dp" />
+                        card_view:layout_editor_absoluteX="330dp"
+                        card_view:layout_editor_absoluteY="344dp" />
 
                     <TextView
                         android:id="@+id/textView23"
@@ -760,16 +763,15 @@
 
                     <ImageButton
                         android:id="@+id/bt_day_3"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:layout_marginTop="24dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"
                         android:tint="#9FA8DA"
                         android:tintMode="multiply"
                         app:layout_constraintEnd_toStartOf="@+id/bt_day_4"
                         app:layout_constraintStart_toEndOf="@+id/bt_day_2"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imageButton3"
                         app:srcCompat="@drawable/button_backgground" />
 
                     <TextView
@@ -819,8 +821,8 @@
                         android:tint="#9FA8DA"
                         android:tintMode="multiply"
                         app:srcCompat="@drawable/button_backgground"
-                        card_view:layout_editor_absoluteX="136dp"
-                        card_view:layout_editor_absoluteY="257dp" />
+                        card_view:layout_editor_absoluteX="278dp"
+                        card_view:layout_editor_absoluteY="332dp" />
 
                     <TextView
                         android:id="@+id/textView19"
@@ -862,17 +864,15 @@
 
                     <ImageButton
                         android:id="@+id/bt_day_31"
-                        android:layout_width="33dp"
+                        android:layout_width="30dp"
                         android:layout_height="33dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginBottom="16dp"
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"
                         android:tint="#9FA8DA"
                         android:tintMode="multiply"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:srcCompat="@drawable/button_backgground" />
+                        app:srcCompat="@drawable/button_backgground"
+                        card_view:layout_editor_absoluteX="112dp"
+                        card_view:layout_editor_absoluteY="338dp" />
 
                     <TextView
                         android:id="@+id/textView17"
@@ -887,163 +887,185 @@
                         app:layout_constraintStart_toStartOf="@+id/bt_day_31"
                         app:layout_constraintTop_toTopOf="@+id/bt_day_31" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </ScrollView>
 
-            <ImageButton
-                android:id="@+id/ib_save_day_dialog"
-                android:layout_width="33dp"
-                android:layout_height="33dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/twotone_save_24" />
+                    <ImageButton
+                        android:id="@+id/ib_save_day_dialog"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@android:color/transparent"
+                        android:scaleType="fitCenter"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/twotone_save_24" />
 
-            <ImageButton
-                android:id="@+id/ib_back_day_dialog"
-                android:layout_width="33dp"
-                android:layout_height="33dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/twotone_arrow_circle_left_24" />
+                    <ImageButton
+                        android:id="@+id/ib_back_day_dialog"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@android:color/transparent"
+                        android:scaleType="fitCenter"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/twotone_arrow_circle_left_24" />
 
-            <RadioButton
-                android:id="@+id/rb_full_birthday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:button="@drawable/radiobutton_custom"
-                android:buttonTint="#835959"
-                android:text="DD/MM/YYYY"
-                app:layout_constraintEnd_toStartOf="@+id/rb_day_month_birthday"
-                app:layout_constraintStart_toStartOf="parent"
-                card_view:layout_editor_absoluteY="32dp" />
+                    <RadioButton
+                        android:id="@+id/rb_full_birthday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@drawable/radiobutton_custom"
+                        android:buttonTint="#835959"
+                        android:text="DD/MM/YYYY"
+                        app:layout_constraintEnd_toStartOf="@+id/rb_day_month_birthday"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ib_save_day_dialog" />
 
-            <RadioButton
-                android:id="@+id/rb_day_month_birthday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="21dp"
-                android:button="@drawable/radiobutton_custom"
-                android:buttonTint="#835959"
-                android:text="DD/MM"
-                app:layout_constraintEnd_toStartOf="@+id/rb_month_year_birthday"
-                app:layout_constraintStart_toEndOf="@+id/rb_full_birthday"
-                card_view:layout_editor_absoluteY="32dp" />
+                    <RadioButton
+                        android:id="@+id/rb_day_month_birthday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="21dp"
+                        android:button="@drawable/radiobutton_custom"
+                        android:buttonTint="#835959"
+                        android:text="DD/MM"
+                        app:layout_constraintEnd_toStartOf="@+id/rb_month_year_birthday"
+                        app:layout_constraintStart_toEndOf="@+id/rb_full_birthday"
+                        app:layout_constraintTop_toBottomOf="@+id/ib_save_day_dialog" />
 
-            <RadioButton
-                android:id="@+id/rb_month_year_birthday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:button="@drawable/radiobutton_custom"
-                android:buttonTint="#835959"
-                android:text="MM/YYYY"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/rb_day_month_birthday"
-                card_view:layout_editor_absoluteY="32dp" />
+                    <RadioButton
+                        android:id="@+id/rb_month_year_birthday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@drawable/radiobutton_custom"
+                        android:buttonTint="#835959"
+                        android:text="MM/YYYY"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/rb_day_month_birthday"
+                        app:layout_constraintTop_toBottomOf="@+id/ib_save_day_dialog" />
 
-            <RadioButton
-                android:id="@+id/rb_unknown_birthday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:button="@drawable/radiobutton_custom"
-                android:buttonTint="#835959"
-                android:text="Desconocida"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/rb_year_birthday"
-                app:layout_constraintTop_toBottomOf="@+id/rb_month_year_birthday" />
+                    <RadioButton
+                        android:id="@+id/rb_unknown_birthday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@drawable/radiobutton_custom"
+                        android:buttonTint="#835959"
+                        android:text="Desconocida"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/rb_year_birthday"
+                        app:layout_constraintTop_toBottomOf="@+id/rb_month_year_birthday" />
 
-            <RadioButton
-                android:id="@+id/rb_month_birthday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:button="@drawable/radiobutton_custom"
-                android:text="Mes"
-                app:layout_constraintEnd_toStartOf="@+id/rb_year_birthday"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rb_full_birthday" />
+                    <RadioButton
+                        android:id="@+id/rb_month_birthday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@drawable/radiobutton_custom"
+                        android:text="Mes"
+                        app:layout_constraintEnd_toStartOf="@+id/rb_year_birthday"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/rb_full_birthday" />
 
-            <RadioButton
-                android:id="@+id/rb_year_birthday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:button="@drawable/radiobutton_custom"
-                android:text="Año"
-                app:layout_constraintEnd_toStartOf="@+id/rb_unknown_birthday"
-                app:layout_constraintStart_toEndOf="@+id/rb_month_birthday"
-                app:layout_constraintTop_toBottomOf="@+id/rb_day_month_birthday" />
+                    <RadioButton
+                        android:id="@+id/rb_year_birthday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@drawable/radiobutton_custom"
+                        android:text="Año"
+                        app:layout_constraintEnd_toStartOf="@+id/rb_unknown_birthday"
+                        app:layout_constraintStart_toEndOf="@+id/rb_month_birthday"
+                        app:layout_constraintTop_toBottomOf="@+id/rb_day_month_birthday" />
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:foregroundTint="#9FA8DA"
-                android:src="@drawable/button_backgground"
-                android:tint="#7D83A9"
-                android:tintMode="multiply"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rb_year_birthday" />
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:foregroundTint="#9FA8DA"
+                        android:src="@drawable/button_backgground"
+                        android:tint="#7D83A9"
+                        android:tintMode="multiply"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/rb_year_birthday" />
 
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="------------------★-------------------"
-                android:textColor="#9FA8DA"
-                android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+                    <TextView
+                        android:id="@+id/textView10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="------------------★-------------------"
+                        android:textColor="#9FA8DA"
+                        android:textSize="24sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
-            <TextView
-                android:id="@+id/textView15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="8dp"
-                android:text="Dia"
-                android:textColor="#FFFFFF"
-                android:textSize="24sp"
-                app:layout_constraintStart_toStartOf="@+id/imageView2"
-                app:layout_constraintTop_toBottomOf="@+id/rb_year_birthday" />
+                    <TextView
+                        android:id="@+id/textView15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Dia"
+                        android:textColor="#FFFFFF"
+                        android:textSize="24sp"
+                        app:layout_constraintStart_toStartOf="@+id/imageView2"
+                        app:layout_constraintTop_toBottomOf="@+id/rb_year_birthday" />
 
-            <ImageButton
-                android:id="@+id/imageButton4"
-                android:layout_width="33dp"
-                android:layout_height="33dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:background="@android:color/transparent"
-                android:tint="#FFFFFF"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/imageView2"
-                app:srcCompat="@drawable/twotone_arrow_drop_down_circle_24" />
+                    <ImageButton
+                        android:id="@+id/imageButton4"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@android:color/transparent"
+                        android:tint="#FFFFFF"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/imageView2"
+                        app:srcCompat="@drawable/twotone_arrow_drop_down_circle_24" />
 
-            <ImageButton
-                android:id="@+id/bt_day_37"
-                android:layout_width="33dp"
-                android:layout_height="33dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                android:tint="#9FA8DA"
-                android:tintMode="multiply"
-                app:srcCompat="@drawable/button_backgground"
-                card_view:layout_editor_absoluteX="264dp"
-                card_view:layout_editor_absoluteY="263dp" />
+                    <ImageButton
+                        android:id="@+id/imageButton3"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@android:color/transparent"
+                        android:scaleType="fitCenter"
+                        app:layout_constraintStart_toStartOf="@+id/imageView3"
+                        app:layout_constraintTop_toBottomOf="@+id/textView10"
+                        app:srcCompat="@drawable/twotone_arrow_circle_left_24" />
 
-            <!-- Cambia el color del texto aquí -->
+                    <ImageButton
+                        android:id="@+id/imageButton5"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@android:color/transparent"
+                        android:scaleType="fitCenter"
+                        app:layout_constraintEnd_toEndOf="@+id/imageView3"
+                        app:layout_constraintTop_toBottomOf="@+id/textView10"
+                        app:srcCompat="@drawable/twotone_arrow_circle_right_24" />
+
+                    <TextView
+                        android:id="@+id/textView65"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="TextView"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageButton3"
+                        app:layout_constraintEnd_toStartOf="@+id/imageButton5"
+                        app:layout_constraintStart_toEndOf="@+id/imageButton3"
+                        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+                    <!-- Cambia el color del texto aquí -->
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
 
