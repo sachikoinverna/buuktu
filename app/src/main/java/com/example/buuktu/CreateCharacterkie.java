@@ -55,6 +55,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -96,7 +97,7 @@ ImageButton bt_basic_info_characterkies;
     int year,day,month;
     CreateEditGeneralDialog dialog;
     private final FirebaseStorage storage = FirebaseStorage.getInstance("gs://buuk-tu-characterkies");
-
+    ArrayList<String> option
     public CreateCharacterkie() {
         // Required empty public constructor
     }
@@ -265,7 +266,9 @@ ImageButton bt_basic_info_characterkies;
 
     }
 
+    public void setValuesRadioButton(){
 
+    }
     public void setOptionPronounsString(String optionPronounsString) {
         this.optionPronounsString = optionPronounsString;
         bt_pronouns_characterkie.setText(optionPronounsString);
