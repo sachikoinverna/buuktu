@@ -28,7 +28,7 @@
                 android:text="@string/one"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/bt_day_two"
+                app:layout_constraintEnd_toStartOf="@+id/bt_month_two"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView12"
                 app:strokeColor="#5D3131"
@@ -44,9 +44,9 @@
                 android:text="@string/six"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/bt_day_seven"
-                app:layout_constraintStart_toEndOf="@+id/bt_day_five"
-                app:layout_constraintTop_toBottomOf="@+id/bt_day_two"
+                app:layout_constraintEnd_toStartOf="@+id/bt_month_seven"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bt_month_one"
                 app:strokeColor="#5D3131"
                 app:strokeWidth="3dp" />
 
@@ -60,8 +60,8 @@
                 android:text="@string/four"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/bt_day_three"
+                app:layout_constraintEnd_toStartOf="@+id/bt_month_five"
+                app:layout_constraintStart_toEndOf="@+id/bt_month_three"
                 app:layout_constraintTop_toBottomOf="@+id/textView12"
                 app:strokeColor="#5D3131"
                 app:strokeWidth="3dp" />
@@ -72,15 +72,13 @@
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
                 android:backgroundTint="#B39DDB"
                 android:text="@string/nine"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/bt_day_ten"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/bt_day_five"
+                app:layout_constraintEnd_toStartOf="@+id/bt_month_ten"
+                app:layout_constraintStart_toEndOf="@+id/bt_month_eight"
+                app:layout_constraintTop_toBottomOf="@+id/bt_month_four"
                 app:strokeColor="#5D3131"
                 app:strokeWidth="3dp" />
 
@@ -94,9 +92,9 @@
                 android:text="@string/eight"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/bt_day_seven"
-                app:layout_constraintTop_toBottomOf="@+id/bt_month_four"
+                app:layout_constraintEnd_toStartOf="@+id/bt_month_nine"
+                app:layout_constraintStart_toEndOf="@+id/bt_month_seven"
+                app:layout_constraintTop_toBottomOf="@+id/bt_month_three"
                 app:strokeColor="#5D3131"
                 app:strokeWidth="3dp" />
 
@@ -104,7 +102,8 @@
                 android:id="@+id/bt_month_twelve"
                 style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_height="55dp"
+                android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:backgroundTint="#B39DDB"
@@ -112,7 +111,6 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/bt_month_eleven"
                 app:layout_constraintTop_toBottomOf="@+id/bt_month_eight"
                 app:strokeColor="#5D3131"
@@ -122,7 +120,8 @@
                 android:id="@+id/bt_month_eleven"
                 style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_height="55dp"
+                android:layout_marginStart="22dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:backgroundTint="#B39DDB"
@@ -130,32 +129,29 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/bt_month_twelve"
-                app:layout_constraintStart_toEndOf="@+id/bt_day_ten"
-                app:layout_constraintTop_toBottomOf="@+id/bt_month_eight"
-                app:strokeColor="#5D3131"
-                app:strokeWidth="3dp" />
-
-            <Button
-                android:id="@+id/bt_day_ten"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:backgroundTint="#B39DDB"
-                android:text="@string/ten"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/bt_month_eleven"
-                app:layout_constraintStart_toEndOf="@+id/bt_month_nine"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/bt_month_six"
                 app:strokeColor="#5D3131"
                 app:strokeWidth="3dp" />
 
             <Button
-                android:id="@+id/bt_day_seven"
+                android:id="@+id/bt_month_ten"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="70dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="#B39DDB"
+                android:text="@string/ten"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/bt_month_nine"
+                app:layout_constraintTop_toBottomOf="@+id/bt_month_five"
+                app:strokeColor="#5D3131"
+                app:strokeWidth="3dp" />
+
+            <Button
+                android:id="@+id/bt_month_seven"
                 style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
@@ -166,12 +162,12 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/bt_month_eight"
                 app:layout_constraintStart_toEndOf="@+id/bt_month_six"
-                app:layout_constraintTop_toBottomOf="@+id/bt_day_three"
+                app:layout_constraintTop_toBottomOf="@+id/bt_month_two"
                 app:strokeColor="#5D3131"
                 app:strokeWidth="3dp" />
 
             <Button
-                android:id="@+id/bt_day_five"
+                android:id="@+id/bt_month_five"
                 style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
@@ -180,14 +176,14 @@
                 android:text="@string/five"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/bt_month_six"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/bt_month_one"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/bt_month_four"
+                app:layout_constraintTop_toBottomOf="@+id/textView12"
                 app:strokeColor="#5D3131"
                 app:strokeWidth="3dp" />
 
             <Button
-                android:id="@+id/bt_day_three"
+                android:id="@+id/bt_month_three"
                 style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
@@ -197,23 +193,22 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/bt_month_four"
-                app:layout_constraintStart_toEndOf="@+id/bt_day_two"
+                app:layout_constraintStart_toEndOf="@+id/bt_month_two"
                 app:layout_constraintTop_toBottomOf="@+id/textView12"
                 app:strokeColor="#5D3131"
                 app:strokeWidth="3dp" />
 
             <Button
-                android:id="@+id/bt_day_two"
+                android:id="@+id/bt_month_two"
                 style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="23dp"
                 android:backgroundTint="#B39DDB"
                 android:text="@string/two"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/bt_day_three"
+                app:layout_constraintEnd_toStartOf="@+id/bt_month_three"
                 app:layout_constraintStart_toEndOf="@+id/bt_month_one"
                 app:layout_constraintTop_toBottomOf="@+id/textView12"
                 app:strokeColor="#5D3131"
@@ -229,10 +224,10 @@
                 android:textStyle="bold|italic"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/bt_save_birthday_characterkie" />
+                app:layout_constraintTop_toBottomOf="@+id/ib_save_month_dialog" />
 
             <ImageButton
-                android:id="@+id/bt_save_birthday_characterkie"
+                android:id="@+id/ib_save_month_dialog"
                 android:layout_width="33dp"
                 android:layout_height="33dp"
                 android:layout_marginTop="8dp"
@@ -244,7 +239,7 @@
                 app:srcCompat="@drawable/twotone_save_24" />
 
             <ImageButton
-                android:id="@+id/ib_back_day_dialog"
+                android:id="@+id/ib_back_month_dialog"
                 android:layout_width="33dp"
                 android:layout_height="33dp"
                 android:layout_marginStart="8dp"

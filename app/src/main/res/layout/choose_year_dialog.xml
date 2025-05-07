@@ -285,7 +285,7 @@
                 card_view:layout_editor_absoluteY="104dp" />
 
             <ImageButton
-                android:id="@+id/bt_save_birthday_characterkie"
+                android:id="@+id/ib_save_month_dialog"
                 android:layout_width="33dp"
                 android:layout_height="33dp"
                 android:layout_marginTop="8dp"

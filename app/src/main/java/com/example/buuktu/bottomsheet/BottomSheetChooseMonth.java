@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.annotation.Nullable;
 
@@ -18,11 +19,12 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BottomSheetChooseMonth extends BottomSheetDialogFragment {
+public class BottomSheetChooseMonth extends BottomSheetDialogFragment implements View.OnClickListener {
     int option;
     Context context;
     List<Button> allButtons = new ArrayList<>();
-    Button bt_day_one,bt_day_two,bt_day_three,bt_day_four,bt_day_five,bt_day_six,bt_day_seven,bt_day_eight,bt_day_nine,bt_day_ten,bt_day_eleven,bt_day_twelve;
+    Button bt_month_one, bt_month_two, bt_month_three,bt_month_four, bt_month_five, bt_month_six, bt_month_seven, bt_month_eight, bt_month_nine, bt_month_ten, bt_month_eleven, bt_month_twelve;
+    ImageButton ib_save_month_dialog,ib_back_month_dialog;
     public BottomSheetChooseMonth(int option) {
         this.option = option;
     }
@@ -44,30 +46,32 @@ public class BottomSheetChooseMonth extends BottomSheetDialogFragment {
     }
     private void initComponents(View view){
         context = getContext();
-        bt_day_one =view.findViewById(R.id.bt_month_one);
-                bt_day_two=view.findViewById(R.id.bt_day_two);
-                bt_day_three=view.findViewById(R.id.bt_day_three);
-                bt_day_four= view.findViewById(R.id.bt_month_four);
-                bt_day_five=view.findViewById(R.id.bt_day_five);
-                bt_day_six=view.findViewById(R.id.bt_month_six);
-                bt_day_seven=view.findViewById(R.id.bt_day_seven);
-                bt_day_eight=view.findViewById(R.id.bt_month_eight);
-                bt_day_nine=view.findViewById(R.id.bt_month_nine);
-                bt_day_ten=view.findViewById(R.id.bt_day_ten);
-                bt_day_eleven=view.findViewById(R.id.bt_month_eleven);
-                bt_day_twelve=view.findViewById(R.id.bt_month_twelve);
-        allButtons.add(bt_day_one);
-        allButtons.add(bt_day_two);
-        allButtons.add(bt_day_three);
-        allButtons.add(bt_day_four);
-        allButtons.add(bt_day_five);
-        allButtons.add(bt_day_six);
-        allButtons.add(bt_day_seven);
-        allButtons.add(bt_day_eight);
-        allButtons.add(bt_day_nine);
-        allButtons.add(bt_day_ten);
-        allButtons.add(bt_day_eleven);
-        allButtons.add(bt_day_twelve);
+        bt_month_one =view.findViewById(R.id.bt_month_one);
+                bt_month_two =view.findViewById(R.id.bt_month_two);
+                bt_month_three =view.findViewById(R.id.bt_month_three);
+        bt_month_four= view.findViewById(R.id.bt_month_four);
+                bt_month_five =view.findViewById(R.id.bt_month_five);
+                bt_month_six =view.findViewById(R.id.bt_month_six);
+                bt_month_seven =view.findViewById(R.id.bt_month_seven);
+                bt_month_eight =view.findViewById(R.id.bt_month_eight);
+                bt_month_nine =view.findViewById(R.id.bt_month_nine);
+                bt_month_ten =view.findViewById(R.id.bt_month_ten);
+                bt_month_eleven =view.findViewById(R.id.bt_month_eleven);
+                bt_month_twelve =view.findViewById(R.id.bt_month_twelve);
+                ib_back_month_dialog = view.findViewById(R.id.ib_back_month_dialog);
+                ib_save_month_dialog = view.findViewById(R.id.ib_save_month_dialog);
+        allButtons.add(bt_month_one);
+        allButtons.add(bt_month_two);
+        allButtons.add(bt_month_three);
+        allButtons.add(bt_month_four);
+        allButtons.add(bt_month_five);
+        allButtons.add(bt_month_six);
+        allButtons.add(bt_month_seven);
+        allButtons.add(bt_month_eight);
+        allButtons.add(bt_month_nine);
+        allButtons.add(bt_month_ten);
+        allButtons.add(bt_month_eleven);
+        allButtons.add(bt_month_twelve);
         for (Button bt : allButtons) {
             bt.setOnClickListener(v -> {
                 bt.setBackgroundTintList(ColorStateList.valueOf(R.color.white));
@@ -77,6 +81,15 @@ public class BottomSheetChooseMonth extends BottomSheetDialogFragment {
                     }
                 }
             });
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId()==R.id.ib_back_month_dialog){
+
+        } else if (v.getId()==R.id.ib_save_month_dialog) {
+
         }
     }
 }

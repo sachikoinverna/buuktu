@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
@@ -23,15 +24,11 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BottomSheetChooseDay extends BottomSheetDialogFragment {
-    RadioButton rb_unknown_birthday,rb_full_birthday,rb_day_month_birthday,rb_month_year_birthday,rb_day_year_birthday,rb_day_birthday,rb_month_birthday,rb_year_birthday,rb_checked;
+public class BottomSheetChooseDay extends BottomSheetDialogFragment implements View.OnClickListener {
+    ImageButton ib_save_day_dialog,ib_back_day_dialog;
     int option;
     Context context;
-    DatePicker datePicker;
-    List<RadioButton> allRadioButtons = new ArrayList<>();
-    Spinner sp_day_birthday;
-    TextInputLayout et_birthdayCreateCharacterkieFull;
-    TextInputEditText et_birthdayCreateCharacterkie;
+    List<Button> allRadioButtons = new ArrayList<>();
     Button bt_day_one,bt_day_two,bt_day_three,bt_day_four,bt_day_five,bt_day_six,bt_day_seven,bt_day_eight,bt_day_nine,bt_day_ten,bt_day_eleven,bt_day_twelve;
     public BottomSheetChooseDay(int option) {
         this.option = option;
@@ -54,29 +51,6 @@ public class BottomSheetChooseDay extends BottomSheetDialogFragment {
     }
     private void initComponents(View view){
         context = getContext();
-        sp_day_birthday = view.findViewById(R.id.sp_day_birthday);
-        rb_unknown_birthday = view.findViewById(R.id.rb_unknown_birthday);
-        rb_full_birthday = view.findViewById(R.id.rb_full_birthday);
-        rb_day_month_birthday = view.findViewById(R.id.rb_day_month_birthday);
-        rb_month_year_birthday= view.findViewById(R.id.rb_month_year_birthday);
-        rb_day_year_birthday= view.findViewById(R.id.rb_day_year_birthday);
-        rb_day_birthday= view.findViewById(R.id.rb_day_birthday);
-        rb_month_birthday= view.findViewById(R.id.rb_month_birthday);
-        rb_year_birthday= view.findViewById(R.id.rb_year_birthday);
-        datePicker = view.findViewById(R.id.datePicker);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), R.layout.custom_spinner_style, days){
-            @Override
-            public View getDropDownView(int position, View convertView, ViewGroup parent) {
-                View view = super.getDropDownView(position, convertView, parent);
-                // Cambiar el tamaño del texto o añadir más padding si es necesario
-                view.setPadding(16, 16, 16, 16);  // Espaciado entre opciones
-                return view;
-            }
-        };
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sp_day_birthday.setAdapter(adapter);
-
-    //    bt_prueba = view.findViewById(R.id.bt_prueba);
 
         allRadioButtons.add(rb_full_birthday);
         allRadioButtons.add(rb_day_month_birthday);
@@ -101,6 +75,15 @@ public class BottomSheetChooseDay extends BottomSheetDialogFragment {
                  //   hideField(datePicker,getFormatForSelectedOption(rb.getId()));
                 }
             });
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId()==R.id.ib_back_day_dialog){
+
+        } else if (v.getId()==R.id.ib_save_day_dialog) {
+
         }
     }
 }

@@ -62,27 +62,12 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
     }
     private void initComponents(View view){
         context = getContext();
-        sp_day_birthday = view.findViewById(R.id.sp_day_birthday);
         rb_unknown_birthday = view.findViewById(R.id.rb_unknown_birthday);
         rb_full_birthday = view.findViewById(R.id.rb_full_birthday);
         rb_day_month_birthday = view.findViewById(R.id.rb_day_month_birthday);
         rb_month_year_birthday= view.findViewById(R.id.rb_month_year_birthday);
-        rb_day_year_birthday= view.findViewById(R.id.rb_day_year_birthday);
-        rb_day_birthday= view.findViewById(R.id.rb_day_birthday);
         rb_month_birthday= view.findViewById(R.id.rb_month_birthday);
         rb_year_birthday= view.findViewById(R.id.rb_year_birthday);
-         datePicker = view.findViewById(R.id.datePicker);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), R.layout.custom_spinner_style, days){
-            @Override
-            public View getDropDownView(int position, View convertView, ViewGroup parent) {
-                View view = super.getDropDownView(position, convertView, parent);
-                // Cambiar el tamaño del texto o añadir más padding si es necesario
-                view.setPadding(16, 16, 16, 16);  // Espaciado entre opciones
-                return view;
-            }
-        };
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sp_day_birthday.setAdapter(adapter);
 
         bt_prueba = view.findViewById(R.id.bt_prueba);
 
@@ -90,8 +75,6 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
         allRadioButtons.add(rb_day_month_birthday);
         allRadioButtons.add(rb_unknown_birthday);
         allRadioButtons.add(rb_month_year_birthday);
-        allRadioButtons.add(rb_day_year_birthday);
-        allRadioButtons.add(rb_day_birthday);
         allRadioButtons.add(rb_month_birthday);
         allRadioButtons.add(rb_year_birthday);
         for (RadioButton rb : allRadioButtons) {
@@ -119,12 +102,6 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
         }else if(radioButtonId==R.id.rb_month_year_birthday) {
             return 3; // MM/yyyy
         }
-        else if(radioButtonId==R.id.rb_day_year_birthday) {
-            return 4; // dd/yyyy
-        }
-        else if(radioButtonId==R.id.rb_day_birthday) {
-            return 5; // dd
-        }
         else if(radioButtonId==R.id.rb_month_birthday) {
             return 6; // MM
         }
@@ -143,10 +120,6 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
             rb_day_month_birthday.setChecked(true);
         } else if (option==R.id.rb_month_year_birthday) {
             rb_month_year_birthday.setChecked(true);
-        }else if(option==R.id.rb_day_year_birthday){
-            rb_day_year_birthday.setChecked(true);
-        } else if (option==R.id.rb_day_birthday) {
-            rb_day_birthday.setChecked(true);
         }else if(option==R.id.rb_month_birthday){
             rb_month_birthday.setChecked(true);
         } else if (option==R.id.rb_year_birthday) {
