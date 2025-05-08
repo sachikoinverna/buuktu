@@ -30,7 +30,8 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class Notikies extends Fragment {
-    ImageButton ib_profile_superior;
+    MainActivity mainActivity;
+    ImageButton backButton,ib_profile_superior;
     RecyclerView rc_notikies_list;
    NotikieListAdapter notikieListAdapter;
    FirebaseFirestore db;
@@ -60,11 +61,10 @@ public class Notikies extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_notikies, container, false);
-        MainActivity mainActivity = (MainActivity) getActivity();
-        ImageButton backButton = mainActivity.getBackButton();
-        backButton.setVisibility(View.GONE);
+        mainActivity = (MainActivity) getActivity();
+        backButton = mainActivity.getBackButton();
         ib_profile_superior = mainActivity.getIb_self_profile();
-        ib_profile_superior.setVisibility(View.VISIBLE);
+        setVisibility();
         rc_notikies_list = view.findViewById(R.id.rc_notikies_list);
         db = FirebaseFirestore.getInstance();
         notikiesCollection = db.collection("Notikies");
@@ -86,6 +86,11 @@ public class Notikies extends Fragment {
             }
         });
         return view;
+    }
+    private void setVisibility(){
+        backButton.setVisibility(View.GONE);
+        ib_profile_superior.setVisibility(View.VISIBLE);
+
     }
     private void updateRecyclerView(ArrayList<NotikieModel> notikieModelArrayList) {
         NotikieListAdapter notikieListAdapter = new NotikieListAdapter(notikieModelArrayList, getContext(), getParentFragmentManager());

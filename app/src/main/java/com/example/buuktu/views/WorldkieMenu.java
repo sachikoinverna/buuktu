@@ -17,6 +17,8 @@ import com.example.buuktu.CreateEditStuffkie;
 import com.example.buuktu.R;
 import com.example.buuktu.utils.NavigationUtils;
 
+import java.security.KeyStore;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link WorldkieMenu#newInstance} factory method to
@@ -24,6 +26,7 @@ import com.example.buuktu.utils.NavigationUtils;
  */
 public class WorldkieMenu extends Fragment implements View.OnClickListener {
     FragmentManager fragmentManager;
+    MainActivity mainActivity;
     FragmentActivity activity;
     private TextView tv_characterkiesAdd,textView5,textView8;
     private Fragment createCharacterkie,createScenariokie,createStuffkie;
@@ -59,12 +62,11 @@ public class WorldkieMenu extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_worldkie_menu, container, false);
-        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity = (MainActivity) getActivity();
         backButton = mainActivity.getBackButton();
-        backButton.setVisibility(View.VISIBLE);
         ib_profile_superior = mainActivity.getIb_self_profile();
-        ib_profile_superior.setVisibility(View.VISIBLE);
         initComponents(view);
+        setVisibility();
         setListeners();
         fragmentManager = requireActivity().getSupportFragmentManager();
         activity = requireActivity();        
@@ -80,6 +82,11 @@ public class WorldkieMenu extends Fragment implements View.OnClickListener {
         tv_characterkiesAdd.setOnClickListener(this);
         textView5.setOnClickListener(this);
         textView8.setOnClickListener(this);
+    }
+    private void setVisibility(){
+        backButton.setVisibility(View.VISIBLE);
+        ib_profile_superior.setVisibility(View.VISIBLE);
+
     }
 
     @Override

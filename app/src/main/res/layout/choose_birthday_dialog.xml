@@ -8,7 +8,7 @@
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="700dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -20,58 +20,6 @@
                     android:layout_height="match_parent"
                     android:layout_marginBottom="8dp">
 
-
-                        <ImageView
-                            android:id="@+id/iv_head_year_birthday_selector"
-                            android:layout_width="0dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:foregroundTint="#9FA8DA"
-                            android:src="@drawable/button_backgground"
-                            android:tint="#7D83A9"
-                            android:tintMode="multiply"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="1.0"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/iv_background_day_month_selector" />
-
-                        <TextView
-                            android:id="@+id/tv_head_year_birthday_selector"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="32dp"
-                            android:layout_marginTop="8dp"
-                            android:text="Dia"
-                            android:textColor="#FFFFFF"
-                            android:textSize="24sp"
-                            app:layout_constraintStart_toStartOf="@+id/iv_head_year_birthday_selector"
-                            app:layout_constraintTop_toTopOf="@+id/iv_head_year_birthday_selector" />
-
-                        <ImageButton
-                            android:id="@+id/bt_show_year_selector"
-                            android:layout_width="33dp"
-                            android:layout_height="33dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="16dp"
-                            android:background="@android:color/transparent"
-                            android:tint="#FFFFFF"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/iv_head_year_birthday_selector"
-                            app:srcCompat="@drawable/twotone_arrow_drop_down_circle_24" />
-
-                        <TextView
-                            android:id="@+id/tv_separator_year_birthday_selector"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="------------------★-------------------"
-                            android:textColor="#9FA8DA"
-                            android:textSize="24sp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.607"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/iv_head_year_birthday_selector" />
 
                         <ImageView
                             android:id="@+id/iv_background_day_month_selector"
@@ -960,7 +908,7 @@
                             android:layout_marginTop="8dp"
                             android:button="@drawable/radiobutton_custom"
                             android:buttonTint="#835959"
-                            android:text="DD/MM/YYYY"
+                            android:text="@string/dd_mm_yy"
                             app:layout_constraintEnd_toStartOf="@+id/rb_month_year_birthday"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/ib_save_date_dialog" />
@@ -972,7 +920,7 @@
                             android:layout_marginTop="8dp"
                             android:button="@drawable/radiobutton_custom"
                             android:buttonTint="#835959"
-                            android:text="MM/YYYY"
+                            android:text="@string/mm_yy"
                             app:layout_constraintEnd_toStartOf="@+id/rb_month_birthday"
                             app:layout_constraintStart_toEndOf="@+id/rb_full_birthday"
                             app:layout_constraintTop_toBottomOf="@+id/ib_save_date_dialog" />
@@ -984,7 +932,7 @@
                             android:layout_marginTop="8dp"
                             android:button="@drawable/radiobutton_custom"
                             android:buttonTint="#835959"
-                            android:text="Desconocida"
+                            android:text="@string/unknown_fem"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/rb_month_year_birthday" />
@@ -995,7 +943,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:button="@drawable/radiobutton_custom"
-                            android:text="MM"
+                            android:text="@string/mm"
                             app:layout_constraintEnd_toStartOf="@+id/rb_year_birthday"
                             app:layout_constraintStart_toEndOf="@+id/rb_month_year_birthday"
                             app:layout_constraintTop_toBottomOf="@+id/ib_save_date_dialog" />
@@ -1006,7 +954,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:button="@drawable/radiobutton_custom"
-                            android:text="YY"
+                            android:text="@string/yyyy"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/rb_month_birthday"
                             app:layout_constraintTop_toBottomOf="@+id/ib_save_date_dialog" />
@@ -1105,8 +1053,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
                             android:layout_marginEnd="16dp"
-                            android:hint="@string/name"
+                            android:hint="@string/yyyy"
                             app:boxCornerRadiusBottomEnd="58dp"
                             app:boxCornerRadiusBottomStart="58dp"
                             app:boxCornerRadiusTopEnd="58dp"
@@ -1116,7 +1065,7 @@
                             app:errorEnabled="false"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/tv_separator_year_birthday_selector"
+                            app:layout_constraintTop_toBottomOf="@+id/iv_background_day_month_selector"
                             app:startIconDrawable="@drawable/outline_person_24">
 
                                 <com.google.android.material.textfield.TextInputEditText

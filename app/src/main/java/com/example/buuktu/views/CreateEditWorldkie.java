@@ -62,6 +62,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  * create an instance of this fragment.
  */
 public class CreateEditWorldkie extends Fragment implements View.OnClickListener {
+    MainActivity mainActivity;
     private FirebaseFirestore db;
     CollectionReference collectionWorldkie;
     private FirebaseAuth firebaseAuth;
@@ -76,7 +77,6 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
     BottomSheetProfilePhoto bottomSheetProfilePhoto;
     FragmentManager fragmentManager;
     FragmentActivity activity;
-    Context context;
     String UID, worldkie_id, source,name;
     boolean privacity, draft;
 
@@ -108,22 +108,18 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_create_edit_worldkie, container, false);
-        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity = (MainActivity) getActivity();
         ib_back = mainActivity.getBackButton();
         ib_save = mainActivity.getIb_save();
-        ib_save.setVisibility(View.VISIBLE);
         ib_profile_superior = mainActivity.getIb_self_profile();
-        ib_profile_superior.setVisibility(View.VISIBLE);
-        context = getContext();
         ib_save.setOnClickListener(this);
 
         fragmentManager = requireActivity().getSupportFragmentManager();
         activity = requireActivity();
-        ib_back.setVisibility(View.VISIBLE);
         firebaseAuth = FirebaseAuth.getInstance();
         UID = firebaseAuth.getUid();
         initComponents(view);
-        ib_select_img_create_worldkie.setVisibility(View.INVISIBLE);
+        setVisibility();
         dialog = new CreateEditGeneralDialog(getContext());
         bottomSheetProfilePhoto = new BottomSheetProfilePhoto();
 
@@ -144,21 +140,12 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
                     return;
                 }
                 if (queryDocumentSnapshot.exists()) {
-                    String name = queryDocumentSnapshot.getString("name");
-                    worldkieModel.setName(name);
-                    boolean worldkie_private = queryDocumentSnapshot.getBoolean("worldkie_private");
-                    worldkieModel.setWorldkie_private(worldkie_private);
-                    tb_worldkiePrivacity.setChecked(worldkie_private);
-                    if(worldkie_private) {
-                        boolean draft = queryDocumentSnapshot.getBoolean("draft");
-                        worldkieModel.setDraft(draft);
-                        tb_worldkieDraft.setChecked(draft);
-                        tb_worldkieDraft.setVisibility(View.VISIBLE);
-                    }
-                    boolean photo_default = queryDocumentSnapshot.getBoolean("photo_default");
-                    worldkieModel.setPhoto_default(photo_default);
-                    et_nameWorldkieCreate.setText(name);
-                       getImage();
+                    worldkieModel = WorldkieModel.fromSnapshot(queryDocumentSnapshot);
+                    et_nameWorldkieCreate.setText(worldkieModel.getName());
+                    tb_worldkiePrivacity.setChecked(worldkieModel.isWorldkie_private());
+                    tb_worldkieDraft.setVisibility(worldkieModel.isWorldkie_private()?View.VISIBLE:View.GONE);
+                    tb_worldkieDraft.setChecked(worldkieModel.isDraft());
+                    getImage();
                 }
             });
 
@@ -169,6 +156,12 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
 
         return view;
     }
+    private void setVisibility(){
+        ib_save.setVisibility(View.VISIBLE);
+        ib_profile_superior.setVisibility(View.VISIBLE);
+        ib_back.setVisibility(View.VISIBLE);
+        ib_select_img_create_worldkie.setVisibility(View.INVISIBLE);
+    }
     private void setListeners(){
         ib_select_img_create_worldkie.setOnClickListener(this);
         ib_back.setOnClickListener(this);
@@ -176,40 +169,28 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
         tb_worldkiePrivacity.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    tb_worldkieDraft.setVisibility(View.VISIBLE);
-                }else{
-                    tb_worldkieDraft.setVisibility(View.GONE);
-                }
+                    tb_worldkieDraft.setVisibility(isChecked?View.VISIBLE:View.GONE);
             }
         });
     }
     private void getImage(){
         if(worldkieModel.isPhoto_default()){
-        collectionWorldkie.document(worldkie_id).addSnapshotListener((queryDocumentSnapshot, e) -> {
-                       /* if (e != null) {
-                            Log.e("Error", e.getMessage());
-                            Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
-                            return;
-                        }*/
-            String id_photo = queryDocumentSnapshot.getString("id_photo");
-            int resId = getContext().getResources().getIdentifier(id_photo, "mipmap", getContext().getPackageName());
+            int resId = mainActivity.getResources().getIdentifier(worldkieModel.getId_photo(), "mipmap", mainActivity.getPackageName());
 
             if (resId != 0) {
-                Drawable drawable = ContextCompat.getDrawable(getContext(), resId);
+                Drawable drawable = ContextCompat.getDrawable(mainActivity, resId);
                 ib_select_img_create_worldkie.setImageDrawable(drawable);
                 source = "app";
-                ib_select_img_create_worldkie.setTag(DrawableUtils.getMipmapName(context,resId));
+                ib_select_img_create_worldkie.setTag(DrawableUtils.getMipmapName(mainActivity,resId));
 
                 try {
-                    DrawableUtils.personalizarImagenCuadradoButton(getContext(),150/7,7,R.color.brownMaroon,drawable, ib_select_img_create_worldkie);
+                    DrawableUtils.personalizarImagenCuadradoButton(mainActivity,150/7,7,R.color.brownMaroon,drawable, ib_select_img_create_worldkie);
                     ib_select_img_create_worldkie.setVisibility(View.VISIBLE);
                     EfectsUtils.startCircularReveal(drawable,ib_select_img_create_worldkie);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
             }
-        });
     } else {
         StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-worldkies").getReference(worldkie_id);
 
@@ -236,7 +217,7 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
         tb_worldkieDraft.setVisibility(View.GONE);
         putDefaultImage();
         source = "app";
-        ib_select_img_create_worldkie.setTag(DrawableUtils.getMipmapName(context,R.mipmap.photoworldkieone));
+        ib_select_img_create_worldkie.setTag(DrawableUtils.getMipmapName(mainActivity,R.mipmap.photoworldkieone));
 
     }
     public void setSelectedProfilePhoto(Drawable image){
@@ -294,8 +275,8 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
     }
 
     private void putDefaultImage() throws IOException {
-        Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
-        DrawableUtils.personalizarImagenCuadradoButton(getContext(),115/6,7,R.color.brownMaroon,drawable, ib_select_img_create_worldkie);
+        Drawable drawable = ContextCompat.getDrawable(mainActivity, R.mipmap.photoworldkieone);
+        DrawableUtils.personalizarImagenCuadradoButton(mainActivity,115/6,7,R.color.brownMaroon,drawable, ib_select_img_create_worldkie);
         ib_select_img_create_worldkie.setVisibility(View.VISIBLE);
 
     }
@@ -379,15 +360,12 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
     private void getValues(){
         name = et_nameWorldkieCreate.getText().toString();
         privacity = tb_worldkiePrivacity.isChecked();
-        if(privacity) {
-            draft = tb_worldkieDraft.isChecked();
-
-        }
+        draft = tb_worldkieDraft.isChecked();
     }
 
     private void editDataFirestore() {
         //if(CheckUtil.handlerCheckName(context,et_nameWorldkieCreate,))
-        if(!et_nameWorldkieCreate.getText().toString().equals("")) {
+        if(!et_nameWorldkieCreate.getText().toString().isEmpty()) {
             dialog.show();
             LottieAnimationView animationView = dialog.findViewById(R.id.anim_create_edit);
             animationView.setAnimation(R.raw.reading_anim);

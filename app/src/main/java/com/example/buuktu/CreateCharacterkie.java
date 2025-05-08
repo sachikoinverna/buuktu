@@ -3,6 +3,7 @@ package com.example.buuktu;
 import static android.widget.Toast.LENGTH_LONG;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -55,6 +56,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -97,7 +100,14 @@ ImageButton bt_basic_info_characterkies;
     int year,day,month;
     CreateEditGeneralDialog dialog;
     private final FirebaseStorage storage = FirebaseStorage.getInstance("gs://buuk-tu-characterkies");
-    ArrayList<String> option
+    ArrayList<String> arrayOptionPronounsString = new ArrayList<>();
+    ArrayList<String> arrayOptionGenderString = new ArrayList<>();
+    ArrayList<String> arrayOptionStatusString = new ArrayList<>();
+    Resources res;
+    String packageName;
+    Class<?> stringClass;
+    Field[] fields;
+    MainActivity mainActivity;
     public CreateCharacterkie() {
         // Required empty public constructor
     }
@@ -129,7 +139,7 @@ ImageButton bt_basic_info_characterkies;
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_create_characterkie, container, false);
-        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity = (MainActivity) getActivity();
         ib_back = mainActivity.getBackButton();
         ib_save = mainActivity.getIb_save();
         context = getContext();
@@ -142,6 +152,8 @@ ImageButton bt_basic_info_characterkies;
         bottomSheetProfilePhoto = new BottomSheetProfilePhoto();
         initComponents(view);
         setListeners();
+        res = context.getResources();
+        packageName = context.getPackageName();
         dialog = new CreateEditGeneralDialog(getContext());
 
         //fieldsNotAdded.add(new FieldItem("EditText","Characterky","Texto",R.drawable.sharp_emoji_nature_24));
@@ -167,6 +179,50 @@ ImageButton bt_basic_info_characterkies;
                         tb_characterkieDraft.setVisibility(View.VISIBLE);
                     }
                     et_nameCharacterkieCreate.setText(name);
+                    String keyPronouns = characterkie.getPronouns();
+                    int resIdPronouns = context.getResources().getIdentifier(keyPronouns, "string", context.getPackageName());
+
+                    if (resIdPronouns != 0) {
+                        String pronouns = context.getString(resIdPronouns);
+                        optionGender = context.getResources().getIdentifier("rb" +keyPronouns, "id", context.getPackageName());
+                        bt_pronouns_characterkie.setText(pronouns);
+                    } else {
+                        optionPronouns = R.id.rb_other_gender_characterkie;
+                        bt_pronouns_characterkie.setText(optionGender);
+                    }
+                    String keyGender = characterkie.getGender();
+                    int resIdGender = context.getResources().getIdentifier(keyGender, "string", context.getPackageName());
+
+                    if (resIdGender != 0) {
+                        String gender = context.getString(resIdGender);
+                        optionGender = context.getResources().getIdentifier("rb" +keyGender, "id", context.getPackageName());
+                        bt_gender_characterkie.setText(gender);
+                    } else {
+                        optionGender = R.id.rb_other_gender_characterkie;
+                        bt_gender_characterkie.setText(keyGender);
+                    }
+                    String keyStatus = characterkie.getStatus();
+                    int resIdStaus = context.getResources().getIdentifier(keyGender, "string", context.getPackageName());
+
+                    if (resIdStaus != 0) {
+                        String status = context.getString(resIdStaus);
+                        optionStatus = context.getResources().getIdentifier("rb" +keyStatus, "id", context.getPackageName());
+                        bt_state_characterkie.setText(status);
+                    } else {
+                        optionGender = R.id.rb_other_status_characterkie;
+                        bt_state_characterkie.setText(keyStatus);
+                    }
+                    /*String keyBirthday = characterkie.getStatus();
+                    int resIdBirthday = context.getResources().getIdentifier(keyGender, "string", context.getPackageName());
+
+                    if (resIdStaus != 0) {
+                        String  = context.getString(resIdStaus);
+                        optionStatus = context.getResources().getIdentifier("rb" +keyStatus, "id", context.getPackageName());
+                        bt_state_characterkie.setText(status);
+                    } else {
+                        optionGender = R.id.rb_other_status_characterkie;
+                        bt_state_characterkie.setText(keyStatus);
+                    }*/
                     getImage();
                 }
             });
@@ -183,6 +239,14 @@ ImageButton bt_basic_info_characterkies;
         setOptionPronounsString(optionPronounsString);
         setOptionBirthdayString(optionBirthdayString);
         return view;
+    }
+
+    public Characterkie getCharacterkie() {
+        return characterkie;
+    }
+
+    public void setCharacterkie(Characterkie characterkie) {
+        this.characterkie = characterkie;
     }
 
     public void setOptionPronouns(int optionPronouns) {
@@ -204,6 +268,7 @@ ImageButton bt_basic_info_characterkies;
     private void initVisibility(){
         ib_back.setVisibility(View.VISIBLE);
         ib_save.setVisibility(View.VISIBLE);
+
     }
     private void getImage(){
         if(characterkie.isPhoto_default()){
@@ -272,7 +337,6 @@ ImageButton bt_basic_info_characterkies;
     public void setOptionPronounsString(String optionPronounsString) {
         this.optionPronounsString = optionPronounsString;
         bt_pronouns_characterkie.setText(optionPronounsString);
-        characterkie.setPronouns(optionPronounsString);
     }
 
     public String getOptionStatusString() {
@@ -282,14 +346,10 @@ ImageButton bt_basic_info_characterkies;
     public void setOptionStatusString(String optionStatusString) {
         this.optionStatusString = optionStatusString;
         bt_state_characterkie.setText(optionStatusString);
-        characterkie.setStatus(optionPronounsString);
-
     }
     public void setOptionBirthdayString(String optionBirthdayString) {
         this.optionBirthdayString = optionBirthdayString;
         bt_birthday_characterkie.setText(optionBirthdayString);
-
-        characterkie.setBirthday(optionBirthdayString);
     }
 
     public String getOptionGenderString() {
@@ -299,8 +359,6 @@ ImageButton bt_basic_info_characterkies;
     public void setOptionGenderString(String optionGenderString) {
         this.optionGenderString = optionGenderString;
         bt_gender_characterkie.setText(optionGenderString);
-        characterkie.setGender(optionPronounsString);
-
     }
 
     private void initComponents(View view){
@@ -323,18 +381,8 @@ ImageButton bt_basic_info_characterkies;
         constraintLayout = view.findViewById(R.id.constraint_create_characterkie);
         tv_basic_info_characterkies = view.findViewById(R.id.tv_basic_info_characterkies);
         bt_basic_info_characterkies = view.findViewById(R.id.bt_basic_info_characterkies);
-        hideBasicInfo();
-        tb_characterkieDraft.setVisibility(View.INVISIBLE);
-        tb_characterkiePrivacity.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    tb_characterkieDraft.setVisibility(View.VISIBLE);
-                }else{
-                    tb_characterkieDraft.setVisibility(View.INVISIBLE);
-                }
-            }
-        });
+        showHideBasicInfo();
+
         characterkieCollection = db.collection("Characterkies");
         fieldkiesRef = db.collection("Fieldkies");
         initVisibility();
@@ -352,6 +400,12 @@ ImageButton bt_basic_info_characterkies;
         bt_gender_characterkie.setOnClickListener(this);
         bt_state_characterkie.setOnClickListener(this);
         bt_basic_info_characterkies.setOnClickListener(this);
+        tb_characterkiePrivacity.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                tb_characterkieDraft.setVisibility(isChecked?View.VISIBLE:View.INVISIBLE);
+            }
+        });
     }
     public Drawable getSelectedProfilePhoto()
     {
@@ -376,8 +430,8 @@ ImageButton bt_basic_info_characterkies;
                 .into(ib_select_img_create_characterkie);
     }
     private void putDefaultImage() throws IOException {
-        Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photocharacterkieone);
-        DrawableUtils.personalizarImagenCircleButton(getContext(),DrawableUtils.drawableToBitmap(drawable),ib_select_img_create_characterkie,R.color.brownMaroon);
+        Drawable drawable = ContextCompat.getDrawable(mainActivity, R.mipmap.photocharacterkieone);
+        DrawableUtils.personalizarImagenCircleButton(mainActivity,DrawableUtils.drawableToBitmap(drawable),ib_select_img_create_characterkie,R.color.brownMaroon);
     }
     public void setSelectedProfilePhoto(Drawable image){
         ib_select_img_create_characterkie.setImageDrawable(image);
@@ -418,31 +472,16 @@ ImageButton bt_basic_info_characterkies;
         }
     }
     private void showHideBasicInfo(){
-        if(!isBasicInfoVisible){
-            bt_birthday_characterkie.setVisibility(View.VISIBLE);
-            bt_gender_characterkie.setVisibility(View.VISIBLE);
-            bt_pronouns_characterkie.setVisibility(View.VISIBLE);
-            bt_state_characterkie.setVisibility(View.VISIBLE);
-            tv_status_characterkie.setVisibility(View.VISIBLE);
-            tv_pronouns_characterkie.setVisibility(View.VISIBLE);
-            tv_gender_characterkie.setVisibility(View.VISIBLE);
-            tv_birthday_characterkie.setVisibility(View.VISIBLE);
-            bt_basic_info_characterkies.setBackgroundResource(R.drawable.twotone_arrow_circle_up_24);
-        }else{
-            hideBasicInfo();
-            bt_basic_info_characterkies.setBackgroundResource(R.drawable.twotone_arrow_drop_down_circle_24);
-        }
+        bt_birthday_characterkie.setVisibility(isBasicInfoVisible ? View.GONE : View.VISIBLE);
+        bt_gender_characterkie.setVisibility(isBasicInfoVisible ? View.GONE : View.VISIBLE);
+        bt_pronouns_characterkie.setVisibility(isBasicInfoVisible ? View.GONE : View.VISIBLE);
+        bt_state_characterkie.setVisibility(isBasicInfoVisible ? View.GONE : View.VISIBLE);
+        tv_status_characterkie.setVisibility(isBasicInfoVisible ? View.GONE : View.VISIBLE);
+        tv_pronouns_characterkie.setVisibility(isBasicInfoVisible ? View.GONE : View.VISIBLE);
+        tv_gender_characterkie.setVisibility(isBasicInfoVisible ? View.GONE : View.VISIBLE);
+        tv_birthday_characterkie.setVisibility(isBasicInfoVisible ? View.GONE : View.VISIBLE);
+        bt_basic_info_characterkies.setBackgroundResource(isBasicInfoVisible ? R.drawable.twotone_arrow_drop_down_circle_24:R.drawable.twotone_arrow_circle_up_24);
         isBasicInfoVisible = !isBasicInfoVisible;
-    }
-    private void hideBasicInfo(){
-        bt_birthday_characterkie.setVisibility(View.GONE);
-        bt_gender_characterkie.setVisibility(View.GONE);
-        bt_pronouns_characterkie.setVisibility(View.GONE);
-        bt_state_characterkie.setVisibility(View.GONE);
-        tv_status_characterkie.setVisibility(View.GONE);
-        tv_pronouns_characterkie.setVisibility(View.GONE);
-        tv_gender_characterkie.setVisibility(View.GONE);
-        tv_birthday_characterkie.setVisibility(View.GONE);
     }
 
     private void addDataToFirestore(){

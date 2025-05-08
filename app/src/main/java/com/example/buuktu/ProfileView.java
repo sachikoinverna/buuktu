@@ -74,8 +74,7 @@ public class ProfileView extends Fragment implements View.OnClickListener {
     String UID,lastPhotoId="";
     UserkieModel userkieModel;
     FragmentManager fragmentManager;
-    FragmentActivity activity;
-
+    MainActivity mainActivity;
     public ProfileView() {
         // Required empty public constructor
     }
@@ -105,32 +104,26 @@ public class ProfileView extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile_view, container, false);
         firebaseAuth = FirebaseAuth.getInstance();
-        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity = (MainActivity) getActivity();
         ib_save = mainActivity.getIb_save();
         ib_back = mainActivity.getBackButton();
         ib_profile_superior = mainActivity.getIb_self_profile();
-        ib_save.setVisibility(View.GONE);
-        fragmentManager = requireActivity().getSupportFragmentManager();
-        activity = requireActivity();
+        fragmentManager = mainActivity.getSupportFragmentManager();
         initComponents(view);
         switch (mode) {
             case "self":
                 firebaseAuth = FirebaseAuth.getInstance();
-                UID = firebaseAuth.getUid();
-                ib_profile_superior.setVisibility(View.INVISIBLE);
-                ib_profileViewEdit.setVisibility(View.VISIBLE);
                 ib_profileViewEdit.setOnClickListener(this);
-                ib_back.setVisibility(View.GONE);
                 break;
             case "other":
-                UID = getArguments().getString("UID");
-                ib_profile_superior.setVisibility(View.VISIBLE);
-
-                ib_profileViewEdit.setVisibility(View.INVISIBLE);
                 ib_back.setOnClickListener(this);
-                ib_back.setVisibility(View.VISIBLE);
                 break;
         }
+        UID = mode.equals("other")? getArguments().getString("UID"):firebaseAuth.getUid();
+        ib_profile_superior.setVisibility(mode.equals("self")?View.INVISIBLE:View.VISIBLE);
+        ib_profileViewEdit.setVisibility(mode.equals("self")?View.VISIBLE:View.INVISIBLE);
+        ib_profileViewEdit.setVisibility(mode.equals("self")?View.GONE:View.VISIBLE);
+
         db = FirebaseFirestore.getInstance();
         characterkieArrayList = new ArrayList<>();
         characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList, getContext());
@@ -298,6 +291,11 @@ public class ProfileView extends Fragment implements View.OnClickListener {
         tv_worldkiesPreviewUserkie = view.findViewById(R.id.tv_worldkiesPreviewUserkie);
         iv_locked_profile =view.findViewById(R.id.iv_locked_profile);
         tv_locked_profile = view.findViewById(R.id.tv_locked_profile);
+        setVisibility();
+    }
+    private void setVisibility(){
+        ib_save.setVisibility(View.GONE);
+
     }
     private void getProfilePhoto(){
         ib_profileView.setVisibility(View.INVISIBLE);
@@ -343,25 +341,25 @@ public class ProfileView extends Fragment implements View.OnClickListener {
             //}
     }
     private void updateRecyclerViewStuffkies(ArrayList<StuffkieModel> stuffkieArrayList) {
-        stuffkiesUserPreviewAdapter = new StuffkiesUserPreviewAdapter(stuffkieArrayList,getContext());
-        rc_stuffkiePreviewUserkie.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        stuffkiesUserPreviewAdapter = new StuffkiesUserPreviewAdapter(stuffkieArrayList,mainActivity);
+        rc_stuffkiePreviewUserkie.setLayoutManager(new LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false));
         rc_stuffkiePreviewUserkie.setAdapter(stuffkiesUserPreviewAdapter);
     }
     private void updateRecyclerViewWorldkies(ArrayList<WorldkieModel> worldkieArrayList) {
-        worldkiesUserPreviewAdapter = new WorldkiesUserPreviewAdapter(worldkieArrayList,getContext(),fragmentManager);
-        rc_worldkiePreviewUserkie.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        worldkiesUserPreviewAdapter = new WorldkiesUserPreviewAdapter(worldkieArrayList,mainActivity,fragmentManager);
+        rc_worldkiePreviewUserkie.setLayoutManager(new LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false));
         rc_worldkiePreviewUserkie.setAdapter(worldkiesUserPreviewAdapter);
     }
     private void updateRecyclerViewCharacterkies(ArrayList<Characterkie> characterkieArrayList) {
-        characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList,getContext());
-        rc_characterkiePreviewUserkie.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList,mainActivity);
+        rc_characterkiePreviewUserkie.setLayoutManager(new LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false));
         rc_characterkiePreviewUserkie.setAdapter(characterkiesUserPreviewAdapter);
     }
 
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.ib_back){
-            NavigationUtils.goBack(fragmentManager,activity);
+            NavigationUtils.goBack(fragmentManager,mainActivity);
         } else if (v.getId() == R.id.ib_profileView) {
             InfoFutureFunctionDialog infoFutureFunctionDialog = new InfoFutureFunctionDialog(getContext());
             infoFutureFunctionDialog.show();

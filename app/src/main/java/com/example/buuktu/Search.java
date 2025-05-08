@@ -1,5 +1,6 @@
 package com.example.buuktu;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,11 +27,12 @@ import com.google.android.material.tabs.TabLayoutMediator;
  */
 public class Search extends Fragment {
 
-    ImageButton ib_save,ib_profile_superior;
+    ImageButton ib_save,ib_profile_superior,backButton;
     private TabLayout tabLayout;
     private ViewPager2 viewPager;
     private PageAdapter pageAdapter;
     SearchView sv_search_main;
+    MainActivity mainActivity;
     public Search() {
         // Required empty public constructor
     }
@@ -57,15 +59,14 @@ public class Search extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
-        MainActivity mainActivity = (MainActivity) getActivity();
-        ImageButton backButton = mainActivity.getBackButton();
-        backButton.setVisibility(View.GONE);
+        mainActivity = (MainActivity) getActivity();
+        backButton = mainActivity.getBackButton();
+
         ib_save = mainActivity.getIb_save();
-        ib_save.setVisibility(View.GONE);
         ib_profile_superior = mainActivity.getIb_self_profile();
-        ib_profile_superior.setVisibility(View.VISIBLE);
 
         initComponents(view);
+        setVisibility();
         viewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
         viewPager.setUserInputEnabled(false);
         viewPager.setPageTransformer(new ViewPager2.PageTransformer() {
@@ -81,16 +82,16 @@ public class Search extends Fragment {
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
             switch (position) {
                 case 0:
-                    tab.setText("Worldkies");
+                    tab.setText(mainActivity.getString(R.string.worldkies));
                     break;
                 case 1:
-                    tab.setText("Characterkies");
+                    tab.setText(mainActivity.getString(R.string.characterkies));
                     break;
                 case 2:
-                    tab.setText("Stuffkies");
+                    tab.setText(mainActivity.getString(R.string.stuffkies));
                     break;
                 case 3:
-                    tab.setText("Userkies");
+                    tab.setText(mainActivity.getString(R.string.characterkies));
                     break;
             }
         }).attach();
@@ -118,5 +119,10 @@ public class Search extends Fragment {
         viewPager = view.findViewById(R.id.vp_search);
         pageAdapter = new PageAdapter(requireActivity());
 
+    }
+    private void setVisibility(){
+        backButton.setVisibility(View.GONE);
+        ib_save.setVisibility(View.GONE);
+        ib_profile_superior.setVisibility(View.VISIBLE);
     }
 }

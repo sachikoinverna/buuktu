@@ -48,7 +48,7 @@
                         android:layout_marginBottom="8dp"
                         android:fontFamily="@font/alegreya"
                         android:switchPadding="30dp"
-                        android:text="Perfil publico"
+                        android:text="@string/profile_private"
                         android:textStyle="bold"
                         android:thumb="@drawable/thumb_custom"
                         android:track="@drawable/track_custom"

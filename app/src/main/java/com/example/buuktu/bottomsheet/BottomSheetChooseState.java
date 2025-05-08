@@ -38,7 +38,7 @@ public class BottomSheetChooseState extends BottomSheetDialogFragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable
     ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.dialog_default_image_profile_photo,
+        View v = inflater.inflate(R.layout.choose_status_dialog,
                 container, false);
         intiComponents(v);
         context = getContext();

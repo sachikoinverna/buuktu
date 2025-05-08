@@ -59,7 +59,6 @@ public class Note extends Fragment implements View.OnClickListener {
     Timestamp timestampNow;
     ImageButton ib_save;
     FragmentManager fragmentManager;
-    FragmentActivity activity;
     MainActivity mainActivity;
     public Note() {
         // Required empty public constructor
@@ -90,10 +89,7 @@ public class Note extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_note, container, false);
         initComponents(view);
-        db = FirebaseFirestore.getInstance();
-        auth = FirebaseAuth.getInstance();
-        UID_USER = auth.getUid();
-        notekieData = new HashMap<>();
+
 
         collectionNotekies = db.collection("Notekies");
         noteItem = new NoteItem();
@@ -120,8 +116,6 @@ public class Note extends Fragment implements View.OnClickListener {
             noteItem.setTitle("");
             noteItem.setContent("");
         }
-        fragmentManager = requireActivity().getSupportFragmentManager();
-        activity = requireActivity();
         setListeners();
         return view;
     }
@@ -132,7 +126,15 @@ public class Note extends Fragment implements View.OnClickListener {
         ib_profile_superior = mainActivity.getIb_self_profile();
         et_title_note = view.findViewById(R.id.et_title_note);
         et_content_note = view.findViewById(R.id.et_content_note);
+        fragmentManager = mainActivity.getSupportFragmentManager();
         setInitVisibility();
+        initVar();
+    }
+    private void initVar(){
+        db = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
+        UID_USER = auth.getUid();
+        notekieData = new HashMap<>();
     }
     private void setListeners(){
         backButton.setOnClickListener(this);
@@ -167,7 +169,7 @@ public class Note extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.ib_back){
-            NavigationUtils.goBack(fragmentManager,activity);
+            NavigationUtils.goBack(fragmentManager,mainActivity);
         }else if (v.getId()==R.id.ib_save) {
                 if ((!et_content_note.getText().equals(noteItem.getContent()) || !et_title_note.getText().equals(noteItem.getTitle())) && (!et_title_note.getText().equals("") || !et_content_note.getText().equals(""))) {
                     timestampNow = Timestamp.now();

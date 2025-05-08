@@ -32,10 +32,10 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
     List<RadioButton> allRadioButtons = new ArrayList<>();
     TextInputLayout et_yearBirthdayCreateFull;
     TextInputEditText et_yearBirthdayCreate;
-    TextView tv_current_month_birthday_selector,tv_head_day_month_birthday_selector,tv_head_year_birthday_selector,tv_separator_year_birthday_selector,tv_separator_day_month_birthday_selector;
+    TextView tv_current_month_birthday_selector,tv_head_day_month_birthday_selector,tv_separator_day_month_birthday_selector;
     int month,day,year;
     ImageButton[] dayButtons;
-    ImageView iv_head_day_month_birthday_selector,iv_head_year_birthday_selector,iv_background_day_month_selector;
+    ImageView iv_head_day_month_birthday_selector,iv_background_day_month_selector;
     boolean daysMonthsSelectorVisible, yearFieldVisible, daysOptionVisible,monthVisible,yearOptionVisible;
     TextView[] tvDays;
     String[]meses;
@@ -72,16 +72,12 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
         et_yearBirthdayCreateFull = view.findViewById(R.id.et_yearBirthdayCreateFull);
         et_yearBirthdayCreate = view.findViewById(R.id.et_yearBirthdayCreate);
         bt_show_day_month_birthday_selector = view.findViewById(R.id.bt_show_day_month_birthday_selector);
-        bt_show_year_selector = view.findViewById(R.id.bt_show_year_selector);
         bt_next_month_birthday_selector = view.findViewById(R.id.bt_next_month_birthday_selector);
         bt_previous_month_birthday_selector = view.findViewById(R.id.bt_previous_month_birthday_selector);
         tv_current_month_birthday_selector = view.findViewById(R.id.tv_current_month_birthday_selector);
         tv_head_day_month_birthday_selector = view.findViewById(R.id.tv_head_day_month_birthday_selector);
-        tv_head_year_birthday_selector= view.findViewById(R.id.tv_head_year_birthday_selector);
-        tv_separator_year_birthday_selector = view.findViewById(R.id.tv_separator_year_birthday_selector);
         tv_separator_day_month_birthday_selector = view.findViewById(R.id.tv_separator_day_month_birthday_selector);
         iv_head_day_month_birthday_selector= view.findViewById(R.id.iv_head_day_month_birthday_selector);
-        iv_head_year_birthday_selector= view.findViewById(R.id.iv_head_year_birthday_selector);
         iv_background_day_month_selector = view.findViewById(R.id.iv_background_day_month_selector);
         arrow_down = ContextCompat.getDrawable(requireContext(), R.drawable.twotone_arrow_drop_down_circle_24);
         arrow_up = ContextCompat.getDrawable(requireContext(), R.drawable.twotone_arrow_circle_up_24);
@@ -133,7 +129,6 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
     }
     private void setListeners(){
         bt_show_day_month_birthday_selector.setOnClickListener(this);
-        bt_show_year_selector.setOnClickListener(this);
         bt_previous_month_birthday_selector.setOnClickListener(this);
         bt_next_month_birthday_selector.setOnClickListener(this);
     }
@@ -185,11 +180,6 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
     private boolean isLeapYear(int year) {
         return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
     }
-    private void showHiddeYear() {
-        et_yearBirthdayCreateFull.setVisibility(yearFieldVisible ? View.GONE : View.VISIBLE);
-        bt_show_year_selector.setImageDrawable(yearFieldVisible ? context.getResources().getDrawable(R.drawable.twotone_arrow_circle_up_24):context.getResources().getDrawable(R.drawable.twotone_arrow_drop_down_circle_24));
-        yearFieldVisible = !yearFieldVisible;
-    }
     private void setInitialOption() {
         for (RadioButton rb : allRadioButtons) {
             if (option == rb.getId()) {
@@ -228,9 +218,6 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
             bt_show_day_month_birthday_selector.setVisibility(View.GONE);
             iv_background_day_month_selector.setVisibility(View.GONE);
         }
-        if(years) {
-            bt_show_year_selector.setImageDrawable(arrow_down);
-        }
         for (int i = 0; i < dayButtons.length; i++) {
             dayButtons[i].setVisibility(View.GONE);
             tvDays[i].setVisibility(View.GONE);
@@ -240,11 +227,7 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
         monthVisible = months;
         bt_next_month_birthday_selector.setVisibility(View.GONE);
         bt_previous_month_birthday_selector.setVisibility(View.GONE);
-        tv_current_month_birthday_selector.setVisibility(View.GONE);
-            bt_show_year_selector.setVisibility(years? View.VISIBLE : View.GONE);
-            tv_head_year_birthday_selector.setVisibility(years ? View.VISIBLE : View.GONE);
-            tv_separator_year_birthday_selector.setVisibility(years ? View.VISIBLE : View.GONE);
-            iv_head_year_birthday_selector.setVisibility(years ? View.VISIBLE : View.GONE);
+        tv_current_month_birthday_selector.setVisibility(years ? View.VISIBLE : View.GONE);
             et_yearBirthdayCreateFull.setVisibility(View.GONE);
 
             tv_head_day_month_birthday_selector.setText(days ? "DD/MM" : "MM");
@@ -285,8 +268,6 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
     public void onClick(View v) {
         if(v.getId()==R.id.bt_show_day_month_birthday_selector){
             showHiddeDaysMonths();
-        } else if (v.getId()==R.id.bt_show_year_selector) {
-            showHiddeYear();
         } else if(v.getId()==R.id.bt_next_month_birthday_selector){
             nextMonth();
         } else if (v.getId()==R.id.bt_previous_month_birthday_selector) {

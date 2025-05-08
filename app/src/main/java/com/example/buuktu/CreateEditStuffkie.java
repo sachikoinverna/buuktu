@@ -33,6 +33,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.IOException;
+import java.security.KeyStore;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,13 +46,11 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
     BottomSheetProfilePhoto bottomSheetProfilePhoto;
     String source;
     FragmentManager fragmentManager;
-    FragmentActivity activity;
-    Context context;
-    boolean isAllFabsVisible;
     ConstraintLayout constraintLayout;
     TextInputEditText et_nameStuffkieCreate;
     TextInputLayout et_nameStuffkieCreateFull;
     Switch tb_stuffkiePrivacity,tb_stuffkieDraft;
+    MainActivity mainActivity;
     public CreateEditStuffkie() {
         // Required empty public constructor
     }
@@ -79,18 +78,11 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_create_edit_stuffkie, container, false);
-        MainActivity mainActivity = (MainActivity) getActivity();
-        ib_back = mainActivity.getBackButton();
-        ib_back.setVisibility(View.VISIBLE);
-        ib_save = mainActivity.getIb_save();
-        ib_save.setVisibility(View.VISIBLE);
+
         initComponents(view);
-        fragmentManager = requireActivity().getSupportFragmentManager();
-        activity = requireActivity();
-        context = getContext();
+        setVisibility();
         setListeners();
         source = "app";
-        tb_stuffkieDraft.setVisibility(View.INVISIBLE);
         bottomSheetProfilePhoto = new BottomSheetProfilePhoto();
         try {
             putDefaultImage();
@@ -99,6 +91,12 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
         }
         return view;
     }
+    private void setVisibility(){
+        ib_save.setVisibility(View.VISIBLE);
+        ib_back.setVisibility(View.VISIBLE);
+        tb_stuffkieDraft.setVisibility(View.INVISIBLE);
+
+    }
     private void initComponents(View view){
         ib_select_img_create_stuffkie = view.findViewById(R.id.ib_select_img_create_stuffkie);
         et_nameStuffkieCreateFull = view.findViewById(R.id.et_nameStuffkieCreateFull);
@@ -106,7 +104,10 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
         constraintLayout = view.findViewById(R.id.constraint_create_stuffkie);
         tb_stuffkiePrivacity = view.findViewById(R.id.tb_stuffkiePrivacity);
         tb_stuffkieDraft = view.findViewById(R.id.tb_stuffkieDraft);
-        isAllFabsVisible = false;
+        mainActivity = (MainActivity) getActivity();
+        ib_back = mainActivity.getBackButton();
+        ib_save = mainActivity.getIb_save();
+        fragmentManager = mainActivity.getSupportFragmentManager();
     }
 
     private void setListeners(){
@@ -116,11 +117,7 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
         tb_stuffkiePrivacity.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    tb_stuffkieDraft.setVisibility(View.VISIBLE);
-                }else{
-                    tb_stuffkieDraft.setVisibility(View.INVISIBLE);
-                }
+                    tb_stuffkieDraft.setVisibility(isChecked?View.VISIBLE:View.INVISIBLE);
             }
         });
     }
@@ -138,7 +135,7 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
     private void putDefaultImage() throws IOException {
 //        Drawable drawable = ContextCompat.getDrawable(context, R.mipmap.photostuffkieone);
        // DrawableUtils.personalizarImagenCuadradoButton(get);
-        DrawableUtils.personalizarImagenCuadradoButton(context,150/7,7,R.color.brownMaroon,R.mipmap.photostuffkieone,ib_select_img_create_stuffkie);
+        DrawableUtils.personalizarImagenCuadradoButton(mainActivity,150/7,7,R.color.brownMaroon,R.mipmap.photostuffkieone,ib_select_img_create_stuffkie);
     }
     public void setSelectedProfilePhoto(Drawable image){
       /*  Bitmap bitmap = Bitmap.createBitmap(
@@ -199,7 +196,7 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
                     editDataFirestore();
                 }*/
             }else if(v.getId()==R.id.ib_back){
-            NavigationUtils.goBack(fragmentManager,activity);
+            NavigationUtils.goBack(fragmentManager,mainActivity);
         }else if (v.getId()==R.id.ib_select_img_create_stuffkie) {
             bottomSheetProfilePhoto.show(getChildFragmentManager(),"BottomSheetProfilePhoto");
         }

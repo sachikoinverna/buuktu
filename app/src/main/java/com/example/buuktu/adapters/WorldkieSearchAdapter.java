@@ -29,6 +29,7 @@ import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.EfectsUtils;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.transition.Hold;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -214,21 +215,12 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
         holder.getIb_show_more_details_worldkie_search().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (holder.moreDetailsShowed) {
-                    holder.getTv_date_last_update_search_worldkie_title().setVisibility(View.GONE);
-                    holder.getTv_date_last_update_search_worldkie().setVisibility(View.GONE);
-                    holder.getTv_date_creation_search_worldkie_title().setVisibility(View.GONE);
-                    holder.getTv_date_creation_search_worldkie().setVisibility(View.GONE);
-                    holder.moreDetailsShowed = false;
-                    holder.getIb_show_more_details_worldkie_search().setImageResource(R.drawable.twotone_arrow_drop_down_circle_24);
-                } else {
-                    holder.getTv_date_last_update_search_worldkie_title().setVisibility(View.VISIBLE);
-                    holder.getTv_date_last_update_search_worldkie().setVisibility(View.VISIBLE);
-                    holder.getTv_date_creation_search_worldkie_title().setVisibility(View.VISIBLE);
-                    holder.getTv_date_creation_search_worldkie().setVisibility(View.VISIBLE);
-                    holder.moreDetailsShowed = true;
-                    holder.getIb_show_more_details_worldkie_search().setImageResource(R.drawable.twotone_keyboard_arrow_up_24);
-                }
+                    holder.getTv_date_last_update_search_worldkie_title().setVisibility(holder.moreDetailsShowed? View.GONE:View.VISIBLE);
+                    holder.getTv_date_last_update_search_worldkie().setVisibility(holder.moreDetailsShowed? View.GONE:View.VISIBLE);
+                    holder.getTv_date_creation_search_worldkie_title().setVisibility(holder.moreDetailsShowed? View.GONE:View.VISIBLE);
+                    holder.getTv_date_creation_search_worldkie().setVisibility(holder.moreDetailsShowed? View.GONE:View.VISIBLE);
+                    holder.getIb_show_more_details_worldkie_search().setImageResource(holder.moreDetailsShowed? R.drawable.twotone_arrow_drop_down_circle_24:R.drawable.twotone_keyboard_arrow_up_24);
+                holder.moreDetailsShowed = !holder.moreDetailsShowed;
             }
         });
         ;

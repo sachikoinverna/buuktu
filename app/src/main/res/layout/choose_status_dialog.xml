@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@drawable/radiobutton_custom"
-                android:text="Vivo"
+                android:text="@string/status_alive"
                 app:layout_constraintEnd_toStartOf="@+id/rb_dead_status_characterkie"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/bt_save_status_characterkie" />
@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@drawable/radiobutton_custom"
-                android:text="Muerto"
+                android:text="@string/status_dead"
                 app:layout_constraintEnd_toStartOf="@+id/rb_unknown_status_characterkie"
                 app:layout_constraintStart_toEndOf="@+id/rb_alive_status_characterkie"
                 app:layout_constraintTop_toBottomOf="@+id/bt_save_status_characterkie" />
@@ -54,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@drawable/radiobutton_custom"
-                android:text="Desconocido"
+                android:text="@string/unknown_masc"
                 app:layout_constraintEnd_toStartOf="@+id/rb_other_status_characterkie"
                 app:layout_constraintStart_toEndOf="@+id/rb_dead_status_characterkie"
                 app:layout_constraintTop_toBottomOf="@+id/bt_save_status_characterkie" />
@@ -64,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@drawable/radiobutton_custom"
-                android:text="Otro"
+                android:text="@string/other_masc"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/rb_unknown_status_characterkie"
                 app:layout_constraintTop_toBottomOf="@+id/bt_save_status_characterkie" />

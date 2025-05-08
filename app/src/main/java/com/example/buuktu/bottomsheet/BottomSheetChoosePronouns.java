@@ -22,7 +22,7 @@ import java.util.List;
 public class BottomSheetChoosePronouns extends BottomSheetDialogFragment implements View.OnClickListener {
     TextInputEditText et_otherPronounsCharacterkie;
     TextInputLayout et_otherPronounsCharacterkieFilled;
-    RadioButton rb_ella_la_le_a_characterkie,rb_el_lo_le_o_characterkie,rb_elle__le_e_characterkie,rb_ella_la_a_characterkie,rb_elle_le_characterkie,rb_ellx_lx_x_characterkie,rb_other_characterkie,rb_unknown_pronouns_characterkie,rb_checked;
+    RadioButton rb_ella_la_le_a_characterkie,rb_el_lo_le_o_characterkie,rb_elle__le_e_characterkie,rb_ella_la_a_characterkie,rb_ellx_lx_x_characterkie,rb_other_characterkie,rb_unknown_pronouns_characterkie,rb_checked;
     List<RadioButton> allRadioButtons = new ArrayList<>();
     Context context;
     CreateCharacterkie createCharacterkie;
@@ -49,19 +49,17 @@ public class BottomSheetChoosePronouns extends BottomSheetDialogFragment impleme
     private void initComponents(View view){
         et_otherPronounsCharacterkie = view.findViewById(R.id.et_otherPronounsCharacterkie);
         et_otherPronounsCharacterkieFilled = view.findViewById(R.id.et_otherPronounsCharacterkieFilled);
-        rb_ella_la_le_a_characterkie = view.findViewById(R.id.rb_ella_la_le_a_characterkie);
-        rb_el_lo_le_o_characterkie = view.findViewById(R.id.rb_el_lo_le_o_characterkie);
-        rb_elle__le_e_characterkie = view.findViewById(R.id.rb_elle__le_e_characterkie);
-        rb_ella_la_a_characterkie= view.findViewById(R.id.rb_ella_la_a_characterkie);
-        rb_elle_le_characterkie= view.findViewById(R.id.rb_elle_le_characterkie);
-        rb_ellx_lx_x_characterkie= view.findViewById(R.id.rb_ellx_lx_x_characterkie);
+        rb_ella_la_le_a_characterkie = view.findViewById(R.id.rb_pronouns_option_fem);
+        rb_el_lo_le_o_characterkie = view.findViewById(R.id.rb_pronouns_option_neutral_one);
+        rb_elle__le_e_characterkie = view.findViewById(R.id.rb_pronouns_option_masc);
+        rb_ella_la_a_characterkie= view.findViewById(R.id.rb_pronouns_option_neutral_two);
+        rb_ellx_lx_x_characterkie= view.findViewById(R.id.rb_pronouns_option_neutral_three);
         rb_other_characterkie= view.findViewById(R.id.rb_other_characterkie);
         rb_unknown_pronouns_characterkie = view.findViewById(R.id.rb_unknown_pronouns_characterkie);
         allRadioButtons.add(rb_el_lo_le_o_characterkie);
         allRadioButtons.add(rb_elle__le_e_characterkie);
         allRadioButtons.add(rb_ella_la_le_a_characterkie);
         allRadioButtons.add(rb_ella_la_a_characterkie);
-        allRadioButtons.add(rb_elle_le_characterkie);
         allRadioButtons.add(rb_ellx_lx_x_characterkie);
         allRadioButtons.add(rb_other_characterkie);
         allRadioButtons.add(rb_unknown_pronouns_characterkie);
@@ -99,9 +97,12 @@ public class BottomSheetChoosePronouns extends BottomSheetDialogFragment impleme
             int idChecked = rb_checked.getId();
             if (idChecked != option) {
                 if (idChecked == R.id.rb_other_characterkie) {
+                    createCharacterkie.getCharacterkie().setPronouns(stringEditText);
+
                     createCharacterkie.setOptionStatusString(stringEditText);
                 } else {
                     createCharacterkie.setOptionPronounsString(rb_checked.getText().toString());
+                    createCharacterkie.getCharacterkie().setPronouns(rb_checked.getTag().toString());
                 }
                 createCharacterkie.setOptionPronouns(idChecked);
             } else {

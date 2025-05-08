@@ -176,11 +176,7 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
         tb_scenariokiePrivacity.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    tb_scenariokieDraft.setVisibility(View.VISIBLE);
-                }else{
-                    tb_scenariokieDraft.setVisibility(View.INVISIBLE);
-                }
+                    tb_scenariokieDraft.setVisibility(isChecked?View.VISIBLE:View.INVISIBLE);
             }
         });
     }
@@ -191,8 +187,6 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
 
         } else if (v.getId() == R.id.ib_back) {
             NavigationUtils.goBack(fragmentManager,activity);
-          //  goBackToPreviousFragment();
-
         } else if (v.getId()==R.id.ib_save) {
 
                 /*if(worldkie_id == null){

@@ -36,6 +36,7 @@ public class AccountSettings extends Fragment implements View.OnClickListener {
     ImageButton backButton,ib_profile_superior;
     FragmentManager fragmentManager;
     FragmentActivity activity;
+    MainActivity mainActivity;
     public AccountSettings() {
         // Required empty public constructor
     }
@@ -67,18 +68,20 @@ public class AccountSettings extends Fragment implements View.OnClickListener {
         initComponents(view);
         UID = firebaseAuth.getUid();
         firebaseAuth.getCurrentUser().getEmail();
-        MainActivity mainActivity = (MainActivity) getActivity();
-        backButton = mainActivity.getBackButton();
-        backButton.setVisibility(View.VISIBLE);
-        ib_profile_superior = mainActivity.getIb_self_profile();
-        ib_profile_superior.setVisibility(View.VISIBLE);
+
         fragmentManager = requireActivity().getSupportFragmentManager();
         activity = requireActivity();
+        setVisibility();
         setListeners();
         dataSet.add(new SettingModel("Correo electronico",firebaseAuth.getCurrentUser().getEmail()));
         dataSet.add(new SettingModel("Password","*******"));
         updateRecyclerView(dataSet);
         return view;
+    }
+    private void setVisibility(){
+        backButton.setVisibility(View.VISIBLE);
+        ib_profile_superior.setVisibility(View.VISIBLE);
+
     }
     private void setListeners(){
         backButton.setOnClickListener(this);
@@ -86,6 +89,9 @@ public class AccountSettings extends Fragment implements View.OnClickListener {
     }
     private void initComponents(View view){
         rv_account_settings = view.findViewById(R.id.rv_account_settings);
+        mainActivity = (MainActivity) getActivity();
+        backButton = mainActivity.getBackButton();
+        ib_profile_superior = mainActivity.getIb_self_profile();
     }
     private void updateRecyclerView(ArrayList<SettingModel> settingModels){
         settingAdapter = new SettingAdapter(settingModels,getContext(),UID);

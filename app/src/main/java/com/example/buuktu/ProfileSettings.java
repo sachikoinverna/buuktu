@@ -52,6 +52,7 @@ import java.util.Map;
  */
 public class ProfileSettings extends Fragment implements View.OnClickListener {
     private SettingAdapter settingAdapter;
+    MainActivity mainActivity;
     private RecyclerView rv_settings_profile;
     private ArrayList<SettingModel> dataSet = new ArrayList<SettingModel>();
     Boolean lastValueProfilePrivate=false;
@@ -64,7 +65,6 @@ public class ProfileSettings extends Fragment implements View.OnClickListener {
     UserkieModel userkieModel;
     ImageButton backButton,ib_save,ib_profile_superior;
     FragmentManager fragmentManager;
-    FragmentActivity activity;
     private final CompoundButton.OnCheckedChangeListener switchListener = (buttonView, isChecked) -> {
         if(!lastValueProfilePrivate.equals(isChecked)) {
             Map<String, Object> worldkieData = new HashMap<>();
@@ -100,23 +100,11 @@ public class ProfileSettings extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile_settings, container, false);
 
-        db = FirebaseFirestore.getInstance();
-        userkies = db.collection("Users");
-        firebaseAuth = FirebaseAuth.getInstance();
-        UID = firebaseAuth.getUid();
-        userkie = userkies.document(UID);
-        MainActivity mainActivity = (MainActivity) getActivity();
-        backButton = mainActivity.getBackButton();
-        backButton.setVisibility(View.VISIBLE);
-        ib_profile_superior = mainActivity.getIb_self_profile();
-        ib_profile_superior.setVisibility(View.VISIBLE);
-        ib_save = mainActivity.getIb_save();
-        fragmentManager = requireActivity().getSupportFragmentManager();
-        activity = requireActivity();
-        setListeners();
-        ib_save.setVisibility(View.GONE);
-        initComponents(view);
+       setVar();
 
+        setListeners();
+        initComponents(view);
+    setVisibility();
         // 🔁 Listener para cambios en Firestore
         userkie.addSnapshotListener((documentSnapshot, e) -> {
             if (e != null) {
@@ -146,15 +134,33 @@ public class ProfileSettings extends Fragment implements View.OnClickListener {
         });
         return view;
     }
+    private void setVisibility(){
+        backButton.setVisibility(View.VISIBLE);
+        ib_profile_superior.setVisibility(View.VISIBLE);
+        ib_save.setVisibility(View.GONE);
+
+    }
+    private void setVar(){
+        db = FirebaseFirestore.getInstance();
+        userkies = db.collection("Users");
+        firebaseAuth = FirebaseAuth.getInstance();
+        UID = firebaseAuth.getUid();
+        userkie = userkies.document(UID);
+    }
     private void setListeners(){
         backButton.setOnClickListener(this);
     }
     private void initComponents(View view) {
         tb_profile_private_settings = view.findViewById(R.id.tb_profile_private_settings);
         rv_settings_profile = view.findViewById(R.id.rv_settings_profile);
-        rv_settings_profile.setLayoutManager(new LinearLayoutManager(getContext()));
-        settingAdapter = new SettingAdapter(dataSet, getContext(), UID);
+        rv_settings_profile.setLayoutManager(new LinearLayoutManager(mainActivity));
+        settingAdapter = new SettingAdapter(dataSet, mainActivity, UID);
         rv_settings_profile.setAdapter(settingAdapter);
+        mainActivity = (MainActivity) getActivity();
+        backButton = mainActivity.getBackButton();
+        ib_profile_superior = mainActivity.getIb_self_profile();
+        ib_save = mainActivity.getIb_save();
+        fragmentManager = mainActivity.getSupportFragmentManager();
     }
     private void updateRecyclerView() {
         settingAdapter.notifyDataSetChanged();
@@ -163,7 +169,7 @@ public class ProfileSettings extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.ib_back){
-            NavigationUtils.goBack(fragmentManager,activity);
+            NavigationUtils.goBack(fragmentManager,mainActivity);
         }/* else if () {
 
         }*/

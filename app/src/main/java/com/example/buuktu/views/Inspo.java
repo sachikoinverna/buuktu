@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class Inspo extends Fragment {
-
+    MainActivity mainActivity;
     RecyclerView rc_buttons_inspo;
     private CardInspoAdapter adapter;
     ImageButton ib_back,ib_save,ib_profile_superior;
@@ -60,8 +60,8 @@ public class Inspo extends Fragment {
     }
     private void initComponents(View view){
         rc_buttons_inspo = view.findViewById(R.id.rc_buttons_inspo);
-        rc_buttons_inspo.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        MainActivity mainActivity = (MainActivity) getActivity();
+        rc_buttons_inspo.setLayoutManager(new GridLayoutManager(mainActivity, 2));
+        mainActivity = (MainActivity) getActivity();
         ib_back = mainActivity.getBackButton();
         ib_profile_superior = mainActivity.getIb_self_profile();
         ib_save = mainActivity.getIb_save();
@@ -77,8 +77,8 @@ public class Inspo extends Fragment {
         ib_profile_superior.setVisibility(View.VISIBLE);
     }
 public void updateRecyclerView(ArrayList<CardItem> cardItems){
-    adapter = new CardInspoAdapter(getContext(),cardItems,getParentFragmentManager());
+    adapter = new CardInspoAdapter(mainActivity,cardItems,getParentFragmentManager());
     rc_buttons_inspo.setAdapter(adapter);
-    rc_buttons_inspo.setLayoutManager(new GridLayoutManager(getContext(),2));
+    rc_buttons_inspo.setLayoutManager(new GridLayoutManager(mainActivity,2));
 }
 }

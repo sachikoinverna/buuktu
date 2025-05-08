@@ -42,7 +42,6 @@ public class Notes extends Fragment implements View.OnClickListener {
     private FloatingActionButton fbMoreOptions, fbAddNote;
     private boolean isAllFabsVisible = false;
     FragmentManager fragmentManager;
-    FragmentActivity activity;
     MainActivity mainActivity;
     public Notes() {}
 
@@ -83,8 +82,6 @@ public class Notes extends Fragment implements View.OnClickListener {
 
         // FAB lógica
 
-        fragmentManager = requireActivity().getSupportFragmentManager();
-        activity = requireActivity();
         setListeners();
         // Escucha en Firestore
         setupFirestoreListener();
@@ -100,9 +97,9 @@ public class Notes extends Fragment implements View.OnClickListener {
         recyclerView = view.findViewById(R.id.rc_all_notes_adapter);
         fbAddNote = view.findViewById(R.id.fb_add_note_list_notes);
         fbMoreOptions = view.findViewById(R.id.fb_more_options_list_notes);
-
+        fragmentManager = mainActivity.getSupportFragmentManager();
     }
-    private void setInitVisibility(){
+    private void setVisibility(){
         backButton.setVisibility(View.VISIBLE);
         ib_save.setVisibility(View.GONE);
         ib_profile_superior.setVisibility(View.VISIBLE);
@@ -115,11 +112,7 @@ public class Notes extends Fragment implements View.OnClickListener {
         fbAddNote.setOnClickListener(this);
     }
     private void toggleFabs() {
-        if (!isAllFabsVisible) {
-            fbAddNote.setVisibility(View.VISIBLE);
-        } else {
-            fbAddNote.setVisibility(View.GONE);
-        }
+        fbAddNote.setVisibility(isAllFabsVisible?View.GONE:View.VISIBLE);
         isAllFabsVisible = !isAllFabsVisible;
     }
 
@@ -171,7 +164,7 @@ public class Notes extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.ib_back){
-            NavigationUtils.goBack(fragmentManager,activity);
+            NavigationUtils.goBack(fragmentManager,mainActivity);
         } else if (v.getId()==R.id.fb_add_note_list_notes) {
             Note note = new Note();
             FragmentManager fragmentManager = getParentFragmentManager();

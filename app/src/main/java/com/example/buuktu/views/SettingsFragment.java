@@ -26,7 +26,7 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class SettingsFragment extends Fragment {
-
+    MainActivity mainActivity;
     private RecyclerView rc_settings;
     private ArrayList<SettingModel> dataSet = new ArrayList<SettingModel>();
     private SearchView searchView;
@@ -63,22 +63,25 @@ public class SettingsFragment extends Fragment {
         searchView.setIconifiedByDefault(false); // Para que el SearchView esté expandido por defecto
         dataSet.clear();
         filteredDataSet.clear();
-        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.twotone_manage_accounts_24);
+        Drawable drawable = ContextCompat.getDrawable(mainActivity, R.drawable.twotone_manage_accounts_24);
         dataSet.add(new SettingModel("Perfil",drawable));
         dataSet.add(new SettingModel("Cuenta",drawable));
-        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity = (MainActivity) getActivity();
         backButton = mainActivity.getBackButton();
-        backButton.setVisibility(View.GONE);
         ib_save = mainActivity.getIb_save();
-        ib_save.setVisibility(View.GONE);
         ib_profile_superior = mainActivity.getIb_self_profile();
-        ib_profile_superior.setVisibility(View.VISIBLE);
+        setVisibility();
         //settingsAdapter.setOnClickListener(this);
         //adapter = new SettingsAdapter(dataSet,getContext());
         updateRecyclerView(dataSet);
         filteredDataSet.addAll(dataSet);
         setListeners();
         return v;
+    }
+    private void setVisibility(){
+        backButton.setVisibility(View.GONE);
+        ib_profile_superior.setVisibility(View.VISIBLE);
+        ib_save.setVisibility(View.GONE);
     }
     private void setListeners(){
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -116,8 +119,8 @@ public class SettingsFragment extends Fragment {
         settingsAdapter.notifyDataSetChanged();
     }
     private void updateRecyclerView(ArrayList<SettingModel> settingModels){
-        settingsAdapter = new SettingsAdapter(settingModels,getContext(),getParentFragmentManager());
+        settingsAdapter = new SettingsAdapter(settingModels,mainActivity,getParentFragmentManager());
         rc_settings.setAdapter(settingsAdapter);
-        rc_settings.setLayoutManager(new LinearLayoutManager(getContext()));
+        rc_settings.setLayoutManager(new LinearLayoutManager(mainActivity));
     }
 }

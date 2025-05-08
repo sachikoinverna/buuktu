@@ -50,8 +50,8 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class WorldkieView extends Fragment implements View.OnClickListener {
-    ArrayList<Characterkie> characterkieArrayList;
-    ArrayList<StuffkieModel> stuffkieArrayList;
+    ArrayList<Characterkie> characterkieArrayList = new ArrayList<>();
+    ArrayList<StuffkieModel> stuffkieArrayList = new ArrayList<>();
     FirebaseFirestore db;
     ImageButton ib_worldkieView,ib_back,ib_save;
     ImageView iv_locked_worldkie;
@@ -62,12 +62,11 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
     String UID,UID_AUTHOR,lastPhotoId="",mode;
     UserkieModel userkieModel;
     FragmentManager fragmentManager;
-    FragmentActivity activity;
     CharacterkiesUserPreviewAdapter characterkiesUserPreviewAdapter;
     StuffkiesUserPreviewAdapter stuffkiesUserPreviewAdapter;
     CollectionReference collectionUserkies,collectionWorldkies,collectionStuffkies,collectionCharacterkies;
-    Context context;
     WorldkieModel worldkieModel;
+    MainActivity mainActivity;
     public WorldkieView() {
         // Required empty public constructor
     }
@@ -97,37 +96,24 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_worldkie_view, container, false);
-        firebaseAuth = FirebaseAuth.getInstance();
-        MainActivity mainActivity = (MainActivity)getActivity();
-        ib_save = mainActivity.getIb_save();
-        ib_save.setVisibility(View.GONE);
-        ib_back = mainActivity.getBackButton();
-        ib_back.setVisibility(View.VISIBLE);
-        fragmentManager = requireActivity().getSupportFragmentManager();
-        activity = requireActivity();
-        db = FirebaseFirestore.getInstance();
-        firebaseAuth = FirebaseAuth.getInstance();
+        setVar();
         initComponents(view);
-        context = getContext();
+        setVisibility();
         worldkieModel = new WorldkieModel();
         switch (mode)
         {
             case "self":
                 firebaseAuth = FirebaseAuth.getInstance();
-                UID_AUTHOR = firebaseAuth.getUid();
-                ib_worldkieView.setVisibility(View.VISIBLE);
                 ib_worldkieView.setOnClickListener(this);
-                ib_back.setVisibility(View.GONE);
-                break;
-            case "other":
-                UID_AUTHOR = getArguments().getString("UID_AUTHOR");
-                ib_worldkieView.setVisibility(View.INVISIBLE);
-                ib_back.setVisibility(View.VISIBLE);
                 break;
         }
+        ib_worldkieView.setVisibility(mode.equals("self")?View.VISIBLE:View.INVISIBLE);
+        ib_back.setVisibility(mode.equals("self")?View.GONE:View.VISIBLE);
+        UID_AUTHOR = mode.equals("other")?getArguments().getString("UID_AUTHOR"):firebaseAuth.getUid();
+
+
         getProfilePhoto();
         db = FirebaseFirestore.getInstance();
-        characterkieArrayList = new ArrayList<>();
         characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList, getContext());
         rc_characterkiesPrevieWorldkie.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rc_characterkiesPrevieWorldkie.setAdapter(characterkiesUserPreviewAdapter);
@@ -135,7 +121,6 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
         rc_characterkiesPrevieWorldkie.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rc_characterkiesPrevieWorldkie.setAdapter(characterkiesUserPreviewAdapter);
 
-        stuffkieArrayList = new ArrayList<>();
         collectionWorldkies = db.collection("Worldkies");
 
         collectionUserkies = db.collection("Users");
@@ -291,6 +276,18 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
         rc_stuffkiesPreviewWorldkie = view.findViewById(R.id.rc_stuffkiesPreviewWorldkie);
         tv_stuffkiesPreviewWorldkie = view.findViewById(R.id.tv_stuffkiesPreviewWorldkie);
         tv_characterkiesPreviewWorldkie = view.findViewById(R.id.tv_characterkiesPreviewWorldkie);
+        mainActivity = (MainActivity)getActivity();
+        ib_save = mainActivity.getIb_save();
+        ib_back = mainActivity.getBackButton();
+        fragmentManager = mainActivity.getSupportFragmentManager();
+    }
+    private void setVisibility(){
+        ib_save.setVisibility(View.GONE);
+        ib_back.setVisibility(View.VISIBLE);
+    }
+    private void setVar(){
+        firebaseAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
     }
     private void getProfilePhoto() {
         if (worldkieModel.isPhoto_default()) {
@@ -302,13 +299,13 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
                             return;
                         }*/
             String id_photo = worldkieModel.getId_photo();
-            int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
+            int resId = mainActivity.getResources().getIdentifier(id_photo, "mipmap", mainActivity.getPackageName());
 
             if (resId != 0 && (!lastPhotoId.equals(id_photo))) {
-                Drawable drawable = ContextCompat.getDrawable(context, resId);
+                Drawable drawable = ContextCompat.getDrawable(mainActivity, resId);
                 ib_worldkieView.setImageDrawable(drawable);
                 try {
-                    DrawableUtils.personalizarImagenCuadradoButton(context, 115 / 6, 7, R.color.brownMaroon, drawable, ib_worldkieView);
+                    DrawableUtils.personalizarImagenCuadradoButton(mainActivity, 115 / 6, 7, R.color.brownMaroon, drawable, ib_worldkieView);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -324,7 +321,7 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
                     if (item.getName().startsWith("cover")) {
                         item.getDownloadUrl().addOnSuccessListener(uri -> {
                             // try {
-                            DrawableUtils.personalizarImagenCuadradoButton(context, 115 / 7, 7, R.color.greenWhatever, uri, ib_worldkieView);
+                            DrawableUtils.personalizarImagenCuadradoButton(mainActivity, 115 / 7, 7, R.color.greenWhatever, uri, ib_worldkieView);
                             //} catch (IOException e) {
                             //    throw new RuntimeException(e);
                             // }
@@ -357,9 +354,9 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.ib_back){
-            NavigationUtils.goBack(fragmentManager,activity);
+            NavigationUtils.goBack(fragmentManager,mainActivity);
         } else if (v.getId() == R.id.ib_worldkieView) {
-            InfoFutureFunctionDialog infoFutureFunctionDialog = new InfoFutureFunctionDialog(getContext());
+            InfoFutureFunctionDialog infoFutureFunctionDialog = new InfoFutureFunctionDialog(mainActivity);
             infoFutureFunctionDialog.show();
         }
     }

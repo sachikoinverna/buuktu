@@ -11,9 +11,7 @@ import androidx.annotation.Nullable;
 
 import com.example.buuktu.CreateCharacterkie;
 import com.example.buuktu.R;
-import com.example.buuktu.views.CreateEditWorldkie;
 import com.example.buuktu.views.MainActivity;
-import com.example.buuktu.views.Register;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -51,10 +49,10 @@ public class BottomSheetChooseGender extends BottomSheetDialogFragment implement
     private void initComponents(View view){
         et_otherGendersCharacterkieFilled = view.findViewById(R.id.et_otherGendersCharacterkieFilled);
         et_otherGendersCharacterkie = view.findViewById(R.id.et_otherGendersCharacterkie);
-        rb_man_chracterkie = view.findViewById(R.id.rb_man_chracterkie);
-        rb_woman_chracterkie = view.findViewById(R.id.rb_woman_chracterkie);
+        rb_man_chracterkie = view.findViewById(R.id.rb_gender_man_chracterkie);
+        rb_woman_chracterkie = view.findViewById(R.id.rb_gender_woman_chracterkie);
         rb_gender_fluid_chracterkie = view.findViewById(R.id.rb_gender_fluid_chracterkie);
-        rb_no_binary_chracterkie= view.findViewById(R.id.rb_no_binary_chracterkie);
+        rb_no_binary_chracterkie= view.findViewById(R.id.rb_gender_no_binary_chracterkie);
         rb_other_gender_characterkie= view.findViewById(R.id.rb_other_gender_characterkie);
         rb_unknown_gender_characterkie = view.findViewById(R.id.rb_unknown_gender_characterkie);
         allRadioButtons.add(rb_woman_chracterkie);
@@ -72,6 +70,7 @@ public class BottomSheetChooseGender extends BottomSheetDialogFragment implement
                 rb.setChecked(true);
                 rb_checked = view.findViewById(rb.getId());
                 if(rb.getId()==R.id.rb_other_gender_characterkie){
+
                     et_otherGendersCharacterkieFilled.setVisibility(View.VISIBLE);
                     // activar el que se pulsó
                 }else {
@@ -91,11 +90,15 @@ public class BottomSheetChooseGender extends BottomSheetDialogFragment implement
     public void onClick(View v) {
         if(v.getId() == R.id.bt_save_status_characterkie){
             if(rb_other_gender_characterkie.isChecked()){
-                createCharacterkie.setOptionGenderString(et_otherGendersCharacterkie.getText().toString());
+                String gender = et_otherGendersCharacterkie.getText().toString();
+
+                createCharacterkie.setOptionGenderString(gender);
+                createCharacterkie.getCharacterkie().setStatus(gender);
             }else {
                 createCharacterkie.setOptionGenderString(rb_checked.getText().toString());
             }
             createCharacterkie.setOptionGender(rb_checked.getId());
+            createCharacterkie.getCharacterkie().setStatus(rb_checked.getTag().toString());
         }
     }
 }

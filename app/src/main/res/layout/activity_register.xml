@@ -509,7 +509,7 @@
         android:foregroundTint="#FFFFFF"
         android:gravity="center"
         android:onClick="addDataToFirestore"
-        android:text="Registro"
+        android:text="@string/register"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold"

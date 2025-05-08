@@ -46,7 +46,7 @@ public class Home extends Fragment implements View.OnClickListener {
     CollectionReference dbWorldkies;
     ImageButton ib_save,ib_profile_superior,backButton;
     FragmentManager fragmentManager;
-
+    MainActivity mainActivity;
     public Home() {
         // Required empty public constructor
     }
@@ -63,7 +63,7 @@ public class Home extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity = (MainActivity) getActivity();
         backButton = mainActivity.getBackButton();
         ib_save = mainActivity.getIb_save();
         ib_profile_superior = mainActivity.getIb_self_profile();
@@ -71,8 +71,8 @@ public class Home extends Fragment implements View.OnClickListener {
         setListeners();
         db = FirebaseFirestore.getInstance();
         UID = auth.getCurrentUser().getUid();
-        rc_worldkies.setLayoutManager(new LinearLayoutManager(getContext()));
-        worldkieAdapter = new WorldkieAdapter(worldkieModelArrayList, getContext(), getParentFragmentManager());
+        rc_worldkies.setLayoutManager(new LinearLayoutManager(mainActivity));
+        worldkieAdapter = new WorldkieAdapter(worldkieModelArrayList, mainActivity, getParentFragmentManager());
         rc_worldkies.setAdapter(worldkieAdapter);
         dbWorldkies = db.collection("Worldkies");
         fragmentManager = requireActivity().getSupportFragmentManager();
@@ -173,11 +173,7 @@ public class Home extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.fb_parentWorldkies){
-                if (!isAllFabsVisible) {
-                    fb_add.setVisibility(View.VISIBLE);
-                } else {
-                    fb_add.setVisibility(View.GONE);
-                }
+            fb_add.setVisibility( isAllFabsVisible?View.GONE:View.VISIBLE);
             isAllFabsVisible = !isAllFabsVisible;
         } else if (v.getId()==R.id.fb_addWorldkie) {
             navigateToNextFragment();

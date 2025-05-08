@@ -32,7 +32,7 @@ public class InspoDesafios extends Fragment implements View.OnClickListener {
     private CardInspoDesafiosAdapter adapter;
     ImageButton ib_back,ib_profile_superior;
     FragmentManager fragmentManager;
-    FragmentActivity activity;
+    MainActivity mainActivity;
     public InspoDesafios() {
         // Required empty public constructor
     }
@@ -61,26 +61,32 @@ public class InspoDesafios extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_inspo_desafios, container, false);
-        rc_buttons_inspo_desafio = view.findViewById(R.id.rc_buttons_inspo_desafio);
-        rc_buttons_inspo_desafio.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        MainActivity mainActivity = (MainActivity) getActivity();
-        ib_back = mainActivity.getBackButton();
-        ib_profile_superior = mainActivity.getIb_self_profile();
-        ib_profile_superior.setVisibility(View.VISIBLE);
+        initComponents(view);
+        rc_buttons_inspo_desafio.setLayoutManager(new GridLayoutManager(mainActivity, 2));
+
         ArrayList<CardItem> items = new ArrayList<>();
         items.add(new CardItem(R.drawable.twotone_abc_24,"Wordkie of the day"));
         items.add(new CardItem(R.drawable.twotone_pin_24,"Numberkie of the day"));
-        ib_back.setVisibility(View.VISIBLE);
-        fragmentManager = requireActivity().getSupportFragmentManager();
-        activity = requireActivity();
+        setVisibility();
         setListeners();
         updateRecyclerView(items);
         return view;
     }
+    private void initComponents(View view){
+        rc_buttons_inspo_desafio = view.findViewById(R.id.rc_buttons_inspo_desafio);
+        mainActivity = (MainActivity) getActivity();
+        ib_back = mainActivity.getBackButton();
+        ib_profile_superior = mainActivity.getIb_self_profile();
+        fragmentManager = mainActivity.getSupportFragmentManager();
+    }
+    private void setVisibility(){
+        ib_profile_superior.setVisibility(View.VISIBLE);
+        ib_back.setVisibility(View.VISIBLE);
+    }
     public void updateRecyclerView(ArrayList<CardItem> cardItems){
-        adapter = new CardInspoDesafiosAdapter(getContext(),cardItems,getParentFragmentManager());
+        adapter = new CardInspoDesafiosAdapter(mainActivity,cardItems,getParentFragmentManager());
         rc_buttons_inspo_desafio.setAdapter(adapter);
-        rc_buttons_inspo_desafio.setLayoutManager(new GridLayoutManager(getContext(),2));
+        rc_buttons_inspo_desafio.setLayoutManager(new GridLayoutManager(mainActivity,2));
     }
     private void setListeners(){
         ib_back.setOnClickListener(this);
@@ -89,7 +95,7 @@ public class InspoDesafios extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.ib_back){
-            NavigationUtils.goBack(fragmentManager,activity);
+            NavigationUtils.goBack(fragmentManager,mainActivity);
         }
     }
 }

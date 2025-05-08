@@ -70,7 +70,7 @@ public class StuffkiesSearch extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_stuffkies_search, container, false);
-        rc_stuffkies_search = view.findViewById(R.id.rc_stuffkies_search);
+        initComponents(view);
         db = FirebaseFirestore.getInstance();
         stuffkieModelArrayList = new ArrayList<>();
         firebaseAuth = FirebaseAuth.getInstance();
@@ -120,6 +120,10 @@ public class StuffkiesSearch extends Fragment {
                 }
         });
         return view;
+    }
+    private void initComponents(View view){
+        rc_stuffkies_search = view.findViewById(R.id.rc_stuffkies_search);
+
     }
     private void updateRecyclerView(ArrayList<StuffkieModel> settingModels){
         stuffkieSearchAdapter = new StuffkieSearchAdapter(settingModels,getContext(),getParentFragmentManager());
