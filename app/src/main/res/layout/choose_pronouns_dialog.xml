@@ -91,7 +91,7 @@
                 android:button="@drawable/radiobutton_custom"
                 android:tag="pronouns_option_neutral_three"
                 android:text="@string/pronouns_option_neutral_three"
-                card_view:layout_constraintEnd_toStartOf="@+id/rb_unknown_pronouns_characterkie"
+                card_view:layout_constraintEnd_toStartOf="@+id/rb_pronouns_unknown_characterkie"
                 card_view:layout_constraintStart_toEndOf="@+id/rb_pronouns_option_neutral_two"
                 card_view:layout_constraintTop_toBottomOf="@+id/rb_pronouns_option_neutral_one" />
 
@@ -103,11 +103,11 @@
                 android:button="@drawable/radiobutton_custom"
                 android:text="@string/other_fem"
                 card_view:layout_constraintEnd_toEndOf="parent"
-                card_view:layout_constraintStart_toEndOf="@+id/rb_unknown_pronouns_characterkie"
+                card_view:layout_constraintStart_toEndOf="@+id/rb_pronouns_unknown_characterkie"
                 card_view:layout_constraintTop_toBottomOf="@+id/rb_pronouns_option_neutral_one" />
 
             <RadioButton
-                android:id="@+id/rb_unknown_pronouns_characterkie"
+                android:id="@+id/rb_pronouns_unknown_characterkie"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -135,13 +135,13 @@
                 app:boxCornerRadiusTopStart="58dp"
                 app:counterEnabled="true"
                 app:counterMaxLength="50"
-                app:errorEnabled="false"
-                app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
+                app:errorEnabled="true"
                 app:startIconDrawable="@drawable/twotone_supervised_user_circle_24"
+                card_view:errorEnabled="true"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toBottomOf="@+id/rb_unknown_pronouns_characterkie">
+                card_view:layout_constraintTop_toBottomOf="@+id/rb_other_characterkie">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_otherPronounsCharacterkie"

@@ -20,6 +20,7 @@ import com.example.buuktu.dialogs.EditPasswordUserDialog;
 import com.example.buuktu.models.SettingModel;
 import com.example.buuktu.utils.CheckUtil;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
@@ -52,6 +53,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.ViewHold
     String UID;
     TextView tv_edittext_general_dialog_error;
     TextInputEditText et_namepronouns;
+    TextInputLayout et_namepronounsFull;
     EditNamePronounsUserDialog editNamePronounsUserDialog;
     CreateEditGeneralDialog dialogCreateEdit;
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -259,8 +261,8 @@ break;
         }
     private void editName(EditNamePronounsUserDialog dialog){
         et_namepronouns = dialog.findViewById(R.id.et_namepronouns);
-        tv_edittext_general_dialog_error = dialog.findViewById(R.id.tv_edittext_general_dialog_error);
-        if(CheckUtil.handlerCheckName(context,et_namepronouns,tv_edittext_general_dialog_error)) {
+        et_namepronounsFull = dialog.findViewById(R.id.et_namepronounsFull);
+        if(CheckUtil.handlerCheckName(context,et_namepronouns,et_namepronounsFull)) {
             dialogCreateEdit.show();
             LottieAnimationView animationViewCreateEdit = dialogCreateEdit.findViewById(R.id.anim_create_edit);
             animationViewCreateEdit.setAnimation(R.raw.reading_anim);
@@ -299,9 +301,9 @@ break;
         }
     private void editPronouns(EditNamePronounsUserDialog dialog){
         et_namepronouns = dialog.findViewById(R.id.et_namepronouns);
-        tv_edittext_general_dialog_error = dialog.findViewById(R.id.tv_edittext_general_dialog_error);
+        et_namepronounsFull = dialog.findViewById(R.id.et_namepronounsFull);
         String newPronouns = et_namepronouns.getText().toString();
-        if(CheckUtil.handlerCheckPronouns(context,et_namepronouns,tv_edittext_general_dialog_error)) {
+        if(CheckUtil.handlerCheckPronouns(context,et_namepronouns,et_namepronounsFull)) {
             dialogCreateEdit.show();
             LottieAnimationView animationViewCreateEdit = dialogCreateEdit.findViewById(R.id.anim_create_edit);
             animationViewCreateEdit.setAnimation(R.raw.reading_anim);

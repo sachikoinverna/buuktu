@@ -2,7 +2,6 @@ package com.example.buuktu;
 
 import static android.widget.Toast.LENGTH_LONG;
 
-import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -24,7 +23,6 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -57,7 +55,6 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -72,7 +69,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  */
 public class CreateCharacterkie extends Fragment implements View.OnClickListener {
     FragmentManager fragmentManager;
-    FragmentActivity activity;
     //ImageView
     TextView tv_basic_info_characterkies,tv_birthday_characterkie,tv_status_characterkie,tv_pronouns_characterkie,tv_gender_characterkie;
     Button bt_birthday_characterkie,bt_pronouns_characterkie,bt_gender_characterkie,bt_state_characterkie;
@@ -91,22 +87,16 @@ ImageButton bt_basic_info_characterkies;
     FirebaseAuth firebaseAuth;
     TextInputLayout et_nameCharacterkieCreateFull;
     ConstraintLayout constraintLayout;
-    Context context;
     String UID, worldkie_id, source,name,characterkie_id, userkie_id;
-    boolean privacity, draft,isAllFabsVisible,isBasicInfoVisible=false;
+    boolean privacity, draft,isBasicInfoVisible=false;
     Characterkie characterkie;
     private int optionPronouns, optionBirthday,optionGender,optionStatus;
     String optionPronounsString, optionBirthdayString,optionGenderString,optionStatusString;
     int year,day,month;
     CreateEditGeneralDialog dialog;
     private final FirebaseStorage storage = FirebaseStorage.getInstance("gs://buuk-tu-characterkies");
-    ArrayList<String> arrayOptionPronounsString = new ArrayList<>();
-    ArrayList<String> arrayOptionGenderString = new ArrayList<>();
-    ArrayList<String> arrayOptionStatusString = new ArrayList<>();
     Resources res;
     String packageName;
-    Class<?> stringClass;
-    Field[] fields;
     MainActivity mainActivity;
     public CreateCharacterkie() {
         // Required empty public constructor
@@ -142,19 +132,16 @@ ImageButton bt_basic_info_characterkies;
         mainActivity = (MainActivity) getActivity();
         ib_back = mainActivity.getBackButton();
         ib_save = mainActivity.getIb_save();
-        context = getContext();
         firebaseAuth = FirebaseAuth.getInstance();
         UID = firebaseAuth.getUid();
         db = FirebaseFirestore.getInstance();
-        fragmentManager = requireActivity().getSupportFragmentManager();
-        activity = requireActivity();
-        characterkie = new Characterkie();
+        fragmentManager = mainActivity.getSupportFragmentManager();
         bottomSheetProfilePhoto = new BottomSheetProfilePhoto();
         initComponents(view);
         setListeners();
-        res = context.getResources();
-        packageName = context.getPackageName();
-        dialog = new CreateEditGeneralDialog(getContext());
+        res = mainActivity.getResources();
+        packageName = mainActivity.getPackageName();
+        dialog = new CreateEditGeneralDialog(mainActivity);
 
         //fieldsNotAdded.add(new FieldItem("EditText","Characterky","Texto",R.drawable.sharp_emoji_nature_24));
         if(characterkie_id == null){
@@ -170,59 +157,17 @@ ImageButton bt_basic_info_characterkies;
                     Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
                     return;
                 }
-                if (queryDocumentSnapshot.exists()) {
+                if (queryDocumentSnapshot!=null) {
                     characterkie = Characterkie.fromSnapshot(queryDocumentSnapshot);
 
                     tb_characterkiePrivacity.setChecked(characterkie.isCharacterkie_private());
-                    if(characterkie.isCharacterkie_private()) {
-                        tb_characterkieDraft.setChecked(draft);
-                        tb_characterkieDraft.setVisibility(View.VISIBLE);
-                    }
+                        tb_characterkieDraft.setChecked(characterkie.isDraft());
+                        tb_characterkieDraft.setVisibility(characterkie.isCharacterkie_private()?View.VISIBLE:View.INVISIBLE);
                     et_nameCharacterkieCreate.setText(name);
-                    String keyPronouns = characterkie.getPronouns();
-                    int resIdPronouns = context.getResources().getIdentifier(keyPronouns, "string", context.getPackageName());
-
-                    if (resIdPronouns != 0) {
-                        String pronouns = context.getString(resIdPronouns);
-                        optionGender = context.getResources().getIdentifier("rb" +keyPronouns, "id", context.getPackageName());
-                        bt_pronouns_characterkie.setText(pronouns);
-                    } else {
-                        optionPronouns = R.id.rb_other_gender_characterkie;
-                        bt_pronouns_characterkie.setText(optionGender);
-                    }
-                    String keyGender = characterkie.getGender();
-                    int resIdGender = context.getResources().getIdentifier(keyGender, "string", context.getPackageName());
-
-                    if (resIdGender != 0) {
-                        String gender = context.getString(resIdGender);
-                        optionGender = context.getResources().getIdentifier("rb" +keyGender, "id", context.getPackageName());
-                        bt_gender_characterkie.setText(gender);
-                    } else {
-                        optionGender = R.id.rb_other_gender_characterkie;
-                        bt_gender_characterkie.setText(keyGender);
-                    }
-                    String keyStatus = characterkie.getStatus();
-                    int resIdStaus = context.getResources().getIdentifier(keyGender, "string", context.getPackageName());
-
-                    if (resIdStaus != 0) {
-                        String status = context.getString(resIdStaus);
-                        optionStatus = context.getResources().getIdentifier("rb" +keyStatus, "id", context.getPackageName());
-                        bt_state_characterkie.setText(status);
-                    } else {
-                        optionGender = R.id.rb_other_status_characterkie;
-                        bt_state_characterkie.setText(keyStatus);
-                    }
-                    /*String keyBirthday = characterkie.getStatus();
-                    int resIdBirthday = context.getResources().getIdentifier(keyGender, "string", context.getPackageName());
-
-                    if (resIdStaus != 0) {
-                        String  = context.getString(resIdStaus);
-                        optionStatus = context.getResources().getIdentifier("rb" +keyStatus, "id", context.getPackageName());
-                        bt_state_characterkie.setText(status);
-                    } else {
-                        optionGender = R.id.rb_other_status_characterkie;
-                        bt_state_characterkie.setText(keyStatus);
-                    }*/
+                    getStrings(characterkie.getPronouns(),"Pronouns");
+                    getStrings(characterkie.getGender(),"Gender");
+                    getStrings(characterkie.getPronouns(),"Pronouns");
+                    getStrings(characterkie.getBirthday_format(),"Birthday");
                     getImage();
                 }
             });
@@ -240,7 +185,47 @@ ImageButton bt_basic_info_characterkies;
         setOptionBirthdayString(optionBirthdayString);
         return view;
     }
+    private void getStrings(String key,String option){
+        int resId = mainActivity.getResources().getIdentifier(key, "string", mainActivity.getPackageName());
 
+        if (resId != 0) {
+            String textString = mainActivity.getString(resId);
+            switch (option) {
+                case "Gender":
+                    optionGender = mainActivity.getResources().getIdentifier("rb" + key, "id", mainActivity.getPackageName());
+                    bt_gender_characterkie.setText(textString);
+                    break;
+                case "Pronouns":
+                    optionPronouns = mainActivity.getResources().getIdentifier("rb" + key, "id", mainActivity.getPackageName());
+                    bt_pronouns_characterkie.setText(textString);
+                    break;
+                case "Status":
+                    optionStatus = mainActivity.getResources().getIdentifier("rb" + key, "id", mainActivity.getPackageName());
+                    bt_state_characterkie.setText(textString);
+                    break;
+                case "Birthday format":
+                    optionBirthday = mainActivity.getResources().getIdentifier("rb" + key, "id", mainActivity.getPackageName());
+                    bt_state_characterkie.setText(characterkie.getBirthday());
+                    break;
+            }
+        } else {
+            switch (option) {
+                case "Gender":
+                    optionGender = R.id.rb_other_gender_characterkie;
+                    bt_gender_characterkie.setText(characterkie.getGender());
+                    break;
+                case "Pronouns":
+                    optionPronouns = R.id.rb_other_characterkie;
+                    bt_pronouns_characterkie.setText(characterkie.getPronouns());
+                    break;
+                case "Status":
+                    optionStatus = R.id.rb_other_status_characterkie;
+                    bt_state_characterkie.setText(characterkie.getStatus());
+                    break;
+            }
+
+        }
+    }
     public Characterkie getCharacterkie() {
         return characterkie;
     }
@@ -278,14 +263,14 @@ ImageButton bt_basic_info_characterkies;
                             Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
                             return;
                         }*/
-                String id_photo = queryDocumentSnapshot.getString("id_photo");
-                int resId = getContext().getResources().getIdentifier(id_photo, "mipmap", getContext().getPackageName());
+                String id_photo = characterkie.getPhoto_id();
+                int resId = mainActivity.getResources().getIdentifier(id_photo, "mipmap", mainActivity.getPackageName());
 
                 if (resId != 0) {
-                    Drawable drawable = ContextCompat.getDrawable(getContext(), resId);
+                    Drawable drawable = ContextCompat.getDrawable(mainActivity, resId);
                     ib_select_img_create_characterkie.setImageDrawable(drawable);
                     source = "app";
-                    ib_select_img_create_characterkie.setTag(DrawableUtils.getMipmapName(context,resId));
+                    ib_select_img_create_characterkie.setTag(DrawableUtils.getMipmapName(mainActivity,resId));
 
                     try {
                         DrawableUtils.personalizarImagenCuadradoButton(getContext(),150/7,7,R.color.brownMaroon,drawable, ib_select_img_create_characterkie);
@@ -320,14 +305,22 @@ ImageButton bt_basic_info_characterkies;
         tb_characterkieDraft.setVisibility(View.GONE);
         putDefaultImage();
         source = "app";
-        optionPronouns = R.id.rb_unknown_pronouns_characterkie;
+        characterkie = new Characterkie();
+
+        characterkie.setUID_AUTHOR(userkie_id);
+        characterkie.setUID_WORLDKIE(worldkie_id);
+        characterkie.setDraft(false);
+        characterkie.setCharacterkie_private(false);
+        optionPronouns = R.id.rb_pronouns_unknown_characterkie;
         optionBirthday = R.id.rb_unknown_birthday;
-        optionGender = R.id.rb_unknown_gender_characterkie;
-        optionStatus = R.id.rb_unknown_status_characterkie;
+        optionGender = R.id.rb_gender_unknown;
+        optionStatus = R.id.rb_status_unknown;
         optionPronounsString = getOptionTextByRadioButtonId(optionPronouns,R.layout.choose_pronouns_dialog);
         optionGenderString = getOptionTextByRadioButtonId(optionGender,R.layout.choose_gender_dialog);
         optionStatusString = getOptionTextByRadioButtonId(optionStatus,R.layout.choose_status_dialog);
-        ib_select_img_create_characterkie.setTag(DrawableUtils.getMipmapName(context,R.mipmap.photoworldkieone));
+       // characterkie.setGender();
+
+        ib_select_img_create_characterkie.setTag(DrawableUtils.getMipmapName(mainActivity,R.mipmap.photoworldkieone));
 
     }
 
@@ -349,7 +342,6 @@ ImageButton bt_basic_info_characterkies;
     }
     public void setOptionBirthdayString(String optionBirthdayString) {
         this.optionBirthdayString = optionBirthdayString;
-        bt_birthday_characterkie.setText(optionBirthdayString);
     }
 
     public String getOptionGenderString() {
@@ -388,7 +380,7 @@ ImageButton bt_basic_info_characterkies;
         initVisibility();
     }
     private String getOptionTextByRadioButtonId(int id, int idLayout){
-        View view = LayoutInflater.from(context).inflate(idLayout, null);
+        View view = LayoutInflater.from(mainActivity).inflate(idLayout, null);
         RadioButton radioButton = view.findViewById(id);
         return radioButton.getText().toString();
     }
@@ -404,6 +396,13 @@ ImageButton bt_basic_info_characterkies;
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 tb_characterkieDraft.setVisibility(isChecked?View.VISIBLE:View.INVISIBLE);
+                characterkie.setCharacterkie_private(isChecked);
+            }
+        });
+        tb_characterkieDraft.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                characterkie.setDraft(isChecked);
             }
         });
     }
@@ -438,8 +437,7 @@ ImageButton bt_basic_info_characterkies;
     }
     public void setDate(){
         if(optionBirthday == R.id.rb_unknown_birthday){
-            bt_birthday_characterkie.setText("Unknown");
-            optionPronounsString = "Unknown";
+            optionBirthdayString = "Unknown";
         } else if (optionBirthday==R.id.rb_full_birthday) {
             optionBirthdayString = day+"/"+month+"/"+year;
         }else if (optionBirthday==R.id.rb_month_year_birthday) {
@@ -449,7 +447,7 @@ ImageButton bt_basic_info_characterkies;
         }else if (optionBirthday==R.id.rb_year_birthday) {
             optionBirthdayString = String.valueOf(year);
         }
-        bt_birthday_characterkie.setText(optionPronounsString);
+        bt_birthday_characterkie.setText(optionBirthdayString);
     }
     public String getSource() {
         return source;
@@ -495,11 +493,6 @@ ImageButton bt_basic_info_characterkies;
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(() -> {
-                                if (source.equals("device")) {
-                                        characterkie = new Characterkie(worldkie_id,userkie_id, name, optionPronounsString,optionBirthdayString,false,tb_characterkieDraft.isChecked(),tb_characterkiePrivacity.isChecked(),"",optionStatusString,optionGenderString);
-                                } else {
-                                        characterkie = new Characterkie(worldkie_id,userkie_id, name, optionPronounsString,optionBirthdayString,true,tb_characterkieDraft.isChecked(),tb_characterkiePrivacity.isChecked(), ib_select_img_create_characterkie.getTag().toString(),optionStatusString,optionGenderString);
-                                }
                                 Task<DocumentReference> addTask = db.collection("Characterkies").add(characterkie);
 
                                 addTask.addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
@@ -519,7 +512,7 @@ ImageButton bt_basic_info_characterkies;
                                                     .observeOn(AndroidSchedulers.mainThread())
                                                     .subscribe(() -> {
                                                         dialog.dismiss();
-                                                        NavigationUtils.goBack(fragmentManager, activity);
+                                                        NavigationUtils.goBack(fragmentManager, mainActivity);
                                                     });
 
                                         }
@@ -643,7 +636,7 @@ ImageButton bt_basic_info_characterkies;
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.ib_back){
-            NavigationUtils.goBack(fragmentManager,activity);
+            NavigationUtils.goBack(fragmentManager,mainActivity);
         } else if (v.getId()==R.id.ib_save) {
             if(worldkie_id == null){
                     addDataToFirestore();

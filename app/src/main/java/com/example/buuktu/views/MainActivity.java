@@ -39,6 +39,8 @@ import com.example.buuktu.R;
 import com.example.buuktu.Search;
 import com.example.buuktu.broadcastReceiver.WordNotificationReceiver;
 import com.example.buuktu.dialogs.InfoFutureFunctionDialog;
+import com.example.buuktu.dialogs.InfoGeneralDialog;
+import com.example.buuktu.dialogs.InfoNotikiesDialog;
 import com.example.buuktu.dialogs.InfoWorldkiesDialog;
 import com.example.buuktu.listeners.OnDialogInfoClickListener;
 import com.example.buuktu.utils.DrawableUtils;
@@ -70,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements OnDialogInfoClick
     private FirebaseFirestore db;
     private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-users");
     InfoWorldkiesDialog infoWorldkiesDialog;
+    InfoNotikiesDialog infoNotikiesDialog;
     InfoFutureFunctionDialog infoFutureFunctionDialog;
     FragmentManager fragmentManager;
     NavigationView navigationView;
@@ -100,6 +103,8 @@ int colorEntero;
         db.setFirestoreSettings(settings);
         scheduleDailyNotification();
         infoWorldkiesDialog = new InfoWorldkiesDialog(this);
+        infoNotikiesDialog = new InfoNotikiesDialog(this);
+        infoNotikiesDialog.setOnDialogClickListener(this);
         infoWorldkiesDialog.setOnDialogClickListener(this);
         infoFutureFunctionDialog.setOnDialogClickListener(this);
 
@@ -166,7 +171,7 @@ int colorEntero;
                 } else if (fragment instanceof Inspo){
 
                 } else if (fragment instanceof Notikies) {
-
+                    infoNotikiesDialog.show();
                 } else if (fragment instanceof Notes){
 
                 }

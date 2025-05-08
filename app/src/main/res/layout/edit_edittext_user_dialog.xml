@@ -50,7 +50,7 @@
                 app:boxCornerRadiusTopStart="58dp"
                 app:counterEnabled="true"
                 app:counterMaxLength="50"
-                app:errorEnabled="false"
+                app:errorEnabled="true"
                 app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

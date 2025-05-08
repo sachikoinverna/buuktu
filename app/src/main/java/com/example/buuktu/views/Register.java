@@ -2,7 +2,6 @@ package com.example.buuktu.views;
 
 
 import android.app.DatePickerDialog;
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -10,7 +9,6 @@ import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.view.View;
-import android.webkit.MimeTypeMap;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.Switch;
@@ -64,6 +62,8 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
     Calendar calendar;
     int yearC, monthC, dayC;
     private FirebaseFirestore db;
+    TextInputLayout  textInputLayout,et_nameRegisterFilled,et_userRegisterFilled,dp_birthdayFilled ,et_pronounsRegisterFilled, et_emailRegisterFilled, et_telephoneRegisterFilled, et_passwordFilled ,et_passwordRepeatRegisterFilled;
+
     public TextInputEditText dp_birthday, et_nameRegister, et_pronounsRegister, et_userRegister, et_emailRegister, et_passwordRepeat, et_password, et_telephoneRegister;
     public TextView tv_registerButton, tv_registerToLoginButton,tv_nameRegister, tv_emailRegister, tv_birthdayRegister, tv_passwordRegister, tv_passwordRepeatRegister, tv_pronounsRegister, tv_usernameRegister, tv_telephoneRegister;
     ImageButton bt_chooseImage,imageButtonActualBottomSheet;
@@ -77,7 +77,6 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
     BottomSheetProfilePhoto bottomSheetProfilePhoto;
     boolean photo_default;
     Date birthday;
-    TextInputLayout dp_birthdayFilled;
     CollectionReference collectionReferenceUsers;
     InputFilter[] filters;
     @Override
@@ -106,14 +105,14 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
     }
 
     public void setClean() {
-        CheckUtil.setErrorMessage(null, tv_nameRegister);
-        CheckUtil.setErrorMessage(null, tv_emailRegister);
-        CheckUtil.setErrorMessage(null, tv_birthdayRegister);
-        CheckUtil.setErrorMessage(null, tv_passwordRegister);
-        CheckUtil.setErrorMessage(null, tv_passwordRepeatRegister);
-        CheckUtil.setErrorMessage(null, tv_pronounsRegister);
-        CheckUtil.setErrorMessage(null, tv_usernameRegister);
-        CheckUtil.setErrorMessage(null, tv_telephoneRegister);
+        CheckUtil.setErrorMessage(null, et_nameRegisterFilled);
+        CheckUtil.setErrorMessage(null, et_emailRegisterFilled);
+        CheckUtil.setErrorMessage(null, dp_birthdayFilled);
+        CheckUtil.setErrorMessage(null, et_passwordFilled);
+        CheckUtil.setErrorMessage(null, et_passwordRepeatRegisterFilled);
+        CheckUtil.setErrorMessage(null, et_pronounsRegisterFilled);
+        CheckUtil.setErrorMessage(null, et_userRegisterFilled);
+        CheckUtil.setErrorMessage(null, et_telephoneRegisterFilled);
     }
 
     public void setSource(String source) {
@@ -149,18 +148,17 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
         et_password = findViewById(R.id.et_password);
         et_passwordRepeat = findViewById(R.id.et_passwordRepeat);
         et_telephoneRegister = findViewById(R.id.et_telephoneRegister);
-        tv_nameRegister = findViewById(R.id.tv_errorNameRegister);
-        tv_emailRegister = findViewById(R.id.tv_errorEmailRegister);
-        tv_birthdayRegister = findViewById(R.id.tv_birthdayError);
-        tv_passwordRegister = findViewById(R.id.tv_errorPasswordRegister);
-        tv_passwordRepeatRegister = findViewById(R.id.tv_errorPasswordRepeatRegister);
-        tv_pronounsRegister = findViewById(R.id.tv_errorPronounsRegister);
-        tv_usernameRegister = findViewById(R.id.tv_errorUsernameRegister);
-        tv_telephoneRegister = findViewById(R.id.tv_errorNumberRegister);
+        et_pronounsRegisterFilled = findViewById(R.id.et_pronounsRegisterFilled);
+        et_emailRegisterFilled = findViewById(R.id.et_emailRegisterFilled);
+        et_telephoneRegisterFilled = findViewById(R.id.et_telephoneRegisterFilled);
+        et_passwordFilled = findViewById(R.id.et_passwordFilled);
+        et_passwordRepeatRegisterFilled = findViewById(R.id.et_passwordRepeatRegisterFilled);
         tv_registerButton = findViewById(R.id.tv_registerButton);
         tv_registerToLoginButton = findViewById(R.id.tv_registerToLoginButton);
         bt_chooseImage = findViewById(R.id.bt_chooseImageRegister);
         tb_privateAccountRegister = findViewById(R.id.tb_privateAccountRegister);
+        et_nameRegisterFilled = findViewById(R.id.et_nameRegisterFilled);
+        et_userRegisterFilled = findViewById(R.id.et_userRegisterFilled);
         dp_birthdayFilled = findViewById(R.id.dp_birthdayFilled);
         calendar = Calendar.getInstance();
         yearC = calendar.get(Calendar.YEAR);
@@ -228,42 +226,44 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
         final int field = v.getId();
         if (!b){
             if (field == R.id.et_nameRegister) {
-                CheckUtil.handlerCheckName(this,et_nameRegister,tv_nameRegister);
+                CheckUtil.handlerCheckName(this,et_nameRegister,et_nameRegisterFilled);
             } else if (field == R.id.dp_birthday) {
-                CheckUtil.handlerCheckBirthdayDate(this,dp_birthday,tv_birthdayRegister);
+                CheckUtil.handlerCheckBirthdayDate(this,dp_birthday,dp_birthdayFilled);
             } else if (field == R.id.et_userRegister) {
-                if(CheckUtil.handlerCheckUser(this,et_userRegister,tv_usernameRegister)){
-                    CheckUtil.setErrorMessage(null,tv_usernameRegister);
+                if(CheckUtil.handlerCheckUser(this,et_userRegister,et_userRegisterFilled)){
+                    CheckUtil.setErrorMessage(null,et_userRegisterFilled);
                 }
             } else if (field == R.id.et_pronounsRegister) {
-                CheckUtil.handlerCheckPronouns(this,et_pronounsRegister,tv_pronounsRegister);
+                CheckUtil.handlerCheckPronouns(this,et_pronounsRegister,et_pronounsRegisterFilled);
             } else if (field == R.id.et_emailRegister) {
-                if(CheckUtil.handlerCheckEmail(this,et_emailRegister,tv_emailRegister)){
-                    CheckUtil.setErrorMessage(null,tv_emailRegister);
-                }            } else if (field == R.id.et_password) {
-                CheckUtil.handlerCheckPassword(this,et_password,tv_passwordRegister);
+                if(CheckUtil.handlerCheckEmail(this,et_emailRegister,et_emailRegisterFilled)){
+                    CheckUtil.setErrorMessage(null,et_emailRegisterFilled);
+                }
+            }
+            else if (field == R.id.et_password) {
+                CheckUtil.handlerCheckPassword(this,et_password,et_passwordFilled);
             } else if (field == R.id.et_passwordRepeat) {
-                CheckUtil.handlerCheckPasswordRepeat(this,et_passwordRepeat,et_password,tv_passwordRepeatRegister);
+                CheckUtil.handlerCheckPasswordRepeat(this,et_passwordRepeat,et_password,et_passwordRepeatRegisterFilled);
             } else if (field == R.id.et_telephoneRegister) {
-                CheckUtil.handlerCheckTelephone(this,et_telephoneRegister,tv_telephoneRegister);
+                CheckUtil.handlerCheckTelephone(this,et_telephoneRegister,et_telephoneRegisterFilled);
             }
         } else {
             if (field == R.id.et_nameRegister) {
-                CheckUtil.setErrorMessage(null, et_nameRegister);
+                CheckUtil.setErrorMessage(null, et_nameRegisterFilled);
             } else if (field == R.id.dp_birthday) {
-                CheckUtil.setErrorMessage(null, tv_birthdayRegister);
+                CheckUtil.setErrorMessage(null, dp_birthdayFilled);
             } else if (field == R.id.et_userRegister) {
-                CheckUtil.setErrorMessage(null,tv_usernameRegister);
+                CheckUtil.setErrorMessage(null,et_userRegisterFilled);
             } else if (field == R.id.et_pronounsRegister) {
-                CheckUtil.setErrorMessage(null, tv_pronounsRegister);
+                CheckUtil.setErrorMessage(null, et_pronounsRegisterFilled);
             } else if (field == R.id.et_emailRegister) {
-                CheckUtil.setErrorMessage(null, tv_emailRegister);
+                CheckUtil.setErrorMessage(null, et_emailRegisterFilled);
             } else if (field == R.id.et_password) {
-                CheckUtil.setErrorMessage(null, tv_passwordRegister);
+                CheckUtil.setErrorMessage(null, et_passwordFilled);
             } else if (field == R.id.et_passwordRepeat) {
-                CheckUtil.setErrorMessage(null, tv_passwordRepeatRegister);
+                CheckUtil.setErrorMessage(null, et_passwordFilled);
             } else if (field == R.id.et_telephoneRegister) {
-                CheckUtil.setErrorMessage(null, tv_telephoneRegister);
+                CheckUtil.setErrorMessage(null, et_telephoneRegisterFilled);
             }
         }
     }
@@ -276,28 +276,28 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
     private boolean checkAllFields() {
         boolean[] allValid = {true}; // usamos un array para modificarlo dentro de lambda
 
-        if (!CheckUtil.handlerCheckName(this, et_nameRegister, tv_nameRegister)) {
+        if (!CheckUtil.handlerCheckName(this, et_nameRegister, et_nameRegisterFilled)) {
             allValid[0] = false;
         }
-        if (!CheckUtil.handlerCheckBirthdayDate(this, dp_birthday, tv_birthdayRegister)) {
+        if (!CheckUtil.handlerCheckBirthdayDate(this, dp_birthday, dp_birthdayFilled)) {
             allValid[0] = false;
         }
-        if (!CheckUtil.handlerCheckPassword(this, et_password, tv_passwordRegister)) {
+        if (!CheckUtil.handlerCheckPassword(this, et_password, et_passwordFilled)) {
             allValid[0] = false;
         }
-        if (!CheckUtil.handlerCheckPasswordRepeat(this, et_passwordRepeat, et_password, tv_passwordRepeatRegister)) {
+        if (!CheckUtil.handlerCheckPasswordRepeat(this, et_passwordRepeat, et_password, et_passwordRepeatRegisterFilled)) {
             allValid[0] = false;
         }
-        if (!CheckUtil.handlerCheckPronouns(this, et_pronounsRegister, tv_pronounsRegister)) {
+        if (!CheckUtil.handlerCheckPronouns(this, et_pronounsRegister, et_pronounsRegisterFilled)) {
             allValid[0] = false;
         }
-        if(!CheckUtil.handlerCheckUser(this,et_userRegister,tv_usernameRegister)){
+        if(!CheckUtil.handlerCheckUser(this,et_userRegister,et_userRegisterFilled)){
             allValid[0] = false;
         }
-        if(!CheckUtil.handlerCheckEmail(this,et_emailRegister,tv_emailRegister)){
+        if(!CheckUtil.handlerCheckEmail(this,et_emailRegister,et_emailRegisterFilled)){
             allValid[0] = false;
         }
-        if(!CheckUtil.handlerCheckTelephone(this,et_telephoneRegister,tv_telephoneRegister)){
+        if(!CheckUtil.handlerCheckTelephone(this,et_telephoneRegister,et_telephoneRegisterFilled)){
             allValid[0] = false;
         }
         return allValid[0];
@@ -325,10 +325,10 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
                                     QuerySnapshot usernameSnapshot = (QuerySnapshot) results.get(0);
                                     QuerySnapshot emailSnapshot = (QuerySnapshot) results.get(1);
                                     if (!usernameSnapshot.isEmpty()) {
-                                        CheckUtil.setErrorMessage("Nombre de usuario existente", tv_usernameRegister);
+                                        CheckUtil.setErrorMessage("Nombre de usuario existente", et_userRegisterFilled);
                                     }
                                     if (!emailSnapshot.isEmpty()) {
-                                        CheckUtil.setErrorMessage("Email existente", tv_emailRegister);
+                                        CheckUtil.setErrorMessage("Email existente", et_emailRegisterFilled);
                                     }
                                     if (usernameSnapshot.isEmpty() && emailSnapshot.isEmpty()) {
                                         // Puedes continuar con el registro

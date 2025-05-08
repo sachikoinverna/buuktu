@@ -3,64 +3,70 @@ package com.example.buuktu.utils;
 import android.content.Context;
 import android.os.Build;
 import android.util.Patterns;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.example.buuktu.R;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
 
+import java.lang.reflect.Field;
+
 public class CheckUtil {
-    public static boolean handlerCheckPassword(Context context,TextInputEditText textInputEditText,TextView textViewError) {
+    public static boolean handlerCheckPassword(Context context,TextInputEditText textInputEditText,TextInputLayout textInputLayout) {
         String text = textInputEditText.getText().toString();
         if (CheckUtil.checkTextEmpty(text)) {
-            CheckUtil.setErrorMessage(context.getString(R.string.passwordErrorEmpty), textViewError);
+            CheckUtil.setErrorMessage(context.getString(R.string.passwordErrorEmpty), textInputLayout);
             return false;
 
         } else if (text.length() < 8) {
-            CheckUtil.setErrorMessage(context.getString(R.string.passwordTooShort), textViewError);
+            CheckUtil.setErrorMessage(context.getString(R.string.passwordTooShort), textInputLayout);
             return false;
 
         } else if (!CheckUtil.checkSpecialCharacter(text)) {
-            CheckUtil.setErrorMessage(context.getString(R.string.passwordErrorSpecialChar), textViewError);
+            CheckUtil.setErrorMessage(context.getString(R.string.passwordErrorSpecialChar), textInputLayout);
             return false;
         } else if (!CheckUtil.checkUppercase(text)) {
-            CheckUtil.setErrorMessage(context.getString(R.string.passwordErrorUppercase), textViewError);
+            CheckUtil.setErrorMessage(context.getString(R.string.passwordErrorUppercase), textInputLayout);
             return false;
         }
-        CheckUtil.setErrorMessage(null, textViewError);
+        CheckUtil.setErrorMessage(null, textInputLayout);
         return true;
     }
-    public static boolean handlerCheckPasswordRepeat(Context context,TextInputEditText textInputEditTextRepeat,TextInputEditText textInputEditTextOriginal,TextView textViewError) {
+    public static boolean handlerCheckPasswordRepeat(Context context,TextInputEditText textInputEditTextRepeat,TextInputEditText textInputEditTextOriginal,TextInputLayout textInputLayout) {
         String textRepeat = textInputEditTextRepeat.getText().toString();
         String textOriginal = textInputEditTextOriginal.getText().toString();
         if (!textRepeat.equals(textOriginal)) {
-            CheckUtil.setErrorMessage(context.getString(R.string.passwordErrorRepeat), textViewError);
+            CheckUtil.setErrorMessage(context.getString(R.string.passwordErrorRepeat), textInputLayout);
             return false;
         }
-        CheckUtil.setErrorMessage(null, textViewError);
+        CheckUtil.setErrorMessage(null, textInputLayout);
         return true;
     }
-    public static boolean handlerCheckUser(Context context,TextInputEditText textInputEditText,TextView textViewError) {
+    public static boolean handlerCheckUser(Context context,TextInputEditText textInputEditText,TextInputLayout textInputLayout) {
         String text = textInputEditText.getText().toString();
         if (CheckUtil.checkTextEmpty(text)) {
-            CheckUtil.setErrorMessage(context.getString(R.string.userErrorEmpty), textViewError);
+            CheckUtil.setErrorMessage(context.getString(R.string.userErrorEmpty), textInputLayout);
             return false;
         }
-        CheckUtil.setErrorMessage(null, textViewError);
+        CheckUtil.setErrorMessage(null, textInputLayout);
         return true;
     }
-    public static boolean handlerCheckBirthdayDate(Context context, TextInputEditText textInputEditText, TextView textViewError) {
+    public static boolean handlerCheckBirthdayDate(Context context, TextInputEditText textInputEditText, TextInputLayout textInputLayout) {
         String text = textInputEditText.getText().toString();
         if (CheckUtil.checkTextEmpty(text)) {
-            CheckUtil.setErrorMessage(context.getString(R.string.birthdayErrorEmpty), textViewError);
+            CheckUtil.setErrorMessage(context.getString(R.string.birthdayErrorEmpty), textInputLayout);
             return false;
         }
-        CheckUtil.setErrorMessage(null, textViewError);
+        CheckUtil.setErrorMessage(null, textInputLayout);
         return true;
     }
-    public static boolean handlerCheckTelephone(Context context,TextInputEditText textInputEditText,TextView textViewError) {
+    public static boolean handlerCheckTelephone(Context context,TextInputEditText textInputEditText,TextInputLayout textInputLayout) {
         String text = textInputEditText.getText().toString();
         PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
         Phonenumber.PhoneNumber number = null;
@@ -70,47 +76,47 @@ public class CheckUtil {
             System.err.println("NumberParseException was thrown: " + e.toString());
         }
         if (CheckUtil.checkTextEmpty(text)) {
-            CheckUtil.setErrorMessage(context.getString(R.string.telephoneErrorEmpty), textViewError);
+            CheckUtil.setErrorMessage(context.getString(R.string.telephoneErrorEmpty), textInputLayout);
             return false;
         } else if (!phoneUtil.isValidNumber(number)) {
-            CheckUtil.setErrorMessage("Numero incorrecto", textViewError);
+            CheckUtil.setErrorMessage("Numero incorrecto", textInputLayout);
             return false;
         }
-        CheckUtil.setErrorMessage(null, textViewError);
+        CheckUtil.setErrorMessage(null, textInputLayout);
         return true;
     }
 
-    public static boolean handlerCheckName(Context context,TextInputEditText textInputEditText,TextView textViewError) {
+    public static boolean handlerCheckName(Context context,TextInputEditText textInputEditText,TextInputLayout textInputLayout) {
         String text = textInputEditText.getText().toString();
         if (CheckUtil.checkTextEmpty(text)) {
-            CheckUtil.setErrorMessage(context.getString(R.string.nameErrorEmpty), textViewError);
+            CheckUtil.setErrorMessage(context.getString(R.string.nameErrorEmpty), textInputLayout);
             return false;
         } else if (CheckUtil.checkNumbers(text)){
-            CheckUtil.setErrorMessage(context.getString(R.string.numberErrorTextField), textViewError);
+            CheckUtil.setErrorMessage(context.getString(R.string.numberErrorTextField), textInputLayout);
             return false;
         }
-        CheckUtil.setErrorMessage(null, textViewError);
+        CheckUtil.setErrorMessage(null, textInputLayout);
         return true;
     }
-    public static boolean handlerCheckPronouns(Context context,TextInputEditText textInputEditText,TextView textViewError) {
+    public static boolean handlerCheckPronouns(Context context,TextInputEditText textInputEditText,TextInputLayout textInputLayout) {
         String text = textInputEditText.getText().toString();
         if (CheckUtil.checkTextEmpty(text)) {
-            CheckUtil.setErrorMessage(context.getString(R.string.pronounsErrorEmpty), textViewError);
+            CheckUtil.setErrorMessage(context.getString(R.string.pronounsErrorEmpty), textInputLayout);
             return false;
         }
-        CheckUtil.setErrorMessage(null, textViewError);
+        CheckUtil.setErrorMessage(null, textInputLayout);
         return true;
     }
-    public static boolean handlerCheckEmail(Context context,TextInputEditText textInputEditText,TextView textViewError) {
+    public static boolean handlerCheckEmail(Context context,TextInputEditText textInputEditText,TextInputLayout textInputLayout) {
         String text = textInputEditText.getText().toString();
         if (CheckUtil.checkTextEmpty(text)) {
-            CheckUtil.setErrorMessage(context.getString(R.string.emailErrorEmpty), textViewError);
+            CheckUtil.setErrorMessage(context.getString(R.string.emailErrorEmpty), textInputLayout);
             return false;
         } else if (!CheckUtil.checkEmailStructure(text)) {
-            CheckUtil.setErrorMessage(context.getString(R.string.emailErrorFormat), textViewError);
+            CheckUtil.setErrorMessage(context.getString(R.string.emailErrorFormat), textInputLayout);
             return false;
         }
-        CheckUtil.setErrorMessage(null, textViewError);
+        CheckUtil.setErrorMessage(null, textInputLayout);
         return true;
     }
     public static boolean checkSpecialChar(String text)
@@ -137,7 +143,7 @@ public class CheckUtil {
         return password != null && password.matches(".*[\\W_].*");
     }
 
-    public static void setErrorMessage(String error, TextView textView) {
-        textView.setText(error);
+    public static void setErrorMessage(String error, TextInputLayout textInputLayout) {
+        textInputLayout.setError(error);
     }
 }

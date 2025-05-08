@@ -18,7 +18,7 @@
             android:layout_height="match_parent">
 
             <ImageButton
-                android:id="@+id/bt_save_status_characterkie"
+                android:id="@+id/bt_status_save_characterkie"
                 android:layout_width="33dp"
                 android:layout_height="33dp"
                 android:layout_marginTop="8dp"
@@ -30,34 +30,37 @@
                 app:srcCompat="@drawable/twotone_save_24" />
 
             <RadioButton
-                android:id="@+id/rb_alive_status_characterkie"
+                android:id="@+id/rb_status_alive"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@drawable/radiobutton_custom"
+                android:tag="status_alive"
                 android:text="@string/status_alive"
-                app:layout_constraintEnd_toStartOf="@+id/rb_dead_status_characterkie"
+                app:layout_constraintEnd_toStartOf="@+id/rb_status_dead"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/bt_save_status_characterkie" />
+                app:layout_constraintTop_toBottomOf="@+id/bt_status_save_characterkie" />
 
             <RadioButton
-                android:id="@+id/rb_dead_status_characterkie"
+                android:id="@+id/rb_status_dead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@drawable/radiobutton_custom"
+                android:tag="status_dead"
                 android:text="@string/status_dead"
-                app:layout_constraintEnd_toStartOf="@+id/rb_unknown_status_characterkie"
-                app:layout_constraintStart_toEndOf="@+id/rb_alive_status_characterkie"
-                app:layout_constraintTop_toBottomOf="@+id/bt_save_status_characterkie" />
+                app:layout_constraintEnd_toStartOf="@+id/rb_status_unknown"
+                app:layout_constraintStart_toEndOf="@+id/rb_status_alive"
+                app:layout_constraintTop_toBottomOf="@+id/bt_status_save_characterkie" />
 
             <RadioButton
-                android:id="@+id/rb_unknown_status_characterkie"
+                android:id="@+id/rb_status_unknown"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@drawable/radiobutton_custom"
-                android:text="@string/unknown_masc"
+                android:tag="status_unknown"
+                android:text="@string/status_unknown"
                 app:layout_constraintEnd_toStartOf="@+id/rb_other_status_characterkie"
-                app:layout_constraintStart_toEndOf="@+id/rb_dead_status_characterkie"
-                app:layout_constraintTop_toBottomOf="@+id/bt_save_status_characterkie" />
+                app:layout_constraintStart_toEndOf="@+id/rb_status_dead"
+                app:layout_constraintTop_toBottomOf="@+id/bt_status_save_characterkie" />
 
             <RadioButton
                 android:id="@+id/rb_other_status_characterkie"
@@ -66,8 +69,8 @@
                 android:button="@drawable/radiobutton_custom"
                 android:text="@string/other_masc"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/rb_unknown_status_characterkie"
-                app:layout_constraintTop_toBottomOf="@+id/bt_save_status_characterkie" />
+                app:layout_constraintStart_toEndOf="@+id/rb_status_unknown"
+                app:layout_constraintTop_toBottomOf="@+id/bt_status_save_characterkie" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/et_otherStatusCharacterkieFilled"
@@ -86,7 +89,7 @@
                 app:boxCornerRadiusTopStart="58dp"
                 app:counterEnabled="true"
                 app:counterMaxLength="50"
-                app:errorEnabled="false"
+                app:errorEnabled="true"
                 app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

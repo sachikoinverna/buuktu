@@ -31,56 +31,60 @@
                 app:srcCompat="@drawable/twotone_save_24" />
 
             <RadioButton
-                android:id="@+id/rb_gender_man_chracterkie"
+                android:id="@+id/rb_gender_male"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@drawable/radiobutton_custom"
+                android:tag="gender_male"
                 android:text="@string/gender_male"
-                app:layout_constraintEnd_toStartOf="@+id/rb_gender_woman_chracterkie"
+                app:layout_constraintEnd_toStartOf="@+id/rb_gender_female"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/bt_save_gender_characterkie" />
 
             <RadioButton
-                android:id="@+id/rb_gender_woman_chracterkie"
+                android:id="@+id/rb_gender_female"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@drawable/radiobutton_custom"
+                android:tag="gender_female"
                 android:text="@string/gender_female"
-                app:layout_constraintEnd_toStartOf="@+id/rb_gender_fluid_chracterkie"
-                app:layout_constraintStart_toEndOf="@+id/rb_gender_man_chracterkie"
+                app:layout_constraintEnd_toStartOf="@+id/rb_gender_fluid"
+                app:layout_constraintStart_toEndOf="@+id/rb_gender_male"
                 app:layout_constraintTop_toBottomOf="@+id/bt_save_gender_characterkie" />
 
             <RadioButton
-                android:id="@+id/rb_gender_fluid_chracterkie"
+                android:id="@+id/rb_gender_fluid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@drawable/radiobutton_custom"
+                android:tag="gender_fluid"
                 android:text="@string/gender_fluid"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/rb_gender_woman_chracterkie"
+                app:layout_constraintStart_toEndOf="@+id/rb_gender_female"
                 app:layout_constraintTop_toBottomOf="@+id/bt_save_gender_characterkie" />
 
             <RadioButton
-                android:id="@+id/rb_gender_no_binary_chracterkie"
+                android:id="@+id/rb_gender_nonbinary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:button="@drawable/radiobutton_custom"
+                android:tag="gender_nonbinary"
                 android:text="@string/gender_nonbinary"
-                app:layout_constraintEnd_toStartOf="@+id/rb_unknown_gender_characterkie"
+                app:layout_constraintEnd_toStartOf="@+id/rb_gender_unknown"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rb_gender_man_chracterkie" />
+                app:layout_constraintTop_toBottomOf="@+id/rb_gender_male" />
 
             <RadioButton
-                android:id="@+id/rb_unknown_gender_characterkie"
+                android:id="@+id/rb_gender_unknown"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:button="@drawable/radiobutton_custom"
                 android:text="@string/unknown_masc"
                 app:layout_constraintEnd_toStartOf="@+id/rb_other_gender_characterkie"
-                app:layout_constraintStart_toEndOf="@+id/rb_gender_no_binary_chracterkie"
-                app:layout_constraintTop_toBottomOf="@+id/rb_gender_fluid_chracterkie" />
+                app:layout_constraintStart_toEndOf="@+id/rb_gender_nonbinary"
+                app:layout_constraintTop_toBottomOf="@+id/rb_gender_fluid" />
 
             <RadioButton
                 android:id="@+id/rb_other_gender_characterkie"
@@ -90,8 +94,8 @@
                 android:button="@drawable/radiobutton_custom"
                 android:text="@string/other_masc"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/rb_unknown_gender_characterkie"
-                app:layout_constraintTop_toBottomOf="@+id/rb_gender_fluid_chracterkie" />
+                app:layout_constraintStart_toEndOf="@+id/rb_gender_unknown"
+                app:layout_constraintTop_toBottomOf="@+id/rb_gender_fluid" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/et_otherGendersCharacterkieFilled"
@@ -109,11 +113,11 @@
                 app:boxCornerRadiusTopStart="58dp"
                 app:counterEnabled="true"
                 app:counterMaxLength="50"
-                app:errorEnabled="false"
+                app:errorEnabled="true"
                 app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rb_gender_no_binary_chracterkie"
+                app:layout_constraintTop_toBottomOf="@+id/rb_gender_nonbinary"
                 app:startIconDrawable="@drawable/twotone_supervised_user_circle_24">
 
                 <com.google.android.material.textfield.TextInputEditText

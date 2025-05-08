@@ -908,6 +908,7 @@
                             android:layout_marginTop="8dp"
                             android:button="@drawable/radiobutton_custom"
                             android:buttonTint="#835959"
+                            android:tag="dd_mm_yy"
                             android:text="@string/dd_mm_yy"
                             app:layout_constraintEnd_toStartOf="@+id/rb_month_year_birthday"
                             app:layout_constraintStart_toStartOf="parent"
@@ -920,6 +921,7 @@
                             android:layout_marginTop="8dp"
                             android:button="@drawable/radiobutton_custom"
                             android:buttonTint="#835959"
+                            android:tag="dd_mm_yy"
                             android:text="@string/mm_yy"
                             app:layout_constraintEnd_toStartOf="@+id/rb_month_birthday"
                             app:layout_constraintStart_toEndOf="@+id/rb_full_birthday"
@@ -1050,6 +1052,7 @@
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/et_yearBirthdayCreateFull"
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
@@ -1062,7 +1065,7 @@
                             app:boxCornerRadiusTopStart="58dp"
                             app:counterEnabled="true"
                             app:counterMaxLength="50"
-                            app:errorEnabled="false"
+                            app:errorEnabled="true"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/iv_background_day_month_selector"
@@ -1080,14 +1083,6 @@
                                     android:textColorHint="@color/brownMaroon" />
 
                         </com.google.android.material.textfield.TextInputLayout>
-
-                        <com.google.android.material.chip.ChipGroup
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            card_view:layout_editor_absoluteX="152dp"
-                            card_view:layout_editor_absoluteY="589dp">
-
-                        </com.google.android.material.chip.ChipGroup>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

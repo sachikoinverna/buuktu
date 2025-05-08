@@ -134,7 +134,7 @@ public class BottomSheetProfilePhoto extends BottomSheetDialogFragment implement
                                       //  DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(drawable), createEditWorldkie.getIb_select_img_create_worldkie(), R.color.brownMaroon);
                                     createEditWorldkie.setSource("device");
                                 } else if (createCharacterkie!=null) {
-                                    DrawableUtils.personalizarImagenCuadradoButton(context,150/6,7,R.color.brownMaroon,uri, createCharacterkie.getIb_select_img_create_worldkie());
+                                    DrawableUtils.personalizarImagenCircleButton(context, uri, createCharacterkie.getIb_select_img_create_worldkie(), R.color.brownMaroon);
                                     createCharacterkie.setSource("device");
                                 }else if (createEditStuffkie!=null) {
                                    // createEditStuffkie.getIb_select_img_create_worldkie().setImageDrawable(drawable);

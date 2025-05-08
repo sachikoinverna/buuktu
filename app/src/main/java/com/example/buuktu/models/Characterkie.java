@@ -15,6 +15,7 @@ public class Characterkie {
     private String name;
     private String pronouns;
     private  String birthday;
+    private String birthday_format;
     private boolean photo_default;
     private boolean draft;
     boolean characterkie_private;
@@ -29,12 +30,13 @@ public class Characterkie {
         this.name=name;
     }
 
-    public Characterkie(String UID_WORLDKIE, String UID_AUTHOR, String name, String pronouns, String birthday, boolean photo_default, boolean draft, boolean characterkie_private, String photo_id, String status, String gender) {
+    public Characterkie(String UID_WORLDKIE, String UID_AUTHOR, String name, String pronouns, String birthday,String birthday_format, boolean photo_default, boolean draft, boolean characterkie_private, String photo_id, String status, String gender) {
         this.UID_WORLDKIE = UID_WORLDKIE;
         this.UID_AUTHOR = UID_AUTHOR;
         this.name = name;
         this.pronouns = pronouns;
         this.birthday = birthday;
+        this.birthday_format=birthday_format;
         this.photo_default = photo_default;
         this.draft = draft;
         this.characterkie_private = characterkie_private;
@@ -52,12 +54,23 @@ public class Characterkie {
         characterkie.setUID(document.getId());
 
         characterkie.setBirthday(document.getString("birthday"));
+        characterkie.setBirthday(document.getString("birthday_format"));
+        characterkie.setBirthday(document.getString("gender"));
+        characterkie.setBirthday(document.getString("status"));
         characterkie.setPhoto_default(document.getBoolean("photo_default"));
         characterkie.setDraft(document.getBoolean("draft"));
         characterkie.setCharacterkie_private(document.getBoolean("characterkie_private"));
         characterkie.setPhoto_id(document.getString("photo_id"));
         characterkie.setPronouns(document.getString("pronouns"));
         return characterkie;
+    }
+
+    public String getBirthday_format() {
+        return birthday_format;
+    }
+
+    public void setBirthday_format(String birthday_format) {
+        this.birthday_format = birthday_format;
     }
 
     public String getStatus() {

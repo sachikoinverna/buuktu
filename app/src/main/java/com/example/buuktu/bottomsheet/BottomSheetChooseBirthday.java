@@ -1,11 +1,15 @@
 package com.example.buuktu.bottomsheet;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -17,6 +21,8 @@ import androidx.core.content.ContextCompat;
 import com.example.buuktu.CreateCharacterkie;
 import com.example.buuktu.R;
 import com.example.buuktu.views.MainActivity;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -26,7 +32,7 @@ import java.util.List;
 
 public class BottomSheetChooseBirthday extends BottomSheetDialogFragment implements View.OnClickListener{
     RadioButton rb_unknown_birthday,rb_full_birthday,rb_month_year_birthday,rb_month_birthday,rb_year_birthday,rb_checked;
-    ImageButton bt_day_1,bt_day_2,bt_day_3,bt_day_4,bt_day_5,bt_day_6,bt_day_7,bt_day_8,bt_day_9,bt_day_10,bt_day_11,bt_day_12,bt_day_13,bt_day_14,bt_day_15,bt_day_16,bt_day_17,bt_day_18,bt_day_19,bt_day_20,bt_day_21,bt_day_22,bt_day_23,bt_day_24,bt_day_25,bt_day_26,bt_day_27,bt_day_28,bt_day_29,bt_day_30,bt_day_31,bt_previous_month_birthday_selector,bt_next_month_birthday_selector,bt_show_day_month_birthday_selector,bt_show_year_selector,bt_selected;
+    ImageButton bt_day_1,bt_day_2,bt_day_3,bt_day_4,bt_day_5,bt_day_6,bt_day_7,bt_day_8,bt_day_9,bt_day_10,bt_day_11,bt_day_12,bt_day_13,bt_day_14,bt_day_15,bt_day_16,bt_day_17,bt_day_18,bt_day_19,bt_day_20,bt_day_21,bt_day_22,bt_day_23,bt_day_24,bt_day_25,bt_day_26,bt_day_27,bt_day_28,bt_day_29,bt_day_30,bt_day_31,bt_previous_month_birthday_selector,bt_next_month_birthday_selector,bt_show_day_month_birthday_selector,bt_selected,ib_save_date_dialog;
     int option;
     Context context;
     List<RadioButton> allRadioButtons = new ArrayList<>();
@@ -52,9 +58,9 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
     ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.choose_birthday_dialog,
                 container, false);
+        context = getContext();
         initComponents(v);
         setInitialOption();
-        context = getContext();
         if(getActivity() instanceof MainActivity) {
             if (getParentFragment() instanceof CreateCharacterkie) {
                 createCharacterkie = (CreateCharacterkie) getParentFragment();
@@ -63,7 +69,6 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
         return v;
     }
     private void initComponents(View view){
-        context = getContext();
         rb_unknown_birthday = view.findViewById(R.id.rb_unknown_birthday);
         rb_full_birthday = view.findViewById(R.id.rb_full_birthday);
         rb_month_year_birthday= view.findViewById(R.id.rb_month_year_birthday);
@@ -81,7 +86,7 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
         iv_background_day_month_selector = view.findViewById(R.id.iv_background_day_month_selector);
         arrow_down = ContextCompat.getDrawable(requireContext(), R.drawable.twotone_arrow_drop_down_circle_24);
         arrow_up = ContextCompat.getDrawable(requireContext(), R.drawable.twotone_arrow_circle_up_24);
-
+        ib_save_date_dialog = view.findViewById(R.id.ib_save_date_dialog);
         setListeners();
         allRadioButtons.add(rb_full_birthday);
         allRadioButtons.add(rb_unknown_birthday);
@@ -103,6 +108,8 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
             });
         }
         month=1;
+
+// Aplica el tint al ImageButton
         tv_current_month_birthday_selector.setText(meses[month-1]);
         daysMonthsSelectorVisible = false;
         yearFieldVisible = false;
@@ -122,25 +129,34 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
             dayButtons[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    bt_selected.setImageTintList(ColorStateList.valueOf(Color.parseColor("#9FA8DA")));
+
                     bt_selected = (ImageButton) v;
+                    int color = getResources().getColor(R.color.brownMaroon, null); // Usando un color de recursos
+
+// Aplica el tint al ImageButton
+                    bt_selected.setImageTintList(ColorStateList.valueOf(color));
                 }
             });
         }
+        bt_selected=dayButtons[0];
+        int color = getResources().getColor(R.color.brownMaroon, null); // Usando un color de recursos
+        bt_selected.setImageTintList(ColorStateList.valueOf(color));
+
     }
     private void setListeners(){
         bt_show_day_month_birthday_selector.setOnClickListener(this);
         bt_previous_month_birthday_selector.setOnClickListener(this);
         bt_next_month_birthday_selector.setOnClickListener(this);
+        ib_save_date_dialog.setOnClickListener(this);
     }
     private void showHiddeDaysMonths() {
         daysMonthsSelectorVisible = !daysMonthsSelectorVisible;
         int days = getDaysMonth();
 
             if (daysMonthsSelectorVisible) {
-                if (monthVisible) {
-                    bt_previous_month_birthday_selector.setVisibility(month == 1 ? View.GONE : View.VISIBLE);
-                    bt_next_month_birthday_selector.setVisibility(month == 12 ? View.GONE : View.VISIBLE);
-                }
+                    bt_previous_month_birthday_selector.setVisibility(month == 1 && monthVisible ? View.GONE : View.VISIBLE);
+                    bt_next_month_birthday_selector.setVisibility(month == 12 && monthVisible ? View.GONE : View.VISIBLE);
             }else {
                 bt_previous_month_birthday_selector.setVisibility(View.GONE);
                 bt_next_month_birthday_selector.setVisibility(View.GONE);
@@ -171,7 +187,7 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
             String year = et_yearBirthdayCreate.getText().toString();
             if(!year.isEmpty()){
                 int yearInt = Integer.parseInt(year);
-                return isLeapYear(yearInt) ? 28 : 29;
+                return isLeapYear(yearInt) ? 29 : 28;
             }else{
                 return  28;
             }
@@ -204,20 +220,13 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
         }
     }
     private void hideShowField(boolean days,boolean months, boolean years) {
-        if(days || months) {
-            tv_head_day_month_birthday_selector.setVisibility(View.VISIBLE);
-            tv_separator_day_month_birthday_selector.setVisibility(View.VISIBLE);
-            iv_head_day_month_birthday_selector.setVisibility(View.VISIBLE);
-            bt_show_day_month_birthday_selector.setVisibility(View.VISIBLE);
-            iv_background_day_month_selector.setVisibility(View.VISIBLE);
+            tv_separator_day_month_birthday_selector.setVisibility(days||months?View.VISIBLE:View.GONE);
+            iv_head_day_month_birthday_selector.setVisibility(days||months?View.VISIBLE:View.GONE);
+            bt_show_day_month_birthday_selector.setVisibility(days||months?View.VISIBLE:View.GONE);
+            iv_background_day_month_selector.setVisibility(days||months?View.VISIBLE:View.GONE);
             bt_show_day_month_birthday_selector.setImageDrawable(arrow_down);
-        }else{
-                tv_head_day_month_birthday_selector.setVisibility(View.GONE);
-                tv_separator_day_month_birthday_selector.setVisibility(View.GONE);
-            iv_head_day_month_birthday_selector.setVisibility(View.GONE);
-            bt_show_day_month_birthday_selector.setVisibility(View.GONE);
-            iv_background_day_month_selector.setVisibility(View.GONE);
-        }
+            tv_head_day_month_birthday_selector.setVisibility(days||months?View.VISIBLE:View.GONE);
+
         for (int i = 0; i < dayButtons.length; i++) {
             dayButtons[i].setVisibility(View.GONE);
             tvDays[i].setVisibility(View.GONE);
@@ -227,10 +236,9 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
         monthVisible = months;
         bt_next_month_birthday_selector.setVisibility(View.GONE);
         bt_previous_month_birthday_selector.setVisibility(View.GONE);
-        tv_current_month_birthday_selector.setVisibility(years ? View.VISIBLE : View.GONE);
-            et_yearBirthdayCreateFull.setVisibility(View.GONE);
-
-            tv_head_day_month_birthday_selector.setText(days ? "DD/MM" : "MM");
+        tv_current_month_birthday_selector.setVisibility(View.GONE);
+        et_yearBirthdayCreateFull.setVisibility(years ? View.VISIBLE: View.GONE);
+        tv_head_day_month_birthday_selector.setText(days ? "DD/MM" : "MM");
 
     }
     private void nextMonth(){
@@ -257,12 +265,53 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
         bt_next_month_birthday_selector.setVisibility(month == 12 ? View.GONE : View.VISIBLE);
     }
     private void saveData(){
-        if(rb_checked.getId()!=R.id.rb_unknown_birthday){
-            createCharacterkie.setDay(day);
+        int id = rb_checked.getId();
+        createCharacterkie.setOptionBirthday(id);
+        if(rb_checked.getId()==R.id.rb_year_birthday){
+            String year = et_yearBirthdayCreate.getText().toString();
+            if(year.isEmpty()){
+                et_yearBirthdayCreateFull.setError("Este campo no puede estar vacío");
+                et_yearBirthdayCreate.requestFocus();
+                return; // 🚫 No cerrar
+            }
+            createCharacterkie.setYear(Integer.parseInt(year));
+        } else if (rb_checked.getId()==R.id.rb_month_birthday) {
             createCharacterkie.setMonth(month);
-            createCharacterkie.setYear(year);
+
+        } else if (rb_checked.getId()==R.id.rb_month_year_birthday) {
+            createCharacterkie.setMonth(month);
+            createCharacterkie.setDay(day);
+        }else if (rb_checked.getId()==R.id.rb_full_birthday) {
+            String year = et_yearBirthdayCreate.getText().toString();
+            if(year.isEmpty()){
+                et_yearBirthdayCreateFull.setError("Este campo no puede estar vacío");
+                et_yearBirthdayCreate.requestFocus();
+                return; // 🚫 No cerrar
+            }
+            createCharacterkie.setYear(Integer.parseInt(year));
+            createCharacterkie.setMonth(month);
+            createCharacterkie.setDay(day);
         }
         createCharacterkie.setDate();
+        createCharacterkie.getCharacterkie().setBirthday_format(rb_checked.getText().toString());
+        dismiss(); // ✅ Solo se cierra si todo está bien
+    }
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        BottomSheetDialog dialog = (BottomSheetDialog) super.onCreateDialog(savedInstanceState);
+        dialog.setCanceledOnTouchOutside(false); // No se cierra al tocar fuera
+
+        dialog.setOnShowListener(dialogInterface -> {
+            BottomSheetDialog d = (BottomSheetDialog) dialogInterface;
+            FrameLayout bottomSheet = d.findViewById(com.google.android.material.R.id.design_bottom_sheet);
+            if (bottomSheet != null) {
+                BottomSheetBehavior<?> behavior = BottomSheetBehavior.from(bottomSheet);
+                behavior.setHideable(false); // No se puede deslizar para cerrar
+                behavior.setDraggable(false); // Opcional: bloquear arrastre
+            }
+        });
+
+        return dialog;
     }
     @Override
     public void onClick(View v) {

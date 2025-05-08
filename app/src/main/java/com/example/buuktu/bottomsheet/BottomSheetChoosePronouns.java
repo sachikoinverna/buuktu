@@ -1,10 +1,13 @@
 package com.example.buuktu.bottomsheet;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 
 import androidx.annotation.Nullable;
@@ -12,6 +15,8 @@ import androidx.annotation.Nullable;
 import com.example.buuktu.CreateCharacterkie;
 import com.example.buuktu.R;
 import com.example.buuktu.views.MainActivity;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -28,6 +33,7 @@ public class BottomSheetChoosePronouns extends BottomSheetDialogFragment impleme
     CreateCharacterkie createCharacterkie;
     String optionString;
     int option;
+    ImageButton bt_save_pronouns_characterkie;
     public BottomSheetChoosePronouns(int option, String optionString) {
         this.option = option;
         this.optionString = optionString;
@@ -55,7 +61,8 @@ public class BottomSheetChoosePronouns extends BottomSheetDialogFragment impleme
         rb_ella_la_a_characterkie= view.findViewById(R.id.rb_pronouns_option_neutral_two);
         rb_ellx_lx_x_characterkie= view.findViewById(R.id.rb_pronouns_option_neutral_three);
         rb_other_characterkie= view.findViewById(R.id.rb_other_characterkie);
-        rb_unknown_pronouns_characterkie = view.findViewById(R.id.rb_unknown_pronouns_characterkie);
+        rb_unknown_pronouns_characterkie = view.findViewById(R.id.rb_pronouns_unknown_characterkie);
+        bt_save_pronouns_characterkie = view.findViewById(R.id.bt_save_pronouns_characterkie);
         allRadioButtons.add(rb_el_lo_le_o_characterkie);
         allRadioButtons.add(rb_elle__le_e_characterkie);
         allRadioButtons.add(rb_ella_la_le_a_characterkie);
@@ -71,12 +78,9 @@ public class BottomSheetChoosePronouns extends BottomSheetDialogFragment impleme
                 }
                 rb.setChecked(true);
                 rb_checked = view.findViewById(rb.getId());
-                if(rb.getId()==R.id.rb_other_characterkie){
-                    et_otherPronounsCharacterkieFilled.setVisibility(View.VISIBLE);
-                    // activar el que se pulsó
-                }else {
-                    et_otherPronounsCharacterkieFilled.setVisibility(View.GONE);
-                }
+
+                    et_otherPronounsCharacterkieFilled.setVisibility(rb.getId()==R.id.rb_other_characterkie?View.VISIBLE:View.GONE);
+
             });
             if(rb.getId()==option){
                 rb.setChecked(true);
@@ -85,31 +89,60 @@ public class BottomSheetChoosePronouns extends BottomSheetDialogFragment impleme
                 et_otherPronounsCharacterkie.setText(optionString);
             }
         }
-        if(option==R.id.rb_unknown_gender_characterkie){
+        if(option!=R.id.rb_other_characterkie){
             et_otherPronounsCharacterkieFilled.setVisibility(View.GONE);
         }
+        setListeners();
     }
+    private void setListeners(){
+        bt_save_pronouns_characterkie.setOnClickListener(this);
+    }
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        BottomSheetDialog dialog = (BottomSheetDialog) super.onCreateDialog(savedInstanceState);
+        dialog.setCanceledOnTouchOutside(false); // No se cierra al tocar fuera
 
+        dialog.setOnShowListener(dialogInterface -> {
+            BottomSheetDialog d = (BottomSheetDialog) dialogInterface;
+            FrameLayout bottomSheet = d.findViewById(com.google.android.material.R.id.design_bottom_sheet);
+            if (bottomSheet != null) {
+                BottomSheetBehavior<?> behavior = BottomSheetBehavior.from(bottomSheet);
+                behavior.setHideable(false); // No se puede deslizar para cerrar
+                behavior.setDraggable(false); // Opcional: bloquear arrastre
+            }
+        });
+
+        return dialog;
+    }
+    private void savePronouns(){
+        String stringEditText = et_otherPronounsCharacterkie.getText().toString();
+        int idChecked = rb_checked.getId();
+        if (idChecked != option) {
+            if (idChecked == R.id.rb_other_characterkie) {
+                if (stringEditText.isEmpty()) {
+                    et_otherPronounsCharacterkieFilled.setError("Este campo no puede estar vacío");
+                    et_otherPronounsCharacterkie.requestFocus();
+                    return; // 🚫 No cerrar
+                }
+                createCharacterkie.getCharacterkie().setPronouns(stringEditText);
+
+                createCharacterkie.setOptionStatusString(stringEditText);
+            } else {
+                createCharacterkie.setOptionPronounsString(rb_checked.getText().toString());
+                createCharacterkie.getCharacterkie().setPronouns(rb_checked.getTag().toString());
+            }
+            createCharacterkie.setOptionPronouns(idChecked);
+        } else {
+            if (idChecked == R.id.rb_other_characterkie && !optionString.equals(stringEditText)) {
+                createCharacterkie.setOptionStatusString(stringEditText);
+            }
+        }
+        dismiss(); // ✅ Solo se cierra si todo está bien
+    }
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.bt_save_status_characterkie) {
-            String stringEditText = et_otherPronounsCharacterkie.getText().toString();
-            int idChecked = rb_checked.getId();
-            if (idChecked != option) {
-                if (idChecked == R.id.rb_other_characterkie) {
-                    createCharacterkie.getCharacterkie().setPronouns(stringEditText);
-
-                    createCharacterkie.setOptionStatusString(stringEditText);
-                } else {
-                    createCharacterkie.setOptionPronounsString(rb_checked.getText().toString());
-                    createCharacterkie.getCharacterkie().setPronouns(rb_checked.getTag().toString());
-                }
-                createCharacterkie.setOptionPronouns(idChecked);
-            } else {
-                if (idChecked == R.id.rb_other_characterkie && !optionString.equals(stringEditText)) {
-                    createCharacterkie.setOptionStatusString(stringEditText);
-                }
-            }
+        if(v.getId() == R.id.bt_save_pronouns_characterkie) {
+            savePronouns();
         }
     }
 }

@@ -58,18 +58,16 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
          View v = inflater.inflate(R.layout.fragment_settings, container, false);// Inflate the layout for this fragment
-         rc_settings = v.findViewById(R.id.rc_settings);
-         searchView = v.findViewById(R.id.searchView);
+        initComponents(v);
         searchView.setIconifiedByDefault(false); // Para que el SearchView esté expandido por defecto
         dataSet.clear();
         filteredDataSet.clear();
-        Drawable drawable = ContextCompat.getDrawable(mainActivity, R.drawable.twotone_manage_accounts_24);
-        dataSet.add(new SettingModel("Perfil",drawable));
-        dataSet.add(new SettingModel("Cuenta",drawable));
-        mainActivity = (MainActivity) getActivity();
-        backButton = mainActivity.getBackButton();
-        ib_save = mainActivity.getIb_save();
-        ib_profile_superior = mainActivity.getIb_self_profile();
+        Drawable drawableProfile = ContextCompat.getDrawable(mainActivity, R.drawable.twotone_manage_accounts_24);
+        Drawable drawableAccount = ContextCompat.getDrawable(mainActivity, R.drawable.twotone_admin_panel_settings_24);
+
+        dataSet.add(new SettingModel(mainActivity.getString(R.string.profile),drawableProfile));
+        dataSet.add(new SettingModel(mainActivity.getString(R.string.account),drawableAccount));
+
         setVisibility();
         //settingsAdapter.setOnClickListener(this);
         //adapter = new SettingsAdapter(dataSet,getContext());
@@ -77,6 +75,14 @@ public class SettingsFragment extends Fragment {
         filteredDataSet.addAll(dataSet);
         setListeners();
         return v;
+    }
+    private void initComponents(View v){
+        mainActivity = (MainActivity) getActivity();
+        backButton = mainActivity.getBackButton();
+        ib_save = mainActivity.getIb_save();
+        ib_profile_superior = mainActivity.getIb_self_profile();
+        rc_settings = v.findViewById(R.id.rc_settings);
+        searchView = v.findViewById(R.id.searchView);
     }
     private void setVisibility(){
         backButton.setVisibility(View.GONE);

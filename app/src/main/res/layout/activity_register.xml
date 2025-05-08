@@ -71,7 +71,7 @@
                     app:boxCornerRadiusTopStart="58dp"
                     app:counterEnabled="true"
                     app:counterMaxLength="50"
-                    app:errorEnabled="false"
+                    app:errorEnabled="true"
                     app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -92,20 +92,6 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <TextView
-                    android:id="@+id/tv_errorNameRegister"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="TextView"
-                    android:textAlignment="center"
-                    android:textColor="@color/redError"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_nameRegisterFilled" />
-
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/et_pronounsRegisterFilled"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -122,11 +108,11 @@
                     app:boxCornerRadiusTopStart="58dp"
                     app:counterEnabled="true"
                     app:counterMaxLength="50"
-                    app:errorEnabled="false"
+                    app:errorEnabled="true"
                     app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_errorNameRegister"
+                    app:layout_constraintTop_toBottomOf="@+id/et_nameRegisterFilled"
                     app:startIconDrawable="@drawable/outline_person_24">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -140,20 +126,6 @@
                         android:textColorHint="@color/brownMaroon"
                         android:textSize="20sp" />
                 </com.google.android.material.textfield.TextInputLayout>
-
-                <TextView
-                    android:id="@+id/tv_errorPronounsRegister"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="TextView"
-                    android:textAlignment="center"
-                    android:textColor="@color/redError"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_pronounsRegisterFilled" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/dp_birthdayFilled"
@@ -174,7 +146,7 @@
                     app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_errorPronounsRegister"
+                    app:layout_constraintTop_toBottomOf="@+id/et_pronounsRegisterFilled"
                     app:startIconDrawable="@drawable/twotone_cake_24">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -194,27 +166,13 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <TextView
-                    android:id="@+id/tv_birthdayError"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="TextView"
-                    android:textAlignment="center"
-                    android:textColor="@color/redError"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/dp_birthdayFilled" />
-
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/et_userRegisterFilled"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="24dp"
                     android:layout_marginEnd="8dp"
                     android:hint="@string/username"
                     android:textAlignment="center"
@@ -224,11 +182,11 @@
                     app:boxCornerRadiusTopStart="58dp"
                     app:counterEnabled="true"
                     app:counterMaxLength="20"
-                    app:errorEnabled="false"
+                    app:errorEnabled="true"
                     app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_birthdayError"
+                    app:layout_constraintTop_toBottomOf="@+id/dp_birthdayFilled"
                     app:startIconDrawable="@drawable/outline_person_24">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -241,20 +199,6 @@
                         android:textAlignment="center"
                         android:textSize="20sp" />
                 </com.google.android.material.textfield.TextInputLayout>
-
-                <TextView
-                    android:id="@+id/tv_errorUsernameRegister"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="TextView"
-                    android:textAlignment="center"
-                    android:textColor="@color/redError"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_userRegisterFilled" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/et_emailRegisterFilled"
@@ -272,11 +216,11 @@
                     app:boxCornerRadiusTopStart="58dp"
                     app:counterEnabled="true"
                     app:counterMaxLength="50"
-                    app:errorEnabled="false"
+                    app:errorEnabled="true"
                     app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_errorUsernameRegister"
+                    app:layout_constraintTop_toBottomOf="@+id/et_userRegisterFilled"
                     app:startIconDrawable="@drawable/twotone_email_24">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -290,20 +234,6 @@
                         android:textSize="20sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
-
-                <TextView
-                    android:id="@+id/tv_errorEmailRegister"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="TextView"
-                    android:textAlignment="center"
-                    android:textColor="@color/redError"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_emailRegisterFilled" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/et_telephoneRegisterFilled"
@@ -321,11 +251,11 @@
                     app:boxCornerRadiusTopStart="58dp"
                     app:counterEnabled="true"
                     app:counterMaxLength="9"
-                    app:errorEnabled="false"
+                    app:errorEnabled="true"
                     app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_errorEmailRegister"
+                    app:layout_constraintTop_toBottomOf="@+id/et_emailRegisterFilled"
                     app:startIconDrawable="@drawable/twotone_phone_24">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -339,20 +269,6 @@
                         android:textAlignment="center"
                         android:textSize="20sp" />
                 </com.google.android.material.textfield.TextInputLayout>
-
-                <TextView
-                    android:id="@+id/tv_errorNumberRegister"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="TextView"
-                    android:textAlignment="center"
-                    android:textColor="@color/redError"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_telephoneRegisterFilled" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/et_passwordFilled"
@@ -375,34 +291,20 @@
                     app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_errorNumberRegister"
+                    app:layout_constraintTop_toBottomOf="@+id/et_telephoneRegisterFilled"
                     app:startIconDrawable="@drawable/outline_password_24">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textPassword"
                         android:gravity="center"
+                        android:inputType="textPassword"
                         android:textAlignment="center"
                         android:textColor="@color/redError"
                         android:textSize="20sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
-
-                <TextView
-                    android:id="@+id/tv_errorPasswordRegister"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:gravity="center"
-                    android:text="TextView"
-                    android:textColor="@color/redError"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_passwordFilled" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/et_passwordRepeatRegisterFilled"
@@ -421,11 +323,11 @@
                     app:counterEnabled="true"
                     app:counterMaxLength="50"
                     app:endIconMode="password_toggle"
-                    app:errorEnabled="false"
+                    app:errorEnabled="true"
                     app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_errorPasswordRegister"
+                    app:layout_constraintTop_toBottomOf="@+id/et_passwordFilled"
                     app:startIconDrawable="@drawable/outline_password_24">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -438,20 +340,6 @@
                         android:textAlignment="center"
                         android:textSize="20sp" />
                 </com.google.android.material.textfield.TextInputLayout>
-
-                <TextView
-                    android:id="@+id/tv_errorPasswordRepeatRegister"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:gravity="center"
-                    android:text="TextView"
-                    android:textColor="@color/redError"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_passwordRepeatRegisterFilled" />
 
                 <Switch
                     android:id="@+id/tb_privateAccountRegister"
@@ -471,7 +359,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_errorPasswordRepeatRegister" />
+                    app:layout_constraintTop_toBottomOf="@+id/et_passwordRepeatRegisterFilled" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
