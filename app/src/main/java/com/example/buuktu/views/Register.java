@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.Switch;
@@ -29,6 +30,7 @@ import com.example.buuktu.dialogs.CreateEditGeneralDialog;
 import com.example.buuktu.models.UserkieModel;
 import com.example.buuktu.utils.CheckUtil;
 import com.example.buuktu.utils.DrawableUtils;
+import com.example.buuktu.utils.EfectsUtils;
 import com.example.buuktu.utils.UIUtils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -65,7 +67,8 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
     TextInputLayout  textInputLayout,et_nameRegisterFilled,et_userRegisterFilled,dp_birthdayFilled ,et_pronounsRegisterFilled, et_emailRegisterFilled, et_telephoneRegisterFilled, et_passwordFilled ,et_passwordRepeatRegisterFilled;
 
     public TextInputEditText dp_birthday, et_nameRegister, et_pronounsRegister, et_userRegister, et_emailRegister, et_passwordRepeat, et_password, et_telephoneRegister;
-    public TextView tv_registerButton, tv_registerToLoginButton,tv_nameRegister, tv_emailRegister, tv_birthdayRegister, tv_passwordRegister, tv_passwordRepeatRegister, tv_pronounsRegister, tv_usernameRegister, tv_telephoneRegister;
+    public Button tv_registerButton, tv_registerToLoginButton;
+            TextView tv_nameRegister, tv_emailRegister, tv_birthdayRegister, tv_passwordRegister, tv_passwordRepeatRegister, tv_pronounsRegister, tv_usernameRegister, tv_telephoneRegister;
     ImageButton bt_chooseImage,imageButtonActualBottomSheet;
     private Switch tb_privateAccountRegister;
     private FirebaseAuth auth;
@@ -229,16 +232,8 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
                 CheckUtil.handlerCheckName(this,et_nameRegister,et_nameRegisterFilled);
             } else if (field == R.id.dp_birthday) {
                 CheckUtil.handlerCheckBirthdayDate(this,dp_birthday,dp_birthdayFilled);
-            } else if (field == R.id.et_userRegister) {
-                if(CheckUtil.handlerCheckUser(this,et_userRegister,et_userRegisterFilled)){
-                    CheckUtil.setErrorMessage(null,et_userRegisterFilled);
-                }
             } else if (field == R.id.et_pronounsRegister) {
                 CheckUtil.handlerCheckPronouns(this,et_pronounsRegister,et_pronounsRegisterFilled);
-            } else if (field == R.id.et_emailRegister) {
-                if(CheckUtil.handlerCheckEmail(this,et_emailRegister,et_emailRegisterFilled)){
-                    CheckUtil.setErrorMessage(null,et_emailRegisterFilled);
-                }
             }
             else if (field == R.id.et_password) {
                 CheckUtil.handlerCheckPassword(this,et_password,et_passwordFilled);
@@ -252,13 +247,9 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
                 CheckUtil.setErrorMessage(null, et_nameRegisterFilled);
             } else if (field == R.id.dp_birthday) {
                 CheckUtil.setErrorMessage(null, dp_birthdayFilled);
-            } else if (field == R.id.et_userRegister) {
-                CheckUtil.setErrorMessage(null,et_userRegisterFilled);
             } else if (field == R.id.et_pronounsRegister) {
                 CheckUtil.setErrorMessage(null, et_pronounsRegisterFilled);
-            } else if (field == R.id.et_emailRegister) {
-                CheckUtil.setErrorMessage(null, et_emailRegisterFilled);
-            } else if (field == R.id.et_password) {
+            }else if (field == R.id.et_password) {
                 CheckUtil.setErrorMessage(null, et_passwordFilled);
             } else if (field == R.id.et_passwordRepeat) {
                 CheckUtil.setErrorMessage(null, et_passwordFilled);
@@ -289,12 +280,6 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
             allValid[0] = false;
         }
         if (!CheckUtil.handlerCheckPronouns(this, et_pronounsRegister, et_pronounsRegisterFilled)) {
-            allValid[0] = false;
-        }
-        if(!CheckUtil.handlerCheckUser(this,et_userRegister,et_userRegisterFilled)){
-            allValid[0] = false;
-        }
-        if(!CheckUtil.handlerCheckEmail(this,et_emailRegister,et_emailRegisterFilled)){
             allValid[0] = false;
         }
         if(!CheckUtil.handlerCheckTelephone(this,et_telephoneRegister,et_telephoneRegisterFilled)){
@@ -373,20 +358,18 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
                                                     documentRef.set(userkieModel).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                         @Override
                                                         public void onSuccess(Void unused) {
-                                                            Toast.makeText(getApplicationContext(), "Your Course has been added to Firebase Firestore", Toast.LENGTH_SHORT).show();
 
                                                             if (source.equals("device")) {
                                                                 StorageReference userRef = storage.getReference().child(task.getResult().getUser().getUid());
                                                                 userRef.child("profile" + DrawableUtils.getExtensionFromUri(getApplicationContext(), image)).putFile(image);
 
                                                             }
-                                                            animationView.setAnimation(R.raw.success_anim);
-                                                            animationView.playAnimation();
+                                                            EfectsUtils.setAnimationsDialog("success",animationView);
+
                                                             Completable.timer(3, TimeUnit.SECONDS)
                                                                     .subscribeOn(Schedulers.io())
                                                                     .observeOn(AndroidSchedulers.mainThread())
                                                                     .subscribe(() -> {
-                                                                        animationView.setVisibility(View.GONE);
                                                                         dialog.dismiss();
                                                                     });
                                                             clearFields();
@@ -396,13 +379,12 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
                                                     }).addOnFailureListener(new OnFailureListener() {
                                                         @Override
                                                         public void onFailure(@NonNull Exception e) {
-                                                            animationView.setAnimation(R.raw.fail_anim);
-                                                            animationView.playAnimation();
+                                                            EfectsUtils.setAnimationsDialog("fail",animationView);
+
                                                             Completable.timer(3, TimeUnit.SECONDS)
                                                                     .subscribeOn(Schedulers.io())
                                                                     .observeOn(AndroidSchedulers.mainThread())
                                                                     .subscribe(() -> {
-                                                                        animationView.setVisibility(View.GONE);
                                                                         dialog.dismiss();
                                                                     });
                                                         }

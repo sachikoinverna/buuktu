@@ -11,14 +11,13 @@
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/twotone_settings_suggest_24"
-            android:title="Settings"
-            />
+            android:title="@string/settings" />
 
     </group>
         <group>
             <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/twotone_exit_to_app_24"
-                android:title="@string/close_session" />
+                android:title="@string/log_out" />
         </group>
 </menu>

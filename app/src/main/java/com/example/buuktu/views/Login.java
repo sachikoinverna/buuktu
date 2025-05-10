@@ -5,6 +5,7 @@ import static android.widget.Toast.makeText;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +35,7 @@ public class Login extends AppCompatActivity {
     private TextInputEditText editTextEmailLogin, editTextPasswordLogin;
     private FirebaseAuth auth;
     private FirebaseFirestore db;
-    TextView tv_loginButton, tv_loginToRegisterButton;
+    Button tv_loginButton, tv_loginToRegisterButton;
     String email,username,password;
     CollectionReference dbUsers;
 

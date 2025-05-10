@@ -26,6 +26,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.buuktu.R;
+import com.example.buuktu.utils.CheckUtil;
 import com.example.buuktu.utils.RoundedBorderSquareTransformation;
 import com.example.buuktu.bottomsheet.BottomSheetProfilePhoto;
 import com.example.buuktu.dialogs.CreateEditGeneralDialog;
@@ -79,7 +80,7 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
     FragmentActivity activity;
     String UID, worldkie_id, source,name;
     boolean privacity, draft;
-
+    LottieAnimationView animationView;
     public CreateEditWorldkie() {
         // Required empty public constructor
     }
@@ -120,7 +121,9 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
         UID = firebaseAuth.getUid();
         initComponents(view);
         setVisibility();
-        dialog = new CreateEditGeneralDialog(getContext());
+        dialog = new CreateEditGeneralDialog(mainActivity);
+         animationView = dialog.findViewById(R.id.anim_create_edit);
+
         bottomSheetProfilePhoto = new BottomSheetProfilePhoto();
 
         db = FirebaseFirestore.getInstance();
@@ -139,7 +142,7 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
                     Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
                     return;
                 }
-                if (queryDocumentSnapshot.exists()) {
+                if (queryDocumentSnapshot!=null) {
                     worldkieModel = WorldkieModel.fromSnapshot(queryDocumentSnapshot);
                     et_nameWorldkieCreate.setText(worldkieModel.getName());
                     tb_worldkiePrivacity.setChecked(worldkieModel.isWorldkie_private());
@@ -291,12 +294,9 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
         CheckUtil.setErrorMessage(null, tv_telephoneRegister);
     }*/
     private void addDataToFirestore() {
-        //if(CheckUtil.handlerCheckName(context,et_nameWorldkieCreate,))
-        if(!et_nameWorldkieCreate.getText().toString().equals("")) {
+        if(CheckUtil.handlerCheckName(mainActivity,et_nameWorldkieCreate,et_nameWorldkieCreateFull)) {
             dialog.show();
-            LottieAnimationView animationView = dialog.findViewById(R.id.anim_create_edit);
-            animationView.setAnimation(R.raw.reading_anim);
-            animationView.playAnimation();
+            EfectsUtils.setAnimationsDialog("start",animationView);
             Completable.timer(3, TimeUnit.SECONDS)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -327,8 +327,7 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
                                                 userRef.child("profile" + DrawableUtils.getExtensionFromUri(getContext(), image)).putFile(image);
 
                                             }
-                                            animationView.setAnimation(R.raw.success_anim);
-                                            animationView.playAnimation();
+                                            EfectsUtils.setAnimationsDialog("success",animationView);
                                             Completable.timer(2, TimeUnit.SECONDS)
                                                     .subscribeOn(Schedulers.io())
                                                     .observeOn(AndroidSchedulers.mainThread())
@@ -342,8 +341,7 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        animationView.setAnimation(R.raw.fail_anim);
-                                        animationView.playAnimation();
+                                        EfectsUtils.setAnimationsDialog("fail",animationView);
                                         Completable.timer(3, TimeUnit.SECONDS)
                                                 .subscribeOn(Schedulers.io())
                                                 .observeOn(AndroidSchedulers.mainThread())
@@ -362,14 +360,11 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
         privacity = tb_worldkiePrivacity.isChecked();
         draft = tb_worldkieDraft.isChecked();
     }
-
     private void editDataFirestore() {
         //if(CheckUtil.handlerCheckName(context,et_nameWorldkieCreate,))
         if(!et_nameWorldkieCreate.getText().toString().isEmpty()) {
             dialog.show();
-            LottieAnimationView animationView = dialog.findViewById(R.id.anim_create_edit);
-            animationView.setAnimation(R.raw.reading_anim);
-            animationView.playAnimation();
+            EfectsUtils.setAnimationsDialog("start",animationView);
             Completable.timer(3, TimeUnit.SECONDS)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -407,8 +402,7 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
                                             userRef.child("profile" + DrawableUtils.getExtensionFromUri(getContext(), image)).putFile(image);
 
                                         }
-                                        animationView.setAnimation(R.raw.success_anim);
-                                        animationView.playAnimation();
+                                        EfectsUtils.setAnimationsDialog("success",animationView);
                                         Completable.timer(3, TimeUnit.SECONDS)
                                                 .subscribeOn(Schedulers.io())
                                                 .observeOn(AndroidSchedulers.mainThread())
@@ -422,8 +416,7 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        animationView.setAnimation(R.raw.fail_anim);
-                                        animationView.playAnimation();
+                                        EfectsUtils.setAnimationsDialog("fail",animationView);
                                         Completable.timer(5, TimeUnit.SECONDS)
                                                 .subscribeOn(Schedulers.io())
                                                 .observeOn(AndroidSchedulers.mainThread())

@@ -367,42 +367,49 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <TextView
+    <Button
         android:id="@+id/tv_registerToLoginButton"
+        style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="180dp"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/button_backgground"
-        android:foreground="@drawable/twotone_bubble_chart_24"
-        android:foregroundGravity="left|center"
-        android:foregroundTint="#FFFFFF"
+        android:backgroundTint="#B39DDB"
         android:gravity="center"
         android:onClick="handlerGoToRegister"
         android:text="@string/login"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold"
+        app:icon="@drawable/twotone_nights_stay_24"
+        app:iconGravity="start"
+        app:iconTint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="#FFFFFF"
+        app:strokeWidth="3dp" />
 
-    <TextView
+    <Button
         android:id="@+id/tv_registerButton"
+        style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="180dp"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/button_backgground"
-        android:foreground="@drawable/twotone_auto_awesome_24"
-        android:foregroundGravity="left|center"
-        android:foregroundTint="#FFFFFF"
+        android:backgroundTint="#9FA8DA"
+        android:backgroundTintMode="add"
         android:gravity="center"
         android:onClick="addDataToFirestore"
         android:text="@string/register"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold"
+        app:icon="@drawable/twotone_auto_awesome_24"
+        app:iconGravity="start"
+        app:iconTint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardview_register" />
+        app:layout_constraintTop_toBottomOf="@+id/cardview_register"
+        app:strokeColor="#FFFFFF"
+        app:strokeWidth="3dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

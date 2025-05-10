@@ -2,14 +2,12 @@ package com.example.buuktu;
 
 import static android.widget.Toast.LENGTH_LONG;
 
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -258,24 +256,27 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
 
 
         getProfilePhoto();
-        ib_back.setOnClickListener(this);
+        setListeners();
         return view;
     }
+    private void setListeners(){
+        ib_back.setOnClickListener(this);
+    }
     private void initComponents(View view){
-        ib_worldkieView = view.findViewById(R.id.ib_worldkieView);
-        tv_locked_worldkie = view.findViewById(R.id.tv_locked_worldkie);
-        iv_locked_worldkie = view.findViewById(R.id.iv_locked_worldkie);
-        tv_nameWorldkieView = view.findViewById(R.id.tv_nameWorldkieView);
-        tv_nameUserWorldkieView = view.findViewById(R.id.tv_nameUserWorldkieView);
-        tv_usernameWorldkieView = view.findViewById(R.id.tv_usernameWorldkieView);
-        tv_creationDateWorldkieView = view.findViewById(R.id.tv_creationDateWorldkieView);
+        ib_worldkieView = view.findViewById(R.id.ib_characterkieView);
+        tv_locked_worldkie = view.findViewById(R.id.tv_locked_characterkie);
+        iv_locked_worldkie = view.findViewById(R.id.iv_locked_characterkie);
+        tv_nameWorldkieView = view.findViewById(R.id.tv_nameCharacterkieView);
+        tv_nameUserWorldkieView = view.findViewById(R.id.tv_nameUserCharacterkieView);
+        tv_usernameWorldkieView = view.findViewById(R.id.tv_usernameCharacterkieView);
+        tv_creationDateWorldkieView = view.findViewById(R.id.tv_nameWorldkieViewCharacterkie);
         tv_lastUpdateWorldkieView = view.findViewById(R.id.tv_lastUpdateWorldkieView);
         cv_characterkiesPreviewWorldkie = view.findViewById(R.id.cv_characterkiesPreviewWorldkie);
         cv_stuffkiesPreviewWorldkie = view.findViewById(R.id.cv_stuffkiesPreviewWorldkie);
         rc_characterkiesPrevieWorldkie = view.findViewById(R.id.rc_characterkiesPrevieWorldkie);
         rc_stuffkiesPreviewWorldkie = view.findViewById(R.id.rc_stuffkiesPreviewWorldkie);
         tv_stuffkiesPreviewWorldkie = view.findViewById(R.id.tv_stuffkiesPreviewWorldkie);
-        tv_characterkiesPreviewWorldkie = view.findViewById(R.id.tv_characterkiesPreviewWorldkie);
+        tv_characterkiesPreviewWorldkie = view.findViewById(R.id.tv_birthdayViewCharacterkie);
         mainActivity = (MainActivity)getActivity();
         ib_save = mainActivity.getIb_save();
         ib_back = mainActivity.getBackButton();
@@ -355,7 +356,7 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         if(v.getId()==R.id.ib_back){
             NavigationUtils.goBack(fragmentManager,mainActivity);
-        } else if (v.getId() == R.id.ib_worldkieView) {
+        } else if (v.getId() == R.id.ib_characterkieView) {
             InfoFutureFunctionDialog infoFutureFunctionDialog = new InfoFutureFunctionDialog(mainActivity);
             infoFutureFunctionDialog.show();
         }

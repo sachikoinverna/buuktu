@@ -4,28 +4,28 @@
     <item
         android:id="@+id/home"
         android:icon="@drawable/twotone_houseboat_24"
-        android:title="Home" />
+        android:title="@string/home" />
 
     <item
         android:id="@+id/search"
         android:icon="@drawable/twotone_explore_24"
-        android:title="Search" />
+        android:title="@string/search" />
 
     <item
         android:id="@+id/inspo"
         android:enabled="true"
         android:icon="@drawable/twotone_bubble_chart_24"
-        android:title="Inspo"
+        android:title="@string/inspo"
         android:visible="true" />
 
     <item
         android:id="@+id/notifications"
         android:icon="@drawable/twotone_notifications_24"
-        android:title="Notikies" />
+        android:title="@string/notikies" />
 
     <item
         android:id="@+id/messages"
         android:icon="@drawable/twotone_message_24"
-        android:title="Mensajes" />
+        android:title="@string/messages" />
 
 </menu>

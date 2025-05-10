@@ -48,6 +48,25 @@ public class CheckUtil {
         CheckUtil.setErrorMessage(null, textInputLayout);
         return true;
     }
+    public static boolean handlerCheckNewIsTheSameAsOld(Context context,TextInputEditText textInputEditTextNew,TextInputEditText textInputEditTextOld,TextInputLayout textInputLayoutNew) {
+        String textNew = textInputEditTextNew.getText().toString();
+        String textOld = textInputEditTextOld.getText().toString();
+        if (!textNew.equals(textOld)) {
+            CheckUtil.setErrorMessage(context.getString(R.string.passwordErrorRepeat), textInputLayoutNew);
+            return false;
+        }
+        CheckUtil.setErrorMessage(null, textInputLayoutNew);
+        return true;
+    }
+    public static boolean handlerCheckNewIsTheSameAsOld(Context context,TextInputEditText textInputEditTextNew,String old,TextInputLayout textInputLayoutNew) {
+        String textNew = textInputEditTextNew.getText().toString();
+        if (!textNew.equals(old)) {
+            CheckUtil.setErrorMessage(context.getString(R.string.passwordErrorRepeat), textInputLayoutNew);
+            return false;
+        }
+        CheckUtil.setErrorMessage(null, textInputLayoutNew);
+        return true;
+    }
     public static boolean handlerCheckUser(Context context,TextInputEditText textInputEditText,TextInputLayout textInputLayout) {
         String text = textInputEditText.getText().toString();
         if (CheckUtil.checkTextEmpty(text)) {

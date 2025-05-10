@@ -64,7 +64,6 @@ public class Characterkie {
         characterkie.setPronouns(document.getString("pronouns"));
         return characterkie;
     }
-
     public String getBirthday_format() {
         return birthday_format;
     }

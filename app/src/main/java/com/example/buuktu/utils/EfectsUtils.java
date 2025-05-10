@@ -12,9 +12,11 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.example.buuktu.R;
 
 public class EfectsUtils {
     public static void startCircularReveal(Drawable finalDrawable, ImageButton imageButton) {
@@ -93,6 +95,22 @@ public class EfectsUtils {
                         // opcional: limpiar si quieres
                     }
                 });
+    }
+    public static void setAnimationsDialog(String phase, LottieAnimationView lottieAnimationView){
+        switch (phase){
+            case "start":
+                lottieAnimationView.setAnimation(R.raw.reading_anim);
+                lottieAnimationView.playAnimation();
+                break;
+            case "success":
+                lottieAnimationView.setAnimation(R.raw.success_anim);
+                lottieAnimationView.playAnimation();
+                break;
+            case "fail":
+                lottieAnimationView.setAnimation(R.raw.fail_anim);
+                lottieAnimationView.playAnimation();
+                break;
+        }
     }
 
 }

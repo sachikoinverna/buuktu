@@ -1,53 +1,76 @@
 package com.example.buuktu;
 
+import static android.widget.Toast.LENGTH_LONG;
+
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.buuktu.adapters.CharacterkiesUserPreviewAdapter;
+import com.example.buuktu.adapters.StuffkiesUserPreviewAdapter;
+import com.example.buuktu.dialogs.InfoFutureFunctionDialog;
+import com.example.buuktu.models.Characterkie;
+import com.example.buuktu.models.StuffkieModel;
+import com.example.buuktu.models.UserkieModel;
+import com.example.buuktu.models.WorldkieModel;
+import com.example.buuktu.utils.DrawableUtils;
+import com.example.buuktu.utils.NavigationUtils;
+import com.example.buuktu.views.MainActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link CharacterkieView#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CharacterkieView extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-
+public class CharacterkieView extends Fragment implements View.OnClickListener {
+    TextView tv_birthdayViewCharacterkie,tv_pronounsViewCharacterkie,tv_genderViewCharacterkie,tv_nameCharacterkieView,tv_nameUserCharacterkieView,tv_usernameCharacterkieView,tv_nameWorldkieViewCharacterkie,tv_locked_characterkie;
+    FirebaseFirestore db;
+    ImageButton ib_worldkieView,ib_back,ib_save,ib_characterkieView;
+    ImageView iv_locked_characterkie;
+    FirebaseAuth firebaseAuth;
+    String UID,UID_AUTHOR,UID_WORLDKIE,lastPhotoId="",mode;
+    UserkieModel userkieModel;
+    FragmentManager fragmentManager;
+    CollectionReference collectionUserkies,collectionWorldkies,collectionStuffkies,collectionCharacterkies;
+    WorldkieModel worldkieModel;
+    MainActivity mainActivity;
     public CharacterkieView() {
         // Required empty public constructor
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CharacterkieView.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CharacterkieView newInstance(String param1, String param2) {
-        CharacterkieView fragment = new CharacterkieView();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public static CharacterkieView newInstance() {
+        return new CharacterkieView();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            mode = getArguments().getString("mode");
+            UID = getArguments().getString("UID");
+            UID_WORLDKIE = getArguments().getString("UID_WORLDKIE");
         }
     }
 
@@ -56,6 +79,152 @@ public class CharacterkieView extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_characterkie_view, container, false);
+        initComponents(view);
+        setVisibility();
+        switch (mode)
+        {
+            case "self":
+                firebaseAuth = FirebaseAuth.getInstance();
+                ib_worldkieView.setOnClickListener(this);
+                break;
+        }
+        ib_worldkieView.setVisibility(mode.equals("self")?View.VISIBLE:View.INVISIBLE);
+        ib_back.setVisibility(mode.equals("self")?View.GONE:View.VISIBLE);
+        UID_AUTHOR = mode.equals("other")?getArguments().getString("UID_AUTHOR"):firebaseAuth.getUid();
+        setVar();
+        getProfilePhoto();
+
+
+        collectionWorldkies.document(UID).addSnapshotListener((documentSnapshot, e) -> {
+            if (e != null) {
+                Log.e("Error", e.getMessage());
+                Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
+                return;
+            }
+
+            if (documentSnapshot != null) {
+                worldkieModel = WorldkieModel.fromSnapshot(documentSnapshot);
+                tv_nameWorldkieViewCharacterkie.setText(worldkieModel.getName());
+            }
+        });
+        collectionUserkies.document(UID_AUTHOR).addSnapshotListener((document, exx) -> {
+                    if (exx != null) {
+                        Log.e("Error", exx.getMessage());
+                        Toast.makeText(getContext(), "Error al escuchar cambios: " + exx.getMessage(), LENGTH_LONG).show();
+                        return;
+                    }
+
+                    if (document != null) {
+                        UserkieModel userkieModel = UserkieModel.fromSnapshot(document);
+                        tv_nameUserCharacterkieView.setText(userkieModel.getName());
+                        tv_usernameCharacterkieView.setText(userkieModel.getUsername());
+                        if ((!worldkieModel.isWorldkie_private() && mode.equals("other") && !userkieModel.isProfile_private()) || (worldkieModel.isWorldkie_private() && mode.equals("self"))) {
+                            collectionCharacterkies.document(UID).addSnapshotListener((documentSnapshot, ex) -> {
+                                if (ex != null) {
+                                    Log.e("Error", ex.getMessage());
+                                    Toast.makeText(getContext(), "Error al escuchar cambios: " + ex.getMessage(), LENGTH_LONG).show();
+                                    return;
+                                }
+
+                                if (documentSnapshot != null) {
+
+                                    Characterkie characterkieModel = new Characterkie(
+                                            documentSnapshot.getId(),
+                                            documentSnapshot.getString("name")
+                                    );
+                                }
+                            });
+                        }
+                    }
+                    ;
+                });
+
+        setListeners();
+        getProfilePhoto();
         return view;
+    }
+    private void setListeners(){
+        ib_back.setOnClickListener(this);
+    }
+    private void initComponents(View view){
+        tv_birthdayViewCharacterkie = view.findViewById(R.id.tv_birthdayViewCharacterkie);
+        tv_genderViewCharacterkie = view.findViewById(R.id.tv_genderViewCharacterkie);
+        tv_pronounsViewCharacterkie = view.findViewById(R.id.tv_pronounsViewCharacterkie);
+        ib_characterkieView = view.findViewById(R.id.ib_characterkieView);
+        tv_nameCharacterkieView = view.findViewById(R.id.tv_nameCharacterkieView);
+        tv_nameUserCharacterkieView = view.findViewById(R.id.tv_nameUserCharacterkieView);
+        tv_usernameCharacterkieView = view.findViewById(R.id.tv_usernameCharacterkieView);
+        tv_nameWorldkieViewCharacterkie = view.findViewById(R.id.tv_nameWorldkieViewCharacterkie);
+        mainActivity = (MainActivity)getActivity();
+        ib_save = mainActivity.getIb_save();
+        ib_back = mainActivity.getBackButton();
+        fragmentManager = mainActivity.getSupportFragmentManager();
+    }
+private void setVisibility(){
+    ib_save.setVisibility(View.GONE);
+    ib_back.setVisibility(View.VISIBLE);
+}
+private void setVar(){
+    db = FirebaseFirestore.getInstance();
+    collectionWorldkies = db.collection("Worldkies");
+    collectionUserkies = db.collection("Users");
+    collectionCharacterkies = db.collection("Characterkies");
+}
+private void getProfilePhoto() {
+    /*if (Characterkie.isPhoto_default()) {
+               /* FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+                firebaseFirestore.collection("Worldkies").document(UID).addSnapshotListener((queryDocumentSnapshot, e) -> {
+                       /* if (e != null) {
+                            Log.e("Error", e.getMessage());
+                            Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
+                            return;
+                        }*/
+      /*  String id_photo = worldkieModel.getId_photo();*/
+      /*  int resId = mainActivity.getResources().getIdentifier(id_photo, "mipmap", mainActivity.getPackageName());
+
+        if (resId != 0 && (!lastPhotoId.equals(id_photo))) {
+            Drawable drawable = ContextCompat.getDrawable(mainActivity, resId);
+            ib_worldkieView.setImageDrawable(drawable);
+            try {
+                DrawableUtils.personalizarImagenCuadradoButton(mainActivity, 115 / 6, 7, R.color.brownMaroon, drawable, ib_worldkieView);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            lastPhotoId = id_photo;
+        }*/
+   // }//);
+    //}
+  /*  else {
+        StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-worldkies").getReference(UID);
+
+        userFolderRef.listAll().addOnSuccessListener(listResult -> {
+            for (StorageReference item : listResult.getItems()) {
+                if (item.getName().startsWith("cover")) {
+                    item.getDownloadUrl().addOnSuccessListener(uri -> {
+                        // try {
+                        DrawableUtils.personalizarImagenCuadradoButton(mainActivity, 115 / 7, 7, R.color.greenWhatever, uri, ib_worldkieView);
+                        //} catch (IOException e) {
+                        //    throw new RuntimeException(e);
+                        // }
+                    });
+                }
+            }
+            ;
+        });*/
+/*.addOnFailureListener(e -> {
+                    Toast.makeText(this, "Error al buscar imagen", Toast.LENGTH_SHORT).show();
+                    Log.e("Storage", "Error listando archivos: " + e.getMessage());
+                })*/
+        ;
+
+
+        // }
+        //}
+    }
+    @Override
+    public void onClick(View v) {
+        if(v.getId()==R.id.ib_back){
+            NavigationUtils.goBack(fragmentManager,mainActivity);
+        }
     }
 }

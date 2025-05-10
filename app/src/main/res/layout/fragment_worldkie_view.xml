@@ -33,7 +33,7 @@
                 android:layout_height="match_parent">
 
                 <ImageButton
-                    android:id="@+id/ib_worldkieView"
+                    android:id="@+id/ib_characterkieView"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_marginTop="8dp"
@@ -44,7 +44,7 @@
                     app:srcCompat="@mipmap/photoworldkieone" />
 
                 <TextView
-                    android:id="@+id/tv_nameUserWorldkieView"
+                    android:id="@+id/tv_nameUserCharacterkieView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -54,10 +54,10 @@
                     android:textColor="#FFFFFF"
                     app:layout_constraintEnd_toStartOf="@+id/tv_at"
                     app:layout_constraintStart_toEndOf="@+id/textView21"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_nameWorldkieView" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_nameCharacterkieView" />
 
                 <TextView
-                    android:id="@+id/tv_nameWorldkieView"
+                    android:id="@+id/tv_nameCharacterkieView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -69,7 +69,7 @@
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ib_worldkieView" />
+                    app:layout_constraintTop_toBottomOf="@+id/ib_characterkieView" />
 
                 <TextView
                     android:id="@+id/tv_at"
@@ -79,11 +79,11 @@
                     android:layout_marginTop="8dp"
                     android:text="@string/at_symbol"
                     android:textColor="#FFFFFF"
-                    app:layout_constraintStart_toEndOf="@+id/tv_nameUserWorldkieView"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_nameWorldkieView" />
+                    app:layout_constraintStart_toEndOf="@+id/tv_nameUserCharacterkieView"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_nameCharacterkieView" />
 
                 <TextView
-                    android:id="@+id/tv_usernameWorldkieView"
+                    android:id="@+id/tv_usernameCharacterkieView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -91,7 +91,7 @@
                     android:text="Nombre de usuario"
                     android:textColor="#FFFFFF"
                     app:layout_constraintStart_toEndOf="@+id/tv_at"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_nameWorldkieView" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_nameCharacterkieView" />
 
                 <TextView
                     android:id="@+id/textView4"
@@ -102,10 +102,10 @@
                     android:text="Creacion"
                     android:textColor="#FFFFFF"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_usernameWorldkieView" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_usernameCharacterkieView" />
 
                 <TextView
-                    android:id="@+id/tv_creationDateWorldkieView"
+                    android:id="@+id/tv_nameWorldkieViewCharacterkie"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -113,7 +113,7 @@
                     android:text="TextView"
                     android:textColor="#FFFFFF"
                     app:layout_constraintStart_toEndOf="@+id/textView4"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_usernameWorldkieView" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_usernameCharacterkieView" />
 
                 <TextView
                     android:id="@+id/textView11"
@@ -137,7 +137,7 @@
                     android:text="TextView"
                     android:textColor="#FFFFFF"
                     app:layout_constraintStart_toEndOf="@+id/textView11"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_creationDateWorldkieView" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_nameWorldkieViewCharacterkie" />
 
                 <TextView
                     android:id="@+id/textView21"
@@ -148,9 +148,9 @@
                     android:layout_marginEnd="8dp"
                     android:text="Creador:"
                     android:textColor="#FFFFFF"
-                    app:layout_constraintEnd_toStartOf="@+id/tv_nameUserWorldkieView"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_nameUserCharacterkieView"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_nameWorldkieView" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_nameCharacterkieView" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
@@ -190,7 +190,7 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/iv_locked_worldkie"
+                        android:id="@+id/iv_locked_characterkie"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_marginTop="8dp"
@@ -201,7 +201,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/tv_locked_worldkie"
+                        android:id="@+id/tv_locked_characterkie"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -211,10 +211,10 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/iv_locked_worldkie" />
+                        app:layout_constraintTop_toBottomOf="@+id/iv_locked_characterkie" />
 
                     <TextView
-                        android:id="@+id/tv_characterkiesPreviewWorldkie"
+                        android:id="@+id/tv_birthdayViewCharacterkie"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -234,7 +234,7 @@
                         android:layout_marginEnd="8dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_characterkiesPreviewWorldkie">
+                        app:layout_constraintTop_toBottomOf="@+id/tv_birthdayViewCharacterkie">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="wrap_content"
@@ -248,7 +248,7 @@
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/tv_characterkiesPreviewWorldkie" />
+                                app:layout_constraintTop_toBottomOf="@+id/tv_birthdayViewCharacterkie" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </com.google.android.material.card.MaterialCardView>

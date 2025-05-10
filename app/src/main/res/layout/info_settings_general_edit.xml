@@ -25,11 +25,11 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/tv_title_notikies"
+                android:id="@+id/tv_lvl_namesdgsdfds"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/notikie"
+                android:text="Inspo"
                 android:textColor="@color/black"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -38,29 +38,29 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/iv_photo_notikie"
+                android:id="@+id/imageView4dsgasf"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_title_notikies"
-                app:srcCompat="@mipmap/img_info_challenges" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_lvl_namesdgsdfds"
+                app:srcCompat="@mipmap/img_info_profile_edit" />
 
             <TextView
-                android:id="@+id/tv_lvl_text_notikie"
+                android:id="@+id/textView46sdgasf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@string/challenges_subtitle"
+                android:text="@string/profile_self_subtitle"
                 android:textSize="20sp"
                 android:textStyle="italic"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_photo_notikie" />
+                app:layout_constraintTop_toBottomOf="@+id/imageView4dsgasf" />
 
             <ImageButton
-                android:id="@+id/ib_close_dialog"
+                android:id="@+id/ib_close_dialogsdfsaf"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="8dp"
@@ -70,22 +70,22 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView6"
+                app:layout_constraintTop_toBottomOf="@+id/textView10"
                 app:srcCompat="@drawable/twotone_cancel_24" />
 
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/textView10"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:text="@string/challenges_description"
+                android:text="@string/profile_self_description"
                 android:textAlignment="center"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_lvl_text_notikie" />
+                app:layout_constraintTop_toBottomOf="@+id/textView46sdgasf" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>

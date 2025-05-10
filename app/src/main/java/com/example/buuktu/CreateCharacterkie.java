@@ -35,6 +35,7 @@ import com.example.buuktu.bottomsheet.BottomSheetChooseState;
 import com.example.buuktu.bottomsheet.BottomSheetProfilePhoto;
 import com.example.buuktu.dialogs.CreateEditGeneralDialog;
 import com.example.buuktu.models.Characterkie;
+import com.example.buuktu.utils.CheckUtil;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.EfectsUtils;
 import com.example.buuktu.utils.NavigationUtils;
@@ -42,6 +43,7 @@ import com.example.buuktu.utils.RoundedBorderSquareTransformation;
 import com.example.buuktu.views.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.textfield.TextInputEditText;
@@ -56,6 +58,8 @@ import com.google.firebase.storage.StorageReference;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -81,7 +85,7 @@ ImageButton bt_basic_info_characterkies;
     BottomSheetChooseState bottomSheetChooseState;
     Switch tb_characterkiePrivacity,tb_characterkieDraft;
     FirebaseFirestore db;
-    CollectionReference characterkieCollection,fieldkiesRef;
+    CollectionReference characterkieCollection;
     DocumentReference characterRef;
     TextInputEditText textInputEditText,et_nameCharacterkieCreate;
     FirebaseAuth firebaseAuth;
@@ -98,6 +102,7 @@ ImageButton bt_basic_info_characterkies;
     Resources res;
     String packageName;
     MainActivity mainActivity;
+    LottieAnimationView animationView;
     public CreateCharacterkie() {
         // Required empty public constructor
     }
@@ -135,6 +140,7 @@ ImageButton bt_basic_info_characterkies;
         firebaseAuth = FirebaseAuth.getInstance();
         UID = firebaseAuth.getUid();
         db = FirebaseFirestore.getInstance();
+        characterkieCollection =db.collection("Characterkies");
         fragmentManager = mainActivity.getSupportFragmentManager();
         bottomSheetProfilePhoto = new BottomSheetProfilePhoto();
         initComponents(view);
@@ -142,6 +148,7 @@ ImageButton bt_basic_info_characterkies;
         res = mainActivity.getResources();
         packageName = mainActivity.getPackageName();
         dialog = new CreateEditGeneralDialog(mainActivity);
+        animationView = dialog.findViewById(R.id.anim_create_edit);
 
         //fieldsNotAdded.add(new FieldItem("EditText","Characterky","Texto",R.drawable.sharp_emoji_nature_24));
         if(characterkie_id == null){
@@ -318,7 +325,12 @@ ImageButton bt_basic_info_characterkies;
         optionPronounsString = getOptionTextByRadioButtonId(optionPronouns,R.layout.choose_pronouns_dialog);
         optionGenderString = getOptionTextByRadioButtonId(optionGender,R.layout.choose_gender_dialog);
         optionStatusString = getOptionTextByRadioButtonId(optionStatus,R.layout.choose_status_dialog);
-       // characterkie.setGender();
+        optionBirthdayString = getOptionTextByRadioButtonId(optionBirthday,R.layout.choose_status_dialog);
+        bt_pronouns_characterkie.setText(optionPronounsString);
+        bt_gender_characterkie.setText(optionGenderString);
+        bt_state_characterkie.setText(optionStatusString);
+        bt_birthday_characterkie.setText(optionBirthdayString);
+        // characterkie.setGender();
 
         ib_select_img_create_characterkie.setTag(DrawableUtils.getMipmapName(mainActivity,R.mipmap.photoworldkieone));
 
@@ -374,9 +386,6 @@ ImageButton bt_basic_info_characterkies;
         tv_basic_info_characterkies = view.findViewById(R.id.tv_basic_info_characterkies);
         bt_basic_info_characterkies = view.findViewById(R.id.bt_basic_info_characterkies);
         showHideBasicInfo();
-
-        characterkieCollection = db.collection("Characterkies");
-        fieldkiesRef = db.collection("Fieldkies");
         initVisibility();
     }
     private String getOptionTextByRadioButtonId(int id, int idLayout){
@@ -483,17 +492,14 @@ ImageButton bt_basic_info_characterkies;
     }
 
     private void addDataToFirestore(){
-        String name = et_nameCharacterkieCreate.getText().toString();
-        if(!name.equals("")){
+        if(CheckUtil.handlerCheckName(mainActivity,et_nameCharacterkieCreate,et_nameCharacterkieCreateFull)){
             dialog.show();
-            LottieAnimationView animationView = dialog.findViewById(R.id.anim_create_edit);
-            animationView.setAnimation(R.raw.reading_anim);
-            animationView.playAnimation();
+            EfectsUtils.setAnimationsDialog("start",animationView);
             Completable.timer(3, TimeUnit.SECONDS)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(() -> {
-                                Task<DocumentReference> addTask = db.collection("Characterkies").add(characterkie);
+                                Task<DocumentReference> addTask = characterkieCollection.add(characterkie);
 
                                 addTask.addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                                     @Override
@@ -505,8 +511,7 @@ ImageButton bt_basic_info_characterkies;
                                                 userRef.child("profile" + DrawableUtils.getExtensionFromUri(getContext(), image)).putFile(image);
 
                                             }
-                                            animationView.setAnimation(R.raw.success_anim);
-                                            animationView.playAnimation();
+                                            EfectsUtils.setAnimationsDialog("success",animationView);
                                             Completable.timer(2, TimeUnit.SECONDS)
                                                     .subscribeOn(Schedulers.io())
                                                     .observeOn(AndroidSchedulers.mainThread())
@@ -520,13 +525,11 @@ ImageButton bt_basic_info_characterkies;
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        animationView.setAnimation(R.raw.fail_anim);
-                                        animationView.playAnimation();
+                                        EfectsUtils.setAnimationsDialog("fail",animationView);
                                         Completable.timer(3, TimeUnit.SECONDS)
                                                 .subscribeOn(Schedulers.io())
                                                 .observeOn(AndroidSchedulers.mainThread())
                                                 .subscribe(() -> {
-                                                    animationView.setVisibility(View.GONE);
                                                     dialog.dismiss();
                                                 });
                                     }
@@ -560,42 +563,38 @@ ImageButton bt_basic_info_characterkies;
         this.month = month;
     }
 
-    private void editDataFirestore(){
-       /* if(!et_nameWorldkieCreate.getText().toString().equals("")) {
+ /*   private void editDataFirestore(){
+        if(CheckUtil.handlerCheckName(mainActivity,et_nameCharacterkieCreate,et_nameCharacterkieCreateFull)) {
             dialog.show();
-            LottieAnimationView animationView = dialog.findViewById(R.id.anim_create_edit);
-            animationView.setAnimation(R.raw.reading_anim);
-            animationView.playAnimation();
+            EfectsUtils.setAnimationsDialog("start",animationView);
+
             Completable.timer(3, TimeUnit.SECONDS)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(() -> {
-                                getValues();
-                                CollectionReference dbWorldkies = db.collection("Worldkies");
-                                Date last_update = new Date();
                                 Map<String, Object> worldkieData = new HashMap<>();
-                                if (!name.equals(worldkieModel.getName())) {
+                                if (!name.equals(characterkie.getName())) {
                                     worldkieData.put("name", name);
                                 }
-                                worldkieData.put("last_update", last_update);
-                                //boolean isDefaultImage = (boolean) createWorldkie.getIB_profile_photo().getTag(R.drawable.worldkie_default);
+\                                //boolean isDefaultImage = (boolean) createWorldkie.getIB_profile_photo().getTag(R.drawable.worldkie_default);
                                 if (source.equals("app") && !ib_select_img_create_worldkie.getTag().toString().equals(worldkieModel.getId_photo())) {
                                     worldkieData.put("id_photo", ib_select_img_create_worldkie.getTag().toString());
                                 }
-                                if (worldkieModel.isPhoto_default() && source.equals("device")) {
+                                if (characterkie.isPhoto_default() && source.equals("device")) {
                                     worldkieData.put("photo_default", false);
 
-                                } else if (!worldkieModel.isPhoto_default() && source.equals("app")) {
+                                } else if (!characterkie.isPhoto_default() && source.equals("app")) {
                                     worldkieData.put("photo_default", true);
 
                                 }
-                                if (worldkieModel.isWorldkie_private() != tb_worldkiePrivacity.isChecked()) {
-                                    worldkieData.put("worldkie_private", tb_worldkiePrivacity.isChecked());
+                                if (characterkie.isWorldkie_private() != tb_worldkiePrivacity.isChecked()) {
                                 }
+                                worldkieData.put("worldkie_private", charac);
+
                                 if (worldkieModel.isDraft() != tb_worldkieDraft.isChecked()) {
                                     worldkieData.put("draft", tb_worldkieDraft.isChecked());
                                 }
-                                dbWorldkies.document(worldkie_id).update(worldkieData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                characterkieCollection.document(userkie_id).update(worldkieData).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {
                                         if (source.equals("device")) {
@@ -603,23 +602,21 @@ ImageButton bt_basic_info_characterkies;
                                             userRef.child("profile" + DrawableUtils.getExtensionFromUri(getContext(), image)).putFile(image);
 
                                         }
-                                        animationView.setAnimation(R.raw.success_anim);
-                                        animationView.playAnimation();
+                                        EfectsUtils.setAnimationsDialog("success",animationView);
+
                                         Completable.timer(3, TimeUnit.SECONDS)
                                                 .subscribeOn(Schedulers.io())
                                                 .observeOn(AndroidSchedulers.mainThread())
                                                 .subscribe(() -> {
-                                                    animationView.setVisibility(View.GONE);
                                                     dialog.dismiss();
-                                                    NavigationUtils.goBack(fragmentManager, activity);
+                                                    NavigationUtils.goBack(fragmentManager,mainActivity);
                                                 });
 
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        animationView.setAnimation(R.raw.fail_anim);
-                                        animationView.playAnimation();
+                                        EfectsUtils.setAnimationsDialog("fail",animationView);
                                         Completable.timer(5, TimeUnit.SECONDS)
                                                 .subscribeOn(Schedulers.io())
                                                 .observeOn(AndroidSchedulers.mainThread())
@@ -631,8 +628,8 @@ ImageButton bt_basic_info_characterkies;
                                 });
                             }
                     );
-        }*/
-    }
+        }
+    }*/
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.ib_back){
@@ -641,7 +638,7 @@ ImageButton bt_basic_info_characterkies;
             if(worldkie_id == null){
                     addDataToFirestore();
                 }else{
-                    editDataFirestore();
+                    //editDataFirestore();
                 }
         } else if (v.getId()==R.id.ib_select_img_create_characterkie) {
             selectImage();
