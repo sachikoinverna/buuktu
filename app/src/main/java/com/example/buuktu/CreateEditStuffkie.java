@@ -258,21 +258,12 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
 
                                         }
                                         EfectsUtils.setAnimationsDialog("success",animationView);
-                                        Completable.timer(2, TimeUnit.SECONDS)
-                                                .subscribeOn(Schedulers.io())
-                                                .observeOn(AndroidSchedulers.mainThread())
-                                                .subscribe(() -> {
-                                                    dialog.dismiss();
-                                                    NavigationUtils.goBack(fragmentManager, mainActivity);
-                                                });
+                                        delayedDismiss();
 
                                     }
                                 }).addOnFailureListener(e -> {
                                     EfectsUtils.setAnimationsDialog("fail",animationView);
-                                    Completable.timer(3, TimeUnit.SECONDS)
-                                            .subscribeOn(Schedulers.io())
-                                            .observeOn(AndroidSchedulers.mainThread())
-                                            .subscribe(() -> dialog.dismiss());
+                                    delayedDismiss();
                                 });
                             }
                     );
@@ -354,6 +345,14 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
             // Iniciar la animación
             circularReveal.start();
         }
+    }
+    private void delayedDismiss() {
+        Completable.timer(3, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> {
+                    dialog.dismiss();
+                });
     }
     @Override
     public void onClick(View v) {

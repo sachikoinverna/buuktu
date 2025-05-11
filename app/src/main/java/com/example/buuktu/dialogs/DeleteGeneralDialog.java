@@ -12,7 +12,9 @@ import androidx.annotation.NonNull;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.buuktu.R;
+import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.utils.EfectsUtils;
+import com.example.buuktu.views.MainActivity;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -34,7 +36,7 @@ public class DeleteGeneralDialog extends Dialog implements View.OnClickListener 
     CollectionReference collectionNotekies,collectionWorldkies;
     LottieAnimationView animationView;
     private FirebaseStorage firebaseStorageWorldkie;
-
+    WorldkieModel worldkieModel;
     public DeleteGeneralDialog(@NonNull Context context, String mode, String UID) {
         super(context);
         this.context = context;
@@ -104,39 +106,38 @@ public class DeleteGeneralDialog extends Dialog implements View.OnClickListener 
         collectionNotekies.document(UID).delete()
                 .addOnSuccessListener(unused -> {
                     EfectsUtils.setAnimationsDialog("success", animationView);
-
-                    Completable.timer(5, TimeUnit.SECONDS)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(this::dismiss);
+                    delayedDismiss();
                 })
                 .addOnFailureListener(e -> {
                     EfectsUtils.setAnimationsDialog("fail", animationView);
-
-                    Completable.timer(5, TimeUnit.SECONDS)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(this::dismiss);
+                    delayedDismiss();
                 });
     }
-    private void deleteWorldkie(){
-            prepareLoading();
-            collectionWorldkies.document(UID).delete().addOnSuccessListener(unused -> firebaseStorageWorldkie.getReference().child(UID).delete().addOnSuccessListener(unused1 -> {
-                EfectsUtils.setAnimationsDialog("success",animationView);
-
-                Completable.timer(5, TimeUnit.SECONDS)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(this::dismiss);
-            }).addOnFailureListener(e -> {
-                EfectsUtils.setAnimationsDialog("fail",animationView);
-
-                Completable.timer(5, TimeUnit.SECONDS)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(this::dismiss);
-            }));
-        }
+    private void deleteWorldkie() {
+        prepareLoading();
+        collectionWorldkies.document(UID).addSnapshotListener((queryDocumentSnapshot, e) -> {
+            if (queryDocumentSnapshot != null) {
+                worldkieModel = WorldkieModel.fromSnapshot(queryDocumentSnapshot);
+                if(worldkieModel.isPhoto_default()){
+                collectionWorldkies.document(UID).delete().addOnSuccessListener(unused ->
+                        firebaseStorageWorldkie.getReference().child(UID).delete().addOnSuccessListener(unused1 -> {
+                            EfectsUtils.setAnimationsDialog("success", animationView);
+                            delayedDismiss();
+                        })
+                ).addOnFailureListener(ex -> {
+                    EfectsUtils.setAnimationsDialog("fail", animationView);
+                    delayedDismiss();
+                });
+                }
+            }
+        });
+    }
+    private void delayedDismiss() {
+        Completable.timer(5, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::dismiss);
+    }
 
     @Override
     public void onClick(View v) {

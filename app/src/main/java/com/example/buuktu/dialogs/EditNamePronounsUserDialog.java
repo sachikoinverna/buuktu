@@ -105,22 +105,20 @@ public class EditNamePronounsUserDialog extends Dialog implements View.OnClickLi
                         documentReference.update(worldkieData).addOnCompleteListener(updateTask -> {
                             if (updateTask.isSuccessful()) {
                                 EfectsUtils.setAnimationsDialog("success",animationViewCreateEdit);
-
-                                Completable.timer(2, TimeUnit.SECONDS)
-                                        .subscribeOn(Schedulers.io())
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe(this::dismiss);
+                                delayedDismiss();
                             } else {
                                 EfectsUtils.setAnimationsDialog("fail",animationViewCreateEdit);
-
-                                Completable.timer(5, TimeUnit.SECONDS)
-                                        .subscribeOn(Schedulers.io())
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe(this::dismiss);
+                                delayedDismiss();
                             }
                         });
                     });
         }
+    }
+    private void delayedDismiss() {
+        Completable.timer(5, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::dismiss);
     }
     private void saveEmail(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -134,16 +132,10 @@ public class EditNamePronounsUserDialog extends Dialog implements View.OnClickLi
                     .subscribe(() -> user.updateEmail(newEmail).addOnCompleteListener(updateTask -> {
                         if (updateTask.isSuccessful()) {
                             EfectsUtils.setAnimationsDialog("success",animationViewCreateEdit);
-                            Completable.timer(2, TimeUnit.SECONDS)
-                                    .subscribeOn(Schedulers.io())
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe(this::dismiss);
+                            delayedDismiss();
                         } else {
                             EfectsUtils.setAnimationsDialog("fail",animationViewCreateEdit);
-                            Completable.timer(2, TimeUnit.SECONDS)
-                                    .subscribeOn(Schedulers.io())
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe(this::dismiss);
+                            delayedDismiss();
                         }
                     })
                     );
@@ -164,17 +156,11 @@ public class EditNamePronounsUserDialog extends Dialog implements View.OnClickLi
                                     if (updateTask.isSuccessful()) {
                                         EfectsUtils.setAnimationsDialog("success",animationViewCreateEdit);
 
-                                        Completable.timer(3, TimeUnit.SECONDS)
-                                                .subscribeOn(Schedulers.io())
-                                                .observeOn(AndroidSchedulers.mainThread())
-                                                .subscribe(this::dismiss);
+                                        delayedDismiss();
                                     } else {
                                         EfectsUtils.setAnimationsDialog("fail",animationViewCreateEdit);
 
-                                        Completable.timer(5, TimeUnit.SECONDS)
-                                                .subscribeOn(Schedulers.io())
-                                                .observeOn(AndroidSchedulers.mainThread())
-                                                .subscribe(this::dismiss);
+                                        delayedDismiss();
                                     }
                                 });
                             }

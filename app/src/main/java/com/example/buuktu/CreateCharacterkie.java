@@ -150,6 +150,7 @@ ImageButton bt_basic_info_characterkies;
             }
         }else{
             characterkieCollection.document(characterkie_id).addSnapshotListener((queryDocumentSnapshot, e) -> {
+
                 if (e != null) {
                     return;
                 }
@@ -501,25 +502,24 @@ ImageButton bt_basic_info_characterkies;
 
                                         }
                                         EfectsUtils.setAnimationsDialog("success",animationView);
-                                        Completable.timer(2, TimeUnit.SECONDS)
-                                                .subscribeOn(Schedulers.io())
-                                                .observeOn(AndroidSchedulers.mainThread())
-                                                .subscribe(() -> {
-                                                    dialog.dismiss();
-                                                    NavigationUtils.goBack(fragmentManager, mainActivity);
-                                                });
+                                        delayedDismiss();
 
                                     }
                                 }).addOnFailureListener(e -> {
                                     EfectsUtils.setAnimationsDialog("fail",animationView);
-                                    Completable.timer(3, TimeUnit.SECONDS)
-                                            .subscribeOn(Schedulers.io())
-                                            .observeOn(AndroidSchedulers.mainThread())
-                                            .subscribe(() -> dialog.dismiss());
+                                    delayedDismiss();
                                 });
                             }
                     );
         }
+    }
+    private void delayedDismiss() {
+        Completable.timer(3, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> {
+                    dialog.dismiss();
+                });
     }
     private void getValues(){
         characterkie.setName(et_nameCharacterkieCreate.getText().toString());
@@ -564,23 +564,11 @@ ImageButton bt_basic_info_characterkies;
                         }
                         EfectsUtils.setAnimationsDialog("success",animationView);
 
-                        Completable.timer(3, TimeUnit.SECONDS)
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(() -> {
-                                    dialog.dismiss();
-                                    NavigationUtils.goBack(fragmentManager,mainActivity);
-                                });
+                        delayedDismiss();
 
                     }).addOnFailureListener(e -> {
                         EfectsUtils.setAnimationsDialog("fail",animationView);
-                        Completable.timer(5, TimeUnit.SECONDS)
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(() -> {
-                                    animationView.setVisibility(View.GONE);
-                                    dialog.dismiss();
-                                });
+                        delayedDismiss();
                     })
                     );
         }

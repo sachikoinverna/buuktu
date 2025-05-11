@@ -240,21 +240,12 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
 
                                         }
                                         EfectsUtils.setAnimationsDialog("success",animationView);
-                                        Completable.timer(2, TimeUnit.SECONDS)
-                                                .subscribeOn(Schedulers.io())
-                                                .observeOn(AndroidSchedulers.mainThread())
-                                                .subscribe(() -> {
-                                                    dialog.dismiss();
-                                                    NavigationUtils.goBack(fragmentManager, mainActivity);
-                                                });
+                                        delayedDismiss();
 
                                     }
                                 }).addOnFailureListener(e -> {
                                     EfectsUtils.setAnimationsDialog("fail",animationView);
-                                    Completable.timer(3, TimeUnit.SECONDS)
-                                            .subscribeOn(Schedulers.io())
-                                            .observeOn(AndroidSchedulers.mainThread())
-                                            .subscribe(() -> dialog.dismiss());
+                                    delayedDismiss();
                                 });
                             }
                     );
@@ -275,28 +266,23 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
                                     userRef.child("profile" + DrawableUtils.getExtensionFromUri(getContext(), image)).putFile(image);
 
                                 }
-                        EfectsUtils.setAnimationsDialog("success",animationView);
-
-                                Completable.timer(3, TimeUnit.SECONDS)
-                                        .subscribeOn(Schedulers.io())
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe(() -> {
-                                            dialog.dismiss();
-                                            NavigationUtils.goBack(fragmentManager,mainActivity);
-                                        });
+                                EfectsUtils.setAnimationsDialog("success",animationView);
+                                delayedDismiss();
 
                             }).addOnFailureListener(e -> {
                                 EfectsUtils.setAnimationsDialog("fail",animationView);
-                                Completable.timer(5, TimeUnit.SECONDS)
-                                        .subscribeOn(Schedulers.io())
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe(() -> {
-                                            animationView.setVisibility(View.GONE);
-                                            dialog.dismiss();
-                                        });
+                                delayedDismiss();
                             })
                     );
         }
+    }
+    private void delayedDismiss() {
+        Completable.timer(3, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> {
+                    dialog.dismiss();
+                });
     }
     @Override
     public void onClick(View v) {

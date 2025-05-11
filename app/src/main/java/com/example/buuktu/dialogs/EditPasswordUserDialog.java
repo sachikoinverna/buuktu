@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.buuktu.R;
 import com.example.buuktu.utils.CheckUtil;
+import com.example.buuktu.utils.EfectsUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthCredential;
@@ -83,8 +84,8 @@ private void saveNewPassword(){
                         // Si la contraseña actual es correcta, cambiamos la contraseña
                         user.updatePassword(newPassword).addOnCompleteListener(updateTask -> {
                             if (updateTask.isSuccessful()) {
-                                animationView.setAnimation(R.raw.success_anim);
-                                animationView.playAnimation();
+                                EfectsUtils.setAnimationsDialog("success",animationView);
+
                                 Completable.timer(5, TimeUnit.SECONDS)
                                         .subscribeOn(Schedulers.io())
                                         .observeOn(AndroidSchedulers.mainThread())
@@ -93,27 +94,13 @@ private void saveNewPassword(){
                                             dismiss();
                                         });
                             } else {
-                                animationView.setAnimation(R.raw.fail_anim);
-                                animationView.playAnimation();
-                                Completable.timer(5, TimeUnit.SECONDS)
-                                        .subscribeOn(Schedulers.io())
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe(() -> {
-                                            animationView.setVisibility(View.GONE);
-                                            dismiss();
-                                        });
+                                EfectsUtils.setAnimationsDialog("fail",animationView);
+
+                                delayedDismiss();
                             }
                         });
                     } else {
-                        animationView.setAnimation(R.raw.fail_anim);
-                        animationView.playAnimation();
-                        Completable.timer(5, TimeUnit.SECONDS)
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(() -> {
-                                    animationView.setVisibility(View.GONE);
-                                    dismiss();
-                                });
+                        EfectsUtils.setAnimationsDialog("fail",animationView);
                         et_oldpasswordFull.setError("Contraseña actual incorrecta");
                     }
                 });
@@ -121,6 +108,12 @@ private void saveNewPassword(){
             }
         }
     }
+    }
+    private void delayedDismiss() {
+        Completable.timer(5, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::dismiss);
     }
     @Override
     public void onClick(View v) {

@@ -132,6 +132,7 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
             }
         }else{
             collectionWorldkie.document(worldkie_id).addSnapshotListener((queryDocumentSnapshot, e) -> {
+
                 if (e != null) {
                     Log.e("Error", e.getMessage());
                     Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
@@ -297,6 +298,14 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
         CheckUtil.setErrorMessage(null, tv_usernameRegister);
         CheckUtil.setErrorMessage(null, tv_telephoneRegister);
     }*/
+  private void delayedDismiss() {
+      Completable.timer(3, TimeUnit.SECONDS)
+              .subscribeOn(Schedulers.io())
+              .observeOn(AndroidSchedulers.mainThread())
+              .subscribe(() -> {
+                  dialog.dismiss();
+              });
+  }
     private void addDataToFirestore() {
         if(CheckUtil.handlerCheckName(mainActivity,et_nameWorldkieCreate,et_nameWorldkieCreateFull)) {
             worldkieModel.setCreation_date(new Timestamp(Instant.now()));
@@ -320,24 +329,12 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
 
                                         }
                                         EfectsUtils.setAnimationsDialog("success",animationView);
-                                        Completable.timer(2, TimeUnit.SECONDS)
-                                                .subscribeOn(Schedulers.io())
-                                                .observeOn(AndroidSchedulers.mainThread())
-                                                .subscribe(() -> {
-                                                    dialog.dismiss();
-                                                    NavigationUtils.goBack(fragmentManager, activity);
-                                                });
+                                        delayedDismiss();
 
                                     }
                                 }).addOnFailureListener(e -> {
                                     EfectsUtils.setAnimationsDialog("fail",animationView);
-                                    Completable.timer(3, TimeUnit.SECONDS)
-                                            .subscribeOn(Schedulers.io())
-                                            .observeOn(AndroidSchedulers.mainThread())
-                                            .subscribe(() -> {
-                                                animationView.setVisibility(View.GONE);
-                                                dialog.dismiss();
-                                            });
+                                    delayedDismiss();
                                 });
                             }
                     );
@@ -388,24 +385,11 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
 
                                     }
                                     EfectsUtils.setAnimationsDialog("success",animationView);
-                                    Completable.timer(3, TimeUnit.SECONDS)
-                                            .subscribeOn(Schedulers.io())
-                                            .observeOn(AndroidSchedulers.mainThread())
-                                            .subscribe(() -> {
-                                                animationView.setVisibility(View.GONE);
-                                                dialog.dismiss();
-                                                NavigationUtils.goBack(fragmentManager, activity);
-                                            });
+                                    delayedDismiss();
 
                                 }).addOnFailureListener(e -> {
                                     EfectsUtils.setAnimationsDialog("fail",animationView);
-                                    Completable.timer(5, TimeUnit.SECONDS)
-                                            .subscribeOn(Schedulers.io())
-                                            .observeOn(AndroidSchedulers.mainThread())
-                                            .subscribe(() -> {
-                                                animationView.setVisibility(View.GONE);
-                                                dialog.dismiss();
-                                            });
+                                    delayedDismiss();
                                 });
                             }
                     );
