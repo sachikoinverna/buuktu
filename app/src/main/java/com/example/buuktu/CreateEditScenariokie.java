@@ -37,7 +37,11 @@ import com.example.buuktu.views.MainActivity;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
@@ -67,6 +71,10 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
     CreateEditGeneralDialog dialog;
     LottieAnimationView animationView;
     ScenariokieModel scenariokieModel;
+    private FirebaseFirestore db;
+    CollectionReference collectionScenariokie;
+    private FirebaseAuth firebaseAuth;
+    private final FirebaseStorage storage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
     public CreateEditScenariokie() {
         // Required empty public constructor
     }
@@ -114,6 +122,8 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
         activity = requireActivity();
         source = "app";
         bottomSheetProfilePhoto = new BottomSheetProfilePhoto();
+        db = FirebaseFirestore.getInstance();
+        collectionScenariokie = db.collection("Scenariokies");
         tb_scenariokieDraft.setVisibility(View.INVISIBLE);
         ib_select_img_create_scenariokie = view.findViewById(R.id.ib_select_img_create_scenariokie);
         setListeners();
