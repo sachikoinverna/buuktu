@@ -114,23 +114,14 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
             holder.getIv_worldkie_preview_worldkie().setVisibility(View.INVISIBLE);
         }
         holder.getCv_worldkie_preview().setOnClickListener(v -> {
-            WorldkieView worldkieView = new WorldkieView();
             Bundle bundle = new Bundle();
             bundle.putString("mode","other");
             bundle.putString("UID",UID);
             bundle.putString("UID_AUTHOR",UID_AUTHOR);
-            NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,worldkieView);
+            NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new WorldkieView());
         });
         if (worldkieModel.isPhoto_default()) {
-            FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-            firebaseFirestore.collection("Worldkies").document(UID).addSnapshotListener((queryDocumentSnapshot, e) -> {
-                       /* if (e != null) {
-                            Log.e("Error", e.getMessage());
-                            Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
-                            return;
-                        }*/
-                //boolean photo_default = queryDocumentSnapshot.getBoolean("photo_default");
-                String id_photo = queryDocumentSnapshot.getString("id_photo");
+             String id_photo = worldkieModel.getId_photo();
                 int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
 
                 if (resId != 0 && (!holder.getLastPhotoId().equals(id_photo))) {
@@ -145,7 +136,6 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
                     holder.getIv_worldkie_preview_worldkie().setVisibility(View.VISIBLE);
                     EfectsUtils.startCircularReveal(drawable,holder.getIv_worldkie_preview_worldkie());
                 }
-            });
         } else {
             StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-worldkies").getReference(UID);
 
