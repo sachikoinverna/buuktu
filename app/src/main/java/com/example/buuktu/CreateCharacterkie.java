@@ -296,7 +296,6 @@ ImageButton bt_basic_info_characterkies;
         tb_characterkiePrivacity.setChecked(false);
         tb_characterkieDraft.setVisibility(View.GONE);
         putDefaultImage();
-        source = "app";
         characterkie = new Characterkie();
 
         characterkie.setUID_AUTHOR(userkie_id);
@@ -316,8 +315,10 @@ ImageButton bt_basic_info_characterkies;
         bt_state_characterkie.setText(optionStatusString);
         bt_birthday_characterkie.setText(optionBirthdayString);
         // characterkie.setGender();
+        characterkie.setPhoto_default(true);
 
         ib_select_img_create_characterkie.setTag(DrawableUtils.getMipmapName(mainActivity,R.mipmap.photoworldkieone));
+        characterkie.setPhoto_id(ib_select_img_create_characterkie.getTag().toString());
 
     }
 
@@ -348,6 +349,8 @@ ImageButton bt_basic_info_characterkies;
 
     public void setOptionGenderString(String optionGenderString) {
         this.optionGenderString = optionGenderString;
+       // optionGender = mainActivity.getResources().getIdentifier("rb" + key, "id", mainActivity.getPackageName());
+
         bt_gender_characterkie.setText(optionGenderString);
     }
 
