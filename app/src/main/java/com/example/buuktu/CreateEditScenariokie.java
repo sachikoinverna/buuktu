@@ -27,15 +27,25 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.buuktu.dialogs.CreateEditGeneralDialog;
 import com.example.buuktu.models.ScenariokieModel;
+import com.example.buuktu.utils.CheckUtil;
+import com.example.buuktu.utils.EfectsUtils;
 import com.example.buuktu.utils.RoundedBorderSquareTransformation;
 import com.example.buuktu.bottomsheet.BottomSheetProfilePhoto;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.NavigationUtils;
 import com.example.buuktu.views.MainActivity;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -201,6 +211,83 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
 
         });
     }
+    private void addDataToFirestore(){
+       /* if(CheckUtil.handlerCheckName(mainActivity,et_nameCharacterkieCreate,et_nameCharacterkieCreateFull)){
+            dialog.show();
+            EfectsUtils.setAnimationsDialog("start",animationView);
+            Completable.timer(3, TimeUnit.SECONDS)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(() -> {
+                                Task<DocumentReference> addTask = characterkieCollection.add(characterkie.toMap());
+
+                                addTask.addOnCompleteListener(task -> {
+                                    if (task.isSuccessful()) {
+
+                                        if (!characterkie.isPhoto_default()) {
+                                            StorageReference userRef = storage.getReference().child(task.getResult().getId());
+                                            userRef.child("profile" + DrawableUtils.getExtensionFromUri(getContext(), image)).putFile(image);
+
+                                        }
+                                        EfectsUtils.setAnimationsDialog("success",animationView);
+                                        Completable.timer(2, TimeUnit.SECONDS)
+                                                .subscribeOn(Schedulers.io())
+                                                .observeOn(AndroidSchedulers.mainThread())
+                                                .subscribe(() -> {
+                                                    dialog.dismiss();
+                                                    NavigationUtils.goBack(fragmentManager, mainActivity);
+                                                });
+
+                                    }
+                                }).addOnFailureListener(e -> {
+                                    EfectsUtils.setAnimationsDialog("fail",animationView);
+                                    Completable.timer(3, TimeUnit.SECONDS)
+                                            .subscribeOn(Schedulers.io())
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .subscribe(() -> dialog.dismiss());
+                                });
+                            }
+                    );
+        }*/
+    }
+
+    private void editDataFirestore(){
+        /*if(CheckUtil.handlerCheckName(mainActivity,et_nameCharacterkieCreate,et_nameCharacterkieCreateFull)) {
+            dialog.show();
+            EfectsUtils.setAnimationsDialog("start",animationView);
+
+            Completable.timer(3, TimeUnit.SECONDS)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(() -> characterkieCollection.document(characterkie_id).update(characterkie.toMap()).addOnSuccessListener(unused -> {
+                                if (!characterkie.isPhoto_default()) {
+                                    StorageReference userRef = storage.getReference().child(worldkie_id);
+                                    userRef.child("profile" + DrawableUtils.getExtensionFromUri(getContext(), image)).putFile(image);
+
+                                }
+                                EfectsUtils.setAnimationsDialog("success",animationView);
+
+                                Completable.timer(3, TimeUnit.SECONDS)
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(() -> {
+                                            dialog.dismiss();
+                                            NavigationUtils.goBack(fragmentManager,mainActivity);
+                                        });
+
+                            }).addOnFailureListener(e -> {
+                                EfectsUtils.setAnimationsDialog("fail",animationView);
+                                Completable.timer(5, TimeUnit.SECONDS)
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(() -> {
+                                            animationView.setVisibility(View.GONE);
+                                            dialog.dismiss();
+                                        });
+                            })
+                    );
+        }*/
+    }
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.ib_select_img_create_scenariokie) {
@@ -210,11 +297,11 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
             NavigationUtils.goBack(fragmentManager,activity);
         } else if (v.getId()==R.id.ib_save) {
 
-                /*if(worldkie_id == null){
+                if(worldkie_id == null){
                     addDataToFirestore();
                 }else{
                     editDataFirestore();
-                }*/
+                }
         }
     }
 }
