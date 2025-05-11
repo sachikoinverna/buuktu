@@ -335,7 +335,6 @@ ImageButton bt_basic_info_characterkies;
     public void setOptionStatusString(String optionStatusString) {
         this.optionStatusString = optionStatusString;
         bt_state_characterkie.setText(optionStatusString);
-        //characterkie.setStatus();
     }
     public void setOptionBirthdayString(String optionBirthdayString) {
         this.optionBirthdayString = optionBirthdayString;
