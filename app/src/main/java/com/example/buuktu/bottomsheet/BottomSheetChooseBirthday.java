@@ -253,13 +253,8 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
     private void updateDaysView() {
         int days = getDaysMonth();
         for (int i = 0; i < 31; i++) {
-            if (i < days && daysOptionVisible) {
-                dayButtons[i].setVisibility(View.VISIBLE);
-                tvDays[i].setVisibility(View.VISIBLE);
-            } else {
-                dayButtons[i].setVisibility(View.GONE);
-                tvDays[i].setVisibility(View.GONE);
-            }
+                dayButtons[i].setVisibility(i < days && daysOptionVisible?View.VISIBLE:View.GONE);
+                tvDays[i].setVisibility(i < days && daysOptionVisible?View.VISIBLE:View.GONE);
         }
         tv_current_month_birthday_selector.setText(meses[month - 1]);
         bt_previous_month_birthday_selector.setVisibility(month == 1 ? View.GONE : View.VISIBLE);
