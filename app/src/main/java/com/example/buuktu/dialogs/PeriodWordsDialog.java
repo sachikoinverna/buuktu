@@ -29,7 +29,7 @@ public class PeriodWordsDialog extends Dialog implements View.OnClickListener{
         setContentView(R.layout.period_words_dialog);
         handler = new Handler();
         initComponents();
-        ib_close_period_word_dialog.setOnClickListener(this);
+        setListeners();
         setCanceledOnTouchOutside(false);
         setCancelable(false);
         getWindow().setBackgroundDrawableResource(android.R.color.transparent);
@@ -51,6 +51,9 @@ public class PeriodWordsDialog extends Dialog implements View.OnClickListener{
         tv_period_word = findViewById(R.id.tv_period_word);
         tv_period_word_title = findViewById(R.id.tv_period_word_title);
         ib_close_period_word_dialog = findViewById(R.id.ib_close_period_word_dialog);
+    }
+    private void setListeners(){
+        ib_close_period_word_dialog.setOnClickListener(this);
     }
     private void updateWordOfTheDay(TextView wordTextView) {
         WordOfTheDay.obtenerPalabraDelDia(palabra -> {

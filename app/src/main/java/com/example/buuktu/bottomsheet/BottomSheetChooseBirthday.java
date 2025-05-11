@@ -49,8 +49,10 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
     String[]meses;
     Drawable arrow_down,arrow_up;
     CreateCharacterkie createCharacterkie;
-    public BottomSheetChooseBirthday(int option) {
+    String optionBirthdayString;
+    public BottomSheetChooseBirthday(int option,String optionBirthdayString) {
         this.option = option;
+        this.optionBirthdayString=optionBirthdayString;
     }
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable
@@ -107,15 +109,7 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
             });
         }
 
-        if(option==R.id.rb_unknown_birthday){
-            month=1;
-            daysMonthsSelectorVisible = false;
-            yearFieldVisible = false;
-        } else if (option==R.id.rb_full_birthday) {
-
-        }
-// Aplica el tint al ImageButton
-        tv_current_month_birthday_selector.setText(meses[month-1]);
+        tv_current_month_birthday_selector.setText(month==1 ? String.valueOf(month) :meses[month-1]);
 
         dayButtons = new ImageButton[31];
         tvDays = new TextView[31];  // Array que almacenará los TextView de los días
@@ -203,6 +197,28 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
                 rb.setChecked(true);
             }
         }
+        if(rb_checked.getId()==R.id.rb_unknown_birthday){
+            month=1;
+            day=1;
+        }
+        else if (rb_checked.getId() == R.id.rb_full_birthday) {
+            String[] date = optionBirthdayString.split("/");
+            day= Integer.parseInt(date[0]);
+            month= Integer.parseInt(date[1]);
+            year= Integer.parseInt(date[2]);
+
+        } else if (rb_checked.getId() == R.id.rb_month_year_birthday) {
+            String[] date = optionBirthdayString.split("/");
+            month= Integer.parseInt(date[1]);
+            year= Integer.parseInt(date[2]);
+            day=1;
+        } else if (rb_checked.getId() == R.id.rb_month_birthday) {
+            month= Integer.parseInt(optionBirthdayString);
+            day=1;
+        } else if (rb_checked.getId() == R.id.rb_year_birthday) {
+            year= Integer.parseInt(optionBirthdayString);
+            et_yearBirthdayCreate.setText(year);
+        }
         setFields();
     }
     private void setFields(){
@@ -234,6 +250,7 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
         }
         daysMonthsSelectorVisible = false;
         daysOptionVisible = days;
+        yearFieldVisible = years;
         monthVisible = months;
         bt_next_month_birthday_selector.setVisibility(View.GONE);
         bt_previous_month_birthday_selector.setVisibility(View.GONE);

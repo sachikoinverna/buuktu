@@ -598,7 +598,7 @@ ImageButton bt_basic_info_characterkies;
         } else if (v.getId()==R.id.ib_select_img_create_characterkie) {
             selectImage();
         } else if(v.getId()==R.id.bt_birthday_characterkie){
-            BottomSheetChooseBirthday bottomSheetChooseBirthday = new BottomSheetChooseBirthday(optionBirthday);
+            BottomSheetChooseBirthday bottomSheetChooseBirthday = new BottomSheetChooseBirthday(optionBirthday,optionBirthdayString);
             bottomSheetChooseBirthday.show(getChildFragmentManager(), bottomSheetChooseBirthday.getTag());
         } else if (v.getId()==R.id.bt_pronouns_characterkie) {
             bottomSheetChoosePronouns = new BottomSheetChoosePronouns(optionPronouns,optionPronounsString);
