@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.buuktu.models.Characterkie;
+import com.example.buuktu.models.CharacterkieModel;
 import com.example.buuktu.models.UserkieModel;
 import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.utils.DrawableUtils;
@@ -49,7 +49,7 @@ public class CharacterkieView extends Fragment implements View.OnClickListener {
     CollectionReference collectionUserkies,collectionWorldkies,collectionStuffkies,collectionCharacterkies;
     WorldkieModel worldkieModel;
     MainActivity mainActivity;
-    Characterkie characterkieModel;
+    CharacterkieModel characterkieModel;
     FirebaseStorage firebaseStorage;
     public CharacterkieView() {
         // Required empty public constructor
@@ -121,11 +121,7 @@ public class CharacterkieView extends Fragment implements View.OnClickListener {
                         }
 
                         if (documentSnapshot != null) {
-
-                            characterkieModel = new Characterkie(
-                                    documentSnapshot.getId(),
-                                    documentSnapshot.getString("name")
-                            );
+                            characterkieModel = CharacterkieModel.fromSnapshot(documentSnapshot);
                         }
                     });
         setListeners();

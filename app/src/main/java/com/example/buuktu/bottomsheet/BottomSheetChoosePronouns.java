@@ -71,30 +71,30 @@ public class BottomSheetChoosePronouns extends BottomSheetDialogFragment impleme
         allRadioButtons.add(rb_other_characterkie);
         allRadioButtons.add(rb_unknown_pronouns_characterkie);
 
+
+        if(option!=R.id.rb_other_characterkie){
+            et_otherPronounsCharacterkieFilled.setVisibility(View.GONE);
+        }else{
+            et_otherPronounsCharacterkie.setText(optionString);
+        }
+        setListeners();
+    }
+    private void setListeners(){
         for (RadioButton rb : allRadioButtons) {
             rb.setOnClickListener(v -> {
                 for (RadioButton other : allRadioButtons) {
                     other.setChecked(false);
                 }
                 rb.setChecked(true);
-                rb_checked = view.findViewById(rb.getId());
+                rb_checked = v.findViewById(rb.getId());
 
-                    et_otherPronounsCharacterkieFilled.setVisibility(rb.getId()==R.id.rb_other_characterkie?View.VISIBLE:View.GONE);
+                et_otherPronounsCharacterkieFilled.setVisibility(rb.getId()==R.id.rb_other_characterkie?View.VISIBLE:View.GONE);
 
             });
             if(rb.getId()==option){
                 rb.setChecked(true);
             }
-            if(option==R.id.rb_other_characterkie){
-                et_otherPronounsCharacterkie.setText(optionString);
-            }
         }
-        if(option!=R.id.rb_other_characterkie){
-            et_otherPronounsCharacterkieFilled.setVisibility(View.GONE);
-        }
-        setListeners();
-    }
-    private void setListeners(){
         bt_save_pronouns_characterkie.setOnClickListener(this);
     }
     @Override

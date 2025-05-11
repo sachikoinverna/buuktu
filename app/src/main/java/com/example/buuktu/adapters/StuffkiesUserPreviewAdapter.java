@@ -100,26 +100,25 @@ public class StuffkiesUserPreviewAdapter extends RecyclerView.Adapter<StuffkiesU
     }
     @Override
     public void onBindViewHolder(@NonNull StuffkiesUserPreviewAdapter.ViewHolder holder, int position) {
+        StuffkieModel stuffkieModel = dataSet.get(position);
         holder.getIv_stuffkie_preview_worldkie().setVisibility(View.INVISIBLE);
-        holder.getTv_stuffkie_preview_worldkie().setText(dataSet.get(holder.getAdapterPosition()).getName());
-        if(!dataSet.get(holder.getAdapterPosition()).isDraft()){
+        holder.getTv_stuffkie_preview_worldkie().setText(stuffkieModel.getName());
+        if(!stuffkieModel.isDraft()){
             holder.getTv_stuffkie_preview_draft().setVisibility(View.INVISIBLE);
         }
-        if(!dataSet.get(holder.getAdapterPosition()).isStuffkie_private()){
+        if(!stuffkieModel.isStuffkie_private()){
             holder.getIv_stuffkie_private_preview().setVisibility(View.GONE);
         }
         holder.getCv_stuffkie_preview().setOnClickListener(v -> {
             Bundle bundle = new Bundle();
             bundle.putString("mode","other");
-            bundle.putString("UID",dataSet.get(holder.getAdapterPosition()).getUID());
+            bundle.putString("UID",stuffkieModel.getUID());
            // bundle.putString("UID_AUTHOR",dataSet.get(holder.getAdapterPosition()).getUID_AUTHOR());
            // bundle.putString("UID_WORLDKIE",dataSet.get(holder.getAdapterPosition()).getUID_WORLDKIE());
             NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new StuffkieView());
         });
-        if (dataSet.get(holder.getAdapterPosition()).isPhoto_default()) {
-            FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-            firebaseFirestore.collection("Stuffkies").document(dataSet.get(holder.getAdapterPosition()).getUID()).addSnapshotListener((queryDocumentSnapshot, e) -> {
-                String id_photo = queryDocumentSnapshot.getString("photo_id");
+        if (stuffkieModel.isPhoto_default()) {
+                String id_photo = stuffkieModel.getPhoto_id();
                 int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
 
                 if (resId != 0 && (!holder.getLastPhotoId().equals(id_photo))) {
@@ -135,7 +134,6 @@ public class StuffkiesUserPreviewAdapter extends RecyclerView.Adapter<StuffkiesU
                     EfectsUtils.startCircularReveal(drawable,holder.getIv_stuffkie_preview_worldkie());
 
                 }
-            });
         } else {
             StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-stuffkies").getReference(dataSet.get(holder.getAdapterPosition()).getUID());
 

@@ -25,13 +25,18 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.buuktu.AccountSettings;
+import com.example.buuktu.InspoDesafios;
+import com.example.buuktu.Note;
 import com.example.buuktu.Notes;
 import com.example.buuktu.Notikies;
+import com.example.buuktu.ProfileSettings;
 import com.example.buuktu.ProfileView;
 import com.example.buuktu.R;
 import com.example.buuktu.Search;
 import com.example.buuktu.broadcastReceiver.WordNotificationReceiver;
 import com.example.buuktu.dialogs.InfoFutureFunctionDialog;
+import com.example.buuktu.dialogs.InfoGeneralDialog;
 import com.example.buuktu.dialogs.InfoNotikiesDialog;
 import com.example.buuktu.dialogs.InfoWorldkiesDialog;
 import com.example.buuktu.utils.DrawableUtils;
@@ -59,9 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private String UID;
     private FirebaseFirestore db;
     private final FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-users");
-    InfoWorldkiesDialog infoWorldkiesDialog;
-    InfoNotikiesDialog infoNotikiesDialog;
-    InfoFutureFunctionDialog infoFutureFunctionDialog;
+    InfoGeneralDialog infoGeneralDialog;
     FragmentManager fragmentManager;
     NavigationView navigationView;
     Toolbar toolbar;
@@ -81,7 +84,6 @@ int colorEntero;
         scheduleDailyNotification();
         fragmentManager = getSupportFragmentManager();
          colorEntero = Color.parseColor("#5f5a7c");
-        infoFutureFunctionDialog = new InfoFutureFunctionDialog(this);
         firebaseAuth = FirebaseAuth.getInstance();
         UID = FirebaseAuth.getInstance().getUid();
         db = FirebaseFirestore.getInstance();
@@ -90,8 +92,6 @@ int colorEntero;
                 .build();
         db.setFirestoreSettings(settings);
         scheduleDailyNotification();
-        infoWorldkiesDialog = new InfoWorldkiesDialog(this);
-        infoNotikiesDialog = new InfoNotikiesDialog(this);
 
         setSupportActionBar(toolbar);
         getProfilePhoto();
@@ -118,7 +118,8 @@ int colorEntero;
             } else if (id == R.id.notifications) {
                 NavigationUtils.goNewFragment(fragmentManager, new Notikies());
             } else if (id == R.id.messages) {
-               infoFutureFunctionDialog.show();
+                infoGeneralDialog = new InfoGeneralDialog(this,"future_function");
+                infoGeneralDialog.show();
             }
             return true;
         });
@@ -141,17 +142,32 @@ int colorEntero;
         ib_info.setOnClickListener(v -> {
             Fragment fragment  = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
             if(fragment instanceof Home){
-                mostrarInfoWorldkies();
+                showInfoDialog("search");
             } else if (fragment instanceof Search) {
-
+                showInfoDialog("search");
             } else if (fragment instanceof Inspo){
-
-            } else if (fragment instanceof Notikies) {
-                infoNotikiesDialog.show();
+                showInfoDialog("inspo");
+            }else if (fragment instanceof InspoDesafios){
+                showInfoDialog("future_function");
+            }else if(fragment instanceof Note) {
+                showInfoDialog( "future_function");
+            } else if(fragment instanceof SettingsFragment){
+                showInfoDialog("future_function");
+            } else if(fragment instanceof AccountSettings){
+                showInfoDialog("future_function");
+            } else if(fragment instanceof ProfileSettings){
+                showInfoDialog("future_function");
+            }
+            else if (fragment instanceof Notikies) {
+                showInfoDialog("notekies");
             } else if (fragment instanceof Notes){
-
+                showInfoDialog("future_function");
             }
         });
+    }
+    private void showInfoDialog(String mode){
+        infoGeneralDialog = new InfoGeneralDialog(this,mode);
+        infoGeneralDialog.show();
     }
     private void getProfilePhoto(){
 
@@ -235,30 +251,7 @@ int colorEntero;
             );
         }
     }
-    private void mostrarInfoWorldkies(){
-        infoWorldkiesDialog.show();
-    }
-   /* private void mostrarInfoInspo(View view){
-        infoInspoDialog.show();
-    }
-    private void mostrarInfoChallenge(View view){
-        infoChallengeDialog.show();
-    }
-    private void mostrarNotekieChallenge(View view){
-        infoNotekieDialog.show();
-    }
-    private void mostrarNotikieChallenge(View view){
-        infoNotikieDialog.show();
-    }*/
-    /*private void mostrarInfoInspo(View view){
-        infoInspoDialog.show();
-    }
-    private void mostrarInfoInspo(View view){
-        infoInspoDialog.show();
-    }*/
-    private void mostrarFutureFunction(View view){
-        infoWorldkiesDialog.show();
-    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.nav_settings) {

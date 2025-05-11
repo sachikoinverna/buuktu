@@ -215,9 +215,7 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
             holder.moreDetailsShowed = !holder.moreDetailsShowed;
         });
         if (worldkieModel.isPhoto_default()) {
-            FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-            firebaseFirestore.collection("Worldkies").document(UID).addSnapshotListener((queryDocumentSnapshot, e) -> {
-                String id_photo = queryDocumentSnapshot.getString("id_photo");
+                String id_photo = worldkieModel.getId_photo();
                 int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
 
                 if (resId != 0 && (!holder.getLastPhotoId().equals(id_photo))) {
@@ -232,7 +230,6 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
                     holder.getIv_worldkie_photo_search().setVisibility(View.VISIBLE);
                     EfectsUtils.startCircularReveal(drawable,holder.getIv_worldkie_photo_search());
                 }
-            });
         } else {
             StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-worldkies").getReference(UID);
 

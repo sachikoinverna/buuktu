@@ -25,7 +25,7 @@ import com.example.buuktu.adapters.CharacterkiesUserPreviewAdapter;
 import com.example.buuktu.adapters.StuffkiesUserPreviewAdapter;
 import com.example.buuktu.adapters.WorldkiesUserPreviewAdapter;
 import com.example.buuktu.dialogs.InfoFutureFunctionDialog;
-import com.example.buuktu.models.Characterkie;
+import com.example.buuktu.models.CharacterkieModel;
 import com.example.buuktu.models.StuffkieModel;
 import com.example.buuktu.models.UserkieModel;
 import com.example.buuktu.models.WorldkieModel;
@@ -55,7 +55,7 @@ public class ProfileView extends Fragment implements View.OnClickListener {
     private TextView tv_usernameProfileView,tv_nameProfileView,tv_worldkiesPreviewUserkie,tv_stuffkiesPreviewUserkie,tv_characterkiesPreviewUserkie,tv_locked_profile;
     ScrollView sv_pa;
     MaterialCardView cv_characterkiesPreviewUserkie,cv_stuffkiesPreviewUserkie,cv_worldkiesPreviewUserkie;
-    ArrayList<Characterkie> characterkieArrayList;
+    ArrayList<CharacterkieModel> characterkieArrayList;
     ArrayList<StuffkieModel> stuffkieArrayList;
     ArrayList<WorldkieModel> worldkieArrayList;
     FirebaseFirestore db;
@@ -228,11 +228,7 @@ public class ProfileView extends Fragment implements View.OnClickListener {
                                 for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
                                     //if (documentSnapshot.getBoolean("photo_default")) {
 
-                                    Characterkie characterkieModel = new Characterkie(
-                                            doc.getId(),
-                                            doc.getString("name")
-                                    );
-                                    Log.d("StuffkiesSearch", "Stuffkie encontrado: " + doc.getString("name"));
+                                    CharacterkieModel characterkieModel = CharacterkieModel.fromSnapshot(documentSnapshot);
 
                                     characterkieArrayList.add(characterkieModel);
                                     foundData = true; // Set the flag to true if data is found
@@ -341,7 +337,7 @@ public class ProfileView extends Fragment implements View.OnClickListener {
         rc_worldkiePreviewUserkie.setLayoutManager(new LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false));
         rc_worldkiePreviewUserkie.setAdapter(worldkiesUserPreviewAdapter);
     }
-    private void updateRecyclerViewCharacterkies(ArrayList<Characterkie> characterkieArrayList) {
+    private void updateRecyclerViewCharacterkies(ArrayList<CharacterkieModel> characterkieArrayList) {
         characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList,mainActivity,fragmentManager);
         rc_characterkiePreviewUserkie.setLayoutManager(new LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false));
         rc_characterkiePreviewUserkie.setAdapter(characterkiesUserPreviewAdapter);

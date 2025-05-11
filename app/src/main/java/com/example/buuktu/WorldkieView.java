@@ -21,7 +21,7 @@ import android.widget.TextView;
 import com.example.buuktu.adapters.CharacterkiesUserPreviewAdapter;
 import com.example.buuktu.adapters.StuffkiesUserPreviewAdapter;
 import com.example.buuktu.dialogs.InfoFutureFunctionDialog;
-import com.example.buuktu.models.Characterkie;
+import com.example.buuktu.models.CharacterkieModel;
 import com.example.buuktu.models.StuffkieModel;
 import com.example.buuktu.models.UserkieModel;
 import com.example.buuktu.models.WorldkieModel;
@@ -46,7 +46,7 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class WorldkieView extends Fragment implements View.OnClickListener {
-    final ArrayList<Characterkie> characterkieArrayList = new ArrayList<>();
+    final ArrayList<CharacterkieModel> characterkieArrayList = new ArrayList<>();
     final ArrayList<StuffkieModel> stuffkieArrayList = new ArrayList<>();
     FirebaseFirestore db;
     ImageButton ib_worldkieView,ib_back,ib_save;
@@ -201,10 +201,7 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
                                         boolean foundData = false; // Add a flag
 
                                         for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
-                                            Characterkie characterkieModel = new Characterkie(
-                                                    doc.getId(),
-                                                    doc.getString("name")
-                                            );
+                                            CharacterkieModel characterkieModel = CharacterkieModel.fromSnapshot(doc);
                                             Log.d("StuffkiesSearch", "Stuffkie encontrado: " + doc.getString("name"));
 
                                             characterkieArrayList.add(characterkieModel);
@@ -330,7 +327,7 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
             //}
         }
     }
-    private void updateRecyclerViewCharacterkies(ArrayList<Characterkie> characterkieArrayList) {
+    private void updateRecyclerViewCharacterkies(ArrayList<CharacterkieModel> characterkieArrayList) {
         characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList,getContext(),fragmentManager);
         rc_characterkiesPrevieWorldkie.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rc_characterkiesPrevieWorldkie.setAdapter(characterkiesUserPreviewAdapter);

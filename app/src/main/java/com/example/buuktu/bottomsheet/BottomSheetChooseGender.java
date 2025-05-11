@@ -44,15 +44,17 @@ public class BottomSheetChooseGender extends BottomSheetDialogFragment implement
         View v = inflater.inflate(R.layout.choose_gender_dialog,
                 container, false);
         initComponents(v);
+        fillArrays();
+        setListeners();
+        return v;
+    }
+    private void initComponents(View view){
         context = getContext();
         if(getActivity() instanceof MainActivity) {
             if (getParentFragment() instanceof CreateCharacterkie) {
                 createCharacterkie = (CreateCharacterkie) getParentFragment();
             }
         }
-        return v;
-    }
-    private void initComponents(View view){
         et_otherGendersCharacterkieFilled = view.findViewById(R.id.et_otherGendersCharacterkieFilled);
         et_otherGendersCharacterkie = view.findViewById(R.id.et_otherGendersCharacterkie);
         rb_man_chracterkie = view.findViewById(R.id.rb_gender_male);
@@ -61,38 +63,39 @@ public class BottomSheetChooseGender extends BottomSheetDialogFragment implement
         rb_no_binary_chracterkie= view.findViewById(R.id.rb_gender_nonbinary);
         rb_other_gender_characterkie= view.findViewById(R.id.rb_other_gender_characterkie);
         rb_unknown_gender_characterkie = view.findViewById(R.id.rb_gender_unknown);
+        bt_save_gender_characterkie = view.findViewById(R.id.bt_save_gender_characterkie);
+        if(option!=R.id.rb_other_gender_characterkie){
+            et_otherGendersCharacterkieFilled.setVisibility(View.GONE);
+        }else{
+            et_otherGendersCharacterkie.setText(optionString);
+        }
+    }
+    private void fillArrays(){
         allRadioButtons.add(rb_woman_chracterkie);
         allRadioButtons.add(rb_gender_fluid_chracterkie);
         allRadioButtons.add(rb_man_chracterkie);
         allRadioButtons.add(rb_no_binary_chracterkie);
         allRadioButtons.add(rb_other_gender_characterkie);
         allRadioButtons.add(rb_unknown_gender_characterkie);
-        bt_save_gender_characterkie = view.findViewById(R.id.bt_save_gender_characterkie);
+    }
+    private void setListeners(){
         for (RadioButton rb : allRadioButtons) {
             rb.setOnClickListener(v -> {
                 for (RadioButton other : allRadioButtons) {
                     other.setChecked(false);
                 }
                 rb.setChecked(true);
-                rb_checked = view.findViewById(rb.getId());
-                if(rb.getId()==R.id.rb_other_gender_characterkie){
+                rb_checked = v.findViewById(rb.getId());
+                et_otherGendersCharacterkieFilled.setVisibility(rb.getId()==R.id.rb_other_gender_characterkie?View.VISIBLE:View.GONE);
 
-                    et_otherGendersCharacterkieFilled.setVisibility(View.VISIBLE);
-                    // activar el que se pulsó
-                }else {
-                    et_otherGendersCharacterkieFilled.setVisibility(View.GONE);
-                }
+                    if(rb.getId()==option){
+                        rb.setChecked(true);
+                    }
             });
             if(rb.getId()==option){
                 rb.setChecked(true);
             }
         }
-        if(option==R.id.rb_gender_unknown){
-            et_otherGendersCharacterkieFilled.setVisibility(View.GONE);
-            setListeners();
-        }
-    }
-    private void setListeners(){
         bt_save_gender_characterkie.setOnClickListener(this);
     }
     @Override

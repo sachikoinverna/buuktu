@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.buuktu.adapters.CharacterkieSearchAdapter;
-import com.example.buuktu.models.Characterkie;
+import com.example.buuktu.models.CharacterkieModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
@@ -30,7 +30,7 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class CharacterkiesSearch extends Fragment {
-    private ArrayList<Characterkie> characterkieModelArrayList;
+    private ArrayList<CharacterkieModel> characterkieModelArrayList;
     CollectionReference collectionCharacterkies;
     private FirebaseFirestore db;
     FirebaseAuth firebaseAuth;
@@ -82,7 +82,7 @@ public class CharacterkiesSearch extends Fragment {
 
                 for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
                     DocumentSnapshot doc = dc.getDocument();
-                        Characterkie characterkie = new Characterkie(doc.getId(), doc.getString("name"));
+                    CharacterkieModel characterkie = CharacterkieModel.fromSnapshot(doc);
                         Log.d("StuffkiesSearch", "Stuffkie encontrado: " + doc.getString("name"));
                         switch (dc.getType()) {
                             case ADDED:
@@ -108,7 +108,7 @@ public class CharacterkiesSearch extends Fragment {
         });
         return view;
     }
-    private void safeAddToList(ArrayList<Characterkie> list, int index, Characterkie item) {
+    private void safeAddToList(ArrayList<CharacterkieModel> list, int index, CharacterkieModel item) {
         if (index >= 0 && index <= list.size()) {
             list.add(index, item);
         } else {
@@ -116,12 +116,12 @@ public class CharacterkiesSearch extends Fragment {
         }
     }
 
-    private void safeSetToList(ArrayList<Characterkie> list, int index, Characterkie item) {
+    private void safeSetToList(ArrayList<CharacterkieModel> list, int index, CharacterkieModel item) {
         if (index >= 0 && index < list.size()) {
             list.set(index, item);
         }
     }
-    private void updateRecyclerView(ArrayList<Characterkie> characterkieArrayList) {
+    private void updateRecyclerView(ArrayList<CharacterkieModel> characterkieArrayList) {
         CharacterkieSearchAdapter characterkieSearchAdapter = new CharacterkieSearchAdapter(characterkieArrayList, getContext(), getParentFragmentManager());
         rc_characterkies_search.setAdapter(characterkieSearchAdapter);
         rc_characterkies_search.setLayoutManager(new LinearLayoutManager(getContext()));

@@ -7,7 +7,7 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Characterkie {
+public class CharacterkieModel {
     String UID_WORLDKIE;
     String UID_AUTHOR;
     private String UID;
@@ -21,15 +21,15 @@ public class Characterkie {
     private String photo_id;
     private String status;
     private String gender;
-    public Characterkie() {
+    public CharacterkieModel() {
     }
 
-    public Characterkie(String UID, String name) {
+    public CharacterkieModel(String UID, String name) {
         this.UID=UID;
         this.name=name;
     }
 
-    public Characterkie(String UID_WORLDKIE, String UID_AUTHOR, String name, String pronouns, String birthday,String birthday_format, boolean photo_default, boolean draft, boolean characterkie_private, String photo_id, String status, String gender) {
+    public CharacterkieModel(String UID_WORLDKIE, String UID_AUTHOR, String name, String pronouns, String birthday,String birthday_format, boolean photo_default, boolean draft, boolean characterkie_private, String photo_id, String status, String gender) {
         this.UID_WORLDKIE = UID_WORLDKIE;
         this.UID_AUTHOR = UID_AUTHOR;
         this.name = name;
@@ -44,11 +44,11 @@ public class Characterkie {
         this.gender = gender;
     }
 
-    public static Characterkie fromSnapshot(DocumentSnapshot document) {
+    public static CharacterkieModel fromSnapshot(DocumentSnapshot document) {
         if (document == null || !document.exists()) {
             return null;
         }
-        Characterkie characterkie = new Characterkie();
+        CharacterkieModel characterkie = new CharacterkieModel();
         characterkie.setName(document.getString("name"));
         characterkie.setUID(document.getId());
 

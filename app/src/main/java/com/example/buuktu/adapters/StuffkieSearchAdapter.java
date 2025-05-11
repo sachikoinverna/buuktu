@@ -113,14 +113,15 @@ public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        StuffkieModel stuffkieModel = dataSet.get(position);
         holder.getIv_stuffkie_photo_search().setVisibility(View.INVISIBLE);
        // holder.getTv_stuffkie_username_search().setText(dataSet.get(holder.getAdapterPosition()).get());
-        String name =dataSet.get(holder.getAdapterPosition()).getName();
+        String name = stuffkieModel.getName();
         if(!holder.getLastName().equals(name)) {
             holder.getTv_stuffkie_name_search().setText(name);
             holder.setLastName(name);
         }
-        if(!dataSet.get(holder.getAdapterPosition()).isStuffkie_private()){
+        if(!stuffkieModel.isStuffkie_private()){
             holder.getIv_stuffkie_private_search().setVisibility(View.INVISIBLE);
         }
 
@@ -131,10 +132,8 @@ public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAd
 
         });
 
-        if (dataSet.get(holder.getAdapterPosition()).isPhoto_default()) {
-            FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-            firebaseFirestore.collection("Stuffkies").document(dataSet.get(holder.getAdapterPosition()).getUID()).addSnapshotListener((queryDocumentSnapshot, e) -> {
-                String id_photo = queryDocumentSnapshot.getString("photo_id");
+        if (stuffkieModel.isPhoto_default()) {
+                String id_photo = stuffkieModel.getPhoto_id();
                 int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
 
                 if (resId != 0 && (holder.getLastPhotoId().equals(id_photo))) {
@@ -149,7 +148,6 @@ public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAd
                     holder.getIv_stuffkie_photo_search().setVisibility(View.VISIBLE);
                     EfectsUtils.startCircularReveal(drawable,holder.getIv_stuffkie_photo_search());
                 }
-            });
         } else {
             StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-stuffkies").getReference(dataSet.get(holder.getAdapterPosition()).getUID());
 

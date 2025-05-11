@@ -106,12 +106,17 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
                         }
             });
         }
-        month=1;
 
+        if(option==R.id.rb_unknown_birthday){
+            month=1;
+            daysMonthsSelectorVisible = false;
+            yearFieldVisible = false;
+        } else if (option==R.id.rb_full_birthday) {
+
+        }
 // Aplica el tint al ImageButton
         tv_current_month_birthday_selector.setText(meses[month-1]);
-        daysMonthsSelectorVisible = false;
-        yearFieldVisible = false;
+
         dayButtons = new ImageButton[31];
         tvDays = new TextView[31];  // Array que almacenará los TextView de los días
         setArrays(view);

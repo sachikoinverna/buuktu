@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buuktu.CharacterkieView;
 import com.example.buuktu.R;
-import com.example.buuktu.models.Characterkie;
+import com.example.buuktu.models.CharacterkieModel;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.NavigationUtils;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -32,7 +32,7 @@ import java.util.ArrayList;
 public class CharacterkiesUserPreviewAdapter extends RecyclerView.Adapter<CharacterkiesUserPreviewAdapter.ViewHolder> {
 
 
-    private final ArrayList<Characterkie> dataSet;
+    private final ArrayList<CharacterkieModel> dataSet;
 
     private final Context context;
     private final FragmentManager fragmentManager;
@@ -76,7 +76,7 @@ public class CharacterkiesUserPreviewAdapter extends RecyclerView.Adapter<Charac
     }
 
     //Constructor donde pasamos la lista de productos y el contexto
-    public CharacterkiesUserPreviewAdapter(ArrayList<Characterkie> dataSet, Context ctx,FragmentManager fragmentManager) {
+    public CharacterkiesUserPreviewAdapter(ArrayList<CharacterkieModel> dataSet, Context ctx,FragmentManager fragmentManager) {
         this.dataSet = dataSet;
         this.context = ctx;
         this.fragmentManager = fragmentManager;
@@ -93,32 +93,25 @@ public class CharacterkiesUserPreviewAdapter extends RecyclerView.Adapter<Charac
     }
     @Override
     public void onBindViewHolder(@NonNull CharacterkiesUserPreviewAdapter.ViewHolder holder, int position) {
-        holder.getTv_characterkie_preview_worldkie().setText(dataSet.get(holder.getAdapterPosition()).getName());
-        if(!dataSet.get(holder.getAdapterPosition()).isDraft()){
+        CharacterkieModel characterkieModel = dataSet.get(position);
+        holder.getTv_characterkie_preview_worldkie().setText(characterkieModel.getName());
+        if(!characterkieModel.isDraft()){
             holder.getTv_characterkie_preview_draft().setVisibility(View.INVISIBLE);
         }
-        if(!dataSet.get(holder.getAdapterPosition())
+        if(!characterkieModel
                 .isCharacterkie_private()){
             holder.getIv_characterkie_preview_worldkie().setVisibility(View.GONE);
         }
         holder.getCardView().setOnClickListener(v -> {
             Bundle bundle = new Bundle();
             bundle.putString("mode","other");
-            bundle.putString("UID",dataSet.get(holder.getAdapterPosition()).getUID());
-            bundle.putString("UID_AUTHOR",dataSet.get(holder.getAdapterPosition()).getUID_AUTHOR());
-            bundle.putString("UID_WORLDKIE",dataSet.get(holder.getAdapterPosition()).getUID_WORLDKIE());
+            bundle.putString("UID",characterkieModel.getUID());
+            bundle.putString("UID_AUTHOR",characterkieModel.getUID_AUTHOR());
+            bundle.putString("UID_WORLDKIE",characterkieModel.getUID_WORLDKIE());
             NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new CharacterkieView());
         });
-        if (dataSet.get(holder.getAdapterPosition()).isPhoto_default()) {
-            FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-            firebaseFirestore.collection("Characterkies").document(dataSet.get(holder.getAdapterPosition()).getUID()).addSnapshotListener((queryDocumentSnapshot, e) -> {
-                       /* if (e != null) {
-                            Log.e("Error", e.getMessage());
-                            Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
-                            return;
-                        }*/
-                //boolean photo_default = queryDocumentSnapshot.getBoolean("photo_default");
-                String id_photo = queryDocumentSnapshot.getString("photo_id");
+        if (characterkieModel.isPhoto_default()) {
+                String id_photo = characterkieModel.getPhoto_id();
                 int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
 
                 if (resId != 0) {
@@ -130,7 +123,6 @@ public class CharacterkiesUserPreviewAdapter extends RecyclerView.Adapter<Charac
                         throw new RuntimeException(ex);
                     }
                 }
-            });
         } else {
             StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-stuffkies").getReference(dataSet.get(holder.getAdapterPosition()).getUID());
 

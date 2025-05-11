@@ -15,7 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buuktu.CharacterkieView;
 import com.example.buuktu.R;
-import com.example.buuktu.models.Characterkie;
+import com.example.buuktu.models.CharacterkieModel;
+import com.example.buuktu.models.StuffkieModel;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.NavigationUtils;
 import com.google.android.material.card.MaterialCardView;
@@ -26,7 +27,7 @@ import java.util.ArrayList;
 
 public class CharacterkieSearchAdapter extends RecyclerView.Adapter<CharacterkieSearchAdapter.ViewHolder>{
 
-    private final ArrayList<Characterkie> dataSet;
+    private final ArrayList<CharacterkieModel> dataSet;
     private final FragmentManager fragmentManager;
 
     private final Context context;
@@ -75,7 +76,7 @@ public class CharacterkieSearchAdapter extends RecyclerView.Adapter<Characterkie
         }
     }
     //Constructor donde pasamos la lista de productos y el contexto
-    public CharacterkieSearchAdapter(ArrayList<Characterkie> dataSet, Context ctx, FragmentManager fragmentManager) {
+    public CharacterkieSearchAdapter(ArrayList<CharacterkieModel> dataSet, Context ctx, FragmentManager fragmentManager) {
         this.dataSet = dataSet;
         this.context = ctx;
         this.fragmentManager = fragmentManager;
@@ -91,8 +92,10 @@ public class CharacterkieSearchAdapter extends RecyclerView.Adapter<Characterkie
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-       // holder.getTv_characterkie_username_search().setText(dataSet.get(holder.getAdapterPosition()).getUsername());
-        holder.getTv_characterkie_name_search().setText(dataSet.get(holder.getAdapterPosition()).getName());
+        CharacterkieModel characterkie = dataSet.get(position);
+
+        // holder.getTv_characterkie_username_search().setText(dataSet.get(holder.getAdapterPosition()).getUsername());
+        holder.getTv_characterkie_name_search().setText(characterkie.getName());
         /*if(dataSet.get(holder.getAdapterPosition()).is()){
             holder.getIv_characterkie_private_search().setImageAlpha(R.drawable.twotone_lock_24);
         }else{

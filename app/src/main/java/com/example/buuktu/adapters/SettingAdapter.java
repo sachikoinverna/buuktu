@@ -85,8 +85,9 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull SettingAdapter.ViewHolder holder, int position) {
-        String name = dataSet.get(holder.getAdapterPosition()).getName();
-        String value = dataSet.get(holder.getAdapterPosition()).getValue();
+        SettingModel settingModel = dataSet.get(position);
+        String name = settingModel.getName();
+        String value = settingModel.getValue();
         String nameSetting = context.getResources().getString(R.string.name);
         String pronounsSetting = context.getResources().getString(R.string.pronouns);
         String emailSetting = context.getResources().getString(R.string.email);

@@ -29,7 +29,7 @@ import com.example.buuktu.bottomsheet.BottomSheetChoosePronouns;
 import com.example.buuktu.bottomsheet.BottomSheetChooseState;
 import com.example.buuktu.bottomsheet.BottomSheetProfilePhoto;
 import com.example.buuktu.dialogs.CreateEditGeneralDialog;
-import com.example.buuktu.models.Characterkie;
+import com.example.buuktu.models.CharacterkieModel;
 import com.example.buuktu.utils.CheckUtil;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.EfectsUtils;
@@ -82,7 +82,7 @@ ImageButton bt_basic_info_characterkies;
     TextInputLayout et_nameCharacterkieCreateFull;
     String UID, worldkie_id, source,name,characterkie_id, userkie_id,gender,pronouns,birthday,status;
     boolean privacity, draft,isBasicInfoVisible=false;
-    Characterkie characterkie;
+    CharacterkieModel characterkie;
     private int optionPronouns, optionBirthday,optionGender,optionStatus;
     String optionPronounsString, optionBirthdayString,optionGenderString,optionStatusString;
     int year,day,month;
@@ -154,7 +154,7 @@ ImageButton bt_basic_info_characterkies;
                     return;
                 }
                 if (queryDocumentSnapshot!=null) {
-                    characterkie = Characterkie.fromSnapshot(queryDocumentSnapshot);
+                    characterkie = CharacterkieModel.fromSnapshot(queryDocumentSnapshot);
 
                     tb_characterkiePrivacity.setChecked(characterkie.isCharacterkie_private());
                         tb_characterkieDraft.setChecked(characterkie.isDraft());
@@ -213,11 +213,11 @@ ImageButton bt_basic_info_characterkies;
 
         }
     }
-    public Characterkie getCharacterkie() {
+    public CharacterkieModel getCharacterkie() {
         return characterkie;
     }
 
-    public void setCharacterkie(Characterkie characterkie) {
+    public void setCharacterkie(CharacterkieModel characterkie) {
         this.characterkie = characterkie;
     }
 
@@ -290,7 +290,7 @@ ImageButton bt_basic_info_characterkies;
         tb_characterkiePrivacity.setChecked(false);
         tb_characterkieDraft.setVisibility(View.GONE);
         putDefaultImage();
-        characterkie = new Characterkie();
+        characterkie = new CharacterkieModel();
 
         characterkie.setUID_AUTHOR(userkie_id);
         characterkie.setUID_WORLDKIE(worldkie_id);
@@ -424,15 +424,23 @@ ImageButton bt_basic_info_characterkies;
     }
     public void setDate(){
         if(optionBirthday == R.id.rb_unknown_birthday){
-            optionBirthdayString = "Unknown";
+            optionBirthdayString = mainActivity.getString(R.string.unknown_fem);
+            characterkie.setBirthday_format(mainActivity.getString(R.string.unknown_fem));
         } else if (optionBirthday==R.id.rb_full_birthday) {
             optionBirthdayString = day+"/"+month+"/"+year;
+            characterkie.setBirthday_format(mainActivity.getString(R.string.dd_mm_yy));
+
         }else if (optionBirthday==R.id.rb_month_year_birthday) {
             optionBirthdayString = month+"/"+year;
+            characterkie.setBirthday_format(mainActivity.getString(R.string.mm_yy));
+
         }else if (optionBirthday==R.id.rb_month_birthday) {
             optionBirthdayString = String.valueOf(month);
+            characterkie.setBirthday_format(mainActivity.getString(R.string.mm));
+
         }else if (optionBirthday==R.id.rb_year_birthday) {
             optionBirthdayString = String.valueOf(year);
+            characterkie.setBirthday_format(mainActivity.getString(R.string.yyyy));
         }
         bt_birthday_characterkie.setText(optionBirthdayString);
     }
@@ -448,7 +456,7 @@ ImageButton bt_basic_info_characterkies;
     public ImageButton getIb_select_img_create_worldkie() {
         return ib_select_img_create_characterkie;
     }
-    public void editMode(Characterkie characterkie){
+    public void editMode(CharacterkieModel characterkie){
         et_nameCharacterkieCreate.setText(characterkie.getName());
         tb_characterkiePrivacity.setChecked(characterkie.isCharacterkie_private());
         tb_characterkieDraft.setChecked(characterkie.isDraft());

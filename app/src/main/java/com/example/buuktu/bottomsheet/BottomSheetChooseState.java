@@ -65,6 +65,8 @@ public class BottomSheetChooseState extends BottomSheetDialogFragment implements
         setListeners();
         if(option!=R.id.rb_other_status_characterkie){
             et_otherStatusCharacterkieFilled.setVisibility(View.GONE);
+        }else{
+            et_otherStatusCharacterkie.setText(optionString);
         }
     }
     private void setListeners(){
@@ -82,6 +84,7 @@ public class BottomSheetChooseState extends BottomSheetDialogFragment implements
                 rb_checked=rb;
             }
         }
+
         bt_save_status_characterkie.setOnClickListener(this);
     }
     private void saveOption(){

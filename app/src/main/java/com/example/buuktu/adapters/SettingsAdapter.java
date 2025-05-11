@@ -67,9 +67,10 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull SettingsAdapter.ViewHolder holder, int position) {
-        String name = dataSet.get(holder.getAdapterPosition()).getName();
+        SettingModel settingModel = dataSet.get(0);
+        String name = settingModel.getName();
             holder.getTv_name_setting().setText(name);
-         holder.getIv_photo_setting().setImageDrawable(dataSet.get(holder.getAdapterPosition()).getDrawable());
+         holder.getIv_photo_setting().setImageDrawable(settingModel.getDrawable());
          holder.getCard_view_setting_list_one().setOnClickListener(v -> {
              if (name.equals(context.getResources().getString(R.string.profile))) {
                  NavigationUtils.goNewFragment(fragmentManager,new ProfileSettings());

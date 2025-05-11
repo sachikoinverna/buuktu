@@ -15,25 +15,30 @@ public class InfoGeneralDialog extends Dialog implements View.OnClickListener {
     static String modeNotekie = "notekie";
     static String modeStuffkie = "stuffkie";
     static String modeWorldkie = "worldkie";
+   String mode;
     static String modeCharacterkie = "characterkie";
-    public InfoGeneralDialog(@NonNull Context context) {
+    public InfoGeneralDialog(@NonNull Context context,String mode)
+    {
         super(context);
+        this.mode=mode;
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.future_function_dialog);
-        //   ib_next_incorrect = findViewById(R.id.ib_next_incorrect);
-        //ib_home_incorrect = findViewById(R.id.ib_home_incorrect);
+        if(mode.equals("future_function")) {
+            setContentView(R.layout.future_function_dialog);
+        } else if (mode.equals("search")) {
+            setContentView(R.layout.info_search_dialog);
+        }else if (mode.equals("inspo")) {
+            setContentView(R.layout.info_inspo_dialog);
+        } else if(mode.equals("notekies")){
+            setContentView(R.layout.info_notekies_dialog);
+        }
         ib_close_dialog = findViewById(R.id.ib_close_dialog);
-        //ib_next_incorrect.setOnClickListener(this);
-       // ib_home_incorrect.setOnClickListener(this);
         ib_close_dialog.setOnClickListener(this);
         setCanceledOnTouchOutside(false);
         setCancelable(false);
-        //if (!nextLevelUnlocked) {
-        //    ib_next_incorrect.setVisibility(View.GONE);
-        //}
+
         getWindow().setBackgroundDrawableResource(android.R.color.transparent);
     }
 
