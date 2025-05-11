@@ -143,7 +143,6 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
             menuWorldkie = new WorldkieMenu();
             Bundle bundle = new Bundle();
             bundle.putString("worldkie_id", dataSet.get(holder.getAdapterPosition()).getUID());
-            bundle.putString("userkie_id",dataSet.get(holder.getAdapterPosition()).getUID_AUTHOR());
             menuWorldkie.setArguments(bundle);
             fragmentManager.beginTransaction().replace(R.id.fragment_container, menuWorldkie).addToBackStack(null) // Permite regresar atrás con el botón de retroceso
                     .commit();
@@ -160,9 +159,7 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
             deleteGeneralDialog.show();
         });
         if (worldkieModel.isPhoto_default()) {
-            FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-            firebaseFirestore.collection("Worldkies").document(dataSet.get(holder.getAdapterPosition()).getUID()).addSnapshotListener((queryDocumentSnapshot, e) -> {
-                String id_photo = queryDocumentSnapshot.getString("id_photo");
+                String id_photo = worldkieModel.getId_photo();
                 int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
 
                 if (resId != 0 && (!holder.getLastPhotoId().equals(id_photo))) {
@@ -179,7 +176,6 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
                     EfectsUtils.startCircularReveal(drawable,holder.getIv_photo_wordlkie());
 
                 }
-            });
             holder.getIv_photo_wordlkie().setVisibility(View.VISIBLE);
         } else {
             StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-worldkies").getReference(dataSet.get(holder.getAdapterPosition()).getUID());

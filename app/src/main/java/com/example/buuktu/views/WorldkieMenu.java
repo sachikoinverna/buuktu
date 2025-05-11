@@ -50,8 +50,6 @@ public class WorldkieMenu extends Fragment implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             this.worldkie_id = getArguments().getString("worldkie_id");
-            this.userkie_id = getArguments().getString("userkie_id");
-
         }
     }
 
@@ -94,18 +92,23 @@ public class WorldkieMenu extends Fragment implements View.OnClickListener {
         } else if (v.getId()==R.id.tv_characterkies) {
             createCharacterkie = new CreateCharacterkie();
             Bundle bundle = new Bundle();
-            bundle.putString("worlkie_id",worldkie_id);
-            bundle.putString("userkie_id",userkie_id);
+            bundle.putString("worldkie_id",worldkie_id);
             createCharacterkie.setArguments(bundle);
 
             fragmentManager.beginTransaction().replace(R.id.fragment_container, createCharacterkie) .addToBackStack(null) // Permite regresar atrás con el botón de retroceso
                     .commit();
         } else if (v.getId()==R.id.textView5) {
             createScenariokie = new CreateEditScenariokie();
+            Bundle bundle = new Bundle();
+            bundle.putString("worldkie_id",worldkie_id);
+            createScenariokie.setArguments(bundle);
             fragmentManager.beginTransaction().replace(R.id.fragment_container, createScenariokie) .addToBackStack(null) // Permite regresar atrás con el botón de retroceso
                     .commit();
         } else if (v.getId()==R.id.textView8) {
             createStuffkie = new CreateEditStuffkie();
+            Bundle bundle = new Bundle();
+            bundle.putString("worldkie_id",worldkie_id);
+            createStuffkie.setArguments(bundle);
             fragmentManager.beginTransaction().replace(R.id.fragment_container, createStuffkie) .addToBackStack(null) // Permite regresar atrás con el botón de retroceso
                     .commit();
         }

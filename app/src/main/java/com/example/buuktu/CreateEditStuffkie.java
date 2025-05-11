@@ -41,6 +41,7 @@ import com.example.buuktu.views.MainActivity;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -64,7 +65,7 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
     ImageButton ib_select_img_create_stuffkie,ib_back,ib_save;
     Uri image;
     BottomSheetProfilePhoto bottomSheetProfilePhoto;
-    String source,stuffkie_id;
+    String source,stuffkie_id,UID,worldkie_id;
     FragmentManager fragmentManager;
     ConstraintLayout constraintLayout;
     TextInputEditText et_nameStuffkieCreate;
@@ -72,13 +73,12 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
     Switch tb_stuffkiePrivacity,tb_stuffkieDraft;
     MainActivity mainActivity;
     CreateEditGeneralDialog dialog;
-    private final FirebaseStorage storage = FirebaseStorage.getInstance("gs://buuk-tu-characterkies");
-    Resources res;
-    String packageName;
+    FirebaseStorage storage;
     LottieAnimationView animationView;
     StuffkieModel stuffkieModel;
     CollectionReference collectionStuffkie;
     FirebaseFirestore db;
+    FirebaseAuth firebaseAuth;
     public CreateEditStuffkie() {
         // Required empty public constructor
     }
@@ -97,8 +97,12 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            this.stuffkie_id = getArguments().getString("stuffkie_id");
-
+            if (getArguments().containsKey("stuffkie_id")) {
+                this.stuffkie_id = getArguments().getString("stuffkie_id");
+            }
+            if (getArguments().containsKey("worldkie_id")) {
+                this.worldkie_id = getArguments().getString("worldkie_id");
+            }
         }
     }
 
@@ -112,7 +116,12 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
         setVisibility();
         setListeners();
         source = "app";
+        firebaseAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+        storage = FirebaseStorage.getInstance("gs://buuk-tu-stuffkies");
+        UID = firebaseAuth.getUid();
+        assert UID != null;
+        Log.d("HOLA",UID);
         collectionStuffkie = db.collection("Stuffkies");
         bottomSheetProfilePhoto = new BottomSheetProfilePhoto();
         dialog = new CreateEditGeneralDialog(mainActivity);
@@ -123,6 +132,7 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
         }
         if(stuffkie_id == null){
             try {
+                stuffkieModel = new StuffkieModel();
                 createMode();
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -218,8 +228,8 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
         tb_stuffkieDraft.setVisibility(View.GONE);
         putDefaultImage();
         source = "app";
-       // stuffkieModel.setAUTHOR_UID();
-
+        stuffkieModel.setAUTHOR_UID(UID);
+        stuffkieModel.setWORDLKIE_UID(worldkie_id);
         stuffkieModel.setPhoto_default(true);
         stuffkieModel.setStuffkie_private(false);
         ib_select_img_create_stuffkie.setTag(DrawableUtils.getMipmapName(mainActivity,R.mipmap.photostuffkieone));
@@ -237,12 +247,13 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
     private void addDataToFirestore(){
         if(CheckUtil.handlerCheckName(mainActivity,et_nameStuffkieCreate,et_nameStuffkieCreateFull)){
             dialog.show();
+            stuffkieModel.setName(et_nameStuffkieCreate.getText().toString());
             EfectsUtils.setAnimationsDialog("start",animationView);
             Completable.timer(3, TimeUnit.SECONDS)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(() -> {
-                                Task<DocumentReference> addTask = collectionStuffkie.add(stuffkieModel);
+                                Task<DocumentReference> addTask = collectionStuffkie.add(stuffkieModel.toMap());
 
                                 addTask.addOnCompleteListener(task -> {
                                     if (task.isSuccessful()) {

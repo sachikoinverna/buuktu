@@ -118,9 +118,12 @@ ImageButton bt_basic_info_characterkies;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            this.worldkie_id = getArguments().getString("worldkie_id");
-            this.characterkie_id = getArguments().getString("characterkie_id");
-            this.userkie_id = getArguments().getString("userkie_id");
+            if(getArguments().containsKey("worldkie_id")) {
+                this.worldkie_id = getArguments().getString("worldkie_id");
+            }
+                if(getArguments().containsKey("characterkie_id")) {
+                    this.characterkie_id = getArguments().getString("characterkie_id");
+                }
         }
     }
 

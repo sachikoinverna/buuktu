@@ -82,6 +82,28 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
     String UID, worldkie_id, source,name;
     boolean privacity, draft;
     LottieAnimationView animationView;
+    public CreateEditWorldkie() {
+        // Required empty public constructor
+    }
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @return A new instance of fragment CreateEditWorldkie.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static CreateEditWorldkie newInstance() {
+        return new CreateEditWorldkie();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+                this.worldkie_id = getArguments().getString("worldkie_id");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -205,7 +227,6 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
         putDefaultImage();
         source = "app";
         worldkieModel.setUID_AUTHOR(UID);
-
         worldkieModel.setPhoto_default(true);
         worldkieModel.setWorldkie_private(false);
         ib_select_img_create_worldkie.setTag(DrawableUtils.getMipmapName(mainActivity,R.mipmap.photoworldkieone));

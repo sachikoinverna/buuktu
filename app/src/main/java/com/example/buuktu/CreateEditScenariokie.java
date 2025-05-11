@@ -26,6 +26,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.buuktu.dialogs.CreateEditGeneralDialog;
+import com.example.buuktu.models.ScenariokieModel;
 import com.example.buuktu.utils.RoundedBorderSquareTransformation;
 import com.example.buuktu.bottomsheet.BottomSheetProfilePhoto;
 import com.example.buuktu.utils.DrawableUtils;
@@ -45,7 +46,7 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
     ImageButton ib_select_img_create_scenariokie,ib_back,ib_save;
     Uri image;
     BottomSheetProfilePhoto bottomSheetProfilePhoto;
-    String source;
+    String source,worldkie_id,scenariokie_id;
     FragmentManager fragmentManager;
     FragmentActivity activity;
     Switch tb_scenariokiePrivacity,tb_scenariokieDraft;
@@ -56,6 +57,7 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
     MainActivity mainActivity;
     CreateEditGeneralDialog dialog;
     LottieAnimationView animationView;
+    ScenariokieModel scenariokieModel;
     public CreateEditScenariokie() {
         // Required empty public constructor
     }
@@ -75,6 +77,12 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            if(getArguments().containsKey("worldkie_id")) {
+                this.worldkie_id = getArguments().getString("worldkie_id");
+            }
+            if(getArguments().containsKey("scenariokie_id")) {
+                this.scenariokie_id = getArguments().getString("scenariokie_id");
+            }
         }
     }
 
@@ -92,6 +100,7 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
         initComponents(view);
         dialog = new CreateEditGeneralDialog(mainActivity);
         animationView = dialog.getAnimationView();
+        scenariokieModel = new ScenariokieModel();
         fragmentManager = requireActivity().getSupportFragmentManager();
         activity = requireActivity();
         source = "app";
