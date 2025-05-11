@@ -11,31 +11,25 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.example.buuktu.R;
-import com.example.buuktu.listeners.OnDialogPeriodNumbersListener;
 import com.example.buuktu.models.NumberOfTheDay;
 import com.example.buuktu.utils.DateUtils;
 
 public class PeriodNumbersDialog extends Dialog implements View.OnClickListener{
     TextView tv_period_number_title,tv_period_number;
     ImageButton ib_close_period_number_dialog;
-    OnDialogPeriodNumbersListener listener;
     private Handler handler;
     private Runnable checkDateRunnable;
     String lastDate;
     public PeriodNumbersDialog(@NonNull Context context) {
         super(context);
     }
-    public void onDialogPeriodWordsListener(@NonNull OnDialogPeriodNumbersListener listener){
-        this.listener = listener;
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.period_numbers_dialog);
         handler = new Handler();
-        tv_period_number = findViewById(R.id.tv_period_number);
-        tv_period_number_title = findViewById(R.id.tv_period_number_title);
-        ib_close_period_number_dialog = findViewById(R.id.ib_close_period_number_dialog);
+        initComponents();
+
         ib_close_period_number_dialog.setOnClickListener(this);
         setCanceledOnTouchOutside(false);
         setCancelable(false);
@@ -54,6 +48,11 @@ public class PeriodNumbersDialog extends Dialog implements View.OnClickListener{
         };
         handler.post(checkDateRunnable);
     }
+    private void initComponents(){
+        tv_period_number = findViewById(R.id.tv_period_number);
+        tv_period_number_title = findViewById(R.id.tv_period_number_title);
+        ib_close_period_number_dialog = findViewById(R.id.ib_close_period_number_dialog);
+    }
     private void updateNumberOfTheDay(TextView textView){
         int number = NumberOfTheDay.obtainNumberOfTheDay(0,300);
         tv_period_number.setText(String.valueOf(number));
@@ -62,9 +61,6 @@ public class PeriodNumbersDialog extends Dialog implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.ib_close_period_number_dialog) {
-            if (listener != null) {
-                listener.onCancel();
-            }
             dismiss();
         }
     }

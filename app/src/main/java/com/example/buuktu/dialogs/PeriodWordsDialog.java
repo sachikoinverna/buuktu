@@ -11,35 +11,27 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.example.buuktu.R;
-import com.example.buuktu.listeners.OnDialogPeriodWordsListener;
 import com.example.buuktu.models.WordOfTheDay;
 import com.example.buuktu.utils.DateUtils;
 
 public class PeriodWordsDialog extends Dialog implements View.OnClickListener{
     ImageButton ib_close_period_word_dialog ;
     TextView tv_period_word_title, tv_period_word;
-    private OnDialogPeriodWordsListener listener;
     private Handler handler;
     private Runnable checkDateRunnable;
     String lastDate;
     public PeriodWordsDialog(@NonNull Context context) {
         super(context);
     }
-    public void setOnDialogClickListener(OnDialogPeriodWordsListener listener) {
-        this.listener = listener;
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.period_words_dialog);
         handler = new Handler();
-        tv_period_word = findViewById(R.id.tv_period_word);
-        tv_period_word_title = findViewById(R.id.tv_period_word_title);
-        ib_close_period_word_dialog = findViewById(R.id.ib_close_period_word_dialog);
+        initComponents();
         ib_close_period_word_dialog.setOnClickListener(this);
         setCanceledOnTouchOutside(false);
         setCancelable(false);
-
         getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         updateWordOfTheDay(tv_period_word);
 
@@ -55,6 +47,11 @@ public class PeriodWordsDialog extends Dialog implements View.OnClickListener{
         };
         handler.post(checkDateRunnable);
     }
+    private void initComponents(){
+        tv_period_word = findViewById(R.id.tv_period_word);
+        tv_period_word_title = findViewById(R.id.tv_period_word_title);
+        ib_close_period_word_dialog = findViewById(R.id.ib_close_period_word_dialog);
+    }
     private void updateWordOfTheDay(TextView wordTextView) {
         WordOfTheDay.obtenerPalabraDelDia(palabra -> {
             wordTextView.setText(palabra);
@@ -66,9 +63,6 @@ public class PeriodWordsDialog extends Dialog implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.ib_close_period_word_dialog) {
-            if (listener != null) {
-                listener.onCancel();
-            }
             dismiss();
         }
     }

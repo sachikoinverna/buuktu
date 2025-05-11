@@ -9,17 +9,13 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 
 import com.example.buuktu.R;
-import com.example.buuktu.listeners.OnDialogInfoClickListener;
 
 public class InfoNotikiesDialog extends Dialog implements View.OnClickListener {
     ImageButton ib_close_dialog ;
-    private OnDialogInfoClickListener listener;
     public InfoNotikiesDialog(@NonNull Context context) {
         super(context);
     }
-    public void setOnDialogClickListener(OnDialogInfoClickListener listener) {
-        this.listener = listener;
-    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,9 +30,6 @@ public class InfoNotikiesDialog extends Dialog implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.ib_close_dialog) {
-            if (listener != null) {
-                listener.onCancel();
-            }
             dismiss();
         }
     }

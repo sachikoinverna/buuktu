@@ -34,13 +34,11 @@ import com.example.buuktu.broadcastReceiver.WordNotificationReceiver;
 import com.example.buuktu.dialogs.InfoFutureFunctionDialog;
 import com.example.buuktu.dialogs.InfoNotikiesDialog;
 import com.example.buuktu.dialogs.InfoWorldkiesDialog;
-import com.example.buuktu.listeners.OnDialogInfoClickListener;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.EfectsUtils;
 import com.example.buuktu.utils.FirebaseAuthUtils;
 import com.example.buuktu.utils.NavigationUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -51,7 +49,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.Calendar;
 
-public class MainActivity extends AppCompatActivity implements OnDialogInfoClickListener, NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawerLayout;
     private BottomNavigationView bottomNavigationView;
@@ -94,9 +92,6 @@ int colorEntero;
         scheduleDailyNotification();
         infoWorldkiesDialog = new InfoWorldkiesDialog(this);
         infoNotikiesDialog = new InfoNotikiesDialog(this);
-        infoNotikiesDialog.setOnDialogClickListener(this);
-        infoWorldkiesDialog.setOnDialogClickListener(this);
-        infoFutureFunctionDialog.setOnDialogClickListener(this);
 
         setSupportActionBar(toolbar);
         getProfilePhoto();
@@ -271,10 +266,6 @@ int colorEntero;
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.nav_settings) {
-           /* fragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, new SettingsFragment())
-                    .addToBackStack(null)
-                    .commit();*/
             NavigationUtils.goNewFragment(fragmentManager, new SettingsFragment());
 
         } else if (item.getItemId() == R.id.nav_logout) {
@@ -284,15 +275,6 @@ int colorEntero;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
-    }
-    @Override
-    public void onAccept() {
-
-    }
-
-    @Override
-    public void onCancel() {
-        infoWorldkiesDialog.dismiss();
     }
     @Override
     protected void onStart() {

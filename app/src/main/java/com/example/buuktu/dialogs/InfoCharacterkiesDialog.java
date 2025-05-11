@@ -9,16 +9,11 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 
 import com.example.buuktu.R;
-import com.example.buuktu.listeners.OnDialogInfoClickListener;
 
 public class InfoCharacterkiesDialog extends Dialog implements View.OnClickListener {
     ImageButton ib_next_incorrect,ib_home_incorrect,ib_close_dialog ;
-    private OnDialogInfoClickListener listener;
     public InfoCharacterkiesDialog(@NonNull Context context) {
         super(context);
-    }
-    public void setOnDialogClickListener(OnDialogInfoClickListener listener) {
-        this.listener = listener;
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +41,7 @@ public class InfoCharacterkiesDialog extends Dialog implements View.OnClickListe
         //    }
         //    dismiss();
         if (v.getId() == R.id.ib_close_dialog) {
-            if (listener != null) {
-                listener.onCancel();
-            }
+
             dismiss();
         }// else if (v.getId() == R.id.ib_retry_incorrect) {
           /*  if (listener != null) {
