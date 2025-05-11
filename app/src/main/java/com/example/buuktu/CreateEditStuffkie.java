@@ -1,5 +1,7 @@
 package com.example.buuktu;
 
+import static android.widget.Toast.LENGTH_LONG;
+
 import android.animation.Animator;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -9,9 +11,11 @@ import android.os.Bundle;
 
 import androidx.annotation.DrawableRes;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -19,12 +23,14 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.buuktu.dialogs.CreateEditGeneralDialog;
 import com.example.buuktu.models.StuffkieModel;
+import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.utils.CheckUtil;
 import com.example.buuktu.utils.EfectsUtils;
 import com.example.buuktu.utils.RoundedBorderSquareTransformation;
@@ -109,12 +115,76 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
         db = FirebaseFirestore.getInstance();
         collectionStuffkie = db.collection("Stuffkies");
         bottomSheetProfilePhoto = new BottomSheetProfilePhoto();
+        dialog = new CreateEditGeneralDialog(mainActivity);
         try {
             putDefaultImage();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        if(stuffkie_id == null){
+            try {
+                createMode();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }else{
+            collectionStuffkie.document(stuffkie_id).addSnapshotListener((queryDocumentSnapshot, e) -> {
+                if (e != null) {
+                    Log.e("Error", e.getMessage());
+                    Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
+                    return;
+                }
+                if (queryDocumentSnapshot!=null) {
+                    stuffkieModel = StuffkieModel.fromSnapshot(queryDocumentSnapshot);
+                    et_nameStuffkieCreate.setText(stuffkieModel.getName());
+                    tb_stuffkiePrivacity.setChecked(stuffkieModel.isStuffkie_private());
+                    tb_stuffkieDraft.setVisibility(stuffkieModel.isStuffkie_private()?View.VISIBLE:View.GONE);
+                    tb_stuffkieDraft.setChecked(stuffkieModel.isDraft());
+                    getImage();
+                }
+            });
+
+            editMode(stuffkieModel);
+        }
         return view;
+    }
+    private void getImage(){
+        if(stuffkieModel.isPhoto_default()){
+            int resId = mainActivity.getResources().getIdentifier(stuffkieModel.getPhoto_id(), "mipmap", mainActivity.getPackageName());
+
+            if (resId != 0) {
+                Drawable drawable = ContextCompat.getDrawable(mainActivity, resId);
+                ib_select_img_create_stuffkie.setImageDrawable(drawable);
+                source = "app";
+                ib_select_img_create_stuffkie.setTag(DrawableUtils.getMipmapName(mainActivity,resId));
+
+                try {
+                    DrawableUtils.personalizarImagenCuadradoButton(mainActivity,150/7,7,R.color.brownMaroon,drawable, ib_select_img_create_stuffkie);
+                    ib_select_img_create_stuffkie.setVisibility(View.VISIBLE);
+                    EfectsUtils.startCircularReveal(drawable,ib_select_img_create_stuffkie);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        } else {
+            StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-worldkies").getReference(stuffkie_id);
+
+            userFolderRef.listAll().addOnSuccessListener(listResult -> {
+                for (StorageReference item : listResult.getItems()) {
+                    if (item.getName().startsWith("cover")) {
+                        item.getDownloadUrl().addOnSuccessListener(uri -> {
+
+                            DrawableUtils.personalizarImagenCuadradoButton(getContext(),150/6,7,R.color.brownMaroon,uri,ib_select_img_create_stuffkie);
+                            ib_select_img_create_stuffkie.setVisibility(View.VISIBLE);
+                            EfectsUtils.startCircularReveal(ib_select_img_create_stuffkie.getDrawable(),ib_select_img_create_stuffkie);
+                            source = "device";
+                        });
+                        break;
+                    }
+                }
+                ;
+            });
+        }
     }
     private void setVisibility(){
         ib_save.setVisibility(View.VISIBLE);
@@ -141,6 +211,28 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
         ib_back = mainActivity.getBackButton();
         ib_save = mainActivity.getIb_save();
         fragmentManager = mainActivity.getSupportFragmentManager();
+    }
+    public void createMode() throws IOException {
+        et_nameStuffkieCreate.setText("");
+        tb_stuffkiePrivacity.setChecked(false);
+        tb_stuffkieDraft.setVisibility(View.GONE);
+        putDefaultImage();
+        source = "app";
+       // stuffkieModel.setAUTHOR_UID();
+
+        stuffkieModel.setPhoto_default(true);
+        stuffkieModel.setStuffkie_private(false);
+        ib_select_img_create_stuffkie.setTag(DrawableUtils.getMipmapName(mainActivity,R.mipmap.photostuffkieone));
+        stuffkieModel.setPhoto_id(ib_select_img_create_stuffkie.getTag().toString());
+    }
+    public void editMode(StuffkieModel stuffkieModel){
+        et_nameStuffkieCreate.setText(stuffkieModel.getName());
+        tb_stuffkiePrivacity.setChecked(stuffkieModel.isStuffkie_private());
+
+        if(!stuffkieModel.isStuffkie_private()){
+            tb_stuffkieDraft.setVisibility(View.GONE);
+        }
+        //obtenerImagen();
     }
     private void addDataToFirestore(){
         if(CheckUtil.handlerCheckName(mainActivity,et_nameStuffkieCreate,et_nameStuffkieCreateFull)){
