@@ -115,23 +115,63 @@ public class DeleteGeneralDialog extends Dialog implements View.OnClickListener 
     }
     private void deleteWorldkie() {
         prepareLoading();
-        collectionWorldkies.document(UID).addSnapshotListener((queryDocumentSnapshot, e) -> {
-            if (queryDocumentSnapshot != null) {
-                worldkieModel = WorldkieModel.fromSnapshot(queryDocumentSnapshot);
-                if(worldkieModel.isPhoto_default()){
-                collectionWorldkies.document(UID).delete().addOnSuccessListener(unused ->
-                        firebaseStorageWorldkie.getReference().child(UID).delete().addOnSuccessListener(unused1 -> {
-                            EfectsUtils.setAnimationsDialog("success", animationView);
-                            delayedDismiss();
-                        })
-                ).addOnFailureListener(ex -> {
+        collectionWorldkies.document(UID).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        WorldkieModel worldkieModel = WorldkieModel.fromSnapshot(documentSnapshot);
+                        if (!worldkieModel.isPhoto_default()) {
+                            // Borrar documento y luego la foto si no es default
+                            collectionWorldkies.document(UID).delete()
+                                    .addOnSuccessListener(unused -> {
+                                        if (firebaseStorageWorldkie != null) {
+                                            firebaseStorageWorldkie.getReference().child(UID).delete()
+                                                    .addOnSuccessListener(unused1 -> {
+                                                        EfectsUtils.setAnimationsDialog("success", animationView);
+                                                        delayedDismiss();
+                                                    })
+                                                    .addOnFailureListener(ex -> {
+                                                        EfectsUtils.setAnimationsDialog("fail", animationView);
+                                                        delayedDismiss();
+                                                        // Considera loguear el error de borrado de la foto
+                                                    });
+                                        } else {
+                                            // Si no hay storage, consideramos éxito la eliminación del documento
+                                            EfectsUtils.setAnimationsDialog("success", animationView);
+                                            delayedDismiss();
+                                        }
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        EfectsUtils.setAnimationsDialog("fail", animationView);
+                                        delayedDismiss();
+                                        // Considera loguear el error de borrado del documento
+                                    });
+                        } else {
+                            // Si la foto es default, solo borra el documento
+                            collectionWorldkies.document(UID).delete()
+                                    .addOnSuccessListener(unused -> {
+                                        EfectsUtils.setAnimationsDialog("success", animationView);
+                                        delayedDismiss();
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        EfectsUtils.setAnimationsDialog("fail", animationView);
+                                        delayedDismiss();
+                                        // Considera loguear el error de borrado del documento
+                                    });
+                        }
+                    } else {
+                        // El documento no existe
+                        EfectsUtils.setAnimationsDialog("fail", animationView);
+                        delayedDismiss();
+                        // Considera mostrar un mensaje de error al usuario
+                    }
+                })
+                .addOnFailureListener(e -> {
                     EfectsUtils.setAnimationsDialog("fail", animationView);
                     delayedDismiss();
+                    // Considera loguear el error al obtener el documento
                 });
-                }
-            }
-        });
     }
+
     private void delayedDismiss() {
         Completable.timer(5, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
