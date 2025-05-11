@@ -39,6 +39,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -47,6 +48,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -225,7 +227,8 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
         tb_worldkieDraft.setVisibility(View.GONE);
         putDefaultImage();
         source = "app";
-        worldkieModel.setUID(UID);
+        worldkieModel.setUID_AUTHOR(UID);
+
         worldkieModel.setPhoto_default(true);
         worldkieModel.setWorldkie_private(false);
         ib_select_img_create_worldkie.setTag(DrawableUtils.getMipmapName(mainActivity,R.mipmap.photoworldkieone));
@@ -312,6 +315,9 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
     }*/
     private void addDataToFirestore() {
         if(CheckUtil.handlerCheckName(mainActivity,et_nameWorldkieCreate,et_nameWorldkieCreateFull)) {
+            worldkieModel.setCreation_date(new Timestamp(Instant.now()));
+            worldkieModel.setLast_update(new Timestamp(Instant.now()));
+            worldkieModel.setPhoto_default(true);
             dialog.show();
             EfectsUtils.setAnimationsDialog("start",animationView);
             Completable.timer(3, TimeUnit.SECONDS)
@@ -390,6 +396,8 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
                                 if (worldkieModel.isDraft() != tb_worldkieDraft.isChecked()) {
                                     worldkieData.put("draft", tb_worldkieDraft.isChecked());
                                 }
+                                worldkieModel.setCreation_date(null);
+                                worldkieModel.setLast_update(new Timestamp(Instant.now()));
                                 dbWorldkies.document(worldkie_id).update(worldkieData).addOnSuccessListener(unused -> {
                                     if (source.equals("device")) {
                                         StorageReference userRef = storage.getReference().child(worldkie_id);
