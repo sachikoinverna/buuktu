@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buuktu.CharacterkieView;
 import com.example.buuktu.R;
-import com.example.buuktu.WorldkieView;
 import com.example.buuktu.models.Characterkie;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.NavigationUtils;
@@ -33,19 +32,19 @@ import java.util.ArrayList;
 public class CharacterkiesUserPreviewAdapter extends RecyclerView.Adapter<CharacterkiesUserPreviewAdapter.ViewHolder> {
 
 
-    private ArrayList<Characterkie> dataSet;
+    private final ArrayList<Characterkie> dataSet;
 
-    private Context context;
-    private FragmentManager fragmentManager;
+    private final Context context;
+    private final FragmentManager fragmentManager;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView iv_characterkie_preview_worldkie,iv_characterkie_private_preview;
-        private TextView tv_characterkie_preview_worldkie,tv_characterkie_preview_draft;
-        CardView cardView;
+        private final ImageView iv_characterkie_preview_worldkie;
+        private final ImageView iv_characterkie_private_preview;
+        private final TextView tv_characterkie_preview_worldkie;
+        private final TextView tv_characterkie_preview_draft;
+        final CardView cardView;
         //private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
         //private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-        FragmentManager fragmentManager;
-
         public ViewHolder(View view) {
             super(view);
             iv_characterkie_preview_worldkie =  view.findViewById(R.id.iv_characterkie_preview_worldkie);
@@ -102,19 +101,13 @@ public class CharacterkiesUserPreviewAdapter extends RecyclerView.Adapter<Charac
                 .isCharacterkie_private()){
             holder.getIv_characterkie_preview_worldkie().setVisibility(View.GONE);
         }
-        holder.getCardView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CharacterkieView characterkieView = new CharacterkieView();
-                Bundle bundle = new Bundle();
-                bundle.putString("mode","other");
-                bundle.putString("UID",dataSet.get(holder.getAdapterPosition()).getUID());
-                bundle.putString("UID_AUTHOR",dataSet.get(holder.getAdapterPosition()).getUID_AUTHOR());
-                bundle.putString("UID_WORLDKIE",dataSet.get(holder.getAdapterPosition()).getUID_WORLDKIE());
-
-                characterkieView.setArguments(bundle);
-                NavigationUtils.goNewFragment(fragmentManager,characterkieView);
-            }
+        holder.getCardView().setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("mode","other");
+            bundle.putString("UID",dataSet.get(holder.getAdapterPosition()).getUID());
+            bundle.putString("UID_AUTHOR",dataSet.get(holder.getAdapterPosition()).getUID_AUTHOR());
+            bundle.putString("UID_WORLDKIE",dataSet.get(holder.getAdapterPosition()).getUID_WORLDKIE());
+            NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new CharacterkieView());
         });
         if (dataSet.get(holder.getAdapterPosition()).isPhoto_default()) {
             FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();

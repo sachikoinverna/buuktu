@@ -31,17 +31,19 @@ import java.util.ArrayList;
 public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesUserPreviewAdapter.ViewHolder>{
 
 
-    private ArrayList<WorldkieModel> dataSet;
-    private FragmentManager fragmentManager;
+    private final ArrayList<WorldkieModel> dataSet;
+    private final FragmentManager fragmentManager;
 
-    private Context context;
+    private final Context context;
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         String lastPhotoId="";
-        private ImageView iv_worldkie_preview_worldkie,iv_stuffkie_private_preview;
-        private TextView tv_worldkie_preview_worldkie,tv_worldkie_preview_draft;
-        CardView cv_worldkie_preview;
+        private final ImageView iv_worldkie_preview_worldkie;
+        private final ImageView iv_stuffkie_private_preview;
+        private final TextView tv_worldkie_preview_worldkie;
+        private final TextView tv_worldkie_preview_draft;
+        final CardView cv_worldkie_preview;
         //private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
         //private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
@@ -117,8 +119,7 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
             bundle.putString("mode","other");
             bundle.putString("UID",UID);
             bundle.putString("UID_AUTHOR",UID_AUTHOR);
-            worldkieView.setArguments(bundle);
-            NavigationUtils.goNewFragment(fragmentManager,worldkieView);
+            NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,worldkieView);
         });
         if (worldkieModel.isPhoto_default()) {
             FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
@@ -162,7 +163,6 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
                         });
                     }
                 }
-                ;
             });
         }
     }

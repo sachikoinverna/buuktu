@@ -28,9 +28,9 @@ import java.util.ArrayList;
 public class SettingsFragment extends Fragment {
     MainActivity mainActivity;
     private RecyclerView rc_settings;
-    private ArrayList<SettingModel> dataSet = new ArrayList<>();
+    private final ArrayList<SettingModel> dataSet = new ArrayList<>();
     private SearchView searchView;
-    private ArrayList<SettingModel> filteredDataSet = new ArrayList<>();
+    private final ArrayList<SettingModel> filteredDataSet = new ArrayList<>();
     SettingsAdapter settingsAdapter;
     ImageButton backButton,ib_save,ib_profile_superior;
     public SettingsFragment() {

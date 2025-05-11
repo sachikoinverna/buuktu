@@ -2,6 +2,7 @@ package com.example.buuktu.adapters;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +16,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buuktu.R;
+import com.example.buuktu.StuffkieView;
 import com.example.buuktu.models.StuffkieModel;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.EfectsUtils;
+import com.example.buuktu.utils.NavigationUtils;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -28,18 +31,20 @@ import java.util.ArrayList;
 
 public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAdapter.ViewHolder>{
 
-    private ArrayList<StuffkieModel> dataSet;
-    private FragmentManager fragmentManager;
+    private final ArrayList<StuffkieModel> dataSet;
+    private final FragmentManager fragmentManager;
 
-    private Context context;
+    private final Context context;
     private Fragment menuWorldkie;
     public class ViewHolder extends RecyclerView.ViewHolder {
         String lastPhotoId="",lastName="";
-        private ImageView iv_stuffkie_photo_search,iv_stuffkie_private_search;
-        MaterialCardView cv_stuffkie_search;
-        TextView tv_stuffkie_name_search, tv_stuffkie_username_search;
-        private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
-        private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        private final ImageView iv_stuffkie_photo_search;
+        private final ImageView iv_stuffkie_private_search;
+        final MaterialCardView cv_stuffkie_search;
+        final TextView tv_stuffkie_name_search;
+        final TextView tv_stuffkie_username_search;
+        private final FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
+        private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         public ViewHolder(View view) {
             super(view);
             tv_stuffkie_username_search = view.findViewById(R.id.tv_stuffkie_username_search);
@@ -120,9 +125,11 @@ public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAd
         }
 
         holder.getCv_stuffkie_search().setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            //bundle.putString();
+            NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new StuffkieView());
 
         });
-        ;
 
         if (dataSet.get(holder.getAdapterPosition()).isPhoto_default()) {
             FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
@@ -160,7 +167,6 @@ public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAd
                         });
                     }
                 }
-                ;
             });
         }
     }

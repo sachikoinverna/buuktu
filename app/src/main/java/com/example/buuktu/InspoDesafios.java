@@ -63,8 +63,8 @@ public class InspoDesafios extends Fragment implements View.OnClickListener {
         rc_buttons_inspo_desafio.setLayoutManager(new GridLayoutManager(mainActivity, 2));
 
         ArrayList<CardItem> items = new ArrayList<>();
-        items.add(new CardItem(R.drawable.twotone_abc_24,"Wordkie of the day"));
-        items.add(new CardItem(R.drawable.twotone_pin_24,"Numberkie of the day"));
+        items.add(new CardItem(R.drawable.twotone_abc_24,mainActivity.getResources().getString(R.string.wordkie_of_the_day)));
+        items.add(new CardItem(R.drawable.twotone_pin_24,mainActivity.getResources().getString(R.string.numberkie_of_the_day)));
         setVisibility();
         setListeners();
         updateRecyclerView(items);
@@ -82,7 +82,7 @@ public class InspoDesafios extends Fragment implements View.OnClickListener {
         ib_back.setVisibility(View.VISIBLE);
     }
     public void updateRecyclerView(ArrayList<CardItem> cardItems){
-        adapter = new CardInspoDesafiosAdapter(mainActivity,cardItems,getParentFragmentManager());
+        adapter = new CardInspoDesafiosAdapter(mainActivity,cardItems,fragmentManager);
         rc_buttons_inspo_desafio.setAdapter(adapter);
         rc_buttons_inspo_desafio.setLayoutManager(new GridLayoutManager(mainActivity,2));
     }

@@ -1,7 +1,5 @@
 package com.example.buuktu.models;
 
-import android.os.Build;
-
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -9,7 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class WordOfTheDay {
-    private static FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private static final FirebaseFirestore db = FirebaseFirestore.getInstance();
     public static void obtenerPalabraDelDia(FirebaseCallback callback) {
         // Fecha actual para obtener el día del año
             int dayOfYear = LocalDate.now().getDayOfYear();

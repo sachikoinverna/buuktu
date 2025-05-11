@@ -1,8 +1,8 @@
 package com.example.buuktu.models;
 
 public class CardItem {
-    private int iconResId;
-    private String text;
+    private final int iconResId;
+    private final String text;
 
     public CardItem(int iconResId, String text) {
         this.iconResId = iconResId;

@@ -29,7 +29,7 @@ import java.util.ArrayList;
 public class AccountSettings extends Fragment implements View.OnClickListener {
     SettingAdapter settingAdapter;
     private RecyclerView rv_settings_profile;
-    private ArrayList<SettingModel> dataSet = new ArrayList<>();
+    private final ArrayList<SettingModel> dataSet = new ArrayList<>();
     String UID;
     FirebaseAuth firebaseAuth;
     RecyclerView rv_account_settings;
@@ -94,9 +94,9 @@ public class AccountSettings extends Fragment implements View.OnClickListener {
         ib_profile_superior = mainActivity.getIb_self_profile();
     }
     private void updateRecyclerView(ArrayList<SettingModel> settingModels){
-        settingAdapter = new SettingAdapter(settingModels,getContext(),UID);
+        settingAdapter = new SettingAdapter(settingModels,mainActivity,UID);
         rv_account_settings.setAdapter(settingAdapter);
-        rv_account_settings.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv_account_settings.setLayoutManager(new LinearLayoutManager(mainActivity));
     }
 
     @Override

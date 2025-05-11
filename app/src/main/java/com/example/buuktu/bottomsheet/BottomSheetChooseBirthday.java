@@ -33,13 +33,15 @@ import java.util.List;
 public class BottomSheetChooseBirthday extends BottomSheetDialogFragment implements View.OnClickListener{
     RadioButton rb_unknown_birthday,rb_full_birthday,rb_month_year_birthday,rb_month_birthday,rb_year_birthday,rb_checked;
     ImageButton bt_day_1,bt_day_2,bt_day_3,bt_day_4,bt_day_5,bt_day_6,bt_day_7,bt_day_8,bt_day_9,bt_day_10,bt_day_11,bt_day_12,bt_day_13,bt_day_14,bt_day_15,bt_day_16,bt_day_17,bt_day_18,bt_day_19,bt_day_20,bt_day_21,bt_day_22,bt_day_23,bt_day_24,bt_day_25,bt_day_26,bt_day_27,bt_day_28,bt_day_29,bt_day_30,bt_day_31,bt_previous_month_birthday_selector,bt_next_month_birthday_selector,bt_show_day_month_birthday_selector,bt_selected,ib_save_date_dialog;
-    int option;
+    final int option;
     Context context;
-    List<RadioButton> allRadioButtons = new ArrayList<>();
+    final List<RadioButton> allRadioButtons = new ArrayList<>();
     TextInputLayout et_yearBirthdayCreateFull;
     TextInputEditText et_yearBirthdayCreate;
     TextView tv_current_month_birthday_selector,tv_head_day_month_birthday_selector,tv_separator_day_month_birthday_selector;
-    int month,day,year;
+    int month;
+    int day;
+    int year;
     ImageButton[] dayButtons;
     ImageView iv_head_day_month_birthday_selector,iv_background_day_month_selector;
     boolean daysMonthsSelectorVisible, yearFieldVisible, daysOptionVisible,monthVisible,yearOptionVisible;
@@ -47,11 +49,8 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
     String[]meses;
     Drawable arrow_down,arrow_up;
     CreateCharacterkie createCharacterkie;
-    public BottomSheetChooseBirthday(int option,int year, int month, int day) {
+    public BottomSheetChooseBirthday(int option) {
         this.option = option;
-        this.year = year;
-        this.month = month;
-        this.day = day;
     }
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable

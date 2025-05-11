@@ -61,11 +61,8 @@ public class Notikies extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_notikies, container, false);
-        mainActivity = (MainActivity) getActivity();
-        backButton = mainActivity.getBackButton();
-        ib_profile_superior = mainActivity.getIb_self_profile();
+        initComponents(view);
         setVisibility();
-        rc_notikies_list = view.findViewById(R.id.rc_notikies_list);
         db = FirebaseFirestore.getInstance();
         notikiesCollection = db.collection("Notikies");
         notikieModelArrayList = new ArrayList<>();
@@ -87,14 +84,20 @@ public class Notikies extends Fragment {
         });
         return view;
     }
+    private void initComponents(View view){
+        mainActivity = (MainActivity) getActivity();
+        backButton = mainActivity.getBackButton();
+        ib_profile_superior = mainActivity.getIb_self_profile();
+        rc_notikies_list = view.findViewById(R.id.rc_notikies_list);
+    }
     private void setVisibility(){
         backButton.setVisibility(View.GONE);
         ib_profile_superior.setVisibility(View.VISIBLE);
 
     }
     private void updateRecyclerView(ArrayList<NotikieModel> notikieModelArrayList) {
-        NotikieListAdapter notikieListAdapter = new NotikieListAdapter(notikieModelArrayList, getContext(), getParentFragmentManager());
+        NotikieListAdapter notikieListAdapter = new NotikieListAdapter(notikieModelArrayList, mainActivity);
         rc_notikies_list.setAdapter(notikieListAdapter);
-        rc_notikies_list.setLayoutManager(new LinearLayoutManager(getContext()));
+        rc_notikies_list.setLayoutManager(new LinearLayoutManager(mainActivity));
     }
 }

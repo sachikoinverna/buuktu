@@ -7,18 +7,14 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputFilter;
-import android.text.Spanned;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -33,15 +29,11 @@ import com.example.buuktu.utils.CheckUtil;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.EfectsUtils;
 import com.example.buuktu.utils.UIUtils;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.Timestamp;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -65,19 +57,18 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
     Calendar calendar;
     int yearC, monthC, dayC;
     private FirebaseFirestore db;
-    TextInputLayout  textInputLayout,et_nameRegisterFilled,et_userRegisterFilled,dp_birthdayFilled ,et_pronounsRegisterFilled, et_emailRegisterFilled, et_telephoneRegisterFilled, et_passwordFilled ,et_passwordRepeatRegisterFilled;
+    TextInputLayout et_nameRegisterFilled,et_userRegisterFilled,dp_birthdayFilled ,et_pronounsRegisterFilled, et_emailRegisterFilled, et_telephoneRegisterFilled, et_passwordFilled ,et_passwordRepeatRegisterFilled;
 
     public TextInputEditText dp_birthday, et_nameRegister, et_pronounsRegister, et_userRegister, et_emailRegister, et_passwordRepeat, et_password, et_telephoneRegister;
     public Button tv_registerButton, tv_registerToLoginButton;
-            TextView tv_nameRegister, tv_emailRegister, tv_birthdayRegister, tv_passwordRegister, tv_passwordRepeatRegister, tv_pronounsRegister, tv_usernameRegister, tv_telephoneRegister;
     ImageButton bt_chooseImage,imageButtonActualBottomSheet;
     private Switch tb_privateAccountRegister;
     private FirebaseAuth auth;
     Uri image;
-    String errorMailFormat,dateSelected,email, username, password,source, photo_id, number, pronouns, name;
+    String email, username, password,source, photo_id, number, pronouns, name;
 
     Boolean privateAccount;
-    FirebaseStorage storage = FirebaseStorage.getInstance("gs://buuk-tu-users");
+    final FirebaseStorage storage = FirebaseStorage.getInstance("gs://buuk-tu-users");
     BottomSheetProfilePhoto bottomSheetProfilePhoto;
     boolean photo_default;
     Date birthday;
@@ -378,9 +369,7 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
                                                     Completable.timer(3, TimeUnit.SECONDS)
                                                             .subscribeOn(Schedulers.io())
                                                             .observeOn(AndroidSchedulers.mainThread())
-                                                            .subscribe(() -> {
-                                                                dialog.dismiss();
-                                                            });
+                                                            .subscribe(dialog::dismiss);
                                                     clearFields();
                                                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                                 }).addOnFailureListener(e -> {
@@ -389,9 +378,7 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
                                                     Completable.timer(3, TimeUnit.SECONDS)
                                                             .subscribeOn(Schedulers.io())
                                                             .observeOn(AndroidSchedulers.mainThread())
-                                                            .subscribe(() -> {
-                                                                dialog.dismiss();
-                                                            });
+                                                            .subscribe(dialog::dismiss);
                                                 });
                                             }
                                         });
@@ -405,7 +392,7 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
 
     public void showDatePickerDialog(View view) {
         DatePickerDialog date = new DatePickerDialog(this, (datePicker, year, month, day) -> {
-            dp_birthday.setText("" + day + "/" + (month + 1) + "/" + year);
+            dp_birthday.setText(day + "/" + (month + 1) + "/" + year);
             dp_birthdayFilled.setHintEnabled(true); // este es el TextInputLayout
             dayC = day;
             monthC = month;

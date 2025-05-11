@@ -31,9 +31,9 @@ public class EditNamePronounsUserDialog extends Dialog implements View.OnClickLi
     ImageButton ib_accept_dialog,ib_close_dialog ;
     TextInputLayout et_namepronounsFull;
     TextInputEditText et_namepronouns;
-    String type;
-    String value;
-    DocumentReference documentReference;
+    final String type;
+    final String value;
+    final DocumentReference documentReference;
     Context context;
     String lastName="", lastPronouns="",lastEmail="",name,pronouns,email;
     LottieAnimationView animationViewCreateEdit;
@@ -131,23 +131,21 @@ public class EditNamePronounsUserDialog extends Dialog implements View.OnClickLi
             Completable.timer(2, TimeUnit.SECONDS)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(() -> {
-                                user.updateEmail(newEmail).addOnCompleteListener(updateTask -> {
-                                    if (updateTask.isSuccessful()) {
-                                        EfectsUtils.setAnimationsDialog("success",animationViewCreateEdit);
-                                        Completable.timer(2, TimeUnit.SECONDS)
-                                                .subscribeOn(Schedulers.io())
-                                                .observeOn(AndroidSchedulers.mainThread())
-                                                .subscribe(this::dismiss);
-                                    } else {
-                                        EfectsUtils.setAnimationsDialog("fail",animationViewCreateEdit);
-                                        Completable.timer(2, TimeUnit.SECONDS)
-                                                .subscribeOn(Schedulers.io())
-                                                .observeOn(AndroidSchedulers.mainThread())
-                                                .subscribe(this::dismiss);
-                                    }
-                                });
-                            }
+                    .subscribe(() -> user.updateEmail(newEmail).addOnCompleteListener(updateTask -> {
+                        if (updateTask.isSuccessful()) {
+                            EfectsUtils.setAnimationsDialog("success",animationViewCreateEdit);
+                            Completable.timer(2, TimeUnit.SECONDS)
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(this::dismiss);
+                        } else {
+                            EfectsUtils.setAnimationsDialog("fail",animationViewCreateEdit);
+                            Completable.timer(2, TimeUnit.SECONDS)
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(this::dismiss);
+                        }
+                    })
                     );
         }
     }

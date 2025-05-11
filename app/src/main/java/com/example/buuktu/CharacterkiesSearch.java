@@ -2,7 +2,6 @@ package com.example.buuktu;
 
 import static android.widget.Toast.LENGTH_LONG;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;

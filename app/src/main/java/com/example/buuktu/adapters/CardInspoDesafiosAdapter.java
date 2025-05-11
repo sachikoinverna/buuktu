@@ -22,9 +22,9 @@ import java.util.List;
 public class CardInspoDesafiosAdapter extends RecyclerView.Adapter<CardInspoDesafiosAdapter.ViewHolder> {
 
     // Modelo de datos, por ejemplo:
-    private List<CardItem> dataSet;
-    private Context context;
-    FragmentManager fragmentManager;
+    private final List<CardItem> dataSet;
+    private final Context context;
+    final FragmentManager fragmentManager;
 
 
 
@@ -64,9 +64,9 @@ public class CardInspoDesafiosAdapter extends RecyclerView.Adapter<CardInspoDesa
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        MaterialCardView cardView;
-        ImageView icon;
-        TextView text;
+        final MaterialCardView cardView;
+        final ImageView icon;
+        final TextView text;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

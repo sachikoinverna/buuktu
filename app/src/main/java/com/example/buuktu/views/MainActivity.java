@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FirebaseAuth.AuthStateListener authStateListener;
     private String UID;
     private FirebaseFirestore db;
-    private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-users");
+    private final FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-users");
     InfoWorldkiesDialog infoWorldkiesDialog;
     InfoNotikiesDialog infoNotikiesDialog;
     InfoFutureFunctionDialog infoFutureFunctionDialog;
@@ -124,6 +124,7 @@ int colorEntero;
         });
         // Cargar el fragmento inicial solo si es la primera creación de la actividad
         if (savedInstanceState == null) {
+
             fragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, new Home()).setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out) // Ejemplo de animación
                     .addToBackStack(null)
@@ -132,14 +133,9 @@ int colorEntero;
         }
     }
     public void getProfileUser(View view){
-                ProfileView profileView = new ProfileView();
                 Bundle bundle = new Bundle();
                 bundle.putString("mode","self");
-                profileView.setArguments(bundle);
-                fragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container, profileView)
-                        .addToBackStack(null)
-                        .commit();
+        NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new ProfileView());
     }
     public void getInfo(View view){
         ib_info.setOnClickListener(v -> {

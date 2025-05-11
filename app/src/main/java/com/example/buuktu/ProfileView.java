@@ -82,8 +82,7 @@ public class ProfileView extends Fragment implements View.OnClickListener {
      *
      * @return A new instance of fragment ProfileView.
      */
-    // TODO: Rename and change types and number of parameters
-    public static ProfileView newInstance(String param1, String param2) {
+    public static ProfileView newInstance() {
         return new ProfileView();
     }
 
@@ -184,49 +183,50 @@ public class ProfileView extends Fragment implements View.OnClickListener {
 
                         }
                     });
-                    collectionWorldkies.whereEqualTo("UID_AUTHOR",UID).addSnapshotListener((queryDocumentSnapshots, ex) -> {
-                        if (ex != null) {
-                            Log.e("Error", ex.getMessage());
-                            Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
-                            return;
-                        }
+                        collectionWorldkies.whereEqualTo("UID_AUTHOR", UID).whereNotEqualTo("draft", true).addSnapshotListener((queryDocumentSnapshots, ex) -> {
+                            if (ex != null) {
+                                Log.e("Error", ex.getMessage());
+                                Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
+                                return;
+                            }
 
-                        if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
-                            worldkieArrayList.clear(); // Limpia la lista antes de agregar nuevos datos
-                            boolean foundData = false; // Add a flag
+                            if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
+                                worldkieArrayList.clear(); // Limpia la lista antes de agregar nuevos datos
+                                boolean foundData = false; // Add a flag
 
-                            for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
+                                for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
                                     worldkieArrayList.add(WorldkieModel.fromSnapshot(doc));
                                     foundData = true; // Set the flag to true if data is found
                                 }
-                            if (foundData) {
-                                tv_worldkiesPreviewUserkie.setVisibility(View.VISIBLE);
-                                cv_worldkiesPreviewUserkie.setVisibility(View.VISIBLE);
-                                updateRecyclerViewWorldkies(worldkieArrayList);
+                                if (foundData) {
+                                    tv_worldkiesPreviewUserkie.setVisibility(View.VISIBLE);
+                                    cv_worldkiesPreviewUserkie.setVisibility(View.VISIBLE);
+                                    updateRecyclerViewWorldkies(worldkieArrayList);
+                                } else {
+                                    tv_worldkiesPreviewUserkie.setVisibility(View.GONE);
+                                    cv_worldkiesPreviewUserkie.setVisibility(View.GONE);
+                                    updateRecyclerViewWorldkies(new ArrayList<>());
+                                }
                             } else {
                                 tv_worldkiesPreviewUserkie.setVisibility(View.GONE);
                                 cv_worldkiesPreviewUserkie.setVisibility(View.GONE);
                                 updateRecyclerViewWorldkies(new ArrayList<>());
                             }
-                        } else {
-                            tv_worldkiesPreviewUserkie.setVisibility(View.GONE);
-                            cv_worldkiesPreviewUserkie.setVisibility(View.GONE);
-                            updateRecyclerViewWorldkies(new ArrayList<>());
-                        }
-                    });
-                    collectionCharacterkies.whereEqualTo("UID_AUTHOR",UID).addSnapshotListener((queryDocumentSnapshots, ex) -> {
-                        if (ex != null) {
-                            Log.e("Error", e.getMessage());
-                            Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
-                            return;
-                        }
+                        });
 
-                        if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
-                            characterkieArrayList.clear(); // Limpia la lista antes de agregar nuevos datos
-                            boolean foundData = false; // Add a flag
+                        collectionCharacterkies.whereEqualTo("UID_AUTHOR", UID).whereNotEqualTo("draft", true).addSnapshotListener((queryDocumentSnapshots, ex) -> {
+                            if (ex != null) {
+                                Log.e("Error", e.getMessage());
+                                Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
+                                return;
+                            }
 
-                            for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
-                                //if (documentSnapshot.getBoolean("photo_default")) {
+                            if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
+                                characterkieArrayList.clear(); // Limpia la lista antes de agregar nuevos datos
+                                boolean foundData = false; // Add a flag
+
+                                for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
+                                    //if (documentSnapshot.getBoolean("photo_default")) {
 
                                     Characterkie characterkieModel = new Characterkie(
                                             doc.getId(),
@@ -236,21 +236,20 @@ public class ProfileView extends Fragment implements View.OnClickListener {
 
                                     characterkieArrayList.add(characterkieModel);
                                     foundData = true; // Set the flag to true if data is found
-                            }
-                            if (foundData) {
-                                tv_characterkiesPreviewUserkie.setVisibility(View.VISIBLE);
-                                cv_characterkiesPreviewUserkie.setVisibility(View.VISIBLE);
-                                updateRecyclerViewCharacterkies(characterkieArrayList);
-                            } else {
-                                tv_characterkiesPreviewUserkie.setVisibility(View.GONE);
-                                cv_characterkiesPreviewUserkie.setVisibility(View.GONE);
-                                updateRecyclerViewCharacterkies(new ArrayList<>());
+                                }
+                                if (foundData) {
+                                    tv_characterkiesPreviewUserkie.setVisibility(View.VISIBLE);
+                                    cv_characterkiesPreviewUserkie.setVisibility(View.VISIBLE);
+                                    updateRecyclerViewCharacterkies(characterkieArrayList);
+                                } else {
+                                    tv_characterkiesPreviewUserkie.setVisibility(View.GONE);
+                                    cv_characterkiesPreviewUserkie.setVisibility(View.GONE);
+                                    updateRecyclerViewCharacterkies(new ArrayList<>());
 
+                                }
                             }
-                        }
-                        ;
-                    });
-                }
+                        });
+                    }
                 else{
                     tv_characterkiesPreviewUserkie.setVisibility(View.GONE);
                     cv_characterkiesPreviewUserkie.setVisibility(View.GONE);
@@ -326,10 +325,10 @@ public class ProfileView extends Fragment implements View.OnClickListener {
 /*.addOnFailureListener(e -> {
                     Toast.makeText(this, "Error al buscar imagen", Toast.LENGTH_SHORT).show();
                     Log.e("Storage", "Error listando archivos: " + e.getMessage());
-                })*/;
+                })*/
 
 
-            // }
+        // }
             //}
     }
     private void updateRecyclerViewStuffkies(ArrayList<StuffkieModel> stuffkieArrayList) {

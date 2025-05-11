@@ -41,7 +41,7 @@ public class ProfileSettings extends Fragment implements View.OnClickListener {
     private SettingAdapter settingAdapter;
     MainActivity mainActivity;
     private RecyclerView rv_settings_profile;
-    private ArrayList<SettingModel> dataSet = new ArrayList<>();
+    private final ArrayList<SettingModel> dataSet = new ArrayList<>();
     Boolean lastValueProfilePrivate=false;
     Switch tb_profile_private_settings;
     FirebaseFirestore db;
@@ -114,7 +114,6 @@ public class ProfileSettings extends Fragment implements View.OnClickListener {
                 dataSet.add(new SettingModel(mainActivity.getResources().getString(R.string.pronouns), userkieModel.getPronouns()));
                 updateRecyclerView();
             }
-            ;
 
             // Inicialmente le asignamos el listener
             tb_profile_private_settings.setOnCheckedChangeListener(switchListener);

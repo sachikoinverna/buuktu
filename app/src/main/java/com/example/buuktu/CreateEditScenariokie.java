@@ -185,29 +185,20 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
         }
     }
     public void setPhotoNoDefault(){
-     /*   sc.setPhoto_default(false);
-        stuffkieModel.setPhoto_id(null);*/
+        scenariokieModel.setPhoto_default(false);
+        scenariokieModel.setPhoto_id(null);
     }
-    public void setPhotoDefault(){/*
-        stuffkieModel.setPhoto_default(true);
-        stuffkieModel.setPhoto_id(ib_select_img_create_stuffkie.getTag().toString());*/
+    public void setPhotoDefault(){
+        scenariokieModel.setPhoto_default(true);
+        scenariokieModel.setPhoto_id(ib_select_img_create_scenariokie.getTag().toString());
     }
     private void setListeners(){
         ib_select_img_create_scenariokie.setOnClickListener(this);
         ib_back.setOnClickListener(this);
         ib_save.setOnClickListener(this);
-        tb_scenariokiePrivacity.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                tb_scenariokieDraft.setVisibility(isChecked?View.VISIBLE:View.INVISIBLE);
+        tb_scenariokiePrivacity.setOnCheckedChangeListener((buttonView, isChecked) -> tb_scenariokieDraft.setVisibility(isChecked?View.VISIBLE:View.INVISIBLE));
+        tb_scenariokieDraft.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
-            }
-        });
-        tb_scenariokieDraft.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-            }
         });
     }
     @Override

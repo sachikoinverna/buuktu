@@ -22,6 +22,7 @@ import com.example.buuktu.dialogs.DeleteGeneralDialog;
 import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.EfectsUtils;
+import com.example.buuktu.utils.NavigationUtils;
 import com.example.buuktu.views.CreateEditWorldkie;
 import com.example.buuktu.views.WorldkieMenu;
 import com.google.firebase.firestore.CollectionReference;
@@ -33,19 +34,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHolder>{
-    private ArrayList<WorldkieModel> dataSet;
-    private FragmentManager fragmentManager;
+    private final ArrayList<WorldkieModel> dataSet;
+    private final FragmentManager fragmentManager;
 
-    private Context context;
+    private final Context context;
     private Fragment menuWorldkie;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private String lastPhotoId="",lastName="";
         private final TextView tv_name_wordlkie;
-        private ImageView iv_photo_wordlkie;
-        private ImageButton ib_enterToAWorldkie,ib_editAWorldkie,ib_deleteAWorldkie;
-        private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
-        private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        private final ImageView iv_photo_wordlkie;
+        private final ImageButton ib_enterToAWorldkie;
+        private final ImageButton ib_editAWorldkie;
+        private final ImageButton ib_deleteAWorldkie;
+        private final FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
+        private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         CollectionReference collectionWorldkies=firestore.collection("Worldkies");
         public ViewHolder(View view) {
             super(view);
@@ -140,19 +143,16 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
             holder.setLastName(name);
         }
         holder.getIb_enterToAWorldkie().setOnClickListener(v -> {
-            menuWorldkie = new WorldkieMenu();
             Bundle bundle = new Bundle();
             bundle.putString("worldkie_id", dataSet.get(holder.getAdapterPosition()).getUID());
-            menuWorldkie.setArguments(bundle);
-            fragmentManager.beginTransaction().replace(R.id.fragment_container, menuWorldkie).addToBackStack(null) // Permite regresar atrás con el botón de retroceso
-                    .commit();
+            NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new WorldkieMenu());
+
         });
         holder.getIb_editAWorldkie().setOnClickListener(v -> {
-            CreateEditWorldkie createEditWorldkie = new CreateEditWorldkie();
             Bundle bundle = new Bundle();
             bundle.putString("worldkie_id",dataSet.get(holder.getAdapterPosition()).getUID());
-            createEditWorldkie.setArguments(bundle);
-            fragmentManager.beginTransaction().replace(R.id.fragment_container,createEditWorldkie).addToBackStack(null).commit();
+            NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new CreateEditWorldkie());
+
         });
         holder.getIb_deleteAWorldkie().setOnClickListener(v -> {
             DeleteGeneralDialog deleteGeneralDialog = new DeleteGeneralDialog(context,"worldkie", worldkieModel.getUID());
@@ -190,7 +190,6 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
                         });
                     }
                 }
-                ;
             });
         }
 

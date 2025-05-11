@@ -15,7 +15,6 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.annotation.DrawableRes;
-import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -33,9 +32,6 @@ import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.EfectsUtils;
 import com.example.buuktu.utils.NavigationUtils;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -167,20 +163,12 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
         ib_select_img_create_worldkie.setOnClickListener(this);
         ib_back.setOnClickListener(this);
         ib_save.setOnClickListener(this);
-        tb_worldkiePrivacity.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                tb_worldkieDraft.setVisibility(
-                        isChecked ? View.VISIBLE : View.GONE);
-                worldkieModel.setWorldkie_private(isChecked);
-            }
+        tb_worldkiePrivacity.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            tb_worldkieDraft.setVisibility(
+                    isChecked ? View.VISIBLE : View.GONE);
+            worldkieModel.setWorldkie_private(isChecked);
         });
-        tb_worldkieDraft.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                worldkieModel.setDraft(isChecked);
-            }
-        });
+        tb_worldkieDraft.setOnCheckedChangeListener((buttonView, isChecked) -> worldkieModel.setDraft(isChecked));
     }
     private void getImage(){
         if(worldkieModel.isPhoto_default()){
@@ -216,7 +204,6 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
                 break;
                 }
             }
-            ;
         });
     }
     }

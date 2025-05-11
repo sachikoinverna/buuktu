@@ -28,11 +28,11 @@ public class BottomSheetChoosePronouns extends BottomSheetDialogFragment impleme
     TextInputEditText et_otherPronounsCharacterkie;
     TextInputLayout et_otherPronounsCharacterkieFilled;
     RadioButton rb_ella_la_le_a_characterkie,rb_el_lo_le_o_characterkie,rb_elle__le_e_characterkie,rb_ella_la_a_characterkie,rb_ellx_lx_x_characterkie,rb_other_characterkie,rb_unknown_pronouns_characterkie,rb_checked;
-    List<RadioButton> allRadioButtons = new ArrayList<>();
+    final List<RadioButton> allRadioButtons = new ArrayList<>();
     Context context;
     CreateCharacterkie createCharacterkie;
-    String optionString;
-    int option;
+    final String optionString;
+    final int option;
     ImageButton bt_save_pronouns_characterkie;
     public BottomSheetChoosePronouns(int option, String optionString) {
         this.option = option;

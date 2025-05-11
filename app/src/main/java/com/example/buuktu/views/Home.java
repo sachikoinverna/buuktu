@@ -35,7 +35,7 @@ import java.util.ArrayList;
  */
 public class Home extends Fragment implements View.OnClickListener {
     private String UID;
-    private FirebaseAuth auth = FirebaseAuth.getInstance();
+    private final FirebaseAuth auth = FirebaseAuth.getInstance();
     private FirebaseFirestore db;
     private ArrayList<WorldkieModel> worldkieModelArrayList;
     private RecyclerView rc_worldkies;

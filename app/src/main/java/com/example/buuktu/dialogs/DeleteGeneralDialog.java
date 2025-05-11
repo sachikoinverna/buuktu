@@ -13,8 +13,6 @@ import androidx.annotation.NonNull;
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.buuktu.R;
 import com.example.buuktu.utils.EfectsUtils;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -27,8 +25,9 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class DeleteGeneralDialog extends Dialog implements View.OnClickListener {
     ImageButton ib_accept_dialog, ib_close_dialog;
-    Context context;
-    String mode, UID;
+    final Context context;
+    final String mode;
+    final String UID;
     TextView tv_title_del, tv_text_del;
     ImageView iv_photo_del;
     FirebaseFirestore db;
@@ -134,18 +133,14 @@ public class DeleteGeneralDialog extends Dialog implements View.OnClickListener 
                 Completable.timer(5, TimeUnit.SECONDS)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(() -> {
-                            dismiss();
-                        });
+                        .subscribe(this::dismiss);
             }).addOnFailureListener(e -> {
                 animationView.setAnimation(R.raw.fail_anim);
                 animationView.playAnimation();
                 Completable.timer(5, TimeUnit.SECONDS)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(() -> {
-                            dismiss();
-                        });
+                        .subscribe(this::dismiss);
             })).addOnFailureListener(e -> {
 
             });

@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class WordNotificationReceiver extends BroadcastReceiver {
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    final FirebaseFirestore db = FirebaseFirestore.getInstance();
     @Override
     public void onReceive(Context context, Intent intent) {
         // Aquí deberías obtener la palabra del día desde almacenamiento o API

@@ -28,11 +28,11 @@ public class BottomSheetChooseGender extends BottomSheetDialogFragment implement
     TextInputLayout et_otherGendersCharacterkieFilled;
     TextInputEditText et_otherGendersCharacterkie;
     RadioButton rb_man_chracterkie,rb_woman_chracterkie,rb_gender_fluid_chracterkie,rb_no_binary_chracterkie,rb_other_gender_characterkie,rb_unknown_gender_characterkie,rb_checked;
-    List<RadioButton> allRadioButtons = new ArrayList<>();
+    final List<RadioButton> allRadioButtons = new ArrayList<>();
     Context context;
     CreateCharacterkie createCharacterkie;
-    int option;
-    String optionString;
+    final int option;
+    final String optionString;
     ImageButton bt_save_gender_characterkie;
     public BottomSheetChooseGender(int option, String optionString) {
         this.option = option;
@@ -113,21 +113,24 @@ public class BottomSheetChooseGender extends BottomSheetDialogFragment implement
         return dialog;
     }
     private void saveGender(){
-        if(rb_other_gender_characterkie.isChecked()){
-            String gender = et_otherGendersCharacterkie.getText().toString();
-            if(gender.isEmpty()){
-                et_otherGendersCharacterkieFilled.setError("Error");
-                et_otherGendersCharacterkie.requestFocus();
-                return;
+        int idChecked = rb_checked.getId();
+        if (idChecked != option) {
+            if (idChecked == R.id.rb_gender_unknown) {
+                String gender = et_otherGendersCharacterkie.getText().toString();
+                if (gender.isEmpty()) {
+                    et_otherGendersCharacterkieFilled.setError("Error");
+                    et_otherGendersCharacterkie.requestFocus();
+                    return;
+                }
+                createCharacterkie.setOptionGenderString(gender);
+                createCharacterkie.getCharacterkie().setStatus(gender);
+            } else {
+                createCharacterkie.setOptionGenderString(rb_checked.getText().toString());
+                createCharacterkie.getCharacterkie().setStatus(rb_checked.getTag().toString());
             }
-            createCharacterkie.setOptionGenderString(gender);
-            createCharacterkie.getCharacterkie().setStatus(gender);
-        }else {
-            createCharacterkie.setOptionGenderString(rb_checked.getText().toString());
+            createCharacterkie.setOptionGender(rb_checked.getId());
+            dismiss();
         }
-        createCharacterkie.setOptionGender(rb_checked.getId());
-        createCharacterkie.getCharacterkie().setStatus(rb_checked.getTag().toString());
-        dismiss();
     }
     @Override
     public void onClick(View v) {

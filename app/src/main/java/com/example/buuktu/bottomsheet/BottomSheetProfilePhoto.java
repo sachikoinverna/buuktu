@@ -33,7 +33,6 @@ import com.example.buuktu.views.MainActivity;
 import com.example.buuktu.views.Register;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class BottomSheetProfilePhoto extends BottomSheetDialogFragment implements View.OnClickListener{
@@ -41,7 +40,7 @@ public class BottomSheetProfilePhoto extends BottomSheetDialogFragment implement
     TextView tv_choose_photo_default,tv_choose_photo_gallery;
     int flag = Intent.FLAG_GRANT_READ_URI_PERMISSION;
     int RESULT_CODE = 0;
-    int REQUEST_CODE = 1;
+    final int REQUEST_CODE = 1;
     private ActivityResultLauncher<Intent> imagePickerLauncher;
     Register register;
     CreateEditWorldkie createEditWorldkie;
@@ -132,6 +131,10 @@ public class BottomSheetProfilePhoto extends BottomSheetDialogFragment implement
                                    // DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(drawable), createCharacterkie.getIb_select_img_create_worldkie(), R.color.brownMaroon);
                                     createEditStuffkie.setSource("device");
                                     createEditStuffkie.setPhotoNoDefault();
+                                } else if(createEditScenariokie!=null){
+                                    DrawableUtils.personalizarImagenCuadradoButton(context,150/6,7,R.color.brownMaroon,uri, createEditScenariokie.getIb_select_img_create_worldkie());
+                                    createEditScenariokie.setPhotoNoDefault();
+
                                 }
                                 dismiss();
                             } catch (IOException e) {

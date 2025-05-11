@@ -1,6 +1,5 @@
 package com.example.buuktu.adapters;
 
-import android.content.ComponentName;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,18 +16,19 @@ import com.example.buuktu.AccountSettings;
 import com.example.buuktu.ProfileSettings;
 import com.example.buuktu.R;
 import com.example.buuktu.models.SettingModel;
+import com.example.buuktu.utils.NavigationUtils;
 
 import java.util.ArrayList;
 
 public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHolder>{
 
-    private ArrayList<SettingModel> dataSet;
-    private Context context;
-    FragmentManager fragmentManager;
+    private final ArrayList<SettingModel> dataSet;
+    private final Context context;
+    final FragmentManager fragmentManager;
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView iv_photo_setting;
-        private TextView tv_name_setting;
-        private CardView card_view_setting_list_one;
+        private final ImageView iv_photo_setting;
+        private final TextView tv_name_setting;
+        private final CardView card_view_setting_list_one;
         public ViewHolder(View view) {
             super(view);
             iv_photo_setting =  view.findViewById(R.id.iv_photo_setting_profile);
@@ -72,13 +72,11 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
          holder.getIv_photo_setting().setImageDrawable(dataSet.get(holder.getAdapterPosition()).getDrawable());
          holder.getCard_view_setting_list_one().setOnClickListener(v -> {
              if (name.equals(context.getResources().getString(R.string.profile))) {
-                 ProfileSettings profileSettings = new ProfileSettings();
-                 fragmentManager.beginTransaction().replace(R.id.fragment_container, profileSettings) .addToBackStack(null) // Permite regresar atrás con el botón de retroceso
-                         .commit();
+                 NavigationUtils.goNewFragment(fragmentManager,new ProfileSettings());
+
              } else if (name.equals(context.getResources().getString(R.string.account))) {
-                 AccountSettings accountSettings = new AccountSettings();
-                 fragmentManager.beginTransaction().replace(R.id.fragment_container, accountSettings) .addToBackStack(null) // Permite regresar atrás con el botón de retroceso
-                         .commit();
+                 NavigationUtils.goNewFragment(fragmentManager,new AccountSettings());
+
              }
          });
     }

@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.core.app.NotificationCompatSideChannelService;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buuktu.R;
@@ -16,7 +15,6 @@ import com.example.buuktu.dialogs.CreateEditGeneralDialog;
 import com.example.buuktu.dialogs.EditNamePronounsUserDialog;
 import com.example.buuktu.dialogs.EditPasswordUserDialog;
 import com.example.buuktu.models.SettingModel;
-import com.example.buuktu.views.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -26,20 +24,19 @@ import java.util.ArrayList;
 
 public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.ViewHolder> {
 
-    private ArrayList<SettingModel> dataSet;
-    private Context context;
-    FirebaseFirestore db;
-    CollectionReference collectionReference;
-    DocumentReference documentReference;
-    FirebaseAuth firebaseAuth;
-    String UID;
+    private final ArrayList<SettingModel> dataSet;
+    private final Context context;
+    final FirebaseFirestore db;
+    final CollectionReference collectionReference;
+    final DocumentReference documentReference;
+    final FirebaseAuth firebaseAuth;
+    final String UID;
     EditNamePronounsUserDialog editNamePronounsUserDialog;
-    CreateEditGeneralDialog dialogCreateEdit;
+    final CreateEditGeneralDialog dialogCreateEdit;
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView tv_name_setting_profile,tv_value_setting_profile;
-        private CardView card_view_setting_list_profile;
-        //private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
-        //private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        private final TextView tv_name_setting_profile;
+        private final TextView tv_value_setting_profile;
+        private final CardView card_view_setting_list_profile;
         public ViewHolder(View view) {
             super(view);
             tv_value_setting_profile =  view.findViewById(R.id.tv_value_setting_profile);

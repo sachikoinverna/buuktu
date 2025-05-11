@@ -86,6 +86,7 @@ public class CheckUtil {
         try {
             number = phoneUtil.parse(text, "ES");
         } catch (NumberParseException e) {
+
             System.err.println("NumberParseException was thrown: " + e.toString());
         }
         if (CheckUtil.checkTextEmpty(text)) {
@@ -119,10 +120,6 @@ public class CheckUtil {
         }
         CheckUtil.setErrorMessage(null, textInputLayout);
         return true;
-    }
-    public static boolean checkSpecialChar(String text)
-    {
-        return text.matches("[!@#$%&*()+=|<>?{}.,]");
     }
     public static boolean checkNumbers(String text){
             return text.matches(".*\\d.*"); // Verifica si hay algún dígito en el texto
@@ -160,7 +157,7 @@ public class CheckUtil {
         return false;
     }
     public static boolean checkSpecialCharacter(String password){
-        return password != null && password.matches(".*[\\W_].*");
+        return password.matches(".*[\\W_].*");
     }
 
     public static void setErrorMessage(String error, TextInputLayout textInputLayout) {

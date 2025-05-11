@@ -28,10 +28,10 @@ public class BottomSheetChooseState extends BottomSheetDialogFragment implements
     TextInputEditText et_otherStatusCharacterkie;
     ImageButton bt_save_status_characterkie;
     RadioButton rb_alive_status_characterkie,rb_dead_status_characterkie,rb_unknown_status_characterkie,rb_other_status_characterkie,rb_checked;
-    List<RadioButton> allRadioButtons = new ArrayList<>();
+    final List<RadioButton> allRadioButtons = new ArrayList<>();
     CreateCharacterkie createCharacterkie;
-    int option;
-    String optionString;
+    final int option;
+    final String optionString;
     public BottomSheetChooseState(int option,String optionString) {
         this.option = option;
         this.optionString = optionString;
@@ -85,22 +85,25 @@ public class BottomSheetChooseState extends BottomSheetDialogFragment implements
         bt_save_status_characterkie.setOnClickListener(this);
     }
     private void saveOption(){
-        if(rb_other_status_characterkie.isChecked()){
-            String textString = et_otherStatusCharacterkie.getText().toString();
-            if (textString.isEmpty()) {
-                et_otherStatusCharacterkieFilled.setError("Este campo no puede estar vacío");
-                et_otherStatusCharacterkie.requestFocus();
+        int idChecked = rb_checked.getId();
+        if (idChecked != option) {
+            if (idChecked==R.id.rb_status_unknown) {
+                String textString = et_otherStatusCharacterkie.getText().toString();
+                if (textString.isEmpty()) {
+                    et_otherStatusCharacterkieFilled.setError("Este campo no puede estar vacío");
+                    et_otherStatusCharacterkie.requestFocus();
 
-                return; // 🚫 No cerrar
+                    return; // 🚫 No cerrar
+                }
+                createCharacterkie.getCharacterkie().setStatus(textString);
+                createCharacterkie.setOptionStatusString(textString);
+            } else {
+                createCharacterkie.setOptionStatusString(rb_checked.getText().toString());
+                createCharacterkie.getCharacterkie().setStatus(rb_checked.getTag().toString());
             }
-            createCharacterkie.getCharacterkie().setStatus(textString);
-            createCharacterkie.setOptionStatusString(textString);
-        }else {
-            createCharacterkie.setOptionStatusString(rb_checked.getText().toString());
-            createCharacterkie.getCharacterkie().setStatus(rb_checked.getTag().toString());
+            createCharacterkie.setOptionStatus(rb_checked.getId());
+            dismiss(); // ✅ Solo se cierra si todo está bien
         }
-        createCharacterkie.setOptionStatus(rb_checked.getId());
-        dismiss(); // ✅ Solo se cierra si todo está bien
     }
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {

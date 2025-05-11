@@ -1,6 +1,7 @@
 package com.example.buuktu.adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +13,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.buuktu.CharacterkieView;
 import com.example.buuktu.R;
 import com.example.buuktu.models.Characterkie;
 import com.example.buuktu.utils.DrawableUtils;
+import com.example.buuktu.utils.NavigationUtils;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -23,17 +26,19 @@ import java.util.ArrayList;
 
 public class CharacterkieSearchAdapter extends RecyclerView.Adapter<CharacterkieSearchAdapter.ViewHolder>{
 
-    private ArrayList<Characterkie> dataSet;
-    private FragmentManager fragmentManager;
+    private final ArrayList<Characterkie> dataSet;
+    private final FragmentManager fragmentManager;
 
-    private Context context;
+    private final Context context;
     private Fragment menuWorldkie;
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView iv_characterkie_photo_search,iv_characterkie_private_search;
-        MaterialCardView cv_characterkie_search;
-        TextView tv_characterkie_name_search, tv_characterkie_username_search;
-        private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
-        private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        private final ImageView iv_characterkie_photo_search;
+        private final ImageView iv_characterkie_private_search;
+        final MaterialCardView cv_characterkie_search;
+        final TextView tv_characterkie_name_search;
+        final TextView tv_characterkie_username_search;
+        private final FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
+        private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         public ViewHolder(View view) {
             super(view);
             tv_characterkie_username_search = view.findViewById(R.id.tv_characterkie_username_search);
@@ -95,9 +100,10 @@ public class CharacterkieSearchAdapter extends RecyclerView.Adapter<Characterkie
         }*/
 
         holder.getCv_characterkie_search().setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new CharacterkieView());
 
         });
-        ;
         DrawableUtils.personalizarImagenCircle(context,DrawableUtils.drawableToBitmap(holder.iv_characterkie_photo_search.getDrawable()),holder.getIv_characterkie_photo_search(),R.color.brownMaroon);
 
         //De esra forma establacemos las imagenes de la lista

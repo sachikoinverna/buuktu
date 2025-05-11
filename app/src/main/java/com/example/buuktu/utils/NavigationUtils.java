@@ -1,5 +1,7 @@
 package com.example.buuktu.utils;
 
+import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -21,5 +23,9 @@ public class NavigationUtils {
                 .replace(R.id.fragment_container, fragment)
                 .addToBackStack(null)
                 .commit();
+    }
+    public static void goNewFragmentWithBundle(Bundle bundle,FragmentManager fragmentManager,Fragment fragment){
+        fragment.setArguments(bundle);
+        goNewFragment(fragmentManager, fragment);
     }
 }

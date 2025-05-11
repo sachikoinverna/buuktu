@@ -3,7 +3,6 @@ package com.example.buuktu;
 import static android.widget.Toast.LENGTH_LONG;
 
 import android.animation.Animator;
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -30,7 +29,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.buuktu.dialogs.CreateEditGeneralDialog;
 import com.example.buuktu.models.StuffkieModel;
-import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.utils.CheckUtil;
 import com.example.buuktu.utils.EfectsUtils;
 import com.example.buuktu.utils.RoundedBorderSquareTransformation;
@@ -49,7 +47,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -192,7 +189,6 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
                         break;
                     }
                 }
-                ;
             });
         }
     }
@@ -278,9 +274,7 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
                                     Completable.timer(3, TimeUnit.SECONDS)
                                             .subscribeOn(Schedulers.io())
                                             .observeOn(AndroidSchedulers.mainThread())
-                                            .subscribe(() -> {
-                                                dialog.dismiss();
-                                            });
+                                            .subscribe(() -> dialog.dismiss());
                                 });
                             }
                     );
@@ -291,19 +285,11 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
         ib_save.setOnClickListener(this);
         ib_back.setOnClickListener(this);
         ib_select_img_create_stuffkie.setOnClickListener(this);
-        tb_stuffkiePrivacity.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                tb_stuffkieDraft.setVisibility(isChecked?View.VISIBLE:View.INVISIBLE);
-                stuffkieModel.setStuffkie_private(isChecked);
-            }
+        tb_stuffkiePrivacity.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            tb_stuffkieDraft.setVisibility(isChecked?View.VISIBLE:View.INVISIBLE);
+            stuffkieModel.setStuffkie_private(isChecked);
         });
-        tb_stuffkieDraft.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                stuffkieModel.setDraft(isChecked);
-            }
-        });
+        tb_stuffkieDraft.setOnCheckedChangeListener((buttonView, isChecked) -> stuffkieModel.setDraft(isChecked));
     }
     public void setImageUri(Uri image){
         this.image=image;

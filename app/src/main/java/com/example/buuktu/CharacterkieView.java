@@ -189,9 +189,7 @@ private void getProfilePhoto() {
                     });
                 }
             }
-        }).addOnFailureListener(e -> {
-                    Log.e("Storage", "Error listando archivos: " + e.getMessage());
-                });
+        }).addOnFailureListener(e -> Log.e("Storage", "Error listando archivos: " + e.getMessage()));
 
 
         }

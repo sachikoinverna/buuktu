@@ -15,7 +15,6 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.buuktu.CharacterkieView;
 import com.example.buuktu.R;
 import com.example.buuktu.StuffkieView;
 import com.example.buuktu.models.StuffkieModel;
@@ -31,15 +30,17 @@ import java.util.ArrayList;
 
 public class StuffkiesUserPreviewAdapter extends RecyclerView.Adapter<StuffkiesUserPreviewAdapter.ViewHolder>{
 
-    private ArrayList<StuffkieModel> dataSet;
-    private Context context;
-    private FragmentManager fragmentManager;
+    private final ArrayList<StuffkieModel> dataSet;
+    private final Context context;
+    private final FragmentManager fragmentManager;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         String lastPhotoId="";
-        private ImageView iv_stuffkie_preview_worldkie,iv_stuffkie_private_preview;
-        private TextView tv_stuffkie_preview_worldkie,tv_stuffkie_preview_draft;
-        CardView cv_stuffkie_preview;
+        private final ImageView iv_stuffkie_preview_worldkie;
+        private final ImageView iv_stuffkie_private_preview;
+        private final TextView tv_stuffkie_preview_worldkie;
+        private final TextView tv_stuffkie_preview_draft;
+        final CardView cv_stuffkie_preview;
         //private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
         //private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
@@ -107,19 +108,13 @@ public class StuffkiesUserPreviewAdapter extends RecyclerView.Adapter<StuffkiesU
         if(!dataSet.get(holder.getAdapterPosition()).isStuffkie_private()){
             holder.getIv_stuffkie_private_preview().setVisibility(View.GONE);
         }
-        holder.getCv_stuffkie_preview().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                StuffkieView stuffkieView = new StuffkieView();
-                Bundle bundle = new Bundle();
-                bundle.putString("mode","other");
-                bundle.putString("UID",dataSet.get(holder.getAdapterPosition()).getUID());
-               // bundle.putString("UID_AUTHOR",dataSet.get(holder.getAdapterPosition()).getUID_AUTHOR());
-               // bundle.putString("UID_WORLDKIE",dataSet.get(holder.getAdapterPosition()).getUID_WORLDKIE());
-
-                stuffkieView.setArguments(bundle);
-                NavigationUtils.goNewFragment(fragmentManager,stuffkieView);
-            }
+        holder.getCv_stuffkie_preview().setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("mode","other");
+            bundle.putString("UID",dataSet.get(holder.getAdapterPosition()).getUID());
+           // bundle.putString("UID_AUTHOR",dataSet.get(holder.getAdapterPosition()).getUID_AUTHOR());
+           // bundle.putString("UID_WORLDKIE",dataSet.get(holder.getAdapterPosition()).getUID_WORLDKIE());
+            NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new StuffkieView());
         });
         if (dataSet.get(holder.getAdapterPosition()).isPhoto_default()) {
             FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
@@ -159,7 +154,6 @@ public class StuffkiesUserPreviewAdapter extends RecyclerView.Adapter<StuffkiesU
 
                     }
                 }
-                ;
             });
 
 

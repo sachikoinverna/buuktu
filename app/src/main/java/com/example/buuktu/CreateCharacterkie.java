@@ -1,22 +1,17 @@
 package com.example.buuktu;
 
-import static android.widget.Toast.LENGTH_LONG;
-
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
@@ -35,14 +30,12 @@ import com.example.buuktu.bottomsheet.BottomSheetChooseState;
 import com.example.buuktu.bottomsheet.BottomSheetProfilePhoto;
 import com.example.buuktu.dialogs.CreateEditGeneralDialog;
 import com.example.buuktu.models.Characterkie;
-import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.utils.CheckUtil;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.EfectsUtils;
 import com.example.buuktu.utils.NavigationUtils;
 import com.example.buuktu.utils.RoundedBorderSquareTransformation;
 import com.example.buuktu.views.MainActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -195,16 +188,16 @@ ImageButton bt_basic_info_characterkies;
         if (resId != 0) {
             String textString = mainActivity.getString(resId);
             if(option.equals(gender)) {
-                optionGender = mainActivity.getResources().getIdentifier("rb" + key, "id", mainActivity.getPackageName());
+                optionGender = mainActivity.getResources().getIdentifier("rb_" + key, "id", mainActivity.getPackageName());
                 bt_gender_characterkie.setText(textString);
             } else if (option.equals(pronouns)) {
-                optionPronouns = mainActivity.getResources().getIdentifier("rb" + key, "id", mainActivity.getPackageName());
+                optionPronouns = mainActivity.getResources().getIdentifier("rb_" + key, "id", mainActivity.getPackageName());
                 bt_pronouns_characterkie.setText(textString);
             } else if (option.equals(status)) {
-                optionStatus = mainActivity.getResources().getIdentifier("rb" + key, "id", mainActivity.getPackageName());
+                optionStatus = mainActivity.getResources().getIdentifier("rb_" + key, "id", mainActivity.getPackageName());
                 bt_state_characterkie.setText(textString);
             } else if (option.equals(birthday)) {
-                optionBirthday = mainActivity.getResources().getIdentifier("rb" + key, "id", mainActivity.getPackageName());
+                optionBirthday = mainActivity.getResources().getIdentifier("rb_" + key, "id", mainActivity.getPackageName());
                 bt_state_characterkie.setText(characterkie.getBirthday());
             }
         } else {
@@ -290,7 +283,6 @@ ImageButton bt_basic_info_characterkies;
                         });
                     }
                 }
-                ;
             });
         }
     }
@@ -309,6 +301,10 @@ ImageButton bt_basic_info_characterkies;
         optionBirthday = R.id.rb_unknown_birthday;
         optionGender = R.id.rb_gender_unknown;
         optionStatus = R.id.rb_status_unknown;
+        characterkie.setPronouns("pronouns_unknown_characterkie");
+        characterkie.setGender("gender_unknown");
+        characterkie.setStatus("status_unknown");
+
         optionPronounsString = getOptionTextByRadioButtonId(optionPronouns,R.layout.choose_pronouns_dialog);
         optionGenderString = getOptionTextByRadioButtonId(optionGender,R.layout.choose_gender_dialog);
         optionStatusString = getOptionTextByRadioButtonId(optionStatus,R.layout.choose_status_dialog);
@@ -515,9 +511,7 @@ ImageButton bt_basic_info_characterkies;
                                     Completable.timer(3, TimeUnit.SECONDS)
                                             .subscribeOn(Schedulers.io())
                                             .observeOn(AndroidSchedulers.mainThread())
-                                            .subscribe(() -> {
-                                                dialog.dismiss();
-                                            });
+                                            .subscribe(() -> dialog.dismiss());
                                 });
                             }
                     );
@@ -558,40 +552,32 @@ ImageButton bt_basic_info_characterkies;
             Completable.timer(3, TimeUnit.SECONDS)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(() -> {
-                                characterkieCollection.document(characterkie_id).update(characterkie.toMap()).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
-                                        if (!characterkie.isPhoto_default()) {
-                                            StorageReference userRef = storage.getReference().child(worldkie_id);
-                                            userRef.child("profile" + DrawableUtils.getExtensionFromUri(getContext(), image)).putFile(image);
+                    .subscribe(() -> characterkieCollection.document(characterkie_id).update(characterkie.toMap()).addOnSuccessListener(unused -> {
+                        if (!characterkie.isPhoto_default()) {
+                            StorageReference userRef = storage.getReference().child(worldkie_id);
+                            userRef.child("profile" + DrawableUtils.getExtensionFromUri(getContext(), image)).putFile(image);
 
-                                        }
-                                        EfectsUtils.setAnimationsDialog("success",animationView);
+                        }
+                        EfectsUtils.setAnimationsDialog("success",animationView);
 
-                                        Completable.timer(3, TimeUnit.SECONDS)
-                                                .subscribeOn(Schedulers.io())
-                                                .observeOn(AndroidSchedulers.mainThread())
-                                                .subscribe(() -> {
-                                                    dialog.dismiss();
-                                                    NavigationUtils.goBack(fragmentManager,mainActivity);
-                                                });
-
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        EfectsUtils.setAnimationsDialog("fail",animationView);
-                                        Completable.timer(5, TimeUnit.SECONDS)
-                                                .subscribeOn(Schedulers.io())
-                                                .observeOn(AndroidSchedulers.mainThread())
-                                                .subscribe(() -> {
-                                                    animationView.setVisibility(View.GONE);
-                                                    dialog.dismiss();
-                                                });
-                                    }
+                        Completable.timer(3, TimeUnit.SECONDS)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(() -> {
+                                    dialog.dismiss();
+                                    NavigationUtils.goBack(fragmentManager,mainActivity);
                                 });
-                            }
+
+                    }).addOnFailureListener(e -> {
+                        EfectsUtils.setAnimationsDialog("fail",animationView);
+                        Completable.timer(5, TimeUnit.SECONDS)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(() -> {
+                                    animationView.setVisibility(View.GONE);
+                                    dialog.dismiss();
+                                });
+                    })
                     );
         }
     }

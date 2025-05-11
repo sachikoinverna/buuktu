@@ -65,15 +65,10 @@ public class Notes extends Fragment implements View.OnClickListener {
 
         // Adaptador
         noteAdapter = new NoteAdapter(requireContext(), items, item -> {
-            Note note = new Note();
             Bundle bundle = new Bundle();
             bundle.putString("note_id", item.getUID());
-            note.setArguments(bundle);
-            FragmentManager fragmentManager = getParentFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, note)
-                    .addToBackStack(null)
-                    .commit();
+            NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new Note());
+
         });
         recyclerView.setAdapter(noteAdapter);
 
@@ -163,12 +158,7 @@ public class Notes extends Fragment implements View.OnClickListener {
         if(v.getId()==R.id.ib_back){
             NavigationUtils.goBack(fragmentManager,mainActivity);
         } else if (v.getId()==R.id.fb_add_note_list_notes) {
-            Note note = new Note();
-            FragmentManager fragmentManager = getParentFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, note)
-                    .addToBackStack(null)
-                    .commit();
+            NavigationUtils.goNewFragment(fragmentManager,new Note());
         }
     }
 }

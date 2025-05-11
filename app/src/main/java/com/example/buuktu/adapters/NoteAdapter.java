@@ -25,7 +25,7 @@ import java.util.List;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
-    private List<NotekieModel> notekieModels;
+    private final List<NotekieModel> notekieModels;
     private final Context context;
     private final OnItemClickListener listener;
 
@@ -65,11 +65,13 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        MaterialCardView cardView;
-        TextView content, title;
-        ImageButton ib_option_note_item, ib_delete_note_item;
-        FirebaseFirestore db;
-        CollectionReference collectionNotekies;
+        final MaterialCardView cardView;
+        final TextView content;
+        final TextView title;
+        final ImageButton ib_option_note_item;
+        final ImageButton ib_delete_note_item;
+        final FirebaseFirestore db;
+        final CollectionReference collectionNotekies;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -1,7 +1,5 @@
 package com.example.buuktu;
 
-import static android.widget.Toast.LENGTH_LONG;
-
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -19,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.buuktu.adapters.CharacterkiesUserPreviewAdapter;
 import com.example.buuktu.adapters.StuffkiesUserPreviewAdapter;
@@ -49,8 +46,8 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class WorldkieView extends Fragment implements View.OnClickListener {
-    ArrayList<Characterkie> characterkieArrayList = new ArrayList<>();
-    ArrayList<StuffkieModel> stuffkieArrayList = new ArrayList<>();
+    final ArrayList<Characterkie> characterkieArrayList = new ArrayList<>();
+    final ArrayList<StuffkieModel> stuffkieArrayList = new ArrayList<>();
     FirebaseFirestore db;
     ImageButton ib_worldkieView,ib_back,ib_save;
     ImageView iv_locked_worldkie;
@@ -150,7 +147,7 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
                     Query query = collectionStuffkies.whereEqualTo("UID_WORLDKIE", UID);
 
                     if ((!worldkieModel.isWorldkie_private() && mode.equals("other") && !userkieModel.isProfile_private())){
-                        query = query.whereEqualTo("draft", false);
+                        query = query.whereNotEqualTo("draft", false);
                     }
                     query.addSnapshotListener((queryDocumentSnapshots, e) -> {
                         if (e != null) {
@@ -192,7 +189,7 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
                         Query queryCharacterkie = collectionCharacterkies.whereEqualTo("UID_WORLDKIE", UID);
 
                         if ((!worldkieModel.isWorldkie_private() && mode.equals("other") && !userkieModel.isProfile_private())) {
-                            queryCharacterkie = query.whereEqualTo("draft", false);
+                            queryCharacterkie = queryCharacterkie.whereNotEqualTo("draft", false);
                         }
                         queryCharacterkie.addSnapshotListener((queryDocumentSnapshots, ex) -> {
                                     if (ex != null) {
@@ -322,13 +319,11 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
                         });
                     }
                 }
-                ;
             });
 /*.addOnFailureListener(e -> {
                     Toast.makeText(this, "Error al buscar imagen", Toast.LENGTH_SHORT).show();
                     Log.e("Storage", "Error listando archivos: " + e.getMessage());
                 })*/
-            ;
 
 
             // }

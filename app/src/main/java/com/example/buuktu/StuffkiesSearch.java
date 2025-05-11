@@ -30,7 +30,7 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class StuffkiesSearch extends Fragment {
-    private ArrayList<StuffkieModel> filteredDataSet = new ArrayList<>();
+    private final ArrayList<StuffkieModel> filteredDataSet = new ArrayList<>();
 
     private ArrayList<StuffkieModel> stuffkieModelArrayList;
     CollectionReference collectionStuffkies;

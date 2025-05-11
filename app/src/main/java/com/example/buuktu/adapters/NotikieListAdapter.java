@@ -8,8 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buuktu.R;
@@ -25,17 +23,14 @@ import java.util.Locale;
 
 public class NotikieListAdapter extends RecyclerView.Adapter<NotikieListAdapter.ViewHolder>{
 
-    private ArrayList<NotikieModel> dataSet;
-    private FragmentManager fragmentManager;
-
-    private Context context;
-    private Fragment menuWorldkie;
+    private final ArrayList<NotikieModel> dataSet;
+    private final Context context;
     public class ViewHolder extends RecyclerView.ViewHolder {
-        MaterialCardView cv_notikie_list_layout;
-        TextView tv_text_notikie_list_layout,tv_date_notikie_list_layout;
-        ImageView iv_icon_notikie_list_layout;
-      //  private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
-        private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        final MaterialCardView cv_notikie_list_layout;
+        final TextView tv_text_notikie_list_layout;
+        final TextView tv_date_notikie_list_layout;
+        final ImageView iv_icon_notikie_list_layout;
+        private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         public ViewHolder(View view) {
             super(view);
             iv_icon_notikie_list_layout = view.findViewById(R.id.iv_icon_notikie_list_layout);
@@ -44,9 +39,6 @@ public class NotikieListAdapter extends RecyclerView.Adapter<NotikieListAdapter.
             tv_text_notikie_list_layout = view.findViewById(R.id.tv_text_notikie_list_layout);
         }
 
-      //  public FirebaseStorage getFirebaseStorage() {
-      //      return firebaseStorage;
-      //  }
         public FirebaseFirestore getDb() {
             return firestore;
         }
@@ -68,10 +60,9 @@ public class NotikieListAdapter extends RecyclerView.Adapter<NotikieListAdapter.
         }
     }
     //Constructor donde pasamos la lista de productos y el contexto
-    public NotikieListAdapter(ArrayList<NotikieModel> dataSet, Context ctx, FragmentManager fragmentManager) {
+    public NotikieListAdapter(ArrayList<NotikieModel> dataSet, Context ctx) {
         this.dataSet = dataSet;
         this.context = ctx;
-        this.fragmentManager = fragmentManager;
     }
     //Se llama cada vez que se hace scroll en la pantalla y los elementos desaparecen y aparecen
     @Override
@@ -112,11 +103,7 @@ public class NotikieListAdapter extends RecyclerView.Adapter<NotikieListAdapter.
         }
 
         // Mostrar el tiempo transcurrido o la fecha completa
-        System.out.println(timeAgo);
         holder.getTv_date_notikie_list_layout().setText(timeAgo);
-        holder.getCv_notikie_list_layout().setOnClickListener(v -> {
-
-        });
     }
 private String getTimeAgo(long seconds, long minutes, long hours, long days) {
     if (days > 0) {

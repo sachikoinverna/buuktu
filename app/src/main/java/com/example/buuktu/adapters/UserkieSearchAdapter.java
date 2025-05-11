@@ -24,6 +24,7 @@ import com.example.buuktu.R;
 import com.example.buuktu.models.UserkieModel;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.EfectsUtils;
+import com.example.buuktu.utils.NavigationUtils;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -33,20 +34,21 @@ import java.util.ArrayList;
 
 public class UserkieSearchAdapter extends RecyclerView.Adapter<UserkieSearchAdapter.ViewHolder> {
 
-    private ArrayList<UserkieModel> dataSet;
-    private FragmentManager fragmentManager;
+    private final ArrayList<UserkieModel> dataSet;
+    private final FragmentManager fragmentManager;
 
-    private Context context;
+    private final Context context;
     private Fragment menuWorldkie;
     public class ViewHolder extends RecyclerView.ViewHolder {
         String lastPhotoId="",lastName="",lastUsername="";
         boolean lastPrivacity=false;
-        private ImageView iv_userkie_private_search;
-        ImageButton iv_userkie_photo_search;
-        MaterialCardView cv_userkie_search;
-        TextView tv_userkie_name_search, tv_userkie_username_search;
-        private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
-        private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        private final ImageView iv_userkie_private_search;
+        final ImageButton iv_userkie_photo_search;
+        final MaterialCardView cv_userkie_search;
+        final TextView tv_userkie_name_search;
+        final TextView tv_userkie_username_search;
+        private final FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
+        private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         public ViewHolder(View view) {
             super(view);
             tv_userkie_username_search = view.findViewById(R.id.tv_userkie_username_search);
@@ -149,17 +151,11 @@ public class UserkieSearchAdapter extends RecyclerView.Adapter<UserkieSearchAdap
         }
 
         holder.getCv_userkie_search().setOnClickListener(v -> {
-            ProfileView profileView = new ProfileView();
             Bundle bundle = new Bundle();
             bundle.putString("mode","other");
             bundle.putString("UID",UID);
-            profileView.setArguments(bundle);
-            fragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, profileView)
-                    .addToBackStack(null)
-                    .commit();
+            NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new ProfileView());
         });
-        ;
         if (userkieModel.isPhoto_default()) {
                 String id_photo = userkieModel.getPhoto_id();
                 int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
