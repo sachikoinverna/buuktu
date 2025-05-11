@@ -337,7 +337,7 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
                                             number = photoNumberUtil.format(phoneNumber, PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL);
 
                                         } catch (NumberParseException e) {
-                                            System.err.println("NumberParseException was thrown: " + e.toString());
+                                            System.err.println("NumberParseException was thrown: " + e);
                                         }
                                         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
                                             if (task.isSuccessful()) {

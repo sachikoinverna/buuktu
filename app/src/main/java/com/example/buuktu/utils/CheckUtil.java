@@ -87,7 +87,7 @@ public class CheckUtil {
             number = phoneUtil.parse(text, "ES");
         } catch (NumberParseException e) {
 
-            System.err.println("NumberParseException was thrown: " + e.toString());
+            System.err.println("NumberParseException was thrown");
         }
         if (CheckUtil.checkTextEmpty(text)) {
             CheckUtil.setErrorMessage(context.getString(R.string.telephoneErrorEmpty), textInputLayout);
