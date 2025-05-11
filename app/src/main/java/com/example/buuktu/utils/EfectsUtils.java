@@ -103,10 +103,6 @@ public class EfectsUtils {
             return;
         }
         switch (phase){
-
-            case "start":
-                lottieAnimationView.setAnimation(R.raw.reading_anim);
-                break;
             case "success":
                 lottieAnimationView.setAnimation(R.raw.success_anim);
                 break;

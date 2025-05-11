@@ -137,7 +137,6 @@ ImageButton bt_basic_info_characterkies;
         res = mainActivity.getResources();
         packageName = mainActivity.getPackageName();
         dialog = new CreateEditGeneralDialog(mainActivity);
-        animationView = dialog.getAnimationView();
         gender = mainActivity.getResources().getString(R.string.gender);
         pronouns = mainActivity.getResources().getString(R.string.pronouns);
         birthday = mainActivity.getResources().getString(R.string.birthday);
@@ -486,7 +485,7 @@ ImageButton bt_basic_info_characterkies;
     private void addDataToFirestore(){
         if(CheckUtil.handlerCheckName(mainActivity,et_nameCharacterkieCreate,et_nameCharacterkieCreateFull)){
             dialog.show();
-            EfectsUtils.setAnimationsDialog("start",animationView);
+            animationView = dialog.getAnimationView();
             Completable.timer(3, TimeUnit.SECONDS)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -551,6 +550,7 @@ ImageButton bt_basic_info_characterkies;
     private void editDataFirestore(){
         if(CheckUtil.handlerCheckName(mainActivity,et_nameCharacterkieCreate,et_nameCharacterkieCreateFull)) {
             dialog.show();
+            animationView = dialog.getAnimationView();
             EfectsUtils.setAnimationsDialog("start",animationView);
 
             Completable.timer(3, TimeUnit.SECONDS)

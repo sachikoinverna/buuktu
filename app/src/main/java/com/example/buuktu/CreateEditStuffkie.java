@@ -241,8 +241,8 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
     private void addDataToFirestore(){
         if(CheckUtil.handlerCheckName(mainActivity,et_nameStuffkieCreate,et_nameStuffkieCreateFull)){
             dialog.show();
+            animationView = dialog.getAnimationView();
             stuffkieModel.setName(et_nameStuffkieCreate.getText().toString());
-            EfectsUtils.setAnimationsDialog("start",animationView);
             Completable.timer(3, TimeUnit.SECONDS)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())

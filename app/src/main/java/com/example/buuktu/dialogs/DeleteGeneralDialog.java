@@ -3,6 +3,7 @@ package com.example.buuktu.dialogs;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -98,7 +99,7 @@ public class DeleteGeneralDialog extends Dialog implements View.OnClickListener 
         ib_close_dialog.setVisibility(View.GONE);
         ib_accept_dialog.setVisibility(View.GONE);
         animationView.setVisibility(View.VISIBLE);
-        EfectsUtils.setAnimationsDialog("start",animationView);
+       // EfectsUtils.setAnimationsDialog("start",animationView);
 
     }
     private void deleteNotekie() {
@@ -115,60 +116,53 @@ public class DeleteGeneralDialog extends Dialog implements View.OnClickListener 
     }
     private void deleteWorldkie() {
         prepareLoading();
+        Log.d("DeleteWorldkie", "Iniciando proceso de eliminación para UID: " + UID);
         collectionWorldkies.document(UID).get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
                         WorldkieModel worldkieModel = WorldkieModel.fromSnapshot(documentSnapshot);
-                        if (!worldkieModel.isPhoto_default()) {
-                            // Borrar documento y luego la foto si no es default
-                            collectionWorldkies.document(UID).delete()
-                                    .addOnSuccessListener(unused -> {
-                                        if (firebaseStorageWorldkie != null) {
-                                            firebaseStorageWorldkie.getReference().child(UID).delete()
-                                                    .addOnSuccessListener(unused1 -> {
-                                                        EfectsUtils.setAnimationsDialog("success", animationView);
-                                                        delayedDismiss();
-                                                    })
-                                                    .addOnFailureListener(ex -> {
-                                                        EfectsUtils.setAnimationsDialog("fail", animationView);
-                                                        delayedDismiss();
-                                                        // Considera loguear el error de borrado de la foto
-                                                    });
-                                        } else {
-                                            // Si no hay storage, consideramos éxito la eliminación del documento
-                                            EfectsUtils.setAnimationsDialog("success", animationView);
-                                            delayedDismiss();
-                                        }
-                                    })
-                                    .addOnFailureListener(e -> {
-                                        EfectsUtils.setAnimationsDialog("fail", animationView);
-                                        delayedDismiss();
-                                        // Considera loguear el error de borrado del documento
-                                    });
-                        } else {
-                            // Si la foto es default, solo borra el documento
-                            collectionWorldkies.document(UID).delete()
-                                    .addOnSuccessListener(unused -> {
+                        Log.d("DeleteWorldkie", "Documento Worldkie encontrado: " + worldkieModel.toString());
+                        boolean isDefault = worldkieModel.isPhoto_default();
+                        Log.d("DeleteWorldkie", "¿La foto es default? " + isDefault);
+
+                        collectionWorldkies.document(UID).delete()
+                                .addOnSuccessListener(unused -> {
+                                    Log.d("DeleteWorldkie", "Eliminación del documento Firestore exitosa.");
+                                    if (!isDefault && firebaseStorageWorldkie != null) {
+                                        Log.d("DeleteWorldkie", "Intentando eliminar la foto del Storage.");
+                                        firebaseStorageWorldkie.getReference().child(UID).delete()
+                                                .addOnSuccessListener(unused1 -> {
+                                                    Log.d("DeleteWorldkie", "Eliminación de la foto del Storage exitosa.");
+                                                    EfectsUtils.setAnimationsDialog("success", animationView);
+                                                    delayedDismiss();
+                                                })
+                                                .addOnFailureListener(ex -> {
+                                                    Log.e("DeleteWorldkie", "Error al eliminar la foto del Storage.", ex);
+                                                    EfectsUtils.setAnimationsDialog("fail", animationView);
+                                                    delayedDismiss();
+                                                });
+                                    } else {
+                                        Log.d("DeleteWorldkie", "No se necesita eliminar la foto del Storage o no hay instancia.");
                                         EfectsUtils.setAnimationsDialog("success", animationView);
                                         delayedDismiss();
-                                    })
-                                    .addOnFailureListener(e -> {
-                                        EfectsUtils.setAnimationsDialog("fail", animationView);
-                                        delayedDismiss();
-                                        // Considera loguear el error de borrado del documento
-                                    });
-                        }
+                                    }
+                                })
+                                .addOnFailureListener(e -> {
+                                    Log.e("DeleteWorldkie", "Error al eliminar el documento Firestore.", e);
+                                    EfectsUtils.setAnimationsDialog("fail", animationView);
+                                    delayedDismiss();
+                                });
+
                     } else {
-                        // El documento no existe
+                        Log.w("DeleteWorldkie", "El documento Worldkie con UID " + UID + " no existe.");
                         EfectsUtils.setAnimationsDialog("fail", animationView);
                         delayedDismiss();
-                        // Considera mostrar un mensaje de error al usuario
                     }
                 })
                 .addOnFailureListener(e -> {
+                    Log.e("DeleteWorldkie", "Error al obtener el documento Worldkie.", e);
                     EfectsUtils.setAnimationsDialog("fail", animationView);
                     delayedDismiss();
-                    // Considera loguear el error al obtener el documento
                 });
     }
 

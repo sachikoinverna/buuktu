@@ -116,7 +116,6 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
         context = getContext();
         initComponents(view);
         dialog = new CreateEditGeneralDialog(mainActivity);
-        animationView = dialog.getAnimationView();
         scenariokieModel = new ScenariokieModel();
         fragmentManager = requireActivity().getSupportFragmentManager();
         activity = requireActivity();
@@ -224,7 +223,7 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
     private void addDataToFirestore(){
        if(CheckUtil.handlerCheckName(mainActivity,et_nameScenariokieCreate,et_nameScenariokieCreateFull)) {
            dialog.show();
-           EfectsUtils.setAnimationsDialog("start", animationView);
+           animationView = dialog.getAnimationView();
             Completable.timer(3, TimeUnit.SECONDS)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -255,8 +254,7 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
     private void editDataFirestore() {
         if (CheckUtil.handlerCheckName(mainActivity, et_nameScenariokieCreate, et_nameScenariokieCreateFull)) {
             dialog.show();
-            EfectsUtils.setAnimationsDialog("start", animationView);
-
+            animationView = dialog.getAnimationView();
             Completable.timer(3, TimeUnit.SECONDS)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())

@@ -74,7 +74,6 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
     Uri image;
     BottomSheetProfilePhoto bottomSheetProfilePhoto;
     FragmentManager fragmentManager;
-    FragmentActivity activity;
     String UID, worldkie_id, source,name;
     LottieAnimationView animationView;
     public CreateEditWorldkie() {
@@ -105,20 +104,14 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_create_edit_worldkie, container, false);
-        mainActivity = (MainActivity) getActivity();
-        ib_back = mainActivity.getBackButton();
-        ib_save = mainActivity.getIb_save();
-        ib_profile_superior = mainActivity.getIb_self_profile();
-        ib_save.setOnClickListener(this);
 
         fragmentManager = requireActivity().getSupportFragmentManager();
-        activity = requireActivity();
         firebaseAuth = FirebaseAuth.getInstance();
         UID = firebaseAuth.getUid();
         initComponents(view);
         setVisibility();
         dialog = new CreateEditGeneralDialog(mainActivity);
-         animationView = dialog.findViewById(R.id.anim_create_edit);
+
         bottomSheetProfilePhoto = new BottomSheetProfilePhoto();
 
         db = FirebaseFirestore.getInstance();
@@ -312,7 +305,8 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
             worldkieModel.setLast_update(new Timestamp(Instant.now()));
             worldkieModel.setPhoto_default(true);
             dialog.show();
-            EfectsUtils.setAnimationsDialog("start",animationView);
+
+            animationView = dialog.getAnimationView();
             Completable.timer(3, TimeUnit.SECONDS)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -347,7 +341,7 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
         //if(CheckUtil.handlerCheckName(context,et_nameWorldkieCreate,))
         if(!et_nameWorldkieCreate.getText().toString().isEmpty()) {
             dialog.show();
-            EfectsUtils.setAnimationsDialog("start",animationView);
+            animationView = dialog.getAnimationView();
             Completable.timer(3, TimeUnit.SECONDS)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -421,6 +415,10 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
         });*/
     }
     private void initComponents(View view){
+        mainActivity = (MainActivity) getActivity();
+        ib_back = mainActivity.getBackButton();
+        ib_save = mainActivity.getIb_save();
+        ib_profile_superior = mainActivity.getIb_self_profile();
         et_nameWorldkieCreateFull = view.findViewById(R.id.et_nameWorldkieCreateFull);
         et_nameWorldkieCreate = view.findViewById(R.id.et_nameWorldkieCreate);
         tb_worldkiePrivacity = view.findViewById(R.id.tb_worldkiePrivacity);
@@ -440,7 +438,7 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
                         editDataFirestore();
                     }
         } else if (v.getId()==R.id.ib_back) {
-            NavigationUtils.goBack(fragmentManager,activity);
+            NavigationUtils.goBack(fragmentManager,mainActivity);
         } else if(v.getId()==R.id.ib_save){
                     if(worldkie_id == null){
                         addDataToFirestore();
