@@ -61,9 +61,8 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
     FragmentActivity activity;
     Switch tb_scenariokiePrivacity,tb_scenariokieDraft;
     Context context;
-    ConstraintLayout constraintLayout;
-    TextInputEditText textInputEditText;
-    TextInputLayout et_nameCharacterkieCreateFull;
+    TextInputEditText et_nameScenariokieCreate;
+    TextInputLayout et_nameScenariokieCreateFull;
     MainActivity mainActivity;
     CreateEditGeneralDialog dialog;
     LottieAnimationView animationView;
@@ -128,7 +127,8 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
     private void initComponents(View view){
         tb_scenariokiePrivacity = view.findViewById(R.id.tb_scenariokiePrivacity);
         tb_scenariokieDraft = view.findViewById(R.id.tb_scenariokieDraft);
-        constraintLayout = view.findViewById(R.id.constraint_create_scenariokie);
+        et_nameScenariokieCreateFull = view.findViewById(R.id.et_nameScenariokieCreateFull);
+        et_nameScenariokieCreate = view.findViewById(R.id.et_nameScenariokieCreate);
     }
     public Drawable getSelectedProfilePhoto()
     {
@@ -212,10 +212,10 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
         });
     }
     private void addDataToFirestore(){
-       /* if(CheckUtil.handlerCheckName(mainActivity,et_nameCharacterkieCreate,et_nameCharacterkieCreateFull)){
-            dialog.show();
-            EfectsUtils.setAnimationsDialog("start",animationView);
-            Completable.timer(3, TimeUnit.SECONDS)
+       if(CheckUtil.handlerCheckName(mainActivity,et_nameScenariokieCreate,et_nameScenariokieCreateFull)) {
+           dialog.show();
+           EfectsUtils.setAnimationsDialog("start", animationView);
+         /*   Completable.timer(3, TimeUnit.SECONDS)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(() -> {
@@ -249,17 +249,18 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
                             }
                     );
         }*/
+       }
     }
 
-    private void editDataFirestore(){
-        /*if(CheckUtil.handlerCheckName(mainActivity,et_nameCharacterkieCreate,et_nameCharacterkieCreateFull)) {
+    private void editDataFirestore() {
+        if (CheckUtil.handlerCheckName(mainActivity, et_nameScenariokieCreate, et_nameScenariokieCreateFull)) {
             dialog.show();
-            EfectsUtils.setAnimationsDialog("start",animationView);
+            EfectsUtils.setAnimationsDialog("start", animationView);
 
-            Completable.timer(3, TimeUnit.SECONDS)
+          /*  Completable.timer(3, TimeUnit.SECONDS)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(() -> characterkieCollection.document(characterkie_id).update(characterkie.toMap()).addOnSuccessListener(unused -> {
+                    .subscribe(() -> scenariokieCollection.document(characterkie_id).update(characterkie.toMap()).addOnSuccessListener(unused -> {
                                 if (!characterkie.isPhoto_default()) {
                                     StorageReference userRef = storage.getReference().child(worldkie_id);
                                     userRef.child("profile" + DrawableUtils.getExtensionFromUri(getContext(), image)).putFile(image);
@@ -287,6 +288,7 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
                             })
                     );
         }*/
+        }
     }
     @Override
     public void onClick(View v) {

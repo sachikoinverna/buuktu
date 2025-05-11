@@ -76,7 +76,6 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
     FragmentManager fragmentManager;
     FragmentActivity activity;
     String UID, worldkie_id, source,name;
-    boolean privacity, draft;
     LottieAnimationView animationView;
     public CreateEditWorldkie() {
         // Required empty public constructor

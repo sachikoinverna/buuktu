@@ -64,7 +64,6 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
     BottomSheetProfilePhoto bottomSheetProfilePhoto;
     String source,stuffkie_id,UID,worldkie_id;
     FragmentManager fragmentManager;
-    ConstraintLayout constraintLayout;
     TextInputEditText et_nameStuffkieCreate;
     TextInputLayout et_nameStuffkieCreateFull;
     Switch tb_stuffkiePrivacity,tb_stuffkieDraft;
@@ -210,7 +209,6 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
         ib_select_img_create_stuffkie = view.findViewById(R.id.ib_select_img_create_stuffkie);
         et_nameStuffkieCreateFull = view.findViewById(R.id.et_nameStuffkieCreateFull);
         et_nameStuffkieCreate = view.findViewById(R.id.et_nameStuffkieCreate);
-        constraintLayout = view.findViewById(R.id.constraint_create_stuffkie);
         tb_stuffkiePrivacity = view.findViewById(R.id.tb_stuffkiePrivacity);
         tb_stuffkieDraft = view.findViewById(R.id.tb_stuffkieDraft);
         mainActivity = (MainActivity) getActivity();

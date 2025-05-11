@@ -80,7 +80,6 @@ ImageButton bt_basic_info_characterkies;
     TextInputEditText textInputEditText,et_nameCharacterkieCreate;
     FirebaseAuth firebaseAuth;
     TextInputLayout et_nameCharacterkieCreateFull;
-    ConstraintLayout constraintLayout;
     String UID, worldkie_id, source,name,characterkie_id, userkie_id,gender,pronouns,birthday,status;
     boolean privacity, draft,isBasicInfoVisible=false;
     Characterkie characterkie;
@@ -371,8 +370,6 @@ ImageButton bt_basic_info_characterkies;
         tv_gender_characterkie = view.findViewById(R.id.tv_gender_characterkie);
         fragmentManager = mainActivity.getSupportFragmentManager();
         tv_pronouns_characterkie = view.findViewById(R.id.tv_pronouns_characterkie);
-
-        constraintLayout = view.findViewById(R.id.constraint_create_characterkie);
         tv_basic_info_characterkies = view.findViewById(R.id.tv_basic_info_characterkies);
         bt_basic_info_characterkies = view.findViewById(R.id.bt_basic_info_characterkies);
         showHideBasicInfo();
