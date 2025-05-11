@@ -225,16 +225,16 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
        if(CheckUtil.handlerCheckName(mainActivity,et_nameScenariokieCreate,et_nameScenariokieCreateFull)) {
            dialog.show();
            EfectsUtils.setAnimationsDialog("start", animationView);
-         /*   Completable.timer(3, TimeUnit.SECONDS)
+            Completable.timer(3, TimeUnit.SECONDS)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(() -> {
-                                Task<DocumentReference> addTask = characterkieCollection.add(characterkie.toMap());
+                                Task<DocumentReference> addTask = collectionScenariokie.add(scenariokieModel.toMap());
 
                                 addTask.addOnCompleteListener(task -> {
                                     if (task.isSuccessful()) {
 
-                                        if (!characterkie.isPhoto_default()) {
+                                        if (!scenariokieModel.isPhoto_default()) {
                                             StorageReference userRef = storage.getReference().child(task.getResult().getId());
                                             userRef.child("profile" + DrawableUtils.getExtensionFromUri(getContext(), image)).putFile(image);
 
@@ -258,7 +258,6 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
                                 });
                             }
                     );
-        }*/
        }
     }
 
@@ -267,11 +266,11 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
             dialog.show();
             EfectsUtils.setAnimationsDialog("start", animationView);
 
-          /*  Completable.timer(3, TimeUnit.SECONDS)
+            Completable.timer(3, TimeUnit.SECONDS)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(() -> scenariokieCollection.document(characterkie_id).update(characterkie.toMap()).addOnSuccessListener(unused -> {
-                                if (!characterkie.isPhoto_default()) {
+                    .subscribe(() -> collectionScenariokie.document(scenariokie_id).update(scenariokieModel.toMap()).addOnSuccessListener(unused -> {
+                                if (!scenariokieModel.isPhoto_default()) {
                                     StorageReference userRef = storage.getReference().child(worldkie_id);
                                     userRef.child("profile" + DrawableUtils.getExtensionFromUri(getContext(), image)).putFile(image);
 
@@ -297,7 +296,6 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
                                         });
                             })
                     );
-        }*/
         }
     }
     @Override

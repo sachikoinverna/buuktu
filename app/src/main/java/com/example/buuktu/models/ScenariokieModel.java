@@ -3,6 +3,10 @@ package com.example.buuktu.models;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
+
 public class ScenariokieModel {
     private String UID;
     private String name;
@@ -43,6 +47,24 @@ public class ScenariokieModel {
 
         }
         return scenariokieModel;
+    }
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        Field[] fields = this.getClass().getDeclaredFields();
+
+        for (Field field : fields) {
+            field.setAccessible(true);
+            try {
+                Object value = field.get(this);
+                if (value != null) {
+                    map.put(field.getName(), value);
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return map;
     }
     @Exclude
     public String getUID() {
