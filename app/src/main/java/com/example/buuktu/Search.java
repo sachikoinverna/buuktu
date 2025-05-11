@@ -1,13 +1,10 @@
 package com.example.buuktu;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
@@ -69,12 +66,7 @@ public class Search extends Fragment {
         setVisibility();
         viewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
         viewPager.setUserInputEnabled(false);
-        viewPager.setPageTransformer(new ViewPager2.PageTransformer() {
-            @Override
-            public void transformPage(@NonNull View page, float position) {
-                page.setAlpha(0.5f+Math.abs(position)*0.5f);
-            }
-        });
+        viewPager.setPageTransformer((page, position) -> page.setAlpha(0.5f+Math.abs(position)*0.5f));
 
         viewPager.setAdapter(pageAdapter);
         viewPager.setUserInputEnabled(true);

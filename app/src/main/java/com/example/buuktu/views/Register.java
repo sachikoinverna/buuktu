@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.Spanned;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -175,17 +176,14 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
 
     }
     private void setFilters(){
-        InputFilter filter = new InputFilter() {
-            @Override
-            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-                for (int i = start; i < end; i++) {
-                    if (Character.isSpaceChar(source.charAt(i))) {
-                        return "";
-                    }
+        InputFilter filter = (source, start, end, dest, dstart, dend) -> {
+            for (int i = start; i < end; i++) {
+                if (Character.isSpaceChar(source.charAt(i))) {
+                    return "";
                 }
-                return null;
-
             }
+            return null;
+
         };
         et_password.setFilters(new InputFilter[]{filter,new InputFilter.LengthFilter(50)});
         et_passwordRepeat.setFilters(new InputFilter[]{filter,new InputFilter.LengthFilter(50)});
@@ -234,6 +232,10 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
                 CheckUtil.handlerCheckBirthdayDate(this,dp_birthday,dp_birthdayFilled);
             } else if (field == R.id.et_pronounsRegister) {
                 CheckUtil.handlerCheckPronouns(this,et_pronounsRegister,et_pronounsRegisterFilled);
+            } else if(field == R.id.et_emailRegister){
+                CheckUtil.checkEmail(this,et_emailRegister,et_emailRegisterFilled);
+            }else if(field == R.id.et_userRegister){
+                CheckUtil.handlerCheckUsernameEmpty(this,et_userRegister,et_userRegisterFilled);
             }
             else if (field == R.id.et_password) {
                 CheckUtil.handlerCheckPassword(this,et_password,et_passwordFilled);
@@ -255,6 +257,11 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
                 CheckUtil.setErrorMessage(null, et_passwordFilled);
             } else if (field == R.id.et_telephoneRegister) {
                 CheckUtil.setErrorMessage(null, et_telephoneRegisterFilled);
+            }
+            else if(field == R.id.et_emailRegister){
+                CheckUtil.setErrorMessage(null, et_emailRegisterFilled);
+            }else if(field == R.id.et_userRegister){
+                CheckUtil.setErrorMessage(null, et_userRegisterFilled);
             }
         }
     }
@@ -283,6 +290,12 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
             allValid[0] = false;
         }
         if(!CheckUtil.handlerCheckTelephone(this,et_telephoneRegister,et_telephoneRegisterFilled)){
+            allValid[0] = false;
+        }
+        if(!CheckUtil.checkEmail(this,et_emailRegister,et_emailRegisterFilled)){
+            allValid[0] = false;
+        }
+        if(!CheckUtil.handlerCheckUsernameEmpty(this,et_userRegister,et_userRegisterFilled)){
             allValid[0] = false;
         }
         return allValid[0];
@@ -315,7 +328,7 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
                                     if (!emailSnapshot.isEmpty()) {
                                         CheckUtil.setErrorMessage("Email existente", et_emailRegisterFilled);
                                     }
-                                    if (usernameSnapshot.isEmpty() && emailSnapshot.isEmpty()) {
+                                    if (usernameSnapshot.isEmpty() && emailSnapshot.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                                         // Puedes continuar con el registro
 
 
@@ -335,61 +348,51 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
                                         } catch (NumberParseException e) {
                                             System.err.println("NumberParseException was thrown: " + e.toString());
                                         }
-                                        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                                if (task.isSuccessful()) {
+                                        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+                                            if (task.isSuccessful()) {
 
 
-                                                    Toast.makeText(getApplicationContext(), "Signup Successful", Toast.LENGTH_SHORT).show();
-                                                    CollectionReference dbUsers = db.collection("Users");
-                                                    UserkieModel userkieModel;
-                                                    if (source.equals("app")) {
-                                                        photo_id = bt_chooseImage.getTag().toString();
-                                                        userkieModel = new UserkieModel(photo_id, privateAccount, true, email, number, username, new Timestamp(birthday), pronouns, name);
-                                                    } else {
-                                                        userkieModel = new UserkieModel(name, pronouns, new Timestamp(birthday), username, number, email, false, privateAccount);
+                                                Toast.makeText(getApplicationContext(), "Signup Successful", Toast.LENGTH_SHORT).show();
+                                                CollectionReference dbUsers = db.collection("Users");
+                                                UserkieModel userkieModel;
+                                                if (source.equals("app")) {
+                                                    photo_id = bt_chooseImage.getTag().toString();
+                                                    userkieModel = new UserkieModel(photo_id, privateAccount, true, email, number, username, new Timestamp(birthday), pronouns, name);
+                                                } else {
+                                                    userkieModel = new UserkieModel(name, pronouns, new Timestamp(birthday), username, number, email, false, privateAccount);
+
+                                                }
+                                                // below method is use to add data to Firebase Firestore.
+                                                DocumentReference documentRef = dbUsers.document(task.getResult().getUser().getUid());
+
+                                                //.document(uid)
+                                                documentRef.set(userkieModel).addOnSuccessListener(unused -> {
+
+                                                    if (source.equals("device")) {
+                                                        StorageReference userRef = storage.getReference().child(task.getResult().getUser().getUid());
+                                                        userRef.child("profile" + DrawableUtils.getExtensionFromUri(getApplicationContext(), image)).putFile(image);
 
                                                     }
-                                                    // below method is use to add data to Firebase Firestore.
-                                                    DocumentReference documentRef = dbUsers.document(task.getResult().getUser().getUid());
+                                                    EfectsUtils.setAnimationsDialog("success",animationView);
 
-                                                    //.document(uid)
-                                                    documentRef.set(userkieModel).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                        @Override
-                                                        public void onSuccess(Void unused) {
+                                                    Completable.timer(3, TimeUnit.SECONDS)
+                                                            .subscribeOn(Schedulers.io())
+                                                            .observeOn(AndroidSchedulers.mainThread())
+                                                            .subscribe(() -> {
+                                                                dialog.dismiss();
+                                                            });
+                                                    clearFields();
+                                                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                                }).addOnFailureListener(e -> {
+                                                    EfectsUtils.setAnimationsDialog("fail",animationView);
 
-                                                            if (source.equals("device")) {
-                                                                StorageReference userRef = storage.getReference().child(task.getResult().getUser().getUid());
-                                                                userRef.child("profile" + DrawableUtils.getExtensionFromUri(getApplicationContext(), image)).putFile(image);
-
-                                                            }
-                                                            EfectsUtils.setAnimationsDialog("success",animationView);
-
-                                                            Completable.timer(3, TimeUnit.SECONDS)
-                                                                    .subscribeOn(Schedulers.io())
-                                                                    .observeOn(AndroidSchedulers.mainThread())
-                                                                    .subscribe(() -> {
-                                                                        dialog.dismiss();
-                                                                    });
-                                                            clearFields();
-                                                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                                                        }
-
-                                                    }).addOnFailureListener(new OnFailureListener() {
-                                                        @Override
-                                                        public void onFailure(@NonNull Exception e) {
-                                                            EfectsUtils.setAnimationsDialog("fail",animationView);
-
-                                                            Completable.timer(3, TimeUnit.SECONDS)
-                                                                    .subscribeOn(Schedulers.io())
-                                                                    .observeOn(AndroidSchedulers.mainThread())
-                                                                    .subscribe(() -> {
-                                                                        dialog.dismiss();
-                                                                    });
-                                                        }
-                                                    });
-                                                }
+                                                    Completable.timer(3, TimeUnit.SECONDS)
+                                                            .subscribeOn(Schedulers.io())
+                                                            .observeOn(AndroidSchedulers.mainThread())
+                                                            .subscribe(() -> {
+                                                                dialog.dismiss();
+                                                            });
+                                                });
                                             }
                                         });
                                     }
@@ -401,18 +404,15 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
 
 
     public void showDatePickerDialog(View view) {
-        DatePickerDialog date = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                dp_birthday.setText("" + day + "/" + (month + 1) + "/" + year);
-                dp_birthdayFilled.setHintEnabled(true); // este es el TextInputLayout
-                dayC = day;
-                monthC = month;
-                yearC = year;
-                Calendar calendar = Calendar.getInstance();
-                calendar.set(year, month, day); // Configura el calendario con la fecha seleccionada
-                birthday = calendar.getTime();
-            }
+        DatePickerDialog date = new DatePickerDialog(this, (datePicker, year, month, day) -> {
+            dp_birthday.setText("" + day + "/" + (month + 1) + "/" + year);
+            dp_birthdayFilled.setHintEnabled(true); // este es el TextInputLayout
+            dayC = day;
+            monthC = month;
+            yearC = year;
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(year, month, day); // Configura el calendario con la fecha seleccionada
+            birthday = calendar.getTime();
         }, yearC, monthC, dayC);
         date.show();
     }

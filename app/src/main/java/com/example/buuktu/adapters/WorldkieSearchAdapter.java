@@ -3,7 +3,6 @@ package com.example.buuktu.adapters;
 import static android.widget.Toast.LENGTH_LONG;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,17 +20,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.buuktu.ProfileView;
 import com.example.buuktu.R;
 import com.example.buuktu.WorldkieView;
-import com.example.buuktu.models.UserkieModel;
 import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.EfectsUtils;
 import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.transition.Hold;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -197,31 +192,25 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
             holder.getIv_worldkie_private_search().setVisibility(View.INVISIBLE);
         }
 
-        holder.getCv_worldkie_search().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                WorldkieView worldkieView = new WorldkieView();
-                Bundle bundle = new Bundle();
-                bundle.putString("mode","other");
-                bundle.putString("UID",UID);
-                bundle.putString("UID_AUTHOR",UID_AUTHOR);
-                worldkieView.setArguments(bundle);
-                fragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container, worldkieView)
-                        .addToBackStack(null)
-                        .commit();
-            }
+        holder.getCv_worldkie_search().setOnClickListener(v -> {
+            WorldkieView worldkieView = new WorldkieView();
+            Bundle bundle = new Bundle();
+            bundle.putString("mode","other");
+            bundle.putString("UID",UID);
+            bundle.putString("UID_AUTHOR",UID_AUTHOR);
+            worldkieView.setArguments(bundle);
+            fragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, worldkieView)
+                    .addToBackStack(null)
+                    .commit();
         });
-        holder.getIb_show_more_details_worldkie_search().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                    holder.getTv_date_last_update_search_worldkie_title().setVisibility(holder.moreDetailsShowed? View.GONE:View.VISIBLE);
-                    holder.getTv_date_last_update_search_worldkie().setVisibility(holder.moreDetailsShowed? View.GONE:View.VISIBLE);
-                    holder.getTv_date_creation_search_worldkie_title().setVisibility(holder.moreDetailsShowed? View.GONE:View.VISIBLE);
-                    holder.getTv_date_creation_search_worldkie().setVisibility(holder.moreDetailsShowed? View.GONE:View.VISIBLE);
-                    holder.getIb_show_more_details_worldkie_search().setImageResource(holder.moreDetailsShowed? R.drawable.twotone_arrow_drop_down_circle_24:R.drawable.twotone_keyboard_arrow_up_24);
-                holder.moreDetailsShowed = !holder.moreDetailsShowed;
-            }
+        holder.getIb_show_more_details_worldkie_search().setOnClickListener(v -> {
+                holder.getTv_date_last_update_search_worldkie_title().setVisibility(holder.moreDetailsShowed? View.GONE:View.VISIBLE);
+                holder.getTv_date_last_update_search_worldkie().setVisibility(holder.moreDetailsShowed? View.GONE:View.VISIBLE);
+                holder.getTv_date_creation_search_worldkie_title().setVisibility(holder.moreDetailsShowed? View.GONE:View.VISIBLE);
+                holder.getTv_date_creation_search_worldkie().setVisibility(holder.moreDetailsShowed? View.GONE:View.VISIBLE);
+                holder.getIb_show_more_details_worldkie_search().setImageResource(holder.moreDetailsShowed? R.drawable.twotone_arrow_drop_down_circle_24:R.drawable.twotone_keyboard_arrow_up_24);
+            holder.moreDetailsShowed = !holder.moreDetailsShowed;
         });
         ;
         if (worldkieModel.isPhoto_default()) {

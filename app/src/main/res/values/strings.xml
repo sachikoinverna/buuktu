@@ -1,5 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="appname">buuk-tu</string>
     <string name="user_email">Email/Username</string>
     <string name="user_password">Password</string>
     <string name="name">Name</string>
@@ -28,14 +28,23 @@
     <string name="ten">10</string>
     <string name="eleven">11</string>
     <string name="twelve">12</string>
-    <string name="thirdteen">13</string>
+    <string name="thirteen">13</string>
     <string name="fourteen">14</string>
-    <string name="fiveteen">15</string>
+    <string name="fifteen">15</string>
     <string name="sixteen">16</string>
     <string name="seventeen">17</string>
-    <string name="eightteen">18</string>
+    <string name="eighteen">18</string>
     <string name="nineteen">19</string>
     <string name="twenty">20</string>
+    <string name="day">day</string>
+    <string name="hour">hour</string>
+    <string name="minute">minute</string>
+    <string name="ago">ago</string>
+    <string name="it_was_a">It was a</string>
+    <string name="second">second</string>
+    <string name="date">Date</string>
+    <string name="status">Status</string>
+
     <string name="twentyone">21</string>
     <string name="twentytwo">22</string>
     <string name="twentythree">23</string>
@@ -67,7 +76,7 @@
     <string name="emailErrorEmpty">Email can not be empty</string>
     <string name="telephoneErrorEmpty">Telephone can not be empty</string>
     <string name="emailErrorFormat">Email format no valid</string>
-    <string name="emailExists">Email already exists</string>"
+    <string name="emailExists">Email already exists</string>
     <string name="passwordErrorEmpty">Password can not be empty</string>
     <string name="passwordTooShort">Password must contains at least 8 characters</string>
     <string name="passwordErrorSpecialChar">Password must contain at least one special characters</string>
@@ -84,7 +93,6 @@
     <string name="libra">Libra</string>
     <string name="scorpio">Scorpio</string>
     <string name="sagittarius">Sagittarius</string>
-    <string name="Leo">Leo</string>
     <string name="capricorn">Capricorn</string>
     <string name="aquarius">Aquarius</string>
     <string name="pisces">Pisces</string>
@@ -142,7 +150,13 @@
     <string name="challenges_subtitle">What do they consist of?</string>
     <string name="profile_self_subtitle">Welcome to your profile.</string>
     <string name="profile_self_description"> It\'s important that you see how others view it, as it\'s your little showcase. You could say you\'re seeing it from the inside, since we also show you your hidden creations so that you have another way to access them.\n\nEvery day at midnight, you will get elements to inspire you.\n\nFrom there, you must use your imagination; there are no written rules, the only one is to use these elements. Paper and pen will be your best allies when trying to create a world with them.\n\nRemember to be careful with what you put in your showcase.</string>
-    <string name="challenges_description">Every day at midnight, you will get elements to inspire you.\n\nFrom there, you must use your imagination; there are no written rules, the only one is to use these elements. Paper and pen will be your best allies when trying to create a world with them.\n\nRemember to activate notifications so you don't miss anything.</string>
+    <string name="challenges_description"><![CDATA[
+Every day at midnight, you will get elements to inspire you.
+
+From there, you must use your imagination; there are no written rules, the only one is to use these elements. Paper and pen will be your best allies when trying to create a world with them.
+
+Remember to activate notifications so you don\'t miss anything.
+]]></string>
     <string name="notikies_description">It is a normal, ordinary notification.\n\nHere you will be able to see any type of notification you have activated with its respective information, including when it was sent.</string>
     <string name="write_here">Write here…</string>
     <string name="status_alive">Alive</string>
@@ -159,5 +173,4 @@
     <string name="numberkie_of_the_day">Numberkie of the day</string>
     <string name="close_nav">Close Navigation Drawer</string>
     <string name="worldkie_privacity">Private worldkie</string>
-
 </resources>

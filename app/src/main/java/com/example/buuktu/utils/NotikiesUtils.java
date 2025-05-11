@@ -1,7 +1,6 @@
 package com.example.buuktu.utils;
 
 import android.app.AlarmManager;
-import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;

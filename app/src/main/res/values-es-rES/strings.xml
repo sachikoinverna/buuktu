@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="appname">buuk-tu</string>
     <string name="user_email">Email/Username</string>
     <string name="user_password">Password</string>
     <string name="name">Name</string>
@@ -19,7 +18,15 @@
     <string name="at_symbol">\@</string>
     <string name="one">1</string>
     <string name="two">2</string>
+    <string name="date">Fecha</string>
+    <string name="it_was_a">Fue un</string>
+    <string name="second">segundo</string>
+    <string name="status">Estado</string>
     <string name="three">3</string>
+    <string name="day">día</string>
+    <string name="hour">hora</string>
+    <string name="minute">minuto</string>
+    <string name="ago">atrás</string>
     <string name="four">4</string>
     <string name="five">5</string>
     <string name="six">6</string>
@@ -29,12 +36,12 @@
     <string name="ten">10</string>
     <string name="eleven">11</string>
     <string name="twelve">12</string>
-    <string name="thirdteen">13</string>
+    <string name="thirteen">13</string>
     <string name="fourteen">14</string>
-    <string name="fiveteen">15</string>
+    <string name="fifteen">15</string>
     <string name="sixteen">16</string>
     <string name="seventeen">17</string>
-    <string name="eightteen">18</string>
+    <string name="eighteen">18</string>
     <string name="nineteen">19</string>
     <string name="twenty">20</string>
     <string name="twentyone">21</string>
@@ -61,7 +68,7 @@
     <string name="messages">Mensajes</string>
     <string name="settings">Ajustes</string>
     <string name="log_out">Cerrar sesion</string>
-<string name="gender">Gender</string>
+    <string name="gender">Gender</string>
     <string name="notikies_subtitle">¿Qué es una notikie?</string>
     <string name="notekies_subtitle">¿Qué es una notekie?</string>
 
@@ -114,7 +121,6 @@
     <string name="libra">Libra</string>
     <string name="scorpio">Scorpio</string>
     <string name="sagittarius">Sagittarius</string>
-    <string name="Leo">Leo</string>
     <string name="capricorn">Capricorn</string>
     <string name="aquarius">Aquarius</string>
     <string name="pisces">Pisces</string>

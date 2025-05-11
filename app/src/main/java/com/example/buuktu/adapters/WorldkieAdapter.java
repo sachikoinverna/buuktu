@@ -16,18 +16,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.example.buuktu.R;
 import com.example.buuktu.dialogs.DeleteGeneralDialog;
-import com.example.buuktu.models.NoteItem;
 import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.EfectsUtils;
 import com.example.buuktu.views.CreateEditWorldkie;
 import com.example.buuktu.views.WorldkieMenu;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -35,18 +31,8 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
-
-public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHolder> implements View.OnClickListener {
-
-    @Override
-    public void onClick(View v) {
-
-    }
+public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHolder>{
     private ArrayList<WorldkieModel> dataSet;
     private FragmentManager fragmentManager;
 
@@ -153,97 +139,25 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
             holder.getTv_name_wordkie().setText(name);
             holder.setLastName(name);
         }
-        holder.getIb_enterToAWorldkie().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                menuWorldkie = new WorldkieMenu();
-                Bundle bundle = new Bundle();
-                bundle.putString("worldkie_id", dataSet.get(holder.getAdapterPosition()).getUID());
-                bundle.putString("userkie_id",dataSet.get(holder.getAdapterPosition()).getUID_AUTHOR());
-                menuWorldkie.setArguments(bundle);
-                fragmentManager.beginTransaction().replace(R.id.fragment_container, menuWorldkie).addToBackStack(null) // Permite regresar atrás con el botón de retroceso
-                        .commit();
-            }
+        holder.getIb_enterToAWorldkie().setOnClickListener(v -> {
+            menuWorldkie = new WorldkieMenu();
+            Bundle bundle = new Bundle();
+            bundle.putString("worldkie_id", dataSet.get(holder.getAdapterPosition()).getUID());
+            bundle.putString("userkie_id",dataSet.get(holder.getAdapterPosition()).getUID_AUTHOR());
+            menuWorldkie.setArguments(bundle);
+            fragmentManager.beginTransaction().replace(R.id.fragment_container, menuWorldkie).addToBackStack(null) // Permite regresar atrás con el botón de retroceso
+                    .commit();
         });
-        holder.getIb_editAWorldkie().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CreateEditWorldkie createEditWorldkie = new CreateEditWorldkie();
-                Bundle bundle = new Bundle();
-                bundle.putString("worldkie_id",dataSet.get(holder.getAdapterPosition()).getUID());
-                createEditWorldkie.setArguments(bundle);
-                fragmentManager.beginTransaction().replace(R.id.fragment_container,createEditWorldkie).addToBackStack(null).commit();
-            }
+        holder.getIb_editAWorldkie().setOnClickListener(v -> {
+            CreateEditWorldkie createEditWorldkie = new CreateEditWorldkie();
+            Bundle bundle = new Bundle();
+            bundle.putString("worldkie_id",dataSet.get(holder.getAdapterPosition()).getUID());
+            createEditWorldkie.setArguments(bundle);
+            fragmentManager.beginTransaction().replace(R.id.fragment_container,createEditWorldkie).addToBackStack(null).commit();
         });
-        holder.getIb_deleteAWorldkie().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DeleteGeneralDialog deleteGeneralDialog = new DeleteGeneralDialog(context,"worldkie");
-                deleteGeneralDialog.setOnDialogClickListener(new DeleteGeneralDialog.OnDialogDelClickListener() {
-                    @Override
-                    public void onAccept() {
-                        TextView tv_title = deleteGeneralDialog.findViewById(R.id.tv_title_del);
-                        TextView tv_text = deleteGeneralDialog.findViewById(R.id.tv_text_del);
-                        ImageView iv_photo = deleteGeneralDialog.findViewById(R.id.iv_photo_del);
-
-                        ImageButton ib_close = deleteGeneralDialog.findViewById(R.id.ib_close_dialog);
-                        ImageButton ib_accept = deleteGeneralDialog.findViewById(R.id.ib_accept_dialog);
-                        LottieAnimationView animationView = deleteGeneralDialog.findViewById(R.id.anim_del);
-
-                        tv_title.setVisibility(View.GONE);
-                        tv_text.setVisibility(View.GONE);
-                        iv_photo.setVisibility(View.GONE);
-                        ib_close.setVisibility(View.GONE);
-                        ib_accept.setVisibility(View.GONE);
-                        animationView.setVisibility(View.VISIBLE);
-                        animationView.setAnimation(R.raw.reading_anim);
-                        animationView.playAnimation();
-                        holder.getDb().collection("Worldkies").document(dataSet.get(holder.getAdapterPosition()).getUID()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                holder.getFirebaseStorage().getReference().child(dataSet.get(holder.getAdapterPosition()).getUID()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
-                                        animationView.setAnimation(R.raw.success_anim);
-                                        animationView.playAnimation();
-                                        Completable.timer(5, TimeUnit.SECONDS)
-                                                .subscribeOn(Schedulers.io())
-                                                .observeOn(AndroidSchedulers.mainThread())
-                                                .subscribe(() -> {
-                                                    animationView.setVisibility(View.GONE);
-                                                    deleteGeneralDialog.dismiss();
-                                                });
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        animationView.setAnimation(R.raw.fail_anim);
-                                        animationView.playAnimation();
-                                        Completable.timer(5, TimeUnit.SECONDS)
-                                                .subscribeOn(Schedulers.io())
-                                                .observeOn(AndroidSchedulers.mainThread())
-                                                .subscribe(() -> {
-                                                    animationView.setVisibility(View.GONE);
-                                                    deleteGeneralDialog.dismiss();
-                                                });
-                                    }
-                                });
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        deleteGeneralDialog.dismiss();
-                    }
-                });
-                deleteGeneralDialog.show();
-            }
+        holder.getIb_deleteAWorldkie().setOnClickListener(v -> {
+            DeleteGeneralDialog deleteGeneralDialog = new DeleteGeneralDialog(context,"worldkie", worldkieModel.getUID());
+            deleteGeneralDialog.show();
         });
         if (worldkieModel.isPhoto_default()) {
             FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();

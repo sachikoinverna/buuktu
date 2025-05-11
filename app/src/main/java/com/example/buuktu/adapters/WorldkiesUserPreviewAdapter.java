@@ -28,21 +28,14 @@ import com.google.firebase.storage.StorageReference;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesUserPreviewAdapter.ViewHolder> implements View.OnClickListener {
+public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesUserPreviewAdapter.ViewHolder>{
 
-    @Override
-    public void onClick(View v) {
 
-    }
     private ArrayList<WorldkieModel> dataSet;
-    private ItemClickListener clicListener;
     private FragmentManager fragmentManager;
 
     private Context context;
 
-    public interface ItemClickListener {
-        public void onClick(View view, int position);
-    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         String lastPhotoId="";
@@ -96,9 +89,7 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
         this.context = ctx;
         this.fragmentManager = fragmentManager;
     }
-    public void setOnClickListener(ItemClickListener clicListener){
-        this.clicListener = clicListener;
-    }
+
 
     
     //Se llama cada vez que se hace scroll en la pantalla y los elementos desaparecen y aparecen
@@ -120,17 +111,14 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
         if(!worldkieModel.isWorldkie_private()) {
             holder.getIv_worldkie_preview_worldkie().setVisibility(View.INVISIBLE);
         }
-        holder.getCv_worldkie_preview().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                WorldkieView worldkieView = new WorldkieView();
-                Bundle bundle = new Bundle();
-                bundle.putString("mode","other");
-                bundle.putString("UID",UID);
-                bundle.putString("UID_AUTHOR",UID_AUTHOR);
-                worldkieView.setArguments(bundle);
-                NavigationUtils.goNewFragment(fragmentManager,worldkieView);
-            }
+        holder.getCv_worldkie_preview().setOnClickListener(v -> {
+            WorldkieView worldkieView = new WorldkieView();
+            Bundle bundle = new Bundle();
+            bundle.putString("mode","other");
+            bundle.putString("UID",UID);
+            bundle.putString("UID_AUTHOR",UID_AUTHOR);
+            worldkieView.setArguments(bundle);
+            NavigationUtils.goNewFragment(fragmentManager,worldkieView);
         });
         if (worldkieModel.isPhoto_default()) {
             FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();

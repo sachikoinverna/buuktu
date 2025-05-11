@@ -3,6 +3,10 @@ package com.example.buuktu.models;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
+
 public class UserkieModel {
     private String name;
     private String pronouns;
@@ -107,11 +111,31 @@ public class UserkieModel {
         userkieModel.setBirthday(document.getTimestamp("birthday"));
         userkieModel.setEmail(document.getString("email"));
         userkieModel.setPhoto_default(document.getBoolean("photo_default"));
+        if(document.contains("photo_id")){
+            userkieModel.setPhoto_id(document.getString("photo_id"));
+        }
         userkieModel.setProfile_private(document.getBoolean("profile_private"));
         userkieModel.setNumber(document.getString("number"));
-        userkieModel.setPhoto_id(document.getString("photo_id"));
         userkieModel.setPronouns(document.getString("pronouns"));
         return userkieModel;
+    }
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        Field[] fields = this.getClass().getDeclaredFields();
+
+        for (Field field : fields) {
+            field.setAccessible(true);
+            try {
+                Object value = field.get(this);
+                if (value != null) {
+                    map.put(field.getName(), value);
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return map;
     }
     public UserkieModel(String photo_id, boolean profile_private, boolean photo_default, String email, String number, String username, Timestamp birthday, String pronouns, String name) {
         this.photo_id = photo_id;

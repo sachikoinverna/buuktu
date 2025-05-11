@@ -126,17 +126,14 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
             tvDays[i] = view.findViewById(tv_day_id_full);  // Asocia el TextView a cada posición en el array
             int bt_day_id_full = getResources().getIdentifier(bt_day_id, "id", context.getPackageName()); // Obtiene el ID del recurso
             dayButtons[i] = view.findViewById(bt_day_id_full);  // Asocia el TextView a cada posición en el array
-            dayButtons[i].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    bt_selected.setImageTintList(ColorStateList.valueOf(Color.parseColor("#9FA8DA")));
+            dayButtons[i].setOnClickListener(v -> {
+                bt_selected.setImageTintList(ColorStateList.valueOf(Color.parseColor("#9FA8DA")));
 
-                    bt_selected = (ImageButton) v;
-                    int color = getResources().getColor(R.color.brownMaroon, null); // Usando un color de recursos
+                bt_selected = (ImageButton) v;
+                int color = getResources().getColor(R.color.brownMaroon, null); // Usando un color de recursos
 
 // Aplica el tint al ImageButton
-                    bt_selected.setImageTintList(ColorStateList.valueOf(color));
-                }
+                bt_selected.setImageTintList(ColorStateList.valueOf(color));
             });
         }
         bt_selected=dayButtons[0];

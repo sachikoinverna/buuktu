@@ -1,27 +1,25 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingDefaultResource">
+
+    <!-- Base application theme -->
     <style name="Base.Theme.Buuktu" parent="Theme.Material3.Light.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:fontFamily">@font/alegreya</item>
     </style>
 
-    <style name="error_appearance" parent="@android:style/TextAppearance">
-        <item name="android:textColor">@color/redError</item>
-        <item name="android:textSize">12sp</item>
-    </style>
+    <!-- Main App Theme -->
+    <style name="Theme.Buuktu" parent="Base.Theme.Buuktu" />
+
+    <!-- Switch Text Style -->
     <style name="SwitchTextAppearance" parent="@android:style/TextAppearance">
         <item name="android:fontFamily">@font/alegreya</item>
     </style>
-    <!--for Normal FAB-->
 
-
-    <style name="animation">
+    <!-- Fade In/Out Animation -->
+    <style name="FadeAnimation">
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 
-    <style name="Theme.Buuktu" parent="Base.Theme.Buuktu" />
 </resources>

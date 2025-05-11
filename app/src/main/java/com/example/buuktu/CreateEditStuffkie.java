@@ -1,7 +1,7 @@
 package com.example.buuktu;
 
 import android.animation.Animator;
-import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -10,7 +10,6 @@ import android.os.Bundle;
 import androidx.annotation.DrawableRes;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
@@ -21,19 +20,34 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Switch;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.buuktu.dialogs.CreateEditGeneralDialog;
+import com.example.buuktu.models.StuffkieModel;
+import com.example.buuktu.utils.CheckUtil;
+import com.example.buuktu.utils.EfectsUtils;
 import com.example.buuktu.utils.RoundedBorderSquareTransformation;
 import com.example.buuktu.bottomsheet.BottomSheetProfilePhoto;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.NavigationUtils;
 import com.example.buuktu.views.MainActivity;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
-import java.security.KeyStore;
+import java.util.Collection;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,13 +58,21 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
     ImageButton ib_select_img_create_stuffkie,ib_back,ib_save;
     Uri image;
     BottomSheetProfilePhoto bottomSheetProfilePhoto;
-    String source;
+    String source,stuffkie_id;
     FragmentManager fragmentManager;
     ConstraintLayout constraintLayout;
     TextInputEditText et_nameStuffkieCreate;
     TextInputLayout et_nameStuffkieCreateFull;
     Switch tb_stuffkiePrivacity,tb_stuffkieDraft;
     MainActivity mainActivity;
+    CreateEditGeneralDialog dialog;
+    private final FirebaseStorage storage = FirebaseStorage.getInstance("gs://buuk-tu-characterkies");
+    Resources res;
+    String packageName;
+    LottieAnimationView animationView;
+    StuffkieModel stuffkieModel;
+    CollectionReference collectionStuffkie;
+    FirebaseFirestore db;
     public CreateEditStuffkie() {
         // Required empty public constructor
     }
@@ -69,6 +91,7 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            this.stuffkie_id = getArguments().getString("stuffkie_id");
 
         }
     }
@@ -83,6 +106,8 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
         setVisibility();
         setListeners();
         source = "app";
+        db = FirebaseFirestore.getInstance();
+        collectionStuffkie = db.collection("Stuffkies");
         bottomSheetProfilePhoto = new BottomSheetProfilePhoto();
         try {
             putDefaultImage();
@@ -97,6 +122,14 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
         tb_stuffkieDraft.setVisibility(View.INVISIBLE);
 
     }
+    public void setPhotoNoDefault(){
+        stuffkieModel.setPhoto_default(false);
+        stuffkieModel.setPhoto_id(null);
+    }
+    public void setPhotoDefault(){
+        stuffkieModel.setPhoto_default(true);
+        stuffkieModel.setPhoto_id(ib_select_img_create_stuffkie.getTag().toString());
+    }
     private void initComponents(View view){
         ib_select_img_create_stuffkie = view.findViewById(R.id.ib_select_img_create_stuffkie);
         et_nameStuffkieCreateFull = view.findViewById(R.id.et_nameStuffkieCreateFull);
@@ -109,6 +142,47 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
         ib_save = mainActivity.getIb_save();
         fragmentManager = mainActivity.getSupportFragmentManager();
     }
+    private void addDataToFirestore(){
+        if(CheckUtil.handlerCheckName(mainActivity,et_nameStuffkieCreate,et_nameStuffkieCreateFull)){
+            dialog.show();
+            EfectsUtils.setAnimationsDialog("start",animationView);
+            Completable.timer(3, TimeUnit.SECONDS)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(() -> {
+                                Task<DocumentReference> addTask = collectionStuffkie.add(stuffkieModel);
+
+                                addTask.addOnCompleteListener(task -> {
+                                    if (task.isSuccessful()) {
+
+                                        if (!stuffkieModel.isPhoto_default()) {
+                                            StorageReference userRef = storage.getReference().child(task.getResult().getId());
+                                            userRef.child("profile" + DrawableUtils.getExtensionFromUri(getContext(), image)).putFile(image);
+
+                                        }
+                                        EfectsUtils.setAnimationsDialog("success",animationView);
+                                        Completable.timer(2, TimeUnit.SECONDS)
+                                                .subscribeOn(Schedulers.io())
+                                                .observeOn(AndroidSchedulers.mainThread())
+                                                .subscribe(() -> {
+                                                    dialog.dismiss();
+                                                    NavigationUtils.goBack(fragmentManager, mainActivity);
+                                                });
+
+                                    }
+                                }).addOnFailureListener(e -> {
+                                    EfectsUtils.setAnimationsDialog("fail",animationView);
+                                    Completable.timer(3, TimeUnit.SECONDS)
+                                            .subscribeOn(Schedulers.io())
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .subscribe(() -> {
+                                                dialog.dismiss();
+                                            });
+                                });
+                            }
+                    );
+        }
+    }
 
     private void setListeners(){
         ib_save.setOnClickListener(this);
@@ -117,7 +191,14 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
         tb_stuffkiePrivacity.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    tb_stuffkieDraft.setVisibility(isChecked?View.VISIBLE:View.INVISIBLE);
+                tb_stuffkieDraft.setVisibility(isChecked?View.VISIBLE:View.INVISIBLE);
+                stuffkieModel.setStuffkie_private(isChecked);
+            }
+        });
+        tb_stuffkieDraft.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                stuffkieModel.setDraft(isChecked);
             }
         });
     }
@@ -190,9 +271,9 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.ib_save){
-                /*if(worldkie_id == null){
+                if(stuffkie_id == null){
                     addDataToFirestore();
-                }else{
+                }/*else{
                     editDataFirestore();
                 }*/
             }else if(v.getId()==R.id.ib_back){

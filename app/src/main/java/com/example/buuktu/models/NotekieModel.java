@@ -3,25 +3,25 @@ package com.example.buuktu.models;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 
-public class NoteItem {
+public class NotekieModel {
     String title;
     String content;
     Timestamp last_update;
     String UID_USER;
     String UID;
-    public static NoteItem fromSnapshot(DocumentSnapshot document) {
+    public static NotekieModel fromSnapshot(DocumentSnapshot document) {
         if (document == null || !document.exists()) {
             return null;
         }
-        NoteItem noteItem = new NoteItem();
-        noteItem.setTitle(document.getString("title"));
-        noteItem.setContent(document.getString("content"));
-        noteItem.setUID(document.getString("UID"));
-        noteItem.setUID_USER(document.getString("UID_USER"));
-        noteItem.setLast_update(document.getTimestamp("last_update"));
-        return noteItem;
+        NotekieModel notekieModel = new NotekieModel();
+        notekieModel.setTitle(document.getString("title"));
+        notekieModel.setContent(document.getString("content"));
+        notekieModel.setUID(document.getString("UID"));
+        notekieModel.setUID_USER(document.getString("UID_USER"));
+        notekieModel.setLast_update(document.getTimestamp("last_update"));
+        return notekieModel;
     }
-    public NoteItem() {
+    public NotekieModel() {
     }
     public String getTitle() {
         return title;

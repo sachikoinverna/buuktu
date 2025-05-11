@@ -1,7 +1,6 @@
 package com.example.buuktu.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buuktu.R;
 import com.example.buuktu.models.StuffkieModel;
-import com.example.buuktu.models.UserkieModel;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.EfectsUtils;
 import com.google.android.material.card.MaterialCardView;
@@ -28,11 +26,8 @@ import com.google.firebase.storage.StorageReference;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAdapter.ViewHolder> implements View.OnClickListener{
-    @Override
-    public void onClick(View v) {
+public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAdapter.ViewHolder>{
 
-    }
     private ArrayList<StuffkieModel> dataSet;
     private FragmentManager fragmentManager;
 
@@ -124,11 +119,8 @@ public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAd
             holder.getIv_stuffkie_private_search().setVisibility(View.INVISIBLE);
         }
 
-        holder.getCv_stuffkie_search().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        holder.getCv_stuffkie_search().setOnClickListener(v -> {
 
-            }
         });
         ;
 

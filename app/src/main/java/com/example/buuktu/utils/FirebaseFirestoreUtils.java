@@ -1,22 +1,7 @@
 package com.example.buuktu.utils;
 
-import static android.widget.Toast.LENGTH_LONG;
-
-import static java.security.AccessController.getContext;
-
-import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
-import android.widget.Toast;
-
-import com.example.buuktu.R;
-import com.example.buuktu.models.StuffkieModel;
-import com.example.buuktu.models.UserkieModel;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.ArrayList;
 
 public class FirebaseFirestoreUtils {
     static FirebaseFirestore db = FirebaseFirestore.getInstance();;

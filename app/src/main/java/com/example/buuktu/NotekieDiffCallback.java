@@ -2,15 +2,15 @@ package com.example.buuktu;
 
 import androidx.recyclerview.widget.DiffUtil;
 
-import com.example.buuktu.models.NoteItem;
+import com.example.buuktu.models.NotekieModel;
 
 import java.util.List;
 
 public class NotekieDiffCallback extends DiffUtil.Callback {
-    private final List<NoteItem> oldList;
-    private final List<NoteItem> newList;
+    private final List<NotekieModel> oldList;
+    private final List<NotekieModel> newList;
 
-    public NotekieDiffCallback(List<NoteItem> oldList, List<NoteItem> newList) {
+    public NotekieDiffCallback(List<NotekieModel> oldList, List<NotekieModel> newList) {
         this.oldList = oldList;
         this.newList = newList;
     }

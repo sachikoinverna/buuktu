@@ -11,13 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.example.buuktu.R;
-import com.example.buuktu.listeners.OnDialogInfoClickListener;
 import com.example.buuktu.listeners.OnDialogPeriodWordsListener;
 import com.example.buuktu.models.WordOfTheDay;
 import com.example.buuktu.utils.DateUtils;
-
-import java.time.LocalDate;
-import java.util.Date;
 
 public class PeriodWordsDialog extends Dialog implements View.OnClickListener{
     ImageButton ib_close_period_word_dialog ;
@@ -60,12 +56,9 @@ public class PeriodWordsDialog extends Dialog implements View.OnClickListener{
         handler.post(checkDateRunnable);
     }
     private void updateWordOfTheDay(TextView wordTextView) {
-        WordOfTheDay.obtenerPalabraDelDia(new WordOfTheDay.FirebaseCallback() {
-            @Override
-            public void onCallback(String palabra) {
-                wordTextView.setText(palabra);
-                lastDate = DateUtils.getCurrentDate();
-            }
+        WordOfTheDay.obtenerPalabraDelDia(palabra -> {
+            wordTextView.setText(palabra);
+            lastDate = DateUtils.getCurrentDate();
         });
     }
 

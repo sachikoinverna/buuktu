@@ -1,10 +1,7 @@
 package com.example.buuktu.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +14,9 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buuktu.R;
-import com.example.buuktu.WorldkieView;
 import com.example.buuktu.models.Characterkie;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.EfectsUtils;
-import com.example.buuktu.utils.NavigationUtils;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -29,20 +24,12 @@ import com.google.firebase.storage.StorageReference;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class CharacterkiesWorldkiePreviewAdapter extends RecyclerView.Adapter<CharacterkiesWorldkiePreviewAdapter.ViewHolder> implements View.OnClickListener {
+public class CharacterkiesWorldkiePreviewAdapter extends RecyclerView.Adapter<CharacterkiesWorldkiePreviewAdapter.ViewHolder> {
 
-    @Override
-    public void onClick(View v) {
-
-    }
     private ArrayList<Characterkie> dataSet;
-    private ItemClickListener clicListener;
 
     private Context context;
 
-    public interface ItemClickListener {
-        public void onClick(View view, int position);
-    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         String lastPhotoId="";
@@ -89,9 +76,6 @@ public class CharacterkiesWorldkiePreviewAdapter extends RecyclerView.Adapter<Ch
     public CharacterkiesWorldkiePreviewAdapter(ArrayList<Characterkie> dataSet, Context ctx) {
         this.dataSet = dataSet;
         this.context = ctx;
-    }
-    public void setOnClickListener(ItemClickListener clicListener){
-        this.clicListener = clicListener;
     }
 
     

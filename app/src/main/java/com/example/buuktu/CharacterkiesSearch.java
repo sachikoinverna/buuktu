@@ -13,13 +13,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.buuktu.adapters.CharacterkieSearchAdapter;
-import com.example.buuktu.adapters.StuffkieSearchAdapter;
 import com.example.buuktu.models.Characterkie;
-import com.example.buuktu.models.StuffkieModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
@@ -85,15 +82,7 @@ public class CharacterkiesSearch extends Fragment {
                 //stuffkieModelArrayList.clear(); // Limpia la lista antes de agregar nuevos datos
 
                 for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
-                    DocumentSnapshot doc = dc.getDocument();                    //if (documentSnapshot.getBoolean("photo_default")) {
-
-                        Drawable drawable = getResources().getDrawable(R.drawable.thumb_custom);
-                    /*StuffkieModel stuffkieModel = new StuffkieModel(
-                            documentSnapshot.getId(),
-                            documentSnapshot.getString("name"),
-                            Boolean.TRUE.equals(documentSnapshot.getBoolean("stuffkie_private")),
-                            R.drawable.cloudlogin
-                    );*/
+                    DocumentSnapshot doc = dc.getDocument();
                         Characterkie characterkie = new Characterkie(doc.getId(), doc.getString("name"));
                         Log.d("StuffkiesSearch", "Stuffkie encontrado: " + doc.getString("name"));
                         switch (dc.getType()) {

@@ -2,15 +2,9 @@ package com.example.buuktu;
 
 import static android.widget.Toast.LENGTH_LONG;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.util.Log;
@@ -21,22 +15,14 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.example.buuktu.models.NoteItem;
+import com.example.buuktu.models.NotekieModel;
 import com.example.buuktu.utils.NavigationUtils;
 import com.example.buuktu.views.MainActivity;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
-import java.sql.Time;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,7 +37,7 @@ public class Note extends Fragment implements View.OnClickListener {
     EditText et_title_note,et_content_note;
     FirebaseFirestore db;
     CollectionReference collectionNotekies;
-    NoteItem noteItem;
+    NotekieModel notekieModel;
     ImageButton ib_save_note,backButton,ib_profile_superior;
     FirebaseAuth auth;
     String UID_USER;
@@ -92,7 +78,7 @@ public class Note extends Fragment implements View.OnClickListener {
 
 
         collectionNotekies = db.collection("Notekies");
-        noteItem = new NoteItem();
+        notekieModel = new NotekieModel();
         if(note_id!=null) {
             collectionNotekies.document(note_id).addSnapshotListener((queryDocumentSnapshot, e) -> {
                 if (e != null) {
@@ -101,20 +87,20 @@ public class Note extends Fragment implements View.OnClickListener {
                     return;
                 }
                 if (queryDocumentSnapshot.exists()) {
-                    NoteItem note = NoteItem.fromSnapshot(queryDocumentSnapshot);
+                    NotekieModel note = NotekieModel.fromSnapshot(queryDocumentSnapshot);
                     String title = note.getTitle();
-                    if (!title.equals("")) {
-                        et_title_note.setText(noteItem.getTitle());
+                    if (!title.isEmpty()) {
+                        et_title_note.setText(notekieModel.getTitle());
                     } else {
-                        et_title_note.setHint(noteItem.getTitle());
+                        et_title_note.setHint(notekieModel.getTitle());
                     }
-                    et_content_note.setText(noteItem.getContent());
+                    et_content_note.setText(notekieModel.getContent());
                 }
                 });
         }
         else{
-            noteItem.setTitle("");
-            noteItem.setContent("");
+            notekieModel.setTitle("");
+            notekieModel.setContent("");
         }
         setListeners();
         return view;
@@ -146,23 +132,12 @@ public class Note extends Fragment implements View.OnClickListener {
         ib_profile_superior.setVisibility(View.VISIBLE);
     }
     private void addDataToFirestore() {
-        collectionNotekies.add(notekieData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
-                note_id = documentReference.getId();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-            }
+        collectionNotekies.add(notekieData).addOnSuccessListener(documentReference -> note_id = documentReference.getId()).addOnFailureListener(e -> {
         });
     }
     private void editDataFirestore() {
-        collectionNotekies.document(note_id).update(notekieData).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
+        collectionNotekies.document(note_id).update(notekieData).addOnSuccessListener(unused -> {
 
-            }
         });
     }
 
@@ -171,7 +146,7 @@ public class Note extends Fragment implements View.OnClickListener {
         if(v.getId()==R.id.ib_back){
             NavigationUtils.goBack(fragmentManager,mainActivity);
         }else if (v.getId()==R.id.ib_save) {
-                if ((!et_content_note.getText().equals(noteItem.getContent()) || !et_title_note.getText().equals(noteItem.getTitle())) && (!et_title_note.getText().equals("") || !et_content_note.getText().equals(""))) {
+                if ((!et_content_note.getText().equals(notekieModel.getContent()) || !et_title_note.getText().equals(notekieModel.getTitle())) && (!et_title_note.getText().equals("") || !et_content_note.getText().equals(""))) {
                     timestampNow = Timestamp.now();
                     if(et_title_note.getText().equals("")){
                         notekieData.put("title","");

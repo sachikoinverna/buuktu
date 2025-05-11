@@ -3,10 +3,6 @@ package com.example.buuktu.utils;
 import android.content.Context;
 import android.os.Build;
 import android.util.Patterns;
-import android.view.Gravity;
-import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.example.buuktu.R;
 import com.google.android.material.textfield.TextInputEditText;
@@ -14,8 +10,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
-
-import java.lang.reflect.Field;
 
 public class CheckUtil {
     public static boolean handlerCheckPassword(Context context,TextInputEditText textInputEditText,TextInputLayout textInputLayout) {
@@ -126,18 +120,6 @@ public class CheckUtil {
         CheckUtil.setErrorMessage(null, textInputLayout);
         return true;
     }
-    public static boolean handlerCheckEmail(Context context,TextInputEditText textInputEditText,TextInputLayout textInputLayout) {
-        String text = textInputEditText.getText().toString();
-        if (CheckUtil.checkTextEmpty(text)) {
-            CheckUtil.setErrorMessage(context.getString(R.string.emailErrorEmpty), textInputLayout);
-            return false;
-        } else if (!CheckUtil.checkEmailStructure(text)) {
-            CheckUtil.setErrorMessage(context.getString(R.string.emailErrorFormat), textInputLayout);
-            return false;
-        }
-        CheckUtil.setErrorMessage(null, textInputLayout);
-        return true;
-    }
     public static boolean checkSpecialChar(String text)
     {
         return text.matches("[!@#$%&*()+=|<>?{}.,]");
@@ -146,8 +128,27 @@ public class CheckUtil {
             return text.matches(".*\\d.*"); // Verifica si hay algún dígito en el texto
 
     }
-    public static boolean checkEmailStructure(String email){
-            return Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    public static boolean checkEmail(Context context,TextInputEditText textInputEditText,TextInputLayout textInputLayout){
+        String text = textInputEditText.getText().toString();
+        if(CheckUtil.checkTextEmpty(text)){
+            CheckUtil.setErrorMessage(context.getString(R.string.pronounsErrorEmpty), textInputLayout);
+            return false;
+        }
+        else if (Patterns.EMAIL_ADDRESS.matcher(text).matches()) {
+            CheckUtil.setErrorMessage(context.getString(R.string.pronounsErrorEmpty), textInputLayout);
+            return false;
+        }
+        CheckUtil.setErrorMessage(null, textInputLayout);
+        return true;
+    }
+    public static boolean handlerCheckUsernameEmpty(Context context,TextInputEditText textInputEditText,TextInputLayout textInputLayout) {
+        String text = textInputEditText.getText().toString();
+        if (CheckUtil.checkTextEmpty(text)) {
+            CheckUtil.setErrorMessage(context.getString(R.string.pronounsErrorEmpty), textInputLayout);
+            return false;
+        }
+        CheckUtil.setErrorMessage(null, textInputLayout);
+        return true;
     }
     public static boolean checkTextEmpty(String text){
             return text.isEmpty();

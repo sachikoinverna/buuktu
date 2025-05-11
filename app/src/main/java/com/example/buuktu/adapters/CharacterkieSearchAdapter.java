@@ -21,11 +21,8 @@ import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 
-public class CharacterkieSearchAdapter extends RecyclerView.Adapter<CharacterkieSearchAdapter.ViewHolder> implements View.OnClickListener{
-    @Override
-    public void onClick(View v) {
+public class CharacterkieSearchAdapter extends RecyclerView.Adapter<CharacterkieSearchAdapter.ViewHolder>{
 
-    }
     private ArrayList<Characterkie> dataSet;
     private FragmentManager fragmentManager;
 
@@ -97,11 +94,8 @@ public class CharacterkieSearchAdapter extends RecyclerView.Adapter<Characterkie
             holder.getIv_characterkie_private_search().setImageAlpha(R.drawable.twotone_lock_open_24);
         }*/
 
-        holder.getCv_characterkie_search().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        holder.getCv_characterkie_search().setOnClickListener(v -> {
 
-            }
         });
         ;
         DrawableUtils.personalizarImagenCircle(context,DrawableUtils.drawableToBitmap(holder.iv_characterkie_photo_search.getDrawable()),holder.getIv_characterkie_photo_search(),R.color.brownMaroon);

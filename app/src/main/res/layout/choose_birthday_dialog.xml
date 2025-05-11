@@ -28,13 +28,13 @@
                             android:layout_marginStart="8dp"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
-                            android:tint="#555F1D"
                             android:tintMode="multiply"
                             app:layout_constraintBottom_toBottomOf="@+id/bt_day_27"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/tv_separator_day_month_birthday_selector"
-                            app:srcCompat="@drawable/button_backgground" />
+                            app:srcCompat="@drawable/button_backgground"
+                            app:tint="#555F1D" />
 
                         <ImageButton
                             android:id="@+id/bt_day_25"
@@ -44,14 +44,14 @@
                             android:layout_marginBottom="8dp"
                             android:background="@android:color/transparent"
                             android:scaleType="fitCenter"
-                            android:tint="#9FA8DA"
                             android:tintMode="multiply"
                             app:layout_constraintBottom_toBottomOf="@+id/iv_background_day_month_selector"
                             app:layout_constraintStart_toStartOf="@+id/bt_day_15"
                             app:layout_constraintTop_toBottomOf="@+id/bt_day_14"
-                            app:srcCompat="@drawable/button_backgground" />
+                            app:srcCompat="@drawable/button_backgground"
+                            app:tint="#9FA8DA" />
 
-                        <TextView
+                    <TextView
                             android:id="@+id/tv_day_25"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -72,14 +72,14 @@
                             android:layout_marginBottom="8dp"
                             android:background="@android:color/transparent"
                             android:scaleType="fitCenter"
-                            android:tint="#9FA8DA"
                             android:tintMode="multiply"
                             app:layout_constraintBottom_toBottomOf="@+id/iv_background_day_month_selector"
                             app:layout_constraintStart_toStartOf="@+id/bt_day_14"
                             app:layout_constraintTop_toBottomOf="@+id/bt_day_13"
-                            app:srcCompat="@drawable/button_backgground" />
+                            app:srcCompat="@drawable/button_backgground"
+                            app:tint="#9FA8DA" />
 
-                        <TextView
+                    <TextView
                             android:id="@+id/tv_day_24"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -100,14 +100,14 @@
                             android:layout_marginBottom="8dp"
                             android:background="@android:color/transparent"
                             android:scaleType="fitCenter"
-                            android:tint="#9FA8DA"
                             android:tintMode="multiply"
                             app:layout_constraintBottom_toBottomOf="@+id/iv_background_day_month_selector"
                             app:layout_constraintStart_toStartOf="@+id/bt_day_13"
                             app:layout_constraintTop_toBottomOf="@+id/bt_day_12"
-                            app:srcCompat="@drawable/button_backgground" />
+                            app:srcCompat="@drawable/button_backgground"
+                            app:tint="#9FA8DA" />
 
-                        <TextView
+                    <TextView
                             android:id="@+id/tv_day_23"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -127,14 +127,14 @@
                             android:layout_marginTop="8dp"
                             android:background="@android:color/transparent"
                             android:scaleType="fitCenter"
-                            android:tint="#9FA8DA"
                             android:tintMode="multiply"
                             app:layout_constraintEnd_toEndOf="@+id/iv_background_day_month_selector"
                             app:layout_constraintStart_toEndOf="@+id/bt_day_21"
                             app:layout_constraintTop_toBottomOf="@+id/bt_day_11"
-                            app:srcCompat="@drawable/button_backgground" />
+                            app:srcCompat="@drawable/button_backgground"
+                            app:tint="#9FA8DA" />
 
-                        <TextView
+                    <TextView
                             android:id="@+id/tv_day_22"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -154,14 +154,14 @@
                             android:layout_marginTop="8dp"
                             android:background="@android:color/transparent"
                             android:scaleType="fitCenter"
-                            android:tint="#9FA8DA"
                             android:tintMode="multiply"
                             app:layout_constraintEnd_toStartOf="@id/bt_day_22"
                             app:layout_constraintStart_toEndOf="@+id/bt_day_20"
                             app:layout_constraintTop_toBottomOf="@+id/bt_day_10"
-                            app:srcCompat="@drawable/button_backgground" />
+                            app:srcCompat="@drawable/button_backgground"
+                            app:tint="#9FA8DA" />
 
-                        <TextView
+                    <TextView
                             android:id="@+id/tv_day_21"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -181,15 +181,15 @@
                             android:layout_marginTop="8dp"
                             android:background="@android:color/transparent"
                             android:scaleType="fitCenter"
-                            android:tint="#9FA8DA"
                             android:tintMode="multiply"
                             app:layout_constraintEnd_toStartOf="@id/bt_day_21"
                             app:layout_constraintStart_toEndOf="@+id/bt_day_19"
                             app:layout_constraintTop_toBottomOf="@+id/bt_day_9"
-                            app:srcCompat="@drawable/button_backgground" />
+                            app:srcCompat="@drawable/button_backgground"
+                            app:tint="#9FA8DA" />
 
-                        <TextView
-                            android:id="@+id/tv_day_20"
+                    <TextView
+                        android:id="@+id/tv_day_20"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/twenty"
@@ -208,15 +208,15 @@
                             android:layout_marginTop="8dp"
                             android:background="@android:color/transparent"
                             android:scaleType="fitCenter"
-                            android:tint="#9FA8DA"
                             android:tintMode="multiply"
                             app:layout_constraintEnd_toStartOf="@id/bt_day_20"
                             app:layout_constraintStart_toEndOf="@+id/bt_day_18"
                             app:layout_constraintTop_toBottomOf="@+id/bt_day_8"
-                            app:srcCompat="@drawable/button_backgground" />
+                            app:srcCompat="@drawable/button_backgground"
+                            app:tint="#9FA8DA" />
 
-                        <TextView
-                            android:id="@+id/tv_day_19"
+                    <TextView
+                        android:id="@+id/tv_day_19"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/nineteen"
@@ -235,18 +235,18 @@
                             android:layout_marginTop="8dp"
                             android:background="@android:color/transparent"
                             android:scaleType="fitCenter"
-                            android:tint="#9FA8DA"
                             android:tintMode="multiply"
                             app:layout_constraintEnd_toStartOf="@id/bt_day_19"
                             app:layout_constraintStart_toEndOf="@+id/bt_day_17"
                             app:layout_constraintTop_toBottomOf="@+id/bt_day_7"
-                            app:srcCompat="@drawable/button_backgground" />
+                            app:srcCompat="@drawable/button_backgground"
+                            app:tint="#9FA8DA" />
 
-                        <TextView
-                            android:id="@+id/tv_day_18"
+                    <TextView
+                        android:id="@+id/tv_day_18"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/eightteen"
+                            android:text="@string/eighteen"
                             android:textColor="#FFFFFF"
                             android:textSize="14sp"
                             android:textStyle="bold"
@@ -262,15 +262,15 @@
                             android:layout_marginTop="8dp"
                             android:background="@android:color/transparent"
                             android:scaleType="fitCenter"
-                            android:tint="#9FA8DA"
                             android:tintMode="multiply"
                             app:layout_constraintEnd_toStartOf="@id/bt_day_18"
                             app:layout_constraintStart_toEndOf="@+id/bt_day_16"
                             app:layout_constraintTop_toBottomOf="@+id/bt_day_6"
-                            app:srcCompat="@drawable/button_backgground" />
+                            app:srcCompat="@drawable/button_backgground"
+                            app:tint="#9FA8DA" />
 
-                        <TextView
-                            android:id="@+id/tv_day_17"
+                    <TextView
+                        android:id="@+id/tv_day_17"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/seventeen"
@@ -289,15 +289,15 @@
                             android:layout_marginTop="8dp"
                             android:background="@android:color/transparent"
                             android:scaleType="fitCenter"
-                            android:tint="#9FA8DA"
                             android:tintMode="multiply"
                             app:layout_constraintEnd_toStartOf="@id/bt_day_17"
                             app:layout_constraintStart_toEndOf="@+id/bt_day_15"
                             app:layout_constraintTop_toBottomOf="@+id/bt_day_5"
-                            app:srcCompat="@drawable/button_backgground" />
+                            app:srcCompat="@drawable/button_backgground"
+                            app:tint="#9FA8DA" />
 
-                        <TextView
-                            android:id="@+id/tv_day_16"
+                    <TextView
+                        android:id="@+id/tv_day_16"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/sixteen"
@@ -316,15 +316,15 @@
                             android:layout_marginTop="8dp"
                             android:background="@android:color/transparent"
                             android:scaleType="fitCenter"
-                            android:tint="#9FA8DA"
                             android:tintMode="multiply"
                             app:layout_constraintEnd_toStartOf="@id/bt_day_15"
                             app:layout_constraintStart_toEndOf="@+id/bt_day_13"
                             app:layout_constraintTop_toBottomOf="@+id/bt_day_3"
-                            app:srcCompat="@drawable/button_backgground" />
+                            app:srcCompat="@drawable/button_backgground"
+                            app:tint="#9FA8DA" />
 
-                        <TextView
-                            android:id="@+id/tv_day_14"
+                    <TextView
+                        android:id="@+id/tv_day_14"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/fourteen"
@@ -343,18 +343,18 @@
                             android:layout_marginTop="8dp"
                             android:background="@android:color/transparent"
                             android:scaleType="fitCenter"
-                            android:tint="#9FA8DA"
                             android:tintMode="multiply"
                             app:layout_constraintEnd_toStartOf="@id/bt_day_16"
                             app:layout_constraintStart_toEndOf="@+id/bt_day_14"
                             app:layout_constraintTop_toBottomOf="@+id/bt_day_4"
-                            app:srcCompat="@drawable/button_backgground" />
+                            app:srcCompat="@drawable/button_backgground"
+                            app:tint="#9FA8DA" />
 
-                        <TextView
-                            android:id="@+id/tv_day_15"
+                    <TextView
+                        android:id="@+id/tv_day_15"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/fiveteen"
+                            android:text="@string/fifteen"
                             android:textColor="#FFFFFF"
                             android:textSize="14sp"
                             android:textStyle="bold"
@@ -370,16 +370,16 @@
                             android:layout_marginTop="8dp"
                             android:background="@android:color/transparent"
                             android:scaleType="fitCenter"
-                            android:tint="#9FA8DA"
                             android:tintMode="multiply"
                             app:layout_constraintEnd_toStartOf="@id/bt_day_13"
                             app:layout_constraintStart_toStartOf="@+id/iv_background_day_month_selector"
                             app:layout_constraintTop_toBottomOf="@+id/bt_day_1"
-                            app:srcCompat="@drawable/button_backgground" />
+                            app:srcCompat="@drawable/button_backgground"
+                            app:tint="#9FA8DA" />
 
-                        <TextView
-                            android:id="@+id/tv_day_12"
-                            android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/tv_day_12"
+                        android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/twelve"
                             android:textColor="#FFFFFF"
@@ -398,16 +398,16 @@
                             android:layout_marginEnd="8dp"
                             android:background="@android:color/transparent"
                             android:scaleType="fitCenter"
-                            android:tint="#9FA8DA"
                             android:tintMode="multiply"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/bt_day_10"
                             app:layout_constraintTop_toBottomOf="@+id/tv_current_month_birthday_selector"
-                            app:srcCompat="@drawable/button_backgground" />
+                            app:srcCompat="@drawable/button_backgground"
+                            app:tint="#9FA8DA" />
 
-                        <TextView
-                            android:id="@+id/tv_day_11"
-                            android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/tv_day_11"
+                        android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/eleven"
                             android:textColor="#FFFFFF"
@@ -425,16 +425,16 @@
                             android:layout_marginTop="8dp"
                             android:background="@android:color/transparent"
                             android:scaleType="fitCenter"
-                            android:tint="#9FA8DA"
                             android:tintMode="multiply"
                             app:layout_constraintEnd_toStartOf="@id/bt_day_11"
                             app:layout_constraintStart_toEndOf="@+id/bt_day_9"
                             app:layout_constraintTop_toBottomOf="@+id/tv_current_month_birthday_selector"
-                            app:srcCompat="@drawable/button_backgground" />
+                            app:srcCompat="@drawable/button_backgground"
+                            app:tint="#9FA8DA" />
 
-                        <TextView
-                            android:id="@+id/tv_day_10"
-                            android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/tv_day_10"
+                        android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/ten"
                             android:textColor="#FFFFFF"
@@ -452,18 +452,18 @@
                             android:layout_marginTop="8dp"
                             android:background="@android:color/transparent"
                             android:scaleType="fitCenter"
-                            android:tint="#9FA8DA"
                             android:tintMode="multiply"
                             app:layout_constraintEnd_toStartOf="@id/bt_day_14"
                             app:layout_constraintStart_toEndOf="@+id/bt_day_12"
                             app:layout_constraintTop_toBottomOf="@+id/bt_day_2"
-                            app:srcCompat="@drawable/button_backgground" />
+                            app:srcCompat="@drawable/button_backgground"
+                            app:tint="#9FA8DA" />
 
-                        <TextView
-                            android:id="@+id/tv_day_13"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/thirdteen"
+                    <TextView
+                        android:id="@+id/tv_day_13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                            android:text="@string/thirteen"
                             android:textColor="#FFFFFF"
                             android:textSize="14sp"
                             android:textStyle="bold"
@@ -479,17 +479,17 @@
                             android:layout_marginTop="8dp"
                             android:background="@android:color/transparent"
                             android:scaleType="fitCenter"
-                            android:tint="#9FA8DA"
                             android:tintMode="multiply"
                             app:layout_constraintEnd_toStartOf="@id/bt_day_9"
                             app:layout_constraintStart_toEndOf="@+id/bt_day_7"
                             app:layout_constraintTop_toBottomOf="@+id/tv_current_month_birthday_selector"
-                            app:srcCompat="@drawable/button_backgground" />
+                            app:srcCompat="@drawable/button_backgground"
+                            app:tint="#9FA8DA" />
 
-                        <TextView
-                            android:id="@+id/tv_day_8"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                    <TextView
+                        android:id="@+id/tv_day_8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                             android:text="@string/eight"
                             android:textColor="#FFFFFF"
                             android:textSize="14sp"
@@ -506,17 +506,17 @@
                             android:layout_marginTop="8dp"
                             android:background="@android:color/transparent"
                             android:scaleType="fitCenter"
-                            android:tint="#9FA8DA"
                             android:tintMode="multiply"
                             app:layout_constraintEnd_toStartOf="@id/bt_day_10"
                             app:layout_constraintStart_toEndOf="@+id/bt_day_8"
                             app:layout_constraintTop_toBottomOf="@+id/tv_current_month_birthday_selector"
-                            app:srcCompat="@drawable/button_backgground" />
+                            app:srcCompat="@drawable/button_backgground"
+                            app:tint="#9FA8DA" />
 
-                        <TextView
-                            android:id="@+id/tv_day_9"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                    <TextView
+                        android:id="@+id/tv_day_9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                             android:text="@string/nine"
                             android:textColor="#FFFFFF"
                             android:textSize="14sp"
@@ -534,17 +534,17 @@
                             android:layout_marginTop="8dp"
                             android:background="@android:color/transparent"
                             android:scaleType="fitCenter"
-                            android:tint="#9FA8DA"
                             android:tintMode="multiply"
                             app:layout_constraintEnd_toStartOf="@+id/bt_day_7"
                             app:layout_constraintStart_toEndOf="@+id/bt_day_5"
                             app:layout_constraintTop_toBottomOf="@+id/tv_current_month_birthday_selector"
-                            app:srcCompat="@drawable/button_backgground" />
+                            app:srcCompat="@drawable/button_backgground"
+                            app:tint="#9FA8DA" />
 
-                        <TextView
-                            android:id="@+id/tv_day_6"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                    <TextView
+                        android:id="@+id/tv_day_6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                             android:text="@string/six"
                             android:textColor="#FFFFFF"
                             android:textSize="14sp"
@@ -561,17 +561,17 @@
                             android:layout_marginTop="8dp"
                             android:background="@android:color/transparent"
                             android:scaleType="fitCenter"
-                            android:tint="#9FA8DA"
                             android:tintMode="multiply"
                             app:layout_constraintEnd_toStartOf="@id/bt_day_6"
                             app:layout_constraintStart_toEndOf="@+id/bt_day_4"
                             app:layout_constraintTop_toBottomOf="@+id/tv_current_month_birthday_selector"
-                            app:srcCompat="@drawable/button_backgground" />
+                            app:srcCompat="@drawable/button_backgground"
+                            app:tint="#9FA8DA" />
 
-                        <TextView
-                            android:id="@+id/tv_day_5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                    <TextView
+                        android:id="@+id/tv_day_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                             android:text="@string/five"
                             android:textColor="#FFFFFF"
                             android:textSize="14sp"
@@ -588,18 +588,18 @@
                             android:layout_marginTop="8dp"
                             android:background="@android:color/transparent"
                             android:scaleType="fitCenter"
-                            android:tint="#9FA8DA"
                             android:tintMode="multiply"
                             app:layout_constraintEnd_toStartOf="@+id/bt_day_5"
                             app:layout_constraintStart_toEndOf="@+id/bt_day_3"
                             app:layout_constraintTop_toBottomOf="@+id/tv_current_month_birthday_selector"
-                            app:srcCompat="@drawable/button_backgground" />
+                            app:srcCompat="@drawable/button_backgground"
+                            app:tint="#9FA8DA" />
 
-                        <TextView
-                            android:id="@+id/tv_day_4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="2dp"
+                    <TextView
+                        android:id="@+id/tv_day_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
                             android:layout_marginBottom="2dp"
                             android:text="@string/four"
                             android:textColor="#FFFFFF"
@@ -619,17 +619,17 @@
                             android:background="@android:color/transparent"
                             android:scaleType="fitCenter"
 
-                            android:tint="#9FA8DA"
                             android:tintMode="multiply"
                             app:layout_constraintEnd_toStartOf="@+id/bt_day_8"
                             app:layout_constraintStart_toEndOf="@+id/bt_day_6"
                             app:layout_constraintTop_toBottomOf="@+id/tv_current_month_birthday_selector"
-                            app:srcCompat="@drawable/button_backgground" />
+                            app:srcCompat="@drawable/button_backgground"
+                            app:tint="#9FA8DA" />
 
-                        <TextView
-                            android:id="@+id/tv_day_7"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                    <TextView
+                        android:id="@+id/tv_day_7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                             android:text="@string/seven"
                             android:textColor="#FFFFFF"
                             android:textSize="14sp"
@@ -646,18 +646,18 @@
                             android:layout_marginTop="8dp"
                             android:background="@android:color/transparent"
                             android:scaleType="fitCenter"
-                            android:tint="#9FA8DA"
                             android:tintMode="multiply"
                             app:layout_constraintEnd_toStartOf="@+id/bt_day_3"
                             app:layout_constraintStart_toEndOf="@+id/bt_day_1"
                             app:layout_constraintTop_toBottomOf="@+id/tv_current_month_birthday_selector"
-                            app:srcCompat="@drawable/button_backgground" />
+                            app:srcCompat="@drawable/button_backgground"
+                            app:tint="#9FA8DA" />
 
-                        <TextView
-                            android:id="@+id/tv_day_2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/two"
+                    <TextView
+                        android:id="@+id/tv_day_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/two"
                             android:textColor="#FFFFFF"
                             android:textSize="14sp"
                             android:textStyle="bold"
@@ -673,19 +673,19 @@
                             android:layout_marginTop="8dp"
                             android:background="@android:color/transparent"
                             android:scaleType="fitCenter"
-                            android:tint="#9FA8DA"
                             android:tintMode="multiply"
                             app:layout_constraintEnd_toStartOf="@+id/bt_day_2"
                             app:layout_constraintStart_toStartOf="@+id/iv_background_day_month_selector"
                             app:layout_constraintTop_toBottomOf="@+id/tv_current_month_birthday_selector"
-                            app:srcCompat="@drawable/button_backgground" />
+                            app:srcCompat="@drawable/button_backgground"
+                            app:tint="#9FA8DA" />
 
-                        <TextView
-                            android:id="@+id/tv_day_1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/one"
-                            android:textColor="#FFFFFF"
+                    <TextView
+                        android:id="@+id/tv_day_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/one"
+                        android:textColor="#FFFFFF"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="@+id/bt_day_1"
@@ -701,35 +701,35 @@
                             android:layout_marginBottom="8dp"
                             android:background="@android:color/transparent"
                             android:scaleType="fitCenter"
-                            android:tint="#9FA8DA"
                             android:tintMode="multiply"
                             app:layout_constraintBottom_toBottomOf="@+id/iv_background_day_month_selector"
                             app:layout_constraintStart_toStartOf="@+id/bt_day_16"
                             app:layout_constraintTop_toBottomOf="@+id/bt_day_15"
-                            app:srcCompat="@drawable/button_backgground" />
+                            app:srcCompat="@drawable/button_backgground"
+                            app:tint="#9FA8DA" />
 
-                        <ImageButton
-                            android:id="@+id/bt_day_27"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginBottom="8dp"
+                    <ImageButton
+                        android:id="@+id/bt_day_27"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
                             android:background="@android:color/transparent"
                             android:scaleType="fitCenter"
-                            android:tint="#9FA8DA"
                             android:tintMode="multiply"
                             app:layout_constraintBottom_toBottomOf="@+id/iv_background_day_month_selector"
                             app:layout_constraintStart_toStartOf="@+id/bt_day_17"
                             app:layout_constraintTop_toBottomOf="@+id/bt_day_16"
-                            app:srcCompat="@drawable/button_backgground" />
+                            app:srcCompat="@drawable/button_backgground"
+                        app:tint="#9FA8DA" />
 
-                        <TextView
-                            android:id="@+id/tv_day_27"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/twentyseven"
-                            android:textColor="#FFFFFF"
-                            android:textSize="14sp"
+                    <TextView
+                        android:id="@+id/tv_day_27"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/twentyseven"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="@+id/bt_day_27"
                             app:layout_constraintEnd_toEndOf="@+id/bt_day_27"
@@ -756,21 +756,20 @@
                             android:layout_marginTop="8dp"
                             android:background="@android:color/transparent"
                             android:scaleType="fitCenter"
-                            android:tint="#9FA8DA"
                             android:tintMode="multiply"
                             app:layout_constraintEnd_toStartOf="@+id/bt_day_4"
                             app:layout_constraintStart_toEndOf="@+id/bt_day_2"
                             app:layout_constraintTop_toBottomOf="@+id/tv_current_month_birthday_selector"
-                            app:srcCompat="@drawable/button_backgground" />
+                            app:srcCompat="@drawable/button_backgground" app:tint="#9FA8DA" />
 
-                        <TextView
-                            android:id="@+id/tv_day_3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/three"
-                            android:textColor="#FFFFFF"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
+                    <TextView
+                        android:id="@+id/tv_day_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/three"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="@+id/bt_day_3"
                             app:layout_constraintEnd_toEndOf="@+id/bt_day_3"
                             app:layout_constraintStart_toStartOf="@+id/bt_day_3"
@@ -784,21 +783,21 @@
                             android:layout_marginBottom="8dp"
                             android:background="@android:color/transparent"
                             android:scaleType="fitCenter"
-                            android:tint="#9FA8DA"
                             android:tintMode="multiply"
                             app:layout_constraintBottom_toBottomOf="@+id/iv_background_day_month_selector"
                             app:layout_constraintStart_toStartOf="@+id/bt_day_18"
                             app:layout_constraintTop_toBottomOf="@+id/bt_day_17"
-                            app:srcCompat="@drawable/button_backgground" />
+                            app:srcCompat="@drawable/button_backgground"
+                            app:tint="#9FA8DA" />
 
-                        <TextView
-                            android:id="@+id/tv_day_28"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/twentyeight"
-                            android:textColor="#FFFFFF"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
+                    <TextView
+                        android:id="@+id/tv_day_28"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/twentyeight"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="@+id/bt_day_28"
                             app:layout_constraintEnd_toEndOf="@+id/bt_day_28"
                             app:layout_constraintStart_toStartOf="@+id/bt_day_28"
@@ -812,12 +811,11 @@
                             android:layout_marginBottom="8dp"
                             android:background="@android:color/transparent"
                             android:scaleType="fitCenter"
-                            android:tint="#9FA8DA"
                             android:tintMode="multiply"
                             app:layout_constraintBottom_toBottomOf="@+id/iv_background_day_month_selector"
                             app:layout_constraintStart_toStartOf="@+id/bt_day_19"
                             app:layout_constraintTop_toBottomOf="@+id/bt_day_18"
-                            app:srcCompat="@drawable/button_backgground" />
+                            app:srcCompat="@drawable/button_backgground" app:tint="#9FA8DA" />
 
                         <TextView
                             android:id="@+id/tv_day_29"
@@ -840,12 +838,11 @@
                             android:layout_marginBottom="8dp"
                             android:background="@android:color/transparent"
                             android:scaleType="fitCenter"
-                            android:tint="#9FA8DA"
                             android:tintMode="multiply"
                             app:layout_constraintBottom_toBottomOf="@+id/iv_background_day_month_selector"
                             app:layout_constraintStart_toStartOf="@+id/bt_day_20"
                             app:layout_constraintTop_toBottomOf="@+id/bt_day_19"
-                            app:srcCompat="@drawable/button_backgground" />
+                            app:srcCompat="@drawable/button_backgground" app:tint="#9FA8DA" />
 
                         <TextView
                             android:id="@+id/tv_day_30"
@@ -868,12 +865,11 @@
                             android:layout_marginBottom="8dp"
                             android:background="@android:color/transparent"
                             android:scaleType="fitCenter"
-                            android:tint="#9FA8DA"
                             android:tintMode="multiply"
                             app:layout_constraintBottom_toBottomOf="@+id/iv_background_day_month_selector"
                             app:layout_constraintStart_toStartOf="@+id/bt_day_21"
                             app:layout_constraintTop_toBottomOf="@+id/bt_day_20"
-                            app:srcCompat="@drawable/button_backgground" />
+                            app:srcCompat="@drawable/button_backgground" app:tint="#9FA8DA" />
 
                         <TextView
                             android:id="@+id/tv_day_31"
@@ -970,11 +966,10 @@
                             android:layout_marginEnd="8dp"
                             android:foregroundTint="#9FA8DA"
                             android:src="@drawable/button_backgground"
-                            android:tint="#7D83A9"
                             android:tintMode="multiply"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/rb_unknown_birthday" />
+                            app:layout_constraintTop_toBottomOf="@+id/rb_unknown_birthday" app:tint="#7D83A9" />
 
                         <TextView
                             android:id="@+id/tv_separator_day_month_birthday_selector"
@@ -1006,10 +1001,9 @@
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="16dp"
                             android:background="@android:color/transparent"
-                            android:tint="#FFFFFF"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/iv_head_day_month_birthday_selector"
-                            app:srcCompat="@drawable/twotone_arrow_drop_down_circle_24" />
+                            app:srcCompat="@drawable/twotone_arrow_drop_down_circle_24" app:tint="#FFFFFF" />
 
                         <ImageButton
                             android:id="@+id/bt_previous_month_birthday_selector"

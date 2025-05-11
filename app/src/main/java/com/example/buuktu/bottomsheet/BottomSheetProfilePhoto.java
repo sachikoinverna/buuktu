@@ -3,29 +3,22 @@ package com.example.buuktu.bottomsheet;
 import static android.app.Activity.RESULT_OK;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageDecoder;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.ColorRes;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -39,11 +32,9 @@ import com.example.buuktu.views.CreateEditWorldkie;
 import com.example.buuktu.views.MainActivity;
 import com.example.buuktu.views.Register;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.google.firebase.storage.StorageReference;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Objects;
 
 public class BottomSheetProfilePhoto extends BottomSheetDialogFragment implements View.OnClickListener{
     Context context;
@@ -132,19 +123,18 @@ public class BottomSheetProfilePhoto extends BottomSheetDialogFragment implement
                                     DrawableUtils.personalizarImagenCuadradoButton(context,150/6,7,R.color.brownMaroon,uri, createEditWorldkie.getIb_select_img_create_worldkie());
 
                                       //  DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(drawable), createEditWorldkie.getIb_select_img_create_worldkie(), R.color.brownMaroon);
-                                    createEditWorldkie.setSource("device");
+                                    createEditWorldkie.setPhotoNoDefault();
                                 } else if (createCharacterkie!=null) {
                                     DrawableUtils.personalizarImagenCircleButton(context, uri, createCharacterkie.getIb_select_img_create_worldkie(), R.color.brownMaroon);
-                                    createCharacterkie.setSource("device");
+                                    createCharacterkie.setPhotoNoDefault();
                                 }else if (createEditStuffkie!=null) {
                                    // createEditStuffkie.getIb_select_img_create_worldkie().setImageDrawable(drawable);
                                    // DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(drawable), createCharacterkie.getIb_select_img_create_worldkie(), R.color.brownMaroon);
                                     createEditStuffkie.setSource("device");
+                                    createEditStuffkie.setPhotoNoDefault();
                                 }
                                 dismiss();
-                            } catch (FileNotFoundException e) {
-                            throw new RuntimeException(e);
-                        } catch (IOException e) {
+                            } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
                     }

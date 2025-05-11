@@ -22,14 +22,15 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Switch;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.buuktu.dialogs.CreateEditGeneralDialog;
 import com.example.buuktu.utils.RoundedBorderSquareTransformation;
 import com.example.buuktu.bottomsheet.BottomSheetProfilePhoto;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.NavigationUtils;
 import com.example.buuktu.views.MainActivity;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -52,6 +53,9 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
     ConstraintLayout constraintLayout;
     TextInputEditText textInputEditText;
     TextInputLayout et_nameCharacterkieCreateFull;
+    MainActivity mainActivity;
+    CreateEditGeneralDialog dialog;
+    LottieAnimationView animationView;
     public CreateEditScenariokie() {
         // Required empty public constructor
     }
@@ -79,13 +83,15 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_create_edit_scenariokie, container, false);
-        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity = (MainActivity) getActivity();
         ib_back = mainActivity.getBackButton();
         ib_back.setVisibility(View.VISIBLE);
         ib_save = mainActivity.getIb_save();
         ib_save.setVisibility(View.VISIBLE);
         context = getContext();
         initComponents(view);
+        dialog = new CreateEditGeneralDialog(mainActivity);
+        animationView = dialog.getAnimationView();
         fragmentManager = requireActivity().getSupportFragmentManager();
         activity = requireActivity();
         source = "app";
@@ -169,6 +175,14 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
             circularReveal.start();
         }
     }
+    public void setPhotoNoDefault(){
+     /*   sc.setPhoto_default(false);
+        stuffkieModel.setPhoto_id(null);*/
+    }
+    public void setPhotoDefault(){/*
+        stuffkieModel.setPhoto_default(true);
+        stuffkieModel.setPhoto_id(ib_select_img_create_stuffkie.getTag().toString());*/
+    }
     private void setListeners(){
         ib_select_img_create_scenariokie.setOnClickListener(this);
         ib_back.setOnClickListener(this);
@@ -176,7 +190,14 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
         tb_scenariokiePrivacity.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    tb_scenariokieDraft.setVisibility(isChecked?View.VISIBLE:View.INVISIBLE);
+                tb_scenariokieDraft.setVisibility(isChecked?View.VISIBLE:View.INVISIBLE);
+
+            }
+        });
+        tb_scenariokieDraft.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
             }
         });
     }

@@ -8,30 +8,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buuktu.R;
-import com.example.buuktu.models.Characterkie;
 import com.example.buuktu.models.NotikieModel;
 import com.example.buuktu.utils.DateUtils;
-import com.example.buuktu.utils.DrawableUtils;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-public class NotikieListAdapter extends RecyclerView.Adapter<NotikieListAdapter.ViewHolder> implements View.OnClickListener{
-    @Override
-    public void onClick(View v) {
+public class NotikieListAdapter extends RecyclerView.Adapter<NotikieListAdapter.ViewHolder>{
 
-    }
     private ArrayList<NotikieModel> dataSet;
     private FragmentManager fragmentManager;
 
@@ -108,11 +101,11 @@ public class NotikieListAdapter extends RecyclerView.Adapter<NotikieListAdapter.
         if (days > 30) {
             // Si han pasado más de 30 días, mostrar la fecha completa con hora
             dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
-            timeAgo = "Fecha: " + dateFormat.format(date);
+            timeAgo = context.getResources().getString(R.string.date)+": " + dateFormat.format(date);
         } else if (days > 7) {
             // Si han pasado más de 7 días pero menos de 30 días, mostrar el día de la semana
             dateFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
-            timeAgo = "Fue un " + dateFormat.format(date);
+            timeAgo = context.getResources().getString(R.string.it_was_a) +" "+ dateFormat.format(date)+".";
         } else {
             // Si han pasado menos de 7 días, mostrar el tiempo transcurrido
             timeAgo = getTimeAgo(seconds, minutes, hours, days);
@@ -121,22 +114,19 @@ public class NotikieListAdapter extends RecyclerView.Adapter<NotikieListAdapter.
         // Mostrar el tiempo transcurrido o la fecha completa
         System.out.println(timeAgo);
         holder.getTv_date_notikie_list_layout().setText(timeAgo);
-        holder.getCv_notikie_list_layout().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        holder.getCv_notikie_list_layout().setOnClickListener(v -> {
 
-            }
         });
     }
 private String getTimeAgo(long seconds, long minutes, long hours, long days) {
     if (days > 0) {
-        return days + " día" + (days > 1 ? "s" : "") + " atrás.";
+        return days + " " +context.getResources().getString(R.string.day) + (days > 1 ? "s" : "") +" "+context.getResources().getString(R.string.ago)+".";
     } else if (hours > 0) {
-        return  hours + " hora" + (hours > 1 ? "s" : "") + " atrás";
+        return  hours + " " +context.getResources().getString(R.string.hour) + (hours > 1 ? "s" : "") +" "+context.getResources().getString(R.string.ago)+ ".";
     } else if (minutes > 0) {
-        return minutes + " minuto" + (minutes > 1 ? "s" : "") + " atrás";
+        return minutes + " " +context.getResources().getString(R.string.minute) + (minutes > 1 ? "s" : "") +" "+context.getResources().getString(R.string.ago)+ ".";
     } else {
-        return seconds + " segundo" + (seconds > 1 ? "s" : "") + " atrás";
+        return seconds + " " +context.getResources().getString(R.string.second) + (seconds > 1 ? "s" : "") +" "+context.getResources().getString(R.string.ago)+ ".";
     }
 }
 

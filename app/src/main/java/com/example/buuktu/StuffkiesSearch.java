@@ -2,7 +2,6 @@ package com.example.buuktu;
 
 import static android.widget.Toast.LENGTH_LONG;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,12 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
 import android.widget.Toast;
 
-import com.example.buuktu.adapters.SettingsAdapter;
 import com.example.buuktu.adapters.StuffkieSearchAdapter;
-import com.example.buuktu.models.SettingModel;
 import com.example.buuktu.models.StuffkieModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -34,7 +30,7 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class StuffkiesSearch extends Fragment {
-    private ArrayList<StuffkieModel> filteredDataSet = new ArrayList<StuffkieModel>();
+    private ArrayList<StuffkieModel> filteredDataSet = new ArrayList<>();
 
     private ArrayList<StuffkieModel> stuffkieModelArrayList;
     CollectionReference collectionStuffkies;
@@ -92,12 +88,7 @@ public class StuffkiesSearch extends Fragment {
                 for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
                     DocumentSnapshot doc = dc.getDocument();                    //if (documentSnapshot.getBoolean("photo_default")) {
 
-                        StuffkieModel stuffkieModel = new StuffkieModel(
-                                doc.getId(),
-                                doc.getString("name"),
-                                doc.getBoolean("stuffkie_private"),
-                                doc.getBoolean("photo_default")
-                        );
+                        StuffkieModel stuffkieModel = StuffkieModel.fromSnapshot(doc);
                         switch (dc.getType()) {
                             case ADDED:
                                 safeAddToList(stuffkieModelArrayList, dc.getNewIndex(), stuffkieModel);

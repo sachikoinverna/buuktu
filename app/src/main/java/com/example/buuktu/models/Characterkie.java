@@ -1,12 +1,11 @@
 package com.example.buuktu.models;
 
-import android.graphics.drawable.Drawable;
-import android.renderscript.ScriptIntrinsicYuvToRGB;
-
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Exclude;
 
-import java.util.Date;
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Characterkie {
     String UID_WORLDKIE;
@@ -64,6 +63,25 @@ public class Characterkie {
         characterkie.setPronouns(document.getString("pronouns"));
         return characterkie;
     }
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        Field[] fields = this.getClass().getDeclaredFields();
+
+        for (Field field : fields) {
+            field.setAccessible(true);
+            try {
+                Object value = field.get(this);
+                if (value != null) {
+                    map.put(field.getName(), value);
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return map;
+    }
+
     public String getBirthday_format() {
         return birthday_format;
     }

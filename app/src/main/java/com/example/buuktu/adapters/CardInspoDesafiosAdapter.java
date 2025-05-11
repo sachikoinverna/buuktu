@@ -8,31 +8,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.buuktu.Notes;
 import com.example.buuktu.R;
 import com.example.buuktu.dialogs.PeriodNumbersDialog;
 import com.example.buuktu.dialogs.PeriodWordsDialog;
 import com.example.buuktu.models.CardItem;
-import com.example.buuktu.views.Inspo;
 import com.google.android.material.card.MaterialCardView;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class CardInspoDesafiosAdapter extends RecyclerView.Adapter<CardInspoDesafiosAdapter.ViewHolder> implements View.OnClickListener {
+public class CardInspoDesafiosAdapter extends RecyclerView.Adapter<CardInspoDesafiosAdapter.ViewHolder> {
 
     // Modelo de datos, por ejemplo:
     private List<CardItem> dataSet;
     private Context context;
     FragmentManager fragmentManager;
-    @Override
-    public void onClick(View v) {
 
-    }
 
 
     public CardInspoDesafiosAdapter(Context context, List<CardItem> dataSet, FragmentManager fragmentManager) {
@@ -54,16 +47,13 @@ public class CardInspoDesafiosAdapter extends RecyclerView.Adapter<CardInspoDesa
         String text = dataSet.get(position).getText();
         holder.getIcon().setImageResource(dataSet.get(position).getIconResId());
         holder.getText().setText(text);
-        holder.getCardView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(text.equals("Wordkie of the day")){
-                    PeriodWordsDialog periodWordsDialog = new PeriodWordsDialog(v.getContext());
-                    periodWordsDialog.show();
-                } else if (text.equals("Numberkie of the day")) {
-                    PeriodNumbersDialog periodNumbersDialog = new PeriodNumbersDialog(v.getContext());
-                    periodNumbersDialog.show();
-                }
+        holder.getCardView().setOnClickListener(v -> {
+            if(text.equals("Wordkie of the day")){
+                PeriodWordsDialog periodWordsDialog = new PeriodWordsDialog(v.getContext());
+                periodWordsDialog.show();
+            } else if (text.equals("Numberkie of the day")) {
+                PeriodNumbersDialog periodNumbersDialog = new PeriodNumbersDialog(v.getContext());
+                periodNumbersDialog.show();
             }
         });
     }

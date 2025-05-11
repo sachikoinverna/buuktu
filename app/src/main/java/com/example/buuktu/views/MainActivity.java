@@ -1,20 +1,15 @@
 package com.example.buuktu.views;
 
-import android.animation.Animator;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
@@ -23,8 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
-import androidx.core.graphics.drawable.RoundedBitmapDrawable;
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -39,7 +32,6 @@ import com.example.buuktu.R;
 import com.example.buuktu.Search;
 import com.example.buuktu.broadcastReceiver.WordNotificationReceiver;
 import com.example.buuktu.dialogs.InfoFutureFunctionDialog;
-import com.example.buuktu.dialogs.InfoGeneralDialog;
 import com.example.buuktu.dialogs.InfoNotikiesDialog;
 import com.example.buuktu.dialogs.InfoWorldkiesDialog;
 import com.example.buuktu.listeners.OnDialogInfoClickListener;
@@ -50,7 +42,6 @@ import com.example.buuktu.utils.NavigationUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -58,7 +49,6 @@ import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.text.BreakIterator;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements OnDialogInfoClickListener, NavigationView.OnNavigationItemSelectedListener {
@@ -119,26 +109,23 @@ int colorEntero;
         ib_self_profile.setVisibility(View.GONE);
         // Configuración del BottomNavigationView
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
 
-                if (id == R.id.home) {
+            if (id == R.id.home) {
 
-                    NavigationUtils.goNewFragment(fragmentManager, new Home());
+                NavigationUtils.goNewFragment(fragmentManager, new Home());
 
-                } else if (id == R.id.search) {
-                    NavigationUtils.goNewFragment(fragmentManager, new Search());
-                } else if (id == R.id.inspo) {
-                    NavigationUtils.goNewFragment(fragmentManager, new Inspo());
-                } else if (id == R.id.notifications) {
-                    NavigationUtils.goNewFragment(fragmentManager, new Notikies());
-                } else if (id == R.id.messages) {
-                   infoFutureFunctionDialog.show();
-                }
-                return true;
+            } else if (id == R.id.search) {
+                NavigationUtils.goNewFragment(fragmentManager, new Search());
+            } else if (id == R.id.inspo) {
+                NavigationUtils.goNewFragment(fragmentManager, new Inspo());
+            } else if (id == R.id.notifications) {
+                NavigationUtils.goNewFragment(fragmentManager, new Notikies());
+            } else if (id == R.id.messages) {
+               infoFutureFunctionDialog.show();
             }
+            return true;
         });
         // Cargar el fragmento inicial solo si es la primera creación de la actividad
         if (savedInstanceState == null) {
@@ -160,21 +147,18 @@ int colorEntero;
                         .commit();
     }
     public void getInfo(View view){
-        ib_info.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment fragment  = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-                if(fragment instanceof Home){
-                    mostrarInfoWorldkies();
-                } else if (fragment instanceof Search) {
+        ib_info.setOnClickListener(v -> {
+            Fragment fragment  = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+            if(fragment instanceof Home){
+                mostrarInfoWorldkies();
+            } else if (fragment instanceof Search) {
 
-                } else if (fragment instanceof Inspo){
+            } else if (fragment instanceof Inspo){
 
-                } else if (fragment instanceof Notikies) {
-                    infoNotikiesDialog.show();
-                } else if (fragment instanceof Notes){
+            } else if (fragment instanceof Notikies) {
+                infoNotikiesDialog.show();
+            } else if (fragment instanceof Notes){
 
-                }
             }
         });
     }

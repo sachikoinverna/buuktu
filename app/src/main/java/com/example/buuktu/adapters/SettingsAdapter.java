@@ -1,12 +1,12 @@
 package com.example.buuktu.adapters;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -20,12 +20,8 @@ import com.example.buuktu.models.SettingModel;
 
 import java.util.ArrayList;
 
-public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHolder> implements View.OnClickListener {
+public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHolder>{
 
-    @Override
-    public void onClick(View v) {
-
-    }
     private ArrayList<SettingModel> dataSet;
     private Context context;
     FragmentManager fragmentManager;
@@ -33,8 +29,6 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
         private ImageView iv_photo_setting;
         private TextView tv_name_setting;
         private CardView card_view_setting_list_one;
-        //private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
-        //private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         public ViewHolder(View view) {
             super(view);
             iv_photo_setting =  view.findViewById(R.id.iv_photo_setting_profile);
@@ -76,20 +70,15 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
         String name = dataSet.get(holder.getAdapterPosition()).getName();
             holder.getTv_name_setting().setText(name);
          holder.getIv_photo_setting().setImageDrawable(dataSet.get(holder.getAdapterPosition()).getDrawable());
-         holder.getCard_view_setting_list_one().setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-                 if (name.equals("Perfil")) {
-                     ProfileSettings profileSettings = new ProfileSettings();
-                     fragmentManager.beginTransaction().replace(R.id.fragment_container, profileSettings) .addToBackStack(null) // Permite regresar atrás con el botón de retroceso
-                             .commit();
-                 } else if (name.equals("Cuenta")) {
-                     AccountSettings accountSettings = new AccountSettings();
-                     fragmentManager.beginTransaction().replace(R.id.fragment_container, accountSettings) .addToBackStack(null) // Permite regresar atrás con el botón de retroceso
-                             .commit();
-                     // Toast.makeText(context, "Cuenta", Toast.LENGTH_SHORT).show();
-
-                 }
+         holder.getCard_view_setting_list_one().setOnClickListener(v -> {
+             if (name.equals(context.getResources().getString(R.string.profile))) {
+                 ProfileSettings profileSettings = new ProfileSettings();
+                 fragmentManager.beginTransaction().replace(R.id.fragment_container, profileSettings) .addToBackStack(null) // Permite regresar atrás con el botón de retroceso
+                         .commit();
+             } else if (name.equals(context.getResources().getString(R.string.account))) {
+                 AccountSettings accountSettings = new AccountSettings();
+                 fragmentManager.beginTransaction().replace(R.id.fragment_container, accountSettings) .addToBackStack(null) // Permite regresar atrás con el botón de retroceso
+                         .commit();
              }
          });
     }

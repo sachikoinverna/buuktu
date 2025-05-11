@@ -35,6 +35,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -98,12 +99,9 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
         initComponents(view);
         setVisibility();
         worldkieModel = new WorldkieModel();
-        switch (mode)
-        {
-            case "self":
-                firebaseAuth = FirebaseAuth.getInstance();
-                ib_worldkieView.setOnClickListener(this);
-                break;
+        if (mode.equals("self")) {
+            firebaseAuth = FirebaseAuth.getInstance();
+            ib_worldkieView.setOnClickListener(this);
         }
         ib_worldkieView.setVisibility(mode.equals("self")?View.VISIBLE:View.INVISIBLE);
         ib_back.setVisibility(mode.equals("self")?View.GONE:View.VISIBLE);
@@ -112,10 +110,10 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
 
         getProfilePhoto();
         db = FirebaseFirestore.getInstance();
-        characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList, getContext());
+        characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList, getContext(),fragmentManager);
         rc_characterkiesPrevieWorldkie.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rc_characterkiesPrevieWorldkie.setAdapter(characterkiesUserPreviewAdapter);
-        characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList, getContext());
+        characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList, getContext(),fragmentManager);
         rc_characterkiesPrevieWorldkie.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rc_characterkiesPrevieWorldkie.setAdapter(characterkiesUserPreviewAdapter);
 
@@ -126,8 +124,6 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
         collectionCharacterkies = db.collection("Characterkies");
         collectionWorldkies.document(UID).addSnapshotListener((documentSnapshot, e) -> {
             if (e != null) {
-                Log.e("Error", e.getMessage());
-                Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
                 return;
             }
 
@@ -143,8 +139,6 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
         });
         collectionUserkies.document(UID_AUTHOR).addSnapshotListener((document, exx) -> {
             if (exx != null) {
-                Log.e("Error", exx.getMessage());
-                Toast.makeText(getContext(), "Error al escuchar cambios: " + exx.getMessage(), LENGTH_LONG).show();
                 return;
             }
 
@@ -153,10 +147,13 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
                 tv_nameUserWorldkieView.setText(userkieModel.getName());
                 tv_usernameWorldkieView.setText(userkieModel.getUsername());
                 if((!worldkieModel.isWorldkie_private() && mode.equals("other") && !userkieModel.isProfile_private()) || (worldkieModel.isWorldkie_private() && mode.equals("self"))){
-                    collectionStuffkies.addSnapshotListener((queryDocumentSnapshots, e) -> {
+                    Query query = collectionStuffkies.whereEqualTo("UID_WORLDKIE", UID);
+
+                    if ((!worldkieModel.isWorldkie_private() && mode.equals("other") && !userkieModel.isProfile_private())){
+                        query = query.whereEqualTo("draft", false);
+                    }
+                    query.addSnapshotListener((queryDocumentSnapshots, e) -> {
                         if (e != null) {
-                            Log.e("Error", e.getMessage());
-                            Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
                             return;
                         }
 
@@ -165,19 +162,12 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
 
                             boolean foundData = false; // Add a flag
                             for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
-                                if (doc.getString("UID_WORLDKIE").equals(UID)) {
 
-                                    StuffkieModel stuffkieModel = new StuffkieModel(
-                                            doc.getId(),
-                                            doc.getString("name"),
-                                            doc.getBoolean("stuffkie_private"),
-                                            doc.getBoolean("photo_default")
-                                    );
+                                    StuffkieModel stuffkieModel = StuffkieModel.fromSnapshot(doc);
                                     Log.d("StuffkiesSearch", "Stuffkie encontrado: " + doc.getString("name"));
 
                                     stuffkieArrayList.add(stuffkieModel);
                                     foundData = true; // Set the flag to true if data is found
-                                }
                             }
                             if (foundData) {
                                 tv_stuffkiesPreviewWorldkie.setVisibility(View.VISIBLE);
@@ -197,44 +187,47 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
 
                         }
                     });
-                    collectionCharacterkies.addSnapshotListener((queryDocumentSnapshots, ex) -> {
-                        if (ex != null) {
-                            Log.e("Error", ex.getMessage());
-                            Toast.makeText(getContext(), "Error al escuchar cambios: " + ex.getMessage(), LENGTH_LONG).show();
-                            return;
+                    if((!worldkieModel.isWorldkie_private() && mode.equals("other") && !userkieModel.isProfile_private()) || (worldkieModel.isWorldkie_private() && mode.equals("self"))) {
+
+                        Query queryCharacterkie = collectionCharacterkies.whereEqualTo("UID_WORLDKIE", UID);
+
+                        if ((!worldkieModel.isWorldkie_private() && mode.equals("other") && !userkieModel.isProfile_private())) {
+                            queryCharacterkie = query.whereEqualTo("draft", false);
                         }
+                        queryCharacterkie.addSnapshotListener((queryDocumentSnapshots, ex) -> {
+                                    if (ex != null) {
+                                        return;
+                                    }
 
-                        if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
-                            characterkieArrayList.clear(); // Limpia la lista antes de agregar nuevos datos
-                            boolean foundData = false; // Add a flag
+                                    if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
+                                        characterkieArrayList.clear(); // Limpia la lista antes de agregar nuevos datos
+                                        boolean foundData = false; // Add a flag
 
-                            for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
-                                //if (documentSnapshot.getBoolean("photo_default")) {
-                                if (doc.getString("UID_WORLDKIE").equals(UID)) {
+                                        for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
+                                            Characterkie characterkieModel = new Characterkie(
+                                                    doc.getId(),
+                                                    doc.getString("name")
+                                            );
+                                            Log.d("StuffkiesSearch", "Stuffkie encontrado: " + doc.getString("name"));
 
-                                    Characterkie characterkieModel = new Characterkie(
-                                            doc.getId(),
-                                            doc.getString("name")
-                                    );
-                                    Log.d("StuffkiesSearch", "Stuffkie encontrado: " + doc.getString("name"));
+                                            characterkieArrayList.add(characterkieModel);
+                                            foundData = true; // Set the flag to true if data is found
+                                            updateRecyclerViewCharacterkies(characterkieArrayList);
+                                        }
+                                        if (foundData) {
+                                            tv_characterkiesPreviewWorldkie.setVisibility(View.VISIBLE);
+                                            cv_characterkiesPreviewWorldkie.setVisibility(View.VISIBLE);
+                                        } else {
+                                            tv_characterkiesPreviewWorldkie.setVisibility(View.GONE);
+                                            cv_characterkiesPreviewWorldkie.setVisibility(View.GONE);
+                                        }
+                                    } else {
+                                        tv_characterkiesPreviewWorldkie.setVisibility(View.GONE);
+                                        cv_characterkiesPreviewWorldkie.setVisibility(View.GONE);
+                                    }
 
-                                    characterkieArrayList.add(characterkieModel);
-                                    foundData = true; // Set the flag to true if data is found
-                                    updateRecyclerViewCharacterkies(characterkieArrayList);
-                                }
-                            }
-                            if (foundData) {
-                                tv_characterkiesPreviewWorldkie.setVisibility(View.VISIBLE);
-                                cv_characterkiesPreviewWorldkie.setVisibility(View.VISIBLE);
-                            } else {
-                                tv_characterkiesPreviewWorldkie.setVisibility(View.GONE);
-                                cv_characterkiesPreviewWorldkie.setVisibility(View.GONE);
-                            }
-                        } else {
-                            tv_characterkiesPreviewWorldkie.setVisibility(View.GONE);
-                            cv_characterkiesPreviewWorldkie.setVisibility(View.GONE);
-                        }
-                    });
+                                });
+                    }
                 } else if(!worldkieModel.isWorldkie_private() && userkieModel.isProfile_private() && mode.equals("other")){
                     tv_locked_worldkie.setVisibility(View.VISIBLE);
                     iv_locked_worldkie.setVisibility(View.VISIBLE);
@@ -343,12 +336,12 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
         }
     }
     private void updateRecyclerViewCharacterkies(ArrayList<Characterkie> characterkieArrayList) {
-        characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList,getContext());
+        characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList,getContext(),fragmentManager);
         rc_characterkiesPrevieWorldkie.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rc_characterkiesPrevieWorldkie.setAdapter(characterkiesUserPreviewAdapter);
     }
     private void updateRecyclerViewStuffkies(ArrayList<StuffkieModel> stuffkieArrayList) {
-        stuffkiesUserPreviewAdapter = new StuffkiesUserPreviewAdapter(stuffkieArrayList,getContext());
+        stuffkiesUserPreviewAdapter = new StuffkiesUserPreviewAdapter(stuffkieArrayList,getContext(),fragmentManager);
         rc_stuffkiesPreviewWorldkie.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rc_stuffkiesPreviewWorldkie.setAdapter(stuffkiesUserPreviewAdapter);
     }

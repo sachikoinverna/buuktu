@@ -1,7 +1,5 @@
 package com.example.buuktu.broadcastReceiver;
 
-import static androidx.browser.customtabs.CustomTabsClient.getPackageName;
-
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
@@ -9,22 +7,14 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.media.AudioAttributes;
 import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
-import android.widget.RemoteViews;
 
-import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
-import com.example.buuktu.DataBinderMapperImpl;
 import com.example.buuktu.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.Timestamp;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -61,16 +51,10 @@ public class WordNotificationReceiver extends BroadcastReceiver {
         notikieData.put("message",phrase);
         notikieData.put("icon",R.drawable.twotone_translate_24);
         notikieData.put("date", FieldValue.serverTimestamp());
-        db.collection("Notikies").add(notikieData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
+        db.collection("Notikies").add(notikieData).addOnSuccessListener(documentReference -> {
 
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
+        }).addOnFailureListener(e -> {
 
-            }
         });
         Log.d("NotiTest", "Notificación enviada");
 

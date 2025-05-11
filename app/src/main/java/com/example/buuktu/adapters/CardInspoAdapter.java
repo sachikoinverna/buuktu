@@ -19,16 +19,13 @@ import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
-public class CardInspoAdapter extends RecyclerView.Adapter<CardInspoAdapter.ViewHolder> implements View.OnClickListener {
+public class CardInspoAdapter extends RecyclerView.Adapter<CardInspoAdapter.ViewHolder> {
 
     // Modelo de datos, por ejemplo:
     private List<CardItem> dataSet;
     private Context context;
     FragmentManager fragmentManager;
-    @Override
-    public void onClick(View v) {
 
-    }
 
 
     public CardInspoAdapter(Context context, List<CardItem> dataSet, FragmentManager fragmentManager) {
@@ -52,18 +49,15 @@ public class CardInspoAdapter extends RecyclerView.Adapter<CardInspoAdapter.View
         holder.getIcon().setImageResource(cardItem.getIconResId());
         holder.getText().setText(text);
 
-        holder.getCardView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(text.equals("Notekies")){
-                    Notes notes = new Notes();
-                    fragmentManager.beginTransaction().replace(R.id.fragment_container, notes) .addToBackStack(null) // Permite regresar atrás con el botón de retroceso
-                            .commit();
-                } else if (text.equals("Desafios")) {
-                    InspoDesafios inspoDesafios = new InspoDesafios();
-                    fragmentManager.beginTransaction().replace(R.id.fragment_container, inspoDesafios) .addToBackStack(null) // Permite regresar atrás con el botón de retroceso
-                            .commit();
-                }
+        holder.getCardView().setOnClickListener(v -> {
+            if(text.equals("Notekies")){
+                Notes notes = new Notes();
+                fragmentManager.beginTransaction().replace(R.id.fragment_container, notes) .addToBackStack(null) // Permite regresar atrás con el botón de retroceso
+                        .commit();
+            } else if (text.equals("Desafios")) {
+                InspoDesafios inspoDesafios = new InspoDesafios();
+                fragmentManager.beginTransaction().replace(R.id.fragment_container, inspoDesafios) .addToBackStack(null) // Permite regresar atrás con el botón de retroceso
+                        .commit();
             }
         });
     }

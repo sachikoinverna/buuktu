@@ -41,12 +41,12 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="8dp"
                     android:src="@drawable/button_backgground"
-                    android:tint="#9FA8DA"
                     android:tintMode="multiply"
                     app:layout_constraintBottom_toTopOf="@+id/tb_CharacterkiePrivacity"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView16" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView16"
+                    app:tint="#9FA8DA" />
 
                 <ImageButton
                     android:id="@+id/ib_characterkieView"
@@ -200,13 +200,13 @@
                         android:layout_marginEnd="8dp"
                         android:layout_marginBottom="8dp"
                         android:src="@drawable/button_backgground"
-                        android:tint="#9FA8DA"
                         android:tintMode="multiply"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+                        app:layout_constraintTop_toBottomOf="@+id/textView13"
+                        app:tint="#9FA8DA" />
 
                     <ImageView
                         android:id="@+id/imageView2"
@@ -217,14 +217,14 @@
                         android:layout_marginEnd="8dp"
                         android:foregroundTint="#9FA8DA"
                         android:src="@drawable/button_backgground"
-                        android:tint="#7D83A9"
                         android:tintMode="multiply"
                         app:layout_constraintBottom_toTopOf="@+id/textView16"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/et_nameCharacterkieCreateFull"
-                        app:layout_constraintVertical_bias="0.0" />
+                        app:layout_constraintVertical_bias="0.0"
+                        app:tint="#7D83A9" />
 
                     <TextView
                         android:id="@+id/tv_basic_info_characterkies2"
@@ -248,9 +248,9 @@
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"
                         android:src="@drawable/twotone_arrow_drop_down_circle_24"
-                        android:tint="#FFFFFF"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/iv_locked_characterkie" />
+                        app:layout_constraintTop_toBottomOf="@+id/iv_locked_characterkie"
+                        app:tint="#FFFFFF" />
 
                     <ImageView
                         android:id="@+id/iv_locked_characterkie"

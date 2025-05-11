@@ -29,7 +29,7 @@ import java.util.ArrayList;
 public class AccountSettings extends Fragment implements View.OnClickListener {
     SettingAdapter settingAdapter;
     private RecyclerView rv_settings_profile;
-    private ArrayList<SettingModel> dataSet = new ArrayList<SettingModel>();
+    private ArrayList<SettingModel> dataSet = new ArrayList<>();
     String UID;
     FirebaseAuth firebaseAuth;
     RecyclerView rv_account_settings;

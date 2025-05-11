@@ -3,7 +3,6 @@ package com.example.buuktu;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import com.example.buuktu.adapters.CardInspoAdapter;
 import com.example.buuktu.adapters.CardInspoDesafiosAdapter;
 import com.example.buuktu.models.CardItem;
 import com.example.buuktu.utils.NavigationUtils;

@@ -4,7 +4,9 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Exclude;
 import java.io.Serializable;
-import java.util.List;
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
 
 public class WorldkieModel implements Serializable {
     private String UID;
@@ -20,151 +22,6 @@ public class WorldkieModel implements Serializable {
     public WorldkieModel() {
     }
 
-    public WorldkieModel(String UID_AUTHOR, Timestamp creation_date, String name, boolean photo_default, boolean worldkie_private) {
-        this.UID_AUTHOR = UID_AUTHOR;
-        this.creation_date = creation_date;
-        this.name = name;
-        this.photo_default = photo_default;
-        this.worldkie_private = worldkie_private;
-        this.last_update = Timestamp.now(); // Inicializar last_update a la hora actual
-    }
-
-    // Constructor 2: UID_AUTHOR, CREATIONDATE, LASTUPDATE, NAME, PHOTODEFAULT, WORLDKIEPRIVATE, PHOTOID
-    public WorldkieModel(String UID_AUTHOR, Timestamp creation_date, Timestamp last_update, String name, boolean photo_default, boolean worldkie_private, String id_photo) {
-        this.UID_AUTHOR = UID_AUTHOR;
-        this.creation_date = creation_date;
-        this.last_update = last_update;
-        this.name = name;
-        this.photo_default = photo_default;
-        this.worldkie_private = worldkie_private;
-        this.id_photo = id_photo;
-    }
-
-    // Constructor 3: UID_AUTHOR, CREATIONDATE, NAME, PHOTODEFAULT, WORLDKIEPRIVATE, DRAFT
-    public WorldkieModel(String UID_AUTHOR, String name, boolean photo_default, boolean worldkie_private, boolean draft) {
-        this.UID_AUTHOR = UID_AUTHOR;
-        this.creation_date = Timestamp.now();
-        this.name = name;
-        this.photo_default = photo_default;
-        this.worldkie_private = worldkie_private;
-        this.draft = draft;
-        this.last_update = Timestamp.now(); // Inicializar last_update a la hora actual
-    }
-    public WorldkieModel(String UID_AUTHOR, String name, boolean photo_default, boolean worldkie_private) {
-        this.UID_AUTHOR = UID_AUTHOR;
-        this.creation_date = Timestamp.now();
-        this.name = name;
-        this.photo_default = photo_default;
-        this.worldkie_private = worldkie_private;
-        this.last_update = Timestamp.now(); // Inicializar last_update a la hora actual
-    }
-    public WorldkieModel(String UID_AUTHOR, String name, boolean photo_default, boolean worldkie_private, boolean draft, String id_photo) {
-        this.UID_AUTHOR = UID_AUTHOR;
-        this.creation_date = Timestamp.now();
-        this.name = name;
-        this.photo_default = photo_default;
-        this.worldkie_private = worldkie_private;
-        this.draft = draft;
-        this.last_update = Timestamp.now(); // Inicializar last_update a la hora actual
-        this.id_photo=id_photo;
-    }
-    public WorldkieModel(String UID_AUTHOR, String name, boolean photo_default, boolean worldkie_private, String id_photo) {
-        this.UID_AUTHOR = UID_AUTHOR;
-        this.creation_date = Timestamp.now();
-        this.name = name;
-        this.photo_default = photo_default;
-        this.worldkie_private = worldkie_private;
-        this.last_update = Timestamp.now(); // Inicializar last_update a la hora actual
-        this.id_photo=id_photo;
-    }
-    // Constructor 4: UID_AUTHOR, CREATIONDATE, LASTUPDATE, NAME, PHOTODEFAULT, WORLDKIEPRIVATE, PHOTOID, DRAFT
-    public WorldkieModel(String UID_AUTHOR, String name, boolean photo_default, boolean worldkie_private, String id_photo, boolean draft) {
-        this.UID_AUTHOR = UID_AUTHOR;
-        this.creation_date = Timestamp.now();
-        this.last_update = Timestamp.now();
-        this.name = name;
-        this.photo_default = photo_default;
-        this.worldkie_private = worldkie_private;
-        this.id_photo = id_photo;
-        this.draft = draft;
-    }
-    public WorldkieModel(String UID,String UID_AUTHOR, Timestamp creation_date, String name, boolean photo_default, boolean worldkie_private) {
-        this.UID=UID;
-        this.UID_AUTHOR = UID_AUTHOR;
-        this.creation_date = creation_date;
-        this.name = name;
-        this.photo_default = photo_default;
-        this.worldkie_private = worldkie_private;
-        this.last_update = Timestamp.now(); // Inicializar last_update a la hora actual
-    }
-
-    public WorldkieModel(String UID,String UID_AUTHOR, Timestamp creation_date, String name, boolean photo_default, boolean worldkie_private,Timestamp last_update) {
-        this.UID=UID;
-        this.UID_AUTHOR = UID_AUTHOR;
-        this.creation_date = creation_date;
-        this.name = name;
-        this.photo_default = photo_default;
-        this.worldkie_private = worldkie_private;
-        this.last_update = last_update; // Inicializar last_update a la hora actual
-    }
-    public WorldkieModel(String UID, String name, boolean photo_default) {
-        this.UID=UID;
-        this.name = name;
-        this.photo_default = photo_default;
-        this.last_update = Timestamp.now(); // Inicializar last_update a la hora actual
-    }
-    public WorldkieModel(String UID,String name, boolean photo_default, String id_photo) {
-        this.UID=UID;
-        this.name = name;
-        this.photo_default = photo_default;
-        this.id_photo=id_photo;
-        this.last_update = Timestamp.now();
-    }
-    // Constructor 2: UID_AUTHOR, CREATIONDATE, LASTUPDATE, NAME, PHOTODEFAULT, WORLDKIEPRIVATE, PHOTOID
-    public WorldkieModel(String UID,String UID_AUTHOR, Timestamp creation_date, Timestamp last_update, String name, boolean photo_default, boolean worldkie_private, String id_photo) {
-        this.UID=UID;
-        this.UID_AUTHOR = UID_AUTHOR;
-        this.creation_date = creation_date;
-        this.last_update = last_update;
-        this.name = name;
-        this.photo_default = photo_default;
-        this.worldkie_private = worldkie_private;
-        this.id_photo = id_photo;
-    }
-
-    // Constructor 3: UID_AUTHOR, CREATIONDATE, NAME, PHOTODEFAULT, WORLDKIEPRIVATE, DRAFT
-    public WorldkieModel(String UID,String UID_AUTHOR, Timestamp creation_date, String name, boolean photo_default, boolean worldkie_private, boolean draft) {
-        this.UID=UID;
-        this.UID_AUTHOR = UID_AUTHOR;
-        this.creation_date = creation_date;
-        this.name = name;
-        this.photo_default = photo_default;
-        this.worldkie_private = worldkie_private;
-        this.draft = draft;
-        this.last_update = Timestamp.now(); // Inicializar last_update a la hora actual
-    }
-
-    // Constructor 4: UID_AUTHOR, CREATIONDATE, LASTUPDATE, NAME, PHOTODEFAULT, WORLDKIEPRIVATE, PHOTOID, DRAFT
-    public WorldkieModel(String UID,String UID_AUTHOR, Timestamp creation_date, Timestamp last_update, String name, boolean photo_default, boolean worldkie_private, String id_photo, boolean draft) {
-        this.UID=UID;
-        this.UID_AUTHOR = UID_AUTHOR;
-        this.creation_date = creation_date;
-        this.last_update = last_update;
-        this.name = name;
-        this.photo_default = photo_default;
-        this.worldkie_private = worldkie_private;
-        this.id_photo = id_photo;
-        this.draft = draft;
-    }
-    public WorldkieModel(String UID,String UID_AUTHOR, Timestamp creation_date, Timestamp last_update, boolean photo_default, boolean worldkie_private, String name) {
-        this.UID=UID;
-        this.UID_AUTHOR = UID_AUTHOR;
-        this.creation_date = creation_date;
-        this.name = name;
-        this.photo_default = photo_default;
-        this.worldkie_private = worldkie_private;
-        this.last_update = last_update; // Inicializar last_update a la hora actual
-    }
     public static WorldkieModel fromSnapshot(DocumentSnapshot document) {
         if (document == null || !document.exists()) {
             return null;
@@ -188,6 +45,25 @@ public class WorldkieModel implements Serializable {
         }
         return worldkieModel;
     }
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        Field[] fields = this.getClass().getDeclaredFields();
+
+        for (Field field : fields) {
+            field.setAccessible(true);
+            try {
+                Object value = field.get(this);
+                if (value != null) {
+                    map.put(field.getName(), value);
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return map;
+    }
+
     public boolean isWorldkie_private() {
         return worldkie_private;
     }

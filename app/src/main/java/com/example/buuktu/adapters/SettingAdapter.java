@@ -4,46 +4,28 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.NotificationCompatSideChannelService;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.airbnb.lottie.LottieAnimationView;
 import com.example.buuktu.R;
 import com.example.buuktu.dialogs.CreateEditGeneralDialog;
 import com.example.buuktu.dialogs.EditNamePronounsUserDialog;
 import com.example.buuktu.dialogs.EditPasswordUserDialog;
 import com.example.buuktu.models.SettingModel;
-import com.example.buuktu.utils.CheckUtil;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.EmailAuthProvider;
+import com.example.buuktu.views.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
+public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.ViewHolder> {
 
-public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.ViewHolder> implements View.OnClickListener {
-
-    @Override
-    public void onClick(View v) {
-
-    }
     private ArrayList<SettingModel> dataSet;
     private Context context;
     FirebaseFirestore db;
@@ -78,6 +60,10 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.ViewHold
         }
     }
 
+    public Context getContext() {
+        return context;
+    }
+
     //Constructor donde pasamos la lista de productos y el contexto
     public SettingAdapter(ArrayList<SettingModel> dataSet, Context ctx, String UID) {
         this.dataSet = dataSet;
@@ -104,45 +90,30 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.ViewHold
     public void onBindViewHolder(@NonNull SettingAdapter.ViewHolder holder, int position) {
         String name = dataSet.get(holder.getAdapterPosition()).getName();
         String value = dataSet.get(holder.getAdapterPosition()).getValue();
-        switch (name.toLowerCase()){
-            case "nombre":
-                    holder.getTv_value_setting_profile().setText(value);
-
-                break;
-            case "pronombres":
-                    holder.getTv_value_setting_profile().setText(value);
-
-                break;
-            case "correo electronico":
-                    holder.getTv_value_setting_profile().setText(value);
-
-                break;
+        String nameSetting = context.getResources().getString(R.string.name);
+        String pronounsSetting = context.getResources().getString(R.string.pronouns);
+        String emailSetting = context.getResources().getString(R.string.email);
+        String passwordSetting = context.getResources().getString(R.string.user_password);
+        if(!name.equals(passwordSetting)) {
+            holder.getTv_value_setting_profile().setText(value);
         }
         holder.getTv_name_setting_profile().setText(name);
-
         holder.getTv_value_setting_profile().setText(value);
-         holder.getCard_view_setting_list_profile().setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-                 switch (name.toLowerCase()) {
-                     case "nombre":
-                         editNamePronounsUserDialog = new EditNamePronounsUserDialog(v.getContext(),"Nombre",value,documentReference);
-                     editNamePronounsUserDialog.show();
-                     break;
-                     case "pronombres":
-                         EditNamePronounsUserDialog editNamePronounsUserDialogPronouns = new EditNamePronounsUserDialog(v.getContext(),"Pronombres",value,documentReference);
-                         editNamePronounsUserDialogPronouns.show();
-                     break;
-                     case "correo electronico":
-                         EditNamePronounsUserDialog editNamePronounsUserDialogEmail = new EditNamePronounsUserDialog(v.getContext(),"Correo electronico",value,documentReference);
+         holder.getCard_view_setting_list_profile().setOnClickListener(v -> {
+             if(name.equals(nameSetting)) {
+                 editNamePronounsUserDialog = new EditNamePronounsUserDialog(v.getContext(), nameSetting, value, documentReference);
+                 editNamePronounsUserDialog.show();
+             } else if (name.equals(pronounsSetting)) {
+                 editNamePronounsUserDialog = new EditNamePronounsUserDialog(v.getContext(), pronounsSetting, value, documentReference);
+                 editNamePronounsUserDialog.show();
+             } else if (name.equals(emailSetting)) {
+                 editNamePronounsUserDialog = new EditNamePronounsUserDialog(v.getContext(), emailSetting, value, documentReference);
 
-                         editNamePronounsUserDialogEmail.show();
-break;
-                     case "password":
-                     EditPasswordUserDialog editPasswordUserDialog = new EditPasswordUserDialog(context);
-                     editPasswordUserDialog.show();
-                     break;
-                 }
+                 editNamePronounsUserDialog.show();
+             } else if (name.equals(passwordSetting)) {
+
+             EditPasswordUserDialog editPasswordUserDialog = new EditPasswordUserDialog(context);
+                 editPasswordUserDialog.show();
              }
          });
     }

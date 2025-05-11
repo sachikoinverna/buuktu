@@ -8,7 +8,6 @@ import android.os.Bundle;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,11 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.buuktu.adapters.CharacterkiesUserPreviewAdapter;
-import com.example.buuktu.adapters.StuffkiesUserPreviewAdapter;
-import com.example.buuktu.dialogs.InfoFutureFunctionDialog;
 import com.example.buuktu.models.Characterkie;
-import com.example.buuktu.models.StuffkieModel;
 import com.example.buuktu.models.UserkieModel;
 import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.utils.DrawableUtils;
@@ -31,14 +26,11 @@ import com.example.buuktu.utils.NavigationUtils;
 import com.example.buuktu.views.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,6 +49,8 @@ public class CharacterkieView extends Fragment implements View.OnClickListener {
     CollectionReference collectionUserkies,collectionWorldkies,collectionStuffkies,collectionCharacterkies;
     WorldkieModel worldkieModel;
     MainActivity mainActivity;
+    Characterkie characterkieModel;
+    FirebaseStorage firebaseStorage;
     public CharacterkieView() {
         // Required empty public constructor
     }
@@ -81,19 +75,16 @@ public class CharacterkieView extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_characterkie_view, container, false);
         initComponents(view);
         setVisibility();
-        switch (mode)
-        {
-            case "self":
-                firebaseAuth = FirebaseAuth.getInstance();
-                ib_worldkieView.setOnClickListener(this);
-                break;
+        if (mode.equals("self")) {
+            firebaseAuth = FirebaseAuth.getInstance();
+            ib_worldkieView.setOnClickListener(this);
         }
-        ib_worldkieView.setVisibility(mode.equals("self")?View.VISIBLE:View.INVISIBLE);
-        ib_back.setVisibility(mode.equals("self")?View.GONE:View.VISIBLE);
-        UID_AUTHOR = mode.equals("other")?getArguments().getString("UID_AUTHOR"):firebaseAuth.getUid();
+        ib_worldkieView.setVisibility(mode.equals("self") ? View.VISIBLE : View.INVISIBLE);
+        ib_back.setVisibility(mode.equals("self") ? View.GONE : View.VISIBLE);
+        UID_AUTHOR = mode.equals("other") ? getArguments().getString("UID_AUTHOR") : firebaseAuth.getUid();
         setVar();
         getProfilePhoto();
-
+        firebaseStorage = FirebaseStorage.getInstance();
 
         collectionWorldkies.document(UID).addSnapshotListener((documentSnapshot, e) -> {
             if (e != null) {
@@ -118,27 +109,25 @@ public class CharacterkieView extends Fragment implements View.OnClickListener {
                         UserkieModel userkieModel = UserkieModel.fromSnapshot(document);
                         tv_nameUserCharacterkieView.setText(userkieModel.getName());
                         tv_usernameCharacterkieView.setText(userkieModel.getUsername());
-                        if ((!worldkieModel.isWorldkie_private() && mode.equals("other") && !userkieModel.isProfile_private()) || (worldkieModel.isWorldkie_private() && mode.equals("self"))) {
-                            collectionCharacterkies.document(UID).addSnapshotListener((documentSnapshot, ex) -> {
-                                if (ex != null) {
-                                    Log.e("Error", ex.getMessage());
-                                    Toast.makeText(getContext(), "Error al escuchar cambios: " + ex.getMessage(), LENGTH_LONG).show();
-                                    return;
-                                }
-
-                                if (documentSnapshot != null) {
-
-                                    Characterkie characterkieModel = new Characterkie(
-                                            documentSnapshot.getId(),
-                                            documentSnapshot.getString("name")
-                                    );
-                                }
-                            });
-                        }
                     }
-                    ;
-                });
+                }
+        );
 
+                    collectionCharacterkies.document(UID).addSnapshotListener((documentSnapshot, ex) -> {
+                        if (ex != null) {
+                            Log.e("Error", ex.getMessage());
+                            Toast.makeText(getContext(), "Error al escuchar cambios: " + ex.getMessage(), LENGTH_LONG).show();
+                            return;
+                        }
+
+                        if (documentSnapshot != null) {
+
+                            characterkieModel = new Characterkie(
+                                    documentSnapshot.getId(),
+                                    documentSnapshot.getString("name")
+                            );
+                        }
+                    });
         setListeners();
         getProfilePhoto();
         return view;
@@ -171,16 +160,9 @@ private void setVar(){
     collectionCharacterkies = db.collection("Characterkies");
 }
 private void getProfilePhoto() {
-    /*if (Characterkie.isPhoto_default()) {
-               /* FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-                firebaseFirestore.collection("Worldkies").document(UID).addSnapshotListener((queryDocumentSnapshot, e) -> {
-                       /* if (e != null) {
-                            Log.e("Error", e.getMessage());
-                            Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
-                            return;
-                        }*/
-      /*  String id_photo = worldkieModel.getId_photo();*/
-      /*  int resId = mainActivity.getResources().getIdentifier(id_photo, "mipmap", mainActivity.getPackageName());
+    if (characterkieModel.isPhoto_default()) {
+        String id_photo = characterkieModel.getPhoto_id();
+        int resId = mainActivity.getResources().getIdentifier(id_photo, "mipmap", mainActivity.getPackageName());
 
         if (resId != 0 && (!lastPhotoId.equals(id_photo))) {
             Drawable drawable = ContextCompat.getDrawable(mainActivity, resId);
@@ -191,11 +173,9 @@ private void getProfilePhoto() {
                 throw new RuntimeException(ex);
             }
             lastPhotoId = id_photo;
-        }*/
-   // }//);
-    //}
-  /*  else {
-        StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-worldkies").getReference(UID);
+        }
+    } else {
+        StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-characterkies").getReference(UID);
 
         userFolderRef.listAll().addOnSuccessListener(listResult -> {
             for (StorageReference item : listResult.getItems()) {
@@ -209,17 +189,12 @@ private void getProfilePhoto() {
                     });
                 }
             }
-            ;
-        });*/
-/*.addOnFailureListener(e -> {
-                    Toast.makeText(this, "Error al buscar imagen", Toast.LENGTH_SHORT).show();
+        }).addOnFailureListener(e -> {
                     Log.e("Storage", "Error listando archivos: " + e.getMessage());
-                })*/
-        ;
+                });
 
 
-        // }
-        //}
+        }
     }
     @Override
     public void onClick(View v) {

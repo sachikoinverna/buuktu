@@ -5,7 +5,6 @@ import static com.example.buuktu.R.mipmap;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -214,19 +213,25 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
         } else if (createEditWorldkie !=null) {
             createEditWorldkie.setSelectedProfilePhoto(imageButton.getDrawable());
             createEditWorldkie.getIb_select_img_create_worldkie().setTag(DrawableUtils.getMipmapName(context,photosWorldkies.get(index)));
+            createEditWorldkie.setPhotoDefault();
 
         } else if (createCharacterkie !=null) {
             createCharacterkie.setSelectedProfilePhoto(imageButton.getDrawable());
             createCharacterkie.getIb_select_img_create_worldkie().setTag(DrawableUtils.getMipmapName(context,photosCharacterkies.get(index)));
+            createCharacterkie.setPhotoDefault();
 
         } else if (createEditStuffkie !=null) {
           //  Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
             createEditStuffkie.setSelectedProfilePhoto(imageButton.getDrawable());
             //createEditStuffkie.get().setTag(getMipmapName(photosStuffkies.get(index)));
+            createEditStuffkie.setPhotoDefault();
+
 
         }else if (createEditScenariokie !=null) {
             createEditScenariokie.setSelectedProfilePhoto(imageButton.getDrawable());
             createEditScenariokie.getIb_select_img_create_worldkie().setTag(DrawableUtils.getMipmapName(context,photosStuffkies.get(index)));
+            createEditScenariokie.setPhotoDefault();
+
         }
     }
     @Override

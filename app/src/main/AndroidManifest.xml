@@ -27,7 +27,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Buuktu"
-        tools:targetApi="31">
+        tools:targetApi="33">
         <receiver android:name=".broadcastReceiver.WordNotificationReceiver"/>
         <activity
             android:name=".views.Login"

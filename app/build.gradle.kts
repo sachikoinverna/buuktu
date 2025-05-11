@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.buuktu"
-        minSdk = 23
+        minSdk = 26
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -43,7 +43,6 @@ dependencies {
     implementation(libs.activity.v1101)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.storage)
-    implementation (libs.activity.v170)
     implementation(libs.appcompat)
     implementation (libs.lottie) // o la versión más reciente
     implementation (libs.rxandroid) // o la versión más reciente

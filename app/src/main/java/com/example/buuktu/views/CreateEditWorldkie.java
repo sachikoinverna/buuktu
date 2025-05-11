@@ -2,7 +2,6 @@ package com.example.buuktu.views;
 
 import static android.widget.Toast.LENGTH_LONG;
 
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -155,8 +154,6 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
             editMode(worldkieModel);
         }
         setListeners();
-    //    DrawableUtils.personalizarImagenCuadradoButton(getContext(),DrawableUtils.drawableToBitmap(ib_select_img_create_worldkie.getDrawable()),ib_select_img_create_worldkie,R.color.greenWhatever);
-
         return view;
     }
     private void setVisibility(){
@@ -165,14 +162,22 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
         ib_back.setVisibility(View.VISIBLE);
         ib_select_img_create_worldkie.setVisibility(View.INVISIBLE);
     }
-    private void setListeners(){
+    private void setListeners() {
         ib_select_img_create_worldkie.setOnClickListener(this);
         ib_back.setOnClickListener(this);
-    ib_save.setOnClickListener(this);
+        ib_save.setOnClickListener(this);
         tb_worldkiePrivacity.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    tb_worldkieDraft.setVisibility(isChecked?View.VISIBLE:View.GONE);
+                tb_worldkieDraft.setVisibility(
+                        isChecked ? View.VISIBLE : View.GONE);
+                worldkieModel.setWorldkie_private(isChecked);
+            }
+        });
+        tb_worldkieDraft.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                worldkieModel.setDraft(isChecked);
             }
         });
     }
@@ -220,8 +225,11 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
         tb_worldkieDraft.setVisibility(View.GONE);
         putDefaultImage();
         source = "app";
+        worldkieModel.setUID(UID);
+        worldkieModel.setPhoto_default(true);
+        worldkieModel.setWorldkie_private(false);
         ib_select_img_create_worldkie.setTag(DrawableUtils.getMipmapName(mainActivity,R.mipmap.photoworldkieone));
-
+        worldkieModel.setId_photo(ib_select_img_create_worldkie.getTag().toString());
     }
     public void setSelectedProfilePhoto(Drawable image){
 
@@ -240,6 +248,7 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
                 .load(DrawableUtils.drawableToBitmap(image))
                 .apply(requestOptions)
                 .into(ib_select_img_create_worldkie);
+
     }
     public void setSelectedProfilePhoto(@DrawableRes int imageResId){
         DrawableUtils.personalizarImagenCuadradoButton(getContext(),150/6,7,R.color.brownMaroon,imageResId,ib_select_img_create_worldkie);
@@ -273,6 +282,14 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
         }
         //obtenerImagen();
     }
+    public void setPhotoNoDefault(){
+        worldkieModel.setPhoto_default(false);
+        worldkieModel.setId_photo(null);
+    }
+    public void setPhotoDefault(){
+        worldkieModel.setPhoto_default(true);
+        worldkieModel.setId_photo(ib_select_img_create_worldkie.getTag().toString());
+    }
     public void setImageUri(Uri image){
         this.image=image;
     }
@@ -302,63 +319,42 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(() -> {
                         getValues();
-                        if (source.equals("device")) {
-                                    if (!privacity) {
-                                        worldkieModel = new WorldkieModel(UID, name, false, privacity, draft);
-                                    } else {
-                                        worldkieModel = new WorldkieModel(UID, name, false, privacity);
-                                    }
-                                } else {
-                                    if (!privacity) {
-                                        worldkieModel = new WorldkieModel(UID, name, true, privacity, draft, ib_select_img_create_worldkie.getTag().toString());
-                                    } else {
-                                        worldkieModel = new WorldkieModel(UID, name, true, privacity, ib_select_img_create_worldkie.getTag().toString());
-                                    }
-                                }
                                 Task<DocumentReference> addTask = db.collection("Worldkies").add(worldkieModel);
 
-                                addTask.addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<DocumentReference> task) {
-                                        if (task.isSuccessful()) {
+                                addTask.addOnCompleteListener(task -> {
+                                    if (task.isSuccessful()) {
 
-                                            if (source.equals("device")) {
-                                                StorageReference userRef = storage.getReference().child(task.getResult().getId());
-                                                userRef.child("profile" + DrawableUtils.getExtensionFromUri(getContext(), image)).putFile(image);
-
-                                            }
-                                            EfectsUtils.setAnimationsDialog("success",animationView);
-                                            Completable.timer(2, TimeUnit.SECONDS)
-                                                    .subscribeOn(Schedulers.io())
-                                                    .observeOn(AndroidSchedulers.mainThread())
-                                                    .subscribe(() -> {
-                                                        dialog.dismiss();
-                                                        NavigationUtils.goBack(fragmentManager, activity);
-                                                    });
+                                        if (!worldkieModel.isPhoto_default()) {
+                                            StorageReference userRef = storage.getReference().child(task.getResult().getId());
+                                            userRef.child("profile" + DrawableUtils.getExtensionFromUri(getContext(), image)).putFile(image);
 
                                         }
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        EfectsUtils.setAnimationsDialog("fail",animationView);
-                                        Completable.timer(3, TimeUnit.SECONDS)
+                                        EfectsUtils.setAnimationsDialog("success",animationView);
+                                        Completable.timer(2, TimeUnit.SECONDS)
                                                 .subscribeOn(Schedulers.io())
                                                 .observeOn(AndroidSchedulers.mainThread())
                                                 .subscribe(() -> {
-                                                    animationView.setVisibility(View.GONE);
                                                     dialog.dismiss();
+                                                    NavigationUtils.goBack(fragmentManager, activity);
                                                 });
+
                                     }
+                                }).addOnFailureListener(e -> {
+                                    EfectsUtils.setAnimationsDialog("fail",animationView);
+                                    Completable.timer(3, TimeUnit.SECONDS)
+                                            .subscribeOn(Schedulers.io())
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .subscribe(() -> {
+                                                animationView.setVisibility(View.GONE);
+                                                dialog.dismiss();
+                                            });
                                 });
                             }
                     );
         }
     }
     private void getValues(){
-        name = et_nameWorldkieCreate.getText().toString();
-        privacity = tb_worldkiePrivacity.isChecked();
-        draft = tb_worldkieDraft.isChecked();
+        worldkieModel.setName(et_nameWorldkieCreate.getText().toString());
     }
     private void editDataFirestore() {
         //if(CheckUtil.handlerCheckName(context,et_nameWorldkieCreate,))
@@ -394,37 +390,31 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
                                 if (worldkieModel.isDraft() != tb_worldkieDraft.isChecked()) {
                                     worldkieData.put("draft", tb_worldkieDraft.isChecked());
                                 }
-                                dbWorldkies.document(worldkie_id).update(worldkieData).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
-                                        if (source.equals("device")) {
-                                            StorageReference userRef = storage.getReference().child(worldkie_id);
-                                            userRef.child("profile" + DrawableUtils.getExtensionFromUri(getContext(), image)).putFile(image);
-
-                                        }
-                                        EfectsUtils.setAnimationsDialog("success",animationView);
-                                        Completable.timer(3, TimeUnit.SECONDS)
-                                                .subscribeOn(Schedulers.io())
-                                                .observeOn(AndroidSchedulers.mainThread())
-                                                .subscribe(() -> {
-                                                    animationView.setVisibility(View.GONE);
-                                                    dialog.dismiss();
-                                                    NavigationUtils.goBack(fragmentManager, activity);
-                                                });
+                                dbWorldkies.document(worldkie_id).update(worldkieData).addOnSuccessListener(unused -> {
+                                    if (source.equals("device")) {
+                                        StorageReference userRef = storage.getReference().child(worldkie_id);
+                                        userRef.child("profile" + DrawableUtils.getExtensionFromUri(getContext(), image)).putFile(image);
 
                                     }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        EfectsUtils.setAnimationsDialog("fail",animationView);
-                                        Completable.timer(5, TimeUnit.SECONDS)
-                                                .subscribeOn(Schedulers.io())
-                                                .observeOn(AndroidSchedulers.mainThread())
-                                                .subscribe(() -> {
-                                                    animationView.setVisibility(View.GONE);
-                                                    dialog.dismiss();
-                                                });
-                                    }
+                                    EfectsUtils.setAnimationsDialog("success",animationView);
+                                    Completable.timer(3, TimeUnit.SECONDS)
+                                            .subscribeOn(Schedulers.io())
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .subscribe(() -> {
+                                                animationView.setVisibility(View.GONE);
+                                                dialog.dismiss();
+                                                NavigationUtils.goBack(fragmentManager, activity);
+                                            });
+
+                                }).addOnFailureListener(e -> {
+                                    EfectsUtils.setAnimationsDialog("fail",animationView);
+                                    Completable.timer(5, TimeUnit.SECONDS)
+                                            .subscribeOn(Schedulers.io())
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .subscribe(() -> {
+                                                animationView.setVisibility(View.GONE);
+                                                dialog.dismiss();
+                                            });
                                 });
                             }
                     );

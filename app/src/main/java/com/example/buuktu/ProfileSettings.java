@@ -2,16 +2,9 @@ package com.example.buuktu;
 
 import static android.widget.Toast.LENGTH_LONG;
 
-import static androidx.browser.customtabs.CustomTabsClient.getPackageName;
-
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,24 +15,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.buuktu.adapters.SettingAdapter;
-import com.example.buuktu.dialogs.InfoFutureFunctionDialog;
 import com.example.buuktu.models.SettingModel;
 import com.example.buuktu.models.UserkieModel;
-import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.NavigationUtils;
 import com.example.buuktu.views.MainActivity;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,7 +41,7 @@ public class ProfileSettings extends Fragment implements View.OnClickListener {
     private SettingAdapter settingAdapter;
     MainActivity mainActivity;
     private RecyclerView rv_settings_profile;
-    private ArrayList<SettingModel> dataSet = new ArrayList<SettingModel>();
+    private ArrayList<SettingModel> dataSet = new ArrayList<>();
     Boolean lastValueProfilePrivate=false;
     Switch tb_profile_private_settings;
     FirebaseFirestore db;
@@ -102,9 +89,9 @@ public class ProfileSettings extends Fragment implements View.OnClickListener {
 
        setVar();
 
-        setListeners();
         initComponents(view);
-    setVisibility();
+        setListeners();
+        setVisibility();
         // 🔁 Listener para cambios en Firestore
         userkie.addSnapshotListener((documentSnapshot, e) -> {
             if (e != null) {
@@ -123,8 +110,8 @@ public class ProfileSettings extends Fragment implements View.OnClickListener {
                 tb_profile_private_settings.setChecked(userkieModel.isProfile_private());
                 tb_profile_private_settings.setOnCheckedChangeListener(switchListener);
 
-                dataSet.add(new SettingModel("Nombre", userkieModel.getName()));
-                dataSet.add(new SettingModel("Pronombres", userkieModel.getPronouns()));
+                dataSet.add(new SettingModel(mainActivity.getResources().getString(R.string.name), userkieModel.getName()));
+                dataSet.add(new SettingModel(mainActivity.getResources().getString(R.string.pronouns), userkieModel.getPronouns()));
                 updateRecyclerView();
             }
             ;
@@ -151,12 +138,12 @@ public class ProfileSettings extends Fragment implements View.OnClickListener {
         backButton.setOnClickListener(this);
     }
     private void initComponents(View view) {
+        mainActivity = (MainActivity) getActivity();
         tb_profile_private_settings = view.findViewById(R.id.tb_profile_private_settings);
         rv_settings_profile = view.findViewById(R.id.rv_settings_profile);
         rv_settings_profile.setLayoutManager(new LinearLayoutManager(mainActivity));
         settingAdapter = new SettingAdapter(dataSet, mainActivity, UID);
         rv_settings_profile.setAdapter(settingAdapter);
-        mainActivity = (MainActivity) getActivity();
         backButton = mainActivity.getBackButton();
         ib_profile_superior = mainActivity.getIb_self_profile();
         ib_save = mainActivity.getIb_save();

@@ -2,9 +2,7 @@ package com.example.buuktu;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -12,12 +10,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import com.example.buuktu.adapters.NoteAdapter;
-import com.example.buuktu.models.NoteItem;
+import com.example.buuktu.models.NotekieModel;
 import com.example.buuktu.utils.NavigationUtils;
 import com.example.buuktu.views.MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -34,7 +31,7 @@ public class Notes extends Fragment implements View.OnClickListener {
 
     private RecyclerView recyclerView;
     private NoteAdapter noteAdapter;
-    private ArrayList<NoteItem> items;
+    private ArrayList<NotekieModel> items;
     private FirebaseFirestore db;
     private CollectionReference collectionNotekies;
     private String UID;
@@ -130,7 +127,7 @@ public class Notes extends Fragment implements View.OnClickListener {
                     if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
                         for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
                             DocumentSnapshot doc = dc.getDocument();
-                            NoteItem note = NoteItem.fromSnapshot(doc);
+                            NotekieModel note = NotekieModel.fromSnapshot(doc);
                             switch (dc.getType()) {
                                 case ADDED:
                                     items.add(dc.getNewIndex(), note);

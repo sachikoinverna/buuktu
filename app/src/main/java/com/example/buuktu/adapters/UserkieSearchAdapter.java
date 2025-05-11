@@ -1,22 +1,17 @@
 package com.example.buuktu.adapters;
 
-import static android.widget.Toast.LENGTH_LONG;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -36,11 +31,8 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
-public class UserkieSearchAdapter extends RecyclerView.Adapter<UserkieSearchAdapter.ViewHolder> implements View.OnClickListener{
-    @Override
-    public void onClick(View v) {
+public class UserkieSearchAdapter extends RecyclerView.Adapter<UserkieSearchAdapter.ViewHolder> {
 
-    }
     private ArrayList<UserkieModel> dataSet;
     private FragmentManager fragmentManager;
 
@@ -156,19 +148,16 @@ public class UserkieSearchAdapter extends RecyclerView.Adapter<UserkieSearchAdap
             holder.getIv_userkie_private_search().setVisibility(View.INVISIBLE);
         }
 
-        holder.getCv_userkie_search().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ProfileView profileView = new ProfileView();
-                Bundle bundle = new Bundle();
-                bundle.putString("mode","other");
-                bundle.putString("UID",UID);
-                profileView.setArguments(bundle);
-                fragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container, profileView)
-                        .addToBackStack(null)
-                        .commit();
-            }
+        holder.getCv_userkie_search().setOnClickListener(v -> {
+            ProfileView profileView = new ProfileView();
+            Bundle bundle = new Bundle();
+            bundle.putString("mode","other");
+            bundle.putString("UID",UID);
+            profileView.setArguments(bundle);
+            fragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, profileView)
+                    .addToBackStack(null)
+                    .commit();
         });
         ;
         if (userkieModel.isPhoto_default()) {

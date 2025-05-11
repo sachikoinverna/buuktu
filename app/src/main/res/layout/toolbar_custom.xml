@@ -27,7 +27,7 @@
             android:padding="8dp"
             android:scaleType="fitCenter"
             android:src="@drawable/twotone_info_24"
-            android:tint="#FFFFFF" />
+            app:tint="#FFFFFF" />
 
         <ImageButton
             android:id="@+id/ib_back"
@@ -38,8 +38,8 @@
             android:layout_marginTop="8dp"
             android:background="@android:color/transparent"
             android:scaleType="fitCenter"
-            android:tint="#FFFFFF"
-            app:srcCompat="@drawable/twotone_keyboard_arrow_left_24" />
+            app:srcCompat="@drawable/twotone_keyboard_arrow_left_24"
+            app:tint="#FFFFFF" />
 
         <ImageButton
             android:id="@+id/ib_save"
@@ -52,8 +52,8 @@
             android:background="@android:color/transparent"
             android:padding="8dp"
             android:scaleType="fitCenter"
-            android:tint="#FFFFFF"
-            app:srcCompat="@drawable/twotone_save_24" />
+            app:srcCompat="@drawable/twotone_save_24"
+            app:tint="#FFFFFF" />
 
     </RelativeLayout>
 

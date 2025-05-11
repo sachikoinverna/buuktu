@@ -7,42 +7,35 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.airbnb.lottie.LottieAnimationView;
 import com.example.buuktu.NotekieDiffCallback;
 import com.example.buuktu.R;
 import com.example.buuktu.dialogs.DeleteGeneralDialog;
-import com.example.buuktu.models.NoteItem;
+import com.example.buuktu.models.NotekieModel;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
-    private List<NoteItem> noteItems;
+    private List<NotekieModel> notekieModels;
     private final Context context;
     private final OnItemClickListener listener;
 
     public interface OnItemClickListener {
-        void onItemClick(NoteItem item);
+        void onItemClick(NotekieModel item);
     }
 
-    public NoteAdapter(Context context, List<NoteItem> noteItems, OnItemClickListener listener) {
+    public NoteAdapter(Context context, List<NotekieModel> notekieModels, OnItemClickListener listener) {
         this.context = context;
-        this.noteItems = noteItems;
+        this.notekieModels = notekieModels;
         this.listener = listener;
     }
 
@@ -55,19 +48,19 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull NoteAdapter.ViewHolder holder, int position) {
-        NoteItem item = noteItems.get(position);
+        NotekieModel item = notekieModels.get(position);
         holder.bind(item, listener);
     }
 
     @Override
     public int getItemCount() {
-        return noteItems.size();
+        return notekieModels.size();
     }
 
-    public void updateList(List<NoteItem> newItems) {
-        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new NotekieDiffCallback(this.noteItems, newItems));
-        this.noteItems.clear();
-        this.noteItems.addAll(newItems);
+    public void updateList(List<NotekieModel> newItems) {
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new NotekieDiffCallback(this.notekieModels, newItems));
+        this.notekieModels.clear();
+        this.notekieModels.addAll(newItems);
         diffResult.dispatchUpdatesTo(this);
     }
 
@@ -90,7 +83,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         }
 
         @SuppressLint("ResourceAsColor")
-        public void bind(final NoteItem item, final OnItemClickListener listener) {
+        public void bind(final NotekieModel item, final OnItemClickListener listener) {
             content.setText(item.getContent());
             if (!item.getTitle().isEmpty()) {
                 title.setText(item.getTitle());
@@ -109,63 +102,11 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
             ib_delete_note_item.setOnClickListener(v -> {
                 DeleteGeneralDialog dialog = new DeleteGeneralDialog(
-                        v.getContext(),"notekie");
-                dialog.setOnDialogClickListener(new DeleteGeneralDialog.OnDialogDelClickListener() {
-                            @Override
-                            public void onAccept() {
-                                deleteNoteItem(item, dialog);
-                            }
-
-                            @Override
-                            public void onCancel() {
-                                dialog.dismiss();
-                            }
-                        }
-                );
+                        v.getContext(),"notekie", item.getUID());
                 dialog.show();
             });
         }
 
-        private void deleteNoteItem(NoteItem item, DeleteGeneralDialog dialog) {
-            TextView tv_title = dialog.findViewById(R.id.tv_title_del);
-            TextView tv_text = dialog.findViewById(R.id.tv_text_del);
-            ImageView iv_photo = dialog.findViewById(R.id.iv_photo_del);
 
-            ImageButton ib_close = dialog.findViewById(R.id.ib_close_dialog);
-            ImageButton ib_accept = dialog.findViewById(R.id.ib_accept_dialog);
-            LottieAnimationView animationView = dialog.findViewById(R.id.anim_del);
-
-            tv_title.setVisibility(View.GONE);
-            tv_text.setVisibility(View.GONE);
-            iv_photo.setVisibility(View.GONE);
-            ib_close.setVisibility(View.GONE);
-            ib_accept.setVisibility(View.GONE);
-            animationView.setVisibility(View.VISIBLE);
-            animationView.setAnimation(R.raw.reading_anim);
-            animationView.playAnimation();
-            collectionNotekies.document(item.getUID()).delete()
-                    .addOnSuccessListener(unused -> {
-                        animationView.setAnimation(R.raw.success_anim);
-                        animationView.playAnimation();
-                        Completable.timer(5, TimeUnit.SECONDS)
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(() -> {
-                                    animationView.setVisibility(View.GONE);
-                                    dialog.dismiss();
-                                });
-                    })
-                    .addOnFailureListener(e -> {
-                        animationView.setAnimation(R.raw.fail_anim);
-                        animationView.playAnimation();
-                        Completable.timer(5, TimeUnit.SECONDS)
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(() -> {
-                                    animationView.setVisibility(View.GONE);
-                                    dialog.dismiss();
-                                });
-                    });
-        }
     }
 }

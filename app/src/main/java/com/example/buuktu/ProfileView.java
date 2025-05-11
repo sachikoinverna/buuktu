@@ -2,14 +2,11 @@ package com.example.buuktu;
 
 import static android.widget.Toast.LENGTH_LONG;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -126,7 +123,7 @@ public class ProfileView extends Fragment implements View.OnClickListener {
 
         db = FirebaseFirestore.getInstance();
         characterkieArrayList = new ArrayList<>();
-        characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList, getContext());
+        characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList, getContext(),fragmentManager);
         rc_characterkiePreviewUserkie.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rc_characterkiePreviewUserkie.setAdapter(characterkiesUserPreviewAdapter);
 
@@ -136,7 +133,7 @@ public class ProfileView extends Fragment implements View.OnClickListener {
         rc_worldkiePreviewUserkie.setAdapter(worldkiesUserPreviewAdapter); // <--- Asignar el adaptador correcto
 
         stuffkieArrayList = new ArrayList<>();
-        stuffkiesUserPreviewAdapter = new StuffkiesUserPreviewAdapter(stuffkieArrayList, getContext()); // Asegúrate de que este también esté inicializado
+        stuffkiesUserPreviewAdapter = new StuffkiesUserPreviewAdapter(stuffkieArrayList, getContext(),fragmentManager); // Asegúrate de que este también esté inicializado
         rc_stuffkiePreviewUserkie.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rc_stuffkiePreviewUserkie.setAdapter(stuffkiesUserPreviewAdapter);
         collectionUserkies = db.collection("Users");
@@ -169,12 +166,7 @@ public class ProfileView extends Fragment implements View.OnClickListener {
                             boolean foundData = false; // Add a flag
 
                             for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
-                                    StuffkieModel stuffkieModel = new StuffkieModel(
-                                            doc.getId(),
-                                            doc.getString("name"),
-                                            doc.getBoolean("stuffkie_private"),
-                                            doc.getBoolean("photo_default")
-                                    );
+                                    StuffkieModel stuffkieModel = StuffkieModel.fromSnapshot(doc);
                                     stuffkieArrayList.add(stuffkieModel);
                                     foundData = true; // Set the flag to true if data is found
 
@@ -341,7 +333,7 @@ public class ProfileView extends Fragment implements View.OnClickListener {
             //}
     }
     private void updateRecyclerViewStuffkies(ArrayList<StuffkieModel> stuffkieArrayList) {
-        stuffkiesUserPreviewAdapter = new StuffkiesUserPreviewAdapter(stuffkieArrayList,mainActivity);
+        stuffkiesUserPreviewAdapter = new StuffkiesUserPreviewAdapter(stuffkieArrayList,mainActivity,fragmentManager);
         rc_stuffkiePreviewUserkie.setLayoutManager(new LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false));
         rc_stuffkiePreviewUserkie.setAdapter(stuffkiesUserPreviewAdapter);
     }
@@ -351,7 +343,7 @@ public class ProfileView extends Fragment implements View.OnClickListener {
         rc_worldkiePreviewUserkie.setAdapter(worldkiesUserPreviewAdapter);
     }
     private void updateRecyclerViewCharacterkies(ArrayList<Characterkie> characterkieArrayList) {
-        characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList,mainActivity);
+        characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList,mainActivity,fragmentManager);
         rc_characterkiePreviewUserkie.setLayoutManager(new LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false));
         rc_characterkiePreviewUserkie.setAdapter(characterkiesUserPreviewAdapter);
     }

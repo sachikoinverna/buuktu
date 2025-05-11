@@ -1,5 +1,7 @@
 package com.example.buuktu.models;
 
+import android.os.Build;
+
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -10,7 +12,8 @@ public class WordOfTheDay {
     private static FirebaseFirestore db = FirebaseFirestore.getInstance();
     public static void obtenerPalabraDelDia(FirebaseCallback callback) {
         // Fecha actual para obtener el día del año
-        int dayOfYear = LocalDate.now().getDayOfYear();
+            int dayOfYear = LocalDate.now().getDayOfYear();
+
 
         // Obtén el documento donde type = "Worldkie of the day"
         db.collection("Wordkies")  // Cambia "palabras" por el nombre de tu colección

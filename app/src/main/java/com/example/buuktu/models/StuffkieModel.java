@@ -1,23 +1,47 @@
 package com.example.buuktu.models;
 
-import java.util.Date;
+import com.google.firebase.database.Exclude;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 public class StuffkieModel {
     private String UID;
     private String name;
-    private Date creation_date;
-    private String WORDLKIE_ID;
-    private String AUTHOR_ID;
+    private String WORDLKIE_UID;
+    private String AUTHOR_UID;
     private boolean draft;
     private boolean stuffkie_private;
     private boolean photo_default;
+    private String photo_id;
+    public StuffkieModel() {
+    }
 
-    public StuffkieModel(String UID, String name, boolean stuffkie_private,boolean photo_default){
+    public StuffkieModel(String UID, String name, boolean stuffkie_private, boolean photo_default,String photo_id, boolean draft){
         this.UID=UID;
         this.name=name;
-        this.stuffkie_private=stuffkie_private;
-        this.stuffkie_private = photo_default;
+        this.stuffkie_private = stuffkie_private;
+        this.photo_default = photo_default;
+        this.photo_id=photo_id;
+        this.draft=draft;
     }
+    public static StuffkieModel fromSnapshot(DocumentSnapshot document){
+        if (document == null || !document.exists()) {
+            return null;
+        }
+        StuffkieModel stuffkieModel = new StuffkieModel();
+        stuffkieModel.setName(document.getString("name"));
+        stuffkieModel.setAUTHOR_UID(document.getString("AUTHOR_UID"));
+        stuffkieModel.setUID(document.getString("UID"));
+        stuffkieModel.setWORDLKIE_UID(document.getString("WORLDKIE_UID"));
+        stuffkieModel.setStuffkie_private(document.getBoolean("stuffkie_private"));
+        stuffkieModel.setDraft(document.getBoolean("draft"));
+        stuffkieModel.setPhoto_default(document.getBoolean("photo_default"));
+        if (document.contains("photo_id")) {
+            stuffkieModel.setPhoto_id(document.getString("photo_id"));
+
+        }
+        return stuffkieModel;
+    }
+    @Exclude
 
     public String getUID() {
         return UID;
@@ -27,10 +51,7 @@ public class StuffkieModel {
         return name;
     }
 
-    public Date getCreation_date() {
-        return creation_date;
-    }
-
+    @Exclude
     public void setUID(String UID) {
         this.UID = UID;
     }
@@ -39,24 +60,28 @@ public class StuffkieModel {
         this.name = name;
     }
 
-    public void setCreation_date(Date creation_date) {
-        this.creation_date = creation_date;
+    public String getPhoto_id() {
+        return photo_id;
     }
 
-    public String getWORDLKIE_ID() {
-        return WORDLKIE_ID;
+    public void setPhoto_id(String photo_id) {
+        this.photo_id = photo_id;
     }
 
-    public void setWORDLKIE_ID(String WORDLKIE_ID) {
-        this.WORDLKIE_ID = WORDLKIE_ID;
+    public String getWORDLKIE_UID() {
+        return WORDLKIE_UID;
     }
 
-    public String getAUTHOR_ID() {
-        return AUTHOR_ID;
+    public void setWORDLKIE_UID(String WORDLKIE_UID) {
+        this.WORDLKIE_UID = WORDLKIE_UID;
     }
 
-    public void setAUTHOR_ID(String AUTHOR_ID) {
-        this.AUTHOR_ID = AUTHOR_ID;
+    public String getAUTHOR_UID() {
+        return AUTHOR_UID;
+    }
+
+    public void setAUTHOR_UID(String AUTHOR_UID) {
+        this.AUTHOR_UID = AUTHOR_UID;
     }
 
     public void setDraft(boolean draft) {

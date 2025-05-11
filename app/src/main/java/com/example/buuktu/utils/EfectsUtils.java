@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
+import android.util.Log;
 import android.view.ViewAnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -97,20 +98,23 @@ public class EfectsUtils {
                 });
     }
     public static void setAnimationsDialog(String phase, LottieAnimationView lottieAnimationView){
+        if (lottieAnimationView == null) {
+            Log.e("EfectsUtils", "LottieAnimationView es null. No se puede establecer la animación.");
+            return;
+        }
         switch (phase){
+
             case "start":
                 lottieAnimationView.setAnimation(R.raw.reading_anim);
-                lottieAnimationView.playAnimation();
                 break;
             case "success":
                 lottieAnimationView.setAnimation(R.raw.success_anim);
-                lottieAnimationView.playAnimation();
                 break;
             case "fail":
                 lottieAnimationView.setAnimation(R.raw.fail_anim);
-                lottieAnimationView.playAnimation();
                 break;
         }
+        lottieAnimationView.playAnimation();
     }
 
 }
