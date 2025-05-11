@@ -67,7 +67,7 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull SettingsAdapter.ViewHolder holder, int position) {
-        SettingModel settingModel = dataSet.get(0);
+        SettingModel settingModel = dataSet.get(position);
         String name = settingModel.getName();
             holder.getTv_name_setting().setText(name);
          holder.getIv_photo_setting().setImageDrawable(settingModel.getDrawable());
