@@ -49,15 +49,10 @@ public class DeleteGeneralDialog extends Dialog implements View.OnClickListener 
         {
         }*/
         setContentView(R.layout.delete_general_dialog);
-        ib_close_dialog = findViewById(R.id.ib_close_dialog);
-        ib_accept_dialog = findViewById(R.id.ib_accept_dialog);
-        iv_photo_del = findViewById(R.id.iv_photo_del);
-        tv_text_del = findViewById(R.id.tv_text_del);
+        initComponents();
         db = FirebaseFirestore.getInstance();
         animationView = findViewById(R.id.anim_del);
         //tv_text_del = findViewById(R.id.tv);
-        tv_title_del = findViewById(R.id.tv_title_del);
-        tv_title_del.setText("Cuidado");
         switch (mode) {
             case "notekie":
                 iv_photo_del.setImageResource(R.mipmap.img_del_notes);
@@ -87,17 +82,25 @@ public class DeleteGeneralDialog extends Dialog implements View.OnClickListener 
 
         getWindow().setBackgroundDrawableResource(android.R.color.transparent);
     }
-
-    private void deleteNotekie() {
-
+    private void initComponents(){
+        ib_close_dialog = findViewById(R.id.ib_close_dialog);
+        ib_accept_dialog = findViewById(R.id.ib_accept_dialog);
+        iv_photo_del = findViewById(R.id.iv_photo_del);
+        tv_text_del = findViewById(R.id.tv_text_del);
+        tv_title_del = findViewById(R.id.tv_title_del);
+    }
+    private void prepareLoading(){
         tv_title_del.setVisibility(View.GONE);
         tv_text_del.setVisibility(View.GONE);
         iv_photo_del.setVisibility(View.GONE);
         ib_close_dialog.setVisibility(View.GONE);
         ib_accept_dialog.setVisibility(View.GONE);
         animationView.setVisibility(View.VISIBLE);
-        animationView.setAnimation(R.raw.reading_anim);
-        animationView.playAnimation();
+        EfectsUtils.setAnimationsDialog("start",animationView);
+
+    }
+    private void deleteNotekie() {
+        prepareLoading();
         collectionNotekies.document(UID).delete()
                 .addOnSuccessListener(unused -> {
                     EfectsUtils.setAnimationsDialog("success", animationView);
@@ -117,33 +120,22 @@ public class DeleteGeneralDialog extends Dialog implements View.OnClickListener 
                 });
     }
     private void deleteWorldkie(){
-
-        tv_title_del.setVisibility(View.GONE);
-        tv_text_del.setVisibility(View.GONE);
-        iv_photo_del.setVisibility(View.GONE);
-        ib_close_dialog.setVisibility(View.GONE);
-        ib_accept_dialog.setVisibility(View.GONE);
-        animationView.setVisibility(View.VISIBLE);
-            animationView.setVisibility(View.VISIBLE);
-            animationView.setAnimation(R.raw.reading_anim);
-            animationView.playAnimation();
+            prepareLoading();
             collectionWorldkies.document(UID).delete().addOnSuccessListener(unused -> firebaseStorageWorldkie.getReference().child(UID).delete().addOnSuccessListener(unused1 -> {
-                animationView.setAnimation(R.raw.success_anim);
-                animationView.playAnimation();
+                EfectsUtils.setAnimationsDialog("success",animationView);
+
                 Completable.timer(5, TimeUnit.SECONDS)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(this::dismiss);
             }).addOnFailureListener(e -> {
-                animationView.setAnimation(R.raw.fail_anim);
-                animationView.playAnimation();
+                EfectsUtils.setAnimationsDialog("fail",animationView);
+
                 Completable.timer(5, TimeUnit.SECONDS)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(this::dismiss);
-            })).addOnFailureListener(e -> {
-
-            });
+            }));
         }
 
     @Override

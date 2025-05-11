@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.buuktu.adapters.PageAdapter;
-import com.example.buuktu.dialogs.InfoFutureFunctionDialog;
 import com.example.buuktu.views.MainActivity;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -92,16 +91,15 @@ public class Search extends Fragment {
     }
     private void initComponents(View view){
         sv_search_main = view.findViewById(R.id.sv_search_main);
-        InfoFutureFunctionDialog futureFunctionDialog = new InfoFutureFunctionDialog(getContext());
         sv_search_main.setFocusable(false);
         sv_search_main.setIconifiedByDefault(false); // Evita que el SearchView se colapse
         sv_search_main.clearFocus();
 
         // Interceptar todos los clics para abrir el diálogo
-        sv_search_main.setOnClickListener(v -> futureFunctionDialog.show());
+        sv_search_main.setOnClickListener(v -> mainActivity.showInfoDialog("future_function"));
         sv_search_main.setOnQueryTextFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
-                futureFunctionDialog.show();
+                mainActivity.showInfoDialog("future_function");
                 v.clearFocus();
             }
         });

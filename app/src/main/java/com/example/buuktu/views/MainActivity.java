@@ -35,10 +35,7 @@ import com.example.buuktu.ProfileView;
 import com.example.buuktu.R;
 import com.example.buuktu.Search;
 import com.example.buuktu.broadcastReceiver.WordNotificationReceiver;
-import com.example.buuktu.dialogs.InfoFutureFunctionDialog;
 import com.example.buuktu.dialogs.InfoGeneralDialog;
-import com.example.buuktu.dialogs.InfoNotikiesDialog;
-import com.example.buuktu.dialogs.InfoWorldkiesDialog;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.EfectsUtils;
 import com.example.buuktu.utils.FirebaseAuthUtils;
@@ -118,8 +115,7 @@ int colorEntero;
             } else if (id == R.id.notifications) {
                 NavigationUtils.goNewFragment(fragmentManager, new Notikies());
             } else if (id == R.id.messages) {
-                infoGeneralDialog = new InfoGeneralDialog(this,"future_function");
-                infoGeneralDialog.show();
+                showInfoDialog( "future_function");
             }
             return true;
         });
@@ -165,7 +161,20 @@ int colorEntero;
             }
         });
     }
-    private void showInfoDialog(String mode){
+    /*info_characterkies_dialog.xml
+    info_desafios_dialog.xml
+    info_inspo_dialog.xml
+    info_notekies_dialog.xml
+    info_notikies_dialog.xml
+    info_other_profile_edit.xml
+    info_search_dialog.xml
+    info_self_profile_edit.xml
+    info_settings_account_edit.xml
+    info_settings_general_edit.xml
+    info_settings_profile_edit.xml
+    info_stuffkies_dialog.xml
+    info_worldkies_dialog.xml*/
+    public void showInfoDialog(String mode){
         infoGeneralDialog = new InfoGeneralDialog(this,mode);
         infoGeneralDialog.show();
     }

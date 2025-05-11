@@ -20,7 +20,6 @@ import android.widget.TextView;
 
 import com.example.buuktu.adapters.CharacterkiesUserPreviewAdapter;
 import com.example.buuktu.adapters.StuffkiesUserPreviewAdapter;
-import com.example.buuktu.dialogs.InfoFutureFunctionDialog;
 import com.example.buuktu.models.CharacterkieModel;
 import com.example.buuktu.models.StuffkieModel;
 import com.example.buuktu.models.UserkieModel;
@@ -279,13 +278,6 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
     }
     private void getProfilePhoto() {
         if (worldkieModel.isPhoto_default()) {
-               /* FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-                firebaseFirestore.collection("Worldkies").document(UID).addSnapshotListener((queryDocumentSnapshot, e) -> {
-                       /* if (e != null) {
-                            Log.e("Error", e.getMessage());
-                            Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
-                            return;
-                        }*/
             String id_photo = worldkieModel.getId_photo();
             int resId = mainActivity.getResources().getIdentifier(id_photo, "mipmap", mainActivity.getPackageName());
 
@@ -299,9 +291,7 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
                 }
                 lastPhotoId = id_photo;
             }
-        }//);
-        //}
-        else {
+        } else {
             StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-worldkies").getReference(UID);
 
             userFolderRef.listAll().addOnSuccessListener(listResult -> {
@@ -317,14 +307,6 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
                     }
                 }
             });
-/*.addOnFailureListener(e -> {
-                    Toast.makeText(this, "Error al buscar imagen", Toast.LENGTH_SHORT).show();
-                    Log.e("Storage", "Error listando archivos: " + e.getMessage());
-                })*/
-
-
-            // }
-            //}
         }
     }
     private void updateRecyclerViewCharacterkies(ArrayList<CharacterkieModel> characterkieArrayList) {
@@ -342,8 +324,7 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
         if(v.getId()==R.id.ib_back){
             NavigationUtils.goBack(fragmentManager,mainActivity);
         } else if (v.getId() == R.id.ib_characterkieView) {
-            InfoFutureFunctionDialog infoFutureFunctionDialog = new InfoFutureFunctionDialog(mainActivity);
-            infoFutureFunctionDialog.show();
+            mainActivity.showInfoDialog("future_function");
         }
     }
 }

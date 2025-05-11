@@ -24,7 +24,6 @@ import android.widget.Toast;
 import com.example.buuktu.adapters.CharacterkiesUserPreviewAdapter;
 import com.example.buuktu.adapters.StuffkiesUserPreviewAdapter;
 import com.example.buuktu.adapters.WorldkiesUserPreviewAdapter;
-import com.example.buuktu.dialogs.InfoFutureFunctionDialog;
 import com.example.buuktu.models.CharacterkieModel;
 import com.example.buuktu.models.StuffkieModel;
 import com.example.buuktu.models.UserkieModel;
@@ -348,8 +347,7 @@ public class ProfileView extends Fragment implements View.OnClickListener {
         if(v.getId()==R.id.ib_back){
             NavigationUtils.goBack(fragmentManager,mainActivity);
         } else if (v.getId() == R.id.ib_profileView) {
-            InfoFutureFunctionDialog infoFutureFunctionDialog = new InfoFutureFunctionDialog(getContext());
-            infoFutureFunctionDialog.show();
+            mainActivity.showInfoDialog("future_function");
         }
     }
 }

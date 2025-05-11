@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import com.example.buuktu.R;
 
 public class InfoGeneralDialog extends Dialog implements View.OnClickListener {
-    ImageButton ib_next_incorrect,ib_home_incorrect,ib_close_dialog ;
+    ImageButton ib_close_dialog ;
     static String modeNotekie = "notekie";
     static String modeStuffkie = "stuffkie";
     static String modeWorldkie = "worldkie";
@@ -33,6 +33,14 @@ public class InfoGeneralDialog extends Dialog implements View.OnClickListener {
             setContentView(R.layout.info_inspo_dialog);
         } else if(mode.equals("notekies")){
             setContentView(R.layout.info_notekies_dialog);
+        } else if (mode.equals("notikies")) {
+            setContentView(R.layout.info_notikies_dialog);
+        } else if(mode.equals("characterkies")){
+            setContentView(R.layout.info_characterkies_dialog);
+        } else if(mode.equals("stuffkies")){
+            setContentView(R.layout.info_stuffkies_dialog);
+        } else if (mode.equals("worldkies")) {
+            setContentView(R.layout.info_worldkies_dialog);
         }
         ib_close_dialog = findViewById(R.id.ib_close_dialog);
         ib_close_dialog.setOnClickListener(this);
@@ -44,19 +52,8 @@ public class InfoGeneralDialog extends Dialog implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        //  if (v.getId() == R.id.ib_next_incorrect) {
-        //   if (listener != null) {
-        //       listener.onNext();
-        //    }
-        //    dismiss();
         if (v.getId() == R.id.ib_close_dialog) {
-
             dismiss();
-        }// else if (v.getId() == R.id.ib_retry_incorrect) {
-          /*  if (listener != null) {
-                listener.onRetry();
-            }
-            dismiss();
-        }*/
+        }
     }
 }

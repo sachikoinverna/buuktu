@@ -275,7 +275,7 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
                                     userRef.child("profile" + DrawableUtils.getExtensionFromUri(getContext(), image)).putFile(image);
 
                                 }
-                                EfectsUtils.setAnimationsDialog("success",animationView);
+                        EfectsUtils.setAnimationsDialog("success",animationView);
 
                                 Completable.timer(3, TimeUnit.SECONDS)
                                         .subscribeOn(Schedulers.io())
