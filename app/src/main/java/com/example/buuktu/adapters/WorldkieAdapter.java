@@ -36,10 +36,7 @@ import java.util.ArrayList;
 public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHolder>{
     private final ArrayList<WorldkieModel> dataSet;
     private final FragmentManager fragmentManager;
-
     private final Context context;
-    private Fragment menuWorldkie;
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         private String lastPhotoId="",lastName="";
         private final TextView tv_name_wordlkie;
@@ -144,13 +141,13 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
         }
         holder.getIb_enterToAWorldkie().setOnClickListener(v -> {
             Bundle bundle = new Bundle();
-            bundle.putString("worldkie_id", dataSet.get(holder.getAdapterPosition()).getUID());
+            bundle.putString("worldkie_id", worldkieModel.getUID());
             NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new WorldkieMenu());
 
         });
         holder.getIb_editAWorldkie().setOnClickListener(v -> {
             Bundle bundle = new Bundle();
-            bundle.putString("worldkie_id",dataSet.get(holder.getAdapterPosition()).getUID());
+            bundle.putString("worldkie_id",worldkieModel.getUID());
             NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new CreateEditWorldkie());
 
         });

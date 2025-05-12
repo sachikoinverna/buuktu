@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.buuktu.R;
 import com.example.buuktu.adapters.WorldkieAdapter;
 import com.example.buuktu.models.WorldkieModel;
+import com.example.buuktu.utils.NavigationUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -42,13 +43,12 @@ public class Home extends Fragment implements View.OnClickListener {
     private FloatingActionButton fb_parent, fb_add;
     private boolean isAllFabsVisible;
     private WorldkieAdapter worldkieAdapter;
-    CollectionReference dbWorldkies;
-    ImageButton ib_save,ib_profile_superior,backButton;
-    FragmentManager fragmentManager;
-    MainActivity mainActivity;
-    public Home() {
-        // Required empty public constructor
-    }
+    private CollectionReference dbWorldkies;
+    private ImageButton ib_save, ib_profile_superior, backButton;
+    private FragmentManager fragmentManager;
+    private MainActivity mainActivity;
+
+    public Home() {}
 
     public static Home newInstance() {
         return new Home();
@@ -57,125 +57,96 @@ public class Home extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        db = FirebaseFirestore.getInstance();
+        UID = auth.getCurrentUser().getUid();
+        worldkieModelArrayList = new ArrayList<>();
+        dbWorldkies = db.collection("Worldkies");
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        mainActivity = (MainActivity) getActivity();
-        backButton = mainActivity.getBackButton();
-        ib_save = mainActivity.getIb_save();
-        ib_profile_superior = mainActivity.getIb_self_profile();
+
+
+        // Inicializa vistas y listeners
         initComponents(view);
+        setVisibility();
         setListeners();
-        db = FirebaseFirestore.getInstance();
-        UID = auth.getCurrentUser().getUid();
+
+        // Configura RecyclerView
         rc_worldkies.setLayoutManager(new LinearLayoutManager(mainActivity));
         worldkieAdapter = new WorldkieAdapter(worldkieModelArrayList, mainActivity, getParentFragmentManager());
         rc_worldkies.setAdapter(worldkieAdapter);
-        dbWorldkies = db.collection("Worldkies");
-        fragmentManager = requireActivity().getSupportFragmentManager();
 
-        dbWorldkies.whereEqualTo("UID_AUTHOR", UID)
-                .orderBy("last_update", Query.Direction.DESCENDING)
-                .addSnapshotListener((queryDocumentSnapshots, e) -> {
-                    if (e != null) {
-                        Log.e("Error", e.getMessage());
-                        Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
-                        return;
-                    }
+        // Escucha cambios en Firestore
+        listenToWorldkies();
 
-                    if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
-
-                        for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
-                            DocumentSnapshot doc = dc.getDocument();
-                            WorldkieModel worldkieModel = createWorldkieModelFromDocument(doc); // Crea el modelo inicial
-                            switch (dc.getType()) {
-                                case ADDED:
-                                    safeAddToList(worldkieModelArrayList, dc.getNewIndex(), worldkieModel);
-                                    worldkieAdapter.notifyItemInserted(dc.getNewIndex());
-                                    break;
-                                case MODIFIED:
-                                    safeSetToList(worldkieModelArrayList, dc.getOldIndex(), worldkieModel);
-                                    worldkieAdapter.notifyItemChanged(dc.getOldIndex());
-                                    break;
-                                case REMOVED:
-                                    safeRemoveFromList(worldkieModelArrayList, dc.getOldIndex());
-                                    worldkieAdapter.notifyItemRemoved(dc.getOldIndex());
-                                    break;
-                            }
-                        }
-
-                    }
-                });
         return view;
     }
-    private void setListeners(){
-        fb_add.setOnClickListener(this);
-        fb_parent.setOnClickListener(this);
-    }
-    public void initComponents(View view){
+
+    private void initComponents(View view) {
         fb_parent = view.findViewById(R.id.fb_parentWorldkies);
         fb_add = view.findViewById(R.id.fb_addWorldkie);
         rc_worldkies = view.findViewById(R.id.rc_worldkies);
-        worldkieModelArrayList = new ArrayList<>();
-        setInitVisibility();
-    }
-    private void setInitVisibility(){
+        mainActivity = (MainActivity) getActivity();
+        fragmentManager = requireActivity().getSupportFragmentManager();
+
+        // Referencias desde MainActivity
+        backButton = mainActivity.getBackButton();
+        ib_save = mainActivity.getIb_save();
+        ib_profile_superior = mainActivity.getIb_self_profile();
         isAllFabsVisible = false;
-        ib_save.setVisibility(View.GONE);
-        backButton.setVisibility(View.GONE);
-        ib_profile_superior.setVisibility(View.VISIBLE);
-        fb_add.setVisibility(View.GONE);
+
     }
-    private void navigateToNextFragment() {
-        CreateEditWorldkie createEditWorldkie = new CreateEditWorldkie();
-        fragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, createEditWorldkie) // El contenedor donde se muestra el fragmento
-                .addToBackStack(null) // Añade la transacción a la pila para que se pueda volver atrás
-                .commit();
+    private void setListeners() {
+        fb_parent.setOnClickListener(this);
+        fb_add.setOnClickListener(this);
+
+    }
+    private void setVisibility() {
+    fb_add.setVisibility(View.GONE);
+    ib_save.setVisibility(View.GONE);
+    backButton.setVisibility(View.GONE);
+    ib_profile_superior.setVisibility(View.VISIBLE);
     }
 
-    private void safeAddToList(ArrayList<WorldkieModel> list, int index, WorldkieModel item) {
-        if (index >= 0 && index <= list.size()) {
-            list.add(index, item);
-        } else {
-            list.add(item); // Fallback: añade al final
-        }
-    }
+    private void listenToWorldkies() {
+        Log.d("Firestore", "Iniciando listener para UID: " + UID);
+        dbWorldkies.whereEqualTo("uid_AUTHOR", UID)
+                .orderBy("last_update", Query.Direction.DESCENDING)
+                .addSnapshotListener((querySnapshots, e) -> {
+                    if (e != null) {
+                        Log.e("Firestore", "Error al escuchar cambios: " + e.getMessage());
+                        Toast.makeText(getContext(), "Error Firestore: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        return;
+                    }
 
-    private void safeSetToList(ArrayList<WorldkieModel> list, int index, WorldkieModel item) {
-        if (index >= 0 && index < list.size()) {
-            list.set(index, item);
-        }
-    }
-    private void safeRemoveFromList(ArrayList<WorldkieModel> list, int index) {
-        if (index >= 0 && index < list.size()) {
-            list.remove(index);
-        }
-    }
-    private WorldkieModel createWorldkieModelFromDocument(DocumentSnapshot doc) {
-            return WorldkieModel.fromSnapshot(doc);
-    }
+                    if (querySnapshots != null && !querySnapshots.isEmpty()) {
+                        Log.d("Firestore", "Documentos recibidos: " + querySnapshots.size());
+                        worldkieModelArrayList.clear();
 
-    // Helper method to update the RecyclerView
-        private void updateRecyclerView(ArrayList<WorldkieModel> worldkieModelArrayList) {
-            WorldkieAdapter worldkieAdapter = new WorldkieAdapter(worldkieModelArrayList, getContext(), getParentFragmentManager());
-            rc_worldkies.setAdapter(worldkieAdapter);
-            rc_worldkies.setLayoutManager(new LinearLayoutManager(getContext()));
-        }
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
+                        for (DocumentSnapshot doc : querySnapshots.getDocuments()) {
+                            Log.d("Firestore", "Doc ID: " + doc.getId() + ", Data: " + doc.getData());
+                            WorldkieModel worldkieModel = WorldkieModel.fromSnapshot(doc);
+                            worldkieModelArrayList.add(worldkieModel);
+                        }
 
+                        worldkieAdapter.notifyDataSetChanged();
+                    } else {
+                        Log.d("Firestore", "No se encontraron documentos para UID: " + UID);
+                        worldkieModelArrayList.clear();
+                        worldkieAdapter.notifyDataSetChanged();
+                    }
+                });
+    }
     @Override
     public void onClick(View v) {
-        if(v.getId()==R.id.fb_parentWorldkies){
-            fb_add.setVisibility( isAllFabsVisible?View.GONE:View.VISIBLE);
+        if (v.getId() == R.id.fb_parentWorldkies) {
             isAllFabsVisible = !isAllFabsVisible;
-        } else if (v.getId()==R.id.fb_addWorldkie) {
-            navigateToNextFragment();
+            fb_add.setVisibility(isAllFabsVisible ? View.VISIBLE : View.GONE);
+        } else if (v.getId() == R.id.fb_addWorldkie) {
+            NavigationUtils.goNewFragment(fragmentManager,new CreateEditWorldkie());
         }
     }
 }

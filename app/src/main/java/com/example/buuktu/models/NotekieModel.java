@@ -16,7 +16,7 @@ public class NotekieModel {
         NotekieModel notekieModel = new NotekieModel();
         notekieModel.setTitle(document.getString("title"));
         notekieModel.setContent(document.getString("content"));
-        notekieModel.setUID(document.getString("UID"));
+        notekieModel.setUID(document.getId());
         notekieModel.setUID_USER(document.getString("UID_USER"));
         notekieModel.setLast_update(document.getTimestamp("last_update"));
         return notekieModel;

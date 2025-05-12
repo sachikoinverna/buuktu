@@ -269,6 +269,32 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
                     );
         }
     }
+    private void editDataFirestore() {
+        if (CheckUtil.handlerCheckName(mainActivity, et_nameStuffkieCreate, et_nameStuffkieCreateFull)) {
+            if (!stuffkieModel.getName().equals(et_nameStuffkieCreate.getText().toString())) {
+                stuffkieModel.setName(et_nameStuffkieCreate.getText().toString());
+            }
+                dialog.show();
+                animationView = dialog.getAnimationView();
+                Completable.timer(3, TimeUnit.SECONDS)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(() ->  collectionStuffkie.document(stuffkie_id).update(stuffkieModel.toMap()).addOnSuccessListener(unused -> {
+                                    if (!stuffkieModel.isPhoto_default()) {
+                                        StorageReference userRef = storage.getReference().child(stuffkie_id);
+                                        userRef.child("profile" + DrawableUtils.getExtensionFromUri(getContext(), image)).putFile(image);
+
+                                    }
+                                    EfectsUtils.setAnimationsDialog("success", animationView);
+                                    delayedDismiss();
+
+                                }).addOnFailureListener(e -> {
+                                    EfectsUtils.setAnimationsDialog("fail", animationView);
+                                    delayedDismiss();
+                                })
+                        );
+            }
+    }
 
     private void setListeners(){
         ib_save.setOnClickListener(this);
@@ -323,28 +349,6 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
     public void setSelectedProfilePhoto(@DrawableRes int imageResId){
         DrawableUtils.personalizarImagenCuadradoButton(getContext(),150/6,7,R.color.brownMaroon,imageResId,ib_select_img_create_stuffkie);
 
-    }
-    private void startCircularReveal(Drawable finalDrawable) {
-        ib_select_img_create_stuffkie.setImageDrawable(finalDrawable);
-        ib_select_img_create_stuffkie.setAlpha(1f);
-
-        // Solo ejecutar la animación en dispositivos con API 21+
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // Obtener el centro del ImageButton
-            int centerX = ib_select_img_create_stuffkie.getWidth() / 2;
-            int centerY = ib_select_img_create_stuffkie.getHeight() / 2;
-
-            // Calcular el radio final (el círculo más grande que puede caber dentro del ImageButton)
-            float finalRadius = Math.max(ib_select_img_create_stuffkie.getWidth(), ib_select_img_create_stuffkie.getHeight());
-
-            // Crear el Animator para la revelación circular
-            Animator circularReveal = ViewAnimationUtils.createCircularReveal(
-                    ib_select_img_create_stuffkie, centerX, centerY, 0, finalRadius);
-            circularReveal.setDuration(500); // Duración de la animación en milisegundos
-
-            // Iniciar la animación
-            circularReveal.start();
-        }
     }
     private void delayedDismiss() {
         Completable.timer(3, TimeUnit.SECONDS)

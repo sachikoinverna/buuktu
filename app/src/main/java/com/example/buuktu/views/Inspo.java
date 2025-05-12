@@ -64,8 +64,8 @@ public class Inspo extends Fragment {
         ib_profile_superior = mainActivity.getIb_self_profile();
         ib_save = mainActivity.getIb_save();
         ArrayList<CardItem> items = new ArrayList<>();
-        items.add(new CardItem(R.drawable.twotone_sticky_note_2_24, "Notekies"));
-        items.add(new CardItem(R.drawable.twotone_military_tech_24, "Desafios"));
+        items.add(new CardItem(R.drawable.twotone_sticky_note_2_24, mainActivity.getResources().getString(R.string.notekies)));
+        items.add(new CardItem(R.drawable.twotone_military_tech_24, mainActivity.getResources().getString(R.string.challenges)));
         updateRecyclerView(items);
         setInitVisibility();
     }

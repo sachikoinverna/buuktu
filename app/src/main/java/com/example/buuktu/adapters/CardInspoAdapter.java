@@ -15,6 +15,7 @@ import com.example.buuktu.InspoDesafios;
 import com.example.buuktu.Notes;
 import com.example.buuktu.R;
 import com.example.buuktu.models.CardItem;
+import com.example.buuktu.utils.NavigationUtils;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
@@ -50,14 +51,10 @@ public class CardInspoAdapter extends RecyclerView.Adapter<CardInspoAdapter.View
         holder.getText().setText(text);
 
         holder.getCardView().setOnClickListener(v -> {
-            if(text.equals("Notekies")){
-                Notes notes = new Notes();
-                fragmentManager.beginTransaction().replace(R.id.fragment_container, notes) .addToBackStack(null) // Permite regresar atrás con el botón de retroceso
-                        .commit();
-            } else if (text.equals("Desafios")) {
-                InspoDesafios inspoDesafios = new InspoDesafios();
-                fragmentManager.beginTransaction().replace(R.id.fragment_container, inspoDesafios) .addToBackStack(null) // Permite regresar atrás con el botón de retroceso
-                        .commit();
+            if(text.equals(context.getResources().getString(R.string.notekies))){
+                NavigationUtils.goNewFragment(fragmentManager,new Notes());
+            } else if (text.equals(context.getResources().getString(R.string.challenges))) {
+                NavigationUtils.goNewFragment(fragmentManager,new InspoDesafios());
             }
         });
     }

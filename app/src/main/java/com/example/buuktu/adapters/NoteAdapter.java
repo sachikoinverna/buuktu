@@ -98,9 +98,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
             cardView.setOnClickListener(v -> listener.onItemClick(item));
 
-            ib_option_note_item.setOnClickListener(v -> {
-                // Acción para opciones del ítem (editar, compartir, etc.)
-            });
 
             ib_delete_note_item.setOnClickListener(v -> {
                 DeleteGeneralDialog dialog = new DeleteGeneralDialog(

@@ -38,12 +38,11 @@ public class Note extends Fragment implements View.OnClickListener {
     FirebaseFirestore db;
     CollectionReference collectionNotekies;
     NotekieModel notekieModel;
-    ImageButton ib_save_note,backButton,ib_profile_superior;
+    ImageButton ib_save,backButton,ib_profile_superior;
     FirebaseAuth auth;
     String UID_USER;
     Map<String, Object> notekieData;
     Timestamp timestampNow;
-    ImageButton ib_save;
     FragmentManager fragmentManager;
     MainActivity mainActivity;
     public Note() {
@@ -127,8 +126,8 @@ public class Note extends Fragment implements View.OnClickListener {
         ib_save.setOnClickListener(this);
     }
     private void setInitVisibility(){
-        ib_save.setVisibility(View.GONE);
-        backButton.setVisibility(View.GONE);
+        ib_save.setVisibility(View.VISIBLE);
+        backButton.setVisibility(View.VISIBLE);
         ib_profile_superior.setVisibility(View.VISIBLE);
     }
     private void addDataToFirestore() {

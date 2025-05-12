@@ -36,16 +36,11 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAdapter.ViewHolder> implements View.OnClickListener{
-    @Override
-    public void onClick(View v) {
-
-    }
+public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAdapter.ViewHolder>{
     private final ArrayList<WorldkieModel> dataSet;
     private final FragmentManager fragmentManager;
 
     private final Context context;
-    private Fragment menuWorldkie;
     public class ViewHolder extends RecyclerView.ViewHolder {
         String lastPhotoId="",lastName="";
         private final ImageView iv_worldkie_photo_search;
