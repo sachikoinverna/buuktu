@@ -38,7 +38,6 @@ public class Search extends Fragment {
      *
      * @return A new instance of fragment Search.
      */
-    // TODO: Rename and change types and number of parameters
     public static Search newInstance() {
         return new Search();
     }
@@ -46,56 +45,33 @@ public class Search extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
-        mainActivity = (MainActivity) getActivity();
-        backButton = mainActivity.getBackButton();
 
-        ib_save = mainActivity.getIb_save();
-        ib_profile_superior = mainActivity.getIb_self_profile();
 
         initComponents(view);
         setVisibility();
-        viewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
-        viewPager.setUserInputEnabled(false);
-        viewPager.setPageTransformer((page, position) -> page.setAlpha(0.5f+Math.abs(position)*0.5f));
-
-        viewPager.setAdapter(pageAdapter);
-        viewPager.setUserInputEnabled(true);
-
-        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
-            switch (position) {
-                case 0:
-                    tab.setText(mainActivity.getString(R.string.worldkies));
-                    break;
-                case 1:
-                    tab.setText(mainActivity.getString(R.string.characterkies));
-                    break;
-                case 2:
-                    tab.setText(mainActivity.getString(R.string.stuffkies));
-                    break;
-                case 3:
-                    tab.setText(mainActivity.getString(R.string.characterkies));
-                    break;
-            }
-        }).attach();
-        viewPager.setPageTransformer(null);
+        setListeners();
+        setupViewPager();
 
         return view;
     }
     private void initComponents(View view){
+        mainActivity = (MainActivity) getActivity();
+        backButton = mainActivity.getBackButton();
+        ib_save = mainActivity.getIb_save();
+        ib_profile_superior = mainActivity.getIb_self_profile();
         sv_search_main = view.findViewById(R.id.sv_search_main);
-        sv_search_main.setFocusable(false);
-        sv_search_main.setIconifiedByDefault(false); // Evita que el SearchView se colapse
-        sv_search_main.clearFocus();
+        tabLayout = view.findViewById(R.id.tbl_search);
+        viewPager = view.findViewById(R.id.vp_search);
+        pageAdapter = new PageAdapter(mainActivity);
 
-        // Interceptar todos los clics para abrir el diálogo
+    }
+    private void setListeners(){
         sv_search_main.setOnClickListener(v -> mainActivity.showInfoDialog("future_function"));
         sv_search_main.setOnQueryTextFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
@@ -103,11 +79,21 @@ public class Search extends Fragment {
                 v.clearFocus();
             }
         });
+    }
+    private void setupViewPager(){
+        viewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
+        viewPager.setAdapter(pageAdapter);
+        viewPager.setUserInputEnabled(true);
 
-        tabLayout = view.findViewById(R.id.tbl_search);
-        viewPager = view.findViewById(R.id.vp_search);
-        pageAdapter = new PageAdapter(requireActivity());
-
+        String[] tabTitles = {
+                getString(R.string.worldkies),
+                getString(R.string.characterkies),
+                getString(R.string.stuffkies),
+                getString(R.string.characterkies)
+        };
+        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
+            tab.setText(tabTitles[position]);
+        }).attach();
     }
     private void setVisibility(){
         backButton.setVisibility(View.GONE);
