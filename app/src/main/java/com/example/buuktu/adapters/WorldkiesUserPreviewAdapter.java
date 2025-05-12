@@ -108,8 +108,7 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
         String UID = worldkieModel.getUID();
         String UID_AUTHOR = worldkieModel.getUID_AUTHOR();
         holder.getIv_stuffkie_private_preview().setVisibility(View.INVISIBLE);
-        holder.getTv_worldkie_preview_worldkie().setText(dataSet.get(holder.getAdapterPosition()).getName());
-        // holder.getIv_characterkie_preview_worldkie().setImageDrawable(dataSet.get(holder.getAdapterPosition()).getPhoto());//  Drawable drawable = dataSet.get(holder.getAdapterPosition()).getPhoto();
+        holder.getTv_worldkie_preview_worldkie().setText(worldkieModel.getName());
         if(!worldkieModel.isWorldkie_private()) {
             holder.getIv_worldkie_preview_worldkie().setVisibility(View.INVISIBLE);
         }

@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +21,7 @@ import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.EfectsUtils;
 import com.example.buuktu.utils.NavigationUtils;
 import com.google.android.material.card.MaterialCardView;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -35,16 +35,16 @@ public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAd
     private final FragmentManager fragmentManager;
 
     private final Context context;
-    private Fragment menuWorldkie;
     public class ViewHolder extends RecyclerView.ViewHolder {
-        String lastPhotoId="",lastName="";
         private final ImageView iv_stuffkie_photo_search;
         private final ImageView iv_stuffkie_private_search;
         final MaterialCardView cv_stuffkie_search;
         final TextView tv_stuffkie_name_search;
         final TextView tv_stuffkie_username_search;
-        private final FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
-        private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        private final FirebaseStorage firebaseStorageStuffkie;
+        private final FirebaseFirestore db;
+        CollectionReference collectionStuffkie;
+
         public ViewHolder(View view) {
             super(view);
             tv_stuffkie_username_search = view.findViewById(R.id.tv_stuffkie_username_search);
@@ -52,29 +52,21 @@ public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAd
             iv_stuffkie_photo_search= view.findViewById(R.id.iv_stuffkie_photo_search);
             cv_stuffkie_search = view.findViewById(R.id.cv_stuffkie_search);
             iv_stuffkie_private_search = view.findViewById(R.id.iv_stuffkie_private_search);
+            db = FirebaseFirestore.getInstance();
+            collectionStuffkie = db.collection("Stuffkies");
+            firebaseStorageStuffkie = FirebaseStorage.getInstance("gs://buuk-tu-stuffkies");
         }
 
-        public String getLastPhotoId() {
-            return lastPhotoId;
-        }
-
-        public void setLastPhotoId(String lastPhotoId) {
-            this.lastPhotoId = lastPhotoId;
-        }
-
-        public String getLastName() {
-            return lastName;
-        }
-
-        public void setLastName(String lastName) {
-            this.lastName = lastName;
-        }
-
-        public FirebaseStorage getFirebaseStorage() {
-            return firebaseStorage;
-        }
         public FirebaseFirestore getDb() {
-            return firestore;
+            return db;
+        }
+
+        public FirebaseStorage getFirebaseStorageStuffkie() {
+            return firebaseStorageStuffkie;
+        }
+
+        public CollectionReference getCollectionStuffkie() {
+            return collectionStuffkie;
         }
 
         public TextView getTv_stuffkie_username_search() {
@@ -115,12 +107,15 @@ public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         StuffkieModel stuffkieModel = dataSet.get(position);
         holder.getIv_stuffkie_photo_search().setVisibility(View.INVISIBLE);
-       // holder.getTv_stuffkie_username_search().setText(dataSet.get(holder.getAdapterPosition()).get());
-        String name = stuffkieModel.getName();
-        if(!holder.getLastName().equals(name)) {
-            holder.getTv_stuffkie_name_search().setText(name);
-            holder.setLastName(name);
-        }
+        holder.getCollectionStuffkie().document(stuffkieModel.getAUTHOR_UID()).addSnapshotListener((documentSnapshot, e) -> {
+            if (e != null) {
+                return;
+            }
+            if (documentSnapshot != null) {
+                holder.getTv_stuffkie_username_search().setText(documentSnapshot.getString("username"));
+            }
+        });
+            holder.getTv_stuffkie_name_search().setText(stuffkieModel.getName());
         if(!stuffkieModel.isStuffkie_private()){
             holder.getIv_stuffkie_private_search().setVisibility(View.INVISIBLE);
         }
@@ -136,7 +131,7 @@ public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAd
                 String id_photo = stuffkieModel.getPhoto_id();
                 int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
 
-                if (resId != 0 && (holder.getLastPhotoId().equals(id_photo))) {
+                if (resId != 0) {
                     Drawable drawable = ContextCompat.getDrawable(context, resId);
                     holder.getIv_stuffkie_photo_search().setImageDrawable(drawable);
                     try {
@@ -144,12 +139,11 @@ public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAd
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
-                    holder.setLastPhotoId(id_photo);
                     holder.getIv_stuffkie_photo_search().setVisibility(View.VISIBLE);
                     EfectsUtils.startCircularReveal(drawable,holder.getIv_stuffkie_photo_search());
                 }
         } else {
-            StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-stuffkies").getReference(dataSet.get(holder.getAdapterPosition()).getUID());
+            StorageReference userFolderRef = holder.getFirebaseStorageStuffkie().getReference(stuffkieModel.getUID());
 
             userFolderRef.listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {

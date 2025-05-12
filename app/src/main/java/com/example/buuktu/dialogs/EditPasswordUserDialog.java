@@ -40,22 +40,29 @@ public class EditPasswordUserDialog extends Dialog implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_password_user_dialog);
         context = getContext();
-        ib_close_dialog = findViewById(R.id.ib_close_dialog);
-        ib_accept_dialog = findViewById(R.id.ib_accept_dialog);
-        tv_title = findViewById(R.id.tv_edit_title);
-         et_oldpassword =findViewById(R.id.et_oldpassword);
-        et_oldpasswordFull = findViewById(R.id.et_oldpasswordFull);
+        initComponents();
+         setListeners();
 
-        et_newPassword  = findViewById(R.id.et_newPassword);
-         et_newpasswordFull = findViewById(R.id.et_newPasswordFull);
-
-        et_newPasswordRepeat  = findViewById(R.id.et_newPasswordRepeat);
-         et_newpasswordRepeatFull = findViewById(R.id.et_newPasswordRepeatFull);
-        ib_accept_dialog.setOnClickListener(this);
-        ib_close_dialog.setOnClickListener(this);
         setCanceledOnTouchOutside(false);
         setCancelable(false);
         getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+    }
+    private void initComponents(){
+        ib_close_dialog = findViewById(R.id.ib_close_dialog);
+        ib_accept_dialog = findViewById(R.id.ib_accept_dialog);
+        tv_title = findViewById(R.id.tv_edit_title);
+        et_oldpassword =findViewById(R.id.et_oldpassword);
+        et_oldpasswordFull = findViewById(R.id.et_oldpasswordFull);
+
+        et_newPassword  = findViewById(R.id.et_newPassword);
+        et_newpasswordFull = findViewById(R.id.et_newPasswordFull);
+
+        et_newPasswordRepeat  = findViewById(R.id.et_newPasswordRepeat);
+        et_newpasswordRepeatFull = findViewById(R.id.et_newPasswordRepeatFull);
+    }
+    private void setListeners(){
+        ib_accept_dialog.setOnClickListener(this);
+        ib_close_dialog.setOnClickListener(this);
     }
 private void saveNewPassword(){
     tv_title.setText("Cuidado");

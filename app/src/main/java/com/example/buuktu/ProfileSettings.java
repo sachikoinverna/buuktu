@@ -156,8 +156,6 @@ public class ProfileSettings extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         if(v.getId()==R.id.ib_back){
             NavigationUtils.goBack(fragmentManager,mainActivity);
-        }/* else if () {
-
-        }*/
+        }
     }
 }

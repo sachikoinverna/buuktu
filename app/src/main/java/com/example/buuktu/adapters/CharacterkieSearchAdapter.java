@@ -31,7 +31,6 @@ public class CharacterkieSearchAdapter extends RecyclerView.Adapter<Characterkie
     private final FragmentManager fragmentManager;
 
     private final Context context;
-    private Fragment menuWorldkie;
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final ImageView iv_characterkie_photo_search;
         private final ImageView iv_characterkie_private_search;

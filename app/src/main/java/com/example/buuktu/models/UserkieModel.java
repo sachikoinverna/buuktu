@@ -55,14 +55,6 @@ public class UserkieModel {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public Timestamp getBirthday() {
-        return birthday;
-    }
-
     public void setBirthday(Timestamp birthday) {
         this.birthday = birthday;
     }

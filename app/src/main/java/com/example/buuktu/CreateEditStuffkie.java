@@ -323,21 +323,11 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
         DrawableUtils.personalizarImagenCuadradoButton(mainActivity,150/7,7,R.color.brownMaroon,R.mipmap.photostuffkieone,ib_select_img_create_stuffkie);
     }
     public void setSelectedProfilePhoto(Drawable image){
-      /*  Bitmap bitmap = Bitmap.createBitmap(
-                image.getIntrinsicWidth(),
-                image.getIntrinsicHeight(),
-                Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        image.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        image.draw(canvas);*/
         int cornerRadius = 150 / 6; // Ejemplo de radio
         int borderWidth = 7; // Ejemplo de grosor del borde
         int borderColor = getContext().getResources().getColor(R.color.brownMaroon, null); // Asegúrate de que el color sea correcto
-//        Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
-        //ib_select_img_create_worldkie.setImageDrawable(image);
-    //       DrawableUtils.
+
         RequestOptions requestOptions = new RequestOptions()
-                // .override(150, 150)
                 .centerCrop()
                 .transform(new RoundedBorderSquareTransformation(cornerRadius,borderWidth,borderColor));
 

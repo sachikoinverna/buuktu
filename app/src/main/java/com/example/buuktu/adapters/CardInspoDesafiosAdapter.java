@@ -44,14 +44,14 @@ public class CardInspoDesafiosAdapter extends RecyclerView.Adapter<CardInspoDesa
 
     @Override
     public void onBindViewHolder(@NonNull CardInspoDesafiosAdapter.ViewHolder holder, int position) {
-        String text = dataSet.get(position).getText();
-        holder.getIcon().setImageResource(dataSet.get(position).getIconResId());
-        holder.getText().setText(text);
+        CardItem cardItem = dataSet.get(position);
+        holder.getIcon().setImageResource(cardItem.getIconResId());
+        holder.getText().setText(cardItem.getText());
         holder.getCardView().setOnClickListener(v -> {
-            if(text.equals("Wordkie of the day")){
+            if(cardItem.getText().equals("Wordkie of the day")){
                 PeriodWordsDialog periodWordsDialog = new PeriodWordsDialog(v.getContext());
                 periodWordsDialog.show();
-            } else if (text.equals("Numberkie of the day")) {
+            } else if (cardItem.getText().equals("Numberkie of the day")) {
                 PeriodNumbersDialog periodNumbersDialog = new PeriodNumbersDialog(v.getContext());
                 periodNumbersDialog.show();
             }
