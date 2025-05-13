@@ -15,9 +15,6 @@ public class DateUtils {
         return !getCurrentDate().equals(date);
     }
 
-    public static long secondsToMs(Timestamp timestamp){
-        return timestamp.toDate().getTime();
-    }
     public static long  currentMs(){
         return System.currentTimeMillis();
     }

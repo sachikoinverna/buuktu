@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -27,12 +28,9 @@ import com.example.buuktu.models.CharacterkieModel;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.EfectsUtils;
 import com.example.buuktu.utils.NavigationUtils;
-import com.example.buuktu.views.CreateEditWorldkie;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class CharacterkiesUserPreviewAdapter extends RecyclerView.Adapter<CharacterkiesUserPreviewAdapter.ViewHolder> {
@@ -44,14 +42,14 @@ public class CharacterkiesUserPreviewAdapter extends RecyclerView.Adapter<Charac
     private final FragmentManager fragmentManager;
     private final String mode;
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private final ImageView iv_characterkie_preview_worldkie;
+        private final ImageButton iv_characterkie_preview_worldkie;
         private final ImageView iv_characterkie_private_preview;
         private final TextView tv_characterkie_preview_worldkie;
         private final TextView tv_characterkie_preview_draft;
         final CardView cardView;
         private FirebaseStorage firebaseStorageCharacterkies = FirebaseStorage.getInstance("gs://buuk-tu-characterkies");
         //private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-        FrameLayout fl_userkie_photo_container;
+        private final FrameLayout fl_characterkie_photo_container_preview;
 
         public ViewHolder(View view) {
             super(view);
@@ -60,18 +58,18 @@ public class CharacterkiesUserPreviewAdapter extends RecyclerView.Adapter<Charac
             iv_characterkie_private_preview = view.findViewById(R.id.iv_characterkie_private_preview);
             tv_characterkie_preview_draft = view.findViewById(R.id.tv_characterkie_preview_draft);
             cardView = view.findViewById(R.id.cv_characterkie_preview);
-            fl_userkie_photo_container = view.findViewById(R.id.fl_userkie_photo_container);
+            fl_characterkie_photo_container_preview = view.findViewById(R.id.fl_characterkie_photo_container_preview);
         }
 
         public FirebaseStorage getFirebaseStorageCharacterkies() {
             return firebaseStorageCharacterkies;
         }
 
-        public FrameLayout getFl_userkie_photo_container() {
-            return fl_userkie_photo_container;
+        public FrameLayout getFl_characterkie_photo_container_preview() {
+            return fl_characterkie_photo_container_preview;
         }
 
-        public ImageView getIv_characterkie_preview_worldkie() {
+        public ImageButton getIv_characterkie_preview_worldkie() {
             return iv_characterkie_preview_worldkie;
         }
 
@@ -111,7 +109,7 @@ public class CharacterkiesUserPreviewAdapter extends RecyclerView.Adapter<Charac
     }
     @Override
     public void onBindViewHolder(@NonNull CharacterkiesUserPreviewAdapter.ViewHolder holder, int position) {
-        holder.getFl_userkie_photo_container().setVisibility(View.INVISIBLE);
+        holder.getFl_characterkie_photo_container_preview().setVisibility(View.INVISIBLE);
         CharacterkieModel characterkieModel = dataSet.get(position);
         holder.getTv_characterkie_preview_worldkie().setText(characterkieModel.getName());
         if(!characterkieModel.isDraft()){
@@ -166,8 +164,9 @@ public class CharacterkiesUserPreviewAdapter extends RecyclerView.Adapter<Charac
 
                     Drawable drawable = ContextCompat.getDrawable(context, resId);
                     //   holder.getIv_userkie_photo_search().set
-                    DrawableUtils.personalizarImagenCircle(context, DrawableUtils.drawableToBitmap(drawable), holder.getIv_characterkie_preview_worldkie(), R.color.brownBrown);
-                    holder.getFl_userkie_photo_container().setVisibility(View.VISIBLE);
+                 //   DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(drawable), holder.getIv_characterkie_preview_worldkie(), R.color.brownBrown);
+                    holder.getIv_characterkie_preview_worldkie().setVisibility(View.VISIBLE);
+                    holder.getFl_characterkie_photo_container_preview().setVisibility(View.VISIBLE);
                     EfectsUtils.startCircularReveal(drawable, holder.getIv_characterkie_preview_worldkie());
                 }
         } else {

@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -16,6 +18,8 @@ import com.example.buuktu.CreateEditScenariokie;
 import com.example.buuktu.CreateEditStuffkie;
 import com.example.buuktu.R;
 import com.example.buuktu.StuffkieView;
+import com.example.buuktu.utils.DrawableUtils;
+import com.example.buuktu.utils.EfectsUtils;
 import com.example.buuktu.utils.NavigationUtils;
 
 /**
@@ -27,11 +31,11 @@ public class WorldkieMenu extends Fragment implements View.OnClickListener {
     FragmentManager fragmentManager;
     MainActivity mainActivity;
     FragmentActivity activity;
-    private TextView tv_characterkiesAdd,textView5,textView8;
-    private Fragment createCharacterkie,createScenariokie,createStuffkie;
+    private Button tv_characterkiesAdd,textView5,textView8;
     ImageButton backButton,ib_profile_superior;
    String worldkie_id;
     Bundle bundle = new Bundle();
+    ImageView iv_scenariokies_worldkie_menu,iv_characterkies_worldkie_menu,iv_stuffkies_worldkie_menu;
     public WorldkieMenu() {
         // Required empty public constructor
     }
@@ -75,6 +79,9 @@ public class WorldkieMenu extends Fragment implements View.OnClickListener {
         tv_characterkiesAdd = view.findViewById( R.id.tv_characterkies);
         textView5 = view.findViewById(R.id.textView5);
         textView8 = view.findViewById(R.id.textView8);
+        iv_scenariokies_worldkie_menu = view.findViewById(R.id.iv_scenariokies_worldkie_menu);
+        iv_stuffkies_worldkie_menu = view.findViewById(R.id.iv_stuffkies_worldkie_menu);
+        iv_characterkies_worldkie_menu = view.findViewById(R.id.iv_characterkies_worldkie_menu);
     }
     private void setListeners(){
         backButton.setOnClickListener(this);
@@ -85,6 +92,18 @@ public class WorldkieMenu extends Fragment implements View.OnClickListener {
     private void setVisibility(){
         backButton.setVisibility(View.VISIBLE);
         ib_profile_superior.setVisibility(View.VISIBLE);
+        iv_characterkies_worldkie_menu.setVisibility(View.INVISIBLE);
+        iv_scenariokies_worldkie_menu.setVisibility(View.INVISIBLE);
+        iv_stuffkies_worldkie_menu.setVisibility(View.INVISIBLE);
+        DrawableUtils.personalizarImagenCuadradoButton(mainActivity,50,10,R.color.white,DrawableUtils.drawableToBitmap(iv_characterkies_worldkie_menu.getDrawable()),iv_characterkies_worldkie_menu);
+        DrawableUtils.personalizarImagenCuadradoButton(mainActivity,50,10,R.color.white,DrawableUtils.drawableToBitmap(iv_scenariokies_worldkie_menu.getDrawable()),iv_scenariokies_worldkie_menu);
+        DrawableUtils.personalizarImagenCuadradoButton(mainActivity,50,10,R.color.white,DrawableUtils.drawableToBitmap(iv_stuffkies_worldkie_menu.getDrawable()),iv_stuffkies_worldkie_menu);
+        iv_characterkies_worldkie_menu.setVisibility(View.VISIBLE);
+        iv_scenariokies_worldkie_menu.setVisibility(View.VISIBLE);
+        iv_stuffkies_worldkie_menu.setVisibility(View.VISIBLE);
+        EfectsUtils.startCircularReveal(iv_characterkies_worldkie_menu.getDrawable(),iv_characterkies_worldkie_menu);
+        EfectsUtils.startCircularReveal(iv_stuffkies_worldkie_menu.getDrawable(),iv_stuffkies_worldkie_menu);
+        EfectsUtils.startCircularReveal(iv_scenariokies_worldkie_menu.getDrawable(),iv_scenariokies_worldkie_menu);
 
     }
 

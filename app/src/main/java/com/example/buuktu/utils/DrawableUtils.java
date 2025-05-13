@@ -138,7 +138,18 @@ public class DrawableUtils {
                 .apply(requestOptions)
                 .into(imageButton);
     }
+    public static void personalizarImagenCuadradoButton(Context context, int cornerRadius, int borderWidth, @ColorRes int idColor, Bitmap bitmap, ImageView imageView) {
+        int borderColor = ContextCompat.getColor(context, idColor);
 
+        RequestOptions requestOptions = new RequestOptions()
+                .centerCrop()
+                .transform(new RoundedBorderSquareTransformation(cornerRadius, borderWidth, borderColor));
+
+        Glide.with(context)
+                .load(bitmap)
+                .apply(requestOptions)
+                .into(imageView);
+    }
 
     public static void personalizarImagenCircle(Context context, Bitmap bitmap, ImageView imageView, @ColorRes int color) {
         RoundedBitmapDrawable roundedDrawable = RoundedBitmapDrawableFactory.create(context.getResources(), bitmap);

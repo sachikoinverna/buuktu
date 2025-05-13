@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -38,7 +39,7 @@ public class CharacterkieSearchAdapter extends RecyclerView.Adapter<Characterkie
 
     private final Context context;
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private final ImageView iv_characterkie_photo_search;
+        private final ImageButton iv_characterkie_photo_search;
         private final ImageView iv_characterkie_private_search;
         final MaterialCardView cv_characterkie_search;
         final TextView tv_characterkie_name_search;
@@ -126,7 +127,7 @@ public class CharacterkieSearchAdapter extends RecyclerView.Adapter<Characterkie
             if (resId != 0) {
                 Drawable drawable = ContextCompat.getDrawable(context, resId);
                 //   holder.getIv_userkie_photo_search().set
-                DrawableUtils.personalizarImagenCircle(context, DrawableUtils.drawableToBitmap(drawable), holder.getIv_characterkie_photo_search(), R.color.brownBrown);
+                //DrawableUtils.personalizarImagenCuadradoButton(context, DrawableUtils.drawableToBitmap(drawable), holder.getIv_characterkie_photo_search(), R.color.brownBrown);
                 holder.getFl_userkie_photo_container().setVisibility(View.VISIBLE);
                 EfectsUtils.startCircularReveal(drawable, holder.getIv_characterkie_photo_search());
             }

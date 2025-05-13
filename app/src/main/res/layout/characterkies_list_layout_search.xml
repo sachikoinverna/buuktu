@@ -38,7 +38,7 @@
                 app:layout_constraintStart_toEndOf="@+id/iv_characterkie_private_search"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
+                <ImageButton
                     android:id="@+id/iv_characterkie_photo_search"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

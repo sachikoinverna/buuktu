@@ -8,88 +8,99 @@
     android:background="@mipmap/img_login"
     tools:context=".views.WorldkieMenu">
 
-    <TextView
+    <ImageView
+        android:id="@+id/iv_scenariokies_worldkie_menu"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="32dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/img_scenariokies_worldkie_menu"
+        app:layout_constraintEnd_toEndOf="@+id/textView5"
+        app:layout_constraintStart_toStartOf="@+id/textView5"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+    <ImageView
+        android:id="@+id/iv_stuffkies_worldkie_menu"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="32dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/img_stuffkies_worldkie_menu"
+        app:layout_constraintEnd_toEndOf="@+id/textView8"
+        app:layout_constraintStart_toStartOf="@+id/textView8"
+        app:layout_constraintTop_toBottomOf="@+id/tv_characterkies" />
+
+    <Button
         android:id="@+id/textView5"
-        android:layout_width="123dp"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginTop="68dp"
-        android:background="@drawable/button_backgground"
-        android:foreground="@drawable/twotone_map_24"
-        android:foregroundGravity="left|center"
-        android:foregroundTint="#FFFFFF"
+        android:backgroundTint="#B39DDB"
         android:gravity="center"
         android:text="Scenariokies"
         android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:icon="@drawable/twotone_map_24"
+        app:iconGravity="start"
+        app:iconTint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.551"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_scenariokies_worldkie_menu"
+        app:strokeColor="#FFFFFF"
+        app:strokeWidth="3dp" />
 
-    <TextView
+    <Button
         android:id="@+id/textView8"
-        android:layout_width="123dp"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:background="@drawable/button_backgground"
-        android:foreground="@drawable/twotone_catching_pokemon_24"
-        android:foregroundGravity="left|center"
-        android:foregroundTint="#FFFFFF"
+        android:backgroundTint="#B39DDB"
         android:gravity="center"
         android:text="Stuffikies"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:icon="@drawable/twotone_catching_pokemon_24"
+        app:iconGravity="start"
+        app:iconTint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tv_characterkies"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.454" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_stuffkies_worldkie_menu"
+        app:strokeColor="#FFFFFF"
+        app:strokeWidth="3dp" />
 
-    <TextView
+    <Button
         android:id="@+id/tv_characterkies"
-        android:layout_width="130dp"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="wrap_content"
         android:layout_height="51dp"
-        android:background="@drawable/button_backgground"
-        android:foreground="@drawable/twotone_face_retouching_natural_24"
-        android:foregroundGravity="left|center"
-        android:foregroundTint="#FFFFFF"
+        android:backgroundTint="#B39DDB"
         android:gravity="center"
         android:text="Characterkies"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textView8"
-        app:layout_constraintHorizontal_bias="0.419"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.455" />
-
-    <ImageView
-        android:id="@+id/imageView10"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:src="@drawable/button_backgground"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:icon="@drawable/twotone_face_retouching_natural_24"
+        app:iconGravity="start"
+        app:iconTint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="51dp" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_characterkies_worldkie_menu"
+        app:strokeColor="#FFFFFF"
+        app:strokeWidth="3dp" />
 
     <ImageView
-        android:id="@+id/imageView9"
+        android:id="@+id/iv_characterkies_worldkie_menu"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_marginTop="32dp"
         android:scaleType="centerCrop"
         android:src="@mipmap/img_characterkies_worldkie_menu"
-        tools:layout_editor_absoluteX="68dp"
-        tools:layout_editor_absoluteY="251dp" />
-
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="68dp"
-        android:text="TextView"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="62dp" />
+        app:layout_constraintEnd_toEndOf="@+id/tv_characterkies"
+        app:layout_constraintStart_toStartOf="@+id/tv_characterkies"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView11"
@@ -98,48 +109,5 @@
         android:src="@drawable/button_backgground"
         tools:layout_editor_absoluteX="268dp"
         tools:layout_editor_absoluteY="228dp" />
-
-    <ImageButton
-        android:id="@+id/imageButton6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:backgroundTint="#FFFFFF"
-        android:src="@drawable/twotone_add_circle_24"
-        tools:layout_editor_absoluteX="343dp"
-        tools:layout_editor_absoluteY="66dp" />
-
-    <ImageView
-        android:id="@+id/imageView12"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/button_backgground"
-        android:backgroundTint="#FFFFFF"
-        android:backgroundTintMode="multiply"
-        android:foregroundTint="#EBEBEB"
-        android:foregroundTintMode="multiply"
-        android:tintMode="multiply"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView10"
-        app:layout_constraintEnd_toEndOf="@+id/imageView10"
-        app:layout_constraintStart_toStartOf="@+id/imageView10"
-        app:layout_constraintTop_toBottomOf="@+id/textView12" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView10"
-        app:layout_constraintEnd_toEndOf="@+id/imageView12"
-        app:layout_constraintStart_toStartOf="@+id/imageView12"
-        app:layout_constraintTop_toBottomOf="@+id/textView12">
-
-    </androidx.recyclerview.widget.RecyclerView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
