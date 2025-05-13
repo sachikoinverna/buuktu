@@ -15,6 +15,7 @@ import com.example.buuktu.CreateCharacterkie;
 import com.example.buuktu.CreateEditScenariokie;
 import com.example.buuktu.CreateEditStuffkie;
 import com.example.buuktu.R;
+import com.example.buuktu.StuffkieView;
 import com.example.buuktu.utils.NavigationUtils;
 
 /**
@@ -29,7 +30,8 @@ public class WorldkieMenu extends Fragment implements View.OnClickListener {
     private TextView tv_characterkiesAdd,textView5,textView8;
     private Fragment createCharacterkie,createScenariokie,createStuffkie;
     ImageButton backButton,ib_profile_superior;
-   String worldkie_id, userkie_id;
+   String worldkie_id;
+    Bundle bundle = new Bundle();
     public WorldkieMenu() {
         // Required empty public constructor
     }
@@ -62,6 +64,7 @@ public class WorldkieMenu extends Fragment implements View.OnClickListener {
         backButton = mainActivity.getBackButton();
         ib_profile_superior = mainActivity.getIb_self_profile();
         initComponents(view);
+        bundle.putString("worldkie_id",worldkie_id);
         setVisibility();
         setListeners();
         fragmentManager = requireActivity().getSupportFragmentManager();
@@ -90,18 +93,12 @@ public class WorldkieMenu extends Fragment implements View.OnClickListener {
         if(v.getId()==R.id.ib_back){
             NavigationUtils.goBack(fragmentManager,activity);
         } else if (v.getId()==R.id.tv_characterkies) {
-            Bundle bundle = new Bundle();
-            bundle.putString("worldkie_id",worldkie_id);
-            NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new CreateCharacterkie());
+            NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new Characterkies());
         } else if (v.getId()==R.id.textView5) {
-            Bundle bundle = new Bundle();
-            bundle.putString("worldkie_id",worldkie_id);
             NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new CreateEditScenariokie());
 
         } else if (v.getId()==R.id.textView8) {
-            Bundle bundle = new Bundle();
-            bundle.putString("worldkie_id",worldkie_id);
-            NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new CreateEditStuffkie());
+            NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new Stuffkies());
 
         }
     }

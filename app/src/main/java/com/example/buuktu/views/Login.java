@@ -23,9 +23,9 @@ public class Login extends AppCompatActivity {
     private TextInputEditText editTextEmailLogin, editTextPasswordLogin;
     private FirebaseAuth auth;
     private FirebaseFirestore db;
-    Button tv_loginButton, tv_loginToRegisterButton;
-    String email,username,password;
-    CollectionReference dbUsers;
+    private Button tv_loginButton, tv_loginToRegisterButton;
+    private String email,username,password;
+    private CollectionReference dbUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +53,8 @@ public class Login extends AppCompatActivity {
     }
 
     public void handlerGoToRegister(View view) {
-        Intent intent = new Intent(this, Register.class);
-        startActivity(intent);
+        startActivity(new Intent(this,Register.class));
+        finish();
 
     }
 
@@ -85,8 +85,8 @@ public class Login extends AppCompatActivity {
     private void logWithEmail(){
         auth.signInWithEmailAndPassword(email, password).addOnSuccessListener(
                 authResult -> {
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    finish();
                 }).addOnFailureListener(e -> {
 
                 });

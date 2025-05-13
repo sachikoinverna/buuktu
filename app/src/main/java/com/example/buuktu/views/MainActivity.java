@@ -40,6 +40,7 @@ import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.EfectsUtils;
 import com.example.buuktu.utils.FirebaseAuthUtils;
 import com.example.buuktu.utils.NavigationUtils;
+import com.example.buuktu.utils.UIUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -56,17 +57,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawerLayout;
     private BottomNavigationView bottomNavigationView;
     private ImageButton ib_info,ib_back,ib_self_profile,ib_save;
-    FirebaseAuth firebaseAuth;
     FirebaseAuth.AuthStateListener authStateListener;
     private String UID;
     private FirebaseFirestore db;
     private final FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-users");
-    InfoGeneralDialog infoGeneralDialog;
-    FragmentManager fragmentManager;
-    NavigationView navigationView;
-    Toolbar toolbar;
-int colorEntero;
-    private String lastPhotoId = "";
+    private InfoGeneralDialog infoGeneralDialog;
+    private FragmentManager fragmentManager;
+    private NavigationView navigationView;
+    private Toolbar toolbar;
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+
+    int colorEntero;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,19 +78,19 @@ int colorEntero;
             return insets;
         });
         //inicialize();
+        UIUtils.hideSystemUI(this);
+
         initComponents();
         scheduleDailyNotification();
         fragmentManager = getSupportFragmentManager();
          colorEntero = Color.parseColor("#5f5a7c");
-        firebaseAuth = FirebaseAuth.getInstance();
-        UID = FirebaseAuth.getInstance().getUid();
+        UID = firebaseAuth.getUid();
         db = FirebaseFirestore.getInstance();
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
                 .setPersistenceEnabled(true)
                 .build();
         db.setFirestoreSettings(settings);
         scheduleDailyNotification();
-
         setSupportActionBar(toolbar);
         getProfilePhoto();
         // Configuración del ActionBarDrawerToggle
@@ -124,7 +125,6 @@ int colorEntero;
 
             fragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, new Home()).setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out) // Ejemplo de animación
-                    .addToBackStack(null)
                     .commit();
             bottomNavigationView.setSelectedItemId(R.id.home); // Selecciona el item "Home" por defecto
         }
@@ -186,19 +186,19 @@ int colorEntero;
             if(photo_default) {
                 String id_photo = queryDocumentSnapshot.getString("photo_id");
                 int resId = getResources().getIdentifier(id_photo, "mipmap", getPackageName());
-                if (resId != 0 && (!lastPhotoId.equals(id_photo))) {
-                    Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), resId);
+                if (resId != 0) {
+                    Drawable drawable = ContextCompat.getDrawable(this, resId);
                     DrawableUtils.personalizarImagenCircleButton(this, DrawableUtils.drawableToBitmap(drawable), ib_self_profile, colorEntero, false);
                     ib_self_profile.setVisibility(View.VISIBLE); // Hacerlo ligeramente transparente al principio
+
                     EfectsUtils.startCircularReveal(drawable,ib_self_profile);
                     ib_self_profile.setImageDrawable(drawable);
-                    lastPhotoId=id_photo;
 
                 } else {
                     Log.e("DRAWABLE", "Recurso no encontrado: " + id_photo);
                 }
             }else{
-                StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-users").getReference(UID);//.child().child(UID);
+                StorageReference userFolderRef = firebaseStorage.getReference(UID);//.child().child(UID);
                 userFolderRef.listAll().addOnSuccessListener(listResult -> {
                     for (StorageReference item : listResult.getItems()) {
                         if (item.getName().startsWith("profile")) {
@@ -225,6 +225,7 @@ int colorEntero;
         ib_back = findViewById(R.id.ib_back);
         ib_save = findViewById(R.id.ib_save);
     }
+
     public ImageButton getBackButton(){
         return ib_back;
     }
@@ -235,6 +236,10 @@ int colorEntero;
 
     public ImageButton getIb_self_profile() {
         return ib_self_profile;
+    }
+
+    public String getUID() {
+        return UID;
     }
 
     private void scheduleDailyNotification() {
@@ -293,5 +298,14 @@ int colorEntero;
             // O simplemente realizar acciones en MainActivity si es la pantalla principal
         }
     }
+    @Override
+    public void onBackPressed() {
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
 
+        if (currentFragment instanceof Home) {
+            // No hacer nada (ignorar el retroceso)
+        } else {
+            super.onBackPressed(); // comportamiento normal en otros fragmentos
+        }
+    }
 }

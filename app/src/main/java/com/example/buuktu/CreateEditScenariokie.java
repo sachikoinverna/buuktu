@@ -74,7 +74,7 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
     private FirebaseFirestore db;
     CollectionReference collectionScenariokie;
     private FirebaseAuth firebaseAuth;
-    private final FirebaseStorage storage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
+    private final FirebaseStorage storage = FirebaseStorage.getInstance("gs://buuk-tu-scenariokies");
     public CreateEditScenariokie() {
         // Required empty public constructor
     }
@@ -291,7 +291,7 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
             NavigationUtils.goBack(fragmentManager,activity);
         } else if (v.getId()==R.id.ib_save) {
 
-                if(worldkie_id == null){
+                if(scenariokie_id == null){
                     addDataToFirestore();
                 }else{
                     editDataFirestore();

@@ -37,6 +37,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -52,7 +53,6 @@ public class ProfileView extends Fragment implements View.OnClickListener {
     private ImageButton ib_profileView,ib_profileViewEdit,ib_save,ib_back,ib_profile_superior;
     ImageView iv_locked_profile;
     private TextView tv_usernameProfileView,tv_nameProfileView,tv_worldkiesPreviewUserkie,tv_stuffkiesPreviewUserkie,tv_characterkiesPreviewUserkie,tv_locked_profile;
-    ScrollView sv_pa;
     MaterialCardView cv_characterkiesPreviewUserkie,cv_stuffkiesPreviewUserkie,cv_worldkiesPreviewUserkie;
     ArrayList<CharacterkieModel> characterkieArrayList;
     ArrayList<StuffkieModel> stuffkieArrayList;
@@ -67,10 +67,11 @@ public class ProfileView extends Fragment implements View.OnClickListener {
     CollectionReference collectionStuffkies;
     CollectionReference collectionCharacterkies;
     FirebaseAuth firebaseAuth;
-    String UID,lastPhotoId="";
+    String UID;
     UserkieModel userkieModel;
     FragmentManager fragmentManager;
     MainActivity mainActivity;
+    FirebaseStorage firebaseStorageUserkies = FirebaseStorage.getInstance("gs://buuk-tu-users");
     public ProfileView() {
         // Required empty public constructor
     }
@@ -105,23 +106,13 @@ public class ProfileView extends Fragment implements View.OnClickListener {
         ib_profile_superior = mainActivity.getIb_self_profile();
         fragmentManager = mainActivity.getSupportFragmentManager();
         initComponents(view);
-        switch (mode) {
-            case "self":
-                firebaseAuth = FirebaseAuth.getInstance();
-                ib_profileViewEdit.setOnClickListener(this);
-                break;
-            case "other":
-                ib_back.setOnClickListener(this);
-                break;
-        }
+        setListeners();
         UID = mode.equals("other")? getArguments().getString("UID"):firebaseAuth.getUid();
-        ib_profile_superior.setVisibility(mode.equals("self")?View.INVISIBLE:View.VISIBLE);
-        ib_profileViewEdit.setVisibility(mode.equals("self")?View.VISIBLE:View.INVISIBLE);
-        ib_profileViewEdit.setVisibility(mode.equals("self")?View.GONE:View.VISIBLE);
+
 
         db = FirebaseFirestore.getInstance();
         characterkieArrayList = new ArrayList<>();
-        characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList, getContext(),fragmentManager);
+        characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList, getContext(),fragmentManager,"self");
         rc_characterkiePreviewUserkie.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rc_characterkiePreviewUserkie.setAdapter(characterkiesUserPreviewAdapter);
 
@@ -131,7 +122,7 @@ public class ProfileView extends Fragment implements View.OnClickListener {
         rc_worldkiePreviewUserkie.setAdapter(worldkiesUserPreviewAdapter); // <--- Asignar el adaptador correcto
 
         stuffkieArrayList = new ArrayList<>();
-        stuffkiesUserPreviewAdapter = new StuffkiesUserPreviewAdapter(stuffkieArrayList, getContext(),fragmentManager); // Asegúrate de que este también esté inicializado
+        stuffkiesUserPreviewAdapter = new StuffkiesUserPreviewAdapter(stuffkieArrayList, getContext(),fragmentManager,"self"); // Asegúrate de que este también esté inicializado
         rc_stuffkiePreviewUserkie.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rc_stuffkiePreviewUserkie.setAdapter(stuffkiesUserPreviewAdapter);
         collectionUserkies = db.collection("Users");
@@ -140,8 +131,7 @@ public class ProfileView extends Fragment implements View.OnClickListener {
         collectionWorldkies = db.collection("Worldkies");
         collectionUserkies.document(UID).addSnapshotListener((documentSnapshot, e) -> {
             if (e != null) {
-                Log.e("Error", e.getMessage());
-                Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
+
                 return;
             }
 
@@ -150,116 +140,99 @@ public class ProfileView extends Fragment implements View.OnClickListener {
                 getProfilePhoto();
                 tv_nameProfileView.setText(userkieModel.getName());
                 tv_usernameProfileView.setText(userkieModel.getUsername());
-                if ((!userkieModel.isProfile_private() && mode.equals("other")) || (mode.equals("self"))){
-                    collectionStuffkies.whereEqualTo("UID_AUTHOR",UID).addSnapshotListener((queryDocumentSnapshots, ex) -> {
+                if ((userkieModel.isProfile_private() && mode.equals("other")) || (!mode.equals("self"))) {
+                    hideShowSection(tv_characterkiesPreviewUserkie,cv_characterkiesPreviewUserkie,false);
+                    hideShowSection(tv_worldkiesPreviewUserkie,cv_worldkiesPreviewUserkie,false);
+                    hideShowSection(tv_stuffkiesPreviewUserkie,cv_stuffkiesPreviewUserkie,false);
+                    iv_locked_profile.setVisibility(View.VISIBLE);
+                    tv_locked_profile.setVisibility(View.VISIBLE);
+                }else{
+                    Query queryStuffkies = collectionStuffkies.whereEqualTo("UID_AUTHOR",UID);
+                    if(mode.equals("other")){
+                        queryStuffkies.whereNotEqualTo("draft",true);
+                    }
+                    queryStuffkies.addSnapshotListener((queryDocumentSnapshots, ex) -> {
                         if (ex != null) {
-                            Log.e("Error", ex.getMessage());
-                            Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
                             return;
                         }
 
                         if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
                             stuffkieArrayList.clear(); // Limpia la lista antes de agregar nuevos datos
-
-                            boolean foundData = false; // Add a flag
-
                             for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
                                     StuffkieModel stuffkieModel = StuffkieModel.fromSnapshot(doc);
                                     stuffkieArrayList.add(stuffkieModel);
-                                    foundData = true; // Set the flag to true if data is found
+                                hideShowSection(tv_stuffkiesPreviewUserkie,cv_stuffkiesPreviewUserkie,true);
 
-                            }
-                            if (foundData) {
-                                tv_stuffkiesPreviewUserkie.setVisibility(View.VISIBLE);
-                                cv_stuffkiesPreviewUserkie.setVisibility(View.VISIBLE);
                                 updateRecyclerViewStuffkies(stuffkieArrayList);
 
                             }
                         } else {
-                            tv_stuffkiesPreviewUserkie.setVisibility(View.GONE);
-                            cv_stuffkiesPreviewUserkie.setVisibility(View.GONE);
+                            hideShowSection(tv_stuffkiesPreviewUserkie,cv_stuffkiesPreviewUserkie,false);
                             updateRecyclerViewStuffkies(new ArrayList<>());
 
                         }
                     });
-                        collectionWorldkies.whereEqualTo("UID_AUTHOR", UID).whereNotEqualTo("draft", true).addSnapshotListener((queryDocumentSnapshots, ex) -> {
+                    Query queryWorldkies = collectionWorldkies.whereEqualTo("uid_AUTHOR",UID);
+                    if(mode.equals("other")){
+                        queryWorldkies.whereNotEqualTo("draft",true);
+                    }
+                        queryWorldkies.addSnapshotListener((queryDocumentSnapshots, ex) -> {
                             if (ex != null) {
-                                Log.e("Error", ex.getMessage());
-                                Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
                                 return;
                             }
 
                             if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
                                 worldkieArrayList.clear(); // Limpia la lista antes de agregar nuevos datos
-                                boolean foundData = false; // Add a flag
 
                                 for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
                                     worldkieArrayList.add(WorldkieModel.fromSnapshot(doc));
-                                    foundData = true; // Set the flag to true if data is found
-                                }
-                                if (foundData) {
-                                    tv_worldkiesPreviewUserkie.setVisibility(View.VISIBLE);
-                                    cv_worldkiesPreviewUserkie.setVisibility(View.VISIBLE);
-                                    updateRecyclerViewWorldkies(worldkieArrayList);
-                                } else {
-                                    tv_worldkiesPreviewUserkie.setVisibility(View.GONE);
-                                    cv_worldkiesPreviewUserkie.setVisibility(View.GONE);
-                                    updateRecyclerViewWorldkies(new ArrayList<>());
-                                }
-                            } else {
-                                tv_worldkiesPreviewUserkie.setVisibility(View.GONE);
-                                cv_worldkiesPreviewUserkie.setVisibility(View.GONE);
-                                updateRecyclerViewWorldkies(new ArrayList<>());
-                            }
-                        });
+                                    hideShowSection(tv_worldkiesPreviewUserkie,cv_worldkiesPreviewUserkie,true);
 
-                        collectionCharacterkies.whereEqualTo("UID_AUTHOR", UID).whereNotEqualTo("draft", true).addSnapshotListener((queryDocumentSnapshots, ex) -> {
+                                    updateRecyclerViewWorldkies(worldkieArrayList);
+                                }
+                            }else {
+                                hideShowSection(tv_worldkiesPreviewUserkie,cv_worldkiesPreviewUserkie,false);
+
+                                updateRecyclerViewWorldkies(new ArrayList<>());
+                                }
+                        });
+                    Query queryCharacterkies = collectionCharacterkies.whereEqualTo("UID_AUTHOR",UID);
+                    if(mode.equals("other")){
+                        queryCharacterkies.whereNotEqualTo("draft",true);
+                    }
+                        queryCharacterkies.addSnapshotListener((queryDocumentSnapshots, ex) -> {
                             if (ex != null) {
-                                Log.e("Error", e.getMessage());
-                                Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
                                 return;
                             }
 
                             if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
                                 characterkieArrayList.clear(); // Limpia la lista antes de agregar nuevos datos
-                                boolean foundData = false; // Add a flag
 
                                 for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
-                                    //if (documentSnapshot.getBoolean("photo_default")) {
 
-                                    CharacterkieModel characterkieModel = CharacterkieModel.fromSnapshot(documentSnapshot);
+                                    CharacterkieModel characterkieModel = CharacterkieModel.fromSnapshot(doc);
 
                                     characterkieArrayList.add(characterkieModel);
-                                    foundData = true; // Set the flag to true if data is found
-                                }
-                                if (foundData) {
-                                    tv_characterkiesPreviewUserkie.setVisibility(View.VISIBLE);
-                                    cv_characterkiesPreviewUserkie.setVisibility(View.VISIBLE);
+                                    hideShowSection(tv_characterkiesPreviewUserkie,cv_characterkiesPreviewUserkie,true);
+
                                     updateRecyclerViewCharacterkies(characterkieArrayList);
-                                } else {
-                                    tv_characterkiesPreviewUserkie.setVisibility(View.GONE);
-                                    cv_characterkiesPreviewUserkie.setVisibility(View.GONE);
+                                }
+                            }else {
+                                    hideShowSection(tv_characterkiesPreviewUserkie,cv_characterkiesPreviewUserkie,false);
                                     updateRecyclerViewCharacterkies(new ArrayList<>());
 
                                 }
-                            }
                         });
                     }
-                else{
-                    tv_characterkiesPreviewUserkie.setVisibility(View.GONE);
-                    cv_characterkiesPreviewUserkie.setVisibility(View.GONE);
-                    tv_worldkiesPreviewUserkie.setVisibility(View.GONE);
-                    cv_worldkiesPreviewUserkie.setVisibility(View.GONE);
-                    tv_stuffkiesPreviewUserkie.setVisibility(View.GONE);
-                    cv_stuffkiesPreviewUserkie.setVisibility(View.GONE);
-                    iv_locked_profile.setVisibility(View.VISIBLE);
-                    tv_locked_profile.setVisibility(View.VISIBLE);
-                }
             }
         });
 
         return view;
 
+    }
+    private void hideShowSection(TextView textView,MaterialCardView materialCardView,boolean visible){
+        textView.setVisibility(visible?View.VISIBLE:View.GONE);
+        materialCardView.setVisibility(visible?View.VISIBLE:View.GONE);
     }
     private void initComponents(View view){
         rc_worldkiePreviewUserkie = view.findViewById(R.id.rc_worldkiePreviewUserkie);
@@ -281,7 +254,19 @@ public class ProfileView extends Fragment implements View.OnClickListener {
     }
     private void setVisibility(){
         ib_save.setVisibility(View.GONE);
-
+        ib_profile_superior.setVisibility(mode.equals("self")?View.INVISIBLE:View.VISIBLE);
+        ib_profileViewEdit.setVisibility(mode.equals("self")?View.VISIBLE:View.INVISIBLE);
+    }
+    private void setListeners(){
+        switch (mode) {
+            case "self":
+                firebaseAuth = FirebaseAuth.getInstance();
+                ib_profileViewEdit.setOnClickListener(this);
+                break;
+            case "other":
+                ib_back.setOnClickListener(this);
+                break;
+        }
     }
     private void getProfilePhoto(){
         ib_profileView.setVisibility(View.INVISIBLE);
@@ -290,17 +275,16 @@ public class ProfileView extends Fragment implements View.OnClickListener {
                 String id_photo = userkieModel.getPhoto_id();
                 int resId = getResources().getIdentifier(id_photo, "mipmap", getContext().getPackageName());
 
-                if (resId != 0 && (!lastPhotoId.equals(id_photo))) {
+                if (resId != 0) {
                     Drawable drawable = ContextCompat.getDrawable(getContext(), resId);
                     ib_profileView.setImageDrawable(drawable);
                     DrawableUtils.personalizarImagenCircleButton(getContext(), DrawableUtils.drawableToBitmap(drawable), ib_profileView, R.color.brownMaroon);
-                    lastPhotoId=id_photo;
                     ib_profileView.setVisibility(View.VISIBLE);
                     EfectsUtils.startCircularReveal(ib_profileView.getDrawable(),ib_profileView);
                 }
 
             } else {
-                StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-users").getReference(UID);
+                StorageReference userFolderRef = firebaseStorageUserkies.getReference(UID);
 
                 userFolderRef.listAll().addOnSuccessListener(listResult -> {
                     for (StorageReference item : listResult.getItems()) {
@@ -327,7 +311,7 @@ public class ProfileView extends Fragment implements View.OnClickListener {
             //}
     }
     private void updateRecyclerViewStuffkies(ArrayList<StuffkieModel> stuffkieArrayList) {
-        stuffkiesUserPreviewAdapter = new StuffkiesUserPreviewAdapter(stuffkieArrayList,mainActivity,fragmentManager);
+        stuffkiesUserPreviewAdapter = new StuffkiesUserPreviewAdapter(stuffkieArrayList,mainActivity,fragmentManager,"self");
         rc_stuffkiePreviewUserkie.setLayoutManager(new LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false));
         rc_stuffkiePreviewUserkie.setAdapter(stuffkiesUserPreviewAdapter);
     }
@@ -337,7 +321,7 @@ public class ProfileView extends Fragment implements View.OnClickListener {
         rc_worldkiePreviewUserkie.setAdapter(worldkiesUserPreviewAdapter);
     }
     private void updateRecyclerViewCharacterkies(ArrayList<CharacterkieModel> characterkieArrayList) {
-        characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList,mainActivity,fragmentManager);
+        characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList,mainActivity,fragmentManager,"self");
         rc_characterkiePreviewUserkie.setLayoutManager(new LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false));
         rc_characterkiePreviewUserkie.setAdapter(characterkiesUserPreviewAdapter);
     }

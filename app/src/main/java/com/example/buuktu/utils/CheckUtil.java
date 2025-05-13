@@ -61,15 +61,6 @@ public class CheckUtil {
         CheckUtil.setErrorMessage(null, textInputLayoutNew);
         return true;
     }
-    public static boolean handlerCheckUser(Context context,TextInputEditText textInputEditText,TextInputLayout textInputLayout) {
-        String text = textInputEditText.getText().toString();
-        if (CheckUtil.checkTextEmpty(text)) {
-            CheckUtil.setErrorMessage(context.getString(R.string.userErrorEmpty), textInputLayout);
-            return false;
-        }
-        CheckUtil.setErrorMessage(null, textInputLayout);
-        return true;
-    }
     public static boolean handlerCheckBirthdayDate(Context context, TextInputEditText textInputEditText, TextInputLayout textInputLayout) {
         String text = textInputEditText.getText().toString();
         if (CheckUtil.checkTextEmpty(text)) {
@@ -131,7 +122,7 @@ public class CheckUtil {
             CheckUtil.setErrorMessage(context.getString(R.string.pronounsErrorEmpty), textInputLayout);
             return false;
         }
-        else if (Patterns.EMAIL_ADDRESS.matcher(text).matches()) {
+        else if (!Patterns.EMAIL_ADDRESS.matcher(text).matches()) {
             CheckUtil.setErrorMessage(context.getString(R.string.pronounsErrorEmpty), textInputLayout);
             return false;
         }

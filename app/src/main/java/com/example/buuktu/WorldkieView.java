@@ -106,10 +106,10 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
 
         getProfilePhoto();
         db = FirebaseFirestore.getInstance();
-        characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList, getContext(),fragmentManager);
+        characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList, getContext(),fragmentManager,"self");
         rc_characterkiesPrevieWorldkie.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rc_characterkiesPrevieWorldkie.setAdapter(characterkiesUserPreviewAdapter);
-        characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList, getContext(),fragmentManager);
+        characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList, getContext(),fragmentManager,"self");
         rc_characterkiesPrevieWorldkie.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rc_characterkiesPrevieWorldkie.setAdapter(characterkiesUserPreviewAdapter);
 
@@ -310,12 +310,12 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
         }
     }
     private void updateRecyclerViewCharacterkies(ArrayList<CharacterkieModel> characterkieArrayList) {
-        characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList,getContext(),fragmentManager);
+        characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList,getContext(),fragmentManager,"self");
         rc_characterkiesPrevieWorldkie.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rc_characterkiesPrevieWorldkie.setAdapter(characterkiesUserPreviewAdapter);
     }
     private void updateRecyclerViewStuffkies(ArrayList<StuffkieModel> stuffkieArrayList) {
-        stuffkiesUserPreviewAdapter = new StuffkiesUserPreviewAdapter(stuffkieArrayList,getContext(),fragmentManager);
+        stuffkiesUserPreviewAdapter = new StuffkiesUserPreviewAdapter(stuffkieArrayList,getContext(),fragmentManager,"self");
         rc_stuffkiesPreviewWorldkie.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rc_stuffkiesPreviewWorldkie.setAdapter(stuffkiesUserPreviewAdapter);
     }

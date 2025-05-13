@@ -47,7 +47,7 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
         final TextView tv_date_creation_search_worldkie;
         final TextView tv_date_last_update_search_worldkie_title;
         final TextView tv_date_last_update_search_worldkie;
-        private final FirebaseStorage firebaseStorageWorldkies;
+        private final FirebaseStorage firebaseStorageWorldkies= FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
         private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         private boolean moreDetailsShowed;
         final CollectionReference collectionUserkies;
@@ -66,7 +66,6 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
             iv_worldkie_private_search = view.findViewById(R.id.iv_worldkie_private_search);
             db = FirebaseFirestore.getInstance();
             collectionUserkies = db.collection("Users");
-            firebaseStorageWorldkies = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
             moreDetailsShowed = false;
         }
 

@@ -159,7 +159,6 @@ public class Note extends Fragment implements View.OnClickListener {
                     }else{
                         notekieData.put("UID_USER", UID_USER);
                         addDataToFirestore();
-
                     }
                 }
             }

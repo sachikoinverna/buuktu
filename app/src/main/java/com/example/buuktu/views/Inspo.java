@@ -25,7 +25,7 @@ import java.util.ArrayList;
 public class Inspo extends Fragment {
     MainActivity mainActivity;
     RecyclerView rc_buttons_inspo;
-    private CardInspoAdapter adapter;
+    CardInspoAdapter adapter;
     ImageButton ib_back,ib_save,ib_profile_superior;
     public Inspo() {
         // Required empty public constructor

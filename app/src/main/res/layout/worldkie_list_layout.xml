@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card_view_setting_list_profile"
+        android:id="@+id/card_view_worldkie_list_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -28,7 +28,7 @@
 
             <TextView
                 android:id="@+id/tv_name_setting_profile"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
@@ -45,58 +45,13 @@
                 android:layout_width="115dp"
                 android:layout_height="115dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="32dp"
+                card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintStart_toStartOf="parent"
                 card_view:layout_constraintTop_toBottomOf="@+id/tv_name_setting_profile"
                 tools:srcCompat="@tools:sample/avatars" />
 
-            <ImageButton
-                android:id="@+id/ib_enterToAWorldkie"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                card_view:layout_constraintBottom_toBottomOf="parent"
-                card_view:layout_constraintEnd_toStartOf="@+id/ib_editAWorldkie"
-                card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toBottomOf="@+id/iv_photo_setting_profile"
-                card_view:srcCompat="@drawable/twotone_door_sliding_24" />
-
-            <ImageButton
-                android:id="@+id/ib_editAWorldkie"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                card_view:layout_constraintBottom_toBottomOf="parent"
-                card_view:layout_constraintEnd_toStartOf="@+id/ib_deleteAWorldkie"
-                card_view:layout_constraintStart_toEndOf="@+id/ib_enterToAWorldkie"
-                card_view:layout_constraintTop_toBottomOf="@+id/iv_photo_setting_profile"
-                card_view:srcCompat="@drawable/twotone_edit_note_24" />
-
-            <ImageButton
-                android:id="@+id/ib_deleteAWorldkie"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                card_view:layout_constraintBottom_toBottomOf="parent"
-                card_view:layout_constraintEnd_toEndOf="parent"
-                card_view:layout_constraintStart_toEndOf="@+id/ib_editAWorldkie"
-                card_view:layout_constraintTop_toBottomOf="@+id/iv_photo_setting_profile"
-                card_view:srcCompat="@drawable/twotone_delete_sweep_24" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>

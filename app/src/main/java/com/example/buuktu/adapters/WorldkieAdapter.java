@@ -2,12 +2,16 @@ package com.example.buuktu.adapters;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,12 +28,16 @@ import com.example.buuktu.utils.EfectsUtils;
 import com.example.buuktu.utils.NavigationUtils;
 import com.example.buuktu.views.CreateEditWorldkie;
 import com.example.buuktu.views.WorldkieMenu;
+import com.google.android.material.card.MaterialCardView;
+import com.google.firebase.Firebase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHolder> {
@@ -60,30 +68,47 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull WorldkieAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         WorldkieModel worldkieModel = dataSet.get(position);
         holder.getIv_photo_wordlkie().setVisibility(View.INVISIBLE);
         holder.getTv_name_wordkie().setText(worldkieModel.getName());
         Bundle bundle = new Bundle();
         bundle.putString("worldkie_id", worldkieModel.getUID());
-        holder.getIb_enterToAWorldkie().setOnClickListener(v -> {
-            NavigationUtils.goNewFragmentWithBundle(bundle, fragmentManager, new WorldkieMenu());
-
+        holder.getCard_view_worldkie_list_layout().setOnClickListener(v -> {
+                NavigationUtils.goNewFragmentWithBundle(bundle, fragmentManager, new WorldkieMenu());
         });
-        holder.getIb_editAWorldkie().setOnClickListener(v -> {
+        holder.getCard_view_worldkie_list_layout().setOnLongClickListener(v -> {
+            View popupView = LayoutInflater.from(context).inflate(R.layout.menu_popup, null);
+            PopupWindow popupWindow = new PopupWindow(popupView,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    true);
 
-            NavigationUtils.goNewFragmentWithBundle(bundle, fragmentManager, new CreateEditWorldkie());
+// Opcional: animación y sombra
+            popupWindow.setElevation(8f);
 
+// Mostrarlo anclado al CardView
+            popupWindow.showAsDropDown(holder.getCard_view_worldkie_list_layout(), 0, -50);
+
+// Listeners
+            popupView.findViewById(R.id.bt_edit_item).setOnClickListener(view -> {
+                NavigationUtils.goNewFragmentWithBundle(bundle, fragmentManager, new CreateEditWorldkie());
+                popupWindow.dismiss();
+            });
+
+            popupView.findViewById(R.id.bt_del_item).setOnClickListener(view2 -> {
+                DeleteGeneralDialog deleteGeneralDialog = new DeleteGeneralDialog(context, "worldkie", worldkieModel.getUID());
+                deleteGeneralDialog.show();
+                popupWindow.dismiss();
+            });
+            return true;
         });
-        holder.getIb_deleteAWorldkie().setOnClickListener(v -> {
-            DeleteGeneralDialog deleteGeneralDialog = new DeleteGeneralDialog(context, "worldkie", worldkieModel.getUID());
-            deleteGeneralDialog.show();
-        });
+
         if (worldkieModel.isPhoto_default()) {
             String id_photo = worldkieModel.getId_photo();
             int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
 
-            if (resId != 0 && (!holder.getLastPhotoId().equals(id_photo))) {
+            if (resId != 0) {
                 Drawable drawable = ContextCompat.getDrawable(context, resId);
                 holder.getIv_photo_wordlkie().setImageDrawable(drawable);
                 try {
@@ -91,7 +116,6 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
-                holder.setLastPhotoId(id_photo);
                 holder.getIv_photo_wordlkie().setVisibility(View.VISIBLE);
 
                 EfectsUtils.startCircularReveal(drawable, holder.getIv_photo_wordlkie());
@@ -99,7 +123,7 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
             }
             holder.getIv_photo_wordlkie().setVisibility(View.VISIBLE);
         } else {
-            StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-worldkies").getReference(dataSet.get(holder.getAdapterPosition()).getUID());
+            StorageReference userFolderRef = holder.getFirebaseStorageWorldkie().getReference(worldkieModel.getUID());
 
             userFolderRef.listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {
@@ -125,49 +149,33 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView tv_name_wordlkie;
         private final ImageView iv_photo_wordlkie;
-        private final ImageButton ib_enterToAWorldkie;
-        private final ImageButton ib_editAWorldkie;
-        private final ImageButton ib_deleteAWorldkie;
-        private final FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
+        private final FirebaseStorage firebaseStorageWorldkie = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
         private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         CollectionReference collectionWorldkies = firestore.collection("Worldkies");
-        private String lastPhotoId = "", lastName = "";
-
+        MaterialCardView card_view_worldkie_list_layout;
         public ViewHolder(View view) {
             super(view);
             tv_name_wordlkie = view.findViewById(R.id.tv_name_setting_profile);
             iv_photo_wordlkie = view.findViewById(R.id.iv_photo_setting_profile);
-            ib_enterToAWorldkie = view.findViewById(R.id.ib_enterToAWorldkie);
-            ib_editAWorldkie = view.findViewById(R.id.ib_editAWorldkie);
-            ib_deleteAWorldkie = view.findViewById(R.id.ib_deleteAWorldkie);
+
+            card_view_worldkie_list_layout = view.findViewById(R.id.card_view_worldkie_list_layout);
         }
 
-        public FirebaseStorage getFirebaseStorage() {
-            return firebaseStorage;
+        public MaterialCardView getCard_view_worldkie_list_layout() {
+            return card_view_worldkie_list_layout;
+        }
+
+        public FirebaseStorage getFirebaseStorageWorldkie() {
+            return firebaseStorageWorldkie;
         }
 
         public FirebaseFirestore getDb() {
             return firestore;
         }
 
-        public ImageButton getIb_enterToAWorldkie() {
-            return ib_enterToAWorldkie;
-        }
-
-        public ImageButton getIb_editAWorldkie() {
-            return ib_editAWorldkie;
-        }
-
-        public ImageButton getIb_deleteAWorldkie() {
-            return ib_deleteAWorldkie;
-        }
 
         public CollectionReference getCollectionWorldkies() {
             return collectionWorldkies;
-        }
-
-        public void setCollectionWorldkies(CollectionReference collectionWorldkies) {
-            this.collectionWorldkies = collectionWorldkies;
         }
 
         //getters
@@ -179,21 +187,7 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
             return iv_photo_wordlkie;
         }
 
-        public String getLastPhotoId() {
-            return lastPhotoId;
-        }
 
-        public void setLastPhotoId(String lastPhotoId) {
-            this.lastPhotoId = lastPhotoId;
-        }
-
-        public String getLastName() {
-            return lastName;
-        }
-
-        public void setLastName(String lastName) {
-            this.lastName = lastName;
-        }
     }
 
 }

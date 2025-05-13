@@ -39,14 +39,12 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
     TextInputLayout et_yearBirthdayCreateFull;
     TextInputEditText et_yearBirthdayCreate;
     TextView tv_current_month_birthday_selector,tv_head_day_month_birthday_selector,tv_separator_day_month_birthday_selector;
-    int month;
-    int day;
-    int year;
+    int month,day,year;
     ImageButton[] dayButtons;
     ImageView iv_head_day_month_birthday_selector,iv_background_day_month_selector;
     boolean daysMonthsSelectorVisible, yearFieldVisible, daysOptionVisible,monthVisible,yearOptionVisible;
     TextView[] tvDays;
-    String[]meses;
+    String[]meses= new String[]{"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"};;
     Drawable arrow_down,arrow_up;
     CreateCharacterkie createCharacterkie;
     String optionBirthdayString;
@@ -95,7 +93,6 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
         allRadioButtons.add(rb_month_birthday);
         allRadioButtons.add(rb_year_birthday);
         rb_checked = view.findViewById(option);
-        meses = new String[]{"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"};
         for (RadioButton rb : allRadioButtons) {
             rb.setOnClickListener(v -> {
                 rb.setChecked(true);
@@ -109,7 +106,6 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
             });
         }
 
-        tv_current_month_birthday_selector.setText(month==1 ? String.valueOf(month) :meses[month-1]);
 
         dayButtons = new ImageButton[31];
         tvDays = new TextView[31];  // Array que almacenará los TextView de los días
@@ -219,6 +215,7 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
             year= Integer.parseInt(optionBirthdayString);
             et_yearBirthdayCreate.setText(year);
         }
+        tv_current_month_birthday_selector.setText(month == 1 ? String.valueOf(month) : meses[month - 1]);
         setFields();
     }
     private void setFields(){
@@ -290,7 +287,6 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
             createCharacterkie.setYear(Integer.parseInt(year));
         } else if (rb_checked.getId()==R.id.rb_month_birthday) {
             createCharacterkie.setMonth(month);
-
         } else if (rb_checked.getId()==R.id.rb_month_year_birthday) {
             createCharacterkie.setMonth(month);
             createCharacterkie.setDay(day);

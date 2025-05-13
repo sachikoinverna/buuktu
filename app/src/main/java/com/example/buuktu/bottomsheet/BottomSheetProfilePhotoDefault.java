@@ -210,6 +210,7 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
         if(register != null) {
             register.setSelectedProfilePhoto(imageButton.getDrawable());
             register.getIB_profile_photo().setTag(DrawableUtils.getMipmapName(context,photosUserkies.get(index)));
+            register.setPhotoDefault();
         } else if (createEditWorldkie !=null) {
             createEditWorldkie.setSelectedProfilePhoto(imageButton.getDrawable());
             createEditWorldkie.getIb_select_img_create_worldkie().setTag(DrawableUtils.getMipmapName(context,photosWorldkies.get(index)));

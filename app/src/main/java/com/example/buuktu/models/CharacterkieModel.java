@@ -51,15 +51,18 @@ public class CharacterkieModel {
         CharacterkieModel characterkie = new CharacterkieModel();
         characterkie.setName(document.getString("name"));
         characterkie.setUID(document.getId());
-
+        characterkie.setUID_AUTHOR("UID_AUTHOR");
+        characterkie.setUID_WORLDKIE("UID_WORLDKIE");
         characterkie.setBirthday(document.getString("birthday"));
         characterkie.setBirthday(document.getString("birthday_format"));
-        characterkie.setBirthday(document.getString("gender"));
-        characterkie.setBirthday(document.getString("status"));
+        characterkie.setGender(document.getString("gender"));
+        characterkie.setStatus(document.getString("status"));
         characterkie.setPhoto_default(document.getBoolean("photo_default"));
         characterkie.setDraft(document.getBoolean("draft"));
         characterkie.setCharacterkie_private(document.getBoolean("characterkie_private"));
-        characterkie.setPhoto_id(document.getString("photo_id"));
+        if(document.contains("photo_id")) {
+            characterkie.setPhoto_id(document.getString("photo_id"));
+        }
         characterkie.setPronouns(document.getString("pronouns"));
         return characterkie;
     }

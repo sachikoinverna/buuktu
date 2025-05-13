@@ -26,18 +26,32 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageButton
-                android:id="@+id/iv_userkie_photo_search"
+            <FrameLayout
+                android:id="@+id/fl_userkie_photo_container"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:layout_margin="4dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/border_register"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/iv_userkie_private_search"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@mipmap/photoprofileone" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageButton
+                    android:id="@+id/iv_userkie_photo_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:background="@null"
+                    android:padding="0dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/iv_userkie_private_search"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@mipmap/photoprofileone" />
+            </FrameLayout>
 
             <ImageView
                 android:id="@+id/iv_userkie_private_search"
@@ -62,14 +76,14 @@
                 android:text="TextView"
                 android:textAlignment="center"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/iv_userkie_photo_search"
+                app:layout_constraintStart_toEndOf="@+id/fl_userkie_photo_container"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_userkie_username_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"
                 android:ellipsize="end"
                 android:maxLines="1"
@@ -83,11 +97,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/at_symbol"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/iv_userkie_photo_search"
+                app:layout_constraintStart_toEndOf="@+id/fl_userkie_photo_container"
                 app:layout_constraintTop_toBottomOf="@+id/tv_userkie_name_search" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -5,9 +5,13 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.util.TypedValue;
 import android.webkit.MimeTypeMap;
@@ -15,12 +19,16 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.annotation.ColorRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.buuktu.R;
 
@@ -152,29 +160,29 @@ public class DrawableUtils {
         imageView.setBackground(bg);
 
     }
-  public static void personalizarImagenCircleButton(Context context, Bitmap bitmap, ImageButton imageButton, @ColorRes int color) {
-      // 1) Configurar el padding mínimo para el borde
-      int pad = (int) TypedValue.applyDimension(
-              TypedValue.COMPLEX_UNIT_DIP, 2, context.getResources().getDisplayMetrics()
-      );
-      imageButton.setPadding(pad, pad, pad, pad);
+    public static void personalizarImagenCircleButton(Context context, Bitmap bitmap, ImageButton imageButton, @ColorRes int color) {
+        int pad = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, 2, context.getResources().getDisplayMetrics()
+        );
+        imageButton.setPadding(pad, pad, pad, pad);
+        imageButton.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-      // 2) Fondo oval con trazo (borde)
-      Drawable drawableBorder = ContextCompat.getDrawable(context, R.drawable.border_register);
-      if (drawableBorder != null) {
-          drawableBorder.setTint(color);
-          imageButton.setBackground(drawableBorder);
-      }
-      imageButton.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        // 1. Aplicar fondo redondeado con borde
+        Drawable drawableBorder = ContextCompat.getDrawable(context, R.drawable.border_register);
+        if (drawableBorder != null) {
+            // Cambiar el color del borde dinámicamente
+            drawableBorder.mutate().setTint(ContextCompat.getColor(context, color));
+            imageButton.setBackground(drawableBorder);
+        }
 
-      // 3) Glide sólo para recortar la imagen en círculo y volcarla en el ImageButton
-      Glide.with(context)
-              .asBitmap()
-              .load(bitmap)
-              .override(bitmap.getWidth(), bitmap.getHeight()) // conserva tamaño original
-              .circleCrop()
-              .into(imageButton);
-  }
+        // 2. Usar Glide para aplicar la imagen circular
+        Glide.with(context)
+                .load(bitmap)
+                .circleCrop()
+                .into(imageButton);
+    }
+
+
     public static void personalizarImagenCircleButton(Context context, Uri uri, ImageButton imageButton, @ColorRes int color) {
         // 1) Configurar el padding mínimo para el borde
         int pad = (int) TypedValue.applyDimension(

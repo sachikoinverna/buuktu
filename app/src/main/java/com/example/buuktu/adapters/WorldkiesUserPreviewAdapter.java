@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,10 +18,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buuktu.R;
 import com.example.buuktu.WorldkieView;
+import com.example.buuktu.dialogs.DeleteGeneralDialog;
 import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.EfectsUtils;
 import com.example.buuktu.utils.NavigationUtils;
+import com.example.buuktu.views.CreateEditWorldkie;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -46,6 +49,7 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
         final CardView cv_worldkie_preview;
         //private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
         //private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        private final FirebaseStorage firebaseStorageWorldkies= FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
 
         public ViewHolder(View view) {
             super(view);
@@ -54,6 +58,10 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
             cv_worldkie_preview = view.findViewById(R.id.cv_worldkie_preview);
             iv_stuffkie_private_preview = view.findViewById(R.id.iv_stuffkie_private_preview);
             tv_worldkie_preview_draft = view.findViewById(R.id.tv_worldkie_preview_draft);
+        }
+
+        public FirebaseStorage getFirebaseStorageWorldkies() {
+            return firebaseStorageWorldkies;
         }
 
         public ImageView getIv_worldkie_preview_worldkie() {
@@ -119,6 +127,35 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
             bundle.putString("UID_AUTHOR",UID_AUTHOR);
             NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new WorldkieView());
         });
+        holder.getCv_worldkie_preview().setOnLongClickListener(v -> {
+            View popupView = LayoutInflater.from(context).inflate(R.layout.menu_popup, null);
+            PopupWindow popupWindow = new PopupWindow(popupView,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    true);
+
+// Opcional: animación y sombra
+            popupWindow.setElevation(8f);
+
+// Mostrarlo anclado al CardView
+            popupWindow.showAsDropDown(holder.getCv_worldkie_preview(), 0, -50);
+
+// ListenersBundle bundle = new Bundle();
+//        bundle.putString("worldkie_id", worldkieModel.getUID());
+            Bundle bundle = new Bundle();
+            bundle.putString("worldkie_id", worldkieModel.getUID());
+            popupView.findViewById(R.id.bt_edit_item).setOnClickListener(view -> {
+                NavigationUtils.goNewFragmentWithBundle(bundle, fragmentManager, new CreateEditWorldkie());
+                popupWindow.dismiss();
+            });
+
+            popupView.findViewById(R.id.bt_del_item).setOnClickListener(view2 -> {
+                DeleteGeneralDialog deleteGeneralDialog = new DeleteGeneralDialog(context, "worldkie", worldkieModel.getUID());
+                deleteGeneralDialog.show();
+                popupWindow.dismiss();
+            });
+            return true;
+        });
         if (worldkieModel.isPhoto_default()) {
              String id_photo = worldkieModel.getId_photo();
                 int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
@@ -136,7 +173,7 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
                     EfectsUtils.startCircularReveal(drawable,holder.getIv_worldkie_preview_worldkie());
                 }
         } else {
-            StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-worldkies").getReference(UID);
+            StorageReference userFolderRef = holder.getFirebaseStorageWorldkies().getReference(UID);
 
             userFolderRef.listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {

@@ -65,15 +65,13 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
     private Switch tb_privateAccountRegister;
     private FirebaseAuth auth;
     Uri image;
-    String email, username, password,source, photo_id, number, pronouns, name;
-
-    Boolean privateAccount;
+    String email, username, source;
     final FirebaseStorage storage = FirebaseStorage.getInstance("gs://buuk-tu-users");
     BottomSheetProfilePhoto bottomSheetProfilePhoto;
-    boolean photo_default;
     Date birthday;
     CollectionReference collectionReferenceUsers;
     InputFilter[] filters;
+    UserkieModel userkieModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,8 +91,8 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
         db = FirebaseFirestore.getInstance();
         collectionReferenceUsers = db.collection("Users");
         if (auth.getCurrentUser() != null) {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
         }
         DrawableUtils.personalizarImagenCircleButton(this, DrawableUtils.drawableToBitmap(bt_chooseImage.getDrawable()), bt_chooseImage, R.color.brownBrown);
     }
@@ -135,6 +133,7 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
     }
 
     private void initComponents() {
+        userkieModel = new UserkieModel();
         dp_birthday = findViewById(R.id.dp_birthday);
         et_nameRegister = findViewById(R.id.et_nameRegister);
         et_pronounsRegister = findViewById(R.id.et_pronounsRegister);
@@ -162,6 +161,7 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
         bottomSheetProfilePhoto = new BottomSheetProfilePhoto();
         source = "app";
         bt_chooseImage.setTag(DrawableUtils.getMipmapName(this,R.mipmap.photoprofileone));
+        setPhotoDefault();
         auth = FirebaseAuth.getInstance();
 
 
@@ -258,8 +258,9 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
     }
 
     public void handlerGoToRegister(View view) {
-        clearFields();
         startActivity(new Intent(this, Login.class));
+        finish();
+
     }
 
     private boolean checkAllFields() {
@@ -292,15 +293,19 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
         return allValid[0];
 
     }
+    public void setPhotoNoDefault(){
+        userkieModel.setPhoto_default(false);
+        userkieModel.setPhoto_id(null);
+    }
+    public void setPhotoDefault(){
+        userkieModel.setPhoto_default(true);
+        userkieModel.setPhoto_id(bt_chooseImage.getTag().toString());
+    }
     public void addDataToFirestore(View view) {
         if (checkAllFields()) {
             CreateEditGeneralDialog dialog = new CreateEditGeneralDialog(this);
             dialog.show();
-
-
             LottieAnimationView animationView = dialog.findViewById(R.id.anim_create_edit);
-            animationView.setAnimation(R.raw.reading_anim);
-            animationView.playAnimation();
             Completable.timer(3, TimeUnit.SECONDS)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -322,44 +327,31 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
                                     if (usernameSnapshot.isEmpty() && emailSnapshot.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                                         // Puedes continuar con el registro
 
-
-                                        email = et_emailRegister.getText().toString();
-                                        password = et_password.getText().toString();
-                                        privateAccount = tb_privateAccountRegister.isChecked();
-                                        username = et_userRegister.getText().toString();
-                                        pronouns = et_pronounsRegister.getText().toString();
-                                        name = et_nameRegister.getText().toString();
-                                        number = et_telephoneRegister.getText().toString();
+                                        userkieModel.setEmail(email);
+                                        userkieModel.setName(et_nameRegister.getText().toString());
+                                        userkieModel.setPronouns(et_pronounsRegister.getText().toString());
+                                        userkieModel.setProfile_private(tb_privateAccountRegister.isChecked());
+                                        userkieModel.setUsername(et_userRegister.getText().toString());
+                                        userkieModel.setBirthday(new Timestamp(birthday));
                                         PhoneNumberUtil photoNumberUtil = PhoneNumberUtil.getInstance();
                                         try {
-                                            Phonenumber.PhoneNumber phoneNumber = photoNumberUtil.parse(number
+                                            Phonenumber.PhoneNumber phoneNumber = photoNumberUtil.parse(et_telephoneRegister.getText().toString()
                                                     , "ES");
-                                            number = photoNumberUtil.format(phoneNumber, PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL);
+                                            userkieModel.setNumber(photoNumberUtil.format(phoneNumber, PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL));
 
                                         } catch (NumberParseException e) {
                                             System.err.println("NumberParseException was thrown: " + e);
                                         }
-                                        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+                                        auth.createUserWithEmailAndPassword(email, et_password.getText().toString()).addOnCompleteListener(task -> {
                                             if (task.isSuccessful()) {
-
-
-                                                Toast.makeText(getApplicationContext(), "Signup Successful", Toast.LENGTH_SHORT).show();
                                                 CollectionReference dbUsers = db.collection("Users");
-                                                UserkieModel userkieModel;
-                                                if (source.equals("app")) {
-                                                    photo_id = bt_chooseImage.getTag().toString();
-                                                    userkieModel = new UserkieModel(photo_id, privateAccount, true, email, number, username, new Timestamp(birthday), pronouns, name);
-                                                } else {
-                                                    userkieModel = new UserkieModel(name, pronouns, new Timestamp(birthday), username, number, email, false, privateAccount);
-
-                                                }
                                                 // below method is use to add data to Firebase Firestore.
                                                 DocumentReference documentRef = dbUsers.document(task.getResult().getUser().getUid());
 
                                                 //.document(uid)
-                                                documentRef.set(userkieModel).addOnSuccessListener(unused -> {
+                                                documentRef.set(userkieModel.toMap()).addOnSuccessListener(unused -> {
 
-                                                    if (source.equals("device")) {
+                                                    if (!userkieModel.isPhoto_default()) {
                                                         StorageReference userRef = storage.getReference().child(task.getResult().getUser().getUid());
                                                         userRef.child("profile" + DrawableUtils.getExtensionFromUri(getApplicationContext(), image)).putFile(image);
 
@@ -370,7 +362,6 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
                                                             .subscribeOn(Schedulers.io())
                                                             .observeOn(AndroidSchedulers.mainThread())
                                                             .subscribe(dialog::dismiss);
-                                                    clearFields();
                                                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                                 }).addOnFailureListener(e -> {
                                                     EfectsUtils.setAnimationsDialog("fail",animationView);
@@ -408,16 +399,5 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         UIUtils.onWindowFocusChanged(this, hasFocus);
-    }
-    private void clearFields(){
-            et_nameRegister.setText("");
-            et_emailRegister.setText("");
-            et_userRegister.setText("");
-            et_pronounsRegister.setText("");
-            et_password.setText("");
-            et_passwordRepeat.setText("");
-            dp_birthday.setText("");
-            et_telephoneRegister.setText("");
-            tb_privateAccountRegister.setChecked(false);
     }
 }

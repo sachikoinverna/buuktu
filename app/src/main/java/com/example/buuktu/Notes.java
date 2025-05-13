@@ -64,7 +64,7 @@ public class Notes extends Fragment implements View.OnClickListener {
         recyclerView.setHasFixedSize(true);
 
         // Adaptador
-        noteAdapter = new NoteAdapter(requireContext(), items, item -> {
+        noteAdapter = new NoteAdapter(mainActivity, items, item -> {
             Bundle bundle = new Bundle();
             bundle.putString("note_id", item.getUID());
             NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new Note());

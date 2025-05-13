@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,8 @@ import com.example.buuktu.NotekieDiffCallback;
 import com.example.buuktu.R;
 import com.example.buuktu.dialogs.DeleteGeneralDialog;
 import com.example.buuktu.models.NotekieModel;
+import com.example.buuktu.utils.NavigationUtils;
+import com.example.buuktu.views.CreateEditWorldkie;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -37,6 +40,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         this.context = context;
         this.notekieModels = notekieModels;
         this.listener = listener;
+    }
+
+    public Context getContext() {
+        return context;
     }
 
     @NonNull
@@ -69,7 +76,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         final TextView content;
         final TextView title;
         final ImageButton ib_option_note_item;
-        final ImageButton ib_delete_note_item;
         final FirebaseFirestore db;
         final CollectionReference collectionNotekies;
 
@@ -79,7 +85,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             title = itemView.findViewById(R.id.tv_title_note_item);
             content = itemView.findViewById(R.id.tv_content_note_item);
             ib_option_note_item = itemView.findViewById(R.id.ib_option_note_item);
-            ib_delete_note_item = itemView.findViewById(R.id.ib_delete_note_item);
             db = FirebaseFirestore.getInstance();
             collectionNotekies = db.collection("Notekies");
         }
@@ -97,12 +102,32 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             }
 
             cardView.setOnClickListener(v -> listener.onItemClick(item));
+            cardView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    View popupView = LayoutInflater.from(itemView.getContext()).inflate(R.layout.menu_popup, null);
+                    PopupWindow popupWindow = new PopupWindow(popupView,
+                            ViewGroup.LayoutParams.WRAP_CONTENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT,
+                            true);
 
+// Opcional: animación y sombra
+                    popupWindow.setElevation(8f);
 
-            ib_delete_note_item.setOnClickListener(v -> {
-                DeleteGeneralDialog dialog = new DeleteGeneralDialog(
-                        v.getContext(),"notekie", item.getUID());
-                dialog.show();
+// Mostrarlo anclado al CardView
+                    popupWindow.showAsDropDown(cardView, 0, -50);
+
+// Listeners
+                    popupView.findViewById(R.id.bt_edit_item).setVisibility(View.GONE);
+
+                    popupView.findViewById(R.id.bt_del_item).setOnClickListener(view2 -> {
+                        DeleteGeneralDialog dialog = new DeleteGeneralDialog(
+                                v.getContext(), "notekie", item.getUID());
+                        dialog.show();
+                        popupWindow.dismiss();
+                    });
+                    return true;
+                }
             });
         }
 

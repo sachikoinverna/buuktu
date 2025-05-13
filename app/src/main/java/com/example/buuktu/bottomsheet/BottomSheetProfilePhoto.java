@@ -12,6 +12,7 @@ import android.graphics.ImageDecoder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -116,6 +117,7 @@ public class BottomSheetProfilePhoto extends BottomSheetDialogFragment implement
                                   //  register.getIB_profile_photo().setImageDrawable(drawable);
                                     DrawableUtils.personalizarImagenCircleButton(context, uri, register.getIB_profile_photo(), R.color.brownMaroon);
                                    // register.getIB_profile_photo().invalidate();
+                                    register.setPhotoNoDefault();
                                     register.setSource("device");
                                 } else if (createEditWorldkie!=null) {
                                  //   createEditWorldkie.getIb_select_img_create_worldkie().setImageDrawable(drawable);

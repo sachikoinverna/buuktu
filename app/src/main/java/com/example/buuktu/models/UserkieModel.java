@@ -31,6 +31,14 @@ public class UserkieModel {
         return email;
     }
 
+    public Timestamp getBirthday() {
+        return birthday;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -99,6 +107,7 @@ public class UserkieModel {
         }
         UserkieModel userkieModel = new UserkieModel();
         userkieModel.setName(document.getString("name"));
+        userkieModel.setUsername(document.getString("username"));
         userkieModel.setUID(document.getId());
         userkieModel.setBirthday(document.getTimestamp("birthday"));
         userkieModel.setEmail(document.getString("email"));
@@ -128,28 +137,6 @@ public class UserkieModel {
         }
 
         return map;
-    }
-    public UserkieModel(String photo_id, boolean profile_private, boolean photo_default, String email, String number, String username, Timestamp birthday, String pronouns, String name) {
-        this.photo_id = photo_id;
-        this.profile_private = profile_private;
-        this.photo_default = photo_default;
-        this.email = email;
-        this.number = number;
-        this.username = username;
-        this.birthday = birthday;
-        this.pronouns = pronouns;
-        this.name = name;
-    }
-
-    public UserkieModel(String name, String pronouns, Timestamp birthday, String username, String number, String email, boolean photo_default, boolean profile_private) {
-        this.name = name;
-        this.pronouns = pronouns;
-        this.birthday = birthday;
-        this.username = username;
-        this.number = number;
-        this.email = email;
-        this.photo_default = photo_default;
-        this.profile_private = profile_private;
     }
 
 }

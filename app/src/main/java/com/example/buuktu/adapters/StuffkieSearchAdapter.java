@@ -41,7 +41,7 @@ public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAd
         final MaterialCardView cv_stuffkie_search;
         final TextView tv_stuffkie_name_search;
         final TextView tv_stuffkie_username_search;
-        private final FirebaseStorage firebaseStorageStuffkie;
+        private final FirebaseStorage firebaseStorageStuffkie= FirebaseStorage.getInstance("gs://buuk-tu-stuffkies");
         private final FirebaseFirestore db;
         CollectionReference collectionStuffkie;
 
@@ -54,7 +54,6 @@ public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAd
             iv_stuffkie_private_search = view.findViewById(R.id.iv_stuffkie_private_search);
             db = FirebaseFirestore.getInstance();
             collectionStuffkie = db.collection("Stuffkies");
-            firebaseStorageStuffkie = FirebaseStorage.getInstance("gs://buuk-tu-stuffkies");
         }
 
         public FirebaseFirestore getDb() {

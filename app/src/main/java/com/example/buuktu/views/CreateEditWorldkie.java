@@ -63,7 +63,6 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
     MainActivity mainActivity;
     private FirebaseFirestore db;
     CollectionReference collectionWorldkie;
-    private FirebaseAuth firebaseAuth;
     private final FirebaseStorage storage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
     private WorldkieModel worldkieModel;
     TextInputLayout et_nameWorldkieCreateFull;
@@ -106,8 +105,7 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
         View view = inflater.inflate(R.layout.fragment_create_edit_worldkie, container, false);
 
         fragmentManager = requireActivity().getSupportFragmentManager();
-        firebaseAuth = FirebaseAuth.getInstance();
-        UID = firebaseAuth.getUid();
+        UID = mainActivity.getUID();
         initComponents(view);
         setVisibility();
         dialog = new CreateEditGeneralDialog(mainActivity);
@@ -236,17 +234,6 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
 
     }
 
-    public String getSource() {
-        return source;
-    }
-
-    public Drawable getSelectedProfilePhoto()
-    {
-        return ib_select_img_create_worldkie.getDrawable();
-    }
-    public void setSource(String source) {
-        this.source = source;
-    }
     public void selectImage(){
         bottomSheetProfilePhoto.show(getChildFragmentManager(),"BottomSheetProfilePhoto");
     }
@@ -292,7 +279,7 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
         CheckUtil.setErrorMessage(null, tv_telephoneRegister);
     }*/
   private void delayedDismiss() {
-      Completable.timer(3, TimeUnit.SECONDS)
+      Completable.timer(2, TimeUnit.SECONDS)
               .subscribeOn(Schedulers.io())
               .observeOn(AndroidSchedulers.mainThread())
               .subscribe(() -> {
@@ -312,7 +299,7 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(() -> {
                         getValues();
-                                Task<DocumentReference> addTask = collectionWorldkie.add(worldkieModel);
+                                Task<DocumentReference> addTask = collectionWorldkie.add(worldkieModel.toMap());
 
                                 addTask.addOnCompleteListener(task -> {
                                     if (task.isSuccessful()) {

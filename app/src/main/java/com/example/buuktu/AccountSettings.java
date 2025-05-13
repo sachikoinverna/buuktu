@@ -27,16 +27,16 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class AccountSettings extends Fragment implements View.OnClickListener {
-    SettingAdapter settingAdapter;
+    private SettingAdapter settingAdapter;
     private RecyclerView rv_settings_profile;
     private final ArrayList<SettingModel> dataSet = new ArrayList<>();
-    String UID;
-    FirebaseAuth firebaseAuth;
-    RecyclerView rv_account_settings;
-    ImageButton backButton,ib_profile_superior;
-    FragmentManager fragmentManager;
-    FragmentActivity activity;
-    MainActivity mainActivity;
+    private String UID;
+    private FirebaseAuth firebaseAuth;
+    private RecyclerView rv_account_settings;
+    private ImageButton backButton,ib_profile_superior;
+    private FragmentManager fragmentManager;
+    private FragmentActivity activity;
+    private MainActivity mainActivity;
     public AccountSettings() {
         // Required empty public constructor
     }

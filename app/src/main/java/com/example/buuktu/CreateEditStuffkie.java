@@ -69,12 +69,12 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
     Switch tb_stuffkiePrivacity,tb_stuffkieDraft;
     MainActivity mainActivity;
     CreateEditGeneralDialog dialog;
-    FirebaseStorage storage;
     LottieAnimationView animationView;
     StuffkieModel stuffkieModel;
     CollectionReference collectionStuffkie;
     FirebaseFirestore db;
     FirebaseAuth firebaseAuth;
+    private final FirebaseStorage storage = FirebaseStorage.getInstance("gs://buuk-tu-stuffkies");
     public CreateEditStuffkie() {
         // Required empty public constructor
     }
@@ -114,7 +114,6 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
         source = "app";
         firebaseAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
-        storage = FirebaseStorage.getInstance("gs://buuk-tu-stuffkies");
         UID = firebaseAuth.getUid();
         assert UID != null;
         Log.d("HOLA",UID);

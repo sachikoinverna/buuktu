@@ -89,7 +89,7 @@ public class Search extends Fragment {
                 getString(R.string.worldkies),
                 getString(R.string.characterkies),
                 getString(R.string.stuffkies),
-                getString(R.string.characterkies)
+                getString(R.string.characterkies),getString(R.string.userkies)
         };
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
             tab.setText(tabTitles[position]);

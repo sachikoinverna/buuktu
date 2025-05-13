@@ -9,13 +9,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,17 +38,13 @@ public class UserkieSearchAdapter extends RecyclerView.Adapter<UserkieSearchAdap
     private final FragmentManager fragmentManager;
 
     private final Context context;
-    private Fragment menuWorldkie;
     public class ViewHolder extends RecyclerView.ViewHolder {
-        String lastPhotoId="",lastName="",lastUsername="";
-        boolean lastPrivacity=false;
         private final ImageView iv_userkie_private_search;
         final ImageButton iv_userkie_photo_search;
         final MaterialCardView cv_userkie_search;
-        final TextView tv_userkie_name_search;
-        final TextView tv_userkie_username_search;
-        private final FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
-        private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        final TextView tv_userkie_name_search, tv_userkie_username_search;
+        FrameLayout fl_userkie_photo_container;
+        private final FirebaseStorage firebaseStorageUserkies = FirebaseStorage.getInstance("gs://buuk-tu-users");
         public ViewHolder(View view) {
             super(view);
             tv_userkie_username_search = view.findViewById(R.id.tv_userkie_username_search);
@@ -56,13 +52,11 @@ public class UserkieSearchAdapter extends RecyclerView.Adapter<UserkieSearchAdap
             iv_userkie_photo_search= view.findViewById(R.id.iv_userkie_photo_search);
             cv_userkie_search = view.findViewById(R.id.cv_userkie_search);
             iv_userkie_private_search = view.findViewById(R.id.iv_userkie_private_search);
+            fl_userkie_photo_container = view.findViewById(R.id.fl_userkie_photo_container);
         }
 
-        public FirebaseStorage getFirebaseStorage() {
-            return firebaseStorage;
-        }
-        public FirebaseFirestore getDb() {
-            return firestore;
+        public FirebaseStorage getFirebaseStorageUserkies() {
+            return firebaseStorageUserkies;
         }
 
         public TextView getTv_userkie_username_search() {
@@ -84,36 +78,8 @@ public class UserkieSearchAdapter extends RecyclerView.Adapter<UserkieSearchAdap
             return iv_userkie_private_search;
         }
 
-        public String getLastPhotoId() {
-            return lastPhotoId;
-        }
-
-        public void setLastPhotoId(String lastPhotoId) {
-            this.lastPhotoId = lastPhotoId;
-        }
-
-        public String getLastName() {
-            return lastName;
-        }
-
-        public void setLastName(String lastName) {
-            this.lastName = lastName;
-        }
-
-        public String getLastUsername() {
-            return lastUsername;
-        }
-
-        public void setLastUsername(String lastUsername) {
-            this.lastUsername = lastUsername;
-        }
-
-        public boolean isLastPrivacity() {
-            return lastPrivacity;
-        }
-
-        public void setLastPrivacity(boolean lastPrivacity) {
-            this.lastPrivacity = lastPrivacity;
+        public FrameLayout getFl_userkie_photo_container() {
+            return fl_userkie_photo_container;
         }
     }
     //Constructor donde pasamos la lista de productos y el contexto
@@ -134,18 +100,9 @@ public class UserkieSearchAdapter extends RecyclerView.Adapter<UserkieSearchAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         UserkieModel userkieModel = dataSet.get(position);
-        holder.getIv_userkie_photo_search().setVisibility(View.INVISIBLE);
-        String username = userkieModel.getUsername();
-        String UID = userkieModel.getUID();
-        if(!holder.getLastUsername().equals(username)){
-            holder.getTv_userkie_username_search().setText(username);
-            holder.setLastUsername(username);
-        }
-        String name = userkieModel.getName();
-        if(!holder.getLastName().equals(name)) {
-            holder.getTv_userkie_name_search().setText(name);
-            holder.setLastName(name);
-        }
+        holder.getFl_userkie_photo_container().setVisibility(View.INVISIBLE);
+            holder.getTv_userkie_username_search().setText(userkieModel.getUsername());
+            holder.getTv_userkie_name_search().setText(userkieModel.getName());
         if(!userkieModel.isProfile_private()){
             holder.getIv_userkie_private_search().setVisibility(View.INVISIBLE);
         }
@@ -153,23 +110,22 @@ public class UserkieSearchAdapter extends RecyclerView.Adapter<UserkieSearchAdap
         holder.getCv_userkie_search().setOnClickListener(v -> {
             Bundle bundle = new Bundle();
             bundle.putString("mode","other");
-            bundle.putString("UID",UID);
+            bundle.putString("UID",userkieModel.getUID());
             NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new ProfileView());
         });
         if (userkieModel.isPhoto_default()) {
                 String id_photo = userkieModel.getPhoto_id();
                 int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
-                if (resId != 0 && (!holder.getLastPhotoId().equals(id_photo))) {
+
+                if (resId != 0) {
                     Drawable drawable = ContextCompat.getDrawable(context, resId);
-                    holder.getIv_userkie_photo_search().setScaleType(ImageView.ScaleType.CENTER_CROP);
-                    holder.getIv_userkie_photo_search().setImageDrawable(drawable);
+                 //   holder.getIv_userkie_photo_search().set
                     DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(drawable), holder.getIv_userkie_photo_search(), R.color.brownBrown);
-                    holder.setLastPhotoId(id_photo);
-                    holder.getIv_userkie_photo_search().setVisibility(View.VISIBLE);
+                    holder.getFl_userkie_photo_container().setVisibility(View.VISIBLE);
                     EfectsUtils.startCircularReveal(drawable, holder.getIv_userkie_photo_search());
                 }
         } else {
-            StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-users").getReference(UID);
+            StorageReference userFolderRef = holder.getFirebaseStorageUserkies().getReference(userkieModel.getUID());
 
             userFolderRef.listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {
@@ -177,11 +133,11 @@ public class UserkieSearchAdapter extends RecyclerView.Adapter<UserkieSearchAdap
                         item.getBytes(5 * 1024 * 1024).addOnSuccessListener(bytes -> {
                             Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                             // Pass the original bitmap to DrawableUtils
-                            holder.getIv_userkie_photo_search().setScaleType(ImageView.ScaleType.CENTER_CROP);
                             DrawableUtils.personalizarImagenCircleButton(context, bitmap, holder.getIv_userkie_photo_search(), R.color.brownBrown);
                             Drawable drawable = new BitmapDrawable(context.getResources(), bitmap);
-                            holder.getIv_userkie_photo_search().setVisibility(View.VISIBLE);
                             EfectsUtils.startCircularReveal(drawable, holder.getIv_userkie_photo_search());
+                            holder.getFl_userkie_photo_container().setVisibility(View.VISIBLE);
+
                         });
                         break;
                     }

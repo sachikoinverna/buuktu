@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.buuktu.adapters.CharacterkieSearchAdapter;
 import com.example.buuktu.models.CharacterkieModel;
+import com.example.buuktu.views.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
@@ -31,12 +32,12 @@ import java.util.ArrayList;
  */
 public class CharacterkiesSearch extends Fragment {
     private ArrayList<CharacterkieModel> characterkieModelArrayList;
-    CollectionReference collectionCharacterkies;
+    private CollectionReference collectionCharacterkies;
     private FirebaseFirestore db;
-    FirebaseAuth firebaseAuth;
-    String UID;
-    RecyclerView rc_characterkies_search;
-    CharacterkieSearchAdapter characterkieSearchAdapter;
+    private String UID;
+    private RecyclerView rc_characterkies_search;
+    private CharacterkieSearchAdapter characterkieSearchAdapter;
+    private MainActivity mainActivity;
     public CharacterkiesSearch() {
     }
 
@@ -64,8 +65,8 @@ public class CharacterkiesSearch extends Fragment {
         View view = inflater.inflate(R.layout.fragment_characterkies_search, container, false);
         rc_characterkies_search = view.findViewById(R.id.rc_characterkies_search);
         db = FirebaseFirestore.getInstance();
-        firebaseAuth = FirebaseAuth.getInstance();
-        UID = firebaseAuth.getUid();
+        mainActivity = (MainActivity) getActivity();
+        UID = mainActivity.getUID();
         characterkieModelArrayList = new ArrayList<>();
         collectionCharacterkies = db.collection("Characterkies");
         characterkieSearchAdapter = new CharacterkieSearchAdapter(characterkieModelArrayList, getContext(), getParentFragmentManager());
