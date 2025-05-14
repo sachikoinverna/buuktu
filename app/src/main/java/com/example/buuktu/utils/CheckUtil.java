@@ -112,6 +112,7 @@ public class CheckUtil {
         CheckUtil.setErrorMessage(null, textInputLayout);
         return true;
     }
+    //Comprobueba si una cadena de texto contiene uno o más caracteres escritos en mayúscula.
     public static boolean checkNumbers(String text){
             return text.matches(".*\\d.*"); // Verifica si hay algún dígito en el texto
 
@@ -141,9 +142,11 @@ public class CheckUtil {
     public static boolean checkTextEmpty(String text){
             return text.isEmpty();
     }
-    public static boolean checkUppercase(String password){
+
+    //Comprobueba si una cadena de texto contiene uno o más caracteres escritos en mayúscula.
+    public static boolean checkUppercase(String text){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return password != null && password.chars().anyMatch(Character::isUpperCase);
+            return text.chars().anyMatch(Character::isUpperCase);
         }
         return false;
     }
@@ -151,6 +154,7 @@ public class CheckUtil {
         return password.matches(".*[\\W_].*");
     }
 
+    //Estable
     public static void setErrorMessage(String error, TextInputLayout textInputLayout) {
         textInputLayout.setError(error);
     }

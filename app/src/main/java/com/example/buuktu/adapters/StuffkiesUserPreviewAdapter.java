@@ -1,6 +1,5 @@
 package com.example.buuktu.adapters;
 
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,16 +15,16 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.buuktu.views.CreateEditStuffkie;
 import com.example.buuktu.R;
-import com.example.buuktu.StuffkieView;
+import com.example.buuktu.views.StuffkieView;
 import com.example.buuktu.dialogs.DeleteGeneralDialog;
 import com.example.buuktu.models.StuffkieModel;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.EfectsUtils;
 import com.example.buuktu.utils.NavigationUtils;
-import com.example.buuktu.views.CreateEditWorldkie;
+import com.example.buuktu.views.MainActivity;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -35,7 +34,7 @@ import java.util.ArrayList;
 public class StuffkiesUserPreviewAdapter extends RecyclerView.Adapter<StuffkiesUserPreviewAdapter.ViewHolder>{
 
     private final ArrayList<StuffkieModel> dataSet;
-    private final Context context;
+    private final MainActivity context;
     private final FragmentManager fragmentManager;
     private final String mode;
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -84,7 +83,7 @@ public class StuffkiesUserPreviewAdapter extends RecyclerView.Adapter<StuffkiesU
     }
 
     //Constructor donde pasamos la lista de productos y el contexto
-    public StuffkiesUserPreviewAdapter(ArrayList<StuffkieModel> dataSet, Context ctx, FragmentManager fragmentManager, String mode) {
+    public StuffkiesUserPreviewAdapter(ArrayList<StuffkieModel> dataSet, MainActivity ctx, FragmentManager fragmentManager, String mode) {
         this.dataSet = dataSet;
         this.context = ctx;
         this.fragmentManager = fragmentManager;
@@ -109,46 +108,48 @@ public class StuffkiesUserPreviewAdapter extends RecyclerView.Adapter<StuffkiesU
             holder.getTv_stuffkie_preview_draft().setVisibility(View.INVISIBLE);
         }
         if(!stuffkieModel.isStuffkie_private()){
-            holder.getIv_stuffkie_private_preview().setVisibility(View.GONE);
+            holder.getIv_stuffkie_private_preview().setVisibility(View.INVISIBLE);
         }
 
         holder.getCv_stuffkie_preview().setOnClickListener(v -> {
             Bundle bundle = new Bundle();
-            bundle.putString("mode","other");
+            bundle.putString("mode",mode);
             bundle.putString("UID",stuffkieModel.getUID());
             bundle.putString("UID_AUTHOR",stuffkieModel.getAUTHOR_UID());
             bundle.putString("UID_WORLDKIE",stuffkieModel.getWORDLKIE_UID());
             NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new StuffkieView());
         });
-        holder.getCv_stuffkie_preview().setOnLongClickListener(v -> {
-            View popupView = LayoutInflater.from(context).inflate(R.layout.menu_popup, null);
-            PopupWindow popupWindow = new PopupWindow(popupView,
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    true);
+        if(mode.equals("self")) {
+            holder.getCv_stuffkie_preview().setOnLongClickListener(v -> {
+                View popupView = LayoutInflater.from(context).inflate(R.layout.menu_popup, null);
+                PopupWindow popupWindow = new PopupWindow(popupView,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        true);
 
 // Opcional: animación y sombra
-            popupWindow.setElevation(8f);
+                popupWindow.setElevation(8f);
 
 // Mostrarlo anclado al CardView
-            popupWindow.showAsDropDown(holder.getCv_stuffkie_preview(), 0, -50);
+                popupWindow.showAsDropDown(holder.getCv_stuffkie_preview(), 0, -50);
 
 // ListenersBundle bundle = new Bundle();
 //        bundle.putString("worldkie_id", worldkieModel.getUID());
-            popupView.findViewById(R.id.bt_edit_item).setOnClickListener(view -> {
-                Bundle bundle = new Bundle();
-                bundle.putString("worldkie_id", stuffkieModel.getUID());
-                NavigationUtils.goNewFragmentWithBundle(bundle, fragmentManager, new CreateEditWorldkie());
-                popupWindow.dismiss();
-            });
+                popupView.findViewById(R.id.bt_edit_item).setOnClickListener(view -> {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("stuffkie_id", stuffkieModel.getUID());
+                    NavigationUtils.goNewFragmentWithBundle(bundle, fragmentManager, new CreateEditStuffkie());
+                    popupWindow.dismiss();
+                });
 
-            popupView.findViewById(R.id.bt_del_item).setOnClickListener(view2 -> {
-                DeleteGeneralDialog deleteGeneralDialog = new DeleteGeneralDialog(context, "stuffkie", stuffkieModel.getUID());
-                deleteGeneralDialog.show();
-                popupWindow.dismiss();
+                popupView.findViewById(R.id.bt_del_item).setOnClickListener(view2 -> {
+                    DeleteGeneralDialog deleteGeneralDialog = new DeleteGeneralDialog(context, "stuffkie", stuffkieModel.getUID());
+                    deleteGeneralDialog.show();
+                    popupWindow.dismiss();
+                });
+                return true;
             });
-            return true;
-        });
+        }
         if (stuffkieModel.isPhoto_default()) {
                 String id_photo = stuffkieModel.getPhoto_id();
                 int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
@@ -166,7 +167,7 @@ public class StuffkiesUserPreviewAdapter extends RecyclerView.Adapter<StuffkiesU
 
                 }
         } else {
-            StorageReference userFolderRef = holder.getFirebaseStorageStuffkies().getReference(stuffkieModel.getUID());
+            StorageReference userFolderRef = context.getFirebaseStorageStuffkies().getReference(stuffkieModel.getUID());
 
             userFolderRef.listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {

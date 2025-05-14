@@ -6,7 +6,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:fontFamily">@font/alegreya</item>
-        <item name="colorPrimary">#5f5a7c</item>
+        <item name="colorPrimary">@color/purple1</item>
 
     </style>
 

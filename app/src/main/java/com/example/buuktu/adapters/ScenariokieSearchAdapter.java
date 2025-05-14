@@ -1,6 +1,5 @@
 package com.example.buuktu.adapters;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -16,15 +15,13 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.buuktu.CharacterkieView;
+import com.example.buuktu.views.CharacterkieView;
 import com.example.buuktu.R;
-import com.example.buuktu.models.CharacterkieModel;
 import com.example.buuktu.models.ScenariokieModel;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.NavigationUtils;
+import com.example.buuktu.views.MainActivity;
 import com.google.android.material.card.MaterialCardView;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
@@ -35,15 +32,13 @@ public class ScenariokieSearchAdapter extends RecyclerView.Adapter<ScenariokieSe
     private final ArrayList<ScenariokieModel> dataSet;
     private final FragmentManager fragmentManager;
 
-    private final Context context;
+    private final MainActivity context;
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final ImageView iv_scenariokie_photo_search;
         private final ImageView iv_characterkie_private_search;
         final MaterialCardView cv_scenariokie_search;
         final TextView tv_characterkie_name_search;
         final TextView tv_characterkie_username_search;
-        private final FirebaseStorage firebaseStorageScenariokies = FirebaseStorage.getInstance("gs://buuk-tu-scenariokies");
-        private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         public ViewHolder(View view) {
             super(view);
             tv_characterkie_username_search = view.findViewById(R.id.tv_scenariokie_username_search);
@@ -51,13 +46,6 @@ public class ScenariokieSearchAdapter extends RecyclerView.Adapter<ScenariokieSe
             iv_scenariokie_photo_search = view.findViewById(R.id.iv_scenariokie_photo_search);
             cv_scenariokie_search = view.findViewById(R.id.cv_scenariokie_search);
             iv_characterkie_private_search = view.findViewById(R.id.iv_scenariokie_private_search);
-        }
-
-        public FirebaseStorage getFirebaseStorageScenariokies() {
-            return firebaseStorageScenariokies;
-        }
-        public FirebaseFirestore getDb() {
-            return firestore;
         }
 
         public TextView getTv_characterkie_username_search() {
@@ -80,7 +68,7 @@ public class ScenariokieSearchAdapter extends RecyclerView.Adapter<ScenariokieSe
         }
     }
     //Constructor donde pasamos la lista de productos y el contexto
-    public ScenariokieSearchAdapter(ArrayList<ScenariokieModel> dataSet, Context ctx, FragmentManager fragmentManager) {
+    public ScenariokieSearchAdapter(ArrayList<ScenariokieModel> dataSet, MainActivity ctx, FragmentManager fragmentManager) {
         this.dataSet = dataSet;
         this.context = ctx;
         this.fragmentManager = fragmentManager;
@@ -125,7 +113,7 @@ public class ScenariokieSearchAdapter extends RecyclerView.Adapter<ScenariokieSe
                 }
             }
         } else {
-            StorageReference userFolderRef = holder.getFirebaseStorageScenariokies().getReference(scenariokieModel.getUID());
+            StorageReference userFolderRef = context.getFirebaseStorageScenariokies().getReference(scenariokieModel.getUID());
 
             userFolderRef.listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {

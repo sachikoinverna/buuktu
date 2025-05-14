@@ -18,7 +18,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
-import com.example.buuktu.CreateCharacterkie;
+import com.example.buuktu.views.CreateCharacterkie;
 import com.example.buuktu.R;
 import com.example.buuktu.views.MainActivity;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -44,10 +44,10 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
     ImageView iv_head_day_month_birthday_selector,iv_background_day_month_selector;
     boolean daysMonthsSelectorVisible, yearFieldVisible, daysOptionVisible,monthVisible,yearOptionVisible;
     TextView[] tvDays;
-    String[]meses= new String[]{"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"};;
+    final String[]meses= new String[]{"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"};
     Drawable arrow_down,arrow_up;
     CreateCharacterkie createCharacterkie;
-    String optionBirthdayString;
+    final String optionBirthdayString;
     public BottomSheetChooseBirthday(int option,String optionBirthdayString) {
         this.option = option;
         this.optionBirthdayString=optionBirthdayString;

@@ -13,14 +13,14 @@
         android:id="@+id/materialCardView"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/loginborders"
+        android:backgroundTint="@color/green2"
         app:cardCornerRadius="40dp"
         app:cardElevation="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="#7E3535"
+        app:strokeColor="@color/green1"
         app:strokeWidth="3dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -37,17 +37,30 @@
                 android:layout_marginEnd="8dp"
                 android:hint="@string/emailUsername"
                 android:textAlignment="center"
+                app:boxBackgroundColor="@color/white"
                 app:boxCornerRadiusBottomEnd="58dp"
                 app:boxCornerRadiusBottomStart="58dp"
                 app:boxCornerRadiusTopEnd="58dp"
                 app:boxCornerRadiusTopStart="58dp"
+                app:boxStrokeColor="@color/green3"
+                app:boxStrokeErrorColor="@color/redError"
+                app:boxStrokeWidth="2dp"
+                app:boxStrokeWidthFocused="3dp"
                 app:counterEnabled="true"
                 app:counterMaxLength="50"
+                app:counterOverflowTextColor="@color/green3"
+                app:counterTextColor="@color/green3"
+                app:cursorColor="@color/green3"
+                app:cursorErrorColor="@color/redError"
+                app:errorTextColor="@color/redError"
                 app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
+                app:hintTextColor="@color/green3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:startIconDrawable="@drawable/twotone_email_24">
+                app:placeholderTextColor="@color/green3"
+                app:startIconDrawable="@drawable/twotone_email_24"
+                app:startIconTint="@color/green3">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_emailLogin"
@@ -57,6 +70,8 @@
                     android:inputType="textEmailAddress"
                     android:maxLength="50"
                     android:textAlignment="center"
+                    android:textColor="@color/green1"
+                    android:textColorHint="@color/green3"
                     android:textSize="20sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -71,19 +86,32 @@
                 android:layout_marginBottom="16dp"
                 android:hint="@string/user_password"
                 android:textAlignment="center"
+                app:boxBackgroundColor="@color/white"
+                app:boxBackgroundMode="outline"
                 app:boxCornerRadiusBottomEnd="58dp"
                 app:boxCornerRadiusBottomStart="58dp"
                 app:boxCornerRadiusTopEnd="58dp"
                 app:boxCornerRadiusTopStart="58dp"
+                app:boxStrokeColor="@color/green3"
+                app:boxStrokeErrorColor="@color/redError"
+                app:boxStrokeWidth="2dp"
+                app:boxStrokeWidthFocused="3dp"
                 app:counterEnabled="true"
                 app:counterMaxLength="50"
+                app:counterTextColor="@color/green3"
+                app:cursorColor="@color/green3"
+                app:cursorErrorColor="@color/redError"
                 app:endIconMode="password_toggle"
+                app:endIconTint="@color/green3"
+                app:errorTextColor="@color/redError"
                 app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
+                app:hintTextColor="@color/green3"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/et_emailLoginFilled"
-                app:startIconDrawable="@drawable/twotone_keyboard_24">
+                app:startIconDrawable="@drawable/twotone_keyboard_24"
+                app:startIconTint="@color/green3">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_passwordLogin"
@@ -94,6 +122,8 @@
                     android:inputType="textPassword"
                     android:maxLength="50"
                     android:textAlignment="center"
+                    android:textColor="@color/green1"
+                    android:textColorHint="@color/green3"
                     android:textSize="20sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -107,6 +137,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="@string/login"
+        android:textColor="#5E6646"
         android:textSize="60sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toTopOf="@+id/materialCardView"
@@ -117,21 +148,17 @@
     <Button
         android:id="@+id/tv_loginToRegisterButton"
         style="@style/Widget.Material3.Button.OutlinedButton"
-        android:layout_width="180dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:backgroundTint="#9FA8DA"
-        android:foregroundTint="#FFFFFF"
+        android:backgroundTint="@color/green1"
         android:gravity="center"
         android:onClick="handlerGoToRegister"
         android:text="@string/register"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:icon="@drawable/sharp_emoji_nature_24"
-        app:iconGravity="start"
-        app:iconTint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:strokeColor="#FFFFFF"
@@ -140,23 +167,39 @@
     <Button
         android:id="@+id/tv_loginButton"
         style="@style/Widget.Material3.Button.OutlinedButton"
-        android:layout_width="180dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginTop="32dp"
-        android:backgroundTint="#9FA8DA"
+        android:backgroundTint="@color/green1"
         android:gravity="center"
         android:onClick="handlerLogin"
         android:text="Iniciar sesion"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:icon="@drawable/baseline_diversity_1_24"
-        app:iconGravity="start"
-        app:iconTint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialCardView"
         app:strokeColor="#FFFFFF"
         app:strokeWidth="3dp" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_loginButton"
+        app:layout_constraintStart_toEndOf="@+id/tv_loginButton"
+        app:layout_constraintTop_toTopOf="@+id/tv_loginButton"
+        app:srcCompat="@mipmap/key_login" />
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_loginToRegisterButton"
+        app:srcCompat="@mipmap/butterfly_login" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

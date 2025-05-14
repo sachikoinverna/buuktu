@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WorldkieView">
+    tools:context=".views.WorldkieView">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -20,12 +20,12 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            app:cardBackgroundColor="@color/brownBrown"
+            app:cardBackgroundColor="@color/purple2"
             app:layout_constraintBottom_toTopOf="@+id/sv_pa"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:strokeColor="#B388FF"
+            app:strokeColor="@color/purple1"
             app:strokeWidth="4dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -67,7 +67,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:text="TextView"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/purple1"
                     app:layout_constraintEnd_toStartOf="@+id/tv_at"
                     app:layout_constraintStart_toEndOf="@+id/textView21"
                     app:layout_constraintTop_toBottomOf="@+id/tv_nameCharacterkieView" />
@@ -80,7 +80,7 @@
                     android:layout_marginEnd="8dp"
                     android:gravity="center"
                     android:text="Nombre"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/purple3"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -94,7 +94,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:text="@string/at_symbol"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/purple1"
                     app:layout_constraintStart_toEndOf="@+id/tv_nameUserCharacterkieView"
                     app:layout_constraintTop_toBottomOf="@+id/tv_nameCharacterkieView" />
 
@@ -105,7 +105,7 @@
                     android:layout_marginTop="8dp"
                     android:gravity="center"
                     android:text="Nombre de usuario"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/purple1"
                     app:layout_constraintStart_toEndOf="@+id/tv_at"
                     app:layout_constraintTop_toBottomOf="@+id/tv_nameCharacterkieView" />
 
@@ -116,8 +116,8 @@
                     android:layout_marginStart="100dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
-                    android:text="Worldkie"
-                    android:textColor="#FFFFFF"
+                    android:text="@string/worldkie"
+                    android:textColor="@color/purple3"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_usernameCharacterkieView" />
@@ -129,7 +129,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:text="TextView"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/purple1"
                     app:layout_constraintStart_toEndOf="@+id/textView4"
                     app:layout_constraintTop_toBottomOf="@+id/tv_usernameCharacterkieView" />
 
@@ -140,8 +140,8 @@
                     android:layout_marginStart="100dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:text="Creador:"
-                    android:textColor="#FFFFFF"
+                    android:text="@string/author"
+                    android:textColor="@color/purple3"
                     app:layout_constraintEnd_toStartOf="@+id/tv_nameUserCharacterkieView"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_nameCharacterkieView" />
@@ -157,18 +157,17 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:paddingBottom="32dp"
-            app:cardBackgroundColor="#FFFFFF"
+            app:cardBackgroundColor="@color/rose2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cv_info_worldkie"
-            app:strokeColor="#642D2D"
+            app:strokeColor="@color/rose1"
             app:strokeWidth="3dp">
 
             <ScrollView
                 android:id="@+id/sv_pa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#FFFFFF"
                 android:paddingTop="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -184,10 +183,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="------------------★-------------------"
-                        android:textColor="#9FA8DA"
+                        android:textColor="@color/rose3"
                         android:textSize="24sp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.842"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
@@ -206,7 +204,7 @@
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView13"
-                        app:tint="#9FA8DA" />
+                        app:tint="@color/rose1" />
 
                     <ImageView
                         android:id="@+id/imageView2"
@@ -224,7 +222,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/et_nameCharacterkieCreateFull"
                         app:layout_constraintVertical_bias="0.0"
-                        app:tint="#7D83A9" />
+                        app:tint="@color/rose1" />
 
                     <TextView
                         android:id="@+id/tv_basic_info_characterkies2"
@@ -240,7 +238,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/iv_locked_characterkie" />
 
                     <ImageButton
-                        android:id="@+id/bt_basic_info_characterkies2"
+                        android:id="@+id/bt_basic_info_characterkies_view"
                         android:layout_width="33dp"
                         android:layout_height="33dp"
                         android:layout_marginTop="8dp"
@@ -250,7 +248,7 @@
                         android:src="@drawable/twotone_arrow_drop_down_circle_24"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/iv_locked_characterkie"
-                        app:tint="#FFFFFF" />
+                        app:tint="@color/white" />
 
                     <ImageView
                         android:id="@+id/iv_locked_characterkie"
@@ -279,12 +277,12 @@
                     <TextView
                         android:id="@+id/tv_birthdayViewCharacterkie"
                         android:layout_width="300dp"
-                        android:layout_height="30dp"
+                        android:layout_height="40dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="16dp"
                         android:background="@drawable/button_backgground"
-                        android:backgroundTint="#CE93D8"
-                        android:backgroundTintMode="multiply"
+                        android:backgroundTint="@color/rose1"
+                        android:backgroundTintMode="screen"
                         android:gravity="center"
                         android:text="@string/birthday"
                         android:textColor="#FFFFFF"
@@ -296,11 +294,11 @@
                     <TextView
                         android:id="@+id/tv_pronounsViewCharacterkie"
                         android:layout_width="300dp"
-                        android:layout_height="30dp"
+                        android:layout_height="40dp"
                         android:layout_marginTop="8dp"
                         android:background="@drawable/button_backgground"
-                        android:backgroundTint="#CE93D8"
-                        android:backgroundTintMode="multiply"
+                        android:backgroundTint="@color/rose1"
+                        android:backgroundTintMode="screen"
                         android:gravity="center"
                         android:text="@string/pronouns"
                         android:textColor="#FFFFFF"
@@ -311,10 +309,10 @@
                     <TextView
                         android:id="@+id/tv_genderViewCharacterkie"
                         android:layout_width="300dp"
-                        android:layout_height="30dp"
+                        android:layout_height="40dp"
                         android:layout_marginTop="8dp"
                         android:background="@drawable/button_backgground"
-                        android:backgroundTint="#CE93D8"
+                        android:backgroundTint="@color/rose1"
                         android:backgroundTintMode="screen"
                         android:gravity="center"
                         android:text="@string/gender"
@@ -324,16 +322,16 @@
                         app:layout_constraintTop_toBottomOf="@+id/tv_pronounsViewCharacterkie" />
 
                     <TextView
-                        android:id="@+id/textView17"
+                        android:id="@+id/tv_statusViewCharacterkie"
                         android:layout_width="300dp"
-                        android:layout_height="30dp"
+                        android:layout_height="40dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="16dp"
                         android:background="@drawable/button_backgground"
-                        android:backgroundTint="#CE93D8"
+                        android:backgroundTint="@color/rose1"
                         android:backgroundTintMode="screen"
                         android:gravity="center"
-                        android:text="TextView"
+                        android:text="@string/status"
                         android:textColor="#FFFFFF"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="@+id/iv_background_basic_info_characterkie3"

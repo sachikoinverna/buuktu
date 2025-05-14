@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -20,11 +20,7 @@ import com.example.buuktu.models.SettingModel;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SettingsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class SettingsFragment extends Fragment {
     MainActivity mainActivity;
     private RecyclerView rc_settings;
@@ -34,15 +30,8 @@ public class SettingsFragment extends Fragment {
     SettingsAdapter settingsAdapter;
     ImageButton backButton,ib_save,ib_profile_superior;
     public SettingsFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment SettingsFragment.
-     */
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
     }
@@ -50,8 +39,6 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
@@ -127,6 +114,6 @@ public class SettingsFragment extends Fragment {
     private void updateRecyclerView(ArrayList<SettingModel> settingModels){
         settingsAdapter = new SettingsAdapter(settingModels,mainActivity,getParentFragmentManager());
         rc_settings.setAdapter(settingsAdapter);
-        rc_settings.setLayoutManager(new LinearLayoutManager(mainActivity));
+        rc_settings.setLayoutManager(new GridLayoutManager(mainActivity,2));
     }
 }

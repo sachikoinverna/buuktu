@@ -15,11 +15,12 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
+        app:cardBackgroundColor="@color/rose1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="#8C9EFF"
+        app:strokeColor="@color/white"
         app:strokeWidth="3dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -49,6 +50,8 @@
                 android:gravity="center"
                 android:text="TextView"
                 android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -63,7 +66,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/twotone_lock_24" />
+                app:srcCompat="@drawable/twotone_lock_24"
+                app:tint="@color/white" />
 
             <TextView
                 android:id="@+id/tv_stuffkie_preview_draft"
@@ -71,35 +75,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/draft"
-                android:textColor="#474242"
+                android:textColor="@color/white"
+                android:textSize="19sp"
                 android:textStyle="italic"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/iv_stuffkie_preview_worldkie" />
-
-            <ImageButton
-                android:id="@+id/imageButton2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="8dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                app:layout_constraintStart_toStartOf="@+id/iv_stuffkie_preview_worldkie"
-                app:layout_constraintTop_toBottomOf="@+id/tv_stuffkie_preview_draft"
-                app:srcCompat="@drawable/twotone_brush_24" />
-
-            <ImageButton
-                android:id="@+id/imageButton3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="24dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                app:layout_constraintEnd_toEndOf="@+id/iv_stuffkie_preview_worldkie"
-                app:layout_constraintTop_toBottomOf="@+id/tv_stuffkie_preview_draft"
-                app:srcCompat="@drawable/twotone_delete_sweep_24" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

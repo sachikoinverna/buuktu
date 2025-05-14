@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Note">
+    tools:context=".views.Note">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
@@ -12,7 +12,10 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="24dp">
+        android:layout_marginBottom="24dp"
+        app:cardBackgroundColor="@color/rose2"
+        app:strokeColor="@color/rose1"
+        app:strokeWidth="3dp">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -32,8 +35,9 @@
                     android:ems="10"
                     android:hint="@string/title"
                     android:inputType="text"
+                    android:textColor="@color/rose3"
                     android:textCursorDrawable="@drawable/lila_star_cursor"
-                    android:textSize="20sp"
+                    android:textSize="24sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -50,7 +54,9 @@
                     android:ems="10"
                     android:hint="@string/write_here"
                     android:inputType="textMultiLine"
+                    android:textColor="@color/rose3"
                     android:textCursorDrawable="@drawable/lila_star_cursor"
+                    android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

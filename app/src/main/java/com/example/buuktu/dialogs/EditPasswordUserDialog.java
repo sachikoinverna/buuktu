@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
@@ -18,7 +17,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.concurrent.TimeUnit;
 
@@ -28,10 +26,10 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class EditPasswordUserDialog extends Dialog implements View.OnClickListener {
     ImageButton ib_accept_dialog,ib_close_dialog ;
-    TextView tv_title;
     TextInputLayout et_newpasswordRepeatFull,et_newpasswordFull,et_oldpasswordFull;
     TextInputEditText et_oldpassword,et_newPassword,et_newPasswordRepeat;
     Context context;
+    LottieAnimationView animationView;
     public EditPasswordUserDialog(@NonNull Context context) {
         super(context);
     }
@@ -43,14 +41,11 @@ public class EditPasswordUserDialog extends Dialog implements View.OnClickListen
         initComponents();
          setListeners();
 
-        setCanceledOnTouchOutside(false);
-        setCancelable(false);
-        getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        setDialogProperties();
     }
     private void initComponents(){
         ib_close_dialog = findViewById(R.id.ib_close_dialog);
         ib_accept_dialog = findViewById(R.id.ib_accept_dialog);
-        tv_title = findViewById(R.id.tv_edit_title);
         et_oldpassword =findViewById(R.id.et_oldpassword);
         et_oldpasswordFull = findViewById(R.id.et_oldpasswordFull);
 
@@ -59,68 +54,59 @@ public class EditPasswordUserDialog extends Dialog implements View.OnClickListen
 
         et_newPasswordRepeat  = findViewById(R.id.et_newPasswordRepeat);
         et_newpasswordRepeatFull = findViewById(R.id.et_newPasswordRepeatFull);
+        animationView = findViewById(R.id.anim_edit);
     }
     private void setListeners(){
         ib_accept_dialog.setOnClickListener(this);
         ib_close_dialog.setOnClickListener(this);
     }
 private void saveNewPassword(){
-    tv_title.setText("Cuidado");
-
-    LottieAnimationView animationView = findViewById(R.id.anim_edit);
-
-    tv_title.setVisibility(View.GONE);
 
     ib_close_dialog.setVisibility(View.GONE);
     ib_accept_dialog.setVisibility(View.GONE);
-    animationView.setAnimation(R.raw.reading_anim);
-    animationView.playAnimation();
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    String newPassword = et_newPassword.getText().toString();
-    String newPasswordRepeat = et_newPasswordRepeat.getText().toString();
+    animationView.setVisibility(View.VISIBLE);
     if(CheckUtil.handlerCheckNewIsTheSameAsOld(context,et_newPassword,et_oldpassword,et_newpasswordFull)) {
         if (CheckUtil.handlerCheckPassword(context, et_newPassword, et_newpasswordFull) && CheckUtil.handlerCheckPasswordRepeat(context, et_newPasswordRepeat, et_newPassword, et_newpasswordRepeatFull)) {
-            if (newPassword.equals(newPasswordRepeat)) {
-                String email = user.getEmail();
+            if (et_newPassword.getText().toString().equals(et_newPasswordRepeat.getText().toString())) {
 
-                String oldPassword = et_oldpassword.getText().toString();
-                AuthCredential credential = EmailAuthProvider.getCredential(email, oldPassword);
-
-                user.reauthenticate(credential).addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        // Si la contraseña actual es correcta, cambiamos la contraseña
-                        user.updatePassword(newPassword).addOnCompleteListener(updateTask -> {
-                            if (updateTask.isSuccessful()) {
-                                EfectsUtils.setAnimationsDialog("success",animationView);
-
-                                Completable.timer(5, TimeUnit.SECONDS)
-                                        .subscribeOn(Schedulers.io())
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe(() -> {
-                                            animationView.setVisibility(View.GONE);
-                                            dismiss();
-                                        });
+                AuthCredential credential = EmailAuthProvider.getCredential(FirebaseAuth.getInstance().getCurrentUser().getEmail(), et_oldpassword.getText().toString());
+                Completable.timer(2, TimeUnit.SECONDS)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(() -> FirebaseAuth.getInstance().getCurrentUser().reauthenticate(credential).addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                // Si la contraseña actual es correcta, cambiamos la contraseña
+                                FirebaseAuth.getInstance().getCurrentUser().updatePassword(et_newPassword.getText().toString()).addOnCompleteListener(updateTask -> {
+                                    if (updateTask.isSuccessful()) {
+                                        successfail("success");
+                                    } else {
+                                        successfail("fail");
+                                    }
+                                });
                             } else {
-                                EfectsUtils.setAnimationsDialog("fail",animationView);
-
-                                delayedDismiss();
+                                EfectsUtils.setAnimationsDialog("fail", animationView);
+                                et_oldpasswordFull.setError("Contraseña actual incorrecta");
                             }
-                        });
-                    } else {
-                        EfectsUtils.setAnimationsDialog("fail",animationView);
-                        et_oldpasswordFull.setError("Contraseña actual incorrecta");
-                    }
-                });
+                        }));
 
             }
         }
     }
+    }
+    private void successfail(String mode){
+        EfectsUtils.setAnimationsDialog(mode, animationView);
+        delayedDismiss();
     }
     private void delayedDismiss() {
         Completable.timer(5, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::dismiss);
+    }
+    private void setDialogProperties(){
+        setCanceledOnTouchOutside(false);
+        setCancelable(false);
+        getWindow().setBackgroundDrawableResource(android.R.color.transparent);
     }
     @Override
     public void onClick(View v) {

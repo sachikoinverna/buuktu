@@ -12,11 +12,10 @@ import android.graphics.ImageDecoder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.RemoteException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Button;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -24,9 +23,9 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.example.buuktu.CreateCharacterkie;
-import com.example.buuktu.CreateEditScenariokie;
-import com.example.buuktu.CreateEditStuffkie;
+import com.example.buuktu.views.CreateCharacterkie;
+import com.example.buuktu.views.CreateEditScenariokie;
+import com.example.buuktu.views.CreateEditStuffkie;
 import com.example.buuktu.R;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.views.CreateEditWorldkie;
@@ -38,7 +37,7 @@ import java.io.IOException;
 
 public class BottomSheetProfilePhoto extends BottomSheetDialogFragment implements View.OnClickListener{
     Context context;
-    TextView tv_choose_photo_default,tv_choose_photo_gallery;
+    Button tv_choose_photo_default,tv_choose_photo_gallery;
     int flag = Intent.FLAG_GRANT_READ_URI_PERMISSION;
     int RESULT_CODE = 0;
     final int REQUEST_CODE = 1;
@@ -96,6 +95,8 @@ public class BottomSheetProfilePhoto extends BottomSheetDialogFragment implement
                                 createCharacterkie.setImageUri(uri);
                             } else if (createEditStuffkie!=null) {
                                 createEditStuffkie.setImageUri(uri);
+                            } else if(createEditScenariokie!=null){
+                                createEditScenariokie.setImageUri(uri);
                             }
                             Bitmap bitmap;
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
@@ -111,30 +112,28 @@ public class BottomSheetProfilePhoto extends BottomSheetDialogFragment implement
                                     createEditWorldkie.setImageUri(uri);
                                 }else if (createEditStuffkie!=null) {
                                     createEditStuffkie.setImageUri(uri);
+                                }else if(createEditScenariokie!=null){
+                                    createEditScenariokie.setImageUri(uri);
+                                }else if (createCharacterkie!=null) {
+                                    createCharacterkie.setImageUri(uri);
                                 }
 
-                                if(register!=null) {
-                                  //  register.getIB_profile_photo().setImageDrawable(drawable);
-                                    DrawableUtils.personalizarImagenCircleButton(context, uri, register.getIB_profile_photo(), R.color.brownMaroon);
-                                   // register.getIB_profile_photo().invalidate();
+                            if(register!=null) {
+                                    DrawableUtils.personalizarImagenCircleButton(context, uri, register.getIB_profile_photo(), R.color.blue1);
                                     register.setPhotoNoDefault();
                                     register.setSource("device");
                                 } else if (createEditWorldkie!=null) {
-                                 //   createEditWorldkie.getIb_select_img_create_worldkie().setImageDrawable(drawable);
                                     DrawableUtils.personalizarImagenCuadradoButton(context,150/6,7,R.color.brownMaroon,uri, createEditWorldkie.getIb_select_img_create_worldkie());
-
-                                      //  DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(drawable), createEditWorldkie.getIb_select_img_create_worldkie(), R.color.brownMaroon);
                                     createEditWorldkie.setPhotoNoDefault();
                                 } else if (createCharacterkie!=null) {
                                     DrawableUtils.personalizarImagenCircleButton(context, uri, createCharacterkie.getIb_select_img_create_worldkie(), R.color.brownMaroon);
                                     createCharacterkie.setPhotoNoDefault();
                                 }else if (createEditStuffkie!=null) {
-                                   // createEditStuffkie.getIb_select_img_create_worldkie().setImageDrawable(drawable);
-                                   // DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(drawable), createCharacterkie.getIb_select_img_create_worldkie(), R.color.brownMaroon);
-                                    createEditStuffkie.setSource("device");
-                                    createEditStuffkie.setPhotoNoDefault();
+
+                                DrawableUtils.personalizarImagenCuadradoButton(context,150/6,7,R.color.brownMaroon,uri, createEditStuffkie.getIb_select_img_create_stuffkie());
+                                createEditStuffkie.setPhotoNoDefault();
                                 } else if(createEditScenariokie!=null){
-                                    DrawableUtils.personalizarImagenCuadradoButton(context,150/6,7,R.color.brownMaroon,uri, createEditScenariokie.getIb_select_img_create_worldkie());
+                                    DrawableUtils.personalizarImagenCuadradoButton(context,150/6,7,R.color.brownMaroon,uri, createEditScenariokie.getIb_select_img_create_scenariokie());
                                     createEditScenariokie.setPhotoNoDefault();
 
                                 }

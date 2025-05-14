@@ -25,15 +25,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.example.buuktu.AccountSettings;
-import com.example.buuktu.InspoDesafios;
-import com.example.buuktu.Note;
-import com.example.buuktu.Notes;
-import com.example.buuktu.Notikies;
-import com.example.buuktu.ProfileSettings;
-import com.example.buuktu.ProfileView;
 import com.example.buuktu.R;
-import com.example.buuktu.Search;
 import com.example.buuktu.broadcastReceiver.WordNotificationReceiver;
 import com.example.buuktu.dialogs.InfoGeneralDialog;
 import com.example.buuktu.utils.DrawableUtils;
@@ -45,6 +37,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.storage.FirebaseStorage;
@@ -59,14 +52,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ImageButton ib_info,ib_back,ib_self_profile,ib_save;
     FirebaseAuth.AuthStateListener authStateListener;
     private String UID;
-    private FirebaseFirestore db;
-    private final FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-users");
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final FirebaseStorage firebaseStorageUsers = FirebaseStorage.getInstance("gs://buuk-tu-users"),
+    firebaseStorageWorldkies= FirebaseStorage.getInstance("gs://buuk-tu-worldkies"),
+            firebaseStorageCharacterkies = FirebaseStorage.getInstance("gs://buuk-tu-characterkies")
+                    ,firebaseStorageStuffkies = FirebaseStorage.getInstance("gs://buuk-tu-stuffkies")
+            ,firebaseStorageScenariokies = FirebaseStorage.getInstance("gs://buuk-tu-scenariokies");
     private InfoGeneralDialog infoGeneralDialog;
     private FragmentManager fragmentManager;
     private NavigationView navigationView;
     private Toolbar toolbar;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-
+    private final CollectionReference collectionNotekies = db.collection("Notekies"),
+            collectionUsers=db.collection("Users"),
+            notikiesCollection = db.collection("Notikies")
+            ,collectionScenariokies = db.collection("Scenariokies"),
+            collectionStuffkies = db.collection("Stuffkies"),
+            collectionCharacterkies = db.collection("Characterkies"),
+            collectionWorldkies = db.collection("Worldkies");
     int colorEntero;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +80,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        //inicialize();
         UIUtils.hideSystemUI(this);
 
         initComponents();
@@ -85,7 +87,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentManager = getSupportFragmentManager();
          colorEntero = Color.parseColor("#5f5a7c");
         UID = firebaseAuth.getUid();
-        db = FirebaseFirestore.getInstance();
+
+
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
                 .setPersistenceEnabled(true)
                 .build();
@@ -137,43 +140,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void getInfo(View view){
         ib_info.setOnClickListener(v -> {
             Fragment fragment  = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-            if(fragment instanceof Home){
-                showInfoDialog("search");
-            } else if (fragment instanceof Search) {
+            if (fragment instanceof Search) {
                 showInfoDialog("search");
             } else if (fragment instanceof Inspo){
                 showInfoDialog("inspo");
             }else if (fragment instanceof InspoDesafios){
                 showInfoDialog("future_function");
             }else if(fragment instanceof Note) {
-                showInfoDialog( "future_function");
-            } else if(fragment instanceof SettingsFragment){
-                showInfoDialog("future_function");
-            } else if(fragment instanceof AccountSettings){
-                showInfoDialog("future_function");
-            } else if(fragment instanceof ProfileSettings){
-                showInfoDialog("future_function");
+                showInfoDialog( "notekies");
+            } else if(fragment instanceof SettingsFragment||fragment instanceof AccountSettings||fragment instanceof ProfileSettings){
+                showInfoDialog("settings");
             }
             else if (fragment instanceof Notikies) {
-                showInfoDialog("notekies");
+                showInfoDialog("notikies");
             } else if (fragment instanceof Notes){
-                showInfoDialog("future_function");
+                showInfoDialog("notekies");
+            }else if (fragment instanceof Home || fragment instanceof WorldkieMenu || fragment instanceof WorldkieView||fragment instanceof CreateEditWorldkie){
+                showInfoDialog("worldkies");
+            }else if (fragment instanceof Characterkies || fragment instanceof CharacterkieView || fragment instanceof CreateCharacterkie){
+                showInfoDialog("characterkies");
+            }else if (fragment instanceof Stuffkies || fragment instanceof StuffkieView || fragment instanceof CreateEditStuffkie){
+                showInfoDialog("stuffkies");
+            }else if (fragment instanceof Scenariokies || fragment instanceof Scenariokie || fragment instanceof CreateEditScenariokie){
+                showInfoDialog("scenariokies");
             }
         });
     }
-    /*info_characterkies_dialog.xml
-    info_desafios_dialog.xml
-    info_inspo_dialog.xml
-    info_notekies_dialog.xml
-    info_notikies_dialog.xml
-    info_other_profile_edit.xml
-    info_search_dialog.xml
-    info_self_profile_edit.xml
-    info_settings_account_edit.xml
-    info_settings_general_edit.xml
-    info_settings_profile_edit.xml
-    info_stuffkies_dialog.xml
-    info_worldkies_dialog.xml*/
+
     public void showInfoDialog(String mode){
         infoGeneralDialog = new InfoGeneralDialog(this,mode);
         infoGeneralDialog.show();
@@ -181,9 +174,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void getProfilePhoto(){
 
         ib_self_profile.setVisibility(View.INVISIBLE); // Hacerlo ligeramente transparente al principio
-        db.collection("Users").document(UID).addSnapshotListener((queryDocumentSnapshot, e) -> {
-            boolean photo_default = queryDocumentSnapshot.getBoolean("photo_default");
-            if(photo_default) {
+        collectionUsers.document(UID).addSnapshotListener((queryDocumentSnapshot, e) -> {
+            if(queryDocumentSnapshot.getBoolean("photo_default")) {
                 String id_photo = queryDocumentSnapshot.getString("photo_id");
                 int resId = getResources().getIdentifier(id_photo, "mipmap", getPackageName());
                 if (resId != 0) {
@@ -192,13 +184,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     ib_self_profile.setVisibility(View.VISIBLE); // Hacerlo ligeramente transparente al principio
 
                     EfectsUtils.startCircularReveal(drawable,ib_self_profile);
-                    ib_self_profile.setImageDrawable(drawable);
-
                 } else {
                     Log.e("DRAWABLE", "Recurso no encontrado: " + id_photo);
                 }
             }else{
-                StorageReference userFolderRef = firebaseStorage.getReference(UID);//.child().child(UID);
+                StorageReference userFolderRef = firebaseStorageUsers.getReference(UID);//.child().child(UID);
                 userFolderRef.listAll().addOnSuccessListener(listResult -> {
                     for (StorageReference item : listResult.getItems()) {
                         if (item.getName().startsWith("profile")) {
@@ -226,6 +216,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ib_save = findViewById(R.id.ib_save);
     }
 
+    public FirebaseStorage getFirebaseStorageCharacterkies() {
+        return firebaseStorageCharacterkies;
+    }
+
+    public FirebaseStorage getFirebaseStorageUsers() {
+        return firebaseStorageUsers;
+    }
+
+    public CollectionReference getCollectionNotekies() {
+        return collectionNotekies;
+    }
+
+    public CollectionReference getCollectionUsers() {
+        return collectionUsers;
+    }
+
     public ImageButton getBackButton(){
         return ib_back;
     }
@@ -234,12 +240,48 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return ib_save;
     }
 
+    public FirebaseStorage getFirebaseStorageScenariokies() {
+        return firebaseStorageScenariokies;
+    }
+
     public ImageButton getIb_self_profile() {
         return ib_self_profile;
     }
 
     public String getUID() {
         return UID;
+    }
+
+    public FirebaseAuth getFirebaseAuth() {
+        return firebaseAuth;
+    }
+
+    public CollectionReference getCollectionWorldkies() {
+        return collectionWorldkies;
+    }
+
+    public CollectionReference getNotikiesCollection() {
+        return notikiesCollection;
+    }
+
+    public CollectionReference getCollectionScenariokies() {
+        return collectionScenariokies;
+    }
+
+    public CollectionReference getCollectionStuffkies() {
+        return collectionStuffkies;
+    }
+
+    public CollectionReference getCollectionCharacterkies() {
+        return collectionCharacterkies;
+    }
+
+    public FirebaseStorage getFirebaseStorageStuffkies() {
+        return firebaseStorageStuffkies;
+    }
+
+    public FirebaseStorage getFirebaseStorageWorldkies() {
+        return firebaseStorageWorldkies;
     }
 
     private void scheduleDailyNotification() {
@@ -268,6 +310,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        // Comprueba si se ha presionado el botón de retroceso.
+
         if (item.getItemId() == R.id.nav_settings) {
             NavigationUtils.goNewFragment(fragmentManager, new SettingsFragment());
 
@@ -289,13 +333,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(this, Login.class); // Reemplaza LoginActivity.class con el nombre de tu clase de Login
             startActivity(intent);
             finish(); // Cierra MainActivity para que el usuario no pueda volver atrás sin iniciar sesión
-        } else {
-            // El usuario ya ha iniciado sesión, puedes cargar la interfaz principal de la aplicación aquí
-            // Por ejemplo:
-            // Intent intent = new Intent(this, HomeActivity.class);
-            // startActivity(intent);
-            // finish();
-            // O simplemente realizar acciones en MainActivity si es la pantalla principal
         }
     }
     @Override

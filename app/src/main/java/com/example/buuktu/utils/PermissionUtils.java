@@ -31,13 +31,4 @@ public class PermissionUtils {
         context.startActivity(intent);
 
     }
-    /*public static void GeolocationPermission(Context context){
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.A)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(context,
-                    new String[]{Manifest.permission.},
-                    REQUEST_CODE_LOCATION_PERMISSION);
-        }
-
-    }*/
 }

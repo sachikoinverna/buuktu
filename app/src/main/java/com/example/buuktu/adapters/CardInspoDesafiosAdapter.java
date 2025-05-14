@@ -46,6 +46,7 @@ public class CardInspoDesafiosAdapter extends RecyclerView.Adapter<CardInspoDesa
     public void onBindViewHolder(@NonNull CardInspoDesafiosAdapter.ViewHolder holder, int position) {
         CardItem cardItem = dataSet.get(position);
         holder.getIcon().setImageResource(cardItem.getIconResId());
+
         holder.getText().setText(cardItem.getText());
         holder.getCardView().setOnClickListener(v -> {
             if(cardItem.getText().equals("Wordkie of the day")){

@@ -7,46 +7,25 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
-import com.example.buuktu.CreateCharacterkie;
-import com.example.buuktu.CreateEditScenariokie;
-import com.example.buuktu.CreateEditStuffkie;
 import com.example.buuktu.R;
-import com.example.buuktu.StuffkieView;
 import com.example.buuktu.utils.DrawableUtils;
-import com.example.buuktu.utils.EfectsUtils;
 import com.example.buuktu.utils.NavigationUtils;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link WorldkieMenu#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class WorldkieMenu extends Fragment implements View.OnClickListener {
     FragmentManager fragmentManager;
     MainActivity mainActivity;
-    FragmentActivity activity;
     private Button tv_characterkiesAdd,textView5,textView8;
     ImageButton backButton,ib_profile_superior;
    String worldkie_id;
     Bundle bundle = new Bundle();
     ImageView iv_scenariokies_worldkie_menu,iv_characterkies_worldkie_menu,iv_stuffkies_worldkie_menu;
-    public WorldkieMenu() {
-        // Required empty public constructor
-    }
+    public WorldkieMenu() {}
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment WorldkieMenu.
-     */
-    // TODO: Rename and change types and number of parameters
     public static WorldkieMenu newInstance() {
         return new WorldkieMenu();
     }
@@ -62,17 +41,14 @@ public class WorldkieMenu extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_worldkie_menu, container, false);
         mainActivity = (MainActivity) getActivity();
-        backButton = mainActivity.getBackButton();
-        ib_profile_superior = mainActivity.getIb_self_profile();
+
         initComponents(view);
         bundle.putString("worldkie_id",worldkie_id);
         setVisibility();
         setListeners();
         fragmentManager = requireActivity().getSupportFragmentManager();
-        activity = requireActivity();        
         return view;
     }
     private void initComponents(View view){
@@ -82,6 +58,9 @@ public class WorldkieMenu extends Fragment implements View.OnClickListener {
         iv_scenariokies_worldkie_menu = view.findViewById(R.id.iv_scenariokies_worldkie_menu);
         iv_stuffkies_worldkie_menu = view.findViewById(R.id.iv_stuffkies_worldkie_menu);
         iv_characterkies_worldkie_menu = view.findViewById(R.id.iv_characterkies_worldkie_menu);
+        backButton = mainActivity.getBackButton();
+        ib_profile_superior = mainActivity.getIb_self_profile();
+
     }
     private void setListeners(){
         backButton.setOnClickListener(this);
@@ -92,29 +71,20 @@ public class WorldkieMenu extends Fragment implements View.OnClickListener {
     private void setVisibility(){
         backButton.setVisibility(View.VISIBLE);
         ib_profile_superior.setVisibility(View.VISIBLE);
-        iv_characterkies_worldkie_menu.setVisibility(View.INVISIBLE);
-        iv_scenariokies_worldkie_menu.setVisibility(View.INVISIBLE);
-        iv_stuffkies_worldkie_menu.setVisibility(View.INVISIBLE);
+
         DrawableUtils.personalizarImagenCuadradoButton(mainActivity,50,10,R.color.white,DrawableUtils.drawableToBitmap(iv_characterkies_worldkie_menu.getDrawable()),iv_characterkies_worldkie_menu);
         DrawableUtils.personalizarImagenCuadradoButton(mainActivity,50,10,R.color.white,DrawableUtils.drawableToBitmap(iv_scenariokies_worldkie_menu.getDrawable()),iv_scenariokies_worldkie_menu);
         DrawableUtils.personalizarImagenCuadradoButton(mainActivity,50,10,R.color.white,DrawableUtils.drawableToBitmap(iv_stuffkies_worldkie_menu.getDrawable()),iv_stuffkies_worldkie_menu);
-        iv_characterkies_worldkie_menu.setVisibility(View.VISIBLE);
-        iv_scenariokies_worldkie_menu.setVisibility(View.VISIBLE);
-        iv_stuffkies_worldkie_menu.setVisibility(View.VISIBLE);
-        EfectsUtils.startCircularReveal(iv_characterkies_worldkie_menu.getDrawable(),iv_characterkies_worldkie_menu);
-        EfectsUtils.startCircularReveal(iv_stuffkies_worldkie_menu.getDrawable(),iv_stuffkies_worldkie_menu);
-        EfectsUtils.startCircularReveal(iv_scenariokies_worldkie_menu.getDrawable(),iv_scenariokies_worldkie_menu);
-
     }
 
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.ib_back){
-            NavigationUtils.goBack(fragmentManager,activity);
+            NavigationUtils.goBack(fragmentManager,mainActivity);
         } else if (v.getId()==R.id.tv_characterkies) {
             NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new Characterkies());
         } else if (v.getId()==R.id.textView5) {
-            NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new CreateEditScenariokie());
+            NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new Scenariokies());
 
         } else if (v.getId()==R.id.textView8) {
             NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new Stuffkies());

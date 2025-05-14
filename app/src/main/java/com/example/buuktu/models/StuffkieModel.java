@@ -34,8 +34,8 @@ public class StuffkieModel {
         StuffkieModel stuffkieModel = new StuffkieModel();
         stuffkieModel.setName(document.getString("name"));
         stuffkieModel.setAUTHOR_UID(document.getString("AUTHOR_UID"));
-        stuffkieModel.setUID(document.getString("UID"));
-        stuffkieModel.setWORDLKIE_UID(document.getString("WORLDKIE_UID"));
+        stuffkieModel.setUID(document.getId());
+        stuffkieModel.setWORDLKIE_UID(document.getString("WORDLKIE_UID"));
         stuffkieModel.setStuffkie_private(document.getBoolean("stuffkie_private"));
         stuffkieModel.setDraft(document.getBoolean("draft"));
         stuffkieModel.setPhoto_default(document.getBoolean("photo_default"));

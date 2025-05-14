@@ -6,10 +6,10 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.annotation.NonNull;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.buuktu.CharacterkiesSearch;
-import com.example.buuktu.StuffkiesSearch;
-import com.example.buuktu.UserkiesSearch;
-import com.example.buuktu.WorldkiesSearch;
+import com.example.buuktu.views.CharacterkiesSearch;
+import com.example.buuktu.views.StuffkiesSearch;
+import com.example.buuktu.views.UserkiesSearch;
+import com.example.buuktu.views.WorldkiesSearch;
 
 public class PageAdapter
         extends FragmentStateAdapter {

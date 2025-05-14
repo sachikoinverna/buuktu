@@ -20,8 +20,14 @@ public class CreateEditGeneralDialog extends Dialog {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.create_edit_general_dialog);
-        animationView = findViewById(R.id.anim_create_edit);
+        initComponents();
+        setDialogProperties();
 
+    }
+    private void initComponents(){
+        animationView = findViewById(R.id.anim_create_edit);
+    }
+    private void setDialogProperties(){
         setCanceledOnTouchOutside(false);
         setCancelable(false);
         getWindow().setBackgroundDrawableResource(android.R.color.transparent);

@@ -10,10 +10,10 @@
 
     <!-- Main content of the activity -->
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/main"
-        android:background="#A67B5B"
+        android:background="@mipmap/img_main_activity"
         tools:context=".views.MainActivity">
 
         <!-- Include custom Toolbar -->
@@ -21,7 +21,7 @@
             android:id="@+id/toolbar"
             layout="@layout/toolbar_custom"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <!-- FloatingActionButton (FAB) -->
         <ImageButton
@@ -51,14 +51,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            app:fabCradleMargin="10dp"
-            app:fabCradleRoundedCornerRadius="50dp">
+            app:backgroundTint="@color/rose1">
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottomNavigationView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
+                app:itemIconTint="@color/white"
+                app:itemRippleColor="@color/rose2"
+                app:itemTextAppearanceActive="@style/ShapeAppearance.Material3.Corner.ExtraLarge"
+                app:itemTextAppearanceInactive="@style/TextAppearance.Material3.LabelMedium"
+                app:itemTextColor="@color/white"
                 app:labelVisibilityMode="labeled"
                 app:menu="@menu/main_menu" />
         </com.google.android.material.bottomappbar.BottomAppBar>
@@ -71,8 +75,10 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:backgroundTint="@color/purple2"
         app:headerLayout="@layout/nav_header"
-        app:itemIconTint="#493D7A"
-        app:itemTextColor="#5f5a7c"
+        app:itemIconSize="26dp"
+        app:itemIconTint="@color/purple3"
+        app:itemTextColor="@color/purple1"
         app:menu="@menu/navmenu" />
 </androidx.drawerlayout.widget.DrawerLayout>

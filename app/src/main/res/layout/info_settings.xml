@@ -9,14 +9,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        app:cardBackgroundColor="@color/white"
+        app:cardBackgroundColor="@color/purple2"
         app:cardCornerRadius="60dp"
         app:cardElevation="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="@color/black"
+        app:strokeColor="@color/purple1"
         app:strokeWidth="5dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,8 +28,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Inspo"
-                android:textColor="@color/black"
+                android:text="@string/settings"
+                android:textColor="@color/purple3"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -45,18 +45,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_lvl_namesdgsdfds"
                 app:srcCompat="@mipmap/img_info_profile_edit" />
-
-            <TextView
-                android:id="@+id/textView46sdgasf"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/profile_self_subtitle"
-                android:textSize="20sp"
-                android:textStyle="italic"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView4dsgasf" />
 
             <ImageButton
                 android:id="@+id/ib_close_dialogsdfsaf"
@@ -79,12 +67,13 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:text="@string/profile_self_description"
+                android:text="@string/settings_description"
                 android:textAlignment="center"
+                android:textColor="@color/purple1"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView46sdgasf" />
+                app:layout_constraintTop_toBottomOf="@+id/imageView4dsgasf" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>

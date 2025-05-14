@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateEditScenariokie">
+    tools:context=".views.CreateEditScenariokie">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -18,11 +18,12 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="32dp"
+            app:cardBackgroundColor="@color/rose2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:strokeColor="#953F3F"
+            app:strokeColor="@color/rose1"
             app:strokeWidth="3dp">
 
             <ScrollView
@@ -45,17 +46,24 @@
                         android:layout_marginEnd="16dp"
                         android:hint="@string/name"
                         android:textAlignment="center"
+                        android:textColorHint="@color/rose3"
+                        app:boxBackgroundColor="@color/white"
                         app:boxCornerRadiusBottomEnd="58dp"
                         app:boxCornerRadiusBottomStart="58dp"
                         app:boxCornerRadiusTopEnd="58dp"
                         app:boxCornerRadiusTopStart="58dp"
+                        app:boxStrokeColor="@color/rose3"
                         app:counterEnabled="true"
                         app:counterMaxLength="50"
+                        app:counterTextColor="@color/rose3"
+                        app:cursorColor="@color/rose3"
                         app:errorEnabled="false"
+                        app:hintTextColor="@color/rose3"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/ib_select_img_create_scenariokie"
-                        app:startIconDrawable="@drawable/outline_person_24">
+                        app:startIconDrawable="@drawable/outline_person_24"
+                        app:startIconTint="@color/rose3">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_nameScenariokieCreate"
@@ -66,6 +74,7 @@
                             android:inputType="text"
                             android:maxLength="50"
                             android:textAlignment="center"
+                            android:textColor="@color/rose2"
                             android:textColorHint="@color/brownMaroon" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -76,7 +85,6 @@
                         android:layout_height="150dp"
                         android:layout_marginTop="16dp"
                         android:background="@android:color/transparent"
-                        android:onClick="selectImage"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -90,6 +98,9 @@
                         android:gravity="center"
                         android:switchPadding="8dp"
                         android:text="Private worldkie"
+                        android:textColor="@color/rose3"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
                         android:thumb="@drawable/thumb_custom"
                         android:track="@drawable/track_custom"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -106,6 +117,9 @@
                         android:gravity="center"
                         android:switchPadding="8dp"
                         android:text="@string/draft"
+                        android:textColor="@color/rose3"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
                         android:thumb="@drawable/thumb_custom"
                         android:track="@drawable/track_custom"
                         app:layout_constraintBottom_toBottomOf="parent"

@@ -1,6 +1,5 @@
 package com.example.buuktu.adapters;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -9,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,13 +17,14 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.buuktu.CharacterkieView;
+import com.example.buuktu.views.CreateEditScenariokie;
 import com.example.buuktu.R;
-import com.example.buuktu.models.CharacterkieModel;
+import com.example.buuktu.dialogs.DeleteGeneralDialog;
 import com.example.buuktu.models.ScenariokieModel;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.NavigationUtils;
-import com.google.firebase.storage.FirebaseStorage;
+import com.example.buuktu.views.MainActivity;
+import com.example.buuktu.views.Scenariokie;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
@@ -34,7 +35,7 @@ public class ScenariokiesUserPreviewAdapter extends RecyclerView.Adapter<Scenari
 
     private final ArrayList<ScenariokieModel> dataSet;
 
-    private final Context context;
+    private final MainActivity context;
     private final FragmentManager fragmentManager;
     private final String mode;
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -43,8 +44,7 @@ public class ScenariokiesUserPreviewAdapter extends RecyclerView.Adapter<Scenari
         private final TextView tv_scenariokie_preview_worldkie;
         private final TextView tv_scenariokie_preview_draft;
         final CardView cardView;
-        //private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
-        //private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
         public ViewHolder(View view) {
             super(view);
             iv_scenariokie_preview_worldkie =  view.findViewById(R.id.iv_scenariokie_preview_worldkie);
@@ -76,7 +76,7 @@ public class ScenariokiesUserPreviewAdapter extends RecyclerView.Adapter<Scenari
     }
 
     //Constructor donde pasamos la lista de productos y el contexto
-    public ScenariokiesUserPreviewAdapter(ArrayList<ScenariokieModel> dataSet, Context ctx, FragmentManager fragmentManager, String mode) {
+    public ScenariokiesUserPreviewAdapter(ArrayList<ScenariokieModel> dataSet, MainActivity ctx, FragmentManager fragmentManager, String mode) {
         this.dataSet = dataSet;
         this.context = ctx;
         this.fragmentManager = fragmentManager;
@@ -89,7 +89,7 @@ public class ScenariokiesUserPreviewAdapter extends RecyclerView.Adapter<Scenari
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
 
         //Creamos la vista de cada item a partir de nuestro layout
-           View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.characterkie_list_layout_preview, viewGroup, false);
+           View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.scenariokie_list_layout_preview, viewGroup, false);
         return new ViewHolder(view);
     }
     @Override
@@ -101,17 +101,48 @@ public class ScenariokiesUserPreviewAdapter extends RecyclerView.Adapter<Scenari
         }
         if(!scenariokieModel
                 .isScenariokie_private()){
-            holder.getIv_scenariokie_preview_worldkie().setVisibility(View.GONE);
+            holder.getIv_scenariokie_private_preview().setVisibility(View.INVISIBLE);
         }
         holder.getCardView().setOnClickListener(v -> {
             Bundle bundle = new Bundle();
-            bundle.putString("mode","other");
+            bundle.putString("mode",mode);
             bundle.putString("UID",scenariokieModel.getUID());
             bundle.putString("UID_AUTHOR",scenariokieModel.getAUTHOR_UID());
             bundle.putString("UID_WORLDKIE",scenariokieModel.getWORDLKIE_UID());
-            NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new CharacterkieView());
+            NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new Scenariokie());
         });
-        if (scenariokieModel.isPhoto_default()) {
+        if(mode.equals("self")) {
+            holder.getCardView().setOnLongClickListener(v -> {
+                View popupView = LayoutInflater.from(context).inflate(R.layout.menu_popup, null);
+                PopupWindow popupWindow = new PopupWindow(popupView,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        true);
+
+// Opcional: animación y sombra
+                popupWindow.setElevation(8f);
+
+// Mostrarlo anclado al CardView
+                popupWindow.showAsDropDown(holder.getCardView(), 0, -50);
+
+// ListenersBundle bundle = new Bundle();
+//        bundle.putString("worldkie_id", worldkieModel.getUID());
+                popupView.findViewById(R.id.bt_edit_item).setOnClickListener(view -> {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("scenariokie_id", scenariokieModel.getUID());
+                    NavigationUtils.goNewFragmentWithBundle(bundle, fragmentManager, new CreateEditScenariokie());
+                    popupWindow.dismiss();
+                });
+
+                popupView.findViewById(R.id.bt_del_item).setOnClickListener(view2 -> {
+                    DeleteGeneralDialog deleteGeneralDialog = new DeleteGeneralDialog(context, "scenariokie", scenariokieModel.getUID());
+                    deleteGeneralDialog.show();
+                    popupWindow.dismiss();
+                });
+                return true;
+            });
+        }
+            if (scenariokieModel.isPhoto_default()) {
                 String id_photo = scenariokieModel.getPhoto_id();
                 int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
 
@@ -124,17 +155,18 @@ public class ScenariokiesUserPreviewAdapter extends RecyclerView.Adapter<Scenari
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
+                    holder.getIv_scenariokie_preview_worldkie().setVisibility(View.VISIBLE);
                 }
         } else {
-            StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-scenariokies").getReference(scenariokieModel.getUID());
+            StorageReference userFolderRef = context.getFirebaseStorageScenariokies().getReference(scenariokieModel.getUID());
 
             userFolderRef.listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {
-                    if (item.getName().startsWith("cover")) {
+                    if (item.getName().startsWith("profile")) {
                             item.getBytes(5 * 1024 * 1024).addOnSuccessListener(bytes -> {
                                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                                 Bitmap bitmapScaled = Bitmap.createScaledBitmap(bitmap, 80, 80, false);
-                                DrawableUtils.personalizarImagenCircle(context, bitmapScaled, holder.getIv_scenariokie_preview_worldkie(), R.color.brownMaroon);
+                                DrawableUtils.personalizarImagenCuadradoButton(context ,150/7,7,R.color.brownMaroon,bitmapScaled, holder.getIv_scenariokie_preview_worldkie());
                             });
                             break;
                         }

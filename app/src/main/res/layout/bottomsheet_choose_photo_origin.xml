@@ -8,55 +8,75 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="-5dp"
-        app:cardBackgroundColor="#1E88E5"
+        app:cardBackgroundColor="@color/purple2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:strokeColor="#B35656"
+        app:strokeColor="@color/purple1"
         app:strokeWidth="3dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
+            <Button
                 android:id="@+id/tv_choose_photo_default"
+                style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="200dp"
-                android:layout_height="51dp"
+                android:layout_height="60dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:background="@drawable/button_backgground"
-                android:foreground="@drawable/twotone_photo_filter_24"
-                android:foregroundGravity="left|center"
-                android:foregroundTint="#FFFFFF"
+                android:backgroundTint="@color/rose1"
+                android:backgroundTintMode="src_over"
                 android:gravity="center"
                 android:text="@string/chooseIconkie"
                 android:textColor="#FFFFFF"
-                app:icon="@drawable/twotone_photo_filter_24"
+                android:textSize="24sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/tv_choose_photo_gallery"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="@color/white"
+                app:strokeWidth="3dp" />
 
-            <TextView
+            <Button
                 android:id="@+id/tv_choose_photo_gallery"
                 android:layout_width="200dp"
-                android:layout_height="51dp"
+                android:layout_height="60dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="13dp"
-                android:background="@drawable/button_backgground"
-                android:foreground="@drawable/twotone_photo_library_24"
-                android:foregroundGravity="left|center"
-                android:foregroundTint="#FFFFFF"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/rose1"
+                android:backgroundTintMode="screen"
                 android:gravity="center"
                 android:text="@string/chooseGallery"
                 android:textColor="#FFFFFF"
-                app:icon="@drawable/twotone_photo_library_24"
+                android:textSize="24sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_choose_photo_default" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_choose_photo_default"
+                app:strokeColor="@color/white"
+                app:strokeWidth="3dp" />
+
+            <ImageView
+                android:id="@+id/imageView10"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="32dp"
+                app:layout_constraintEnd_toEndOf="@+id/tv_choose_photo_default"
+                app:layout_constraintTop_toTopOf="@+id/tv_choose_photo_default"
+                app:srcCompat="@mipmap/bow_choose_photo" />
+
+            <ImageView
+                android:id="@+id/imageView12"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="32dp"
+                app:layout_constraintEnd_toEndOf="@+id/tv_choose_photo_gallery"
+                app:layout_constraintTop_toTopOf="@+id/tv_choose_photo_gallery"
+                app:srcCompat="@mipmap/ribbon_choose_photo" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 

@@ -24,26 +24,6 @@ public class CharacterkieModel {
     public CharacterkieModel() {
     }
 
-    public CharacterkieModel(String UID, String name) {
-        this.UID=UID;
-        this.name=name;
-    }
-
-    public CharacterkieModel(String UID_WORLDKIE, String UID_AUTHOR, String name, String pronouns, String birthday,String birthday_format, boolean photo_default, boolean draft, boolean characterkie_private, String photo_id, String status, String gender) {
-        this.UID_WORLDKIE = UID_WORLDKIE;
-        this.UID_AUTHOR = UID_AUTHOR;
-        this.name = name;
-        this.pronouns = pronouns;
-        this.birthday = birthday;
-        this.birthday_format=birthday_format;
-        this.photo_default = photo_default;
-        this.draft = draft;
-        this.characterkie_private = characterkie_private;
-        this.photo_id = photo_id;
-        this.status = status;
-        this.gender = gender;
-    }
-
     public static CharacterkieModel fromSnapshot(DocumentSnapshot document) {
         if (document == null || !document.exists()) {
             return null;
@@ -51,10 +31,10 @@ public class CharacterkieModel {
         CharacterkieModel characterkie = new CharacterkieModel();
         characterkie.setName(document.getString("name"));
         characterkie.setUID(document.getId());
-        characterkie.setUID_AUTHOR("UID_AUTHOR");
-        characterkie.setUID_WORLDKIE("UID_WORLDKIE");
+        characterkie.setUID_AUTHOR((document.getString("UID_AUTHOR")));
+        characterkie.setUID_WORLDKIE((document.getString("UID_WORLDKIE")));
         characterkie.setBirthday(document.getString("birthday"));
-        characterkie.setBirthday(document.getString("birthday_format"));
+        characterkie.setBirthday_format(document.getString("birthday_format"));
         characterkie.setGender(document.getString("gender"));
         characterkie.setStatus(document.getString("status"));
         characterkie.setPhoto_default(document.getBoolean("photo_default"));

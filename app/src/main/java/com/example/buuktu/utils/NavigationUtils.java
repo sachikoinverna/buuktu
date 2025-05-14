@@ -13,8 +13,6 @@ public class NavigationUtils {
         if (fragmentManager.getBackStackEntryCount() > 0) {
             fragmentManager.popBackStack();
         } else {
-            // Realiza alguna acción si no hay nada en la pila de retroceso
-            // Por ejemplo, cerrar la actividad:
             activity.onBackPressed();
         }
     }

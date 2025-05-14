@@ -4,36 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WorldkieView">
+    tools:context=".views.WorldkieView">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#FFFFFF"
-        android:backgroundTint="#FFFFFF">
+        android:layout_height="match_parent">
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cv_info_worldkie"
+            android:id="@+id/cv_info_stuffkie"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            app:cardBackgroundColor="@color/brownBrown"
+            app:cardBackgroundColor="@color/purple2"
             app:layout_constraintBottom_toTopOf="@+id/sv_pa"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:strokeColor="#B388FF"
-            app:strokeWidth="4dp">
+            app:strokeColor="@color/purple1"
+            app:strokeWidth="5dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <ImageButton
-                    android:id="@+id/ib_characterkieView"
+                    android:id="@+id/ib_stuffkieView"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_marginTop="8dp"
@@ -44,32 +42,33 @@
                     app:srcCompat="@mipmap/photoworldkieone" />
 
                 <TextView
-                    android:id="@+id/tv_nameUserCharacterkieView"
+                    android:id="@+id/tv_nameUserStuffkieView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:text="TextView"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/purple1"
+                    android:textSize="16sp"
                     app:layout_constraintEnd_toStartOf="@+id/tv_at"
                     app:layout_constraintStart_toEndOf="@+id/textView21"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_nameCharacterkieView" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_nameStuffkieView" />
 
                 <TextView
-                    android:id="@+id/tv_nameCharacterkieView"
+                    android:id="@+id/tv_nameStuffkieView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
                     android:gravity="center"
                     android:text="Nombre"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp"
+                    android:textColor="@color/purple3"
+                    android:textSize="24sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ib_characterkieView" />
+                    app:layout_constraintTop_toBottomOf="@+id/ib_stuffkieView" />
 
                 <TextView
                     android:id="@+id/tv_at"
@@ -78,20 +77,22 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:text="@string/at_symbol"
-                    android:textColor="#FFFFFF"
-                    app:layout_constraintStart_toEndOf="@+id/tv_nameUserCharacterkieView"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_nameCharacterkieView" />
+                    android:textColor="@color/purple1"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toEndOf="@+id/tv_nameUserStuffkieView"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_nameStuffkieView" />
 
                 <TextView
-                    android:id="@+id/tv_usernameCharacterkieView"
+                    android:id="@+id/tv_usernameStuffkieView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:gravity="center"
                     android:text="Nombre de usuario"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/purple1"
+                    android:textSize="16sp"
                     app:layout_constraintStart_toEndOf="@+id/tv_at"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_nameCharacterkieView" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_nameStuffkieView" />
 
                 <TextView
                     android:id="@+id/textView4"
@@ -100,24 +101,26 @@
                     android:layout_marginStart="100dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
-                    android:text="Worldkie"
-                    android:textColor="#FFFFFF"
+                    android:text="@string/worldkie"
+                    android:textColor="@color/purple3"
+                    android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_usernameCharacterkieView" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_usernameStuffkieView" />
 
                 <TextView
-                    android:id="@+id/tv_nameWorldkieViewCharacterkie"
+                    android:id="@+id/tv_nameWorldkieViewStuffkie"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
                     android:text="TextView"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/purple1"
+                    android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView4"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_usernameCharacterkieView" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_usernameStuffkieView" />
 
                 <TextView
                     android:id="@+id/textView21"
@@ -126,11 +129,12 @@
                     android:layout_marginStart="100dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:text="Creador:"
-                    android:textColor="#FFFFFF"
-                    app:layout_constraintEnd_toStartOf="@+id/tv_nameUserCharacterkieView"
+                    android:text="@string/author"
+                    android:textColor="@color/purple3"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_nameUserStuffkieView"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_nameCharacterkieView" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_nameStuffkieView" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
@@ -143,59 +147,45 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:paddingBottom="32dp"
-            app:cardBackgroundColor="#FFFFFF"
+            app:cardBackgroundColor="@color/rose2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cv_info_worldkie"
-            app:strokeColor="#642D2D"
+            app:layout_constraintTop_toBottomOf="@+id/cv_info_stuffkie"
+            app:strokeColor="@color/rose1"
             app:strokeWidth="3dp">
 
-            <ScrollView
-                android:id="@+id/sv_pa"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="32dp"
-                android:background="#FFFFFF"
-                android:maxHeight="300dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cv_info_worldkie">
+                android:layout_height="match_parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/iv_locked_stuffkie"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="8dp"
+                    android:src="@drawable/twotone_lock_24"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_locked_stuffkie"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:tint="@color/rose3" />
 
-                    <ImageView
-                        android:id="@+id/iv_locked_characterkie"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="8dp"
-                        android:src="@drawable/twotone_lock_24"
-                        android:visibility="gone"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/tv_locked_stuffkie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    android:textColor="@color/rose1"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/tv_locked_characterkie"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:text="TextView"
-                        android:visibility="gone"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/iv_locked_characterkie" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </ScrollView>
         </com.google.android.material.card.MaterialCardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

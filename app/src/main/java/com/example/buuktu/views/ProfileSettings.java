@@ -1,4 +1,4 @@
-package com.example.buuktu;
+package com.example.buuktu.views;
 
 import static android.widget.Toast.LENGTH_LONG;
 
@@ -18,11 +18,11 @@ import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.example.buuktu.R;
 import com.example.buuktu.adapters.SettingAdapter;
 import com.example.buuktu.models.SettingModel;
 import com.example.buuktu.models.UserkieModel;
 import com.example.buuktu.utils.NavigationUtils;
-import com.example.buuktu.views.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -32,11 +32,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ProfileSettings#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ProfileSettings extends Fragment implements View.OnClickListener {
     private SettingAdapter settingAdapter;
     MainActivity mainActivity;
@@ -62,15 +57,8 @@ public class ProfileSettings extends Fragment implements View.OnClickListener {
     };
 
     public ProfileSettings() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment ProfileSettings.
-     */
     public static ProfileSettings newInstance() {
         return new ProfileSettings();
     }
@@ -78,8 +66,6 @@ public class ProfileSettings extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
@@ -154,6 +140,7 @@ public class ProfileSettings extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        // Comprueba si se ha presionado el botón de retroceso.
         if(v.getId()==R.id.ib_back){
             NavigationUtils.goBack(fragmentManager,mainActivity);
         }

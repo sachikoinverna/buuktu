@@ -7,12 +7,10 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputFilter;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Switch;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,8 +34,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -56,21 +52,19 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class Register extends AppCompatActivity implements View.OnFocusChangeListener {
     Calendar calendar;
     int yearC, monthC, dayC;
-    private FirebaseFirestore db;
     TextInputLayout et_nameRegisterFilled,et_userRegisterFilled,dp_birthdayFilled ,et_pronounsRegisterFilled, et_emailRegisterFilled, et_telephoneRegisterFilled, et_passwordFilled ,et_passwordRepeatRegisterFilled;
 
     public TextInputEditText dp_birthday, et_nameRegister, et_pronounsRegister, et_userRegister, et_emailRegister, et_passwordRepeat, et_password, et_telephoneRegister;
     public Button tv_registerButton, tv_registerToLoginButton;
-    ImageButton bt_chooseImage,imageButtonActualBottomSheet;
+    ImageButton bt_chooseImage;
     private Switch tb_privateAccountRegister;
-    private FirebaseAuth auth;
+    private final FirebaseAuth auth = FirebaseAuth.getInstance();
     Uri image;
     String email, username, source;
     final FirebaseStorage storage = FirebaseStorage.getInstance("gs://buuk-tu-users");
     BottomSheetProfilePhoto bottomSheetProfilePhoto;
     Date birthday;
     CollectionReference collectionReferenceUsers;
-    InputFilter[] filters;
     UserkieModel userkieModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,55 +76,30 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        isUserLoggedIn();
         UIUtils.hideSystemUI(this);
 
         initComponents();
-        setClean();
         setListeners();
         setFilters();
-        db = FirebaseFirestore.getInstance();
-        collectionReferenceUsers = db.collection("Users");
+
+    }
+    private void isUserLoggedIn(){
         if (auth.getCurrentUser() != null) {
             startActivity(new Intent(this, MainActivity.class));
             finish();
         }
-        DrawableUtils.personalizarImagenCircleButton(this, DrawableUtils.drawableToBitmap(bt_chooseImage.getDrawable()), bt_chooseImage, R.color.brownBrown);
-    }
-
-    public void setClean() {
-        CheckUtil.setErrorMessage(null, et_nameRegisterFilled);
-        CheckUtil.setErrorMessage(null, et_emailRegisterFilled);
-        CheckUtil.setErrorMessage(null, dp_birthdayFilled);
-        CheckUtil.setErrorMessage(null, et_passwordFilled);
-        CheckUtil.setErrorMessage(null, et_passwordRepeatRegisterFilled);
-        CheckUtil.setErrorMessage(null, et_pronounsRegisterFilled);
-        CheckUtil.setErrorMessage(null, et_userRegisterFilled);
-        CheckUtil.setErrorMessage(null, et_telephoneRegisterFilled);
     }
 
     public void setSource(String source) {
         this.source = source;
     }
 
-    public String getSource() {
-        return source;
-    }
-
-    public ImageButton getImageButtonActualBottomSheet() {
-        return imageButtonActualBottomSheet;
-    }
-
-    public Uri getImageUri() {
-        return image;
-    }
 
     public void setImageUri(Uri image) {
         this.image = image;
     }
 
-    public void setImageButtonActualBottomSheet(int id) {
-
-    }
 
     private void initComponents() {
         userkieModel = new UserkieModel();
@@ -162,7 +131,7 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
         source = "app";
         bt_chooseImage.setTag(DrawableUtils.getMipmapName(this,R.mipmap.photoprofileone));
         setPhotoDefault();
-        auth = FirebaseAuth.getInstance();
+        DrawableUtils.personalizarImagenCircleButton(this, DrawableUtils.drawableToBitmap(bt_chooseImage.getDrawable()), bt_chooseImage, R.color.blue1);
 
 
     }
@@ -195,14 +164,6 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
 
     public void setSelectedProfilePhoto(Drawable image) {
         bt_chooseImage.setImageDrawable(image);
-    }
-
-    public Drawable getSelectedProfilePhoto() {
-        return bt_chooseImage.getDrawable();
-    }
-
-    public ImageButton getBt_chooseImage() {
-        return bt_chooseImage;
     }
 
     public ImageButton getIB_profile_photo() {
@@ -257,8 +218,11 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
         }
     }
 
-    public void handlerGoToRegister(View view) {
+    //Se navega al registro.
+    public void handlerGoLogin(View view) {
+        // Lanza la actividad para que el usuario inicie sesión.
         startActivity(new Intent(this, Login.class));
+        // Elimina la pantalla de registro de la pila de actividades.
         finish();
 
     }
@@ -302,7 +266,9 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
         userkieModel.setPhoto_id(bt_chooseImage.getTag().toString());
     }
     public void addDataToFirestore(View view) {
+        // Verifica que todos los datos ingresados sean válidos
         if (checkAllFields()) {
+            //
             CreateEditGeneralDialog dialog = new CreateEditGeneralDialog(this);
             dialog.show();
             LottieAnimationView animationView = dialog.findViewById(R.id.anim_create_edit);
@@ -312,19 +278,22 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
                     .subscribe(() -> {
                                 username = et_userRegister.getText().toString();
                                 email = et_emailRegister.getText().toString();
-
+                                // Realiza una búsqueda en "Users" para el nombre de usuario especificado, limitando a un solo resultado
                                 Task<QuerySnapshot> usernameTask = collectionReferenceUsers.whereEqualTo("username", username).limit(1).get();
-                                Task<QuerySnapshot> emailTask = collectionReferenceUsers.whereEqualTo("email", email).limit(1).get();
+                        // Realiza una búsqueda en "Users" para el email especificado, limitando a un solo resultado
+                        Task<QuerySnapshot> emailTask = collectionReferenceUsers.whereEqualTo("email", email).limit(1).get();
+                        //
                                 Tasks.whenAllSuccess(usernameTask, emailTask).addOnSuccessListener(results -> {
                                     QuerySnapshot usernameSnapshot = (QuerySnapshot) results.get(0);
                                     QuerySnapshot emailSnapshot = (QuerySnapshot) results.get(1);
+                                    //Comprueba si
                                     if (!usernameSnapshot.isEmpty()) {
                                         CheckUtil.setErrorMessage("Nombre de usuario existente", et_userRegisterFilled);
                                     }
                                     if (!emailSnapshot.isEmpty()) {
                                         CheckUtil.setErrorMessage("Email existente", et_emailRegisterFilled);
                                     }
-                                    if (usernameSnapshot.isEmpty() && emailSnapshot.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                                    if (usernameSnapshot.isEmpty() && emailSnapshot.isEmpty()) {
                                         // Puedes continuar con el registro
 
                                         userkieModel.setEmail(email);
@@ -344,13 +313,9 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
                                         }
                                         auth.createUserWithEmailAndPassword(email, et_password.getText().toString()).addOnCompleteListener(task -> {
                                             if (task.isSuccessful()) {
-                                                CollectionReference dbUsers = db.collection("Users");
                                                 // below method is use to add data to Firebase Firestore.
-                                                DocumentReference documentRef = dbUsers.document(task.getResult().getUser().getUid());
-
-                                                //.document(uid)
-                                                documentRef.set(userkieModel.toMap()).addOnSuccessListener(unused -> {
-
+                                                collectionReferenceUsers.document(task.getResult().getUser().getUid()).set(userkieModel.toMap()).addOnSuccessListener(unused -> {
+                                                    //Comprueba
                                                     if (!userkieModel.isPhoto_default()) {
                                                         StorageReference userRef = storage.getReference().child(task.getResult().getUser().getUid());
                                                         userRef.child("profile" + DrawableUtils.getExtensionFromUri(getApplicationContext(), image)).putFile(image);
@@ -395,9 +360,4 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
         date.show();
     }
 
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        UIUtils.onWindowFocusChanged(this, hasFocus);
-    }
 }

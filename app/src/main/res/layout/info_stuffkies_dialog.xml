@@ -7,61 +7,84 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/white"
+        app:cardBackgroundColor="@color/purple2"
         app:cardCornerRadius="60dp"
-        app:cardElevation="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="@color/black"
+        app:strokeColor="@color/purple1"
         app:strokeWidth="5dp">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/tv_lvl_title_del"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Stuffkie"
-                android:textColor="@color/black"
-                android:textSize="24sp" />
+                android:layout_marginTop="16dp"
+                android:text="@string/stuffkie"
+                android:textColor="@color/purple3"
+                android:textSize="34sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/iv_photo_del"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_lvl_title_del"
                 app:srcCompat="@mipmap/img_info_stuffkies" />
 
             <TextView
                 android:id="@+id/tv_lvl_text_del"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="¿Que es un worldkie?"
-                android:textSize="20sp" />
+                android:layout_marginTop="8dp"
+                android:text="@string/stuffkies_subtitle"
+                android:textColor="@color/purple3"
+                android:textSize="24sp"
+                android:textStyle="italic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_photo_del" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/stuffkie_description"
+                android:textAlignment="center"
+                android:textColor="@color/purple1"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_lvl_text_del" />
 
-                <ImageButton
-                    android:id="@+id/ib_close_dialog"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:background="@null"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/twotone_cancel_24" />
-
-            </LinearLayout>
-
-        </LinearLayout>
+            <ImageButton
+                android:id="@+id/ib_close_dialog"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@null"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView15"
+                app:srcCompat="@drawable/twotone_cancel_24" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

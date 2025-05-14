@@ -19,8 +19,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -35,10 +33,11 @@ public class EditNamePronounsUserDialog extends Dialog implements View.OnClickLi
     final String value;
     final DocumentReference documentReference;
     Context context;
-    String lastName="", lastPronouns="",lastEmail="",name,pronouns,email;
+    String name,pronouns,email;
     LottieAnimationView animationViewCreateEdit;
     public EditNamePronounsUserDialog(@NonNull Context context, String type,String value,DocumentReference documentReference) {
         super(context);
+        this.context=context;
         this.type=type;
         this.value=value;
         this.documentReference=documentReference;
@@ -47,30 +46,25 @@ public class EditNamePronounsUserDialog extends Dialog implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_edittext_user_dialog);
-        context = getContext();
         initComponents();
 
         setListeners();
-        setCanceledOnTouchOutside(false);
-        setCancelable(false);
-        String name = context.getResources().getString(R.string.name);
-        String pronouns = context.getResources().getString(R.string.pronouns);
-        String email = context.getResources().getString(R.string.email);
+        name = context.getString(R.string.name);
+        pronouns = context.getString(R.string.pronouns);
+        email = context.getString(R.string.email);
         if(type.equals(name)){
-                et_namepronounsFull.setHint(name);
                 et_namepronouns.setInputType(InputType.TYPE_CLASS_TEXT);
                 et_namepronounsFull.setStartIconDrawable(R.drawable.twotone_add_circle_24);}
         else if(type.equals(pronouns)) {
-            et_namepronounsFull.setHint(pronouns);
             et_namepronouns.setInputType(InputType.TYPE_CLASS_TEXT);
             et_namepronounsFull.setStartIconDrawable(R.drawable.twotone_add_circle_24);
         } else if (type.equals(email)) {
-                et_namepronounsFull.setHint(email);
                 et_namepronouns.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
                 et_namepronounsFull.setStartIconDrawable(R.drawable.twotone_email_24);
         }
+        et_namepronounsFull.setHint(type);
         et_namepronouns.setText(value);
-        getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        setDialogProperties();
     }
     private void initComponents(){
         et_namepronounsFull = findViewById(R.id.et_namepronounsFull);
@@ -92,27 +86,30 @@ public class EditNamePronounsUserDialog extends Dialog implements View.OnClickLi
                 saveEmail();
         }
     }
+    private void changeVisibility(){
+        animationViewCreateEdit.setVisibility(View.VISIBLE);
+        et_namepronounsFull.setVisibility(View.GONE);
+        ib_accept_dialog.setVisibility(View.GONE);
+        ib_close_dialog.setVisibility(View.GONE);
+    }
     private void saveName(){
         if(CheckUtil.handlerCheckName(context,et_namepronouns,et_namepronounsFull)) {
-            EfectsUtils.setAnimationsDialog("start",animationViewCreateEdit);
-
+            changeVisibility();
             Completable.timer(2, TimeUnit.SECONDS)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(() -> {
-                        Map<String, Object> worldkieData = new HashMap<>();
-                        worldkieData.put("name", et_namepronouns.getText().toString());
-                        documentReference.update(worldkieData).addOnCompleteListener(updateTask -> {
-                            if (updateTask.isSuccessful()) {
-                                EfectsUtils.setAnimationsDialog("success",animationViewCreateEdit);
-                                delayedDismiss();
-                            } else {
-                                EfectsUtils.setAnimationsDialog("fail",animationViewCreateEdit);
-                                delayedDismiss();
-                            }
-                        });
-                    });
+                    .subscribe(() -> documentReference.update("name", et_namepronouns.getText().toString()).addOnCompleteListener(updateTask -> {
+                        if (updateTask.isSuccessful()) {
+                                successFail("success");
+                        } else {
+                            successFail("fail");
+                        }
+                    }));
         }
+    }
+    private void successFail(String mode){
+        EfectsUtils.setAnimationsDialog(mode,animationViewCreateEdit);
+        delayedDismiss();
     }
     private void delayedDismiss() {
         Completable.timer(5, TimeUnit.SECONDS)
@@ -123,49 +120,41 @@ public class EditNamePronounsUserDialog extends Dialog implements View.OnClickLi
     private void saveEmail(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String oldEmail = user.getEmail();
-        String newEmail = et_namepronouns.getText().toString();
         if (!CheckUtil.handlerCheckNewIsTheSameAsOld(context,et_namepronouns,oldEmail,et_namepronounsFull)) {
-            EfectsUtils.setAnimationsDialog("start",animationViewCreateEdit);
+            changeVisibility();
             Completable.timer(2, TimeUnit.SECONDS)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(() -> user.updateEmail(newEmail).addOnCompleteListener(updateTask -> {
+                    .subscribe(() -> user.updateEmail(et_namepronouns.getText().toString()).addOnCompleteListener(updateTask -> {
                         if (updateTask.isSuccessful()) {
-                            EfectsUtils.setAnimationsDialog("success",animationViewCreateEdit);
-                            delayedDismiss();
+                            successFail("success");
                         } else {
-                            EfectsUtils.setAnimationsDialog("fail",animationViewCreateEdit);
-                            delayedDismiss();
+                            successFail("fail");
                         }
                     })
                     );
         }
     }
     private void savePronouns(){
-        String newPronouns = et_namepronouns.getText().toString();
         if(CheckUtil.handlerCheckPronouns(context,et_namepronouns,et_namepronounsFull)) {
-            EfectsUtils.setAnimationsDialog("start",animationViewCreateEdit);
-
+            changeVisibility();
             Completable.timer(3, TimeUnit.SECONDS)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(() -> {
-                                Map<String, Object> worldkieData = new HashMap<>();
-                                worldkieData.put("pronouns", newPronouns);
-                                documentReference.update(worldkieData).addOnCompleteListener(updateTask -> {
-                                    if (updateTask.isSuccessful()) {
-                                        EfectsUtils.setAnimationsDialog("success",animationViewCreateEdit);
-
-                                        delayedDismiss();
-                                    } else {
-                                        EfectsUtils.setAnimationsDialog("fail",animationViewCreateEdit);
-
-                                        delayedDismiss();
-                                    }
-                                });
-                            }
+                    .subscribe(() -> documentReference.update("pronouns", et_namepronouns.getText().toString()).addOnCompleteListener(updateTask -> {
+                        if (updateTask.isSuccessful()) {
+                            successFail("success");
+                        } else {
+                            successFail("fail");
+                        }
+                    })
                     );
         }
+    }
+    private void setDialogProperties(){
+        setCanceledOnTouchOutside(false);
+        setCancelable(false);
+        getWindow().setBackgroundDrawableResource(android.R.color.transparent);
     }
     @Override
     public void onClick(View v) {

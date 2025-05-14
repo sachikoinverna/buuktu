@@ -1,6 +1,4 @@
-package com.example.buuktu;
-
-import static android.widget.Toast.LENGTH_LONG;
+package com.example.buuktu.views;
 
 import android.os.Bundle;
 
@@ -12,28 +10,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import com.example.buuktu.R;
 import com.example.buuktu.adapters.CharacterkieSearchAdapter;
 import com.example.buuktu.models.CharacterkieModel;
-import com.example.buuktu.views.MainActivity;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CharacterkiesSearch#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class CharacterkiesSearch extends Fragment {
     private ArrayList<CharacterkieModel> characterkieModelArrayList;
-    private CollectionReference collectionCharacterkies;
-    private FirebaseFirestore db;
     private String UID;
     private RecyclerView rc_characterkies_search;
     private CharacterkieSearchAdapter characterkieSearchAdapter;
@@ -41,22 +29,14 @@ public class CharacterkiesSearch extends Fragment {
     public CharacterkiesSearch() {
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment CharacterkiesSearch.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CharacterkiesSearch newInstance(String param1, String param2) {
+
+    public static CharacterkiesSearch newInstance() {
         return new CharacterkiesSearch();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
@@ -64,17 +44,14 @@ public class CharacterkiesSearch extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_characterkies_search, container, false);
         rc_characterkies_search = view.findViewById(R.id.rc_characterkies_search);
-        db = FirebaseFirestore.getInstance();
         mainActivity = (MainActivity) getActivity();
         UID = mainActivity.getUID();
         characterkieModelArrayList = new ArrayList<>();
-        collectionCharacterkies = db.collection("Characterkies");
-        characterkieSearchAdapter = new CharacterkieSearchAdapter(characterkieModelArrayList, getContext(), getParentFragmentManager());
+
+        characterkieSearchAdapter = new CharacterkieSearchAdapter(characterkieModelArrayList, mainActivity, getParentFragmentManager());
         rc_characterkies_search.setAdapter(characterkieSearchAdapter);
-        collectionCharacterkies.whereNotEqualTo("UID_AUTHOR",UID).whereEqualTo("draft",false).addSnapshotListener((queryDocumentSnapshots, e) -> {
+        mainActivity.getCollectionCharacterkies().whereNotEqualTo("UID_AUTHOR",UID).whereEqualTo("draft",false).addSnapshotListener((queryDocumentSnapshots, e) -> {
             if (e != null) {
-                Log.e("Error", e.getMessage());
-                Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
                 return;
             }
 
@@ -123,7 +100,7 @@ public class CharacterkiesSearch extends Fragment {
         }
     }
     private void updateRecyclerView(ArrayList<CharacterkieModel> characterkieArrayList) {
-        CharacterkieSearchAdapter characterkieSearchAdapter = new CharacterkieSearchAdapter(characterkieArrayList, getContext(), getParentFragmentManager());
+        CharacterkieSearchAdapter characterkieSearchAdapter = new CharacterkieSearchAdapter(characterkieArrayList, mainActivity, getParentFragmentManager());
         rc_characterkies_search.setAdapter(characterkieSearchAdapter);
         rc_characterkies_search.setLayoutManager(new LinearLayoutManager(getContext()));
     }

@@ -1,4 +1,4 @@
-package com.example.buuktu;
+package com.example.buuktu.views;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -13,16 +13,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
+import com.example.buuktu.R;
 import com.example.buuktu.adapters.NoteAdapter;
 import com.example.buuktu.models.NotekieModel;
 import com.example.buuktu.utils.NavigationUtils;
-import com.example.buuktu.views.MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
@@ -31,13 +30,10 @@ public class Notes extends Fragment implements View.OnClickListener {
 
     private RecyclerView recyclerView;
     private NoteAdapter noteAdapter;
-    private ArrayList<NotekieModel> items;
-    private FirebaseFirestore db;
-    private CollectionReference collectionNotekies;
+    private ArrayList<NotekieModel> items = new ArrayList<>();
     private String UID;
     ImageButton ib_save,backButton,ib_profile_superior;
-    private FloatingActionButton fbMoreOptions, fbAddNote;
-    private boolean isAllFabsVisible = false;
+    private FloatingActionButton fbAddNote;
     FragmentManager fragmentManager;
     MainActivity mainActivity;
     public Notes() {}
@@ -53,10 +49,8 @@ public class Notes extends Fragment implements View.OnClickListener {
         initComponents(view);
 
 
-        db = FirebaseFirestore.getInstance();
         UID = FirebaseAuth.getInstance().getUid();
-        collectionNotekies = db.collection("Notekies");
-        items = new ArrayList<>();
+
 
         // Layout manager
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
@@ -88,28 +82,22 @@ public class Notes extends Fragment implements View.OnClickListener {
         // Inicialización
         recyclerView = view.findViewById(R.id.rc_all_notes_adapter);
         fbAddNote = view.findViewById(R.id.fb_add_note_list_notes);
-        fbMoreOptions = view.findViewById(R.id.fb_more_options_list_notes);
         fragmentManager = mainActivity.getSupportFragmentManager();
+        setVisibility();
     }
     private void setVisibility(){
         backButton.setVisibility(View.VISIBLE);
         ib_save.setVisibility(View.GONE);
         ib_profile_superior.setVisibility(View.VISIBLE);
-        fbAddNote.setVisibility(View.GONE);
-        isAllFabsVisible = false;
     }
     private void setListeners(){
         backButton.setOnClickListener(this);
-        fbMoreOptions.setOnClickListener(v -> toggleFabs());
         fbAddNote.setOnClickListener(this);
     }
-    private void toggleFabs() {
-        fbAddNote.setVisibility(isAllFabsVisible?View.GONE:View.VISIBLE);
-        isAllFabsVisible = !isAllFabsVisible;
-    }
+
 
     private void setupFirestoreListener() {
-        collectionNotekies
+        mainActivity.getCollectionNotekies()
                 .whereEqualTo("UID_USER", UID)
                 .orderBy("last_update", Query.Direction.DESCENDING)
                 .addSnapshotListener((queryDocumentSnapshots, e) -> {
@@ -155,6 +143,7 @@ public class Notes extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        // Comprueba si se ha presionado el botón de retroceso.
         if(v.getId()==R.id.ib_back){
             NavigationUtils.goBack(fragmentManager,mainActivity);
         } else if (v.getId()==R.id.fb_add_note_list_notes) {

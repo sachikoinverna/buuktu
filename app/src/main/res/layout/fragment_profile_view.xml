@@ -4,14 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileView">
+    tools:context=".views.ProfileView">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FDFDFD"
-        android:backgroundTint="#FFFFFF"
         tools:context=".views.ProfileView">
 
         <com.google.android.material.card.MaterialCardView
@@ -21,11 +19,11 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            app:cardBackgroundColor="@color/brownBrown"
+            app:cardBackgroundColor="@color/purple2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:strokeColor="#B388FF"
+            app:strokeColor="@color/purple1"
             app:strokeWidth="4dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -66,7 +64,7 @@
                     android:layout_marginEnd="8dp"
                     android:gravity="center"
                     android:text="Nombre"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/purple3"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -80,7 +78,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
                     android:text="@string/at_symbol"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/purple3"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/tv_usernameProfileView"
                     app:layout_constraintTop_toBottomOf="@+id/tv_nameProfileView" />
@@ -93,7 +91,7 @@
                     android:layout_marginBottom="8dp"
                     android:gravity="center"
                     android:text="Nombre de usuario"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/purple3"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -109,11 +107,11 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            app:cardBackgroundColor="#FFFFFF"
+            app:cardBackgroundColor="@color/rose2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cv_info_self_profile"
-            app:strokeColor="#AB6060"
+            app:strokeColor="@color/rose1"
             app:strokeWidth="3dp">
 
             <ScrollView
@@ -124,7 +122,6 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
-                android:background="#FFFFFF"
                 android:fillViewport="true"
                 android:maxHeight="300dp"
                 android:scrollbarStyle="outsideOverlay">
@@ -165,6 +162,7 @@
                         android:layout_marginTop="8dp"
                         android:gravity="center"
                         android:text="@string/characterkies"
+                        android:textColor="@color/rose3"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -178,10 +176,11 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="16dp"
+                        app:cardBackgroundColor="@color/rose2"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_characterkiesPreviewUserkie"
-                        app:strokeColor="#9B1A1A"
+                        app:strokeColor="@color/rose1"
                         app:strokeWidth="3dp">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -200,7 +199,7 @@
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/tv_characterkiesPreviewUserkie" />
+                                 />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </com.google.android.material.card.MaterialCardView>
@@ -212,6 +211,7 @@
                         android:layout_marginTop="8dp"
                         android:gravity="center"
                         android:text="@string/stuffkies"
+                        android:textColor="@color/rose3"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -225,10 +225,11 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="16dp"
+                        app:cardBackgroundColor="@color/rose2"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_stuffkiesPreviewUserkie"
-                        app:strokeColor="#8C2727"
+                        app:strokeColor="@color/rose1"
                         app:strokeWidth="3dp">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -247,7 +248,7 @@
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/tv_stuffkiesPreviewUserkie" />
+                                />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -259,6 +260,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="@string/worldkies"
+                        android:textColor="@color/rose3"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -273,11 +275,12 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="8dp"
+                        app:cardBackgroundColor="@color/rose2"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_worldkiesPreviewUserkie"
-                        app:strokeColor="#9E1515"
+                        app:strokeColor="@color/rose1"
                         app:strokeWidth="3dp">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -298,7 +301,52 @@
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </com.google.android.material.card.MaterialCardView>
+                    <TextView
+                        android:id="@+id/tv_scenariokiesPreviewUserkie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/scenariokies"
+                        android:textColor="@color/rose3"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/cv_worldkiesPreviewUserkie" />
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cv_scenariokiesPreviewUserkie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="8dp"
+                        app:cardBackgroundColor="@color/rose2"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_scenariokiesPreviewUserkie"
+                        app:strokeColor="@color/rose1"
+                        app:strokeWidth="3dp">
 
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rc_scenariokiePreviewUserkie"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginEnd="8dp"
+                                android:orientation="horizontal"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </com.google.android.material.card.MaterialCardView>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </ScrollView>

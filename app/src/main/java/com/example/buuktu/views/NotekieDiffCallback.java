@@ -1,4 +1,4 @@
-package com.example.buuktu;
+package com.example.buuktu.views;
 
 import androidx.recyclerview.widget.DiffUtil;
 

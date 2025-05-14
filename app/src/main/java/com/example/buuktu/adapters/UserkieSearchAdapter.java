@@ -1,6 +1,5 @@
 package com.example.buuktu.adapters;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -19,15 +18,14 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.buuktu.ProfileView;
+import com.example.buuktu.views.ProfileView;
 import com.example.buuktu.R;
 import com.example.buuktu.models.UserkieModel;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.EfectsUtils;
 import com.example.buuktu.utils.NavigationUtils;
+import com.example.buuktu.views.MainActivity;
 import com.google.android.material.card.MaterialCardView;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
@@ -37,14 +35,13 @@ public class UserkieSearchAdapter extends RecyclerView.Adapter<UserkieSearchAdap
     private final ArrayList<UserkieModel> dataSet;
     private final FragmentManager fragmentManager;
 
-    private final Context context;
+    private final MainActivity context;
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final ImageView iv_userkie_private_search;
         final ImageButton iv_userkie_photo_search;
         final MaterialCardView cv_userkie_search;
         final TextView tv_userkie_name_search, tv_userkie_username_search;
         FrameLayout fl_userkie_photo_container;
-        private final FirebaseStorage firebaseStorageUserkies = FirebaseStorage.getInstance("gs://buuk-tu-users");
         public ViewHolder(View view) {
             super(view);
             tv_userkie_username_search = view.findViewById(R.id.tv_userkie_username_search);
@@ -55,9 +52,6 @@ public class UserkieSearchAdapter extends RecyclerView.Adapter<UserkieSearchAdap
             fl_userkie_photo_container = view.findViewById(R.id.fl_userkie_photo_container);
         }
 
-        public FirebaseStorage getFirebaseStorageUserkies() {
-            return firebaseStorageUserkies;
-        }
 
         public TextView getTv_userkie_username_search() {
             return tv_userkie_username_search;
@@ -83,7 +77,7 @@ public class UserkieSearchAdapter extends RecyclerView.Adapter<UserkieSearchAdap
         }
     }
     //Constructor donde pasamos la lista de productos y el contexto
-    public UserkieSearchAdapter(ArrayList<UserkieModel> dataSet, Context ctx, FragmentManager fragmentManager) {
+    public UserkieSearchAdapter(ArrayList<UserkieModel> dataSet, MainActivity ctx, FragmentManager fragmentManager) {
         this.dataSet = dataSet;
         this.context = ctx;
         this.fragmentManager = fragmentManager;
@@ -125,7 +119,7 @@ public class UserkieSearchAdapter extends RecyclerView.Adapter<UserkieSearchAdap
                     EfectsUtils.startCircularReveal(drawable, holder.getIv_userkie_photo_search());
                 }
         } else {
-            StorageReference userFolderRef = holder.getFirebaseStorageUserkies().getReference(userkieModel.getUID());
+            StorageReference userFolderRef = context.getFirebaseStorageUsers().getReference(userkieModel.getUID());
 
             userFolderRef.listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {

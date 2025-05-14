@@ -11,8 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.buuktu.InspoDesafios;
-import com.example.buuktu.Notes;
+import com.example.buuktu.views.InspoDesafios;
+import com.example.buuktu.views.Notes;
 import com.example.buuktu.R;
 import com.example.buuktu.models.CardItem;
 import com.example.buuktu.utils.NavigationUtils;

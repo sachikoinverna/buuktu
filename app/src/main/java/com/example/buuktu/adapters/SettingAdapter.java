@@ -15,10 +15,9 @@ import com.example.buuktu.dialogs.CreateEditGeneralDialog;
 import com.example.buuktu.dialogs.EditNamePronounsUserDialog;
 import com.example.buuktu.dialogs.EditPasswordUserDialog;
 import com.example.buuktu.models.SettingModel;
+import com.example.buuktu.views.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
@@ -26,8 +25,6 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.ViewHold
 
     private final ArrayList<SettingModel> dataSet;
     private final Context context;
-    final FirebaseFirestore db;
-    final CollectionReference collectionReference;
     final DocumentReference documentReference;
     final FirebaseAuth firebaseAuth;
     final String UID;
@@ -62,14 +59,12 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.ViewHold
     }
 
     //Constructor donde pasamos la lista de productos y el contexto
-    public SettingAdapter(ArrayList<SettingModel> dataSet, Context ctx, String UID) {
+    public SettingAdapter(ArrayList<SettingModel> dataSet, MainActivity ctx, String UID) {
         this.dataSet = dataSet;
         this.context = ctx;
         firebaseAuth = FirebaseAuth.getInstance();
         this.UID = UID;
-        db = FirebaseFirestore.getInstance();
-        collectionReference = db.collection("Users");
-        documentReference = collectionReference.document(UID);
+        documentReference = ctx.getCollectionUsers().document(UID);
         dialogCreateEdit = new CreateEditGeneralDialog(context);
     }
 
@@ -88,27 +83,18 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.ViewHold
         SettingModel settingModel = dataSet.get(position);
         String name = settingModel.getName();
         String value = settingModel.getValue();
-        String nameSetting = context.getResources().getString(R.string.name);
-        String pronounsSetting = context.getResources().getString(R.string.pronouns);
-        String emailSetting = context.getResources().getString(R.string.email);
-        String passwordSetting = context.getResources().getString(R.string.user_password);
-        if(!name.equals(passwordSetting)) {
+        if (!name.equals(context.getResources().getString(R.string.user_password))) {
             holder.getTv_value_setting_profile().setText(value);
+        } else {
+            holder.getTv_value_setting_profile().setText("••••••");
         }
-        holder.getTv_name_setting_profile().setText(name);
-        holder.getTv_value_setting_profile().setText(value);
-         holder.getCard_view_setting_list_profile().setOnClickListener(v -> {
-             if(name.equals(nameSetting)) {
-                 editNamePronounsUserDialog = new EditNamePronounsUserDialog(v.getContext(), nameSetting, value, documentReference);
-                 editNamePronounsUserDialog.show();
-             } else if (name.equals(pronounsSetting)) {
-                 editNamePronounsUserDialog = new EditNamePronounsUserDialog(v.getContext(), pronounsSetting, value, documentReference);
-                 editNamePronounsUserDialog.show();
-             } else if (name.equals(emailSetting)) {
-                 editNamePronounsUserDialog = new EditNamePronounsUserDialog(v.getContext(), emailSetting, value, documentReference);
 
+        holder.getTv_name_setting_profile().setText(name);
+         holder.getCard_view_setting_list_profile().setOnClickListener(v -> {
+             if (name.equals(context.getResources().getString(R.string.name)) || name.equals(context.getResources().getString(R.string.pronouns)) || name.equals(context.getResources().getString(R.string.email))) {
+                 editNamePronounsUserDialog = new EditNamePronounsUserDialog(v.getContext(), name, value, documentReference);
                  editNamePronounsUserDialog.show();
-             } else if (name.equals(passwordSetting)) {
+             } else if (name.equals(context.getResources().getString(R.string.user_password))) {
 
              EditPasswordUserDialog editPasswordUserDialog = new EditPasswordUserDialog(context);
                  editPasswordUserDialog.show();

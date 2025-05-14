@@ -28,15 +28,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Buuktu"
         tools:targetApi="33">
-        <activity
-            android:name=".views.Characterkies"
-            android:exported="false" />
-        <activity
-            android:name=".views.Stuffkies"
-            android:exported="false" />
-        <activity
-            android:name=".views.Worldkie"
-            android:exported="false" />
+
 
         <receiver android:name=".broadcastReceiver.WordNotificationReceiver" />
 

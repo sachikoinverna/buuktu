@@ -1,4 +1,4 @@
-package com.example.buuktu;
+package com.example.buuktu.views;
 
 import static android.widget.Toast.LENGTH_LONG;
 
@@ -14,42 +14,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.buuktu.R;
 import com.example.buuktu.adapters.StuffkieSearchAdapter;
 import com.example.buuktu.models.StuffkieModel;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link StuffkiesSearch#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class StuffkiesSearch extends Fragment {
-    private final ArrayList<StuffkieModel> filteredDataSet = new ArrayList<>();
 
-    private ArrayList<StuffkieModel> stuffkieModelArrayList;
-    CollectionReference collectionStuffkies;
-    private FirebaseFirestore db;
-    FirebaseAuth firebaseAuth;
-    String UID;
+public class StuffkiesSearch extends Fragment {
+
+    private ArrayList<StuffkieModel> stuffkieModelArrayList= new ArrayList<>();
     RecyclerView rc_stuffkies_search;
     StuffkieSearchAdapter stuffkieSearchAdapter;
+    MainActivity mainActivity;
     public StuffkiesSearch() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment StuffkiesSearch.
-     */
-    // TODO: Rename and change types and number of parameters
     public static StuffkiesSearch newInstance() {
         return new StuffkiesSearch();
     }
@@ -57,25 +39,18 @@ public class StuffkiesSearch extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_stuffkies_search, container, false);
         initComponents(view);
-        db = FirebaseFirestore.getInstance();
-        stuffkieModelArrayList = new ArrayList<>();
-        firebaseAuth = FirebaseAuth.getInstance();
-        UID = firebaseAuth.getUid();
-        collectionStuffkies = db.collection("Stuffkies");
-        stuffkieSearchAdapter = new StuffkieSearchAdapter(stuffkieModelArrayList, getContext(), getParentFragmentManager());
+        mainActivity =(MainActivity) getActivity();
+        stuffkieSearchAdapter = new StuffkieSearchAdapter(stuffkieModelArrayList, mainActivity, getParentFragmentManager());
         rc_stuffkies_search.setAdapter(stuffkieSearchAdapter);
         rc_stuffkies_search.setLayoutManager(new LinearLayoutManager(getContext()));
-        collectionStuffkies.whereNotEqualTo("UID_AUTHOR",UID).whereEqualTo("draft",false).addSnapshotListener((queryDocumentSnapshots, e) -> {
+        mainActivity.getCollectionStuffkies().whereNotEqualTo("UID_AUTHOR",mainActivity.getUID()).whereEqualTo("draft",false).addSnapshotListener((queryDocumentSnapshots, e) -> {
             if (e != null) {
                 Log.e("Error", e.getMessage());
                 Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
@@ -117,7 +92,7 @@ public class StuffkiesSearch extends Fragment {
 
     }
     private void updateRecyclerView(ArrayList<StuffkieModel> settingModels){
-        stuffkieSearchAdapter = new StuffkieSearchAdapter(settingModels,getContext(),getParentFragmentManager());
+        stuffkieSearchAdapter = new StuffkieSearchAdapter(settingModels,mainActivity,getParentFragmentManager());
         rc_stuffkies_search.setAdapter(stuffkieSearchAdapter);
         rc_stuffkies_search.setLayoutManager(new LinearLayoutManager(getContext()));
     }

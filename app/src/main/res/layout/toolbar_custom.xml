@@ -4,7 +4,7 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="#5f5a7c"
+    android:background="@color/purple1"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
@@ -27,7 +27,7 @@
             android:padding="8dp"
             android:scaleType="fitCenter"
             android:src="@drawable/twotone_info_24"
-            app:tint="#FFFFFF" />
+            app:tint="@color/white" />
 
         <ImageButton
             android:id="@+id/ib_back"
@@ -39,7 +39,7 @@
             android:background="@android:color/transparent"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/twotone_keyboard_arrow_left_24"
-            app:tint="#FFFFFF" />
+            app:tint="@color/white" />
 
         <ImageButton
             android:id="@+id/ib_save"
@@ -53,7 +53,7 @@
             android:padding="8dp"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/twotone_save_24"
-            app:tint="#FFFFFF" />
+            app:tint="@color/white" />
 
     </RelativeLayout>
 

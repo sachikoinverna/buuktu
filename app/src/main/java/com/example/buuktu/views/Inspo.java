@@ -17,27 +17,15 @@ import com.example.buuktu.models.CardItem;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Inspo#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class Inspo extends Fragment {
-    MainActivity mainActivity;
-    RecyclerView rc_buttons_inspo;
-    CardInspoAdapter adapter;
-    ImageButton ib_back,ib_save,ib_profile_superior;
-    public Inspo() {
-        // Required empty public constructor
-    }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment Inspo.
-     */
-    // TODO: Rename and change types and number of parameters
+public class Inspo extends Fragment {
+    private MainActivity mainActivity;
+    private RecyclerView rc_buttons_inspo;
+    private CardInspoAdapter adapter;
+    private ImageButton ib_back,ib_save,ib_profile_superior;
+    private ArrayList<CardItem> items = new ArrayList<>();
+    public Inspo() {}
+
     public static Inspo newInstance() {
         return new Inspo();
     }
@@ -50,33 +38,32 @@ public class Inspo extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_inspo, container, false);
         initComponents(view);
+        setVisibility();
+        setRecyclerView();
         return view;
 
     }
     private void initComponents(View view){
         rc_buttons_inspo = view.findViewById(R.id.rc_buttons_inspo);
-        rc_buttons_inspo.setLayoutManager(new GridLayoutManager(mainActivity, 2));
         mainActivity = (MainActivity) getActivity();
         ib_back = mainActivity.getBackButton();
         ib_profile_superior = mainActivity.getIb_self_profile();
         ib_save = mainActivity.getIb_save();
-        ArrayList<CardItem> items = new ArrayList<>();
+
+    }
+    private void setRecyclerView(){
+        items.clear();
         items.add(new CardItem(R.drawable.twotone_sticky_note_2_24, mainActivity.getResources().getString(R.string.notekies)));
         items.add(new CardItem(R.drawable.twotone_military_tech_24, mainActivity.getResources().getString(R.string.challenges)));
-        updateRecyclerView(items);
-        setInitVisibility();
+        adapter = new CardInspoAdapter(mainActivity,items,getParentFragmentManager());
+        rc_buttons_inspo.setAdapter(adapter);
+        rc_buttons_inspo.setLayoutManager(new GridLayoutManager(mainActivity,2));
     }
-    private void setInitVisibility(){
+    private void setVisibility(){
         ib_save.setVisibility(View.GONE);
         ib_back.setVisibility(View.GONE);
         ib_profile_superior.setVisibility(View.VISIBLE);
     }
-public void updateRecyclerView(ArrayList<CardItem> cardItems){
-    adapter = new CardInspoAdapter(mainActivity,cardItems,getParentFragmentManager());
-    rc_buttons_inspo.setAdapter(adapter);
-    rc_buttons_inspo.setLayoutManager(new GridLayoutManager(mainActivity,2));
-}
 }

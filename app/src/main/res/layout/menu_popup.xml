@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@android:color/transparent"
@@ -11,13 +10,13 @@
         android:id="@+id/imageView3"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:tint="#9FA8DA"
-        android:tintMode="multiply"
+        android:tintMode="screen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/button_backgground" />
+        app:srcCompat="@drawable/button_backgground"
+        app:tint="@color/rose3" />
 
     <ImageButton
         android:id="@+id/bt_del_item"
@@ -29,12 +28,12 @@
         android:layout_marginBottom="16dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
-        android:tint="#9FA8DA"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/bt_edit_item"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/twotone_delete_sweep_24" />
+        app:srcCompat="@drawable/twotone_delete_sweep_24"
+        app:tint="@color/white" />
 
     <ImageButton
         android:id="@+id/bt_edit_item"
@@ -45,9 +44,9 @@
         android:layout_marginBottom="16dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
-        android:tint="#9FA8DA"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/twotone_edit_note_24" />
+        app:srcCompat="@drawable/twotone_edit_note_24"
+        app:tint="@color/white" />
 </androidx.constraintlayout.widget.ConstraintLayout>

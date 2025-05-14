@@ -9,14 +9,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        app:cardBackgroundColor="@color/white"
+        app:cardBackgroundColor="@color/purple2"
         app:cardCornerRadius="60dp"
         app:cardElevation="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="@color/black"
+        app:strokeColor="@color/purple1"
         app:strokeWidth="5dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,8 +29,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/inspo"
-                android:textColor="@color/black"
-                android:textSize="24sp"
+                android:textColor="@color/purple3"
+                android:textSize="34sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -69,7 +69,8 @@
                 android:layout_marginEnd="16dp"
                 android:text="@string/inspo_description"
                 android:textAlignment="center"
-                android:textSize="16sp"
+                android:textColor="@color/purple1"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView4dsg" />

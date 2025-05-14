@@ -12,8 +12,9 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/register"
+        android:textColor="@color/blue3"
         android:textSize="60sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toTopOf="@+id/cardview_register"
@@ -23,15 +24,14 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardview_register"
         android:layout_width="350dp"
-        android:layout_height="550dp"
-        android:background="@drawable/cardview_border"
+        android:layout_height="510dp"
+        android:backgroundTint="@color/blue2"
         app:cardCornerRadius="40dp"
-        app:cardElevation="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="@color/black"
+        app:strokeColor="@color/blue1"
         app:strokeWidth="3dp">
 
         <ScrollView
@@ -65,18 +65,32 @@
                     android:layout_marginEnd="8dp"
                     android:hint="@string/name"
                     android:textAlignment="center"
+                    android:textColorHint="@color/blue3"
+                    app:boxBackgroundColor="@color/white"
                     app:boxCornerRadiusBottomEnd="58dp"
                     app:boxCornerRadiusBottomStart="58dp"
                     app:boxCornerRadiusTopEnd="58dp"
                     app:boxCornerRadiusTopStart="58dp"
+                    app:boxStrokeColor="@color/blue3"
+                    app:boxStrokeErrorColor="@color/redError"
+                    app:boxStrokeWidth="2dp"
+                    app:boxStrokeWidthFocused="3dp"
                     app:counterEnabled="true"
                     app:counterMaxLength="50"
+                    app:counterOverflowTextColor="@color/blue3"
+                    app:counterTextColor="@color/blue3"
+                    app:cursorColor="@color/blue3"
+                    app:cursorErrorColor="@color/redError"
                     app:errorEnabled="true"
+                    app:errorIconTint="@color/redError"
+                    app:errorTextColor="@color/redError"
                     app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
+                    app:hintTextColor="@color/blue3"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/bt_chooseImageRegister"
-                    app:startIconDrawable="@drawable/twotone_supervised_user_circle_24">
+                    app:startIconDrawable="@drawable/twotone_supervised_user_circle_24"
+                    app:startIconTint="@color/blue3">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_nameRegister"
@@ -87,7 +101,7 @@
                         android:inputType="text"
                         android:maxLength="50"
                         android:textAlignment="center"
-                        android:textColorHint="@color/brownMaroon"
+                        android:textColor="@color/blue1"
                         android:textSize="20sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -102,18 +116,28 @@
                     android:layout_marginEnd="8dp"
                     android:hint="@string/pronouns"
                     android:textAlignment="center"
+                    android:textColorHint="@color/blue3"
+                    app:boxBackgroundColor="@color/white"
                     app:boxCornerRadiusBottomEnd="58dp"
                     app:boxCornerRadiusBottomStart="58dp"
                     app:boxCornerRadiusTopEnd="58dp"
                     app:boxCornerRadiusTopStart="58dp"
+                    app:boxStrokeColor="@color/blue3"
+                    app:boxStrokeErrorColor="@color/redError"
+                    app:boxStrokeWidth="2dp"
+                    app:boxStrokeWidthFocused="3dp"
                     app:counterEnabled="true"
                     app:counterMaxLength="50"
                     app:errorEnabled="true"
+                    app:errorIconTint="@color/redError"
+                    app:errorTextColor="@color/redError"
                     app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
+                    app:hintTextColor="@color/blue3"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/et_nameRegisterFilled"
-                    app:startIconDrawable="@drawable/outline_person_24">
+                    app:startIconDrawable="@drawable/outline_person_24"
+                    app:startIconTint="@color/blue3">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_pronounsRegister"
@@ -123,6 +147,7 @@
                         android:inputType="text"
                         android:maxLength="50"
                         android:textAlignment="center"
+                        android:textColor="@color/blue1"
                         android:textColorHint="@color/brownMaroon"
                         android:textSize="20sp" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -138,16 +163,26 @@
                     android:gravity="center"
                     android:hint="@string/birthday"
                     android:textAlignment="center"
+                    android:textColorHint="@color/blue3"
+                    app:boxBackgroundColor="@color/white"
                     app:boxCornerRadiusBottomEnd="58dp"
                     app:boxCornerRadiusBottomStart="58dp"
                     app:boxCornerRadiusTopEnd="58dp"
                     app:boxCornerRadiusTopStart="58dp"
+                    app:boxStrokeColor="@color/blue3"
+                    app:boxStrokeErrorColor="@color/redError"
+                    app:boxStrokeWidth="2dp"
+                    app:boxStrokeWidthFocused="3dp"
+                    app:endIconTint="@color/redError"
                     app:errorEnabled="false"
+                    app:errorIconTint="@color/redError"
                     app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
+                    app:hintTextColor="@color/blue3"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/et_pronounsRegisterFilled"
-                    app:startIconDrawable="@drawable/twotone_cake_24">
+                    app:startIconDrawable="@drawable/twotone_cake_24"
+                    app:startIconTint="@color/blue3">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/dp_birthday"
@@ -161,7 +196,7 @@
                         android:inputType="none"
                         android:onClick="showDatePickerDialog"
                         android:textAlignment="center"
-                        android:textColorHint="@color/brownMaroon"
+                        android:textColor="@color/blue1"
                         android:textSize="20sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -176,18 +211,28 @@
                     android:layout_marginEnd="8dp"
                     android:hint="@string/username"
                     android:textAlignment="center"
+                    android:textColorHint="@color/blue3"
+                    app:boxBackgroundColor="@color/white"
                     app:boxCornerRadiusBottomEnd="58dp"
                     app:boxCornerRadiusBottomStart="58dp"
                     app:boxCornerRadiusTopEnd="58dp"
                     app:boxCornerRadiusTopStart="58dp"
+                    app:boxStrokeColor="@color/blue3"
+                    app:boxStrokeErrorColor="@color/redError"
+                    app:boxStrokeWidth="2dp"
+                    app:boxStrokeWidthFocused="3dp"
                     app:counterEnabled="true"
                     app:counterMaxLength="20"
+                    app:endIconTint="@color/redError"
                     app:errorEnabled="true"
+                    app:errorIconTint="@color/redError"
                     app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
+                    app:hintTextColor="@color/blue3"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/dp_birthdayFilled"
-                    app:startIconDrawable="@drawable/outline_person_24">
+                    app:startIconDrawable="@drawable/outline_person_24"
+                    app:startIconTint="@color/blue3">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_userRegister"
@@ -197,6 +242,7 @@
                         android:inputType="text"
                         android:maxLength="20"
                         android:textAlignment="center"
+                        android:textColor="@color/blue1"
                         android:textSize="20sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -210,18 +256,27 @@
                     android:layout_marginEnd="8dp"
                     android:hint="@string/email"
                     android:textAlignment="center"
+                    android:textColorHint="@color/blue3"
+                    app:boxBackgroundColor="@color/white"
                     app:boxCornerRadiusBottomEnd="58dp"
                     app:boxCornerRadiusBottomStart="58dp"
                     app:boxCornerRadiusTopEnd="58dp"
                     app:boxCornerRadiusTopStart="58dp"
+                    app:boxStrokeColor="@color/blue3"
+                    app:boxStrokeErrorColor="@color/redError"
+                    app:boxStrokeWidth="2dp"
+                    app:boxStrokeWidthFocused="3dp"
                     app:counterEnabled="true"
                     app:counterMaxLength="50"
+                    app:endIconTint="@color/redError"
                     app:errorEnabled="true"
                     app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
+                    app:hintTextColor="@color/blue3"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/et_userRegisterFilled"
-                    app:startIconDrawable="@drawable/twotone_email_24">
+                    app:startIconDrawable="@drawable/twotone_email_24"
+                    app:startIconTint="@color/blue3">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_emailRegister"
@@ -231,6 +286,7 @@
                         android:inputType="textEmailAddress"
                         android:maxLength="50"
                         android:textAlignment="center"
+                        android:textColor="@color/blue1"
                         android:textSize="20sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -245,18 +301,28 @@
                     android:layout_marginEnd="8dp"
                     android:hint="@string/numberphone"
                     android:textAlignment="center"
+                    android:textColorHint="@color/blue3"
+                    app:boxBackgroundColor="@color/white"
                     app:boxCornerRadiusBottomEnd="58dp"
                     app:boxCornerRadiusBottomStart="58dp"
                     app:boxCornerRadiusTopEnd="58dp"
                     app:boxCornerRadiusTopStart="58dp"
+                    app:boxStrokeColor="@color/blue3"
+                    app:boxStrokeErrorColor="@color/redError"
+                    app:boxStrokeWidth="2dp"
+                    app:boxStrokeWidthFocused="3dp"
                     app:counterEnabled="true"
                     app:counterMaxLength="9"
+                    app:endIconTint="@color/redError"
                     app:errorEnabled="true"
+                    app:errorIconTint="@color/redError"
                     app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
+                    app:hintTextColor="@color/blue3"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/et_emailRegisterFilled"
-                    app:startIconDrawable="@drawable/twotone_phone_24">
+                    app:startIconDrawable="@drawable/twotone_phone_24"
+                    app:startIconTint="@color/blue3">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_telephoneRegister"
@@ -267,6 +333,7 @@
                         android:inputType="phone"
                         android:maxLength="9"
                         android:textAlignment="center"
+                        android:textColor="@color/blue1"
                         android:textSize="20sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -280,19 +347,29 @@
                     android:layout_marginEnd="8dp"
                     android:hint="@string/user_password"
                     android:textAlignment="center"
+                    android:textColorHint="@color/blue3"
+                    app:boxBackgroundColor="@color/white"
                     app:boxCornerRadiusBottomEnd="58dp"
                     app:boxCornerRadiusBottomStart="58dp"
                     app:boxCornerRadiusTopEnd="58dp"
                     app:boxCornerRadiusTopStart="58dp"
+                    app:boxStrokeColor="@color/blue3"
+                    app:boxStrokeErrorColor="@color/redError"
+                    app:boxStrokeWidth="2dp"
+                    app:boxStrokeWidthFocused="3dp"
                     app:counterEnabled="true"
                     app:counterMaxLength="50"
                     app:endIconMode="password_toggle"
+                    app:endIconTint="@color/blue3"
                     app:errorEnabled="true"
+                    app:errorIconTint="@color/redError"
                     app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
+                    app:hintTextColor="@color/blue3"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/et_telephoneRegisterFilled"
-                    app:startIconDrawable="@drawable/outline_password_24">
+                    app:startIconDrawable="@drawable/outline_password_24"
+                    app:startIconTint="@color/blue3">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_password"
@@ -301,7 +378,7 @@
                         android:gravity="center"
                         android:inputType="textPassword"
                         android:textAlignment="center"
-                        android:textColor="@color/redError"
+                        android:textColor="@color/blue1"
                         android:textSize="20sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -316,19 +393,29 @@
                     android:layout_marginEnd="8dp"
                     android:hint="@string/repeatPassword"
                     android:textAlignment="center"
+                    android:textColorHint="@color/blue3"
+                    app:boxBackgroundColor="@color/white"
                     app:boxCornerRadiusBottomEnd="58dp"
                     app:boxCornerRadiusBottomStart="58dp"
                     app:boxCornerRadiusTopEnd="58dp"
                     app:boxCornerRadiusTopStart="58dp"
+                    app:boxStrokeColor="@color/blue3"
+                    app:boxStrokeErrorColor="@color/redError"
+                    app:boxStrokeWidth="2dp"
+                    app:boxStrokeWidthFocused="3dp"
                     app:counterEnabled="true"
                     app:counterMaxLength="50"
                     app:endIconMode="password_toggle"
+                    app:endIconTint="@color/blue3"
                     app:errorEnabled="true"
+                    app:errorIconTint="@color/redError"
                     app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
+                    app:hintTextColor="@color/blue3"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/et_passwordFilled"
-                    app:startIconDrawable="@drawable/outline_password_24">
+                    app:startIconDrawable="@drawable/outline_password_24"
+                    app:startIconTint="@color/blue3">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_passwordRepeat"
@@ -338,6 +425,7 @@
                         android:inputType="textPassword"
                         android:maxLength="50"
                         android:textAlignment="center"
+                        android:textColor="@color/blue1"
                         android:textSize="20sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -352,8 +440,10 @@
                     android:fontFamily="@font/alegreya"
                     android:switchPadding="16dp"
                     android:switchTextAppearance="@style/SwitchTextAppearance"
-                    android:text="Cuenta privada"
+                    android:text="@string/profile_private"
+                    android:textColor="@color/blue3"
                     android:textSize="20sp"
+                    android:textStyle="bold"
                     android:thumb="@drawable/thumb_custom"
                     android:track="@drawable/track_custom"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -370,20 +460,17 @@
     <Button
         android:id="@+id/tv_registerToLoginButton"
         style="@style/Widget.Material3.Button.OutlinedButton"
-        android:layout_width="180dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:backgroundTint="#B39DDB"
+        android:backgroundTint="@color/blue1"
         android:gravity="center"
-        android:onClick="handlerGoToRegister"
+        android:onClick="handlerGoLogin"
         android:text="@string/login"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:icon="@drawable/twotone_nights_stay_24"
-        app:iconGravity="start"
-        app:iconTint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:strokeColor="#FFFFFF"
@@ -392,10 +479,10 @@
     <Button
         android:id="@+id/tv_registerButton"
         style="@style/Widget.Material3.Button.OutlinedButton"
-        android:layout_width="180dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="#9FA8DA"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/blue1"
         android:backgroundTintMode="add"
         android:gravity="center"
         android:onClick="addDataToFirestore"
@@ -403,13 +490,28 @@
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:icon="@drawable/twotone_auto_awesome_24"
-        app:iconGravity="start"
-        app:iconTint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardview_register"
         app:strokeColor="#FFFFFF"
         app:strokeWidth="3dp" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_registerToLoginButton"
+        app:srcCompat="@mipmap/bow_register" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_registerButton"
+        app:layout_constraintTop_toTopOf="@+id/tv_registerButton"
+        app:srcCompat="@mipmap/heart_register" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

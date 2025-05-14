@@ -1,4 +1,4 @@
-package com.example.buuktu;
+package com.example.buuktu.views;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -18,61 +18,48 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.buuktu.R;
 import com.example.buuktu.adapters.CharacterkiesUserPreviewAdapter;
+import com.example.buuktu.adapters.ScenariokiesUserPreviewAdapter;
 import com.example.buuktu.adapters.StuffkiesUserPreviewAdapter;
 import com.example.buuktu.models.CharacterkieModel;
+import com.example.buuktu.models.ScenariokieModel;
 import com.example.buuktu.models.StuffkieModel;
 import com.example.buuktu.models.UserkieModel;
 import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.NavigationUtils;
-import com.example.buuktu.views.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link WorldkieView#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class WorldkieView extends Fragment implements View.OnClickListener {
     final ArrayList<CharacterkieModel> characterkieArrayList = new ArrayList<>();
     final ArrayList<StuffkieModel> stuffkieArrayList = new ArrayList<>();
-    FirebaseFirestore db;
+    ArrayList<ScenariokieModel> scenariokieModelArrayList = new ArrayList<>();
     ImageButton ib_worldkieView,ib_back,ib_save;
     ImageView iv_locked_worldkie;
-    TextView tv_nameWorldkieView,tv_nameUserWorldkieView,tv_usernameWorldkieView,tv_creationDateWorldkieView,tv_lastUpdateWorldkieView,tv_characterkiesPreviewWorldkie,tv_stuffkiesPreviewWorldkie,tv_locked_worldkie;
-    CardView cv_characterkiesPreviewWorldkie,cv_stuffkiesPreviewWorldkie;
-    RecyclerView rc_characterkiesPrevieWorldkie,rc_stuffkiesPreviewWorldkie;
+    TextView tv_nameWorldkieView,tv_nameUserWorldkieView,tv_usernameWorldkieView,tv_creationDateWorldkieView,tv_lastUpdateWorldkieView,tv_characterkiesPreviewWorldkie,tv_stuffkiesPreviewWorldkie,tv_locked_worldkie,tv_scenariokiesPreviewWorldkie;
+    CardView cv_characterkiesPreviewWorldkie,cv_stuffkiesPreviewWorldkie,cv_scenariokiesPreviewWorldkie;
+    RecyclerView rc_characterkiesPrevieWorldkie,rc_stuffkiesPreviewWorldkie,rc_scenariokiesPreviewWorldkie;
     FirebaseAuth firebaseAuth;
     String UID,UID_AUTHOR,lastPhotoId="",mode;
     UserkieModel userkieModel;
     FragmentManager fragmentManager;
     CharacterkiesUserPreviewAdapter characterkiesUserPreviewAdapter;
     StuffkiesUserPreviewAdapter stuffkiesUserPreviewAdapter;
-    CollectionReference collectionUserkies,collectionWorldkies,collectionStuffkies,collectionCharacterkies;
     WorldkieModel worldkieModel;
     MainActivity mainActivity;
-    public WorldkieView() {
-        // Required empty public constructor
-    }
+    ScenariokiesUserPreviewAdapter scenariokiesUserPreviewAdapter;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment WorldkieView.
-     */
-    // TODO: Rename and change types and number of parameters
+    public WorldkieView() {}
+
     public static WorldkieView newInstance() {
         return new WorldkieView();
     }
@@ -89,7 +76,6 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_worldkie_view, container, false);
         setVar();
         initComponents(view);
@@ -105,20 +91,14 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
 
 
         getProfilePhoto();
-        db = FirebaseFirestore.getInstance();
-        characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList, getContext(),fragmentManager,"self");
+        characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList, mainActivity,fragmentManager,"self");
         rc_characterkiesPrevieWorldkie.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rc_characterkiesPrevieWorldkie.setAdapter(characterkiesUserPreviewAdapter);
-        characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList, getContext(),fragmentManager,"self");
+        characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList, mainActivity,fragmentManager,"self");
         rc_characterkiesPrevieWorldkie.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rc_characterkiesPrevieWorldkie.setAdapter(characterkiesUserPreviewAdapter);
 
-        collectionWorldkies = db.collection("Worldkies");
-
-        collectionUserkies = db.collection("Users");
-        collectionStuffkies = db.collection("Stuffkies");
-        collectionCharacterkies = db.collection("Characterkies");
-        collectionWorldkies.document(UID).addSnapshotListener((documentSnapshot, e) -> {
+        mainActivity.getCollectionWorldkies().document(UID).addSnapshotListener((documentSnapshot, e) -> {
             if (e != null) {
                 return;
             }
@@ -133,7 +113,7 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
                         tv_lastUpdateWorldkieView.setText(simpleDateFormat.format(worldkieModel.getLast_update().toDate()));
             }
         });
-        collectionUserkies.document(UID_AUTHOR).addSnapshotListener((document, exx) -> {
+        mainActivity.getCollectionUsers().document(UID_AUTHOR).addSnapshotListener((document, exx) -> {
             if (exx != null) {
                 return;
             }
@@ -143,7 +123,7 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
                 tv_nameUserWorldkieView.setText(userkieModel.getName());
                 tv_usernameWorldkieView.setText(userkieModel.getUsername());
                 if((!worldkieModel.isWorldkie_private() && mode.equals("other") && !userkieModel.isProfile_private()) || (worldkieModel.isWorldkie_private() && mode.equals("self"))){
-                    Query query = collectionStuffkies.whereEqualTo("UID_WORLDKIE", UID);
+                    Query query = mainActivity.getCollectionStuffkies().whereEqualTo("UID_WORLDKIE", UID);
 
                     if ((!worldkieModel.isWorldkie_private() && mode.equals("other") && !userkieModel.isProfile_private())){
                         query = query.whereNotEqualTo("draft", false);
@@ -185,7 +165,7 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
                     });
                     if((!worldkieModel.isWorldkie_private() && mode.equals("other") && !userkieModel.isProfile_private()) || (worldkieModel.isWorldkie_private() && mode.equals("self"))) {
 
-                        Query queryCharacterkie = collectionCharacterkies.whereEqualTo("UID_WORLDKIE", UID);
+                        Query queryCharacterkie = mainActivity.getCollectionWorldkies().whereEqualTo("UID_WORLDKIE", UID);
 
                         if ((!worldkieModel.isWorldkie_private() && mode.equals("other") && !userkieModel.isProfile_private())) {
                             queryCharacterkie = queryCharacterkie.whereNotEqualTo("draft", false);
@@ -220,6 +200,38 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
                                     }
 
                                 });
+                        Query queryScenariokie = mainActivity.getCollectionScenariokies().whereEqualTo("WORDLKIE_UID", UID);
+
+                        if ((!worldkieModel.isWorldkie_private() && mode.equals("other") && !userkieModel.isProfile_private())) {
+                            queryScenariokie.whereNotEqualTo("draft", false);
+                        }
+                        queryScenariokie.addSnapshotListener((queryDocumentSnapshots, ex) -> {
+                            if (ex != null) {
+                                return;
+                            }
+
+                            if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
+                                scenariokieModelArrayList.clear(); // Limpia la lista antes de agregar nuevos datos
+                                boolean foundData = false; // Add a flag
+
+                                for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
+                                    scenariokieModelArrayList.add(ScenariokieModel.fromSnapshot(doc));
+                                    foundData = true; // Set the flag to true if data is found
+                                    updateRecyclerViewScenariokies(scenariokieModelArrayList);
+                                }
+                                if (foundData) {
+                                    tv_scenariokiesPreviewWorldkie.setVisibility(View.VISIBLE);
+                                    cv_scenariokiesPreviewWorldkie.setVisibility(View.VISIBLE);
+                                } else {
+                                    tv_scenariokiesPreviewWorldkie.setVisibility(View.GONE);
+                                    cv_scenariokiesPreviewWorldkie.setVisibility(View.GONE);
+                                }
+                            } else {
+                                tv_scenariokiesPreviewWorldkie.setVisibility(View.GONE);
+                                cv_scenariokiesPreviewWorldkie.setVisibility(View.GONE);
+                            }
+
+                        });
                     }
                 } else if(!worldkieModel.isWorldkie_private() && userkieModel.isProfile_private() && mode.equals("other")){
                     tv_locked_worldkie.setVisibility(View.VISIBLE);
@@ -249,6 +261,9 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
         ib_back.setOnClickListener(this);
     }
     private void initComponents(View view){
+        tv_scenariokiesPreviewWorldkie = view.findViewById(R.id.tv_scenariokiesPreviewWorldkie);
+        cv_scenariokiesPreviewWorldkie = view.findViewById(R.id.cv_scenariokiesPreviewWorldkie);
+        rc_scenariokiesPreviewWorldkie = view.findViewById(R.id.rc_scenariokiesPreviewWorldkie);
         ib_worldkieView = view.findViewById(R.id.ib_characterkieView);
         tv_locked_worldkie = view.findViewById(R.id.tv_locked_characterkie);
         iv_locked_worldkie = view.findViewById(R.id.iv_locked_characterkie);
@@ -274,7 +289,6 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
     }
     private void setVar(){
         firebaseAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
     }
     private void getProfilePhoto() {
         if (worldkieModel.isPhoto_default()) {
@@ -292,7 +306,7 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
                 lastPhotoId = id_photo;
             }
         } else {
-            StorageReference userFolderRef = FirebaseStorage.getInstance("gs://buuk-tu-worldkies").getReference(UID);
+            StorageReference userFolderRef = mainActivity.getFirebaseStorageWorldkies().getReference(UID);
 
             userFolderRef.listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {
@@ -310,17 +324,23 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
         }
     }
     private void updateRecyclerViewCharacterkies(ArrayList<CharacterkieModel> characterkieArrayList) {
-        characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList,getContext(),fragmentManager,"self");
+        characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList,mainActivity,fragmentManager,"self");
         rc_characterkiesPrevieWorldkie.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rc_characterkiesPrevieWorldkie.setAdapter(characterkiesUserPreviewAdapter);
     }
     private void updateRecyclerViewStuffkies(ArrayList<StuffkieModel> stuffkieArrayList) {
-        stuffkiesUserPreviewAdapter = new StuffkiesUserPreviewAdapter(stuffkieArrayList,getContext(),fragmentManager,"self");
+        stuffkiesUserPreviewAdapter = new StuffkiesUserPreviewAdapter(stuffkieArrayList,mainActivity,fragmentManager,"self");
         rc_stuffkiesPreviewWorldkie.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rc_stuffkiesPreviewWorldkie.setAdapter(stuffkiesUserPreviewAdapter);
     }
+    private void updateRecyclerViewScenariokies(ArrayList<ScenariokieModel> scenariokieModelArrayList) {
+        scenariokiesUserPreviewAdapter = new ScenariokiesUserPreviewAdapter(scenariokieModelArrayList,mainActivity,fragmentManager,"self");
+        rc_scenariokiesPreviewWorldkie.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        rc_scenariokiesPreviewWorldkie.setAdapter(scenariokiesUserPreviewAdapter);
+    }
     @Override
     public void onClick(View v) {
+        // Comprueba si se ha presionado el botón de retroceso.
         if(v.getId()==R.id.ib_back){
             NavigationUtils.goBack(fragmentManager,mainActivity);
         } else if (v.getId() == R.id.ib_characterkieView) {

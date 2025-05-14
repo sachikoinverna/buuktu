@@ -11,7 +11,7 @@ import android.widget.RadioButton;
 
 import androidx.annotation.Nullable;
 
-import com.example.buuktu.CreateCharacterkie;
+import com.example.buuktu.views.CreateCharacterkie;
 import com.example.buuktu.R;
 import com.example.buuktu.views.MainActivity;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;

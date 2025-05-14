@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateCharacterkie">
+    tools:context=".views.CreateCharacterkie">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -20,12 +20,13 @@
             android:layout_marginBottom="32dp"
             android:clipChildren="false"
             android:clipToPadding="false"
+            app:cardBackgroundColor="@color/rose2"
             app:cardUseCompatPadding="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:strokeColor="#6D2525"
+            app:strokeColor="@color/rose3"
             app:strokeWidth="3dp">
 
             <ScrollView
@@ -54,7 +55,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView16"
-                        app:tint="#9FA8DA" />
+                        app:tint="@color/rose1" />
 
                     <Button
                         android:id="@+id/bt_state_characterkie"
@@ -62,7 +63,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
-                        android:backgroundTint="#9FA8DA"
+                        android:backgroundTint="@color/rose1"
                         android:drawableStart="@drawable/twotone_cake_24"
                         android:textColor="#FFFFFF"
                         app:icon="@drawable/twotone_cake_24"
@@ -79,7 +80,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:backgroundTint="#9FA8DA"
+                        android:backgroundTint="@color/rose1"
                         android:drawableStart="@drawable/twotone_cake_24"
                         android:textColor="#FFFFFF"
                         app:icon="@drawable/twotone_cake_24"
@@ -96,7 +97,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:backgroundTint="#9FA8DA"
+                        android:backgroundTint="@color/rose1"
                         android:drawableStart="@drawable/twotone_cake_24"
                         android:textColor="#FFFFFF"
                         app:icon="@drawable/twotone_cake_24"
@@ -127,17 +128,24 @@
                         android:layout_marginTop="42dp"
                         android:layout_marginEnd="16dp"
                         android:hint="@string/name"
+                        android:textColorHint="@color/rose3"
+                        app:boxBackgroundColor="@color/white"
                         app:boxCornerRadiusBottomEnd="58dp"
                         app:boxCornerRadiusBottomStart="58dp"
                         app:boxCornerRadiusTopEnd="58dp"
                         app:boxCornerRadiusTopStart="58dp"
+                        app:boxStrokeColor="@color/rose3"
                         app:counterEnabled="true"
                         app:counterMaxLength="50"
+                        app:counterOverflowTextColor="@color/rose3"
+                        app:cursorColor="@color/rose3"
                         app:errorEnabled="false"
+                        app:hintTextColor="@color/rose3"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/ib_select_img_create_characterkie"
-                        app:startIconDrawable="@drawable/outline_person_24">
+                        app:startIconDrawable="@drawable/outline_person_24"
+                        app:startIconTint="@color/rose3">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_nameCharacterkieCreate"
@@ -148,6 +156,7 @@
                             android:inputType="text"
                             android:maxLength="50"
                             android:textAlignment="center"
+                            android:textColor="@color/rose2"
                             android:textColorHint="@color/brownMaroon" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -160,7 +169,7 @@
                         android:layout_marginTop="8dp"
                         android:drawableStart="@drawable/twotone_cake_24"
                         android:textColor="#FFFFFF"
-                        app:backgroundTint="#9FA8DA"
+                        app:backgroundTint="@color/rose1"
                         app:icon="@drawable/twotone_cake_24"
                         app:iconGravity="start"
                         app:iconTint="#FFFFFF"
@@ -177,6 +186,7 @@
                         android:layout_marginTop="16dp"
                         android:text="@string/birthday"
                         android:textColor="#FFFFFF"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -191,6 +201,9 @@
                         android:gravity="center"
                         android:switchPadding="8dp"
                         android:text="@string/worldkie_privacity"
+                        android:textColor="@color/rose3"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
                         android:thumb="@drawable/thumb_custom"
                         android:track="@drawable/track_custom"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -207,6 +220,9 @@
                         android:gravity="center"
                         android:switchPadding="8dp"
                         android:text="@string/draft"
+                        android:textColor="@color/rose3"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
                         android:thumb="@drawable/thumb_custom"
                         android:track="@drawable/track_custom"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -221,6 +237,7 @@
                         android:layout_marginTop="8dp"
                         android:text="@string/status"
                         android:textColor="#FFFFFF"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -233,6 +250,7 @@
                         android:layout_marginTop="8dp"
                         android:text="@string/gender"
                         android:textColor="#FFFFFF"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -245,6 +263,7 @@
                         android:layout_marginTop="8dp"
                         android:text="@string/pronouns"
                         android:textColor="#FFFFFF"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -256,7 +275,7 @@
                         android:layout_height="50dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
-                        android:foregroundTint="#9FA8DA"
+                        android:backgroundTintMode="multiply"
                         android:src="@drawable/button_backgground"
                         android:tintMode="multiply"
                         app:layout_constraintBottom_toTopOf="@+id/textView16"
@@ -265,7 +284,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/et_nameCharacterkieCreateFull"
                         app:layout_constraintVertical_bias="0.0"
-                        app:tint="#7D83A9" />
+                        app:tint="@color/rose1" />
 
                     <TextView
                         android:id="@+id/tv_basic_info_characterkies"
@@ -291,7 +310,7 @@
                         android:src="@drawable/twotone_arrow_drop_down_circle_24"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/et_nameCharacterkieCreateFull"
-                        app:tint="#FFFFFF" />
+                        app:tint="@color/white" />
 
                     <TextView
                         android:id="@+id/textView16"
@@ -299,7 +318,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="------------------★-------------------"
-                        android:textColor="#9FA8DA"
+                        android:textColor="@color/rose3"
                         android:textSize="24sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

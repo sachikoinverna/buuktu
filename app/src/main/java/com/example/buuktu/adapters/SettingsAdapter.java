@@ -12,8 +12,8 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.buuktu.AccountSettings;
-import com.example.buuktu.ProfileSettings;
+import com.example.buuktu.views.AccountSettings;
+import com.example.buuktu.views.ProfileSettings;
 import com.example.buuktu.R;
 import com.example.buuktu.models.SettingModel;
 import com.example.buuktu.utils.NavigationUtils;
@@ -70,7 +70,9 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
         SettingModel settingModel = dataSet.get(position);
         String name = settingModel.getName();
             holder.getTv_name_setting().setText(name);
-         holder.getIv_photo_setting().setImageDrawable(settingModel.getDrawable());
+        //holder.getIv_photo_setting().setBackgroundColor(R.color.white);
+        //holder.getIv_photo_setting().setBackgroundColor(R.color.white);
+        holder.getIv_photo_setting().setImageDrawable(settingModel.getDrawable());
          holder.getCard_view_setting_list_one().setOnClickListener(v -> {
              if (name.equals(context.getResources().getString(R.string.profile))) {
                  NavigationUtils.goNewFragment(fragmentManager,new ProfileSettings());

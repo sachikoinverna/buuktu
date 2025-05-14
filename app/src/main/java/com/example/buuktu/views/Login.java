@@ -2,8 +2,8 @@ package com.example.buuktu.views;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -16,16 +16,10 @@ import com.example.buuktu.R;
 import com.example.buuktu.utils.UIUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Login extends AppCompatActivity {
     private TextInputEditText editTextEmailLogin, editTextPasswordLogin;
-    private FirebaseAuth auth;
-    private FirebaseFirestore db;
-    private Button tv_loginButton, tv_loginToRegisterButton;
-    private String email,username,password;
-    private CollectionReference dbUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,63 +31,63 @@ public class Login extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        //Oculta la barra de estado.
         UIUtils.hideSystemUI(this);
+        //Inicializa los componentes.
         initComponents();
 
     }
 
     private void initComponents() {
-        tv_loginButton = findViewById(R.id.tv_loginButton);
-        tv_loginToRegisterButton = findViewById(R.id.tv_loginToRegisterButton);
         editTextEmailLogin = findViewById(R.id.et_emailLogin);
         editTextPasswordLogin = findViewById(R.id.et_passwordLogin);
-        db = FirebaseFirestore.getInstance();
-        auth = FirebaseAuth.getInstance();
-        dbUsers = db.collection("Users");
     }
 
+    //Se navega al registro.
     public void handlerGoToRegister(View view) {
+        // Lanza la actividad para que el usuario se registre.
         startActivity(new Intent(this,Register.class));
+        // Elimina la pantalla de login de la pila de actividades.
         finish();
-
     }
 
     public void handlerLogin(View view) {
+        // Comprueba si los campos de Email/Nombre de usuario y Contraseña no están vacíos.
         if (!editTextEmailLogin.getText().toString().isEmpty() && !editTextPasswordLogin.getText().toString().isEmpty()) {
-            password = editTextPasswordLogin.getText().toString();
-            if(editTextEmailLogin.getText().toString().contains("@")){
-                email = editTextEmailLogin.getText().toString();
-                logWithEmail();
+        // Ningún campo está vacío, así que se verifica si se está usando un email para acceder.
+            if(Patterns.EMAIL_ADDRESS.matcher(editTextEmailLogin.getText().toString()).matches()){
+                // Al usar un email, se llama al método de inicio de sesión correspondiente.
+                logWithEmail(editTextEmailLogin.getText().toString());
             }else{
-                username = editTextEmailLogin.getText().toString();
-                logWithUsername();
+                // Al usar un nombre de usuario, se llama al método de inicio de sesión correspondiente.
+                logWithUsername(editTextEmailLogin.getText().toString());
             }
         }
     }
-    private void logWithUsername(){
-        dbUsers.whereEqualTo("username", username).get().addOnSuccessListener(queryDocumentSnapshots -> {
+    private void logWithUsername(String username){
+        // Realiza una búsqueda en la colección "Users" para el nombre de usuario especificado, limitando a un solo resultado.
+        FirebaseFirestore.getInstance().collection("Users").whereEqualTo("username", username).limit(1).get().addOnSuccessListener(queryDocumentSnapshots -> {
+            // Comprueba si se ha obtenido algún resultado.
             if (!queryDocumentSnapshots.isEmpty()) {
-                for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
-                    email = queryDocumentSnapshots.getDocuments().get(i).getString("email");
-                    logWithEmail();
-                }
+            // Se obtuvo un resultado: se llama al método de inicio de sesión con el email del primer documento.
+                logWithEmail(queryDocumentSnapshots.getDocuments().get(0).getString("email"));
             } else if (queryDocumentSnapshots.isEmpty()) {
+                // No se ha obtenido ningún resultado, se indica que el login ha fallado.
                 Toast.makeText(getApplicationContext(), "Login Failed", Toast.LENGTH_SHORT).show();
             }
         });
     }
-    private void logWithEmail(){
-        auth.signInWithEmailAndPassword(email, password).addOnSuccessListener(
+    private void logWithEmail(String email){
+        // Intenta autenticar al usuario en FirebaseAuth con email y contraseña.
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, editTextPasswordLogin.getText().toString()).addOnSuccessListener(
                 authResult -> {
+                    // El inicio de sesión fue exitoso, por lo que se lanza la actividad principal de la aplicación.
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    // Elimina la pantalla de login de la pila de actividades.
                     finish();
                 }).addOnFailureListener(e -> {
-
+                // El inicio de sesión falló, se muestra un mensaje de error.
+            Toast.makeText(getApplicationContext(), "Login Failed 2", Toast.LENGTH_SHORT).show();
                 });
-    }
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        UIUtils.onWindowFocusChanged(this, hasFocus);
     }
 }

@@ -10,11 +10,14 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        card_view:cardBackgroundColor="@color/purple2"
         card_view:cardCornerRadius="10dp"
         card_view:cardElevation="10dp"
         card_view:layout_constraintBottom_toBottomOf="parent"
         card_view:layout_constraintEnd_toEndOf="parent"
-        card_view:layout_constraintStart_toStartOf="parent">
+        card_view:layout_constraintStart_toStartOf="parent"
+        card_view:strokeColor="@color/purple1"
+        card_view:strokeWidth="3dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -41,6 +44,7 @@
                 android:button="@drawable/radiobutton_custom"
                 android:tag="pronouns_option_fem"
                 android:text="@string/pronouns_option_fem"
+                android:textColor="@color/purple3"
                 card_view:layout_constraintEnd_toStartOf="@+id/rb_pronouns_option_masc"
                 card_view:layout_constraintStart_toStartOf="parent"
                 card_view:layout_constraintTop_toBottomOf="@+id/bt_save_pronouns_characterkie" />
@@ -54,6 +58,7 @@
                 android:button="@drawable/radiobutton_custom"
                 android:tag="pronouns_option_masc"
                 android:text="@string/pronouns_option_masc"
+                android:textColor="@color/purple3"
                 card_view:layout_constraintEnd_toStartOf="@+id/rb_pronouns_option_neutral_one"
                 card_view:layout_constraintStart_toEndOf="@+id/rb_pronouns_option_fem"
                 card_view:layout_constraintTop_toBottomOf="@+id/bt_save_pronouns_characterkie" />
@@ -67,6 +72,7 @@
                 android:button="@drawable/radiobutton_custom"
                 android:tag="pronouns_option_neutral_one"
                 android:text="@string/pronouns_option_neutral_one"
+                android:textColor="@color/purple3"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintStart_toEndOf="@+id/rb_pronouns_option_masc"
                 card_view:layout_constraintTop_toBottomOf="@+id/bt_save_pronouns_characterkie" />
@@ -80,6 +86,7 @@
                 android:button="@drawable/radiobutton_custom"
                 android:tag="pronouns_option_neutral_two"
                 android:text="@string/pronouns_option_neutral_two"
+                android:textColor="@color/purple3"
                 card_view:layout_constraintStart_toStartOf="parent"
                 card_view:layout_constraintTop_toBottomOf="@+id/rb_pronouns_option_fem" />
 
@@ -91,6 +98,7 @@
                 android:button="@drawable/radiobutton_custom"
                 android:tag="pronouns_option_neutral_three"
                 android:text="@string/pronouns_option_neutral_three"
+                android:textColor="@color/purple3"
                 card_view:layout_constraintEnd_toStartOf="@+id/rb_pronouns_unknown_characterkie"
                 card_view:layout_constraintStart_toEndOf="@+id/rb_pronouns_option_neutral_two"
                 card_view:layout_constraintTop_toBottomOf="@+id/rb_pronouns_option_neutral_one" />
@@ -102,6 +110,7 @@
                 android:layout_marginTop="8dp"
                 android:button="@drawable/radiobutton_custom"
                 android:text="@string/other_fem"
+                android:textColor="@color/purple3"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintStart_toEndOf="@+id/rb_pronouns_unknown_characterkie"
                 card_view:layout_constraintTop_toBottomOf="@+id/rb_pronouns_option_neutral_one" />
@@ -114,6 +123,7 @@
                 android:button="@drawable/radiobutton_custom"
                 android:tag="pronouns_option_unknown"
                 android:text="@string/pronouns_option_unknown"
+                android:textColor="@color/purple3"
                 card_view:layout_constraintEnd_toStartOf="@+id/rb_other_characterkie"
                 card_view:layout_constraintStart_toEndOf="@+id/rb_pronouns_option_neutral_three"
                 card_view:layout_constraintTop_toBottomOf="@+id/rb_pronouns_option_neutral_one" />
@@ -129,6 +139,7 @@
                 android:layout_marginBottom="8dp"
                 android:hint="@string/name"
                 android:textAlignment="center"
+                android:textColorHint="@color/purple3"
                 app:boxCornerRadiusBottomEnd="58dp"
                 app:boxCornerRadiusBottomStart="58dp"
                 app:boxCornerRadiusTopEnd="58dp"
@@ -137,11 +148,17 @@
                 app:counterMaxLength="50"
                 app:errorEnabled="true"
                 app:startIconDrawable="@drawable/twotone_supervised_user_circle_24"
+                card_view:boxBackgroundColor="@color/white"
+                card_view:boxStrokeColor="@color/purple3"
+                card_view:counterTextColor="@color/purple3"
+                card_view:cursorColor="@color/purple3"
                 card_view:errorEnabled="true"
+                card_view:hintTextColor="@color/purple3"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toBottomOf="@+id/rb_other_characterkie">
+                card_view:layout_constraintTop_toBottomOf="@+id/rb_other_characterkie"
+                card_view:startIconTint="@color/purple3">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_otherPronounsCharacterkie"
@@ -152,7 +169,8 @@
                     android:inputType="text"
                     android:maxLength="50"
                     android:textAlignment="center"
-                    android:textColorHint="@color/brownMaroon"
+                    android:textColor="@color/purple2"
+                    android:textColorHint="@color/purple3"
                     android:textSize="20sp" />
 
             </com.google.android.material.textfield.TextInputLayout>

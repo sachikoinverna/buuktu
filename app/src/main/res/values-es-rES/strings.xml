@@ -1,7 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="word_of_the_day_available">Palabra del día disponible.</string>
     <string name="user_email">Email/Username</string>
     <string name="user_password">Password</string>
+    <string name="old_password">Contraseña antigua</string>
+    <string name="new_password">Nueva contraseña</string>
+    <string name="new_repeat_password">Repite nueva contraseña</string>
+    <string name="wait_new_info">Pronto podrás ver más información.</string>
+    <string name="private_stuffkie">Stuffkie privado.</string>
+    <string name="untitled">Sin título</string>
+    <string name="attention">Atención</string>
+    <string name="del_notekie">¿Deseas eliminar la nota? No podrás recuperarla.</string>
+    <string name="del_characterkie">¿Deseas eliminar el personaje? No podrás recuperarlo.</string>
+    <string name="del_worldkie">¿Deseas eliminar la ubicación? No podrás recuperarla.</string>
+    <string name="del_stuffkie">¿Deseas eliminar el objeto? No podrás recuperarlo.</string>
+    <string name="author">Autor:</string>
+    <string name="feature_unavailable">Función aún no disponible</string>
+    <string name="feature_coming_soon">Muy pronto podrás acceder a ella.</string>
+    <string name="creation">Creación:</string>
+    <string name="last_update">Última actualización:</string>
+    <string name="worldkie">Worldkie:</string>
+    <string name="characterkies_subtitle">¿Que es un characterkie?</string>
+
     <string name="name">Name</string>
     <string name="surname">Surname</string>
     <string name="register">Register</string>
@@ -70,8 +90,15 @@
     <string name="settings">Ajustes</string>
     <string name="log_out">Cerrar sesion</string>
     <string name="gender">Gender</string>
+    <string name="stuffkie">Stuffkie</string>
     <string name="notikies_subtitle">¿Qué es una notikie?</string>
     <string name="notekies_subtitle">¿Qué es una notekie?</string>
+    <string name="stuffkies_subtitle">¿Qué es un stuffkie?</string>
+    <string name="worldkies_subtitle">¿Qué es un worldkie?</string>
+    <string name="worldkie_normal">Worldkie</string>
+    <string name="scenariokies_subtitle">¿Qué es un scenariokie?</string>
+    <string name="scenariokie_description"> Un scenariokie es un pequeño universo del que iras juntando pieza a pieza hasta crear la base de tu libro. Dentro de el tendras la informacion organizad.Bienvenido a tu perfil. Es importante que veas como lo ve el resto, ya que es tu pequeño escaparate. Se podria decir que lo estas viendo desde dentro, ya que te mostramos también tus creaciones ocultas con la intencion de que tengas otra manera de acceder a estas. /n/n Cada día a medianoche obtendras elementos para inspirarte./n/nA partir de ahí, debes usar tu imaginacion, no hay reglas escritas, la única es usar dichos elementos. Papel y boligrafo seran tus mejores aliados a la hora de intentar crear un mundo con ellos./n/nRecuerda tener cuidado con lo que pones en tu escaparate.</string>
+    <string name="characterkie">Characterkie</string>
 
     <string name="profile_other_subtitle">¿Qué estoy viendo?</string>
     <string name="profile_self_subtitle">Bienvenido a tu perfil.</string>
@@ -80,17 +107,20 @@
     <string name="profile_self_description"> Es importante que veas como lo ve el resto, ya que es tu pequeño escaparate. Se podria decir que lo estas viendo desde dentro, ya que te mostramos también tus creaciones ocultas con la intencion de que tengas otra manera de acceder a estas. /n/n Cada día a medianoche obtendras elementos para inspirarte./n/nA partir de ahí, debes usar tu imaginacion, no hay reglas escritas, la única es usar dichos elementos. Papel y boligrafo seran tus mejores aliados a la hora de intentar crear un mundo con ellos./n/nRecuerda tener cuidado con lo que pones en tu escaparate.</string>
     <string name="profile_othegr_description">Bienvenido a tu perfil..Es importante que veas como lo ve el resto, ya que es tu pequeño escaparate. Se podria decir que lo estas viendo desde dentro, ya que te mostramos también tus creaciones ocultas con la intencion de que tengas otra manera de acceder a estas. /n/n Cada día a medianoche obtendras elementos para inspirarte./n/nA partir de ahí, debes usar tu imaginacion, no hay reglas escritas, la única es usar dichos elementos. Papel y boligrafo seran tus mejores aliados a la hora de intentar crear un mundo con ellos./n/nRecuerda tener cuidado con lo que pones en tu escaparate.</string>
     <string name="worldkie_description"> Un worldkie es un pequeño universo del que iras juntando pieza a pieza hasta crear la base de tu libro. Dentro de el tendras la informacion organizad.Bienvenido a tu perfil. Es importante que veas como lo ve el resto, ya que es tu pequeño escaparate. Se podria decir que lo estas viendo desde dentro, ya que te mostramos también tus creaciones ocultas con la intencion de que tengas otra manera de acceder a estas. /n/n Cada día a medianoche obtendras elementos para inspirarte./n/nA partir de ahí, debes usar tu imaginacion, no hay reglas escritas, la única es usar dichos elementos. Papel y boligrafo seran tus mejores aliados a la hora de intentar crear un mundo con ellos./n/nRecuerda tener cuidado con lo que pones en tu escaparate.</string>
-    <string name="characterkie_description">Un characterkie es un personaje de tu pequeño universo literario. Pulsando .Bienvenido a tu perfil. Es importante que veas como lo ve el resto, ya que es tu pequeño escaparate. Se podria decir que lo estas viendo desde dentro, ya que te mostramos también tus creaciones ocultas con la intencion de que tengas otra manera de acceder a estas. /n/n Cada día a medianoche obtendras elementos para inspirarte./n/nA partir de ahí, debes usar tu imaginacion, no hay reglas escritas, la única es usar dichos elementos. Papel y boligrafo seran tus mejores aliados a la hora de intentar crear un mundo con ellos./n/nRecuerda tener cuidado con lo que pones en tu escaparate.</string>
+    <string name="characterkie_description">Un characterkie es un personaje de tu pequeño universo literario.</string>
     <string name="notekie_description">Te vas a llevar una decepcion, pero es una nota normal y corriente. . Es importante que veas como lo ve el resto, ya que es tu pequeño escaparate. Se podria decir que lo estas viendo desde dentro, ya que te mostramos también tus creaciones ocultas con la intencion de que tengas otra manera de acceder a estas. /n/n Cada día a medianoche obtendras elementos para inspirarte./n/nA partir de ahí, debes usar tu imaginacion, no hay reglas escritas, la única es usar dichos elementos. Papel y boligrafo seran tus mejores aliados a la hora de intentar crear un mundo con ellos./n/nRecuerda tener cuidado con lo que pones en tu escaparate.</string>
     <string name="settings_description">Momento de descubrir america, ajustes es efectivamente donde hace ajustes. Es importante que veas como lo ve el resto, ya que es tu pequeño escaparate. Se podria decir que lo estas viendo desde dentro, ya que te mostramos también tus creaciones ocultas con la intencion de que tengas otra manera de acceder a estas. /n/n Cada día a medianoche obtendras elementos para inspirarte./n/nA partir de ahí, debes usar tu imaginacion, no hay reglas escritas, la única es usar dichos elementos. Papel y boligrafo seran tus mejores aliados a la hora de intentar crear un mundo con ellos./n/nRecuerda tener cuidado con lo que pones en tu escaparate.</string>
     <string name="search_description">Te voy a contar un secreto pero no se lo cuentes a nadie, aquí deberias poder buscar por nombreWorldkies, Characterkies,Stuffkies y usuarios pero aun no se puede. PD: Si quieres un tip, puedes verlos igualmente y acceder a ellos.  Es importante que veas como lo ve el resto, ya que es tu pequeño escaparate. Se podria decir que lo estas viendo desde dentro, ya que te mostramos también tus creaciones ocultas con la intencion de que tengas otra manera de acceder a estas. /n/n Cada día a medianoche obtendras elementos para inspirarte./n/nA partir de ahí, debes usar tu imaginacion, no hay reglas escritas, la única es usar dichos elementos. Papel y boligrafo seran tus mejores aliados a la hora de intentar crear un mundo con ellos./n/nRecuerda tener cuidado con lo que pones en tu escaparate.</string>
     <string name="home_description">Bienvenido a la pantalla principal, si pulsas en el boton podras crear un nuevo Worldkie. Todos los que hayas creado se mostraran aquiTe voy a contar un secreto pero no se lo cuentes a nadie, aquí deberias poder buscar por nombreWorldkies, Characterkies,Stuffkies y usuarios pero aun no se puede. PD: Si quieres un tip, puedes verlos igualmente y acceder a ellos.  Es importante que veas como lo ve el resto, ya que es tu pequeño escaparate. Se podria decir que lo estas viendo desde dentro, ya que te mostramos también tus creaciones ocultas con la intencion de que tengas otra manera de acceder a estas. /n/n Cada día a medianoche obtendras elementos para inspirarte./n/nA partir de ahí, debes usar tu imaginacion, no hay reglas escritas, la única es usar dichos elementos. Papel y boligrafo seran tus mejores aliados a la hora de intentar crear un mundo con ellos./n/nRecuerda tener cuidado con lo que pones en tu escaparate.</string>
+    <string name="stuffkie_description">Un stuffkie es un objeto de tu pequeño universo literario.</string>
 
     <string name="inspo">Inspo</string>
     <string name="inspo_description">Aquí podrás guardar todas las ideas que se te vengan a la cabeza, así como intentar conseguir nuevas a través de nuestros desafíos, los cuales también te ayudaran a entrenarte en el arte de crear nuevas historias.</string>
     <string name="notikies_description">Es una notificación normal y corriente.\n\nAquí podrás ver cualquier tipo de notificación que tengas activado con su respectiva información, incluyendo cuándo se mandó.</string>
     <string name="notekie">Notekie</string>
     <string name="notikie">Notikie</string>
+    <string name="scenariokie">Scenariokie</string>
+
     <string name="yyyy">YYYY</string>
     <string name="draft">Borrador</string>
     <string name="chooseIconkie">Iconkie</string>

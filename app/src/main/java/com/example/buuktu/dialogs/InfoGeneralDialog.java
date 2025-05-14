@@ -12,11 +12,7 @@ import com.example.buuktu.R;
 
 public class InfoGeneralDialog extends Dialog implements View.OnClickListener {
     ImageButton ib_close_dialog ;
-    static String modeNotekie = "notekie";
-    static String modeStuffkie = "stuffkie";
-    static String modeWorldkie = "worldkie";
    String mode;
-    static String modeCharacterkie = "characterkie";
     public InfoGeneralDialog(@NonNull Context context,String mode)
     {
         super(context);
@@ -50,15 +46,30 @@ public class InfoGeneralDialog extends Dialog implements View.OnClickListener {
             case "worldkies":
                 setContentView(R.layout.info_worldkies_dialog);
                 break;
+            case "settings":
+                setContentView(R.layout.info_settings);
+                break;
+            case "scenariokies":
+                setContentView(R.layout.info_scenariokies_dialog);
+                break;
         }
-        ib_close_dialog = findViewById(R.id.ib_close_dialog);
-        ib_close_dialog.setOnClickListener(this);
-        setCanceledOnTouchOutside(false);
-        setCancelable(false);
-
-        getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        initComponents();
+        setListeners();
+        setDialogProperties();
     }
+private void initComponents(){
+    ib_close_dialog = findViewById(R.id.ib_close_dialog);
 
+}
+private void setListeners(){
+    ib_close_dialog.setOnClickListener(this);
+}
+private void setDialogProperties(){
+    setCanceledOnTouchOutside(false);
+    setCancelable(false);
+
+    getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+}
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.ib_close_dialog) {

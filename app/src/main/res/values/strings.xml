@@ -1,9 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="word_of_the_day_available">Word of the day available.</string>
     <string name="user_email">Email/Username</string>
     <string name="user_password">Password</string>
     <string name="name">Name</string>
     <string name="surname">Surname</string>
+    <string name="private_stuffkie">Private stuffkie.</string>
+    <string name="untitled">Untitled</string>
+    <string name="attention">Attention</string>
+    <string name="author">Author:</string>
+    <string name="feature_unavailable">Feature not available yet</string>
+    <string name="feature_coming_soon">You’ll be able to access it very soon.</string>
+    <string name="creation">Creation:</string>
+    <string name="last_update">Last update:</string>
+    <string name="worldkie">Worldkie:</string>
+
+    <string name="del_notekie">Do you want to delete the note? You won’t be able to recover it.</string>
+    <string name="del_characterkie">Do you want to delete the character? You won’t be able to recover it.</string>
+    <string name="del_worldkie">Do you want to delete the location? You won’t be able to recover it.</string>
+    <string name="del_stuffkie">Do you want to delete the item? You won’t be able to recover it.</string>
+    <string name="wait_new_info">You\'ll be able to see more information soon.</string>
+    <string name="old_password">Old password</string>
+    <string name="new_password">New password</string>
+    <string name="new_repeat_password">Repeat new password</string>
     <string name="register">Register</string>
     <string name="login">Login</string>
     <string name="challenges">Challenges</string>
@@ -126,6 +145,8 @@
     <string name="gender_unknown">Unknown</string>
     <string name="other_masc">Other</string>
     <string name="other_fem">Other</string>
+    <string name="worldkie_normal">Worldkie</string>
+
     <string name="title">Title</string>
     <string name="profile">Profile</string>
     <string name="account">Account</string>
@@ -134,19 +155,30 @@
     <string name="messages">Messages</string>
     <string name="log_out">Log out</string>
     <string name="settings">Settings</string>
+    <string name="stuffkie">Stuffkie</string>
     <string name="profile_other_subtitle">¿Qué estoy viendo?</string>
     <string name="profile_othegr_description">Bienvenido a tu perfil..Es importante que veas como lo ve el resto, ya que es tu pequeño escaparate. Se podria decir que lo estas viendo desde dentro, ya que te mostramos tambien tus creaciones ocultas con la intencion de que tengas otra manera de acceder a estas. /n/n Cada dia a medianoche obtendras elementos para inspirarte./n/nA partir de ahi, debes usar tu imaginacion, no hay reglas escritas, la unica es usar dichos elementos. Papel y boligrafo seran tus mejores aliados a la hora de intentar crear un mundo con ellos./n/nRecuerda tener cuidado con lo que pones en tu escaparate.</string>
     <string name="worldkie_description"> Un worldkie es un pequeño universo del que iras juntando pieza a pieza hasta crear la base de tu libro. Dentro de el tendras la informacion organizad.</string>
-    <string name="characterkie_description">Un characterkie es un personaje de tu pequeño universo literario. Pulsando .Es importante que veas coe el resto, ya que es tu pequeño escaparate. Se podria decir que lo estas viendo desde dentro, ya que te mostramos tambien tus creaciones ocultas con la intencion de que tengas otra manera de acceder a estas. /n/n Cada dia a medianoche obtendras elementos para inspirarte./n/nA partir de ahi, debes usar tu imaginacion, no hay reglas escritas, la unica es usar dichos elementos. Papel y boligrafo seran tus mejores aliados a la hora de intentar crear un mundo con ellos./n/nRecuerda tener cuidado con lo que pones en tu escaparate.</string>
+    <string name="characterkie_description">A character from your own literary universe.</string>
+    <string name="stuffkie_description">A stuffkie from your own literary universe.</string>
     <string name="notekie_description">Te vas a llevar una decepcion, pero es una nota normal y corriente.</string>
-    <string name="settings_description">Momento de descubrir america, ajustes es efectivamente donde hace ajustes</string>
+    <string name="settings_description">Momento de descubrir america, ajustes es efectivamente donde hace ajustes.\n\nTu cuenta debe estar siempre perfecta, asi que haz todos los ajustes necesarios para ello.</string>
     <string name="search_description">Te voy a contar un secreto pero no se lo cuentes a nadie, aqui deberias poder buscar usuarios y elementos  por nombre pero aun no se puede.\n\nPD: Si quieres un tip, puedes verlos igualmente y acceder a ellos.</string>
     <string name="home_description">Bienvenido a la pantalla principal, si pulsas en el boton podras crear un nuevo Worldkie. Todos los que hayas creado se mostraran aqui.</string>
     <string name="notekies_subtitle">¿Qué es una notekie?</string>
+    <string name="stuffkies_subtitle">What\'s a stuffkie?</string>
+    <string name="worldkies_subtitle">What\'s a worldkie?</string>
+    <string name="scenariokie">Scenariokie</string>
+    <string name="scenariokies_subtitle">What\'s a scenariokie?</string>
+    <string name="scenariokie_description">A place from your own literary universe.</string>
+    <string name="characterkie">Characterkie</string>
+
     <string name="notekie">Notekie</string>
     <string name="notikie">Notikie</string>
     <string name="inspo_description">Here you can save all the ideas that come to your mind, as well as try to get new ones through our challenges.</string>
     <string name="notikies_subtitle">What\'s a notikie?</string>
+    <string name="characterkies_subtitle">What\'s a characterkie?</string>
+
     <string name="inspo">Inspo</string>
     <string name="challenges_subtitle">What do they consist of?</string>
     <string name="profile_self_subtitle">Welcome to your profile.</string>
@@ -174,6 +206,4 @@ Remember to activate notifications so you don\'t miss anything.
     <string name="numberkie_of_the_day">Numberkie of the day</string>
     <string name="close_nav">Close Navigation Drawer</string>
     <string name="worldkie_privacity">Private worldkie</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

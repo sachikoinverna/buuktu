@@ -4,7 +4,6 @@ import static com.example.buuktu.R.color;
 import static com.example.buuktu.R.mipmap;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -18,9 +17,9 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 
-import com.example.buuktu.CreateCharacterkie;
-import com.example.buuktu.CreateEditScenariokie;
-import com.example.buuktu.CreateEditStuffkie;
+import com.example.buuktu.views.CreateCharacterkie;
+import com.example.buuktu.views.CreateEditScenariokie;
+import com.example.buuktu.views.CreateEditStuffkie;
 import com.example.buuktu.R;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.views.CreateEditWorldkie;
@@ -33,7 +32,6 @@ import java.util.ArrayList;
 public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  implements View.OnClickListener{
     Context context;
     ImageButton ib_prf_imgOne,ib_prf_imgTwo,ib_prf_imgThree,ib_prf_imgFour,ib_prf_imgFive,ib_prf_imgSix ,ib_prf_imgSeven ,ib_prf_imgEight ,ib_prf_imgNine ,ib_prf_imgTen ,ib_prf_imgEleven,ib_back_default_photo_profile;
-    Bitmap selectedBitmap;
     Register register;
     ArrayList<ImageButton> imageButtons;
     CreateEditWorldkie createEditWorldkie;
@@ -166,7 +164,7 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
         int imageIndex = 0;
         for(ImageButton imageButton: imageButtons){
             if(register!=null) {
-                DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(ContextCompat.getDrawable(context,photosUserkies.get(imageIndex))), imageButton, R.color.brownBrown);
+                DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(ContextCompat.getDrawable(context,photosUserkies.get(imageIndex))), imageButton, color.blue1);
             } else if (createCharacterkie!=null) {
                 Log.d("BottomSheet", "photosCharacterkies size in setImages: " + photosCharacterkies.size());
                 DrawableUtils.personalizarImagenCircleButton(context,DrawableUtils.drawableToBitmap(ContextCompat.getDrawable(context,photosCharacterkies.get(imageIndex))),imageButton, color.greenWhatever);
@@ -222,15 +220,14 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
             createCharacterkie.setPhotoDefault();
 
         } else if (createEditStuffkie !=null) {
-          //  Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
             createEditStuffkie.setSelectedProfilePhoto(imageButton.getDrawable());
-            //createEditStuffkie.get().setTag(getMipmapName(photosStuffkies.get(index)));
+            createEditStuffkie.getIb_select_img_create_stuffkie().setTag(DrawableUtils.getMipmapName(context,photosStuffkies.get(index)));
             createEditStuffkie.setPhotoDefault();
 
 
         }else if (createEditScenariokie !=null) {
             createEditScenariokie.setSelectedProfilePhoto(imageButton.getDrawable());
-            createEditScenariokie.getIb_select_img_create_worldkie().setTag(DrawableUtils.getMipmapName(context,photosStuffkies.get(index)));
+            createEditScenariokie.getIb_select_img_create_scenariokie().setTag(DrawableUtils.getMipmapName(context,photosScenariokies.get(index)));
             createEditScenariokie.setPhotoDefault();
 
         }

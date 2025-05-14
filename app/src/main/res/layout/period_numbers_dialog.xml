@@ -6,18 +6,19 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.card.MaterialCardView
-        android:layout_width="300dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:theme="@style/Theme.MaterialComponents"
 
-        app:cardBackgroundColor="#8C9EFF"
+        app:cardBackgroundColor="@color/purple2"
+        app:cardCornerRadius="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="#8C9EFF"
+        app:strokeColor="@color/purple1"
         app:strokeWidth="5dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,18 +29,21 @@
                 android:id="@+id/tv_period_number_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:text="@string/numberkie_of_the_day"
-                android:textSize="24sp"
+                android:textColor="@color/purple3"
+                android:textSize="34sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/imageView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/iv_period_number"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:layout_marginTop="8dp"
                 android:src="@mipmap/numberkie_of_the_day"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -50,24 +54,29 @@
                 android:id="@+id/tv_period_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:text="TextView"
+                android:layout_marginEnd="16dp"
+                android:textColor="@color/purple1"
+                android:textSize="24sp"
+                android:textStyle="italic"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_period_number_title" />
 
             <ImageButton
                 android:id="@+id/ib_close_period_number_dialog"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginBottom="8dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
                 android:src="@drawable/twotone_cancel_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView6"
+                app:layout_constraintTop_toBottomOf="@+id/iv_period_number"
                 app:tint="#DC3C3C" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

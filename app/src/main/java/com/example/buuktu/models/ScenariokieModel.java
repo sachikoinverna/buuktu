@@ -37,9 +37,9 @@ public class ScenariokieModel {
         ScenariokieModel scenariokieModel = new ScenariokieModel();
         scenariokieModel.setName(document.getString("name"));
         scenariokieModel.setAUTHOR_UID(document.getString("AUTHOR_UID"));
-        scenariokieModel.setUID(document.getString("UID"));
-        scenariokieModel.setWORDLKIE_UID(document.getString("WORLDKIE_UID"));
-        scenariokieModel.setScenariokie_private(document.getBoolean("scenario_private"));
+        scenariokieModel.setUID(document.getId());
+        scenariokieModel.setWORDLKIE_UID(document.getString("WORDLKIE_UID"));
+        scenariokieModel.setScenariokie_private(document.getBoolean("scenariokie_private"));
         scenariokieModel.setDraft(document.getBoolean("draft"));
         scenariokieModel.setPhoto_default(document.getBoolean("photo_default"));
         if (document.contains("photo_id")) {

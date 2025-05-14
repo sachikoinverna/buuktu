@@ -5,13 +5,9 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.util.TypedValue;
 import android.webkit.MimeTypeMap;
@@ -19,16 +15,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.annotation.ColorRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.CustomTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.buuktu.R;
 
@@ -235,7 +227,6 @@ public class DrawableUtils {
         imageButton.setBackground(drawableBorder);
         imageButton.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-        // 3) Glide sólo para el circleCrop
         Glide.with(context)
                 .asBitmap()
                 .load(bitmap)
@@ -244,13 +235,11 @@ public class DrawableUtils {
                 .into(imageButton);
     }
     public static void personalizarImagenCircleButton(Context context, Uri uri, ImageButton imageButton, @ColorRes int color, boolean pressed) {
-        // 1) Padding mínimo
         int pad = (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, 2, context.getResources().getDisplayMetrics()
         );
         imageButton.setPadding(pad, pad, pad, pad);
 
-        // 2) Fondo oval con trazo más grueso si está presionado
         GradientDrawable drawableBorder = new GradientDrawable();
         drawableBorder.setShape(GradientDrawable.OVAL);
         int strokeWidthDp = pressed ? 40 : 20;
@@ -261,11 +250,9 @@ public class DrawableUtils {
         imageButton.setBackground(drawableBorder);
         imageButton.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-        // 3) Glide sólo para el circleCrop
         Glide.with(context)
                 .asBitmap()
                 .load(uri)
-            //    .override(bitmap.getWidth(), bitmap.getHeight())
                 .circleCrop()
                 .into(imageButton);
     }

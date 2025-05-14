@@ -1,6 +1,5 @@
 package com.example.buuktu.adapters;
 
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,15 +14,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buuktu.R;
-import com.example.buuktu.StuffkieView;
+import com.example.buuktu.views.StuffkieView;
 import com.example.buuktu.models.StuffkieModel;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.EfectsUtils;
 import com.example.buuktu.utils.NavigationUtils;
+import com.example.buuktu.views.MainActivity;
 import com.google.android.material.card.MaterialCardView;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
@@ -34,17 +31,13 @@ public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAd
     private final ArrayList<StuffkieModel> dataSet;
     private final FragmentManager fragmentManager;
 
-    private final Context context;
+    private final MainActivity context;
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final ImageView iv_stuffkie_photo_search;
         private final ImageView iv_stuffkie_private_search;
         final MaterialCardView cv_stuffkie_search;
         final TextView tv_stuffkie_name_search;
         final TextView tv_stuffkie_username_search;
-        private final FirebaseStorage firebaseStorageStuffkie= FirebaseStorage.getInstance("gs://buuk-tu-stuffkies");
-        private final FirebaseFirestore db;
-        CollectionReference collectionStuffkie;
-
         public ViewHolder(View view) {
             super(view);
             tv_stuffkie_username_search = view.findViewById(R.id.tv_stuffkie_username_search);
@@ -52,20 +45,6 @@ public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAd
             iv_stuffkie_photo_search= view.findViewById(R.id.iv_stuffkie_photo_search);
             cv_stuffkie_search = view.findViewById(R.id.cv_stuffkie_search);
             iv_stuffkie_private_search = view.findViewById(R.id.iv_stuffkie_private_search);
-            db = FirebaseFirestore.getInstance();
-            collectionStuffkie = db.collection("Stuffkies");
-        }
-
-        public FirebaseFirestore getDb() {
-            return db;
-        }
-
-        public FirebaseStorage getFirebaseStorageStuffkie() {
-            return firebaseStorageStuffkie;
-        }
-
-        public CollectionReference getCollectionStuffkie() {
-            return collectionStuffkie;
         }
 
         public TextView getTv_stuffkie_username_search() {
@@ -88,7 +67,7 @@ public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAd
         }
     }
     //Constructor donde pasamos la lista de productos y el contexto
-    public StuffkieSearchAdapter(ArrayList<StuffkieModel> dataSet, Context ctx, FragmentManager fragmentManager) {
+    public StuffkieSearchAdapter(ArrayList<StuffkieModel> dataSet, MainActivity ctx, FragmentManager fragmentManager) {
         this.dataSet = dataSet;
         this.context = ctx;
         this.fragmentManager = fragmentManager;
@@ -106,7 +85,7 @@ public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         StuffkieModel stuffkieModel = dataSet.get(position);
         holder.getIv_stuffkie_photo_search().setVisibility(View.INVISIBLE);
-        holder.getCollectionStuffkie().document(stuffkieModel.getAUTHOR_UID()).addSnapshotListener((documentSnapshot, e) -> {
+        context.getCollectionUsers().document(stuffkieModel.getAUTHOR_UID()).addSnapshotListener((documentSnapshot, e) -> {
             if (e != null) {
                 return;
             }
@@ -142,7 +121,7 @@ public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAd
                     EfectsUtils.startCircularReveal(drawable,holder.getIv_stuffkie_photo_search());
                 }
         } else {
-            StorageReference userFolderRef = holder.getFirebaseStorageStuffkie().getReference(stuffkieModel.getUID());
+            StorageReference userFolderRef = context.getFirebaseStorageStuffkies().getReference(stuffkieModel.getUID());
 
             userFolderRef.listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {

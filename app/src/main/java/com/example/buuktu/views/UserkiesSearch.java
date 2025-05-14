@@ -1,4 +1,4 @@
-package com.example.buuktu;
+package com.example.buuktu.views;
 
 import static android.widget.Toast.LENGTH_LONG;
 
@@ -14,28 +14,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.widget.Toast;
 
+import com.example.buuktu.R;
 import com.example.buuktu.adapters.UserkieSearchAdapter;
 import com.example.buuktu.models.UserkieModel;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldPath;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
 public class UserkiesSearch extends Fragment {
 
     private RecyclerView rc_userkies_search;
-    private FirebaseFirestore db;
-    private FirebaseAuth firebaseAuth;
     private ArrayList<UserkieModel> userkieModelArrayList;
     private UserkieSearchAdapter userkieSearchAdapter;
-    private String UID;
-    public UserkiesSearch() {
-        // Constructor vacío obligatorio
-    }
+    MainActivity mainActivity;
+    public UserkiesSearch() {}
 
     public static UserkiesSearch newInstance() {
         return new UserkiesSearch();
@@ -44,31 +38,29 @@ public class UserkiesSearch extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        firebaseAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
-        userkieModelArrayList = new ArrayList<>();
-        userkieSearchAdapter = new UserkieSearchAdapter(userkieModelArrayList, getContext(), getParentFragmentManager());
-        UID = firebaseAuth.getUid();
+
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_userkies_search, container, false);
-
+        mainActivity = (MainActivity)getActivity();
         rc_userkies_search = view.findViewById(R.id.rc_userkies_search);
+        loadUserkies();
+        userkieSearchAdapter = new UserkieSearchAdapter(userkieModelArrayList, mainActivity, getParentFragmentManager());
         rc_userkies_search.setLayoutManager(new LinearLayoutManager(getContext()));
+        userkieModelArrayList = new ArrayList<>();
+
         rc_userkies_search.setAdapter(userkieSearchAdapter);
 
-        loadUserkies();
 
         return view;
     }
 
     private void loadUserkies() {
-        CollectionReference collectionUserkies = db.collection("Users");
 
-        collectionUserkies.whereNotEqualTo(FieldPath.documentId(), UID).addSnapshotListener((queryDocumentSnapshots, e) -> {
+        mainActivity.getCollectionUsers().whereNotEqualTo(FieldPath.documentId(), mainActivity.getUID()).addSnapshotListener((queryDocumentSnapshots, e) -> {
             if (e != null) {
                 Log.e("Firestore Error", e.getMessage());
                 Toast.makeText(getContext(), "Error al cargar usuarios", LENGTH_LONG).show();

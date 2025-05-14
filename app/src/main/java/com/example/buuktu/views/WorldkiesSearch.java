@@ -1,4 +1,4 @@
-package com.example.buuktu;
+package com.example.buuktu.views;
 
 import static android.widget.Toast.LENGTH_LONG;
 
@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.buuktu.R;
 import com.example.buuktu.adapters.WorldkieSearchAdapter;
 import com.example.buuktu.models.WorldkieModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,23 +33,12 @@ import java.util.ArrayList;
 public class WorldkiesSearch extends Fragment {
 
     RecyclerView rc_worldkies_search;
-    private FirebaseFirestore db;
     private ArrayList<WorldkieModel> worldkieModelArrayList;
     CollectionReference collectionWorldkies;
     WorldkieSearchAdapter worldkieSearchAdapter;
-    FirebaseAuth firebaseAuth;
-    String UID;
-    public WorldkiesSearch() {
-        // Required empty public constructor
-    }
+    MainActivity mainActivity;
+    public WorldkiesSearch() {}
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment WorldkiesSearch.
-     */
-    // TODO: Rename and change types and number of parameters
     public static WorldkiesSearch newInstance() {
         return new WorldkiesSearch();
     }
@@ -56,25 +46,20 @@ public class WorldkiesSearch extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_worldkies_search, container, false);
         rc_worldkies_search = view.findViewById(R.id.rc_worldkies_search);
-        db = FirebaseFirestore.getInstance();
         worldkieModelArrayList = new ArrayList<>();
-        firebaseAuth = FirebaseAuth.getInstance();
-        UID = firebaseAuth.getUid();
-        collectionWorldkies = db.collection("Worldkies");
         worldkieSearchAdapter = new WorldkieSearchAdapter(worldkieModelArrayList, getContext(), getParentFragmentManager());
         rc_worldkies_search.setAdapter(worldkieSearchAdapter);
         rc_worldkies_search.setLayoutManager(new LinearLayoutManager(getContext()));
-        collectionWorldkies.whereNotEqualTo("UID_AUTHOR",UID).whereEqualTo("draft",false).addSnapshotListener((queryDocumentSnapshots, e) -> {
+        mainActivity = (MainActivity) requireActivity();
+        mainActivity.getCollectionWorldkies().whereNotEqualTo("UID_AUTHOR",mainActivity.getUID()).whereEqualTo("draft",false).addSnapshotListener((queryDocumentSnapshots, e) -> {
             if (e != null) {
                 Log.e("Error", e.getMessage());
                 Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();

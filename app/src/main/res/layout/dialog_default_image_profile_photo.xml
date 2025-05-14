@@ -11,9 +11,12 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/purple2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:strokeColor="@color/purple1"
+        app:strokeWidth="3dp"
         card_view:cardCornerRadius="10dp"
         card_view:cardElevation="10dp">
 

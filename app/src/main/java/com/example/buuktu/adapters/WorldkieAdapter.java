@@ -1,16 +1,11 @@
 package com.example.buuktu.adapters;
 
-import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -27,26 +22,21 @@ import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.EfectsUtils;
 import com.example.buuktu.utils.NavigationUtils;
 import com.example.buuktu.views.CreateEditWorldkie;
+import com.example.buuktu.views.MainActivity;
 import com.example.buuktu.views.WorldkieMenu;
 import com.google.android.material.card.MaterialCardView;
-import com.google.firebase.Firebase;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHolder> {
     private final ArrayList<WorldkieModel> dataSet;
     private final FragmentManager fragmentManager;
-    private final Context context;
+    private final MainActivity context;
 
     //Constructor donde pasamos la lista de productos y el contexto
-    public WorldkieAdapter(ArrayList<WorldkieModel> dataSet, Context ctx, FragmentManager fragmentManager) {
+    public WorldkieAdapter(ArrayList<WorldkieModel> dataSet, MainActivity ctx, FragmentManager fragmentManager) {
         this.dataSet = dataSet;
         this.context = ctx;
         this.fragmentManager = fragmentManager;
@@ -58,7 +48,7 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
 
         //Creamos la vista de cada item a partir de nuestro layout
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.worldkie_list_layout, viewGroup, false);
-        return new ViewHolder(view);
+         return new ViewHolder(view);
     }
 
     @Override
@@ -74,9 +64,7 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
         holder.getTv_name_wordkie().setText(worldkieModel.getName());
         Bundle bundle = new Bundle();
         bundle.putString("worldkie_id", worldkieModel.getUID());
-        holder.getCard_view_worldkie_list_layout().setOnClickListener(v -> {
-                NavigationUtils.goNewFragmentWithBundle(bundle, fragmentManager, new WorldkieMenu());
-        });
+        holder.getCard_view_worldkie_list_layout().setOnClickListener(v -> NavigationUtils.goNewFragmentWithBundle(bundle, fragmentManager, new WorldkieMenu()));
         holder.getCard_view_worldkie_list_layout().setOnLongClickListener(v -> {
             View popupView = LayoutInflater.from(context).inflate(R.layout.menu_popup, null);
             PopupWindow popupWindow = new PopupWindow(popupView,
@@ -112,7 +100,7 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
                 Drawable drawable = ContextCompat.getDrawable(context, resId);
                 holder.getIv_photo_wordlkie().setImageDrawable(drawable);
                 try {
-                    DrawableUtils.personalizarImagenCuadradoButton(context, 115 / 6, 7, R.color.brownMaroon, drawable, holder.getIv_photo_wordlkie());
+                    DrawableUtils.personalizarImagenCuadradoButton(context, 115 / 6, 7, R.color.white, drawable, holder.getIv_photo_wordlkie());
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -123,13 +111,13 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
             }
             holder.getIv_photo_wordlkie().setVisibility(View.VISIBLE);
         } else {
-            StorageReference userFolderRef = holder.getFirebaseStorageWorldkie().getReference(worldkieModel.getUID());
+            StorageReference userFolderRef = context.getFirebaseStorageWorldkies().getReference(worldkieModel.getUID());
 
             userFolderRef.listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {
                     if (item.getName().startsWith("cover")) {
                         item.getDownloadUrl().addOnSuccessListener(uri -> {
-                            DrawableUtils.personalizarImagenCuadradoImageView(context, 150 / 6, 7, R.color.brownMaroon, uri, holder.getIv_photo_wordlkie());
+                            DrawableUtils.personalizarImagenCuadradoImageView(context, 150 / 6, 7, R.color.white, uri, holder.getIv_photo_wordlkie());
                             holder.getIv_photo_wordlkie().setVisibility(View.VISIBLE);
                             EfectsUtils.startCircularReveal(context, uri, holder.getIv_photo_wordlkie());
                         });
@@ -149,9 +137,6 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView tv_name_wordlkie;
         private final ImageView iv_photo_wordlkie;
-        private final FirebaseStorage firebaseStorageWorldkie = FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
-        private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-        CollectionReference collectionWorldkies = firestore.collection("Worldkies");
         MaterialCardView card_view_worldkie_list_layout;
         public ViewHolder(View view) {
             super(view);
@@ -165,18 +150,6 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
             return card_view_worldkie_list_layout;
         }
 
-        public FirebaseStorage getFirebaseStorageWorldkie() {
-            return firebaseStorageWorldkie;
-        }
-
-        public FirebaseFirestore getDb() {
-            return firestore;
-        }
-
-
-        public CollectionReference getCollectionWorldkies() {
-            return collectionWorldkies;
-        }
 
         //getters
         public TextView getTv_name_wordkie() {
