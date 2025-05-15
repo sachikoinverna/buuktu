@@ -61,47 +61,41 @@ public class StuffkieView extends Fragment implements View.OnClickListener {
         setVisibility();
         setListeners();
         UID_AUTHOR = mode.equals("other") ? getArguments().getString("UID_AUTHOR") : mainActivity.getUID();
+        getStuffkie();
+        return view;
+    }
+    private void getStuffkie(){
         mainActivity.getCollectionUsers().document(UID_AUTHOR).addSnapshotListener((documentSnapshot, e) -> {
-            if (e != null) {
-
-                return;
-            }
+            if (e != null) return;
 
             if (documentSnapshot != null) {
                 userkieModel = UserkieModel.fromSnapshot(documentSnapshot);
                 tv_nameUserStuffkieView.setText(userkieModel.getName());
                 tv_usernameStuffkieView.setText(userkieModel.getUsername());
 
-                    mainActivity.getCollectionStuffkies().document(UID).addSnapshotListener((queryDocumentSnapshots, ex) -> {
-                        if (ex != null) {
-                            return;
-                        }
-                        stuffkieModel = StuffkieModel.fromSnapshot(queryDocumentSnapshots);
-                        tv_nameStuffkieView.setText(stuffkieModel.getName());
-                        getProfilePhoto();
-                    });
-                    mainActivity.getCollectionWorldkies().document(UID_WORLDKIE).addSnapshotListener((queryDocumentSnapshots2, ex) -> {
-                        if (ex != null) {
-                            return;
-                        }
-                        worldkieModel = WorldkieModel.fromSnapshot(queryDocumentSnapshots2);
-                        tv_nameWorldkieViewStuffkie.setText(worldkieModel.getName());
-                    });
+                mainActivity.getCollectionStuffkies().document(UID).addSnapshotListener((queryDocumentSnapshots, ex) -> {
+                    if (ex != null) return;
+
+                    stuffkieModel = StuffkieModel.fromSnapshot(queryDocumentSnapshots);
+                    tv_nameStuffkieView.setText(stuffkieModel.getName());
+                    getProfilePhoto();
+                });
+                mainActivity.getCollectionWorldkies().document(UID_WORLDKIE).addSnapshotListener((queryDocumentSnapshots2, ex) -> {
+                    if (ex != null) return;
+                    worldkieModel = WorldkieModel.fromSnapshot(queryDocumentSnapshots2);
+                    tv_nameWorldkieViewStuffkie.setText(worldkieModel.getName());
+                });
                 iv_locked_stuffkie.setBackgroundResource(((!userkieModel.isProfile_private() && mode.equals("other")) || (mode.equals("self") || (!worldkieModel.isWorldkie_private()&& mode.equals("other")) || (!stuffkieModel.isStuffkie_private()&&mode.equals("other")))  ? R.drawable.twotone_lock_24:R.drawable.twotone_build_circle_24));
                 tv_locked_stuffkie.setText(((!userkieModel.isProfile_private() && mode.equals("other")) || (mode.equals("self")|| (!worldkieModel.isWorldkie_private()&& mode.equals("other")) || (!stuffkieModel.isStuffkie_private()&&mode.equals("other"))) ? mainActivity.getString(R.string.wait_new_info):mainActivity.getString(R.string.private_stuffkie)));
             }
         });
-
-
-        return view;
     }
     private void setListeners(){
         ib_back.setOnClickListener(this);
     }
     private void getProfilePhoto() {
         if (stuffkieModel.isPhoto_default()) {
-            String id_photo = stuffkieModel.getPhoto_id();
-            int resId = mainActivity.getResources().getIdentifier(id_photo, "mipmap", mainActivity.getPackageName());
+            int resId = mainActivity.getResources().getIdentifier(stuffkieModel.getPhoto_id(), "mipmap", mainActivity.getPackageName());
 
             if (resId != 0) {
                 Drawable drawable = ContextCompat.getDrawable(mainActivity, resId);
@@ -113,9 +107,7 @@ public class StuffkieView extends Fragment implements View.OnClickListener {
                 }
             }
         } else {
-            StorageReference userFolderRef = mainActivity.getFirebaseStorageCharacterkies().getReference(UID);
-
-            userFolderRef.listAll().addOnSuccessListener(listResult -> {
+            mainActivity.getFirebaseStorageCharacterkies().getReference(UID).listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {
                     if (item.getName().startsWith("cover")) {
                         item.getDownloadUrl().addOnSuccessListener(uri -> {

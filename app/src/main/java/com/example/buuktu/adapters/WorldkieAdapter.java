@@ -35,20 +35,16 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
     private final FragmentManager fragmentManager;
     private final MainActivity context;
 
-    //Constructor donde pasamos la lista de productos y el contexto
     public WorldkieAdapter(ArrayList<WorldkieModel> dataSet, MainActivity ctx, FragmentManager fragmentManager) {
         this.dataSet = dataSet;
         this.context = ctx;
         this.fragmentManager = fragmentManager;
     }
 
-    //Se llama cada vez que se hace scroll en la pantalla y los elementos desaparecen y aparecen
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-
-        //Creamos la vista de cada item a partir de nuestro layout
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.worldkie_list_layout, viewGroup, false);
-         return new ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
@@ -72,13 +68,8 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     true);
 
-// Opcional: animación y sombra
-            popupWindow.setElevation(8f);
-
-// Mostrarlo anclado al CardView
             popupWindow.showAsDropDown(holder.getCard_view_worldkie_list_layout(), 0, -50);
 
-// Listeners
             popupView.findViewById(R.id.bt_edit_item).setOnClickListener(view -> {
                 NavigationUtils.goNewFragmentWithBundle(bundle, fragmentManager, new CreateEditWorldkie());
                 popupWindow.dismiss();
@@ -111,9 +102,7 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
             }
             holder.getIv_photo_wordlkie().setVisibility(View.VISIBLE);
         } else {
-            StorageReference userFolderRef = context.getFirebaseStorageWorldkies().getReference(worldkieModel.getUID());
-
-            userFolderRef.listAll().addOnSuccessListener(listResult -> {
+            context.getFirebaseStorageWorldkies().getReference(worldkieModel.getUID()).listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {
                     if (item.getName().startsWith("cover")) {
                         item.getDownloadUrl().addOnSuccessListener(uri -> {
@@ -128,7 +117,6 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
 
     }
 
-    // Devolvemos el numero de items de nuestro arraylist, lo invoca automaticamente el layout manager
     @Override
     public int getItemCount() {
         return dataSet.size();
@@ -151,7 +139,6 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
         }
 
 
-        //getters
         public TextView getTv_name_wordkie() {
             return tv_name_wordlkie;
         }

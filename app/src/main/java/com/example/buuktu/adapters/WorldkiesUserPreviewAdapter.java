@@ -125,10 +125,6 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         true);
 
-// Opcional: animación y sombra
-                popupWindow.setElevation(8f);
-
-// Mostrarlo anclado al CardView
                 popupWindow.showAsDropDown(holder.getCv_worldkie_preview(), 0, -50);
 
 // ListenersBundle bundle = new Bundle();
@@ -164,9 +160,7 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
                     EfectsUtils.startCircularReveal(drawable,holder.getIv_worldkie_preview_worldkie());
                 }
         } else {
-            StorageReference userFolderRef = context.getFirebaseStorageWorldkies().getReference(UID);
-
-            userFolderRef.listAll().addOnSuccessListener(listResult -> {
+            context.getFirebaseStorageWorldkies().getReference(UID).listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {
                     if (item.getName().startsWith("cover")) {
                         item.getDownloadUrl().addOnSuccessListener(uri -> {
@@ -184,7 +178,6 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
         }
     }
 
-    // Devolvemos el numero de items de nuestro arraylist, lo invoca automaticamente el layout manager
     @Override
     public int getItemCount() {
         return dataSet.size();

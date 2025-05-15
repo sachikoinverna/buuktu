@@ -44,7 +44,6 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
     ImageView iv_head_day_month_birthday_selector,iv_background_day_month_selector;
     boolean daysMonthsSelectorVisible, yearFieldVisible, daysOptionVisible,monthVisible,yearOptionVisible;
     TextView[] tvDays;
-    final String[]meses= new String[]{"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"};
     Drawable arrow_down,arrow_up;
     CreateCharacterkie createCharacterkie;
     final String optionBirthdayString;
@@ -215,7 +214,7 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
             year= Integer.parseInt(optionBirthdayString);
             et_yearBirthdayCreate.setText(year);
         }
-        tv_current_month_birthday_selector.setText(month == 1 ? String.valueOf(month) : meses[month - 1]);
+        tv_current_month_birthday_selector.setText(month == 1 ? String.valueOf(month) : createCharacterkie.getMeses()[month - 1]);
         setFields();
     }
     private void setFields(){
@@ -270,7 +269,7 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
                 dayButtons[i].setVisibility(i < days && daysOptionVisible?View.VISIBLE:View.GONE);
                 tvDays[i].setVisibility(i < days && daysOptionVisible?View.VISIBLE:View.GONE);
         }
-        tv_current_month_birthday_selector.setText(meses[month - 1]);
+        tv_current_month_birthday_selector.setText(createCharacterkie.getMeses()[month - 1]);
         bt_previous_month_birthday_selector.setVisibility(month == 1 ? View.GONE : View.VISIBLE);
         bt_next_month_birthday_selector.setVisibility(month == 12 ? View.GONE : View.VISIBLE);
     }

@@ -81,7 +81,6 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_create_edit_scenariokie, container, false);
 
 
@@ -135,6 +134,7 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
         scenariokieModel.setWORDLKIE_UID(worldkie_id);
         scenariokieModel.setPhoto_default(true);
         scenariokieModel.setScenariokie_private(false);
+        ib_select_img_create_scenariokie.setVisibility(View.VISIBLE);
         ib_select_img_create_scenariokie.setTag(DrawableUtils.getMipmapName(mainActivity,R.mipmap.photoscenariokieone));
         scenariokieModel.setPhoto_id(ib_select_img_create_scenariokie.getTag().toString());
     }
@@ -216,8 +216,7 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
     }
     private void uploadNewImage(){
         if (!scenariokieModel.isPhoto_default()) {
-            StorageReference userRef = mainActivity.getFirebaseStorageScenariokies().getReference().child(scenariokie_id);
-            userRef.child("profile" + DrawableUtils.getExtensionFromUri(getContext(), image)).putFile(image);
+            mainActivity.getFirebaseStorageScenariokies().getReference().child(scenariokie_id).child("cover" + DrawableUtils.getExtensionFromUri(mainActivity, image)).putFile(image);
         }
     }
     private void getImage(){
@@ -238,11 +237,9 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
                 }
             }
         } else {
-            StorageReference userFolderRef = mainActivity.getFirebaseStorageScenariokies().getReference(scenariokie_id);
-
-            userFolderRef.listAll().addOnSuccessListener(listResult -> {
+           mainActivity.getFirebaseStorageScenariokies().getReference(scenariokie_id).listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {
-                    if (item.getName().startsWith("profile")) {
+                    if (item.getName().startsWith("cover")) {
                         item.getDownloadUrl().addOnSuccessListener(uri -> {
 
                             DrawableUtils.personalizarImagenCuadradoButton(getContext(),150/6,7,R.color.brownMaroon,uri,ib_select_img_create_scenariokie);

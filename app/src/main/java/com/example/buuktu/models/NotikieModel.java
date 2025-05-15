@@ -7,7 +7,7 @@ public class NotikieModel {
     String message;
     Timestamp date;
     int icon;
-
+    String UID_USER;
     public int getIcon() {
         return icon;
     }
@@ -30,6 +30,17 @@ public class NotikieModel {
 
     public void setIcon(int icon) {
         this.icon = icon;
+    }
+
+    public String getUID_USER() {
+        return UID_USER;
+    }
+
+    public NotikieModel(String message, Timestamp date, int icon, String UID_USER) {
+        this.message = message;
+        this.date = date;
+        this.icon = icon;
+        this.UID_USER = UID_USER;
     }
 
     public NotikieModel() {

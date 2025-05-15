@@ -14,7 +14,8 @@
     <string name="creation">Creation:</string>
     <string name="last_update">Last update:</string>
     <string name="worldkie">Worldkie:</string>
-
+    <string name="actual_password_incorrect">Contraseña actual incorrecta</string>
+<string name="incorrect_telephone">Incorrect telephone</string>
     <string name="del_notekie">Do you want to delete the note? You won’t be able to recover it.</string>
     <string name="del_characterkie">Do you want to delete the character? You won’t be able to recover it.</string>
     <string name="del_worldkie">Do you want to delete the location? You won’t be able to recover it.</string>
@@ -104,18 +105,6 @@
     <string name="passwordErrorRepeatEmpty">Password can not be empty</string>
     <string name="passwordErrorRepeat">Passwords do not match</string>
     <string name="gender">Gender</string>
-    <string name="aries">Aries</string>
-    <string name="taurus">Taurus</string>
-    <string name="gemini">Gemini</string>
-    <string name="cancer">Cancer</string>
-    <string name="leo">Leo</string>
-    <string name="virgo">Virgo</string>
-    <string name="libra">Libra</string>
-    <string name="scorpio">Scorpio</string>
-    <string name="sagittarius">Sagittarius</string>
-    <string name="capricorn">Capricorn</string>
-    <string name="aquarius">Aquarius</string>
-    <string name="pisces">Pisces</string>
     <string name="app_name">buuktu</string>
     <string name="open_nav">Open Navigation Drawer</string>
     <string name="close_session">Logout</string>
@@ -164,7 +153,6 @@
     <string name="notekie_description">Te vas a llevar una decepcion, pero es una nota normal y corriente.</string>
     <string name="settings_description">Momento de descubrir america, ajustes es efectivamente donde hace ajustes.\n\nTu cuenta debe estar siempre perfecta, asi que haz todos los ajustes necesarios para ello.</string>
     <string name="search_description">Te voy a contar un secreto pero no se lo cuentes a nadie, aqui deberias poder buscar usuarios y elementos  por nombre pero aun no se puede.\n\nPD: Si quieres un tip, puedes verlos igualmente y acceder a ellos.</string>
-    <string name="home_description">Bienvenido a la pantalla principal, si pulsas en el boton podras crear un nuevo Worldkie. Todos los que hayas creado se mostraran aqui.</string>
     <string name="notekies_subtitle">¿Qué es una notekie?</string>
     <string name="stuffkies_subtitle">What\'s a stuffkie?</string>
     <string name="worldkies_subtitle">What\'s a worldkie?</string>

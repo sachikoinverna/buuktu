@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="greenGreen">#57ab7a</color>
     <color name="greenWhatever">#50bb75</color>
     <color name="brownMaroon">#8d4925</color>
     <color name="brownBrown">#7a3916</color>
@@ -13,17 +11,14 @@
     <color name="blue1">#90B4BA</color>
     <color name="blue2">#A7D5DC</color>
     <color name="blue3">#3C5E73</color>
-    <color name="gold3">#8B6A2F</color>
-    <color name="gold1">#D4AF37</color>
-    <color name="gold2">#F7E7B3</color>
     <color name="purple1">#6750A4</color> <!-- Morado Base -->
     <color name="purple2">#EADDFF</color> <!-- Morado Claro -->
     <color name="purple3">#381E72</color> <!-- Morado Oscuro -->
 
     <!-- 💜 Gris Púrpura -->
-    <color name="gray_purple1">#625B71</color> <!-- Gris Púrpura Base -->
-    <color name="gray_purple2">#E8DEF8</color> <!-- Gris Púrpura Claro -->
-    <color name="gray_purple3">#3E384A</color> <!-- Gris Púrpura Oscuro -->
+    <!-- Gris Púrpura Base -->
+    <!-- Gris Púrpura Claro -->
+    <!-- Gris Púrpura Oscuro -->
 
     <!-- 🌸 Rosa -->
     <color name="rose1">#C58197</color> <!-- Rosa Base -->
@@ -32,12 +27,12 @@
 
     <!-- 🧼 Fondo / Superficie -->
     <color name="background_light">#FFFBFE</color> <!-- Blanco Suave (Fondo Claro) -->
-    <color name="surface_light">#FFFBFE</color> <!-- Blanco Suave (Superficie Clara) -->
-    <color name="text_on_light_background">#1C1B1F</color> <!-- Texto sobre Fondo Claro (Negro Suave) -->
-    <color name="text_on_light_surface">#1C1B1F</color> <!-- Texto sobre Superficie Clara (Negro Suave) -->
+    <!-- Blanco Suave (Superficie Clara) -->
+    <!-- Texto sobre Fondo Claro (Negro Suave) -->
+    <!-- Texto sobre Superficie Clara (Negro Suave) -->
 
     <!-- ❌ Error -->
-    <color name="error_base">#B3261E</color> <!-- Rojo Base de Error -->
-    <color name="error_light">#F9DEDC</color> <!-- Rojo Claro de Error -->
+    <!-- Rojo Base de Error -->
+    <!-- Rojo Claro de Error -->
     <color name="error_dark">#601410</color> <!-- Rojo Oscuro de Error -->
 </resources>

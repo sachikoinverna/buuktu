@@ -56,16 +56,8 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
     String worldkie_id;
     LottieAnimationView animationView;
     public CreateEditWorldkie() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment CreateEditWorldkie.
-     */
-    // TODO: Rename and change types and number of parameters
     public static CreateEditWorldkie newInstance() {
         return new CreateEditWorldkie();
     }
@@ -81,7 +73,6 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_create_edit_worldkie, container, false);
         mainActivity = (MainActivity) getActivity();
         fragmentManager = requireActivity().getSupportFragmentManager();
@@ -159,9 +150,7 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
                 }
             }
     } else {
-        StorageReference userFolderRef = mainActivity.getFirebaseStorageWorldkies().getReference(worldkie_id);
-
-        userFolderRef.listAll().addOnSuccessListener(listResult -> {
+        mainActivity.getFirebaseStorageWorldkies().getReference(worldkie_id).listAll().addOnSuccessListener(listResult -> {
             for (StorageReference item : listResult.getItems()) {
                 if (item.getName().startsWith("cover")) {
                     item.getDownloadUrl().addOnSuccessListener(uri -> {
@@ -189,14 +178,12 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
     }
     public void setSelectedProfilePhoto(Drawable image){
 
-        int cornerRadius = 150 / 6; // Ejemplo de radio
-        int borderWidth = 7; // Ejemplo de grosor del borde
-        int borderColor = getContext().getResources().getColor(R.color.brownMaroon, null); // Asegúrate de que el color sea correcto
-//        Drawable drawable = ContextCompat.getDrawable(getContext(), R.mipmap.photoworldkieone);
-        //ib_select_img_create_worldkie.setImageDrawable(image);
+        int cornerRadius = 150 / 6;
+        int borderWidth = 7;
+        int borderColor = getContext().getResources().getColor(R.color.brownMaroon, null);
+
 
         RequestOptions requestOptions = new RequestOptions()
-               // .override(150, 150)
                 .centerCrop()
                 .transform(new RoundedBorderSquareTransformation(cornerRadius,borderWidth,borderColor));
 
@@ -237,16 +224,7 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
         ib_select_img_create_worldkie.setVisibility(View.VISIBLE);
 
     }
-  /*  public void setClean() {
-        CheckUtil.setErrorMessage(null, tv_nameRegister);
-        CheckUtil.setErrorMessage(null, tv_emailRegister);
-        CheckUtil.setErrorMessage(null, tv_birthdayRegister);
-        CheckUtil.setErrorMessage(null, tv_passwordRegister);
-        CheckUtil.setErrorMessage(null, tv_passwordRepeatRegister);
-        CheckUtil.setErrorMessage(null, tv_pronounsRegister);
-        CheckUtil.setErrorMessage(null, tv_usernameRegister);
-        CheckUtil.setErrorMessage(null, tv_telephoneRegister);
-    }*/
+
   private void delayedDismiss() {
       Completable.timer(2, TimeUnit.SECONDS)
               .subscribeOn(Schedulers.io())
@@ -264,19 +242,10 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
                                     if (task.isSuccessful()) {
                                         worldkie_id = addTask.getResult().getId();
 
-                                        if (!worldkieModel.isPhoto_default()) {
-                                            StorageReference userRef = mainActivity.getFirebaseStorageWorldkies().getReference().child(task.getResult().getId());
-                                            userRef.child("profile" + DrawableUtils.getExtensionFromUri(getContext(), image)).putFile(image);
-
-                                        }
-                                        EfectsUtils.setAnimationsDialog("success",animationView);
-                                        delayedDismiss();
+                                        success();
 
                                     }
-                                }).addOnFailureListener(e -> {
-                                    EfectsUtils.setAnimationsDialog("fail",animationView);
-                                    delayedDismiss();
-                                });
+                                }).addOnFailureListener(e -> fail());
                             }
                     );
 
@@ -313,8 +282,7 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
     }
         private void uploadNewImage(){
             if (!worldkieModel.isPhoto_default()) {
-                StorageReference userRef = mainActivity.getFirebaseStorageWorldkies().getReference().child(worldkie_id);
-                userRef.child("profile" + DrawableUtils.getExtensionFromUri(getContext(), image)).putFile(image);
+                mainActivity.getFirebaseStorageWorldkies().getReference().child(worldkie_id).child("cover" + DrawableUtils.getExtensionFromUri(getContext(), image)).putFile(image);
 
             }
         }

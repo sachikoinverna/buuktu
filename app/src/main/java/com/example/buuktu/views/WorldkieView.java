@@ -10,7 +10,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +48,7 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
     CardView cv_characterkiesPreviewWorldkie,cv_stuffkiesPreviewWorldkie,cv_scenariokiesPreviewWorldkie;
     RecyclerView rc_characterkiesPrevieWorldkie,rc_stuffkiesPreviewWorldkie,rc_scenariokiesPreviewWorldkie;
     FirebaseAuth firebaseAuth;
-    String UID,UID_AUTHOR,lastPhotoId="",mode;
+    String UID,UID_AUTHOR,mode;
     UserkieModel userkieModel;
     FragmentManager fragmentManager;
     CharacterkiesUserPreviewAdapter characterkiesUserPreviewAdapter;
@@ -80,185 +79,135 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
         setVar();
         initComponents(view);
         setVisibility();
-        worldkieModel = new WorldkieModel();
-        if (mode.equals("self")) {
-            firebaseAuth = FirebaseAuth.getInstance();
-            ib_worldkieView.setOnClickListener(this);
-        }
         ib_worldkieView.setVisibility(mode.equals("self")?View.VISIBLE:View.INVISIBLE);
         ib_back.setVisibility(mode.equals("self")?View.GONE:View.VISIBLE);
         UID_AUTHOR = mode.equals("other")?getArguments().getString("UID_AUTHOR"):firebaseAuth.getUid();
 
 
-        getProfilePhoto();
-        characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList, mainActivity,fragmentManager,"self");
-        rc_characterkiesPrevieWorldkie.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        rc_characterkiesPrevieWorldkie.setAdapter(characterkiesUserPreviewAdapter);
-        characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList, mainActivity,fragmentManager,"self");
-        rc_characterkiesPrevieWorldkie.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        rc_characterkiesPrevieWorldkie.setAdapter(characterkiesUserPreviewAdapter);
-
-        mainActivity.getCollectionWorldkies().document(UID).addSnapshotListener((documentSnapshot, e) -> {
-            if (e != null) {
-                return;
-            }
-
-            if (documentSnapshot != null) {
-               worldkieModel = WorldkieModel.fromSnapshot(documentSnapshot);
-                //  userkieModel = new UserkieModel(firebaseAuth.getUid(),documentSnapshot.getString("name"),R.drawable.thumb_custom,documentSnapshot.getString("username"),documentSnapshot.getBoolean("photo_default"),true);
-                tv_nameWorldkieView.setText(worldkieModel.getName());
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-
-                tv_creationDateWorldkieView.setText(simpleDateFormat.format(worldkieModel.getCreation_date().toDate()));
-                        tv_lastUpdateWorldkieView.setText(simpleDateFormat.format(worldkieModel.getLast_update().toDate()));
-            }
-        });
-        mainActivity.getCollectionUsers().document(UID_AUTHOR).addSnapshotListener((document, exx) -> {
-            if (exx != null) {
-                return;
-            }
-
-            if (document != null) {
-                UserkieModel userkieModel = UserkieModel.fromSnapshot(document);
-                tv_nameUserWorldkieView.setText(userkieModel.getName());
-                tv_usernameWorldkieView.setText(userkieModel.getUsername());
-                if((!worldkieModel.isWorldkie_private() && mode.equals("other") && !userkieModel.isProfile_private()) || (worldkieModel.isWorldkie_private() && mode.equals("self"))){
-                    Query query = mainActivity.getCollectionStuffkies().whereEqualTo("UID_WORLDKIE", UID);
-
-                    if ((!worldkieModel.isWorldkie_private() && mode.equals("other") && !userkieModel.isProfile_private())){
-                        query = query.whereNotEqualTo("draft", false);
-                    }
-                    query.addSnapshotListener((queryDocumentSnapshots, e) -> {
-                        if (e != null) {
-                            return;
-                        }
-
-                        if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
-                            stuffkieArrayList.clear(); // Limpia la lista antes de agregar nuevos datos
-
-                            boolean foundData = false; // Add a flag
-                            for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
-
-                                    StuffkieModel stuffkieModel = StuffkieModel.fromSnapshot(doc);
-                                    Log.d("StuffkiesSearch", "Stuffkie encontrado: " + doc.getString("name"));
-
-                                    stuffkieArrayList.add(stuffkieModel);
-                                    foundData = true; // Set the flag to true if data is found
-                            }
-                            if (foundData) {
-                                tv_stuffkiesPreviewWorldkie.setVisibility(View.VISIBLE);
-                                cv_stuffkiesPreviewWorldkie.setVisibility(View.VISIBLE);
-                                updateRecyclerViewStuffkies(stuffkieArrayList);
-
-                            } else {
-                                tv_stuffkiesPreviewWorldkie.setVisibility(View.GONE);
-                                cv_stuffkiesPreviewWorldkie.setVisibility(View.GONE);
-                                updateRecyclerViewStuffkies(new ArrayList<>());
-
-                            }
-                        } else {
-                            tv_stuffkiesPreviewWorldkie.setVisibility(View.GONE);
-                            cv_stuffkiesPreviewWorldkie.setVisibility(View.GONE);
-                            updateRecyclerViewStuffkies(new ArrayList<>());
-
-                        }
-                    });
-                    if((!worldkieModel.isWorldkie_private() && mode.equals("other") && !userkieModel.isProfile_private()) || (worldkieModel.isWorldkie_private() && mode.equals("self"))) {
-
-                        Query queryCharacterkie = mainActivity.getCollectionWorldkies().whereEqualTo("UID_WORLDKIE", UID);
-
-                        if ((!worldkieModel.isWorldkie_private() && mode.equals("other") && !userkieModel.isProfile_private())) {
-                            queryCharacterkie = queryCharacterkie.whereNotEqualTo("draft", false);
-                        }
-                        queryCharacterkie.addSnapshotListener((queryDocumentSnapshots, ex) -> {
-                                    if (ex != null) {
-                                        return;
-                                    }
-
-                                    if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
-                                        characterkieArrayList.clear(); // Limpia la lista antes de agregar nuevos datos
-                                        boolean foundData = false; // Add a flag
-
-                                        for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
-                                            CharacterkieModel characterkieModel = CharacterkieModel.fromSnapshot(doc);
-                                            Log.d("StuffkiesSearch", "Stuffkie encontrado: " + doc.getString("name"));
-
-                                            characterkieArrayList.add(characterkieModel);
-                                            foundData = true; // Set the flag to true if data is found
-                                            updateRecyclerViewCharacterkies(characterkieArrayList);
-                                        }
-                                        if (foundData) {
-                                            tv_characterkiesPreviewWorldkie.setVisibility(View.VISIBLE);
-                                            cv_characterkiesPreviewWorldkie.setVisibility(View.VISIBLE);
-                                        } else {
-                                            tv_characterkiesPreviewWorldkie.setVisibility(View.GONE);
-                                            cv_characterkiesPreviewWorldkie.setVisibility(View.GONE);
-                                        }
-                                    } else {
-                                        tv_characterkiesPreviewWorldkie.setVisibility(View.GONE);
-                                        cv_characterkiesPreviewWorldkie.setVisibility(View.GONE);
-                                    }
-
-                                });
-                        Query queryScenariokie = mainActivity.getCollectionScenariokies().whereEqualTo("WORDLKIE_UID", UID);
-
-                        if ((!worldkieModel.isWorldkie_private() && mode.equals("other") && !userkieModel.isProfile_private())) {
-                            queryScenariokie.whereNotEqualTo("draft", false);
-                        }
-                        queryScenariokie.addSnapshotListener((queryDocumentSnapshots, ex) -> {
-                            if (ex != null) {
-                                return;
-                            }
-
-                            if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
-                                scenariokieModelArrayList.clear(); // Limpia la lista antes de agregar nuevos datos
-                                boolean foundData = false; // Add a flag
-
-                                for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
-                                    scenariokieModelArrayList.add(ScenariokieModel.fromSnapshot(doc));
-                                    foundData = true; // Set the flag to true if data is found
-                                    updateRecyclerViewScenariokies(scenariokieModelArrayList);
-                                }
-                                if (foundData) {
-                                    tv_scenariokiesPreviewWorldkie.setVisibility(View.VISIBLE);
-                                    cv_scenariokiesPreviewWorldkie.setVisibility(View.VISIBLE);
-                                } else {
-                                    tv_scenariokiesPreviewWorldkie.setVisibility(View.GONE);
-                                    cv_scenariokiesPreviewWorldkie.setVisibility(View.GONE);
-                                }
-                            } else {
-                                tv_scenariokiesPreviewWorldkie.setVisibility(View.GONE);
-                                cv_scenariokiesPreviewWorldkie.setVisibility(View.GONE);
-                            }
-
-                        });
-                    }
-                } else if(!worldkieModel.isWorldkie_private() && userkieModel.isProfile_private() && mode.equals("other")){
-                    tv_locked_worldkie.setVisibility(View.VISIBLE);
-                    iv_locked_worldkie.setVisibility(View.VISIBLE);
-                    tv_characterkiesPreviewWorldkie.setVisibility(View.GONE);
-                    cv_characterkiesPreviewWorldkie.setVisibility(View.GONE);
-                    tv_stuffkiesPreviewWorldkie.setVisibility(View.GONE);
-                    cv_stuffkiesPreviewWorldkie.setVisibility(View.GONE);
-                }
-                    else if(worldkieModel.isWorldkie_private() && mode.equals("other")){
-                    tv_locked_worldkie.setVisibility(View.VISIBLE);
-                    iv_locked_worldkie.setVisibility(View.VISIBLE);
-                    tv_characterkiesPreviewWorldkie.setVisibility(View.GONE);
-                    cv_characterkiesPreviewWorldkie.setVisibility(View.GONE);
-                    tv_stuffkiesPreviewWorldkie.setVisibility(View.GONE);
-                    cv_stuffkiesPreviewWorldkie.setVisibility(View.GONE);
-                }
-            }
-        });
-
-
-        getProfilePhoto();
+        getData();
         setListeners();
         return view;
     }
+    private void getData(){
+        getWorldkie();
+        getAuthor();
+        if((worldkieModel.isWorldkie_private()||userkieModel.isProfile_private()) && mode.equals("other")){
+            tv_locked_worldkie.setVisibility(View.VISIBLE);
+            iv_locked_worldkie.setVisibility(View.VISIBLE);
+            tv_characterkiesPreviewWorldkie.setVisibility(View.GONE);
+            cv_characterkiesPreviewWorldkie.setVisibility(View.GONE);
+            tv_stuffkiesPreviewWorldkie.setVisibility(View.GONE);
+            cv_stuffkiesPreviewWorldkie.setVisibility(View.GONE);
+            tv_scenariokiesPreviewWorldkie.setVisibility(View.GONE);
+            cv_scenariokiesPreviewWorldkie.setVisibility(View.GONE);
+        }else{
+            getCharacterkies();
+            getStuffkies();
+            getScenariokies();
+        }
+    }
+    private void addDraftQuery(Query query){
+        if (mode.equals("other")){
+            query.whereNotEqualTo("draft", false);
+        }
+    }
+
+    private void getScenariokies(){
+        Query queryScenariokie = mainActivity.getCollectionScenariokies().whereEqualTo("WORDLKIE_UID", UID);
+        addDraftQuery(queryScenariokie);
+        queryScenariokie.addSnapshotListener((queryDocumentSnapshots, ex) -> {
+            if (ex != null) return;
+
+            if (queryDocumentSnapshots != null) {
+                scenariokieModelArrayList.clear(); // Limpia la lista antes de agregar nuevos datos
+
+                for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
+                    scenariokieModelArrayList.add(ScenariokieModel.fromSnapshot(doc));
+                    setRecyclerViewScenariokies();
+                }
+            }else{
+                tv_scenariokiesPreviewWorldkie.setVisibility(View.GONE);
+                cv_scenariokiesPreviewWorldkie.setVisibility(View.GONE);
+            }
+        });
+    }
+    private void getWorldkie(){
+        mainActivity.getCollectionWorldkies().document(UID).addSnapshotListener((documentSnapshot, e) -> {
+            if (e != null) return;
+
+            if (documentSnapshot != null) {
+                worldkieModel = WorldkieModel.fromSnapshot(documentSnapshot);
+                tv_nameWorldkieView.setText(worldkieModel.getName());
+                tv_creationDateWorldkieView.setText(new SimpleDateFormat("dd/MM/yyyy").format(worldkieModel.getCreation_date().toDate()));
+                tv_lastUpdateWorldkieView.setText(new SimpleDateFormat("dd/MM/yyyy").format(worldkieModel.getLast_update().toDate()));
+
+            }
+        });
+    }
+    private void getAuthor(){
+        mainActivity.getCollectionUsers().document(UID_AUTHOR).addSnapshotListener((document, e) -> {
+            if (e != null) return;
+
+            if (document != null) {
+                userkieModel = UserkieModel.fromSnapshot(document);
+                tv_nameUserWorldkieView.setText(userkieModel.getName());
+                tv_usernameWorldkieView.setText(userkieModel.getUsername());
+            }
+        });
+    }
+    private void getCharacterkies(){
+        Query queryCharacterkie = mainActivity.getCollectionWorldkies().whereEqualTo("UID_WORLDKIE", UID);
+        if (mode.equals("other")) {
+            queryCharacterkie = queryCharacterkie.whereNotEqualTo("draft", false);
+        }
+        queryCharacterkie.addSnapshotListener((queryDocumentSnapshots, ex) -> {
+            if (ex != null) return;
+
+            if (queryDocumentSnapshots != null) {
+                characterkieArrayList.clear();
+
+                for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
+
+                    characterkieArrayList.add(CharacterkieModel.fromSnapshot(doc));
+                    setRecyclerViewCharacterkies();
+                }
+            }else{
+                tv_characterkiesPreviewWorldkie.setVisibility(View.GONE);
+                cv_characterkiesPreviewWorldkie.setVisibility(View.GONE);
+            }
+        }
+        );
+    }
+
+
+    private void getStuffkies() {
+        Query query = mainActivity.getCollectionStuffkies().whereEqualTo("UID_WORLDKIE", UID);
+
+        if (mode.equals("other") ){
+            query = query.whereNotEqualTo("draft", false);
+        }
+        query.addSnapshotListener((queryDocumentSnapshots, e) -> {
+            if (e != null) return;
+
+            if (queryDocumentSnapshots != null) {
+                stuffkieArrayList.clear();
+
+                for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
+
+
+                    stuffkieArrayList.add(StuffkieModel.fromSnapshot(doc));
+                    setRecyclerViewStuffkies();
+                }
+            }else{
+
+                tv_stuffkiesPreviewWorldkie.setVisibility(View.GONE);
+                cv_stuffkiesPreviewWorldkie.setVisibility(View.GONE);
+            }
+        });
+    }
     private void setListeners(){
         ib_back.setOnClickListener(this);
+        ib_worldkieView.setOnClickListener(this);
     }
     private void initComponents(View view){
         tv_scenariokiesPreviewWorldkie = view.findViewById(R.id.tv_scenariokiesPreviewWorldkie);
@@ -295,7 +244,7 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
             String id_photo = worldkieModel.getId_photo();
             int resId = mainActivity.getResources().getIdentifier(id_photo, "mipmap", mainActivity.getPackageName());
 
-            if (resId != 0 && (!lastPhotoId.equals(id_photo))) {
+            if (resId != 0) {
                 Drawable drawable = ContextCompat.getDrawable(mainActivity, resId);
                 ib_worldkieView.setImageDrawable(drawable);
                 try {
@@ -303,12 +252,9 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
-                lastPhotoId = id_photo;
             }
         } else {
-            StorageReference userFolderRef = mainActivity.getFirebaseStorageWorldkies().getReference(UID);
-
-            userFolderRef.listAll().addOnSuccessListener(listResult -> {
+            mainActivity.getFirebaseStorageWorldkies().getReference(UID).listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {
                     if (item.getName().startsWith("cover")) {
                         item.getDownloadUrl().addOnSuccessListener(uri -> {
@@ -323,17 +269,17 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
             });
         }
     }
-    private void updateRecyclerViewCharacterkies(ArrayList<CharacterkieModel> characterkieArrayList) {
+    private void setRecyclerViewCharacterkies() {
         characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieArrayList,mainActivity,fragmentManager,"self");
         rc_characterkiesPrevieWorldkie.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rc_characterkiesPrevieWorldkie.setAdapter(characterkiesUserPreviewAdapter);
     }
-    private void updateRecyclerViewStuffkies(ArrayList<StuffkieModel> stuffkieArrayList) {
+    private void setRecyclerViewStuffkies() {
         stuffkiesUserPreviewAdapter = new StuffkiesUserPreviewAdapter(stuffkieArrayList,mainActivity,fragmentManager,"self");
         rc_stuffkiesPreviewWorldkie.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rc_stuffkiesPreviewWorldkie.setAdapter(stuffkiesUserPreviewAdapter);
     }
-    private void updateRecyclerViewScenariokies(ArrayList<ScenariokieModel> scenariokieModelArrayList) {
+    private void setRecyclerViewScenariokies() {
         scenariokiesUserPreviewAdapter = new ScenariokiesUserPreviewAdapter(scenariokieModelArrayList,mainActivity,fragmentManager,"self");
         rc_scenariokiesPreviewWorldkie.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rc_scenariokiesPreviewWorldkie.setAdapter(scenariokiesUserPreviewAdapter);

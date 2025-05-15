@@ -52,6 +52,7 @@ public class Scenariokie extends Fragment implements View.OnClickListener {
             mode = getArguments().getString("mode");
             UID = getArguments().getString("UID");
             UID_WORLDKIE = getArguments().getString("UID_WORLDKIE");
+
         }
     }
 
@@ -62,12 +63,16 @@ public class Scenariokie extends Fragment implements View.OnClickListener {
         initComponents(view);
         setVisibility();
         setListeners();
-        UID_AUTHOR = mode.equals("other") ? getArguments().getString("UID_AUTHOR") : mainActivity.getUID();
-        mainActivity.getCollectionUsers().document(UID_AUTHOR).addSnapshotListener((documentSnapshot, e) -> {
-            if (e != null) {
 
-                return;
-            }
+        getScenariokie();
+
+
+        return view;
+    }
+    private void getScenariokie(){
+        mainActivity.getCollectionUsers().document(UID_AUTHOR).addSnapshotListener((documentSnapshot, e) -> {
+            if (e != null) return;
+
 
             if (documentSnapshot != null) {
                 userkieModel = UserkieModel.fromSnapshot(documentSnapshot);
@@ -75,17 +80,13 @@ public class Scenariokie extends Fragment implements View.OnClickListener {
                 tv_usernameScenariokieView.setText(userkieModel.getUsername());
 
                 mainActivity.getCollectionScenariokies().document(UID).addSnapshotListener((queryDocumentSnapshots, ex) -> {
-                    if (ex != null) {
-                        return;
-                    }
+                    if (ex != null) return;
                     scenariokieModel = scenariokieModel.fromSnapshot(queryDocumentSnapshots);
                     tv_nameScenariokieView.setText(scenariokieModel.getName());
                     getProfilePhoto();
                 });
                 mainActivity.getCollectionWorldkies().document(UID_WORLDKIE).addSnapshotListener((queryDocumentSnapshots2, ex) -> {
-                    if (ex != null) {
-                        return;
-                    }
+                    if (ex != null) return;
                     worldkieModel = WorldkieModel.fromSnapshot(queryDocumentSnapshots2);
                     tv_nameWorldkieViewScenariokie.setText(worldkieModel.getName());
                 });
@@ -93,9 +94,6 @@ public class Scenariokie extends Fragment implements View.OnClickListener {
                 tv_locked_scenariokie.setText(((!userkieModel.isProfile_private() && mode.equals("other")) || (mode.equals("self")|| (!worldkieModel.isWorldkie_private()&& mode.equals("other")) || (!scenariokieModel.isScenariokie_private()&&mode.equals("other"))) ? mainActivity.getString(R.string.wait_new_info):mainActivity.getString(R.string.private_stuffkie)));
             }
         });
-
-
-        return view;
     }
     private void setListeners(){
         ib_back.setOnClickListener(this);
@@ -115,9 +113,7 @@ public class Scenariokie extends Fragment implements View.OnClickListener {
                 }
             }
         } else {
-            StorageReference userFolderRef = mainActivity.getFirebaseStorageScenariokies().getReference(UID);
-
-            userFolderRef.listAll().addOnSuccessListener(listResult -> {
+            mainActivity.getFirebaseStorageScenariokies().getReference(UID).listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {
                     if (item.getName().startsWith("cover")) {
                         item.getDownloadUrl().addOnSuccessListener(uri -> {
@@ -146,6 +142,7 @@ public class Scenariokie extends Fragment implements View.OnClickListener {
         ib_save = mainActivity.getIb_save();
         ib_back = mainActivity.getBackButton();
         fragmentManager = mainActivity.getSupportFragmentManager();
+        UID_AUTHOR = mode.equals("other") ? getArguments().getString("UID_AUTHOR") : mainActivity.getUID();
     }
     private void setVisibility(){
         ib_save.setVisibility(View.GONE);

@@ -13,8 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.buuktu.R;
 import com.example.buuktu.adapters.NotikieListAdapter;
 import com.example.buuktu.models.NotikieModel;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 
@@ -24,7 +22,8 @@ public class Notikies extends Fragment {
     ImageButton backButton,ib_profile_superior;
     RecyclerView rc_notikies_list;
    NotikieListAdapter notikieListAdapter;
-   ArrayList<NotikieModel> notikieModelArrayList;
+   ArrayList<NotikieModel> notikieModelArrayList = new ArrayList<>();
+
     public Notikies() {
     }
 
@@ -44,22 +43,29 @@ public class Notikies extends Fragment {
         View view = inflater.inflate(R.layout.fragment_notikies, container, false);
         initComponents(view);
         setVisibility();
-        notikieModelArrayList = new ArrayList<>();
-        mainActivity.getNotikiesCollection().orderBy("date", Query.Direction.DESCENDING).addSnapshotListener((queryDocumentSnapshots, e) -> {
-            if (e != null) {
-                return;
-            }
+        setRecyclerView();
 
-            if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
-                notikieModelArrayList.clear(); // Limpia la lista antes de agregar nuevos datos
-
-                for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
-                    notikieModelArrayList.add(NotikieModel.fromSnapshot(documentSnapshot));
-                    updateRecyclerView(notikieModelArrayList);
-                }
-            }
-        });
         return view;
+    }
+   /* private void getScenariokies() {
+        mainActivity.getNotikiesCollection()
+                .whereEqualTo("WORDLKIE_UID", worldkie_id).orderBy("date", Query.Direction.DESCENDING)
+                .addSnapshotListener((snapshots, error) -> {
+                    if (error != null) return;
+
+                    notikieModelArrayList.clear();
+                    if (snapshots != null) {
+                        for (DocumentSnapshot doc : snapshots) {
+                            notikieModelArrayList.add(NotikieModel.fromSnapshot(doc));
+                        }
+                    }
+                    notikieListAdapter.notifyDataSetChanged();
+                });
+    }*/
+    private void setRecyclerView() {
+        notikieListAdapter = new NotikieListAdapter(notikieModelArrayList, mainActivity);
+        rc_notikies_list.setAdapter(notikieListAdapter);
+        rc_notikies_list.setLayoutManager(new LinearLayoutManager(mainActivity));
     }
     private void initComponents(View view){
         mainActivity = (MainActivity) getActivity();
@@ -71,10 +77,5 @@ public class Notikies extends Fragment {
         backButton.setVisibility(View.GONE);
         ib_profile_superior.setVisibility(View.VISIBLE);
 
-    }
-    private void updateRecyclerView(ArrayList<NotikieModel> notikieModelArrayList) {
-        notikieListAdapter = new NotikieListAdapter(notikieModelArrayList, mainActivity);
-        rc_notikies_list.setAdapter(notikieListAdapter);
-        rc_notikies_list.setLayoutManager(new LinearLayoutManager(mainActivity));
     }
 }

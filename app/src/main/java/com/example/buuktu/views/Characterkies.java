@@ -50,20 +50,12 @@ public class Characterkies extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_characterkies, container, false);
-
-
-        // Inicializa vistas y listeners
         initComponents(view);
         setVisibility();
         setListeners();
+        getCharacterkies();
+        setRecyclerView();
 
-        // Configura RecyclerView
-        rc_characterkies.setLayoutManager(new GridLayoutManager(mainActivity,2));
-        characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieModels, mainActivity, fragmentManager,"self");
-        rc_characterkies.setAdapter(characterkiesUserPreviewAdapter);
-
-        // Escucha cambios en Firestore
-        listenToWorldkies();
 
         return view;
     }
@@ -73,8 +65,6 @@ public class Characterkies extends Fragment implements View.OnClickListener {
         rc_characterkies = view.findViewById(R.id.rc_characterkies);
         mainActivity = (MainActivity) getActivity();
         fragmentManager = requireActivity().getSupportFragmentManager();
-
-        // Referencias desde MainActivity
         backButton = mainActivity.getBackButton();
         ib_save = mainActivity.getIb_save();
         ib_profile_superior = mainActivity.getIb_self_profile();
@@ -85,35 +75,27 @@ public class Characterkies extends Fragment implements View.OnClickListener {
 
     }
     private void setVisibility() {
-        fb_add.setVisibility(View.GONE);
         ib_save.setVisibility(View.GONE);
         backButton.setVisibility(View.VISIBLE);
         ib_profile_superior.setVisibility(View.VISIBLE);
     }
 
-    private void listenToWorldkies() {
-        mainActivity.getCollectionCharacterkies().whereEqualTo("UID_WORLDKIE", worldkie_id)
-                .addSnapshotListener((querySnapshots, e) -> {
-                    if (e != null) {
+    private void getCharacterkies() {
+        mainActivity.getCollectionCharacterkies()
+                .whereEqualTo("UID_WORLDKIE", worldkie_id)
+                .addSnapshotListener((snapshots, error) -> {
+                    if (error != null) return;
 
-                        return;
-                    }
-
-                    if (querySnapshots != null) {
-                        characterkieModels.clear();
-
-                        for (DocumentSnapshot doc : querySnapshots.getDocuments()) {
+                    characterkieModels.clear();
+                    if (snapshots != null) {
+                        for (DocumentSnapshot doc : snapshots) {
                             characterkieModels.add(CharacterkieModel.fromSnapshot(doc));
                         }
-
-                        characterkiesUserPreviewAdapter.notifyDataSetChanged();
-                    } else {
-                        characterkieModels.clear();
-                        characterkiesUserPreviewAdapter.notifyDataSetChanged();
                     }
+                    characterkiesUserPreviewAdapter.notifyDataSetChanged();
                 });
     }
-    private void setupRecyclerView() {
+    private void setRecyclerView() {
         rc_characterkies.setLayoutManager(new GridLayoutManager(mainActivity, 2));
         characterkiesUserPreviewAdapter = new CharacterkiesUserPreviewAdapter(characterkieModels, mainActivity, fragmentManager, "self");
         rc_characterkies.setAdapter(characterkiesUserPreviewAdapter);

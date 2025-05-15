@@ -129,10 +129,7 @@ public class CharacterkiesUserPreviewAdapter extends RecyclerView.Adapter<Charac
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         true);
 
-// Opcional: animación y sombra
-                popupWindow.setElevation(8f);
 
-// Mostrarlo anclado al CardView
                 popupWindow.showAsDropDown(holder.getCardView(), 0, -50);
 
 // ListenersBundle bundle = new Bundle();
@@ -166,9 +163,7 @@ public class CharacterkiesUserPreviewAdapter extends RecyclerView.Adapter<Charac
                     EfectsUtils.startCircularReveal(drawable, holder.getIv_characterkie_preview_worldkie());
                 }
         } else {
-            StorageReference userFolderRef = context.getFirebaseStorageCharacterkies().getReference(characterkieModel.getUID());
-
-            userFolderRef.listAll().addOnSuccessListener(listResult -> {
+            context.getFirebaseStorageCharacterkies().getReference(characterkieModel.getUID()).listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {
                     if (item.getName().startsWith("cover")) {
                             item.getBytes(5 * 1024 * 1024).addOnSuccessListener(bytes -> {
@@ -183,7 +178,6 @@ public class CharacterkiesUserPreviewAdapter extends RecyclerView.Adapter<Charac
             }
 
     }
-    // Devolvemos el numero de items de nuestro arraylist, lo invoca automaticamente el layout manager
     @Override
     public int getItemCount() {
         return dataSet.size();

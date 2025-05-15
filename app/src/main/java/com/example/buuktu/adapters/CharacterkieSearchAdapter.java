@@ -41,7 +41,7 @@ public class CharacterkieSearchAdapter extends RecyclerView.Adapter<Characterkie
         final MaterialCardView cv_characterkie_search;
         final TextView tv_characterkie_name_search;
         final TextView tv_characterkie_username_search;
-        FrameLayout fl_userkie_photo_container;
+        FrameLayout fl_characterkie_photo_container;
         public ViewHolder(View view) {
             super(view);
             tv_characterkie_username_search = view.findViewById(R.id.tv_characterkie_username_search);
@@ -49,15 +49,15 @@ public class CharacterkieSearchAdapter extends RecyclerView.Adapter<Characterkie
             iv_characterkie_photo_search= view.findViewById(R.id.iv_characterkie_photo_search);
             cv_characterkie_search = view.findViewById(R.id.cv_characterkie_search);
             iv_characterkie_private_search = view.findViewById(R.id.iv_characterkie_private_search);
-            fl_userkie_photo_container = view.findViewById(R.id.fl_userkie_photo_container);
+            fl_characterkie_photo_container = view.findViewById(R.id.fl_characterkie_photo_container);
         }
 
         public TextView getTv_characterkie_username_search() {
             return tv_characterkie_username_search;
         }
 
-        public FrameLayout getFl_userkie_photo_container() {
-            return fl_userkie_photo_container;
+        public FrameLayout getFl_characterkie_photo_container() {
+            return fl_characterkie_photo_container;
         }
 
         public TextView getTv_characterkie_name_search() {
@@ -92,7 +92,7 @@ public class CharacterkieSearchAdapter extends RecyclerView.Adapter<Characterkie
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.getFl_userkie_photo_container().setVisibility(View.INVISIBLE);
+        holder.getFl_characterkie_photo_container().setVisibility(View.INVISIBLE);
         CharacterkieModel characterkie = dataSet.get(position);
 
         // holder.getTv_characterkie_username_search().setText(dataSet.get(holder.getAdapterPosition()).getUsername());
@@ -116,13 +116,11 @@ public class CharacterkieSearchAdapter extends RecyclerView.Adapter<Characterkie
                 Drawable drawable = ContextCompat.getDrawable(context, resId);
                 //   holder.getIv_userkie_photo_search().set
                 //DrawableUtils.personalizarImagenCuadradoButton(context, DrawableUtils.drawableToBitmap(drawable), holder.getIv_characterkie_photo_search(), R.color.brownBrown);
-                holder.getFl_userkie_photo_container().setVisibility(View.VISIBLE);
+                holder.getFl_characterkie_photo_container().setVisibility(View.VISIBLE);
                 EfectsUtils.startCircularReveal(drawable, holder.getIv_characterkie_photo_search());
             }
         } else {
-            StorageReference userFolderRef = context.getFirebaseStorageCharacterkies().getReference(characterkie.getUID());
-
-            userFolderRef.listAll().addOnSuccessListener(listResult -> {
+            context.getFirebaseStorageCharacterkies().getReference(characterkie.getUID()).listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {
                     if (item.getName().startsWith("cover")) {
                         item.getBytes(5 * 1024 * 1024).addOnSuccessListener(bytes -> {
@@ -138,7 +136,6 @@ public class CharacterkieSearchAdapter extends RecyclerView.Adapter<Characterkie
     }
 
 
-    // Devolvemos el numero de items de nuestro arraylist, lo invoca automaticamente el layout manager
     @Override
     public int getItemCount() {
         return dataSet.size();

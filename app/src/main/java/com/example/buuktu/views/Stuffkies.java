@@ -53,13 +53,30 @@ public class Stuffkies extends Fragment implements View.OnClickListener {
         setVisibility();
         setListeners();
         bundle.putString("worldkie_id",worldkie_id);
+        getStuffkies();
+        setRecyclerView();
+        return view;
+    }
+
+    private void getStuffkies() {
+        mainActivity.getCollectionStuffkies()
+                .whereEqualTo("WORDLKIE_UID", worldkie_id)
+                .addSnapshotListener((snapshots, error) -> {
+                    if (error != null) return;
+
+                    stuffkieModels.clear();
+                    if (snapshots != null) {
+                        for (DocumentSnapshot doc : snapshots) {
+                            stuffkieModels.add(StuffkieModel.fromSnapshot(doc));
+                        }
+                    }
+                    stuffkiesUserPreviewAdapter.notifyDataSetChanged();
+                });
+    }
+    private void setRecyclerView() {
         rc_worldkies.setLayoutManager(new GridLayoutManager(mainActivity,2));
         stuffkiesUserPreviewAdapter = new StuffkiesUserPreviewAdapter(stuffkieModels, mainActivity, fragmentManager,"self");
         rc_worldkies.setAdapter(stuffkiesUserPreviewAdapter);
-
-        listenToWorldkies();
-
-        return view;
     }
 
     private void initComponents(View view) {
@@ -67,8 +84,6 @@ public class Stuffkies extends Fragment implements View.OnClickListener {
         rc_worldkies = view.findViewById(R.id.rc_stuffkies);
         mainActivity = (MainActivity) getActivity();
         fragmentManager = requireActivity().getSupportFragmentManager();
-
-        // Referencias desde MainActivity
         backButton = mainActivity.getBackButton();
         ib_save = mainActivity.getIb_save();
         ib_profile_superior = mainActivity.getIb_self_profile();
@@ -80,34 +95,12 @@ public class Stuffkies extends Fragment implements View.OnClickListener {
 
     }
     private void setVisibility() {
-        fb_add.setVisibility(View.GONE);
         ib_save.setVisibility(View.GONE);
         backButton.setVisibility(View.VISIBLE);
         ib_profile_superior.setVisibility(View.VISIBLE);
     }
 
-    private void listenToWorldkies() {
-        mainActivity.getCollectionStuffkies().whereEqualTo("WORDLKIE_UID", worldkie_id)
-                .addSnapshotListener((querySnapshots, e) -> {
-                    if (e != null) {
-                        return;
-                    }
 
-                    if (querySnapshots != null && !querySnapshots.isEmpty()) {
-                        stuffkieModels.clear();
-
-                        for (DocumentSnapshot doc : querySnapshots.getDocuments()) {
-                            StuffkieModel stuffkieModel = StuffkieModel.fromSnapshot(doc);
-                            stuffkieModels.add(stuffkieModel);
-                        }
-
-                        stuffkiesUserPreviewAdapter.notifyDataSetChanged();
-                    } else {
-                        stuffkieModels.clear();
-                        stuffkiesUserPreviewAdapter.notifyDataSetChanged();
-                    }
-                });
-    }
 
     @Override
     public void onClick(View v) {

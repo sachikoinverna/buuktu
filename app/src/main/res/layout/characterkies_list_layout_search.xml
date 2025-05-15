@@ -16,10 +16,12 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+        app:cardBackgroundColor="@color/rose1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="@color/white"
         app:strokeWidth="3dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -51,11 +53,13 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@mipmap/photoprofilefive" />
             </FrameLayout>
+
             <ImageView
                 android:id="@+id/iv_characterkie_private_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:tint="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -66,26 +70,30 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:gravity="center"
                 android:maxLines="1"
                 android:text="TextView"
                 android:textAlignment="center"
+                android:textColor="@color/rose3"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/fl_characterkie_photo_container"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_characterkie_username_search"
-                android:layout_width="56dp"
+                android:layout_width="wrap_content"
                 android:layout_height="18dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="TextView"
+                android:textColor="@color/white"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView9"
                 app:layout_constraintTop_toBottomOf="@+id/tv_characterkie_name_search" />
@@ -98,6 +106,8 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:text="@string/at_symbol"
+                android:textColor="@color/white"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/fl_characterkie_photo_container"
                 app:layout_constraintTop_toBottomOf="@+id/tv_characterkie_name_search" />

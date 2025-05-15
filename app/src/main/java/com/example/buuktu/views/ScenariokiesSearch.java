@@ -11,24 +11,25 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.buuktu.R;
-import com.example.buuktu.adapters.StuffkieSearchAdapter;
-import com.example.buuktu.models.StuffkieModel;
+import com.example.buuktu.adapters.ScenariokieSearchAdapter;
+import com.example.buuktu.models.ScenariokieModel;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
 
 
-public class StuffkiesSearch extends Fragment {
-
-    private ArrayList<StuffkieModel> stuffkieModelArrayList= new ArrayList<>();
-    private RecyclerView rc_stuffkies_search;
-    private StuffkieSearchAdapter stuffkieSearchAdapter;
+public class ScenariokiesSearch extends Fragment {
+    private ArrayList<ScenariokieModel> scenariokieModelArrayList = new ArrayList<>();
+    private RecyclerView rc_scenariokies_search;
+    private ScenariokieSearchAdapter scenariokieSearchAdapter;
     private MainActivity mainActivity;
-    public StuffkiesSearch() {
+    public ScenariokiesSearch() {
     }
 
-    public static StuffkiesSearch newInstance() {
-        return new StuffkiesSearch();
+
+    public static ScenariokiesSearch newInstance() {
+        return new ScenariokiesSearch();
+
     }
 
     @Override
@@ -39,34 +40,34 @@ public class StuffkiesSearch extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_stuffkies_search, container, false);
+        View view = inflater.inflate(R.layout.fragment_scenariokies_search, container, false);
         initComponents(view);
-        getStuffkies();
+        getScenariokies();
         setRecyclerView();
         return view;
     }
     private void initComponents(View view){
         mainActivity =(MainActivity) getActivity();
-        rc_stuffkies_search = view.findViewById(R.id.rc_stuffkies_search);
+        rc_scenariokies_search = view.findViewById(R.id.rc_scenariokies_search);
     }
-    private void getStuffkies() {
-        mainActivity.getCollectionStuffkies()
+    private void getScenariokies() {
+        mainActivity.getCollectionScenariokies()
                 .whereNotEqualTo("UID_AUTHOR",mainActivity.getUID()).whereEqualTo("draft",false)
                 .addSnapshotListener((snapshots, error) -> {
                     if (error != null) return;
 
-                    stuffkieModelArrayList.clear();
+                    scenariokieModelArrayList.clear();
                     if (snapshots != null) {
                         for (DocumentSnapshot doc : snapshots) {
-                            stuffkieModelArrayList.add(StuffkieModel.fromSnapshot(doc));
+                            scenariokieModelArrayList.add(ScenariokieModel.fromSnapshot(doc));
                         }
                     }
-                    stuffkieSearchAdapter.notifyDataSetChanged();
+                    scenariokieSearchAdapter.notifyDataSetChanged();
                 });
     }
     private void setRecyclerView() {
-        rc_stuffkies_search.setLayoutManager(new LinearLayoutManager(mainActivity));
-        stuffkieSearchAdapter = new StuffkieSearchAdapter(stuffkieModelArrayList, mainActivity, getParentFragmentManager());
-        rc_stuffkies_search.setAdapter(stuffkieSearchAdapter);
+        rc_scenariokies_search.setLayoutManager(new LinearLayoutManager(mainActivity));
+        scenariokieSearchAdapter = new ScenariokieSearchAdapter(scenariokieModelArrayList, mainActivity, getParentFragmentManager());
+        rc_scenariokies_search.setAdapter(scenariokieSearchAdapter);
     }
 }

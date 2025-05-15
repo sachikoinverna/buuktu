@@ -33,14 +33,14 @@ public class CharacterkieView extends Fragment implements View.OnClickListener {
     TextView tv_birthdayViewCharacterkie,tv_pronounsViewCharacterkie,tv_genderViewCharacterkie,tv_nameCharacterkieView,tv_nameUserCharacterkieView,tv_usernameCharacterkieView,tv_nameWorldkieViewCharacterkie,tv_locked_characterkie,tv_statusViewCharacterkie;
     ImageButton bt_basic_info_characterkies_view,ib_back,ib_save,ib_characterkieView;
     ImageView iv_locked_characterkie;
-    String UID,UID_AUTHOR,UID_WORLDKIE,lastPhotoId="",mode;
+    String UID,UID_AUTHOR,UID_WORLDKIE,mode;
     UserkieModel userkieModel;
     FragmentManager fragmentManager;
     WorldkieModel worldkieModel;
     MainActivity mainActivity;
     CharacterkieModel characterkieModel;
     boolean isBasicInfoVisible;
-    final String[]meses= new String[]{"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"};
+    String[]meses;
     public CharacterkieView() {
     }
     public static CharacterkieView newInstance() {
@@ -63,56 +63,58 @@ public class CharacterkieView extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_characterkie_view, container, false);
         initComponents(view);
         setVisibility();
-        if (mode.equals("self")) {
-        }
-      //  ib_worldkieView.setVisibility(mode.equals("self") ? View.VISIBLE : View.INVISIBLE);
         UID_AUTHOR = mode.equals("other") ? getArguments().getString("UID_AUTHOR") : mainActivity.getUID();
-        mainActivity.getCollectionWorldkies().document(UID_WORLDKIE).addSnapshotListener((documentSnapshot, e) -> {
-            if (e != null) {
-                Log.e("Error", e.getMessage());
-                Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
-                return;
+        getData();
+        meses= new String[]{mainActivity.getString(R.string.january),mainActivity.getString(R.string.february),mainActivity.getString(R.string.march),mainActivity.getString(R.string.april),mainActivity.getString(R.string.may),mainActivity.getString(R.string.june),mainActivity.getString(R.string.july),mainActivity.getString(R.string.august),mainActivity.getString(R.string.september),mainActivity.getString(R.string.october),mainActivity.getString(R.string.november),mainActivity.getString(R.string.december)};
+
+
+
+        setListeners();
+        return view;
+    }
+    private void getData(){
+        getUser();
+        getWorldkie();
+        getCharacterkie();
+    }
+    private void getCharacterkie(){
+        mainActivity.getCollectionCharacterkies().document(UID).addSnapshotListener((documentSnapshot, ex) -> {
+            if (ex != null) return;
+
+
+            if (documentSnapshot != null) {
+                characterkieModel = CharacterkieModel.fromSnapshot(documentSnapshot);
+                tv_nameCharacterkieView.setText(characterkieModel.getName());
+                getStrings(characterkieModel.getPronouns(),"pronouns");
+                getStrings(characterkieModel.getGender(),"gender");
+                getStrings(characterkieModel.getStatus(),"status");
+                getStrings(characterkieModel.getBirthday_format(),"birthday");
+                getProfilePhoto();
             }
+        });
+    }
+    private void getWorldkie(){
+        mainActivity.getCollectionWorldkies().document(UID_WORLDKIE).addSnapshotListener((documentSnapshot, e) -> {
+            if (e != null) return;
 
             if (documentSnapshot != null) {
                 worldkieModel = WorldkieModel.fromSnapshot(documentSnapshot);
                 tv_nameWorldkieViewCharacterkie.setText(worldkieModel.getName());
             }
         });
+    }
+    private void getUser(){
         mainActivity.getCollectionUsers().document(UID_AUTHOR).addSnapshotListener((document, exx) -> {
-                    if (exx != null) {
-                        Log.e("Error", exx.getMessage());
-                        Toast.makeText(getContext(), "Error al escuchar cambios: " + exx.getMessage(), LENGTH_LONG).show();
-                        return;
-                    }
+                    if (exx != null) return;
+
 
                     if (document != null) {
-                        UserkieModel userkieModel = UserkieModel.fromSnapshot(document);
+                        userkieModel = UserkieModel.fromSnapshot(document);
                         tv_nameUserCharacterkieView.setText(userkieModel.getName());
                         tv_usernameCharacterkieView.setText(userkieModel.getUsername());
                     }
                 }
         );
-
-                    mainActivity.getCollectionCharacterkies().document(UID).addSnapshotListener((documentSnapshot, ex) -> {
-                        if (ex != null) {
-                            Log.e("Error", ex.getMessage());
-                            Toast.makeText(getContext(), "Error al escuchar cambios: " + ex.getMessage(), LENGTH_LONG).show();
-                            return;
-                        }
-
-                        if (documentSnapshot != null) {
-                            characterkieModel = CharacterkieModel.fromSnapshot(documentSnapshot);
-                            tv_nameCharacterkieView.setText(characterkieModel.getName());
-                            getStrings(characterkieModel.getPronouns(),"pronouns");
-                            getStrings(characterkieModel.getGender(),"gender");
-                            getStrings(characterkieModel.getStatus(),"status");
-                            getStrings(characterkieModel.getBirthday_format(),"birthday");
-                            getProfilePhoto();
-                        }
-                    });
-        setListeners();
-        return view;
     }
     private void getStrings(String key,String option){
         int resId = mainActivity.getResources().getIdentifier(key, "string", mainActivity.getPackageName());
@@ -192,7 +194,7 @@ private void getProfilePhoto() {
         String id_photo = characterkieModel.getPhoto_id();
         int resId = mainActivity.getResources().getIdentifier(id_photo, "mipmap", mainActivity.getPackageName());
 
-        if (resId != 0 && (!lastPhotoId.equals(id_photo))) {
+        if (resId != 0) {
             Drawable drawable = ContextCompat.getDrawable(mainActivity, resId);
             ib_characterkieView.setImageDrawable(drawable);
             try {
@@ -200,12 +202,9 @@ private void getProfilePhoto() {
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
-            lastPhotoId = id_photo;
         }
     } else {
-        StorageReference userFolderRef = mainActivity.getFirebaseStorageCharacterkies().getReference(UID);
-
-        userFolderRef.listAll().addOnSuccessListener(listResult -> {
+        mainActivity.getFirebaseStorageCharacterkies().getReference(UID).listAll().addOnSuccessListener(listResult -> {
             for (StorageReference item : listResult.getItems()) {
                 if (item.getName().startsWith("cover")) {
                     item.getDownloadUrl().addOnSuccessListener(uri -> {

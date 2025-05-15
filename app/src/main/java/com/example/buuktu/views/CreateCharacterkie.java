@@ -56,7 +56,7 @@ public class CreateCharacterkie extends Fragment implements View.OnClickListener
 ImageButton bt_basic_info_characterkies;
     ImageButton ib_select_img_create_characterkie,ib_back,ib_save;
     Uri image;
-    final String[]meses= new String[]{"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"};
+    String[] meses;
     BottomSheetDialogFragment bottomSheetProfilePhoto;
     BottomSheetChoosePronouns bottomSheetChoosePronouns;
     BottomSheetChooseGender bottomSheetChooseGender;
@@ -98,13 +98,13 @@ ImageButton bt_basic_info_characterkies;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_create_characterkie, container, false);
 
         bottomSheetProfilePhoto = new BottomSheetProfilePhoto();
         initComponents(view);
         setListeners();
+        meses= new String[]{mainActivity.getString(R.string.january),mainActivity.getString(R.string.february),mainActivity.getString(R.string.march),mainActivity.getString(R.string.april),mainActivity.getString(R.string.may),mainActivity.getString(R.string.june),mainActivity.getString(R.string.july),mainActivity.getString(R.string.august),mainActivity.getString(R.string.september),mainActivity.getString(R.string.october),mainActivity.getString(R.string.november),mainActivity.getString(R.string.december)};
         res = mainActivity.getResources();
         packageName = mainActivity.getPackageName();
         dialog = new CreateEditGeneralDialog(mainActivity);
@@ -125,9 +125,7 @@ ImageButton bt_basic_info_characterkies;
         }else{
             mainActivity.getCollectionCharacterkies().document(characterkie_id).addSnapshotListener((queryDocumentSnapshot, e) -> {
 
-                if (e != null) {
-                    return;
-                }
+                if (e != null) return;
                 if (queryDocumentSnapshot!=null) {
                     characterkie = CharacterkieModel.fromSnapshot(queryDocumentSnapshot);
                     editMode();
@@ -151,7 +149,12 @@ ImageButton bt_basic_info_characterkies;
         optionBirthdayString = getOptionTextByRadioButtonId(optionBirthday,R.layout.choose_birthday_dialog);
         getImage();
     }
-    private void getStrings(String key,String option){
+
+    public String[] getMeses() {
+        return meses;
+    }
+
+    private void getStrings(String key, String option){
         int resId = mainActivity.getResources().getIdentifier(key, "string", mainActivity.getPackageName());
 
         if (resId != 0) {
@@ -454,8 +457,7 @@ ImageButton bt_basic_info_characterkies;
     }
     private void uploadNewImage(){
         if (!characterkie.isPhoto_default()) {
-            StorageReference userRef = mainActivity.getFirebaseStorageCharacterkies().getReference().child(characterkie_id);
-            userRef.child("profile" + DrawableUtils.getExtensionFromUri(getContext(), image)).putFile(image);
+            mainActivity.getFirebaseStorageCharacterkies().getReference().child(characterkie_id).child("cover" + DrawableUtils.getExtensionFromUri(mainActivity, image)).putFile(image);
 
         }
     }

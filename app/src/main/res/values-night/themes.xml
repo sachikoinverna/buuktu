@@ -5,13 +5,9 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:fontFamily">@font/alegreya</item>
-        <item name="colorPrimary">@color/blue3</item>
+        <item name="colorPrimary">@color/purple1</item>
     </style>
     <style name="SwitchTextAppearance" parent="@android:style/TextAppearance">
         <item name="android:fontFamily">@font/alegreya</item>
-    </style>
-    <style name="animation">
-        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
-        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 </resources>

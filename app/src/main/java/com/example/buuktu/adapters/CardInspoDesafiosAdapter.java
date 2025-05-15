@@ -21,7 +21,6 @@ import java.util.List;
 
 public class CardInspoDesafiosAdapter extends RecyclerView.Adapter<CardInspoDesafiosAdapter.ViewHolder> {
 
-    // Modelo de datos, por ejemplo:
     private final List<CardItem> dataSet;
     private final Context context;
     final FragmentManager fragmentManager;
@@ -37,7 +36,6 @@ public class CardInspoDesafiosAdapter extends RecyclerView.Adapter<CardInspoDesa
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Inflar el layout del item que contiene un CardView
         View view = LayoutInflater.from(context).inflate(R.layout.card_item, parent, false);
         return new ViewHolder(view);
     }

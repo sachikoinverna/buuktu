@@ -21,26 +21,14 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fb_parentScenariokies"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="24dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/twotone_more_24"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:shapeAppearance="?attr/floatingActionButtonStyle" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fb_addScenariokie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="24dp"
             android:scaleType="fitCenter"
             android:src="@drawable/twotone_add_circle_24"
-            app:layout_constraintBottom_toTopOf="@+id/fb_parentScenariokies"
+            app:layout_constraintBottom_toBottomOf="@+id/rc_scenariokies"
             app:layout_constraintEnd_toEndOf="parent"
             app:shapeAppearance="?attr/floatingActionButtonStyle" />
     </androidx.constraintlayout.widget.ConstraintLayout>

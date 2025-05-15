@@ -36,7 +36,8 @@
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="24dp"
         app:cardBackgroundColor="@color/rose2"
-        app:strokeColor="@color/rose1">
+        app:strokeColor="@color/rose1"
+        app:strokeWidth="5dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

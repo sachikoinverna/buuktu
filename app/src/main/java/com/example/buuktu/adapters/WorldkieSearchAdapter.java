@@ -189,9 +189,7 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
                     EfectsUtils.startCircularReveal(drawable,holder.getIv_worldkie_photo_search());
                 }
         } else {
-            StorageReference userFolderRef = holder.firebaseStorageWorldkies.getReference(UID);
-
-            userFolderRef.listAll().addOnSuccessListener(listResult -> {
+            holder.firebaseStorageWorldkies.getReference(UID).listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {
                     if (item.getName().startsWith("cover")) {
                         item.getDownloadUrl().addOnSuccessListener(uri -> {
@@ -211,7 +209,6 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
 
 
 
-    // Devolvemos el numero de items de nuestro arraylist, lo invoca automaticamente el layout manager
     @Override
     public int getItemCount() {
         return dataSet.size();

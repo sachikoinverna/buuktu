@@ -340,9 +340,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
 
         if (currentFragment instanceof Home) {
-            // No hacer nada (ignorar el retroceso)
         } else {
-            super.onBackPressed(); // comportamiento normal en otros fragmentos
+            super.onBackPressed();
         }
     }
 }

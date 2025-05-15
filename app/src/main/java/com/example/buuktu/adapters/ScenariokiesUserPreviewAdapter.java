@@ -75,7 +75,6 @@ public class ScenariokiesUserPreviewAdapter extends RecyclerView.Adapter<Scenari
         }
     }
 
-    //Constructor donde pasamos la lista de productos y el contexto
     public ScenariokiesUserPreviewAdapter(ArrayList<ScenariokieModel> dataSet, MainActivity ctx, FragmentManager fragmentManager, String mode) {
         this.dataSet = dataSet;
         this.context = ctx;
@@ -84,11 +83,9 @@ public class ScenariokiesUserPreviewAdapter extends RecyclerView.Adapter<Scenari
     }
 
     
-    //Se llama cada vez que se hace scroll en la pantalla y los elementos desaparecen y aparecen
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
 
-        //Creamos la vista de cada item a partir de nuestro layout
            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.scenariokie_list_layout_preview, viewGroup, false);
         return new ViewHolder(view);
     }
@@ -119,10 +116,6 @@ public class ScenariokiesUserPreviewAdapter extends RecyclerView.Adapter<Scenari
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         true);
 
-// Opcional: animación y sombra
-                popupWindow.setElevation(8f);
-
-// Mostrarlo anclado al CardView
                 popupWindow.showAsDropDown(holder.getCardView(), 0, -50);
 
 // ListenersBundle bundle = new Bundle();
@@ -158,11 +151,9 @@ public class ScenariokiesUserPreviewAdapter extends RecyclerView.Adapter<Scenari
                     holder.getIv_scenariokie_preview_worldkie().setVisibility(View.VISIBLE);
                 }
         } else {
-            StorageReference userFolderRef = context.getFirebaseStorageScenariokies().getReference(scenariokieModel.getUID());
-
-            userFolderRef.listAll().addOnSuccessListener(listResult -> {
+            context.getFirebaseStorageScenariokies().getReference(scenariokieModel.getUID()).listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {
-                    if (item.getName().startsWith("profile")) {
+                    if (item.getName().startsWith("cover")) {
                             item.getBytes(5 * 1024 * 1024).addOnSuccessListener(bytes -> {
                                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                                 Bitmap bitmapScaled = Bitmap.createScaledBitmap(bitmap, 80, 80, false);
@@ -175,7 +166,6 @@ public class ScenariokiesUserPreviewAdapter extends RecyclerView.Adapter<Scenari
             }
 
     }
-    // Devolvemos el numero de items de nuestro arraylist, lo invoca automaticamente el layout manager
     @Override
     public int getItemCount() {
         return dataSet.size();

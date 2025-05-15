@@ -15,11 +15,12 @@ import android.util.Log;
 import androidx.core.app.NotificationCompat;
 
 import com.example.buuktu.R;
-import com.google.firebase.firestore.FieldValue;
+import com.example.buuktu.models.NotikieModel;
+import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.time.Instant;
 
 public class WordNotificationReceiver extends BroadcastReceiver {
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -47,11 +48,7 @@ public class WordNotificationReceiver extends BroadcastReceiver {
                 .setPriority(NotificationCompat.PRIORITY_HIGH).setSmallIcon(R.mipmap.boo_vector).setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.words_of_the_day_notikie));
 
         notificationManager.notify(1, builder.build());
-        Map<String,Object> notikieData = new HashMap<>();
-        notikieData.put("message",phrase);
-        notikieData.put("icon",R.drawable.twotone_translate_24);
-        notikieData.put("date", FieldValue.serverTimestamp());
-        db.collection("Notikies").add(notikieData).addOnSuccessListener(documentReference -> {
+        db.collection("Notikies").add(new NotikieModel(phrase,new Timestamp(Instant.now()),R.drawable.twotone_translate_24, FirebaseAuth.getInstance().getUid())).addOnSuccessListener(documentReference -> {
 
         }).addOnFailureListener(e -> {
 

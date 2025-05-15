@@ -67,17 +67,14 @@ public class ScenariokieSearchAdapter extends RecyclerView.Adapter<ScenariokieSe
             return iv_characterkie_private_search;
         }
     }
-    //Constructor donde pasamos la lista de productos y el contexto
     public ScenariokieSearchAdapter(ArrayList<ScenariokieModel> dataSet, MainActivity ctx, FragmentManager fragmentManager) {
         this.dataSet = dataSet;
         this.context = ctx;
         this.fragmentManager = fragmentManager;
     }
-    //Se llama cada vez que se hace scroll en la pantalla y los elementos desaparecen y aparecen
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
 
-        //Creamos la vista de cada item a partir de nuestro layout
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.characterkies_list_layout_search, viewGroup, false);
         return new ViewHolder(view);
     }
@@ -113,9 +110,7 @@ public class ScenariokieSearchAdapter extends RecyclerView.Adapter<ScenariokieSe
                 }
             }
         } else {
-            StorageReference userFolderRef = context.getFirebaseStorageScenariokies().getReference(scenariokieModel.getUID());
-
-            userFolderRef.listAll().addOnSuccessListener(listResult -> {
+            context.getFirebaseStorageScenariokies().getReference(scenariokieModel.getUID()).listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {
                     if (item.getName().startsWith("cover")) {
                         item.getBytes(5 * 1024 * 1024).addOnSuccessListener(bytes -> {
@@ -131,7 +126,6 @@ public class ScenariokieSearchAdapter extends RecyclerView.Adapter<ScenariokieSe
     }
 
 
-    // Devolvemos el numero de items de nuestro arraylist, lo invoca automaticamente el layout manager
     @Override
     public int getItemCount() {
         return dataSet.size();

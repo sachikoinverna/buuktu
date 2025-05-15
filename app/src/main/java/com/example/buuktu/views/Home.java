@@ -23,11 +23,9 @@ import java.util.ArrayList;
 
 
 public class Home extends Fragment implements View.OnClickListener {
-    private String UID;
     private ArrayList<WorldkieModel> worldkieModelArrayList;
     private RecyclerView rc_worldkies;
     private FloatingActionButton fb_add;
-    private boolean isAllFabsVisible;
     private WorldkieAdapter worldkieAdapter;
     private ImageButton ib_save, ib_profile_superior, backButton;
     private FragmentManager fragmentManager;
@@ -56,30 +54,41 @@ public class Home extends Fragment implements View.OnClickListener {
         initComponents(view);
         setVisibility();
         setListeners();
-        UID = mainActivity.getUID();
 
-        // Configura RecyclerView
+
+
+        setRecyclerView();
+        getWorldkies();
+        return view;
+    }
+    private void getWorldkies() {
+        mainActivity.getCollectionWorldkies().whereEqualTo("UID_AUTHOR", mainActivity.getUID())
+                .orderBy("last_update", Query.Direction.DESCENDING)
+                .addSnapshotListener((snapshots, error) -> {
+                    if (error != null) return;
+
+                    worldkieModelArrayList.clear();
+                    if (snapshots != null) {
+                        for (DocumentSnapshot doc : snapshots) {
+                            worldkieModelArrayList.add(WorldkieModel.fromSnapshot(doc));
+                        }
+                    }
+                    worldkieAdapter.notifyDataSetChanged();
+                });
+    }
+    private void setRecyclerView() {
         rc_worldkies.setLayoutManager(new GridLayoutManager(mainActivity,2));
         worldkieAdapter = new WorldkieAdapter(worldkieModelArrayList, mainActivity, fragmentManager);
         rc_worldkies.setAdapter(worldkieAdapter);
-
-        // Escucha cambios en Firestore
-        listenToWorldkies();
-
-        return view;
     }
-
     private void initComponents(View view) {
         fb_add = view.findViewById(R.id.fb_addWorldkie);
         rc_worldkies = view.findViewById(R.id.rc_worldkies);
         mainActivity = (MainActivity) getActivity();
         fragmentManager = requireActivity().getSupportFragmentManager();
-
-        // Referencias desde MainActivity
         backButton = mainActivity.getBackButton();
         ib_save = mainActivity.getIb_save();
         ib_profile_superior = mainActivity.getIb_self_profile();
-        isAllFabsVisible = false;
 
     }
     private void setListeners() {
@@ -87,35 +96,11 @@ public class Home extends Fragment implements View.OnClickListener {
 
     }
     private void setVisibility() {
-    fb_add.setVisibility(View.GONE);
     ib_save.setVisibility(View.GONE);
     backButton.setVisibility(View.GONE);
     ib_profile_superior.setVisibility(View.VISIBLE);
     }
 
-    private void listenToWorldkies() {
-        mainActivity.getCollectionWorldkies().whereEqualTo("uid_AUTHOR", UID)
-                .orderBy("last_update", Query.Direction.DESCENDING)
-                .addSnapshotListener((querySnapshots, e) -> {
-                    if (e != null) {
-                        return;
-                    }
-
-                    if (querySnapshots != null && !querySnapshots.isEmpty()) {
-                        worldkieModelArrayList.clear();
-
-                        for (DocumentSnapshot doc : querySnapshots.getDocuments()) {
-                            WorldkieModel worldkieModel = WorldkieModel.fromSnapshot(doc);
-                            worldkieModelArrayList.add(worldkieModel);
-                        }
-
-                        worldkieAdapter.notifyDataSetChanged();
-                    } else {
-                        worldkieModelArrayList.clear();
-                        worldkieAdapter.notifyDataSetChanged();
-                    }
-                });
-    }
 
     @Override
     public void onClick(View v) {

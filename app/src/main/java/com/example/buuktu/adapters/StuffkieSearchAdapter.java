@@ -66,17 +66,14 @@ public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAd
             return iv_stuffkie_private_search;
         }
     }
-    //Constructor donde pasamos la lista de productos y el contexto
     public StuffkieSearchAdapter(ArrayList<StuffkieModel> dataSet, MainActivity ctx, FragmentManager fragmentManager) {
         this.dataSet = dataSet;
         this.context = ctx;
         this.fragmentManager = fragmentManager;
     }
-    //Se llama cada vez que se hace scroll en la pantalla y los elementos desaparecen y aparecen
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
 
-        //Creamos la vista de cada item a partir de nuestro layout
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.stuffkies_list_layout_search, viewGroup, false);
         return new ViewHolder(view);
     }
@@ -121,9 +118,7 @@ public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAd
                     EfectsUtils.startCircularReveal(drawable,holder.getIv_stuffkie_photo_search());
                 }
         } else {
-            StorageReference userFolderRef = context.getFirebaseStorageStuffkies().getReference(stuffkieModel.getUID());
-
-            userFolderRef.listAll().addOnSuccessListener(listResult -> {
+            context.getFirebaseStorageStuffkies().getReference(stuffkieModel.getUID()).listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {
                     if (item.getName().startsWith("cover")) {
                         item.getDownloadUrl().addOnSuccessListener(uri -> {
@@ -142,7 +137,6 @@ public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAd
     }
 
 
-    // Devolvemos el numero de items de nuestro arraylist, lo invoca automaticamente el layout manager
     @Override
     public int getItemCount() {
         return dataSet.size();

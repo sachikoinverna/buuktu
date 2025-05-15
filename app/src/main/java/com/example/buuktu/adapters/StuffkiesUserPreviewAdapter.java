@@ -24,8 +24,6 @@ import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.EfectsUtils;
 import com.example.buuktu.utils.NavigationUtils;
 import com.example.buuktu.views.MainActivity;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
@@ -43,9 +41,6 @@ public class StuffkiesUserPreviewAdapter extends RecyclerView.Adapter<StuffkiesU
         private final TextView tv_stuffkie_preview_worldkie;
         private final TextView tv_stuffkie_preview_draft;
         final CardView cv_stuffkie_preview;
-        private final FirebaseStorage firebaseStorageStuffkies = FirebaseStorage.getInstance("gs://buuk-tu-stuffkies");
-        //private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-        CollectionReference collectionUserkies;
         public ViewHolder(View view) {
             super(view);
             iv_stuffkie_preview_worldkie =  view.findViewById(R.id.iv_stuffkie_preview_worldkie);
@@ -53,7 +48,6 @@ public class StuffkiesUserPreviewAdapter extends RecyclerView.Adapter<StuffkiesU
             iv_stuffkie_private_preview = view.findViewById(R.id.iv_stuffkie_private_preview);
             tv_stuffkie_preview_draft = view.findViewById(R.id.tv_stuffkie_preview_draft);
             cv_stuffkie_preview = view.findViewById(R.id.cv_stuffkie_preview);
-           // FirebaseStorage.getInstance("gs://buuk-tu-stuffkies");
         }
 
         public ImageView getIv_stuffkie_private_preview() {
@@ -76,13 +70,9 @@ public class StuffkiesUserPreviewAdapter extends RecyclerView.Adapter<StuffkiesU
             return cv_stuffkie_preview;
         }
 
-        public FirebaseStorage getFirebaseStorageStuffkies() {
-            return firebaseStorageStuffkies;
-        }
 
     }
 
-    //Constructor donde pasamos la lista de productos y el contexto
     public StuffkiesUserPreviewAdapter(ArrayList<StuffkieModel> dataSet, MainActivity ctx, FragmentManager fragmentManager, String mode) {
         this.dataSet = dataSet;
         this.context = ctx;
@@ -91,11 +81,9 @@ public class StuffkiesUserPreviewAdapter extends RecyclerView.Adapter<StuffkiesU
     }
 
     
-    //Se llama cada vez que se hace scroll en la pantalla y los elementos desaparecen y aparecen
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
 
-        //Creamos la vista de cada item a partir de nuestro layout
            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.stuffkie_list_layout_preview, viewGroup, false);
         return new ViewHolder(view);
     }
@@ -127,10 +115,7 @@ public class StuffkiesUserPreviewAdapter extends RecyclerView.Adapter<StuffkiesU
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         true);
 
-// Opcional: animación y sombra
-                popupWindow.setElevation(8f);
 
-// Mostrarlo anclado al CardView
                 popupWindow.showAsDropDown(holder.getCv_stuffkie_preview(), 0, -50);
 
 // ListenersBundle bundle = new Bundle();
@@ -167,9 +152,7 @@ public class StuffkiesUserPreviewAdapter extends RecyclerView.Adapter<StuffkiesU
 
                 }
         } else {
-            StorageReference userFolderRef = context.getFirebaseStorageStuffkies().getReference(stuffkieModel.getUID());
-
-            userFolderRef.listAll().addOnSuccessListener(listResult -> {
+           context.getFirebaseStorageStuffkies().getReference(stuffkieModel.getUID()).listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {
                     if (item.getName().startsWith("cover")) {
                         item.getDownloadUrl().addOnSuccessListener(uri -> {
@@ -190,7 +173,6 @@ public class StuffkiesUserPreviewAdapter extends RecyclerView.Adapter<StuffkiesU
         }
     }
 
-    // Devolvemos el numero de items de nuestro arraylist, lo invoca automaticamente el layout manager
     @Override
     public int getItemCount() {
         return dataSet.size();

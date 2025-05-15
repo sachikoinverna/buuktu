@@ -111,7 +111,6 @@
     <string name="notekie_description">Te vas a llevar una decepcion, pero es una nota normal y corriente. . Es importante que veas como lo ve el resto, ya que es tu pequeño escaparate. Se podria decir que lo estas viendo desde dentro, ya que te mostramos también tus creaciones ocultas con la intencion de que tengas otra manera de acceder a estas. /n/n Cada día a medianoche obtendras elementos para inspirarte./n/nA partir de ahí, debes usar tu imaginacion, no hay reglas escritas, la única es usar dichos elementos. Papel y boligrafo seran tus mejores aliados a la hora de intentar crear un mundo con ellos./n/nRecuerda tener cuidado con lo que pones en tu escaparate.</string>
     <string name="settings_description">Momento de descubrir america, ajustes es efectivamente donde hace ajustes. Es importante que veas como lo ve el resto, ya que es tu pequeño escaparate. Se podria decir que lo estas viendo desde dentro, ya que te mostramos también tus creaciones ocultas con la intencion de que tengas otra manera de acceder a estas. /n/n Cada día a medianoche obtendras elementos para inspirarte./n/nA partir de ahí, debes usar tu imaginacion, no hay reglas escritas, la única es usar dichos elementos. Papel y boligrafo seran tus mejores aliados a la hora de intentar crear un mundo con ellos./n/nRecuerda tener cuidado con lo que pones en tu escaparate.</string>
     <string name="search_description">Te voy a contar un secreto pero no se lo cuentes a nadie, aquí deberias poder buscar por nombreWorldkies, Characterkies,Stuffkies y usuarios pero aun no se puede. PD: Si quieres un tip, puedes verlos igualmente y acceder a ellos.  Es importante que veas como lo ve el resto, ya que es tu pequeño escaparate. Se podria decir que lo estas viendo desde dentro, ya que te mostramos también tus creaciones ocultas con la intencion de que tengas otra manera de acceder a estas. /n/n Cada día a medianoche obtendras elementos para inspirarte./n/nA partir de ahí, debes usar tu imaginacion, no hay reglas escritas, la única es usar dichos elementos. Papel y boligrafo seran tus mejores aliados a la hora de intentar crear un mundo con ellos./n/nRecuerda tener cuidado con lo que pones en tu escaparate.</string>
-    <string name="home_description">Bienvenido a la pantalla principal, si pulsas en el boton podras crear un nuevo Worldkie. Todos los que hayas creado se mostraran aquiTe voy a contar un secreto pero no se lo cuentes a nadie, aquí deberias poder buscar por nombreWorldkies, Characterkies,Stuffkies y usuarios pero aun no se puede. PD: Si quieres un tip, puedes verlos igualmente y acceder a ellos.  Es importante que veas como lo ve el resto, ya que es tu pequeño escaparate. Se podria decir que lo estas viendo desde dentro, ya que te mostramos también tus creaciones ocultas con la intencion de que tengas otra manera de acceder a estas. /n/n Cada día a medianoche obtendras elementos para inspirarte./n/nA partir de ahí, debes usar tu imaginacion, no hay reglas escritas, la única es usar dichos elementos. Papel y boligrafo seran tus mejores aliados a la hora de intentar crear un mundo con ellos./n/nRecuerda tener cuidado con lo que pones en tu escaparate.</string>
     <string name="stuffkie_description">Un stuffkie es un objeto de tu pequeño universo literario.</string>
 
     <string name="inspo">Inspo</string>
@@ -125,6 +124,9 @@
     <string name="draft">Borrador</string>
     <string name="chooseIconkie">Iconkie</string>
     <string name="chooseGallery">Gallery</string>
+    <string name="actual_password_incorrect">Contraseña actual incorrecta</string>
+
+    <string name="incorrect_telephone">Telefono incorrecto</string>
     <string name="emailUsername">Correo electronico/Nombre de usuario</string>
     <string name="numberErrorTextField">No puede contener numeros</string>
     <string name="nameErrorEmpty">El nombre no puede estar vacio</string>
@@ -143,18 +145,6 @@
     <string name="passwordErrorUppercase">Debe contener al menos una mayúscula</string>
     <string name="passwordErrorRepeatEmpty">La contraseña no puede estar vacia</string>
     <string name="passwordErrorRepeat">Contraseñas no coinciden</string>
-    <string name="aries">Aries</string>
-    <string name="taurus">Taurus</string>
-    <string name="gemini">Gemini</string>
-    <string name="cancer">Cancer</string>
-    <string name="leo">Leo</string>
-    <string name="virgo">Virgo</string>
-    <string name="libra">Libra</string>
-    <string name="scorpio">Scorpio</string>
-    <string name="sagittarius">Sagittarius</string>
-    <string name="capricorn">Capricorn</string>
-    <string name="aquarius">Aquarius</string>
-    <string name="pisces">Pisces</string>
     <string name="january">Enero</string>
     <string name="february">Febrero</string>
     <string name="march">Marzo</string>

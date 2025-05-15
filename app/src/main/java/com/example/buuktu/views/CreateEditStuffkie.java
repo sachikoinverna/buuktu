@@ -55,15 +55,9 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
     LottieAnimationView animationView;
     StuffkieModel stuffkieModel;
     public CreateEditStuffkie() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment CreateEditStuffkie.
-     */
+
     public static CreateEditStuffkie newInstance() {
         return new CreateEditStuffkie();
     }
@@ -84,7 +78,6 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_create_edit_stuffkie, container, false);
 
         initComponents(view);
@@ -141,9 +134,7 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
                 }
             }
         } else {
-            StorageReference userFolderRef = mainActivity.getFirebaseStorageStuffkies().getReference(stuffkie_id);
-
-            userFolderRef.listAll().addOnSuccessListener(listResult -> {
+            mainActivity.getFirebaseStorageStuffkies().getReference(stuffkie_id).listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {
                     if (item.getName().startsWith("cover")) {
                         item.getDownloadUrl().addOnSuccessListener(uri -> {
@@ -232,8 +223,7 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
     }
 private void uploadNewImage(){
     if (!stuffkieModel.isPhoto_default()) {
-        StorageReference userRef = mainActivity.getFirebaseStorageStuffkies().getReference().child(stuffkie_id);
-        userRef.child("profile" + DrawableUtils.getExtensionFromUri(getContext(), image)).putFile(image);
+        mainActivity.getFirebaseStorageStuffkies().getReference().child(stuffkie_id).child("cover" + DrawableUtils.getExtensionFromUri(mainActivity, image)).putFile(image);
 
     }
 }
@@ -252,8 +242,6 @@ private void uploadNewImage(){
     }
 
     private void putDefaultImage() throws IOException {
-//        Drawable drawable = ContextCompat.getDrawable(context, R.mipmap.photostuffkieone);
-       // DrawableUtils.personalizarImagenCuadradoButton(get);
         DrawableUtils.personalizarImagenCuadradoButton(mainActivity,150/7,7,R.color.brownMaroon,R.mipmap.photostuffkieone,ib_select_img_create_stuffkie);
     }
     public void setSelectedProfilePhoto(Drawable image){
