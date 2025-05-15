@@ -119,8 +119,7 @@ public class EditNamePronounsUserDialog extends Dialog implements View.OnClickLi
     }
     private void saveEmail(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String oldEmail = user.getEmail();
-        if (!CheckUtil.handlerCheckNewIsTheSameAsOld(context,et_namepronouns,oldEmail,et_namepronounsFull)) {
+        if (!CheckUtil.handlerCheckNewIsTheSameAsOld(context,et_namepronouns,user.getEmail(),et_namepronounsFull)) {
             changeVisibility();
             Completable.timer(2, TimeUnit.SECONDS)
                     .subscribeOn(Schedulers.io())

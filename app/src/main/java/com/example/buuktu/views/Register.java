@@ -288,10 +288,10 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
                                     QuerySnapshot emailSnapshot = (QuerySnapshot) results.get(1);
                                     //Comprueba si
                                     if (!usernameSnapshot.isEmpty()) {
-                                        CheckUtil.setErrorMessage("Nombre de usuario existente", et_userRegisterFilled);
+                                        CheckUtil.setErrorMessage(getString(R.string.userErrorExists), et_userRegisterFilled);
                                     }
                                     if (!emailSnapshot.isEmpty()) {
-                                        CheckUtil.setErrorMessage("Email existente", et_emailRegisterFilled);
+                                        CheckUtil.setErrorMessage(getString(R.string.emailExists), et_emailRegisterFilled);
                                     }
                                     if (usernameSnapshot.isEmpty() && emailSnapshot.isEmpty()) {
                                         // Puedes continuar con el registro
@@ -317,8 +317,7 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
                                                 collectionReferenceUsers.document(task.getResult().getUser().getUid()).set(userkieModel.toMap()).addOnSuccessListener(unused -> {
                                                     //Comprueba
                                                     if (!userkieModel.isPhoto_default()) {
-                                                        StorageReference userRef = storage.getReference().child(task.getResult().getUser().getUid());
-                                                        userRef.child("profile" + DrawableUtils.getExtensionFromUri(getApplicationContext(), image)).putFile(image);
+                                                        storage.getReference().child(task.getResult().getUser().getUid()).child("profile" + DrawableUtils.getExtensionFromUri(getApplicationContext(), image)).putFile(image);
 
                                                     }
                                                     EfectsUtils.setAnimationsDialog("success",animationView);
@@ -345,7 +344,12 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
         }
         }
 
-
+    private void delayedDismiss(CreateEditGeneralDialog dialog) {
+        Completable.timer(2, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> dialog.dismiss());
+    }
     public void showDatePickerDialog(View view) {
         DatePickerDialog date = new DatePickerDialog(this, (datePicker, year, month, day) -> {
             dp_birthday.setText(day + "/" + (month + 1) + "/" + year);

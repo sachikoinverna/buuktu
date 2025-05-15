@@ -109,11 +109,8 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
             }
         } else {
             mainActivity.getCollectionScenariokies().document(scenariokie_id).addSnapshotListener((queryDocumentSnapshot, e) -> {
-                if (e != null) {
-                    Log.e("Error", e.getMessage());
-                    Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
-                    return;
-                }
+                if (e != null) return;
+
                 if (queryDocumentSnapshot != null) {
 
                     scenariokieModel = ScenariokieModel.fromSnapshot(queryDocumentSnapshot);

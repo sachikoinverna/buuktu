@@ -21,43 +21,44 @@ public class InfoGeneralDialog extends Dialog implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        switch (mode) {
-            case "future_function":
-                setContentView(R.layout.future_function_dialog);
-                break;
-            case "search":
-                setContentView(R.layout.info_search_dialog);
-                break;
-            case "inspo":
-                setContentView(R.layout.info_inspo_dialog);
-                break;
-            case "notekies":
-                setContentView(R.layout.info_notekies_dialog);
-                break;
-            case "notikies":
-                setContentView(R.layout.info_notikies_dialog);
-                break;
-            case "characterkies":
-                setContentView(R.layout.info_characterkies_dialog);
-                break;
-            case "stuffkies":
-                setContentView(R.layout.info_stuffkies_dialog);
-                break;
-            case "worldkies":
-                setContentView(R.layout.info_worldkies_dialog);
-                break;
-            case "settings":
-                setContentView(R.layout.info_settings);
-                break;
-            case "scenariokies":
-                setContentView(R.layout.info_scenariokies_dialog);
-                break;
-        }
+
         initComponents();
         setListeners();
         setDialogProperties();
     }
 private void initComponents(){
+    switch (mode) {
+        case "future_function":
+            setContentView(R.layout.future_function_dialog);
+            break;
+        case "search":
+            setContentView(R.layout.info_search_dialog);
+            break;
+        case "inspo":
+            setContentView(R.layout.info_inspo_dialog);
+            break;
+        case "notekies":
+            setContentView(R.layout.info_notekies_dialog);
+            break;
+        case "notikies":
+            setContentView(R.layout.info_notikies_dialog);
+            break;
+        case "characterkies":
+            setContentView(R.layout.info_characterkies_dialog);
+            break;
+        case "stuffkies":
+            setContentView(R.layout.info_stuffkies_dialog);
+            break;
+        case "worldkies":
+            setContentView(R.layout.info_worldkies_dialog);
+            break;
+        case "settings":
+            setContentView(R.layout.info_settings);
+            break;
+        case "scenariokies":
+            setContentView(R.layout.info_scenariokies_dialog);
+            break;
+    }
     ib_close_dialog = findViewById(R.id.ib_close_dialog);
 
 }
