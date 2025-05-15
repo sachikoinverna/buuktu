@@ -217,8 +217,7 @@ ImageButton bt_basic_info_characterkies;
     }
     private void getImage(){
         if(characterkie.isPhoto_default()){
-                String id_photo = characterkie.getPhoto_id();
-                int resId = mainActivity.getResources().getIdentifier(id_photo, "mipmap", mainActivity.getPackageName());
+                int resId = mainActivity.getResources().getIdentifier(characterkie.getPhoto_id(), "mipmap", mainActivity.getPackageName());
 
                 if (resId != 0) {
                     Drawable drawable = ContextCompat.getDrawable(mainActivity, resId);
@@ -234,9 +233,7 @@ ImageButton bt_basic_info_characterkies;
                     }
                 }
         } else {
-            StorageReference userFolderRef = mainActivity.getFirebaseStorageWorldkies().getReference(worldkie_id);
-
-            userFolderRef.listAll().addOnSuccessListener(listResult -> {
+            mainActivity.getFirebaseStorageWorldkies().getReference(worldkie_id).listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {
                     if (item.getName().startsWith("cover")) {
                         item.getDownloadUrl().addOnSuccessListener(uri -> {
