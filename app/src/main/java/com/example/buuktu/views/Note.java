@@ -1,7 +1,5 @@
 package com.example.buuktu.views;
 
-import static android.widget.Toast.LENGTH_LONG;
-
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.buuktu.R;
@@ -68,10 +65,7 @@ public class Note extends Fragment implements View.OnClickListener {
     private void setNotekieModel(){
         if(note_id!=null) {
             mainActivity.getCollectionNotekies().document(note_id).addSnapshotListener((queryDocumentSnapshot, e) -> {
-                if (e != null) {
-                    Toast.makeText(getContext(), "Error al escuchar cambios: " + e.getMessage(), LENGTH_LONG).show();
-                    return;
-                }
+                if (e != null) return;
                 if (queryDocumentSnapshot != null) {
                     notekieModel = NotekieModel.fromSnapshot(queryDocumentSnapshot);
                     createMode();
@@ -86,8 +80,7 @@ public class Note extends Fragment implements View.OnClickListener {
         }
     }
     private void createMode(){
-        String title = notekieModel.getTitle();
-        if (!title.isEmpty()) {
+        if (!notekieModel.getTitle().isEmpty()) {
             et_title_note.setText(notekieModel.getTitle());
         } else {
             et_title_note.setHint(notekieModel.getTitle());
@@ -119,16 +112,12 @@ public class Note extends Fragment implements View.OnClickListener {
         Completable.timer(3, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> {
-                            Task<DocumentReference> addTask = mainActivity.getCollectionNotekies().add(notekieModel.toMap());
-
-                            addTask.addOnCompleteListener(task -> {
-                                if (task.isSuccessful()) {
-                                    note_id = addTask.getResult().getId();
-                                    successFail("success");
-                                }
-                            }).addOnFailureListener(e -> successFail("fail"));
-                        }
+                .subscribe(() -> mainActivity.getCollectionNotekies().add(notekieModel.toMap()).addOnCompleteListener(task -> {
+                     if (task.isSuccessful()) {
+                         note_id = task.getResult().getId();
+                         successFail("success");
+                     }
+                 }).addOnFailureListener(e -> successFail("fail"))
                 );
     }
 private void delayedDismiss() {

@@ -23,8 +23,6 @@ import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.NavigationUtils;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.IOException;
-
 
 public class StuffkieView extends Fragment implements View.OnClickListener {
     UserkieModel userkieModel;
@@ -100,11 +98,7 @@ public class StuffkieView extends Fragment implements View.OnClickListener {
             if (resId != 0) {
                 Drawable drawable = ContextCompat.getDrawable(mainActivity, resId);
                 ib_stuffkieView.setImageDrawable(drawable);
-                try {
                     DrawableUtils.personalizarImagenCuadradoButton(mainActivity, 115 / 6, 7, R.color.brownMaroon, drawable, ib_stuffkieView);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
             }
         } else {
             mainActivity.getFirebaseStorageCharacterkies().getReference(UID).listAll().addOnSuccessListener(listResult -> {
@@ -113,9 +107,7 @@ public class StuffkieView extends Fragment implements View.OnClickListener {
                         item.getDownloadUrl().addOnSuccessListener(uri -> {
                             // try {
                             DrawableUtils.personalizarImagenCuadradoButton(mainActivity, 115 / 7, 7, R.color.greenWhatever, uri, ib_stuffkieView);
-                            //} catch (IOException e) {
-                            //    throw new RuntimeException(e);
-                            // }
+
                         });
                     }
                 }

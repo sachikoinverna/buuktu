@@ -1,7 +1,5 @@
 package com.example.buuktu.views;
 
-import static android.widget.Toast.LENGTH_LONG;
-
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -16,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.buuktu.R;
 import com.example.buuktu.models.CharacterkieModel;
@@ -25,8 +22,6 @@ import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.NavigationUtils;
 import com.google.firebase.storage.StorageReference;
-
-import java.io.IOException;
 
 
 public class CharacterkieView extends Fragment implements View.OnClickListener {
@@ -88,7 +83,7 @@ public class CharacterkieView extends Fragment implements View.OnClickListener {
                 getStrings(characterkieModel.getPronouns(),"pronouns");
                 getStrings(characterkieModel.getGender(),"gender");
                 getStrings(characterkieModel.getStatus(),"status");
-                getStrings(characterkieModel.getBirthday_format(),"birthday");
+                getBirthday();
                 getProfilePhoto();
             }
         });
@@ -116,6 +111,23 @@ public class CharacterkieView extends Fragment implements View.OnClickListener {
                 }
         );
     }
+    private void getBirthday()
+    {
+        if (characterkieModel.getBirthday_format().equalsIgnoreCase(mainActivity.getString(R.string.unknown_fem))) {
+
+            tv_birthdayViewCharacterkie.setText(mainActivity.getString(R.string.birthday) + ": " + mainActivity.getString(R.string.unknown_fem).toLowerCase());
+        } else if (characterkieModel.getBirthday_format().equals(mainActivity.getString(R.string.dd_mm_yy))) {
+            tv_birthdayViewCharacterkie.setText(mainActivity.getString(R.string.birthday) + ": " + characterkieModel.getBirthday());
+
+        } else if (characterkieModel.getBirthday_format().equals(mainActivity.getString(R.string.mm_yy))) {
+            String[] month = characterkieModel.getBirthday().split("/");
+            tv_birthdayViewCharacterkie.setText(mainActivity.getString(R.string.birthday) + ": " + meses[Integer.parseInt(month[0])] + " de " + month[1]);
+        } else if (characterkieModel.getBirthday_format().equals(mainActivity.getString(R.string.mm))) {
+            tv_birthdayViewCharacterkie.setText(mainActivity.getString(R.string.birthday) + ": " + meses[Integer.parseInt(characterkieModel.getBirthday())]);
+        } else if (characterkieModel.getBirthday_format().equals(mainActivity.getString(R.string.yyyy))) {
+            tv_birthdayViewCharacterkie.setText(mainActivity.getString(R.string.birthday) + ": " + characterkieModel.getBirthday());
+        }
+    }
     private void getStrings(String key,String option){
         int resId = mainActivity.getResources().getIdentifier(key, "string", mainActivity.getPackageName());
 
@@ -123,41 +135,27 @@ public class CharacterkieView extends Fragment implements View.OnClickListener {
             String textString = mainActivity.getString(resId);
             switch (option) {
                 case "gender":
-                    tv_genderViewCharacterkie.setText(mainActivity.getString(R.string.gender) + ": " + textString);
+                    tv_genderViewCharacterkie.setText(mainActivity.getString(R.string.gender) + ": " + textString.toLowerCase());
                     break;
                 case "pronouns":
-                    tv_pronounsViewCharacterkie.setText(mainActivity.getString(R.string.pronouns) + ": " + textString);
+                    tv_pronounsViewCharacterkie.setText(mainActivity.getString(R.string.pronouns) + ": " + textString.toLowerCase());
                     break;
                 case "status":
-                    tv_statusViewCharacterkie.setText(mainActivity.getString(R.string.status) + ": " + textString);
+                    tv_statusViewCharacterkie.setText(mainActivity.getString(R.string.status) + ": " + textString.toLowerCase());
                     break;
                 case "birthday":
-                    if (characterkieModel.getBirthday_format().equalsIgnoreCase(mainActivity.getString(R.string.unknown_fem))) {
 
-                        tv_birthdayViewCharacterkie.setText(mainActivity.getString(R.string.birthday) + ": " + mainActivity.getString(R.string.unknown_fem));
-                    } else if (characterkieModel.getBirthday_format().equals(mainActivity.getString(R.string.dd_mm_yy))) {
-                        tv_birthdayViewCharacterkie.setText(mainActivity.getString(R.string.birthday) + ": " + characterkieModel.getBirthday());
-
-                    } else if (characterkieModel.getBirthday_format().equals(mainActivity.getString(R.string.mm_yy))) {
-                        String[] month = characterkieModel.getBirthday().split("/");
-                        tv_birthdayViewCharacterkie.setText(mainActivity.getString(R.string.birthday) + ": " + meses[Integer.parseInt(month[0])] + " de " + month[1]);
-                    } else if (characterkieModel.getBirthday_format().equals(mainActivity.getString(R.string.mm))) {
-                        tv_birthdayViewCharacterkie.setText(mainActivity.getString(R.string.birthday) + ": " + meses[Integer.parseInt(characterkieModel.getBirthday())]);
-                    } else if (characterkieModel.getBirthday_format().equals(mainActivity.getString(R.string.yyyy))) {
-                        tv_birthdayViewCharacterkie.setText(mainActivity.getString(R.string.birthday) + ": " + characterkieModel.getBirthday());
-                    }
-                    break;
             }
         } else {
             switch (option) {
                 case "gender":
-                    tv_genderViewCharacterkie.setText(mainActivity.getString(R.string.gender)+": "+characterkieModel.getGender());
+                    tv_genderViewCharacterkie.setText(mainActivity.getString(R.string.gender)+": "+characterkieModel.getGender().toLowerCase());
                     break;
                 case "pronouns":
-                    tv_pronounsViewCharacterkie.setText(mainActivity.getString(R.string.pronouns)+": "+characterkieModel.getPronouns());
+                    tv_pronounsViewCharacterkie.setText(mainActivity.getString(R.string.pronouns)+": "+characterkieModel.getPronouns().toLowerCase());
                     break;
                 case "status":
-                    tv_statusViewCharacterkie.setText(mainActivity.getString(R.string.status)+": "+characterkieModel.getGender());
+                    tv_statusViewCharacterkie.setText(mainActivity.getString(R.string.status)+": "+characterkieModel.getGender().toLowerCase());
                     break;
             }
 
@@ -191,17 +189,12 @@ private void setVisibility(){
 
 private void getProfilePhoto() {
     if (characterkieModel.isPhoto_default()) {
-        String id_photo = characterkieModel.getPhoto_id();
-        int resId = mainActivity.getResources().getIdentifier(id_photo, "mipmap", mainActivity.getPackageName());
+        int resId = mainActivity.getResources().getIdentifier(characterkieModel.getPhoto_id(), "mipmap", mainActivity.getPackageName());
 
         if (resId != 0) {
             Drawable drawable = ContextCompat.getDrawable(mainActivity, resId);
             ib_characterkieView.setImageDrawable(drawable);
-            try {
                 DrawableUtils.personalizarImagenCuadradoButton(mainActivity, 115 / 6, 7, R.color.brownMaroon, drawable, ib_characterkieView);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
         }
     } else {
         mainActivity.getFirebaseStorageCharacterkies().getReference(UID).listAll().addOnSuccessListener(listResult -> {

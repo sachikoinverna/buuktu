@@ -26,7 +26,6 @@ import com.example.buuktu.views.CreateEditWorldkie;
 import com.example.buuktu.views.MainActivity;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesUserPreviewAdapter.ViewHolder>{
@@ -127,8 +126,6 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
 
                 popupWindow.showAsDropDown(holder.getCv_worldkie_preview(), 0, -50);
 
-// ListenersBundle bundle = new Bundle();
-//        bundle.putString("worldkie_id", worldkieModel.getUID());
                 Bundle bundle = new Bundle();
                 bundle.putString("worldkie_id", worldkieModel.getUID());
                 popupView.findViewById(R.id.bt_edit_item).setOnClickListener(view -> {
@@ -145,17 +142,13 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
             });
         }
         if (worldkieModel.isPhoto_default()) {
-             String id_photo = worldkieModel.getId_photo();
-                int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
+                int resId = context.getResources().getIdentifier(worldkieModel.getId_photo(), "mipmap", context.getPackageName());
 
                 if (resId != 0) {
                     Drawable drawable = ContextCompat.getDrawable(context, resId);
                     holder.getIv_worldkie_preview_worldkie().setImageDrawable(drawable);
-                    try {
                         DrawableUtils.personalizarImagenCuadradoButton(context,115/6,7,R.color.brownMaroon,drawable, holder.getIv_worldkie_preview_worldkie());
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
+
                     holder.getIv_worldkie_preview_worldkie().setVisibility(View.VISIBLE);
                     EfectsUtils.startCircularReveal(drawable,holder.getIv_worldkie_preview_worldkie());
                 }
@@ -164,13 +157,9 @@ public class WorldkiesUserPreviewAdapter extends RecyclerView.Adapter<WorldkiesU
                 for (StorageReference item : listResult.getItems()) {
                     if (item.getName().startsWith("cover")) {
                         item.getDownloadUrl().addOnSuccessListener(uri -> {
-                            try {
-                                DrawableUtils.personalizarImagenCuadradoButton(context,100/6,7, R.color.greenWhatever,uri,holder.getIv_worldkie_preview_worldkie(),R.mipmap.photoprofileone);
+                                DrawableUtils.personalizarImagenCuadradoButton(context,100/6,7, R.color.greenWhatever,uri,holder.getIv_worldkie_preview_worldkie());
                                 holder.getIv_worldkie_preview_worldkie().setVisibility(View.VISIBLE);
-                                EfectsUtils.startCircularReveal(context,uri,holder.getIv_worldkie_preview_worldkie());
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
+                            EfectsUtils.startCircularReveal(holder.getIv_worldkie_preview_worldkie().getDrawable(), holder.getIv_worldkie_preview_worldkie());
                         });
                     }
                 }

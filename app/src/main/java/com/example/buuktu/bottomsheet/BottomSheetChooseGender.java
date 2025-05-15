@@ -1,7 +1,6 @@
 package com.example.buuktu.bottomsheet;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +28,6 @@ public class BottomSheetChooseGender extends BottomSheetDialogFragment implement
     TextInputEditText et_otherGendersCharacterkie;
     RadioButton rb_man_chracterkie,rb_woman_chracterkie,rb_gender_fluid_chracterkie,rb_no_binary_chracterkie,rb_other_gender_characterkie,rb_unknown_gender_characterkie,rb_checked;
     final List<RadioButton> allRadioButtons = new ArrayList<>();
-    Context context;
     CreateCharacterkie createCharacterkie;
     final int option;
     final String optionString;
@@ -49,7 +47,6 @@ public class BottomSheetChooseGender extends BottomSheetDialogFragment implement
         return v;
     }
     private void initComponents(View view){
-        context = getContext();
         if(getActivity() instanceof MainActivity) {
             if (getParentFragment() instanceof CreateCharacterkie) {
                 createCharacterkie = (CreateCharacterkie) getParentFragment();

@@ -23,8 +23,6 @@ import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.NavigationUtils;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.IOException;
-
 
 public class Scenariokie extends Fragment implements View.OnClickListener {
 
@@ -106,11 +104,7 @@ public class Scenariokie extends Fragment implements View.OnClickListener {
             if (resId != 0) {
                 Drawable drawable = ContextCompat.getDrawable(mainActivity, resId);
                 ib_scenariokieView.setImageDrawable(drawable);
-                try {
                     DrawableUtils.personalizarImagenCuadradoButton(mainActivity, 115 / 6, 7, R.color.brownMaroon, drawable, ib_scenariokieView);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
             }
         } else {
             mainActivity.getFirebaseStorageScenariokies().getReference(UID).listAll().addOnSuccessListener(listResult -> {

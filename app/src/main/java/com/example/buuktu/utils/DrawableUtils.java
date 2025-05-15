@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.util.TypedValue;
 import android.webkit.MimeTypeMap;
@@ -16,15 +15,10 @@ import android.widget.ImageView;
 
 import androidx.annotation.ColorRes;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.RoundedBitmapDrawable;
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.signature.ObjectKey;
 import com.example.buuktu.R;
-
-import java.io.IOException;
 
 public class DrawableUtils {
     public static Bitmap drawableToBitmap(Drawable drawable) {
@@ -45,44 +39,30 @@ public class DrawableUtils {
         return bitmap;
     }
 
-    public static void personalizarImagenCuadradoButton(Context context, int cornerRadius,int borderWidth,@ColorRes int idColor, int mipmap, ImageButton imageButton) {
-        int borderColor = ContextCompat.getColor(context, idColor);
-
-
-        RequestOptions requestOptions = new RequestOptions()
-                .centerCrop()
-                .transform(new RoundedBorderSquareTransformation(cornerRadius, borderWidth, borderColor));
-
+    public static void personalizarImagenCuadradoButton(Context context, int radius, int border, @ColorRes int colorRes, int imageRes, ImageButton button) {
         Glide.with(context)
-                .load(mipmap) // 👍 Esto sí pasa por la transformación
-                .apply(requestOptions)
-                .into(imageButton);
+                .load(imageRes)
+                .apply(new RequestOptions()
+                        .centerCrop()
+                        .transform(new RoundedBorderSquareTransformation(radius, border, ContextCompat.getColor(context, colorRes))))
+                .into(button);
     }
-    public static void personalizarImagenCuadradoButton(Context context, int cornerRadius, int borderWidth, @ColorRes int idColor, Uri uri, ImageView imageView, int mipmapError) throws IOException {
-        int borderColor = ContextCompat.getColor(context, idColor);
 
-        // 3. Escalar al tamaño deseado (opcional, por ejemplo 150x150
-        RequestOptions requestOptions = new RequestOptions()
-                .centerCrop()
-                .transform(new RoundedBorderSquareTransformation(cornerRadius, borderWidth, borderColor));
-
+    public static void personalizarImagenCuadradoButton(Context context, int radius, int border, @ColorRes int idColor, Uri uri, ImageView imageView) {
         Glide.with(context)
-                .load(uri).signature(new ObjectKey(System.currentTimeMillis())).error(mipmapError) // Cambia la firma para forzar la recarga
-                // 👍 Esto sí pasa por la transformación
-                .apply(requestOptions)
+                .load(uri)
+                .apply(new RequestOptions()
+                        .centerCrop()
+                        .transform(new RoundedBorderSquareTransformation(radius, border, ContextCompat.getColor(context, idColor))))
                 .into(imageView);
+
     }
-    public static void personalizarImagenCuadradoButton(Context context, int cornerRadius, int borderWidth, @ColorRes int idColor, Drawable drawable, ImageView imageView) throws IOException {
-        int borderColor = ContextCompat.getColor(context, idColor);
-
-        RequestOptions requestOptions = new RequestOptions()
-                .centerCrop()
-                .transform(new RoundedBorderSquareTransformation(cornerRadius, borderWidth, borderColor));
-
+    public static void personalizarImagenCuadradoButton(Context context, int radius, int border, @ColorRes int idColor, Drawable drawable, ImageView imageView) {
         Glide.with(context)
-                .load(drawable) // Cambia la firma para forzar la recarga
-                // 👍 Esto sí pasa por la transformación
-                .apply(requestOptions)
+                .load(drawable)
+                .apply(new RequestOptions()
+                        .centerCrop()
+                        .transform(new RoundedBorderSquareTransformation(radius, border, ContextCompat.getColor(context, idColor))))
                 .into(imageView);
     }
     public static String getMipmapName(Context context, int id) {
@@ -96,71 +76,56 @@ public class DrawableUtils {
         String type = cr.getType(uri);
         return "." + mime.getExtensionFromMimeType(type);
     }
-    public static void personalizarImagenCuadradoButton(Context context, int cornerRadius, int borderWidth,@ColorRes int idColor, Uri uri, ImageButton imageButton) {
-        int borderColor = ContextCompat.getColor(context, idColor);
-        RequestOptions requestOptions = new RequestOptions()
-                .centerCrop() // << 👈 evita el recorte
-                .transform(new RoundedBorderSquareTransformation(cornerRadius, borderWidth, borderColor));
+    public static void personalizarImagenCuadradoButton(Context context, int radius, int border,@ColorRes int idColor, Uri uri, ImageButton imageButton) {
         Glide.with(context)
-                .load(uri).signature(new ObjectKey(System.currentTimeMillis())) // Cambia la firma para forzar la recarga
-                // 👍 Esto sí pasa por la transformación
-                .apply(requestOptions)
+                .load(uri)
+                .apply(new RequestOptions()
+                        .centerCrop()
+                        .transform(new RoundedBorderSquareTransformation(radius, border, ContextCompat.getColor(context, idColor))))
                 .into(imageButton);
     }
-    public static void personalizarImagenCuadradoImageView(Context context, int cornerRadius, int borderWidth,@ColorRes int idColor, Uri uri, ImageView imageView) {
-        int borderColor = ContextCompat.getColor(context, idColor);
-        RequestOptions requestOptions = new RequestOptions()
-                .centerCrop() // << 👈 evita el recorte
-                .transform(new RoundedBorderSquareTransformation(cornerRadius, borderWidth, borderColor));
+    public static void personalizarImagenCuadradoImageView(Context context, int radius, int border,@ColorRes int idColor, Uri uri, ImageView imageView) {
         Glide.with(context)
-                .load(uri).signature(new ObjectKey(System.currentTimeMillis())) // Cambia la firma para forzar la recarga
-                // 👍 Esto sí pasa por la transformación
-                .apply(requestOptions)
+                .load(uri)
+                .apply(new RequestOptions()
+                        .centerCrop()
+                        .transform(new RoundedBorderSquareTransformation(radius, border, ContextCompat.getColor(context, idColor))))
                 .into(imageView);
     }
-    public static void personalizarImagenCuadradoButton(Context context, int cornerRadius, int borderWidth, @ColorRes int idColor, Bitmap bitmap, ImageButton imageButton) {
-        int borderColor = ContextCompat.getColor(context, idColor);
-
-        RequestOptions requestOptions = new RequestOptions()
-                .centerCrop()
-                .transform(new RoundedBorderSquareTransformation(cornerRadius, borderWidth, borderColor));
-
+    public static void personalizarImagenCuadradoButton(Context context, int radius, int border, @ColorRes int idColor, Bitmap bitmap, ImageButton imageButton) {
         Glide.with(context)
                 .load(bitmap)
-                .apply(requestOptions)
+                .apply(new RequestOptions()
+                        .centerCrop()
+                        .transform(new RoundedBorderSquareTransformation(radius, border, ContextCompat.getColor(context, idColor))))
                 .into(imageButton);
     }
-    public static void personalizarImagenCuadradoButton(Context context, int cornerRadius, int borderWidth, @ColorRes int idColor, Bitmap bitmap, ImageView imageView) {
-        int borderColor = ContextCompat.getColor(context, idColor);
-
-        RequestOptions requestOptions = new RequestOptions()
-                .centerCrop()
-                .transform(new RoundedBorderSquareTransformation(cornerRadius, borderWidth, borderColor));
-
+    public static void personalizarImagenCuadradoButton(Context context, int radius, int border, @ColorRes int idColor, Bitmap bitmap, ImageView imageView) {
         Glide.with(context)
                 .load(bitmap)
-                .apply(requestOptions)
+                .apply(new RequestOptions()
+                        .centerCrop()
+                        .transform(new RoundedBorderSquareTransformation(radius, border, ContextCompat.getColor(context, idColor))))
                 .into(imageView);
     }
 
     public static void personalizarImagenCircle(Context context, Bitmap bitmap, ImageView imageView, @ColorRes int color) {
-        RoundedBitmapDrawable roundedDrawable = RoundedBitmapDrawableFactory.create(context.getResources(), bitmap);
-        roundedDrawable.setCircular(true); // Ya hace la imagen circular, no necesita setCornerRadius()
-        imageView.setImageDrawable(roundedDrawable);
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         int pad = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                2,
-                context.getResources().getDisplayMetrics()
+                TypedValue.COMPLEX_UNIT_DIP, 2, context.getResources().getDisplayMetrics()
         );
         imageView.setPadding(pad, pad, pad, pad);
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
+        // 1. Aplicar fondo redondeado con borde
+        Drawable drawableBorder = ContextCompat.getDrawable(context, R.drawable.border_register);
+        drawableBorder.setTint(ContextCompat.getColor(context, color));
+        imageView.setBackground(drawableBorder);
 
-// Obtener el drawable del borde de manera segura
-        Drawable bg = ContextCompat.getDrawable(context, R.drawable.border_register);
-        bg.setTint(color);
-
-        imageView.setBackground(bg);
+        // 2. Usar Glide para aplicar la imagen circular
+        Glide.with(context)
+                .load(bitmap)
+                .circleCrop()
+                .into(imageView);
 
     }
     public static void personalizarImagenCircleButton(Context context, Bitmap bitmap, ImageButton imageButton, @ColorRes int color) {
@@ -172,11 +137,8 @@ public class DrawableUtils {
 
         // 1. Aplicar fondo redondeado con borde
         Drawable drawableBorder = ContextCompat.getDrawable(context, R.drawable.border_register);
-        if (drawableBorder != null) {
-            // Cambiar el color del borde dinámicamente
-            drawableBorder.mutate().setTint(ContextCompat.getColor(context, color));
+            drawableBorder.setTint(ContextCompat.getColor(context, color));
             imageButton.setBackground(drawableBorder);
-        }
 
         // 2. Usar Glide para aplicar la imagen circular
         Glide.with(context)
@@ -195,65 +157,37 @@ public class DrawableUtils {
 
         // 2) Fondo oval con trazo (borde)
         Drawable drawableBorder = ContextCompat.getDrawable(context, R.drawable.border_register);
-        if (drawableBorder != null) {
-            drawableBorder.setTint(color);
-            imageButton.setBackground(drawableBorder);
-        }
+        drawableBorder.setTint(ContextCompat.getColor(context, color));
+
+        imageButton.setBackground(drawableBorder);
         imageButton.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
         // 3) Glide sólo para recortar la imagen en círculo y volcarla en el ImageButton
         Glide.with(context)
                 .asBitmap()
                 .load(uri)
-             //   .override(bitmap.getWidth(), bitmap.getHeight()) // conserva tamaño original
                 .circleCrop()
                 .into(imageButton);
     }
-    public static void personalizarImagenCircleButton(Context context, Bitmap bitmap, ImageButton imageButton, @ColorRes int color, boolean pressed) {
-        // 1) Padding mínimo
+    public static void personalizarImagenCircleButton(Context context, Uri uri, ImageView imageView, @ColorRes int color) {
+        // 1) Configurar el padding mínimo para el borde
         int pad = (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, 2, context.getResources().getDisplayMetrics()
         );
-        imageButton.setPadding(pad, pad, pad, pad);
+        imageView.setPadding(pad, pad, pad, pad);
 
-        // 2) Fondo oval con trazo más grueso si está presionado
-        GradientDrawable drawableBorder = new GradientDrawable();
-        drawableBorder.setShape(GradientDrawable.OVAL);
-        int strokeWidthDp = pressed ? 40 : 20;
-        int strokePx = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, strokeWidthDp, context.getResources().getDisplayMetrics()
-        );
-        drawableBorder.setStroke(strokePx, color);
-        imageButton.setBackground(drawableBorder);
-        imageButton.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        // 2) Fondo oval con trazo (borde)
+        Drawable drawableBorder = ContextCompat.getDrawable(context, R.drawable.border_register);
+        drawableBorder.setTint(ContextCompat.getColor(context, color));
 
-        Glide.with(context)
-                .asBitmap()
-                .load(bitmap)
-                .override(bitmap.getWidth(), bitmap.getHeight())
-                .circleCrop()
-                .into(imageButton);
-    }
-    public static void personalizarImagenCircleButton(Context context, Uri uri, ImageButton imageButton, @ColorRes int color, boolean pressed) {
-        int pad = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, 2, context.getResources().getDisplayMetrics()
-        );
-        imageButton.setPadding(pad, pad, pad, pad);
+        imageView.setBackground(drawableBorder);
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-        GradientDrawable drawableBorder = new GradientDrawable();
-        drawableBorder.setShape(GradientDrawable.OVAL);
-        int strokeWidthDp = pressed ? 40 : 20;
-        int strokePx = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, strokeWidthDp, context.getResources().getDisplayMetrics()
-        );
-        drawableBorder.setStroke(strokePx, color);
-        imageButton.setBackground(drawableBorder);
-        imageButton.setScaleType(ImageView.ScaleType.CENTER_CROP);
-
+        // 3) Glide sólo para recortar la imagen en círculo y volcarla en el ImageButton
         Glide.with(context)
                 .asBitmap()
                 .load(uri)
                 .circleCrop()
-                .into(imageButton);
+                .into(imageView);
     }
 }

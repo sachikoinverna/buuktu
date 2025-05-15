@@ -7,6 +7,7 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
+/** @noinspection CallToPrintStackTrace*/
 public class NotekieModel {
     String title;
     String text;
@@ -64,14 +65,6 @@ public class NotekieModel {
 
     public void setLast_update(Timestamp last_update) {
         this.last_update = last_update;
-    }
-
-    public String getUID_USER() {
-        return UID_USER;
-    }
-
-    public Timestamp getLast_update() {
-        return last_update;
     }
 
     public String getUID() {

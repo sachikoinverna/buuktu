@@ -27,7 +27,6 @@ import com.example.buuktu.views.WorldkieMenu;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHolder> {
@@ -84,17 +83,12 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
         });
 
         if (worldkieModel.isPhoto_default()) {
-            String id_photo = worldkieModel.getId_photo();
-            int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
+            int resId = context.getResources().getIdentifier(worldkieModel.getId_photo(), "mipmap", context.getPackageName());
 
             if (resId != 0) {
                 Drawable drawable = ContextCompat.getDrawable(context, resId);
                 holder.getIv_photo_wordlkie().setImageDrawable(drawable);
-                try {
                     DrawableUtils.personalizarImagenCuadradoButton(context, 115 / 6, 7, R.color.white, drawable, holder.getIv_photo_wordlkie());
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
                 holder.getIv_photo_wordlkie().setVisibility(View.VISIBLE);
 
                 EfectsUtils.startCircularReveal(drawable, holder.getIv_photo_wordlkie());
@@ -108,7 +102,8 @@ public class WorldkieAdapter extends RecyclerView.Adapter<WorldkieAdapter.ViewHo
                         item.getDownloadUrl().addOnSuccessListener(uri -> {
                             DrawableUtils.personalizarImagenCuadradoImageView(context, 150 / 6, 7, R.color.white, uri, holder.getIv_photo_wordlkie());
                             holder.getIv_photo_wordlkie().setVisibility(View.VISIBLE);
-                            EfectsUtils.startCircularReveal(context, uri, holder.getIv_photo_wordlkie());
+                            EfectsUtils.startCircularReveal(holder.getIv_photo_wordlkie().getDrawable(), holder.getIv_photo_wordlkie());
+
                         });
                     }
                 }

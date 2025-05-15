@@ -23,7 +23,6 @@ import com.example.buuktu.views.MainActivity;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAdapter.ViewHolder>{
@@ -109,11 +108,7 @@ public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAd
                 if (resId != 0) {
                     Drawable drawable = ContextCompat.getDrawable(context, resId);
                     holder.getIv_stuffkie_photo_search().setImageDrawable(drawable);
-                    try {
                         DrawableUtils.personalizarImagenCuadradoButton(context,115/6,7,R.color.brownMaroon,drawable, holder.getIv_stuffkie_photo_search());
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
                     holder.getIv_stuffkie_photo_search().setVisibility(View.VISIBLE);
                     EfectsUtils.startCircularReveal(drawable,holder.getIv_stuffkie_photo_search());
                 }
@@ -122,13 +117,9 @@ public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAd
                 for (StorageReference item : listResult.getItems()) {
                     if (item.getName().startsWith("cover")) {
                         item.getDownloadUrl().addOnSuccessListener(uri -> {
-                            try {
-                                DrawableUtils.personalizarImagenCuadradoButton(context,115/7,7, R.color.greenWhatever,uri,holder.getIv_stuffkie_photo_search(),R.mipmap.photostuffkieone);
+                                DrawableUtils.personalizarImagenCuadradoButton(context,115/7,7, R.color.greenWhatever,uri,holder.getIv_stuffkie_photo_search());
                                 holder.getIv_stuffkie_photo_search().setVisibility(View.VISIBLE);
                                 EfectsUtils.startCircularReveal(context,uri,holder.getIv_stuffkie_photo_search());
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
                         });
                     }
                 }

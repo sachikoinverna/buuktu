@@ -16,10 +16,8 @@ import com.example.buuktu.models.NumberOfTheDay;
 import com.example.buuktu.utils.DateUtils;
 import com.example.buuktu.utils.DrawableUtils;
 
-import java.io.IOException;
-
 public class PeriodNumbersDialog extends Dialog implements View.OnClickListener{
-    TextView tv_period_number_title,tv_period_number;
+    TextView tv_period_number;
     ImageButton ib_close_period_number_dialog;
     ImageView iv_period_number;
     private Handler handler = new Handler();
@@ -43,11 +41,7 @@ public class PeriodNumbersDialog extends Dialog implements View.OnClickListener{
 
     }
     private void customizeImage(){
-        try {
             DrawableUtils.personalizarImagenCuadradoButton(context,12,3,R.color.purple1, iv_period_number.getDrawable(), iv_period_number);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
     private void checkNewDay(){
         checkDateRunnable = new Runnable() {
@@ -78,7 +72,6 @@ public class PeriodNumbersDialog extends Dialog implements View.OnClickListener{
     }
     private void initComponents(){
         tv_period_number = findViewById(R.id.tv_period_number);
-        tv_period_number_title = findViewById(R.id.tv_period_number_title);
         ib_close_period_number_dialog = findViewById(R.id.ib_close_period_number_dialog);
         iv_period_number = findViewById(R.id.iv_period_number);
     }

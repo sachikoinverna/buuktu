@@ -33,7 +33,6 @@ public class ProfileSettings extends Fragment implements View.OnClickListener {
     Boolean lastValueProfilePrivate=false;
     Switch tb_profile_private_settings;
 
-    DocumentReference userkie;
     UserkieModel userkieModel;
     ImageButton backButton,ib_save,ib_profile_superior;
     FragmentManager fragmentManager;
@@ -41,7 +40,7 @@ public class ProfileSettings extends Fragment implements View.OnClickListener {
         if(!lastValueProfilePrivate.equals(isChecked)) {
             Map<String, Object> worldkieData = new HashMap<>();
             worldkieData.put("private", isChecked);
-            userkie.update(worldkieData);
+            mainActivity.getCollectionUsers().document(mainActivity.getUID()).update(worldkieData);
             lastValueProfilePrivate=isChecked;
         }
     };

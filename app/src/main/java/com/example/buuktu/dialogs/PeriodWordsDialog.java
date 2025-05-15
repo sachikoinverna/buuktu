@@ -16,11 +16,9 @@ import com.example.buuktu.models.WordOfTheDay;
 import com.example.buuktu.utils.DateUtils;
 import com.example.buuktu.utils.DrawableUtils;
 
-import java.io.IOException;
-
 public class PeriodWordsDialog extends Dialog implements View.OnClickListener{
     ImageButton ib_close_period_word_dialog ;
-    TextView tv_period_word_title, tv_period_word;
+    TextView tv_period_word;
     ImageView iv_period_word;
     private Handler handler = new Handler();
     private Runnable checkDateRunnable;
@@ -43,11 +41,8 @@ public class PeriodWordsDialog extends Dialog implements View.OnClickListener{
 
     }
     private void customizeImage(){
-        try {
             DrawableUtils.personalizarImagenCuadradoButton(context,12,3,R.color.purple1,iv_period_word.getDrawable(),iv_period_word);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+
     }
     private void checkNewDay(){
         // Configurar el Runnable para chequear el cambio de día
@@ -69,7 +64,6 @@ public class PeriodWordsDialog extends Dialog implements View.OnClickListener{
     }
     private void initComponents(){
         tv_period_word = findViewById(R.id.tv_period_word);
-        tv_period_word_title = findViewById(R.id.tv_period_word_title);
         ib_close_period_word_dialog = findViewById(R.id.ib_close_period_word_dialog);
         iv_period_word = findViewById(R.id.iv_period_word);
     }

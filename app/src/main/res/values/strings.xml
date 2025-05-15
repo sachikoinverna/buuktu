@@ -187,7 +187,7 @@ Remember to activate notifications so you don\'t miss anything.
     <string name="pronouns_option_neutral_one">They/Them</string>
     <string name="pronouns_option_neutral_two">Ze/zir</string>
     <string name="pronouns_option_neutral_three">Xe/xem</string>
-    <string name="pronouns_option_unknown">Unknown</string>
+    <string name="pronouns_unknown">Unknown</string>
     <string name="status_unknown">Unknown</string>
     <string name="profile_private">Private profile</string>
     <string name="wordkie_of_the_day">Wordkie of the day</string>

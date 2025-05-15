@@ -4,8 +4,6 @@ import android.animation.Animator;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
-import android.util.Log;
 import android.view.ViewAnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -24,8 +22,6 @@ public class EfectsUtils {
         imageButton.setImageDrawable(finalDrawable);
         imageButton.setAlpha(1f);
 
-        // Solo ejecutar la animación en dispositivos con API 21+
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             // Obtener el centro del ImageButton
             if (imageButton.isAttachedToWindow()) {
 
@@ -43,14 +39,13 @@ public class EfectsUtils {
                 // Iniciar la animación
                 circularReveal.start();
             }
-        }
+
     }
     public static void startCircularReveal(Drawable finalDrawable, ImageView imageView) {
         imageView.setImageDrawable(finalDrawable);
         imageView.setAlpha(1f);
 
         // Solo ejecutar la animación en dispositivos con API 21+
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             // Obtener el centro del ImageButton
             if (imageView.isAttachedToWindow()) {
 
@@ -68,7 +63,7 @@ public class EfectsUtils {
                 // Iniciar la animación
                 circularReveal.start();
             }
-        }
+
     }
     public static void startCircularReveal(@NonNull Context context, @NonNull Uri uri, @NonNull ImageView imageView) {
         Glide.with(context)
@@ -79,7 +74,6 @@ public class EfectsUtils {
                         imageView.setImageDrawable(resource);
                         imageView.setAlpha(1f);
 
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                             int centerX = imageView.getWidth() / 2;
                             int centerY = imageView.getHeight() / 2;
                             float finalRadius = Math.max(imageView.getWidth(), imageView.getHeight());
@@ -89,7 +83,7 @@ public class EfectsUtils {
                             circularReveal.setDuration(500);
                             circularReveal.start();
                         }
-                    }
+
 
                     @Override
                     public void onLoadCleared(@Nullable Drawable placeholder) {
@@ -98,10 +92,6 @@ public class EfectsUtils {
                 });
     }
     public static void setAnimationsDialog(String phase, LottieAnimationView lottieAnimationView){
-        if (lottieAnimationView == null) {
-            Log.e("EfectsUtils", "LottieAnimationView es null. No se puede establecer la animación.");
-            return;
-        }
         switch (phase){
             case "success":
                 lottieAnimationView.setAnimation(R.raw.success_anim);

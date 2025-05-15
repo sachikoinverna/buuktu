@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.buuktu.views.CharacterkiesSearch;
+import com.example.buuktu.views.ScenariokiesSearch;
 import com.example.buuktu.views.StuffkiesSearch;
 import com.example.buuktu.views.UserkiesSearch;
 import com.example.buuktu.views.WorldkiesSearch;
@@ -29,11 +30,13 @@ public class PageAdapter
                     return new StuffkiesSearch();
                 case 3:
                     return new UserkiesSearch();
+                case 4:
+                    return new ScenariokiesSearch();
             }
             return new WorldkiesSearch();
         }
         @Override
         public int getItemCount() {
-            return 4; // Number of fragments (pages)
+            return 5; // Number of fragments (pages)
         }
 }

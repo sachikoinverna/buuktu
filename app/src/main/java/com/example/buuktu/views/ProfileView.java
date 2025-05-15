@@ -43,10 +43,10 @@ public class ProfileView extends Fragment implements View.OnClickListener {
     ImageView iv_locked_profile;
     private TextView tv_usernameProfileView, tv_nameProfileView, tv_worldkiesPreviewUserkie, tv_stuffkiesPreviewUserkie, tv_characterkiesPreviewUserkie, tv_locked_profile, tv_scenariokiesPreviewUserkie;
     MaterialCardView cv_characterkiesPreviewUserkie, cv_stuffkiesPreviewUserkie, cv_worldkiesPreviewUserkie, cv_scenariokiesPreviewUserkie;
-    ArrayList<CharacterkieModel> characterkieArrayList;
-    ArrayList<StuffkieModel> stuffkieArrayList;
-    ArrayList<WorldkieModel> worldkieArrayList;
-    final ArrayList<ScenariokieModel> scenariokieModelArrayList = new ArrayList<>();
+    ArrayList<CharacterkieModel> characterkieArrayList=new ArrayList<>();
+    ArrayList<StuffkieModel> stuffkieArrayList=new ArrayList<>();
+    ArrayList<WorldkieModel> worldkieArrayList=new ArrayList<>();
+    ArrayList<ScenariokieModel> scenariokieModelArrayList = new ArrayList<>();
     RecyclerView rc_characterkiePreviewUserkie, rc_stuffkiePreviewUserkie, rc_worldkiePreviewUserkie, rc_scenariokiePreviewUserkie;
     CharacterkiesUserPreviewAdapter characterkiesUserPreviewAdapter;
     StuffkiesUserPreviewAdapter stuffkiesUserPreviewAdapter;
@@ -76,7 +76,6 @@ public class ProfileView extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile_view, container, false);
-        mainActivity = (MainActivity) getActivity();
 
         initComponents(view);
         setListeners();
@@ -90,15 +89,7 @@ public class ProfileView extends Fragment implements View.OnClickListener {
     private void getData() {
         UID = mode.equals("other") ? getArguments().getString("UID") : mainActivity.getUID();
         getUser();
-        if ((userkieModel.isProfile_private() && mode.equals("other")) || (!mode.equals("self"))) {
-            hideShowSection(tv_characterkiesPreviewUserkie, cv_characterkiesPreviewUserkie, false);
-            hideShowSection(tv_worldkiesPreviewUserkie, cv_worldkiesPreviewUserkie, false);
-            hideShowSection(tv_stuffkiesPreviewUserkie, cv_stuffkiesPreviewUserkie, false);
-            iv_locked_profile.setVisibility(View.VISIBLE);
-            tv_locked_profile.setVisibility(View.VISIBLE);
-        } else {
-            getStuffkies();
-        }
+
     }
 
     private void getUser() {
@@ -109,10 +100,23 @@ public class ProfileView extends Fragment implements View.OnClickListener {
                 getProfilePhoto();
                 tv_nameProfileView.setText(userkieModel.getName());
                 tv_usernameProfileView.setText(userkieModel.getUsername());
+                if ((userkieModel.isProfile_private() && mode.equals("other")) || (!mode.equals("self"))) {
+                    hideShowSection(tv_characterkiesPreviewUserkie, cv_characterkiesPreviewUserkie, false);
+                    hideShowSection(tv_worldkiesPreviewUserkie, cv_worldkiesPreviewUserkie, false);
+                    hideShowSection(tv_stuffkiesPreviewUserkie, cv_stuffkiesPreviewUserkie, false);
+                    hideShowSection(tv_scenariokiesPreviewUserkie, cv_scenariokiesPreviewUserkie, false);
+
+                } else {
+                    getStuffkies();
+                    getWorldkies();
+                    getScenariokies();
+                    getCharacterkies();
+                }
+                iv_locked_profile.setVisibility(userkieModel.isProfile_private()&& !mode.equals("self")?View.VISIBLE:View.GONE);
+                tv_locked_profile.setVisibility(userkieModel.isProfile_private()&&!mode.equals("self")?View.VISIBLE:View.GONE);
             }
         });
     }
-
     private void getStuffkies() {
         Query queryStuffkies = mainActivity.getCollectionStuffkies().whereEqualTo("UID_AUTHOR", UID);
         if (mode.equals("other")) {
@@ -219,6 +223,7 @@ public class ProfileView extends Fragment implements View.OnClickListener {
         materialCardView.setVisibility(visible?View.VISIBLE:View.GONE);
     }
     private void initComponents(View view){
+        mainActivity = (MainActivity) getActivity();
         rc_worldkiePreviewUserkie = view.findViewById(R.id.rc_worldkiePreviewUserkie);
         rc_stuffkiePreviewUserkie = view.findViewById(R.id.rc_stuffkiePreviewUserkie);
         rc_characterkiePreviewUserkie = view.findViewById(R.id.rc_characterkiePreviewUserkie);

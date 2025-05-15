@@ -44,12 +44,14 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
     ImageView iv_head_day_month_birthday_selector,iv_background_day_month_selector;
     boolean daysMonthsSelectorVisible, yearFieldVisible, daysOptionVisible,monthVisible,yearOptionVisible;
     TextView[] tvDays;
+    String[] meses;
     Drawable arrow_down,arrow_up;
     CreateCharacterkie createCharacterkie;
     final String optionBirthdayString;
-    public BottomSheetChooseBirthday(int option,String optionBirthdayString) {
+    public BottomSheetChooseBirthday(int option,String optionBirthdayString,String[]meses) {
         this.option = option;
         this.optionBirthdayString=optionBirthdayString;
+        this.meses = meses;
     }
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable
@@ -165,9 +167,7 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
         bt_show_day_month_birthday_selector.setImageDrawable(daysMonthsSelectorVisible ? arrow_up:arrow_down);
 
     }
-    private void initValues(){
 
-    }
     private int getDaysMonth(){
         if(month==1 || month==3 || month==5 || month==7||month==8||month==10||month==12){
             return 31;
@@ -214,7 +214,7 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
             year= Integer.parseInt(optionBirthdayString);
             et_yearBirthdayCreate.setText(year);
         }
-        tv_current_month_birthday_selector.setText(month == 1 ? String.valueOf(month) : createCharacterkie.getMeses()[month - 1]);
+        tv_current_month_birthday_selector.setText(month == 1 ? String.valueOf(meses[0]) : meses[month - 1]);
         setFields();
     }
     private void setFields(){
@@ -269,7 +269,7 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
                 dayButtons[i].setVisibility(i < days && daysOptionVisible?View.VISIBLE:View.GONE);
                 tvDays[i].setVisibility(i < days && daysOptionVisible?View.VISIBLE:View.GONE);
         }
-        tv_current_month_birthday_selector.setText(createCharacterkie.getMeses()[month - 1]);
+        tv_current_month_birthday_selector.setText(meses[month - 1]);
         bt_previous_month_birthday_selector.setVisibility(month == 1 ? View.GONE : View.VISIBLE);
         bt_next_month_birthday_selector.setVisibility(month == 12 ? View.GONE : View.VISIBLE);
     }

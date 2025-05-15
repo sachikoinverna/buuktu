@@ -106,9 +106,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         true);
 
-// Opcional: animación y sombra
-                popupWindow.setElevation(8f);
-
 // Mostrarlo anclado al CardView
                 popupWindow.showAsDropDown(cardView, 0, -50);
 

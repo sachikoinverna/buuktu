@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.Switch;
 
-import androidx.annotation.DrawableRes;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -74,15 +73,11 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_edit_worldkie, container, false);
-        mainActivity = (MainActivity) getActivity();
-        fragmentManager = requireActivity().getSupportFragmentManager();
+
         initComponents(view);
         setVisibility();
-        dialog = new CreateEditGeneralDialog(mainActivity);
 
-        bottomSheetProfilePhoto = new BottomSheetProfilePhoto();
 
-        worldkieModel = new WorldkieModel();
         setWorldkieModel();
         setListeners();
         return view;
@@ -97,9 +92,7 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
         }else{
             mainActivity.getCollectionWorldkies().document(worldkie_id).addSnapshotListener((queryDocumentSnapshot, e) -> {
 
-                if (e != null) {
-                    return;
-                }
+                if (e != null) return;
                 if (queryDocumentSnapshot!=null) {
                     worldkieModel = WorldkieModel.fromSnapshot(queryDocumentSnapshot);
                     editMode();
@@ -141,13 +134,9 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
                 ib_select_img_create_worldkie.setImageDrawable(drawable);
                 ib_select_img_create_worldkie.setTag(DrawableUtils.getMipmapName(mainActivity,resId));
 
-                try {
                     DrawableUtils.personalizarImagenCuadradoButton(mainActivity,150/7,7,R.color.brownMaroon,drawable, ib_select_img_create_worldkie);
                     ib_select_img_create_worldkie.setVisibility(View.VISIBLE);
                     EfectsUtils.startCircularReveal(drawable,ib_select_img_create_worldkie);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
             }
     } else {
         mainActivity.getFirebaseStorageWorldkies().getReference(worldkie_id).listAll().addOnSuccessListener(listResult -> {
@@ -166,6 +155,8 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
     }
     }
     public void createMode() throws IOException {
+        worldkieModel = new WorldkieModel();
+
         et_nameWorldkieCreate.setText("");
         tb_worldkiePrivacity.setChecked(false);
         tb_worldkieDraft.setVisibility(View.GONE);
@@ -175,6 +166,7 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
         worldkieModel.setWorldkie_private(false);
         ib_select_img_create_worldkie.setTag(DrawableUtils.getMipmapName(mainActivity,R.mipmap.photoworldkieone));
         worldkieModel.setId_photo(ib_select_img_create_worldkie.getTag().toString());
+
     }
     public void setSelectedProfilePhoto(Drawable image){
 
@@ -191,10 +183,6 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
                 .load(DrawableUtils.drawableToBitmap(image))
                 .apply(requestOptions)
                 .into(ib_select_img_create_worldkie);
-
-    }
-    public void setSelectedProfilePhoto(@DrawableRes int imageResId){
-        DrawableUtils.personalizarImagenCuadradoButton(getContext(),150/6,7,R.color.brownMaroon,imageResId,ib_select_img_create_worldkie);
 
     }
 
@@ -297,8 +285,10 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
         tb_worldkiePrivacity = view.findViewById(R.id.tb_worldkiePrivacity);
         tb_worldkieDraft = view.findViewById(R.id.tb_worldkieDraft);
         ib_select_img_create_worldkie = view.findViewById(R.id.ib_select_img_create_worldkie);
+        dialog = new CreateEditGeneralDialog(mainActivity);
+        bottomSheetProfilePhoto = new BottomSheetProfilePhoto();
+        fragmentManager = requireActivity().getSupportFragmentManager();
     }
-
 
     @Override
     public void onClick(View v) {
@@ -310,12 +300,6 @@ public class CreateEditWorldkie extends Fragment implements View.OnClickListener
         // Comprueba si se ha presionado el botón de retroceso.
         else if (v.getId()==R.id.ib_back) {
             NavigationUtils.goBack(fragmentManager,mainActivity);
-        } else if(v.getId()==R.id.ib_save){
-                    if(worldkie_id == null){
-                        addDataToFirestore();
-                    }else{
-                        editDataFirestore();
-                    }
-                }
+        }
         }
     }

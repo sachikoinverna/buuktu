@@ -170,7 +170,7 @@
     <string name="pronouns_option_neutral_one">Elle</string>
     <string name="pronouns_option_neutral_two">Ellx</string>
     <string name="pronouns_option_neutral_three">Ell@</string>
-    <string name="pronouns_option_unknown">Desconocidos</string>
+    <string name="pronouns_unknown">Desconocidos</string>
     <string name="gender_male">Hombre</string>
     <string name="gender_female">Mujer</string>
     <string name="gender_fluid">Género fluido</string>

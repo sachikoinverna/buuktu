@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buuktu.R;
@@ -23,14 +22,11 @@ public class CardInspoDesafiosAdapter extends RecyclerView.Adapter<CardInspoDesa
 
     private final List<CardItem> dataSet;
     private final Context context;
-    final FragmentManager fragmentManager;
 
 
-
-    public CardInspoDesafiosAdapter(Context context, List<CardItem> dataSet, FragmentManager fragmentManager) {
+    public CardInspoDesafiosAdapter(Context context, List<CardItem> dataSet) {
         this.context = context;
         this.dataSet = dataSet;
-        this.fragmentManager = fragmentManager;
     }
 
     @NonNull

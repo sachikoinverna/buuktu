@@ -1,8 +1,5 @@
 package com.example.buuktu.adapters;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -108,12 +105,10 @@ public class UserkieSearchAdapter extends RecyclerView.Adapter<UserkieSearchAdap
             NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new ProfileView());
         });
         if (userkieModel.isPhoto_default()) {
-                String id_photo = userkieModel.getPhoto_id();
-                int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
+                int resId = context.getResources().getIdentifier(userkieModel.getPhoto_id(), "mipmap", context.getPackageName());
 
                 if (resId != 0) {
                     Drawable drawable = ContextCompat.getDrawable(context, resId);
-                 //   holder.getIv_userkie_photo_search().set
                     DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(drawable), holder.getIv_userkie_photo_search(), R.color.brownBrown);
                     holder.getFl_userkie_photo_container().setVisibility(View.VISIBLE);
                     EfectsUtils.startCircularReveal(drawable, holder.getIv_userkie_photo_search());
@@ -124,12 +119,10 @@ public class UserkieSearchAdapter extends RecyclerView.Adapter<UserkieSearchAdap
             userFolderRef.listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {
                     if (item.getName().startsWith("profile")) {
-                        item.getBytes(5 * 1024 * 1024).addOnSuccessListener(bytes -> {
-                            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                            // Pass the original bitmap to DrawableUtils
-                            DrawableUtils.personalizarImagenCircleButton(context, bitmap, holder.getIv_userkie_photo_search(), R.color.brownBrown);
-                            Drawable drawable = new BitmapDrawable(context.getResources(), bitmap);
-                            EfectsUtils.startCircularReveal(drawable, holder.getIv_userkie_photo_search());
+                        item.getDownloadUrl().addOnSuccessListener(uri -> {
+
+                            DrawableUtils.personalizarImagenCircleButton(context, uri, holder.getIv_userkie_photo_search(), R.color.brownMaroon);
+                            EfectsUtils.startCircularReveal(holder.getIv_userkie_photo_search().getDrawable(), holder.getIv_userkie_photo_search());
                             holder.getFl_userkie_photo_container().setVisibility(View.VISIBLE);
 
                         });

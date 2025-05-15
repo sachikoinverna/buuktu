@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.buuktu.R;
 import com.example.buuktu.adapters.NotikieListAdapter;
 import com.example.buuktu.models.NotikieModel;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 
@@ -43,13 +45,14 @@ public class Notikies extends Fragment {
         View view = inflater.inflate(R.layout.fragment_notikies, container, false);
         initComponents(view);
         setVisibility();
+        getNotekies();
         setRecyclerView();
 
         return view;
     }
-   /* private void getScenariokies() {
+   private void getNotekies() {
         mainActivity.getNotikiesCollection()
-                .whereEqualTo("WORDLKIE_UID", worldkie_id).orderBy("date", Query.Direction.DESCENDING)
+                .whereEqualTo("UID_USER", mainActivity.getUID()).orderBy("date", Query.Direction.DESCENDING)
                 .addSnapshotListener((snapshots, error) -> {
                     if (error != null) return;
 
@@ -61,7 +64,7 @@ public class Notikies extends Fragment {
                     }
                     notikieListAdapter.notifyDataSetChanged();
                 });
-    }*/
+    }
     private void setRecyclerView() {
         notikieListAdapter = new NotikieListAdapter(notikieModelArrayList, mainActivity);
         rc_notikies_list.setAdapter(notikieListAdapter);

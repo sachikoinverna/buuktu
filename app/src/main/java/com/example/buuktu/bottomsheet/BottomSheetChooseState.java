@@ -43,11 +43,7 @@ public class BottomSheetChooseState extends BottomSheetDialogFragment implements
         View v = inflater.inflate(R.layout.choose_status_dialog,
                 container, false);
         intComponents(v);
-        if(getActivity() instanceof MainActivity) {
-            if (getParentFragment() instanceof CreateCharacterkie) {
-                createCharacterkie = (CreateCharacterkie) getParentFragment();
-            }
-        }
+
         return v;
     }
     private void intComponents(View view){
@@ -62,6 +58,11 @@ public class BottomSheetChooseState extends BottomSheetDialogFragment implements
         allRadioButtons.add(rb_alive_status_characterkie);
         allRadioButtons.add(rb_unknown_status_characterkie);
         allRadioButtons.add(rb_other_status_characterkie);
+        if(getActivity() instanceof MainActivity) {
+            if (getParentFragment() instanceof CreateCharacterkie) {
+                createCharacterkie = (CreateCharacterkie) getParentFragment();
+            }
+        }
         setListeners();
         if(option!=R.id.rb_other_status_characterkie){
             et_otherStatusCharacterkieFilled.setVisibility(View.GONE);

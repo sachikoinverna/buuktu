@@ -6,9 +6,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.ImageDecoder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,13 +30,9 @@ import com.example.buuktu.views.MainActivity;
 import com.example.buuktu.views.Register;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-import java.io.IOException;
-
 public class BottomSheetProfilePhoto extends BottomSheetDialogFragment implements View.OnClickListener{
     Context context;
     Button tv_choose_photo_default,tv_choose_photo_gallery;
-    int flag = Intent.FLAG_GRANT_READ_URI_PERMISSION;
-    int RESULT_CODE = 0;
     final int REQUEST_CODE = 1;
     private ActivityResultLauncher<Intent> imagePickerLauncher;
     Register register;
@@ -55,21 +48,7 @@ public class BottomSheetProfilePhoto extends BottomSheetDialogFragment implement
         View v = inflater.inflate(R.layout.bottomsheet_choose_photo_origin,
                 container, false);
     initComponents(v);
-    context = getContext();
-    if(getActivity() instanceof Register){
-        register = (Register) getActivity();
-    }
-    if(getActivity() instanceof MainActivity){
-        if(getParentFragment() instanceof CreateEditWorldkie){
-            createEditWorldkie = (CreateEditWorldkie) getParentFragment();
-        } else if(getParentFragment() instanceof CreateCharacterkie){
-            createCharacterkie = (CreateCharacterkie) getParentFragment();
-        } else if (getParentFragment() instanceof CreateEditStuffkie) {
-            createEditStuffkie = (CreateEditStuffkie) getParentFragment();
-        }else if (getParentFragment() instanceof CreateEditScenariokie) {
-            createEditScenariokie = (CreateEditScenariokie) getParentFragment();
-        }
-    }
+
         initSelector();
         setListeners();
 
@@ -79,69 +58,39 @@ public class BottomSheetProfilePhoto extends BottomSheetDialogFragment implement
     private void setListeners(){
         tv_choose_photo_default.setOnClickListener(this);
         tv_choose_photo_gallery.setOnClickListener(this);
+
     }
     private void initSelector(){
         imagePickerLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        try {
                             Uri uri = result.getData().getData();
                             if(register!=null) {
                                 register.setImageUri(uri);
-                            } else if (createEditWorldkie!=null) {
-                                createEditWorldkie.setImageUri(uri);
-                            } else if (createCharacterkie!=null) {
-                                createCharacterkie.setImageUri(uri);
-                            } else if (createEditStuffkie!=null) {
-                                createEditStuffkie.setImageUri(uri);
-                            } else if(createEditScenariokie!=null){
-                                createEditScenariokie.setImageUri(uri);
-                            }
-                            Bitmap bitmap;
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                                ImageDecoder.Source source = ImageDecoder.createSource(context.getContentResolver(), uri);
-                                bitmap = ImageDecoder.decodeBitmap(source);
-
-                            } else {
-                                bitmap =  BitmapFactory.decodeStream(context.getContentResolver().openInputStream(uri));
-                            }
-                                if(register!=null) {
-                                    register.setImageUri(uri);
-                                } else if (createEditWorldkie!=null) {
-                                    createEditWorldkie.setImageUri(uri);
-                                }else if (createEditStuffkie!=null) {
-                                    createEditStuffkie.setImageUri(uri);
-                                }else if(createEditScenariokie!=null){
-                                    createEditScenariokie.setImageUri(uri);
-                                }else if (createCharacterkie!=null) {
-                                    createCharacterkie.setImageUri(uri);
-                                }
-
-                            if(register!=null) {
-                                    DrawableUtils.personalizarImagenCircleButton(context, uri, register.getIB_profile_photo(), R.color.blue1);
+                                DrawableUtils.personalizarImagenCircleButton(context, uri, register.getIB_profile_photo(), R.color.blue1);
                                     register.setPhotoNoDefault();
                                     register.setSource("device");
                                 } else if (createEditWorldkie!=null) {
-                                    DrawableUtils.personalizarImagenCuadradoButton(context,150/6,7,R.color.brownMaroon,uri, createEditWorldkie.getIb_select_img_create_worldkie());
+                                createEditWorldkie.setImageUri(uri);
+                                DrawableUtils.personalizarImagenCuadradoButton(context,150/6,7,R.color.brownMaroon,uri, createEditWorldkie.getIb_select_img_create_worldkie());
                                     createEditWorldkie.setPhotoNoDefault();
                                 } else if (createCharacterkie!=null) {
-                                    DrawableUtils.personalizarImagenCircleButton(context, uri, createCharacterkie.getIb_select_img_create_worldkie(), R.color.brownMaroon);
+                                createCharacterkie.setImageUri(uri);
+                                DrawableUtils.personalizarImagenCircleButton(context, uri, createCharacterkie.getIb_select_img_create_worldkie(), R.color.brownMaroon);
                                     createCharacterkie.setPhotoNoDefault();
                                 }else if (createEditStuffkie!=null) {
-
+                                createEditStuffkie.setImageUri(uri);
                                 DrawableUtils.personalizarImagenCuadradoButton(context,150/6,7,R.color.brownMaroon,uri, createEditStuffkie.getIb_select_img_create_stuffkie());
                                 createEditStuffkie.setPhotoNoDefault();
                                 } else if(createEditScenariokie!=null){
-                                    DrawableUtils.personalizarImagenCuadradoButton(context,150/6,7,R.color.brownMaroon,uri, createEditScenariokie.getIb_select_img_create_scenariokie());
-                                    createEditScenariokie.setPhotoNoDefault();
+                                createEditScenariokie.setImageUri(uri);
 
+                                DrawableUtils.personalizarImagenCuadradoButton(context,150/6,7,R.color.brownMaroon,uri, createEditScenariokie.getIb_select_img_create_scenariokie());
+                                    createEditScenariokie.setPhotoNoDefault();
                                 }
                                 dismiss();
-                            } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
+                            }
                 }
         );
     }
@@ -168,6 +117,15 @@ public class BottomSheetProfilePhoto extends BottomSheetDialogFragment implement
     private void initComponents(View v){
     tv_choose_photo_default = v.findViewById(R.id.tv_choose_photo_default);
     tv_choose_photo_gallery = v.findViewById(R.id.tv_choose_photo_gallery);
+        context = getContext();
+        if(getActivity() instanceof Register)register = (Register) getActivity();
+        else if(getActivity() instanceof MainActivity) {
+            if (getParentFragment() instanceof CreateEditWorldkie) createEditWorldkie = (CreateEditWorldkie) getParentFragment();
+            else if (getParentFragment() instanceof CreateCharacterkie) createCharacterkie = (CreateCharacterkie) getParentFragment();
+            else if (getParentFragment() instanceof CreateEditStuffkie) createEditStuffkie = (CreateEditStuffkie) getParentFragment();
+            else if (getParentFragment() instanceof CreateEditScenariokie) createEditScenariokie = (CreateEditScenariokie) getParentFragment();
+
+        }
 }
     @Override
     public void onClick(View v) {

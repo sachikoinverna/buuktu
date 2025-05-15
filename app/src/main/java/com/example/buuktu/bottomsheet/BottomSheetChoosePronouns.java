@@ -1,7 +1,6 @@
 package com.example.buuktu.bottomsheet;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +28,6 @@ public class BottomSheetChoosePronouns extends BottomSheetDialogFragment impleme
     TextInputLayout et_otherPronounsCharacterkieFilled;
     RadioButton rb_ella_la_le_a_characterkie,rb_el_lo_le_o_characterkie,rb_elle__le_e_characterkie,rb_ella_la_a_characterkie,rb_ellx_lx_x_characterkie,rb_other_characterkie,rb_unknown_pronouns_characterkie,rb_checked;
     final List<RadioButton> allRadioButtons = new ArrayList<>();
-    Context context;
     CreateCharacterkie createCharacterkie;
     final String optionString;
     final int option;
@@ -61,7 +59,7 @@ public class BottomSheetChoosePronouns extends BottomSheetDialogFragment impleme
         rb_ella_la_a_characterkie= view.findViewById(R.id.rb_pronouns_option_neutral_two);
         rb_ellx_lx_x_characterkie= view.findViewById(R.id.rb_pronouns_option_neutral_three);
         rb_other_characterkie= view.findViewById(R.id.rb_other_characterkie);
-        rb_unknown_pronouns_characterkie = view.findViewById(R.id.rb_pronouns_unknown_characterkie);
+        rb_unknown_pronouns_characterkie = view.findViewById(R.id.rb_pronouns_unknown);
         bt_save_pronouns_characterkie = view.findViewById(R.id.bt_save_pronouns_characterkie);
         allRadioButtons.add(rb_el_lo_le_o_characterkie);
         allRadioButtons.add(rb_elle__le_e_characterkie);

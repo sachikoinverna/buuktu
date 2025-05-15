@@ -78,8 +78,8 @@ public class Search extends Fragment {
         String[] tabTitles = {
                 getString(R.string.worldkies),
                 getString(R.string.characterkies),
-                getString(R.string.stuffkies),
-                getString(R.string.scenariokies),getString(R.string.userkies)
+                getString(R.string.stuffkies),getString(R.string.userkies),
+                getString(R.string.scenariokies)
         };
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> tab.setText(tabTitles[position])).attach();
     }

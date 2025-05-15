@@ -1,7 +1,5 @@
 package com.example.buuktu.adapters;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,6 +15,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.buuktu.utils.EfectsUtils;
 import com.example.buuktu.views.CreateEditScenariokie;
 import com.example.buuktu.R;
 import com.example.buuktu.dialogs.DeleteGeneralDialog;
@@ -27,7 +26,6 @@ import com.example.buuktu.views.MainActivity;
 import com.example.buuktu.views.Scenariokie;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class ScenariokiesUserPreviewAdapter extends RecyclerView.Adapter<ScenariokiesUserPreviewAdapter.ViewHolder> {
@@ -118,8 +116,6 @@ public class ScenariokiesUserPreviewAdapter extends RecyclerView.Adapter<Scenari
 
                 popupWindow.showAsDropDown(holder.getCardView(), 0, -50);
 
-// ListenersBundle bundle = new Bundle();
-//        bundle.putString("worldkie_id", worldkieModel.getUID());
                 popupView.findViewById(R.id.bt_edit_item).setOnClickListener(view -> {
                     Bundle bundle = new Bundle();
                     bundle.putString("scenariokie_id", scenariokieModel.getUID());
@@ -136,35 +132,29 @@ public class ScenariokiesUserPreviewAdapter extends RecyclerView.Adapter<Scenari
             });
         }
             if (scenariokieModel.isPhoto_default()) {
-                String id_photo = scenariokieModel.getPhoto_id();
-                int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
+                int resId = context.getResources().getIdentifier(scenariokieModel.getPhoto_id(), "mipmap", context.getPackageName());
 
                 if (resId != 0) {
                     Drawable drawable = ContextCompat.getDrawable(context, resId);
 
                     holder.getIv_scenariokie_preview_worldkie().setImageDrawable(drawable);
-                    try {
                         DrawableUtils.personalizarImagenCuadradoButton(context,115/6,7,R.color.brownMaroon,drawable, holder.getIv_scenariokie_preview_worldkie());
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
                     holder.getIv_scenariokie_preview_worldkie().setVisibility(View.VISIBLE);
                 }
         } else {
             context.getFirebaseStorageScenariokies().getReference(scenariokieModel.getUID()).listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {
                     if (item.getName().startsWith("cover")) {
-                            item.getBytes(5 * 1024 * 1024).addOnSuccessListener(bytes -> {
-                                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                                Bitmap bitmapScaled = Bitmap.createScaledBitmap(bitmap, 80, 80, false);
-                                DrawableUtils.personalizarImagenCuadradoButton(context ,150/7,7,R.color.brownMaroon,bitmapScaled, holder.getIv_scenariokie_preview_worldkie());
-                            });
-                            break;
-                        }
-                    }
-                });
-            }
+                        item.getDownloadUrl().addOnSuccessListener(uri -> {
+                                        DrawableUtils.personalizarImagenCuadradoButton(context ,150/7,7,R.color.brownMaroon,uri, holder.getIv_scenariokie_preview_worldkie());
+                                holder.getIv_scenariokie_preview_worldkie().setVisibility(View.VISIBLE);
+                        EfectsUtils.startCircularReveal(context, uri, holder.getIv_scenariokie_preview_worldkie());
+                        });
 
+                }
+                }
+            });
+            }
     }
     @Override
     public int getItemCount() {

@@ -23,8 +23,7 @@ import java.util.ArrayList;
 public class Stuffkies extends Fragment implements View.OnClickListener {
     private ArrayList<StuffkieModel> stuffkieModels=new ArrayList<>();
     private RecyclerView rc_worldkies;
-    private FloatingActionButton fb_parent, fb_add;
-    private boolean isAllFabsVisible;
+    private FloatingActionButton fb_add;
     private StuffkiesUserPreviewAdapter stuffkiesUserPreviewAdapter;
     private ImageButton ib_save, ib_profile_superior, backButton;
     private FragmentManager fragmentManager;
@@ -87,7 +86,6 @@ public class Stuffkies extends Fragment implements View.OnClickListener {
         backButton = mainActivity.getBackButton();
         ib_save = mainActivity.getIb_save();
         ib_profile_superior = mainActivity.getIb_self_profile();
-        isAllFabsVisible = false;
 
     }
     private void setListeners() {

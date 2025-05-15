@@ -1,7 +1,5 @@
 package com.example.buuktu.views;
 
-import static android.widget.Toast.LENGTH_LONG;
-
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,13 +8,11 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.Switch;
-import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
@@ -86,12 +82,10 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
 
         initComponents(view);
         setVisibility();
+        setScenariokieModel();
         dialog = new CreateEditGeneralDialog(mainActivity);
-        scenariokieModel = new ScenariokieModel();
-        fragmentManager = requireActivity().getSupportFragmentManager();
+
         bottomSheetProfilePhoto = new BottomSheetProfilePhoto();
-        tb_scenariokieDraft.setVisibility(View.INVISIBLE);
-        ib_select_img_create_scenariokie = view.findViewById(R.id.ib_select_img_create_scenariokie);
         setListeners();
         return view;
     }
@@ -124,6 +118,7 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
         }
     }
     private void createMode(){
+        scenariokieModel = new ScenariokieModel();
         et_nameScenariokieCreate.setText("");
         tb_scenariokiePrivacity.setChecked(false);
         tb_scenariokieDraft.setVisibility(View.GONE);
@@ -134,6 +129,7 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
         ib_select_img_create_scenariokie.setVisibility(View.VISIBLE);
         ib_select_img_create_scenariokie.setTag(DrawableUtils.getMipmapName(mainActivity,R.mipmap.photoscenariokieone));
         scenariokieModel.setPhoto_id(ib_select_img_create_scenariokie.getTag().toString());
+        fragmentManager = requireActivity().getSupportFragmentManager();
     }
     private void initComponents(View view){
         tb_scenariokiePrivacity = view.findViewById(R.id.tb_scenariokiePrivacity);
@@ -142,12 +138,9 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
         et_nameScenariokieCreate = view.findViewById(R.id.et_nameScenariokieCreate);
         mainActivity = (MainActivity) getActivity();
         ib_back = mainActivity.getBackButton();
+        ib_select_img_create_scenariokie = view.findViewById(R.id.ib_select_img_create_scenariokie);
         ib_save = mainActivity.getIb_save();
 
-    }
-    public Drawable getSelectedProfilePhoto()
-    {
-        return ib_select_img_create_scenariokie.getDrawable();
     }
 
     public void setSelectedProfilePhoto(Drawable image){
@@ -224,14 +217,10 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
                 Drawable drawable = ContextCompat.getDrawable(mainActivity, resId);
                 ib_select_img_create_scenariokie.setImageDrawable(drawable);
                 ib_select_img_create_scenariokie.setTag(DrawableUtils.getMipmapName(mainActivity,resId));
-
-                try {
-                    DrawableUtils.personalizarImagenCuadradoButton(mainActivity,150/7,7,R.color.brownMaroon,drawable, ib_select_img_create_scenariokie);
+                 DrawableUtils.personalizarImagenCuadradoButton(mainActivity,150/7,7,R.color.brownMaroon,drawable, ib_select_img_create_scenariokie);
                     ib_select_img_create_scenariokie.setVisibility(View.VISIBLE);
                     EfectsUtils.startCircularReveal(drawable,ib_select_img_create_scenariokie);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+
             }
         } else {
            mainActivity.getFirebaseStorageScenariokies().getReference(scenariokie_id).listAll().addOnSuccessListener(listResult -> {

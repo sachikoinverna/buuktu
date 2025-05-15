@@ -4,7 +4,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.annotation.DrawableRes;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -83,8 +82,7 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
         initComponents(view);
         setVisibility();
         setListeners();
-        bottomSheetProfilePhoto = new BottomSheetProfilePhoto();
-        dialog = new CreateEditGeneralDialog(mainActivity);
+
         setStuffkieModel();
         return view;
     }
@@ -124,14 +122,9 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
                 Drawable drawable = ContextCompat.getDrawable(mainActivity, resId);
                 ib_select_img_create_stuffkie.setImageDrawable(drawable);
                 ib_select_img_create_stuffkie.setTag(DrawableUtils.getMipmapName(mainActivity,resId));
-
-                try {
-                    DrawableUtils.personalizarImagenCuadradoButton(mainActivity,150/7,7,R.color.brownMaroon,drawable, ib_select_img_create_stuffkie);
+                 DrawableUtils.personalizarImagenCuadradoButton(mainActivity,150/7,7,R.color.brownMaroon,drawable, ib_select_img_create_stuffkie);
                     ib_select_img_create_stuffkie.setVisibility(View.VISIBLE);
                     EfectsUtils.startCircularReveal(drawable,ib_select_img_create_stuffkie);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
             }
         } else {
             mainActivity.getFirebaseStorageStuffkies().getReference(stuffkie_id).listAll().addOnSuccessListener(listResult -> {
@@ -173,6 +166,8 @@ public class CreateEditStuffkie extends Fragment implements View.OnClickListener
         ib_back = mainActivity.getBackButton();
         ib_save = mainActivity.getIb_save();
         fragmentManager = mainActivity.getSupportFragmentManager();
+        bottomSheetProfilePhoto = new BottomSheetProfilePhoto();
+        dialog = new CreateEditGeneralDialog(mainActivity);
     }
     public void createMode() throws IOException {
         et_nameStuffkieCreate.setText("");
@@ -257,10 +252,6 @@ private void uploadNewImage(){
                 .load(DrawableUtils.drawableToBitmap(image))
                 .apply(requestOptions)
                 .into(ib_select_img_create_stuffkie);
-    }
-    public void setSelectedProfilePhoto(@DrawableRes int imageResId){
-        DrawableUtils.personalizarImagenCuadradoButton(getContext(),150/6,7,R.color.brownMaroon,imageResId,ib_select_img_create_stuffkie);
-
     }
 
     public ImageButton getIb_select_img_create_stuffkie() {

@@ -27,14 +27,6 @@ public class UserkieModel {
         this.photo_id = photo_id;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public Timestamp getBirthday() {
-        return birthday;
-    }
-
     public void setUsername(String username) {
         this.username = username;
     }
@@ -49,10 +41,6 @@ public class UserkieModel {
 
     public void setUID(String UID) {
         this.UID = UID;
-    }
-
-    public String getNumber() {
-        return number;
     }
 
     public void setNumber(String number) {

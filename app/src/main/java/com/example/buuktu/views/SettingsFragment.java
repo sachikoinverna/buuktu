@@ -46,22 +46,15 @@ public class SettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
          View v = inflater.inflate(R.layout.fragment_settings, container, false);// Inflate the layout for this fragment
         initComponents(v);
-        searchView.setIconifiedByDefault(false); // Para que el SearchView esté expandido por defecto
-        dataSet.clear();
-        filteredDataSet.clear();
-        Drawable drawableProfile = ContextCompat.getDrawable(mainActivity, R.drawable.twotone_manage_accounts_24);
-        Drawable drawableAccount = ContextCompat.getDrawable(mainActivity, R.drawable.twotone_admin_panel_settings_24);
-
-        dataSet.add(new SettingModel(mainActivity.getString(R.string.profile),drawableProfile));
-        dataSet.add(new SettingModel(mainActivity.getString(R.string.account),drawableAccount));
-
+        setSearchViewProperties();
         setVisibility();
-        //settingsAdapter.setOnClickListener(this);
-        //adapter = new SettingsAdapter(dataSet,getContext());
-        updateRecyclerView(dataSet);
-        filteredDataSet.addAll(dataSet);
+
+        setRecyclerView();
         setListeners();
         return v;
+    }
+    private void setSearchViewProperties(){
+        searchView.setIconifiedByDefault(false); // Para que el SearchView esté expandido por defecto
     }
     private void initComponents(View v){
         mainActivity = (MainActivity) getActivity();
@@ -70,6 +63,17 @@ public class SettingsFragment extends Fragment {
         ib_profile_superior = mainActivity.getIb_self_profile();
         rc_settings = v.findViewById(R.id.rc_settings);
         searchView = v.findViewById(R.id.searchView);
+    }
+    private void setRecyclerView() {
+        dataSet.clear();
+        filteredDataSet.clear();
+        Drawable drawableProfile = ContextCompat.getDrawable(mainActivity, R.drawable.twotone_manage_accounts_24);
+        Drawable drawableAccount = ContextCompat.getDrawable(mainActivity, R.drawable.twotone_admin_panel_settings_24);
+
+        dataSet.add(new SettingModel(mainActivity.getString(R.string.profile),drawableProfile));
+        dataSet.add(new SettingModel(mainActivity.getString(R.string.account),drawableAccount));
+        filteredDataSet.addAll(dataSet);
+        updateRecyclerView(filteredDataSet);
     }
     private void setVisibility(){
         backButton.setVisibility(View.GONE);

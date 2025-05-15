@@ -1,6 +1,5 @@
 package com.example.buuktu.adapters;
 
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,18 +15,15 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buuktu.R;
+import com.example.buuktu.views.MainActivity;
 import com.example.buuktu.views.WorldkieView;
 import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.EfectsUtils;
 import com.example.buuktu.utils.NavigationUtils;
 import com.google.android.material.card.MaterialCardView;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -35,7 +31,7 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
     private final ArrayList<WorldkieModel> dataSet;
     private final FragmentManager fragmentManager;
 
-    private final Context context;
+    private final MainActivity context;
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final ImageView iv_worldkie_photo_search;
         private final ImageView iv_worldkie_private_search;
@@ -47,11 +43,9 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
         final TextView tv_date_creation_search_worldkie;
         final TextView tv_date_last_update_search_worldkie_title;
         final TextView tv_date_last_update_search_worldkie;
-        private final FirebaseStorage firebaseStorageWorldkies= FirebaseStorage.getInstance("gs://buuk-tu-worldkies");
-        private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
         private boolean moreDetailsShowed;
-        final CollectionReference collectionUserkies;
-        private final FirebaseFirestore db;
+
         public ViewHolder(View view) {
             super(view);
             ib_show_more_details_worldkie_search = view.findViewById(R.id.ib_show_more_details_worldkie_search);
@@ -64,17 +58,9 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
             iv_worldkie_photo_search= view.findViewById(R.id.iv_worldkie_photo_search);
             cv_worldkie_search = view.findViewById(R.id.cv_worldkie_search);
             iv_worldkie_private_search = view.findViewById(R.id.iv_worldkie_private_search);
-            db = FirebaseFirestore.getInstance();
-            collectionUserkies = db.collection("Users");
             moreDetailsShowed = false;
         }
 
-        public FirebaseStorage getFirebaseStorageWorldkies() {
-            return firebaseStorageWorldkies;
-        }
-        public FirebaseFirestore getDb() {
-            return firestore;
-        }
 
         public TextView getTv_worldkie_username_search() {
             return tv_worldkie_username_search;
@@ -115,12 +101,9 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
             return ib_show_more_details_worldkie_search;
         }
 
-        public CollectionReference getCollectionUserkies() {
-            return collectionUserkies;
-        }
     }
     //Constructor donde pasamos la lista de productos y el contexto
-    public WorldkieSearchAdapter(ArrayList<WorldkieModel> dataSet, Context ctx, FragmentManager fragmentManager) {
+    public WorldkieSearchAdapter(ArrayList<WorldkieModel> dataSet, MainActivity ctx, FragmentManager fragmentManager) {
         this.dataSet = dataSet;
         this.context = ctx;
         this.fragmentManager = fragmentManager;
@@ -137,13 +120,10 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         WorldkieModel worldkieModel = dataSet.get(position);
-        String UID_AUTHOR = worldkieModel.getUID_AUTHOR();
-        String UID = worldkieModel.getUID();
         holder.getIv_worldkie_photo_search().setVisibility(View.INVISIBLE);
-        holder.getCollectionUserkies().document(UID_AUTHOR).addSnapshotListener((documentSnapshot, e) -> {
-            if (e != null) {
-                return;
-            }
+        context.getCollectionUsers().document(worldkieModel.getUID_AUTHOR()).addSnapshotListener((documentSnapshot, e) -> {
+            if (e != null) return;
+
             if (documentSnapshot != null) {
                 holder.getTv_worldkie_username_search().setText(documentSnapshot.getString("username"));
             }
@@ -153,16 +133,15 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
         holder.getTv_date_creation_search_worldkie_title().setVisibility(View.GONE);
         holder.getTv_date_creation_search_worldkie().setVisibility(View.GONE);
         holder.getTv_worldkie_name_search().setText(worldkieModel.getName());
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        holder.getTv_date_last_update_search_worldkie().setText(simpleDateFormat.format(worldkieModel.getLast_update().toDate()));
-        holder.getTv_date_creation_search_worldkie().setText(simpleDateFormat.format(worldkieModel.getCreation_date().toDate()));
+        holder.getTv_date_last_update_search_worldkie().setText(new SimpleDateFormat("dd/MM/yyyy").format(worldkieModel.getLast_update().toDate()));
+        holder.getTv_date_creation_search_worldkie().setText(new SimpleDateFormat("dd/MM/yyyy").format(worldkieModel.getCreation_date().toDate()));
         holder.getIv_worldkie_private_search().setVisibility(worldkieModel.isWorldkie_private()?View.VISIBLE:View.INVISIBLE);
 
         holder.getCv_worldkie_search().setOnClickListener(v -> {
             Bundle bundle = new Bundle();
             bundle.putString("mode","other");
-            bundle.putString("UID",UID);
-            bundle.putString("UID_AUTHOR",UID_AUTHOR);
+            bundle.putString("UID",worldkieModel.getUID());
+            bundle.putString("UID_AUTHOR",worldkieModel.getUID_AUTHOR());
             NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new WorldkieView());
         });
         holder.getIb_show_more_details_worldkie_search().setOnClickListener(v -> {
@@ -174,32 +153,24 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
             holder.moreDetailsShowed = !holder.moreDetailsShowed;
         });
         if (worldkieModel.isPhoto_default()) {
-                String id_photo = worldkieModel.getId_photo();
-                int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
+                int resId = context.getResources().getIdentifier(worldkieModel.getId_photo(), "mipmap", context.getPackageName());
 
                 if (resId != 0) {
                     Drawable drawable = ContextCompat.getDrawable(context, resId);
                     holder.getIv_worldkie_photo_search().setImageDrawable(drawable);
-                    try {
                         DrawableUtils.personalizarImagenCuadradoButton(context,115/6,7,R.color.brownMaroon,drawable, holder.getIv_worldkie_photo_search());
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
+
                     holder.getIv_worldkie_photo_search().setVisibility(View.VISIBLE);
                     EfectsUtils.startCircularReveal(drawable,holder.getIv_worldkie_photo_search());
                 }
         } else {
-            holder.firebaseStorageWorldkies.getReference(UID).listAll().addOnSuccessListener(listResult -> {
+            context.getFirebaseStorageWorldkies().getReference(worldkieModel.getUID()).listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {
                     if (item.getName().startsWith("cover")) {
                         item.getDownloadUrl().addOnSuccessListener(uri -> {
-                            try {
-                                DrawableUtils.personalizarImagenCuadradoButton(context,115/7,7, R.color.greenWhatever,uri,holder.getIv_worldkie_photo_search(),R.mipmap.photoworldkieone);
+                                DrawableUtils.personalizarImagenCuadradoButton(context,115/7,7, R.color.greenWhatever,uri,holder.getIv_worldkie_photo_search());
                                 holder.getIv_worldkie_photo_search().setVisibility(View.VISIBLE);
-                                EfectsUtils.startCircularReveal(context,uri,holder.getIv_worldkie_photo_search());
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
+                            EfectsUtils.startCircularReveal(holder.getIv_worldkie_photo_search().getDrawable(), holder.getIv_worldkie_photo_search());
                         });
                     }
                 }

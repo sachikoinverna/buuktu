@@ -19,14 +19,6 @@ public class StuffkieModel {
     public StuffkieModel() {
     }
 
-    public StuffkieModel(String UID, String name, boolean stuffkie_private, boolean photo_default,String photo_id, boolean draft){
-        this.UID=UID;
-        this.name=name;
-        this.stuffkie_private = stuffkie_private;
-        this.photo_default = photo_default;
-        this.photo_id=photo_id;
-        this.draft=draft;
-    }
     public static StuffkieModel fromSnapshot(DocumentSnapshot document){
         if (document == null || !document.exists()) {
             return null;

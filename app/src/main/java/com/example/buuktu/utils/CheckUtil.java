@@ -1,7 +1,6 @@
 package com.example.buuktu.utils;
 
 import android.content.Context;
-import android.os.Build;
 import android.util.Patterns;
 
 import com.example.buuktu.R;
@@ -134,10 +133,7 @@ public class CheckUtil {
 
     //Comprobueba si una cadena de texto contiene uno o más caracteres escritos en mayúscula.
     public static boolean checkUppercase(String text){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             return text.chars().anyMatch(Character::isUpperCase);
-        }
-        return false;
     }
     public static boolean checkSpecialCharacter(String password){
         return password.matches(".*[\\W_].*");

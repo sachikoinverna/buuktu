@@ -14,9 +14,7 @@
     <style name="Theme.Buuktu" parent="Base.Theme.Buuktu" />
 
     <!-- Switch Text Style -->
-    <style name="SwitchTextAppearance" parent="@android:style/TextAppearance">
-        <item name="android:fontFamily">@font/alegreya</item>
-    </style>
+    <style name="SwitchTextAppearance" parent="@android:style/TextAppearance" />
 
     <!-- Fade In/Out Animation -->
 

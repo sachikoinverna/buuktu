@@ -1,7 +1,5 @@
 package com.example.buuktu.adapters;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,7 +22,6 @@ import com.example.buuktu.views.MainActivity;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class ScenariokieSearchAdapter extends RecyclerView.Adapter<ScenariokieSearchAdapter.ViewHolder>{
@@ -75,49 +72,42 @@ public class ScenariokieSearchAdapter extends RecyclerView.Adapter<ScenariokieSe
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
 
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.characterkies_list_layout_search, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.scenariokie_list_layout_search, viewGroup, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ScenariokieModel scenariokieModel = dataSet.get(position);
-
-        // holder.getTv_characterkie_username_search().setText(dataSet.get(holder.getAdapterPosition()).getUsername());
         holder.getTv_characterkie_name_search().setText(scenariokieModel.getName());
-        /*if(dataSet.get(holder.getAdapterPosition()).is()){
-            holder.getIv_characterkie_private_search().setImageAlpha(R.drawable.twotone_lock_24);
-        }else{
-            holder.getIv_characterkie_private_search().setImageAlpha(R.drawable.twotone_lock_open_24);
-        }*/
+        if(scenariokieModel.isScenariokie_private()){
+            holder.getIv_characterkie_private_search().setVisibility(View.INVISIBLE);
+        }
+        context.getCollectionUsers().document(scenariokieModel.getAUTHOR_UID()).addSnapshotListener((documentSnapshot, e) -> {
+            if (e != null) return;
 
+            if (documentSnapshot != null) {
+                holder.getTv_characterkie_username_search().setText(documentSnapshot.getString("username"));
+            }
+        });
         holder.getCv_scenariokie_search().setOnClickListener(v -> {
             Bundle bundle = new Bundle();
             NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new CharacterkieView());
 
         });
         if (scenariokieModel.isPhoto_default()) {
-            String id_photo = scenariokieModel.getPhoto_id();
-            int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
+            int resId = context.getResources().getIdentifier(scenariokieModel.getPhoto_id(), "mipmap", context.getPackageName());
 
             if (resId != 0) {
                 Drawable drawable = ContextCompat.getDrawable(context, resId);
                 holder.getIv_scenariokie_photo_search().setImageDrawable(drawable);
-                try {
                     DrawableUtils.personalizarImagenCuadradoButton(context,115/6,7,R.color.brownMaroon,drawable, holder.getIv_scenariokie_photo_search());
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
             }
         } else {
             context.getFirebaseStorageScenariokies().getReference(scenariokieModel.getUID()).listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {
                     if (item.getName().startsWith("cover")) {
-                        item.getBytes(5 * 1024 * 1024).addOnSuccessListener(bytes -> {
-                            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                            Bitmap bitmapScaled = Bitmap.createScaledBitmap(bitmap, 80, 80, false);
-                            DrawableUtils.personalizarImagenCircle(context, bitmapScaled, holder.getIv_scenariokie_photo_search(), R.color.brownMaroon);
-                        });
+                        item.getDownloadUrl().addOnSuccessListener(uri -> DrawableUtils.personalizarImagenCuadradoButton(context,115/6,7,R.color.brownMaroon,uri, holder.getIv_scenariokie_photo_search()));
                         break;
                     }
                 }

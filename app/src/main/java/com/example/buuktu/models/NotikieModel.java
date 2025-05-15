@@ -32,10 +32,6 @@ public class NotikieModel {
         this.icon = icon;
     }
 
-    public String getUID_USER() {
-        return UID_USER;
-    }
-
     public NotikieModel(String message, Timestamp date, int icon, String UID_USER) {
         this.message = message;
         this.date = date;

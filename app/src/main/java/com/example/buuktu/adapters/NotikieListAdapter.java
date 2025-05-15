@@ -13,8 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.buuktu.R;
 import com.example.buuktu.models.NotikieModel;
 import com.example.buuktu.utils.DateUtils;
-import com.google.android.material.card.MaterialCardView;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -26,26 +24,16 @@ public class NotikieListAdapter extends RecyclerView.Adapter<NotikieListAdapter.
     private final ArrayList<NotikieModel> dataSet;
     private final Context context;
     public class ViewHolder extends RecyclerView.ViewHolder {
-        final MaterialCardView cv_notikie_list_layout;
         final TextView tv_text_notikie_list_layout;
         final TextView tv_date_notikie_list_layout;
         final ImageView iv_icon_notikie_list_layout;
-        private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         public ViewHolder(View view) {
             super(view);
             iv_icon_notikie_list_layout = view.findViewById(R.id.iv_icon_notikie_list_layout);
-            cv_notikie_list_layout = view.findViewById(R.id.cv_notikie_list_layout);
             tv_date_notikie_list_layout = view.findViewById(R.id.tv_date_notikie_list_layout);
             tv_text_notikie_list_layout = view.findViewById(R.id.tv_text_notikie_list_layout);
         }
 
-        public FirebaseFirestore getDb() {
-            return firestore;
-        }
-
-        public MaterialCardView getCv_notikie_list_layout() {
-            return cv_notikie_list_layout;
-        }
 
         public TextView getTv_text_notikie_list_layout() {
             return tv_text_notikie_list_layout;

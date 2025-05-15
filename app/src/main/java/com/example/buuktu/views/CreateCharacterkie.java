@@ -1,6 +1,5 @@
 package com.example.buuktu.views;
 
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,14 +12,11 @@ import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import androidx.annotation.DrawableRes;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.buuktu.R;
 import com.example.buuktu.bottomsheet.BottomSheetChooseBirthday;
 import com.example.buuktu.bottomsheet.BottomSheetChooseGender;
@@ -33,7 +29,6 @@ import com.example.buuktu.utils.CheckUtil;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.EfectsUtils;
 import com.example.buuktu.utils.NavigationUtils;
-import com.example.buuktu.utils.RoundedBorderSquareTransformation;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.textfield.TextInputEditText;
@@ -71,8 +66,6 @@ ImageButton bt_basic_info_characterkies;
     String optionPronounsString, optionBirthdayString,optionGenderString,optionStatusString;
     int year,day,month;
     CreateEditGeneralDialog dialog;
-    Resources res;
-    String packageName;
     MainActivity mainActivity;
     LottieAnimationView animationView;
     public CreateCharacterkie() {
@@ -104,10 +97,7 @@ ImageButton bt_basic_info_characterkies;
         bottomSheetProfilePhoto = new BottomSheetProfilePhoto();
         initComponents(view);
         setListeners();
-        meses= new String[]{mainActivity.getString(R.string.january),mainActivity.getString(R.string.february),mainActivity.getString(R.string.march),mainActivity.getString(R.string.april),mainActivity.getString(R.string.may),mainActivity.getString(R.string.june),mainActivity.getString(R.string.july),mainActivity.getString(R.string.august),mainActivity.getString(R.string.september),mainActivity.getString(R.string.october),mainActivity.getString(R.string.november),mainActivity.getString(R.string.december)};
-        res = mainActivity.getResources();
-        packageName = mainActivity.getPackageName();
-        dialog = new CreateEditGeneralDialog(mainActivity);
+
         gender = mainActivity.getResources().getString(R.string.gender);
         pronouns = mainActivity.getResources().getString(R.string.pronouns);
         birthday = mainActivity.getResources().getString(R.string.birthday);
@@ -143,15 +133,17 @@ ImageButton bt_basic_info_characterkies;
         getStrings(characterkie.getGender(),"gender");
         getStrings(characterkie.getStatus(),"status");
         getStrings(characterkie.getBirthday_format(),"birthday");
+
         optionPronounsString = getOptionTextByRadioButtonId(optionPronouns,R.layout.choose_pronouns_dialog);
         optionGenderString = getOptionTextByRadioButtonId(optionGender,R.layout.choose_gender_dialog);
         optionStatusString = getOptionTextByRadioButtonId(optionStatus,R.layout.choose_status_dialog);
-        optionBirthdayString = getOptionTextByRadioButtonId(optionBirthday,R.layout.choose_birthday_dialog);
+     //   optionBirthdayString = getOptionTextByRadioButtonId(optionBirthday,R.layout.choose_birthday_dialog);
+        if(characterkie.getBirthday_format().equals(getString(R.string.unknown_fem))){
+            optionBirthdayString = getString(R.string.unknown_fem);
+        }else{
+            optionBirthdayString = characterkie.getBirthday();
+        }
         getImage();
-    }
-
-    public String[] getMeses() {
-        return meses;
     }
 
     private void getStrings(String key, String option){
@@ -190,10 +182,6 @@ ImageButton bt_basic_info_characterkies;
         return characterkie;
     }
 
-    public void setCharacterkie(CharacterkieModel characterkie) {
-        this.characterkie = characterkie;
-    }
-
     public void setOptionPronouns(int optionPronouns) {
         this.optionPronouns = optionPronouns;
     }
@@ -223,14 +211,9 @@ ImageButton bt_basic_info_characterkies;
                     Drawable drawable = ContextCompat.getDrawable(mainActivity, resId);
                     ib_select_img_create_characterkie.setImageDrawable(drawable);
                     ib_select_img_create_characterkie.setTag(DrawableUtils.getMipmapName(mainActivity,resId));
-
-                    try {
                         DrawableUtils.personalizarImagenCuadradoButton(getContext(),150/7,7,R.color.brownMaroon,drawable, ib_select_img_create_characterkie);
                         ib_select_img_create_characterkie.setVisibility(View.VISIBLE);
                         EfectsUtils.startCircularReveal(drawable,ib_select_img_create_characterkie);
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
                 }
         } else {
             mainActivity.getFirebaseStorageWorldkies().getReference(worldkie_id).listAll().addOnSuccessListener(listResult -> {
@@ -250,6 +233,8 @@ ImageButton bt_basic_info_characterkies;
         et_nameCharacterkieCreate.setText("");
         tb_characterkiePrivacity.setChecked(false);
         tb_characterkieDraft.setVisibility(View.GONE);
+        meses= new String[]{mainActivity.getString(R.string.january),mainActivity.getString(R.string.february),mainActivity.getString(R.string.march),mainActivity.getString(R.string.april),mainActivity.getString(R.string.may),mainActivity.getString(R.string.june),mainActivity.getString(R.string.july),mainActivity.getString(R.string.august),mainActivity.getString(R.string.september),mainActivity.getString(R.string.october),mainActivity.getString(R.string.november),mainActivity.getString(R.string.december)};
+        dialog = new CreateEditGeneralDialog(mainActivity);
         putDefaultImage();
         characterkie = new CharacterkieModel();
 
@@ -257,15 +242,15 @@ ImageButton bt_basic_info_characterkies;
         characterkie.setUID_WORLDKIE(worldkie_id);
         characterkie.setDraft(false);
         characterkie.setCharacterkie_private(false);
-        optionPronouns = R.id.rb_pronouns_unknown_characterkie;
+        optionPronouns = R.id.rb_pronouns_unknown;
         optionBirthday = R.id.rb_unknown_birthday;
         optionGender = R.id.rb_gender_unknown;
         optionStatus = R.id.rb_status_unknown;
-        characterkie.setPronouns("pronouns_unknown_characterkie");
+        characterkie.setPronouns("pronouns_unknown");
         characterkie.setGender("gender_unknown");
         characterkie.setStatus("status_unknown");
         characterkie.setBirthday("unknown");
-        characterkie.setBirthday_format("unknown_birthday");
+        characterkie.setBirthday_format("unknown");
         optionPronounsString = getOptionTextByRadioButtonId(optionPronouns,R.layout.choose_pronouns_dialog);
         optionGenderString = getOptionTextByRadioButtonId(optionGender,R.layout.choose_gender_dialog);
         optionStatusString = getOptionTextByRadioButtonId(optionStatus,R.layout.choose_status_dialog);
@@ -279,37 +264,21 @@ ImageButton bt_basic_info_characterkies;
 
         ib_select_img_create_characterkie.setTag(DrawableUtils.getMipmapName(mainActivity,R.mipmap.photocharacterkieone));
         characterkie.setPhoto_id(ib_select_img_create_characterkie.getTag().toString());
-        try {
             putDefaultImage();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void setValuesRadioButton(){
 
     }
+
     public void setOptionPronounsString(String optionPronounsString) {
         this.optionPronounsString = optionPronounsString;
         bt_pronouns_characterkie.setText(optionPronounsString);
     }
 
-    public String getOptionStatusString() {
-        return optionStatusString;
-    }
 
     public void setOptionStatusString(String optionStatusString) {
         this.optionStatusString = optionStatusString;
         bt_state_characterkie.setText(optionStatusString);
     }
-    public void setOptionBirthdayString(String optionBirthdayString) {
-        this.optionBirthdayString = optionBirthdayString;
 
-    }
-
-    public String getOptionGenderString() {
-        return optionGenderString;
-    }
 
     public void setOptionGenderString(String optionGenderString) {
         this.optionGenderString = optionGenderString;
@@ -360,28 +329,9 @@ ImageButton bt_basic_info_characterkies;
         });
         tb_characterkieDraft.setOnCheckedChangeListener((buttonView, isChecked) -> characterkie.setDraft(isChecked));
     }
-    public Drawable getSelectedProfilePhoto()
-    {
-        return ib_select_img_create_characterkie.getDrawable();
-    }
-    public void setSelectedProfilePhoto(@DrawableRes int imageResId){
-        int cornerRadius = 150 / 6;
-        int borderWidth = 7;
-        int borderColor = ContextCompat.getColor(getContext(), R.color.brownMaroon);
 
-        RequestOptions requestOptions = new RequestOptions()
-                //.override(150, 150)
-                .centerCrop()
-                .transform(new RoundedBorderSquareTransformation(cornerRadius, borderWidth, borderColor));
-
-        Glide.with(getContext())
-                .load(imageResId) // 👍 Esto sí pasa por la transformación
-                .apply(requestOptions)
-                .into(ib_select_img_create_characterkie);
-    }
-    private void putDefaultImage() throws IOException {
-        Drawable drawable = ContextCompat.getDrawable(mainActivity, R.mipmap.photocharacterkieone);
-        DrawableUtils.personalizarImagenCircleButton(mainActivity,DrawableUtils.drawableToBitmap(drawable),ib_select_img_create_characterkie,R.color.brownMaroon);
+    private void putDefaultImage(){
+        DrawableUtils.personalizarImagenCircleButton(mainActivity,DrawableUtils.drawableToBitmap(ContextCompat.getDrawable(mainActivity, R.mipmap.photocharacterkieone)),ib_select_img_create_characterkie,R.color.brownMaroon);
     }
     public void setSelectedProfilePhoto(Drawable image){
         ib_select_img_create_characterkie.setImageDrawable(image);
@@ -389,23 +339,29 @@ ImageButton bt_basic_info_characterkies;
     public void setDate(){
         if(optionBirthday == R.id.rb_unknown_birthday){
             optionBirthdayString = mainActivity.getString(R.string.unknown_fem);
+            characterkie.setBirthday(mainActivity.getString(R.string.unknown_fem));
+
             characterkie.setBirthday_format(mainActivity.getString(R.string.unknown_fem));
             bt_birthday_characterkie.setText(optionBirthdayString);
         } else if (optionBirthday==R.id.rb_full_birthday) {
             optionBirthdayString = day+"/"+month+"/"+year;
+            characterkie.setBirthday(optionBirthdayString);
             characterkie.setBirthday_format(mainActivity.getString(R.string.dd_mm_yy));
             bt_birthday_characterkie.setText(optionBirthdayString);
         }else if (optionBirthday==R.id.rb_month_year_birthday) {
             optionBirthdayString = month+"/"+year;
+            characterkie.setBirthday(optionBirthdayString);
             characterkie.setBirthday_format(mainActivity.getString(R.string.mm_yy));
             bt_birthday_characterkie.setText(meses[month]+" de "+year);
 
         }else if (optionBirthday==R.id.rb_month_birthday) {
             optionBirthdayString = String.valueOf(month);
+            characterkie.setBirthday(optionBirthdayString);
             characterkie.setBirthday_format(mainActivity.getString(R.string.mm));
             bt_birthday_characterkie.setText(meses[month]);
         }else if (optionBirthday==R.id.rb_year_birthday) {
             optionBirthdayString = String.valueOf(year);
+            characterkie.setBirthday(optionBirthdayString);
             characterkie.setBirthday_format(mainActivity.getString(R.string.yyyy));
             bt_birthday_characterkie.setText(optionBirthdayString);
         }
@@ -473,28 +429,16 @@ ImageButton bt_basic_info_characterkies;
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(() -> dialog.dismiss());
     }
-    private void getValues(){
-        characterkie.setName(et_nameCharacterkieCreate.getText().toString());
-    }
-    public int getYear() {
-        return year;
-    }
 
     public void setYear(int year) {
         this.year = year;
-    }
-
-    public int getDay() {
-        return day;
     }
 
     public void setDay(int day) {
         this.day = day;
     }
 
-    public int getMonth() {
-        return month;
-    }
+
 
     public void setMonth(int month) {
         this.month = month;
@@ -527,7 +471,7 @@ ImageButton bt_basic_info_characterkies;
         } else if (v.getId()==R.id.ib_select_img_create_characterkie) {
             selectImage();
         } else if(v.getId()==R.id.bt_birthday_characterkie){
-            BottomSheetChooseBirthday bottomSheetChooseBirthday = new BottomSheetChooseBirthday(optionBirthday,optionBirthdayString);
+            BottomSheetChooseBirthday bottomSheetChooseBirthday = new BottomSheetChooseBirthday(optionBirthday,optionBirthdayString,meses);
             bottomSheetChooseBirthday.show(getChildFragmentManager(), bottomSheetChooseBirthday.getTag());
         } else if (v.getId()==R.id.bt_pronouns_characterkie) {
             bottomSheetChoosePronouns = new BottomSheetChoosePronouns(optionPronouns,optionPronounsString);

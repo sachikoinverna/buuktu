@@ -29,7 +29,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.ViewHold
     final FirebaseAuth firebaseAuth;
     final String UID;
     EditNamePronounsUserDialog editNamePronounsUserDialog;
-    final CreateEditGeneralDialog dialogCreateEdit;
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView tv_name_setting_profile;
         private final TextView tv_value_setting_profile;
@@ -54,9 +54,6 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.ViewHold
         }
     }
 
-    public Context getContext() {
-        return context;
-    }
 
     //Constructor donde pasamos la lista de productos y el contexto
     public SettingAdapter(ArrayList<SettingModel> dataSet, MainActivity ctx, String UID) {
@@ -65,7 +62,6 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.ViewHold
         firebaseAuth = FirebaseAuth.getInstance();
         this.UID = UID;
         documentReference = ctx.getCollectionUsers().document(UID);
-        dialogCreateEdit = new CreateEditGeneralDialog(context);
     }
 
 
@@ -81,20 +77,18 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull SettingAdapter.ViewHolder holder, int position) {
         SettingModel settingModel = dataSet.get(position);
-        String name = settingModel.getName();
-        String value = settingModel.getValue();
-        if (!name.equals(context.getResources().getString(R.string.user_password))) {
-            holder.getTv_value_setting_profile().setText(value);
+        if (!settingModel.getName().equals(context.getResources().getString(R.string.user_password))) {
+            holder.getTv_value_setting_profile().setText(settingModel.getValue());
         } else {
             holder.getTv_value_setting_profile().setText("••••••");
         }
 
-        holder.getTv_name_setting_profile().setText(name);
+        holder.getTv_name_setting_profile().setText(settingModel.getName());
          holder.getCard_view_setting_list_profile().setOnClickListener(v -> {
-             if (name.equals(context.getResources().getString(R.string.name)) || name.equals(context.getResources().getString(R.string.pronouns)) || name.equals(context.getResources().getString(R.string.email))) {
-                 editNamePronounsUserDialog = new EditNamePronounsUserDialog(v.getContext(), name, value, documentReference);
+             if (settingModel.getName().equals(context.getResources().getString(R.string.name)) || settingModel.getName().equals(context.getResources().getString(R.string.pronouns)) || settingModel.getName().equals(context.getResources().getString(R.string.email))) {
+                 editNamePronounsUserDialog = new EditNamePronounsUserDialog(v.getContext(), settingModel.getName(), settingModel.getValue(), documentReference);
                  editNamePronounsUserDialog.show();
-             } else if (name.equals(context.getResources().getString(R.string.user_password))) {
+             } else if (settingModel.getName().equals(context.getResources().getString(R.string.user_password))) {
 
              EditPasswordUserDialog editPasswordUserDialog = new EditPasswordUserDialog(context);
                  editPasswordUserDialog.show();

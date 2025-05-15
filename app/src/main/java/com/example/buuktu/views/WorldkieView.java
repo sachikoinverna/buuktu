@@ -33,7 +33,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -140,7 +139,7 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
                 tv_nameWorldkieView.setText(worldkieModel.getName());
                 tv_creationDateWorldkieView.setText(new SimpleDateFormat("dd/MM/yyyy").format(worldkieModel.getCreation_date().toDate()));
                 tv_lastUpdateWorldkieView.setText(new SimpleDateFormat("dd/MM/yyyy").format(worldkieModel.getLast_update().toDate()));
-
+                getPhoto();
             }
         });
     }
@@ -239,7 +238,7 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
     private void setVar(){
         firebaseAuth = FirebaseAuth.getInstance();
     }
-    private void getProfilePhoto() {
+    private void getPhoto() {
         if (worldkieModel.isPhoto_default()) {
             String id_photo = worldkieModel.getId_photo();
             int resId = mainActivity.getResources().getIdentifier(id_photo, "mipmap", mainActivity.getPackageName());
@@ -247,23 +246,13 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
             if (resId != 0) {
                 Drawable drawable = ContextCompat.getDrawable(mainActivity, resId);
                 ib_worldkieView.setImageDrawable(drawable);
-                try {
                     DrawableUtils.personalizarImagenCuadradoButton(mainActivity, 115 / 6, 7, R.color.brownMaroon, drawable, ib_worldkieView);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
             }
         } else {
             mainActivity.getFirebaseStorageWorldkies().getReference(UID).listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {
                     if (item.getName().startsWith("cover")) {
-                        item.getDownloadUrl().addOnSuccessListener(uri -> {
-                            // try {
-                            DrawableUtils.personalizarImagenCuadradoButton(mainActivity, 115 / 7, 7, R.color.greenWhatever, uri, ib_worldkieView);
-                            //} catch (IOException e) {
-                            //    throw new RuntimeException(e);
-                            // }
-                        });
+                        item.getDownloadUrl().addOnSuccessListener(uri -> DrawableUtils.personalizarImagenCuadradoButton(mainActivity, 115 / 7, 7, R.color.greenWhatever, uri, ib_worldkieView));
                     }
                 }
             });

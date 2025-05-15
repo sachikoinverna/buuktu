@@ -1,13 +1,8 @@
 package com.example.buuktu.views;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -26,12 +21,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.buuktu.R;
-import com.example.buuktu.broadcastReceiver.WordNotificationReceiver;
 import com.example.buuktu.dialogs.InfoGeneralDialog;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.EfectsUtils;
 import com.example.buuktu.utils.FirebaseAuthUtils;
 import com.example.buuktu.utils.NavigationUtils;
+import com.example.buuktu.utils.NotikiesUtils;
+import com.example.buuktu.utils.PermissionUtils;
 import com.example.buuktu.utils.UIUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -43,14 +39,11 @@ import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.util.Calendar;
-
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawerLayout;
     private BottomNavigationView bottomNavigationView;
     private ImageButton ib_info,ib_back,ib_self_profile,ib_save;
-    FirebaseAuth.AuthStateListener authStateListener;
     private String UID;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final FirebaseStorage firebaseStorageUsers = FirebaseStorage.getInstance("gs://buuk-tu-users"),
@@ -70,7 +63,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             collectionStuffkies = db.collection("Stuffkies"),
             collectionCharacterkies = db.collection("Characterkies"),
             collectionWorldkies = db.collection("Worldkies");
-    int colorEntero;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,34 +76,44 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         initComponents();
         scheduleDailyNotification();
-        fragmentManager = getSupportFragmentManager();
-         colorEntero = Color.parseColor("#5f5a7c");
-        UID = firebaseAuth.getUid();
 
 
-        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
-                .setPersistenceEnabled(true)
-                .build();
-        db.setFirestoreSettings(settings);
+
+        setFirebaseSettings();
         scheduleDailyNotification();
         setSupportActionBar(toolbar);
         getProfilePhoto();
         // Configuración del ActionBarDrawerToggle
+
+        // Configuración del BottomNavigationView
+            setListeners();
+        if (savedInstanceState == null) {
+            loadHome();
+        }
+        // Cargar el fragmento inicial solo si es la primera creación de la actividad
+
+    }
+    private void setFirebaseSettings(){
+        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                .setPersistenceEnabled(true)
+                .build();
+        db.setFirestoreSettings(settings);
+    }
+    private void loadHome(){
+        NavigationUtils.goNewFragment(fragmentManager, new Home());
+        bottomNavigationView.setSelectedItemId(R.id.home);
+    }
+    private void setListeners(){
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, toolbar, R.string.open_nav, R.string.close_nav);
-        drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-        ib_self_profile.setVisibility(View.GONE);
-        // Configuración del BottomNavigationView
-        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        drawerLayout.addDrawerListener(toggle);
+
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
-
             if (id == R.id.home) {
-
                 NavigationUtils.goNewFragment(fragmentManager, new Home());
-
             } else if (id == R.id.search) {
                 NavigationUtils.goNewFragment(fragmentManager, new Search());
             } else if (id == R.id.inspo) {
@@ -123,22 +125,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
             return true;
         });
-        // Cargar el fragmento inicial solo si es la primera creación de la actividad
-        if (savedInstanceState == null) {
-
-            fragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, new Home()).setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out) // Ejemplo de animación
-                    .commit();
-            bottomNavigationView.setSelectedItemId(R.id.home); // Selecciona el item "Home" por defecto
-        }
+        ib_info.setOnClickListener(v -> getInfo());
     }
     public void getProfileUser(View view){
                 Bundle bundle = new Bundle();
                 bundle.putString("mode","self");
         NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new ProfileView());
     }
-    public void getInfo(View view){
-        ib_info.setOnClickListener(v -> {
+    public void getInfo(){
             Fragment fragment  = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
             if (fragment instanceof Search) {
                 showInfoDialog("search");
@@ -164,7 +158,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }else if (fragment instanceof Scenariokies || fragment instanceof Scenariokie || fragment instanceof CreateEditScenariokie){
                 showInfoDialog("scenariokies");
             }
-        });
     }
 
     public void showInfoDialog(String mode){
@@ -176,24 +169,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ib_self_profile.setVisibility(View.INVISIBLE); // Hacerlo ligeramente transparente al principio
         collectionUsers.document(UID).addSnapshotListener((queryDocumentSnapshot, e) -> {
             if(queryDocumentSnapshot.getBoolean("photo_default")) {
-                String id_photo = queryDocumentSnapshot.getString("photo_id");
-                int resId = getResources().getIdentifier(id_photo, "mipmap", getPackageName());
+                int resId = getResources().getIdentifier(queryDocumentSnapshot.getString("photo_id"), "mipmap", getPackageName());
                 if (resId != 0) {
                     Drawable drawable = ContextCompat.getDrawable(this, resId);
-                    DrawableUtils.personalizarImagenCircleButton(this, DrawableUtils.drawableToBitmap(drawable), ib_self_profile, colorEntero, false);
+                    DrawableUtils.personalizarImagenCircleButton(this, DrawableUtils.drawableToBitmap(drawable), ib_self_profile, R.color.purple1);
                     ib_self_profile.setVisibility(View.VISIBLE); // Hacerlo ligeramente transparente al principio
 
                     EfectsUtils.startCircularReveal(drawable,ib_self_profile);
-                } else {
-                    Log.e("DRAWABLE", "Recurso no encontrado: " + id_photo);
                 }
             }else{
-                StorageReference userFolderRef = firebaseStorageUsers.getReference(UID);//.child().child(UID);
-                userFolderRef.listAll().addOnSuccessListener(listResult -> {
+                firebaseStorageUsers.getReference().listAll().addOnSuccessListener(listResult -> {
                     for (StorageReference item : listResult.getItems()) {
                         if (item.getName().startsWith("profile")) {
                             item.getDownloadUrl().addOnSuccessListener(uri -> {
-                                DrawableUtils.personalizarImagenCircleButton(this, uri, ib_self_profile, colorEntero, false);
+                                DrawableUtils.personalizarImagenCircleButton(this, uri, ib_self_profile, R.color.purple1);
                                 ib_self_profile.setVisibility(View.VISIBLE); // Hacerlo ligeramente transparente al principio
                                 EfectsUtils.startCircularReveal(ib_self_profile.getDrawable(), ib_self_profile);
                             });
@@ -214,6 +203,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ib_info = findViewById(R.id.ib_info);
         ib_back = findViewById(R.id.ib_back);
         ib_save = findViewById(R.id.ib_save);
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        fragmentManager = getSupportFragmentManager();
+        UID = firebaseAuth.getUid();
     }
 
     public FirebaseStorage getFirebaseStorageCharacterkies() {
@@ -285,27 +277,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void scheduleDailyNotification() {
-        Intent intent = new Intent(this, WordNotificationReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-
-        if (calendar.getTimeInMillis() < System.currentTimeMillis()) {
-            calendar.add(Calendar.DAY_OF_YEAR, 1);
-        }
-
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        if (alarmManager != null) {
-            alarmManager.setExactAndAllowWhileIdle(
-                    AlarmManager.RTC_WAKEUP,
-                    calendar.getTimeInMillis(),
-                    pendingIntent
-            );
-        }
+        PermissionUtils.NotifyPermission(this);
+        NotikiesUtils.setDailyAlarm(this);
     }
 
     @Override
@@ -330,8 +303,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         if (currentUser == null) {
             // Si el usuario no ha iniciado sesión, redirige a la actividad de Login
-            Intent intent = new Intent(this, Login.class); // Reemplaza LoginActivity.class con el nombre de tu clase de Login
-            startActivity(intent);
+            startActivity(new Intent(this, Login.class));
             finish(); // Cierra MainActivity para que el usuario no pueda volver atrás sin iniciar sesión
         }
     }

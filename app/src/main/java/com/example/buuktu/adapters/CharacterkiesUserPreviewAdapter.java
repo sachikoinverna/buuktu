@@ -1,7 +1,5 @@
 package com.example.buuktu.adapters;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -132,8 +130,6 @@ public class CharacterkiesUserPreviewAdapter extends RecyclerView.Adapter<Charac
 
                 popupWindow.showAsDropDown(holder.getCardView(), 0, -50);
 
-// ListenersBundle bundle = new Bundle();
-//        bundle.putString("worldkie_id", worldkieModel.getUID());
                 popupView.findViewById(R.id.bt_edit_item).setOnClickListener(view -> {
                     Bundle bundle = new Bundle();
                     bundle.putString("characterkie_id", characterkieModel.getUID());
@@ -156,8 +152,7 @@ public class CharacterkiesUserPreviewAdapter extends RecyclerView.Adapter<Charac
                 if (resId != 0) {
 
                     Drawable drawable = ContextCompat.getDrawable(context, resId);
-                    //   holder.getIv_userkie_photo_search().set
-                 //   DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(drawable), holder.getIv_characterkie_preview_worldkie(), R.color.brownBrown);
+                    DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(drawable), holder.getIv_characterkie_preview_worldkie(), R.color.brownBrown);
                     holder.getIv_characterkie_preview_worldkie().setVisibility(View.VISIBLE);
                     holder.getFl_characterkie_photo_container_preview().setVisibility(View.VISIBLE);
                     EfectsUtils.startCircularReveal(drawable, holder.getIv_characterkie_preview_worldkie());
@@ -166,11 +161,7 @@ public class CharacterkiesUserPreviewAdapter extends RecyclerView.Adapter<Charac
             context.getFirebaseStorageCharacterkies().getReference(characterkieModel.getUID()).listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {
                     if (item.getName().startsWith("cover")) {
-                            item.getBytes(5 * 1024 * 1024).addOnSuccessListener(bytes -> {
-                                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                                Bitmap bitmapScaled = Bitmap.createScaledBitmap(bitmap, 80, 80, false);
-                                DrawableUtils.personalizarImagenCircle(context, bitmapScaled, holder.getIv_characterkie_preview_worldkie(), R.color.brownMaroon);
-                            });
+                        item.getDownloadUrl().addOnSuccessListener(uri -> DrawableUtils.personalizarImagenCircleButton(context, uri, holder.getIv_characterkie_preview_worldkie(), R.color.brownMaroon));
                             break;
                         }
                     }

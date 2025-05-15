@@ -56,7 +56,7 @@ public class InspoDesafios extends Fragment implements View.OnClickListener {
     private void setRecyclerView(){
         items.add(new CardItem(R.drawable.twotone_abc_24,mainActivity.getResources().getString(R.string.wordkie_of_the_day)));
         items.add(new CardItem(R.drawable.twotone_pin_24,mainActivity.getResources().getString(R.string.numberkie_of_the_day)));
-        adapter = new CardInspoDesafiosAdapter(mainActivity,items,getParentFragmentManager());
+        adapter = new CardInspoDesafiosAdapter(mainActivity,items);
         rc_buttons_inspo_desafio.setAdapter(adapter);
         rc_buttons_inspo_desafio.setLayoutManager(new GridLayoutManager(mainActivity,2));
     }

@@ -75,11 +75,11 @@
                 android:layout_width="26dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="8dp"
-                android:tint="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/twotone_lock_24" />
+                app:srcCompat="@drawable/twotone_lock_24"
+                app:tint="@color/white" />
 
             <TextView
                 android:id="@+id/textView9"
@@ -100,10 +100,10 @@
                 android:layout_marginEnd="16dp"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                android:tint="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_worldkie_name_search"
-                app:srcCompat="@drawable/twotone_arrow_drop_down_circle_24" />
+                app:srcCompat="@drawable/twotone_arrow_drop_down_circle_24"
+                app:tint="@color/white" />
 
             <TextView
                 android:id="@+id/tv_date_creation_search_worldkie_title"

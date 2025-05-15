@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Switch;
 
@@ -36,7 +35,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
@@ -55,12 +53,12 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
     TextInputLayout et_nameRegisterFilled,et_userRegisterFilled,dp_birthdayFilled ,et_pronounsRegisterFilled, et_emailRegisterFilled, et_telephoneRegisterFilled, et_passwordFilled ,et_passwordRepeatRegisterFilled;
 
     public TextInputEditText dp_birthday, et_nameRegister, et_pronounsRegister, et_userRegister, et_emailRegister, et_passwordRepeat, et_password, et_telephoneRegister;
-    public Button tv_registerButton, tv_registerToLoginButton;
     ImageButton bt_chooseImage;
     private Switch tb_privateAccountRegister;
     private final FirebaseAuth auth = FirebaseAuth.getInstance();
     Uri image;
-    String email, username, source;
+    String email;
+    String username;
     final FirebaseStorage storage = FirebaseStorage.getInstance("gs://buuk-tu-users");
     BottomSheetProfilePhoto bottomSheetProfilePhoto;
     Date birthday;
@@ -91,10 +89,6 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
         }
     }
 
-    public void setSource(String source) {
-        this.source = source;
-    }
-
 
     public void setImageUri(Uri image) {
         this.image = image;
@@ -116,8 +110,6 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
         et_telephoneRegisterFilled = findViewById(R.id.et_telephoneRegisterFilled);
         et_passwordFilled = findViewById(R.id.et_passwordFilled);
         et_passwordRepeatRegisterFilled = findViewById(R.id.et_passwordRepeatRegisterFilled);
-        tv_registerButton = findViewById(R.id.tv_registerButton);
-        tv_registerToLoginButton = findViewById(R.id.tv_registerToLoginButton);
         bt_chooseImage = findViewById(R.id.bt_chooseImageRegister);
         tb_privateAccountRegister = findViewById(R.id.tb_privateAccountRegister);
         et_nameRegisterFilled = findViewById(R.id.et_nameRegisterFilled);
@@ -128,7 +120,6 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
         monthC = calendar.get(Calendar.MONTH);
         dayC = calendar.get(Calendar.DAY_OF_MONTH);
         bottomSheetProfilePhoto = new BottomSheetProfilePhoto();
-        source = "app";
         bt_chooseImage.setTag(DrawableUtils.getMipmapName(this,R.mipmap.photoprofileone));
         setPhotoDefault();
         DrawableUtils.personalizarImagenCircleButton(this, DrawableUtils.drawableToBitmap(bt_chooseImage.getDrawable()), bt_chooseImage, R.color.blue1);
@@ -322,18 +313,12 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
                                                     }
                                                     EfectsUtils.setAnimationsDialog("success",animationView);
 
-                                                    Completable.timer(3, TimeUnit.SECONDS)
-                                                            .subscribeOn(Schedulers.io())
-                                                            .observeOn(AndroidSchedulers.mainThread())
-                                                            .subscribe(dialog::dismiss);
+                                                    delayedDismiss(dialog);
                                                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                                 }).addOnFailureListener(e -> {
                                                     EfectsUtils.setAnimationsDialog("fail",animationView);
 
-                                                    Completable.timer(3, TimeUnit.SECONDS)
-                                                            .subscribeOn(Schedulers.io())
-                                                            .observeOn(AndroidSchedulers.mainThread())
-                                                            .subscribe(dialog::dismiss);
+                                                    delayedDismiss(dialog);
                                                 });
                                             }
                                         });
@@ -348,7 +333,7 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
         Completable.timer(2, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> dialog.dismiss());
+                .subscribe(dialog::dismiss);
     }
     public void showDatePickerDialog(View view) {
         DatePickerDialog date = new DatePickerDialog(this, (datePicker, year, month, day) -> {

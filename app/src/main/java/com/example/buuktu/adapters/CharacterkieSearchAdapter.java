@@ -1,7 +1,5 @@
 package com.example.buuktu.adapters;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -94,28 +92,28 @@ public class CharacterkieSearchAdapter extends RecyclerView.Adapter<Characterkie
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.getFl_characterkie_photo_container().setVisibility(View.INVISIBLE);
         CharacterkieModel characterkie = dataSet.get(position);
+        context.getCollectionUsers().document(characterkie.getUID_AUTHOR()).addSnapshotListener((documentSnapshot, e) -> {
+            if (e != null) return;
 
-        // holder.getTv_characterkie_username_search().setText(dataSet.get(holder.getAdapterPosition()).getUsername());
+            if (documentSnapshot != null) {
+                holder.getTv_characterkie_username_search().setText(documentSnapshot.getString("username"));
+            }
+        });
         holder.getTv_characterkie_name_search().setText(characterkie.getName());
-        /*if(dataSet.get(holder.getAdapterPosition()).is()){
-            holder.getIv_characterkie_private_search().setImageAlpha(R.drawable.twotone_lock_24);
-        }else{
-            holder.getIv_characterkie_private_search().setImageAlpha(R.drawable.twotone_lock_open_24);
-        }*/
-
+        if(!characterkie.isCharacterkie_private()){
+            holder.getIv_characterkie_private_search().setVisibility(View.GONE);
+        }
         holder.getCv_characterkie_search().setOnClickListener(v -> {
             Bundle bundle = new Bundle();
             NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new CharacterkieView());
 
         });
         if (characterkie.isPhoto_default()) {
-            String id_photo = characterkie.getPhoto_id();
-            int resId = context.getResources().getIdentifier(id_photo, "mipmap", context.getPackageName());
+            int resId = context.getResources().getIdentifier( characterkie.getPhoto_id(), "mipmap", context.getPackageName());
 
             if (resId != 0) {
                 Drawable drawable = ContextCompat.getDrawable(context, resId);
-                //   holder.getIv_userkie_photo_search().set
-                //DrawableUtils.personalizarImagenCuadradoButton(context, DrawableUtils.drawableToBitmap(drawable), holder.getIv_characterkie_photo_search(), R.color.brownBrown);
+                DrawableUtils.personalizarImagenCircle(context, DrawableUtils.drawableToBitmap(drawable), holder.getIv_characterkie_photo_search(), R.color.brownBrown);
                 holder.getFl_characterkie_photo_container().setVisibility(View.VISIBLE);
                 EfectsUtils.startCircularReveal(drawable, holder.getIv_characterkie_photo_search());
             }
@@ -123,11 +121,7 @@ public class CharacterkieSearchAdapter extends RecyclerView.Adapter<Characterkie
             context.getFirebaseStorageCharacterkies().getReference(characterkie.getUID()).listAll().addOnSuccessListener(listResult -> {
                 for (StorageReference item : listResult.getItems()) {
                     if (item.getName().startsWith("cover")) {
-                        item.getBytes(5 * 1024 * 1024).addOnSuccessListener(bytes -> {
-                            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                            Bitmap bitmapScaled = Bitmap.createScaledBitmap(bitmap, 80, 80, false);
-                            DrawableUtils.personalizarImagenCircle(context, bitmapScaled, holder.getIv_characterkie_photo_search(), R.color.brownMaroon);
-                        });
+                        item.getDownloadUrl().addOnSuccessListener(uri -> DrawableUtils.personalizarImagenCircleButton(context, uri, holder.getIv_characterkie_photo_search(), R.color.brownMaroon));
                         break;
                     }
                 }

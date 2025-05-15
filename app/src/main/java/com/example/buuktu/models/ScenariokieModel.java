@@ -20,16 +20,6 @@ public class ScenariokieModel {
     public ScenariokieModel() {
     }
 
-    public ScenariokieModel(String UID, String name, String WORDLKIE_UID, String AUTHOR_UID, boolean draft, boolean scenariokie_private, boolean photo_default, String photo_id) {
-        this.UID = UID;
-        this.name = name;
-        this.WORDLKIE_UID = WORDLKIE_UID;
-        this.AUTHOR_UID = AUTHOR_UID;
-        this.draft = draft;
-        this.scenariokie_private = scenariokie_private;
-        this.photo_default = photo_default;
-        this.photo_id = photo_id;
-    }
     public static ScenariokieModel fromSnapshot(DocumentSnapshot document){
         if (document == null || !document.exists()) {
             return null;
