@@ -58,9 +58,7 @@ public class CharacterkieView extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_characterkie_view, container, false);
         initComponents(view);
         setVisibility();
-        UID_AUTHOR = mode.equals("other") ? getArguments().getString("UID_AUTHOR") : mainActivity.getUID();
         getData();
-        meses= new String[]{mainActivity.getString(R.string.january),mainActivity.getString(R.string.february),mainActivity.getString(R.string.march),mainActivity.getString(R.string.april),mainActivity.getString(R.string.may),mainActivity.getString(R.string.june),mainActivity.getString(R.string.july),mainActivity.getString(R.string.august),mainActivity.getString(R.string.september),mainActivity.getString(R.string.october),mainActivity.getString(R.string.november),mainActivity.getString(R.string.december)};
 
 
 
@@ -180,6 +178,8 @@ public class CharacterkieView extends Fragment implements View.OnClickListener {
         ib_save = mainActivity.getIb_save();
         ib_back = mainActivity.getBackButton();
         fragmentManager = mainActivity.getSupportFragmentManager();
+        UID_AUTHOR = mode.equals("other") ? getArguments().getString("UID_AUTHOR") : mainActivity.getUID();
+        meses= new String[]{mainActivity.getString(R.string.january),mainActivity.getString(R.string.february),mainActivity.getString(R.string.march),mainActivity.getString(R.string.april),mainActivity.getString(R.string.may),mainActivity.getString(R.string.june),mainActivity.getString(R.string.july),mainActivity.getString(R.string.august),mainActivity.getString(R.string.september),mainActivity.getString(R.string.october),mainActivity.getString(R.string.november),mainActivity.getString(R.string.december)};
         showHideBasicInfo();
     }
 private void setVisibility(){

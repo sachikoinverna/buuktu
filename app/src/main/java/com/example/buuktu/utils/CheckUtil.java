@@ -12,7 +12,7 @@ import com.google.i18n.phonenumbers.Phonenumber;
 
 public class CheckUtil {
     public static boolean handlerCheckPassword(Context context,TextInputEditText textInputEditText,TextInputLayout textInputLayout) {
-        if (CheckUtil.checkTextEmpty(context,textInputLayout,textInputEditText.getText().toString())) {
+        if (!CheckUtil.checkTextEmpty(context,textInputLayout,textInputEditText.getText().toString())) {
             return false;
         } else if ( textInputEditText.getText().toString().length() < 8) {
             CheckUtil.setErrorMessage(context.getString(R.string.passwordTooShort), textInputLayout);
@@ -38,15 +38,7 @@ public class CheckUtil {
     }
     public static boolean handlerCheckNewIsTheSameAsOld(Context context,TextInputEditText textInputEditTextNew,TextInputEditText textInputEditTextOld,TextInputLayout textInputLayoutNew) {
 
-        if (!textInputEditTextNew.getText().toString().equals(textInputEditTextOld.getText().toString())) {
-            CheckUtil.setErrorMessage(context.getString(R.string.passwordErrorRepeat), textInputLayoutNew);
-            return false;
-        }
-        CheckUtil.setErrorMessage(null, textInputLayoutNew);
-        return true;
-    }
-    public static boolean handlerCheckNewIsTheSameAsOld(Context context,TextInputEditText textInputEditTextNew,String old,TextInputLayout textInputLayoutNew) {
-        if (!textInputEditTextNew.getText().toString().equals(old)) {
+        if (textInputEditTextNew.getText().toString().equals(textInputEditTextOld.getText().toString())) {
             CheckUtil.setErrorMessage(context.getString(R.string.passwordErrorRepeat), textInputLayoutNew);
             return false;
         }
@@ -54,33 +46,36 @@ public class CheckUtil {
         return true;
     }
     public static boolean handlerCheckBirthdayDate(Context context, TextInputEditText textInputEditText, TextInputLayout textInputLayout) {
-        if (CheckUtil.checkTextEmpty(context,textInputLayout,textInputEditText.getText().toString())) {
+        if (!CheckUtil.checkTextEmpty(context,textInputLayout,textInputEditText.getText().toString())) {
             return false;
         }
         CheckUtil.setErrorMessage(null, textInputLayout);
         return true;
     }
     public static boolean handlerCheckTelephone(Context context,TextInputEditText textInputEditText,TextInputLayout textInputLayout) {
-        PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
-        Phonenumber.PhoneNumber number = null;
-        try {
-            number = phoneUtil.parse(textInputEditText.getText().toString(), "ES");
-        } catch (NumberParseException e) {
 
-            System.err.println("NumberParseException was thrown");
-        }
-        if (CheckUtil.checkTextEmpty(context,textInputLayout,textInputEditText.getText().toString())) {
+        if (!CheckUtil.checkTextEmpty(context,textInputLayout,textInputEditText.getText().toString())) {
             return false;
-        } else if (!phoneUtil.isValidNumber(number)) {
-            CheckUtil.setErrorMessage(context.getString(R.string.incorrect_telephone), textInputLayout);
-            return false;
+        } else {
+            try {
+                PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
+                Phonenumber.PhoneNumber number = phoneUtil.parse(textInputEditText.getText().toString(), "ES");
+
+                if (!phoneUtil.isValidNumber(number)) {
+                    CheckUtil.setErrorMessage(context.getString(R.string.incorrect_telephone), textInputLayout);
+                    return false;
+                }
+            } catch (NumberParseException e) {
+                CheckUtil.setErrorMessage(context.getString(R.string.incorrect_telephone), textInputLayout);
+                return false;
+            }
         }
         CheckUtil.setErrorMessage(null, textInputLayout);
         return true;
     }
 
     public static boolean handlerCheckName(Context context,TextInputEditText textInputEditText,TextInputLayout textInputLayout) {
-        if (CheckUtil.checkTextEmpty(context,textInputLayout,textInputEditText.getText().toString())) {
+        if (!CheckUtil.checkTextEmpty(context,textInputLayout,textInputEditText.getText().toString())) {
             return false;
         } else if (CheckUtil.checkNumbers(textInputEditText.getText().toString())){
             CheckUtil.setErrorMessage(context.getString(R.string.numberErrorTextField), textInputLayout);
@@ -90,7 +85,7 @@ public class CheckUtil {
         return true;
     }
     public static boolean handlerCheckPronouns(Context context,TextInputEditText textInputEditText,TextInputLayout textInputLayout) {
-        if (CheckUtil.checkTextEmpty(context,textInputLayout,textInputEditText.getText().toString())) {
+        if (!CheckUtil.checkTextEmpty(context,textInputLayout,textInputEditText.getText().toString())) {
             return false;
         }
         CheckUtil.setErrorMessage(null, textInputLayout);
@@ -102,7 +97,7 @@ public class CheckUtil {
 
     }
     public static boolean checkEmail(Context context,TextInputEditText textInputEditText,TextInputLayout textInputLayout){
-        if (CheckUtil.checkTextEmpty(context,textInputLayout,textInputEditText.getText().toString())) {
+        if (!CheckUtil.checkTextEmpty(context,textInputLayout,textInputEditText.getText().toString())) {
             return false;
         }
         else if (!Patterns.EMAIL_ADDRESS.matcher(textInputEditText.getText().toString()).matches()) {
@@ -113,7 +108,7 @@ public class CheckUtil {
         return true;
     }
     public static boolean handlerCheckUsernameEmpty(Context context,TextInputEditText textInputEditText,TextInputLayout textInputLayout) {
-        if (CheckUtil.checkTextEmpty(context,textInputLayout,textInputEditText.getText().toString())) {
+        if (!CheckUtil.checkTextEmpty(context,textInputLayout,textInputEditText.getText().toString())) {
             return false;
         }
         CheckUtil.setErrorMessage(null, textInputLayout);

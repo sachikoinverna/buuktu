@@ -11,23 +11,21 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.buuktu.views.InspoDesafios;
-import com.example.buuktu.views.Notes;
 import com.example.buuktu.R;
 import com.example.buuktu.models.CardItem;
 import com.example.buuktu.utils.NavigationUtils;
+import com.example.buuktu.views.InspoDesafios;
+import com.example.buuktu.views.Notes;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
 public class CardInspoAdapter extends RecyclerView.Adapter<CardInspoAdapter.ViewHolder> {
 
+    final FragmentManager fragmentManager;
     // Modelo de datos, por ejemplo:
     private final List<CardItem> dataSet;
     private final Context context;
-    final FragmentManager fragmentManager;
-
-
 
     public CardInspoAdapter(Context context, List<CardItem> dataSet, FragmentManager fragmentManager) {
         this.context = context;
@@ -51,10 +49,10 @@ public class CardInspoAdapter extends RecyclerView.Adapter<CardInspoAdapter.View
         holder.getText().setText(text);
 
         holder.getCardView().setOnClickListener(v -> {
-            if(text.equals(context.getResources().getString(R.string.notekies))){
-                NavigationUtils.goNewFragment(fragmentManager,new Notes());
+            if (text.equals(context.getResources().getString(R.string.notekies))) {
+                NavigationUtils.goNewFragment(fragmentManager, new Notes());
             } else if (text.equals(context.getResources().getString(R.string.challenges))) {
-                NavigationUtils.goNewFragment(fragmentManager,new InspoDesafios());
+                NavigationUtils.goNewFragment(fragmentManager, new InspoDesafios());
             }
         });
     }

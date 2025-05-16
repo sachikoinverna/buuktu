@@ -142,6 +142,7 @@ public class WorldkieSearchAdapter extends RecyclerView.Adapter<WorldkieSearchAd
             bundle.putString("mode","other");
             bundle.putString("UID",worldkieModel.getUID());
             bundle.putString("UID_AUTHOR",worldkieModel.getUID_AUTHOR());
+
             NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new WorldkieView());
         });
         holder.getIb_show_more_details_worldkie_search().setOnClickListener(v -> {

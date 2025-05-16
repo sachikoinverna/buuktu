@@ -33,6 +33,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.i18n.phonenumbers.NumberParseException;
@@ -51,7 +52,6 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
     Calendar calendar;
     int yearC, monthC, dayC;
     TextInputLayout et_nameRegisterFilled,et_userRegisterFilled,dp_birthdayFilled ,et_pronounsRegisterFilled, et_emailRegisterFilled, et_telephoneRegisterFilled, et_passwordFilled ,et_passwordRepeatRegisterFilled;
-
     public TextInputEditText dp_birthday, et_nameRegister, et_pronounsRegister, et_userRegister, et_emailRegister, et_passwordRepeat, et_password, et_telephoneRegister;
     ImageButton bt_chooseImage;
     private Switch tb_privateAccountRegister;
@@ -121,6 +121,7 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
         dayC = calendar.get(Calendar.DAY_OF_MONTH);
         bottomSheetProfilePhoto = new BottomSheetProfilePhoto();
         bt_chooseImage.setTag(DrawableUtils.getMipmapName(this,R.mipmap.photoprofileone));
+        collectionReferenceUsers = FirebaseFirestore.getInstance().collection("Users");
         setPhotoDefault();
         DrawableUtils.personalizarImagenCircleButton(this, DrawableUtils.drawableToBitmap(bt_chooseImage.getDrawable()), bt_chooseImage, R.color.blue1);
 
@@ -313,7 +314,7 @@ public class Register extends AppCompatActivity implements View.OnFocusChangeLis
                                                     }
                                                     EfectsUtils.setAnimationsDialog("success",animationView);
 
-                                                    delayedDismiss(dialog);
+
                                                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                                 }).addOnFailureListener(e -> {
                                                     EfectsUtils.setAnimationsDialog("fail",animationView);

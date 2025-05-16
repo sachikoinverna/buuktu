@@ -68,7 +68,6 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull SettingAdapter.ViewHolder holder, int position) {
         SettingModel settingModel = dataSet.get(position);
-        DocumentReference documentReference = context.getCollectionUsers().document(context.getUID());
         if (!settingModel.getName().equals(context.getResources().getString(R.string.user_password))) {
             holder.getTv_value_setting_profile().setText(settingModel.getValue());
         } else {
@@ -77,7 +76,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.ViewHold
 
         holder.getTv_name_setting_profile().setText(settingModel.getName());
          holder.getCard_view_setting_list_profile().setOnClickListener(v -> {
-             if (settingModel.getName().equals(context.getResources().getString(R.string.name)) || settingModel.getName().equals(context.getResources().getString(R.string.pronouns)) || settingModel.getName().equals(context.getResources().getString(R.string.email))) {
+             if (settingModel.getName().equals(context.getResources().getString(R.string.name)) || settingModel.getName().equals(context.getResources().getString(R.string.pronouns))) {
                  editNamePronounsUserDialog = new EditNamePronounsUserDialog(v.getContext(), settingModel.getName(), settingModel.getValue(),context.getCollectionUsers().document(context.getUID()));
                  editNamePronounsUserDialog.show();
              } else if (settingModel.getName().equals(context.getResources().getString(R.string.user_password))) {

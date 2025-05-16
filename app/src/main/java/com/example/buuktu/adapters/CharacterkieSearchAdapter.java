@@ -105,6 +105,9 @@ public class CharacterkieSearchAdapter extends RecyclerView.Adapter<Characterkie
         }
         holder.getCv_characterkie_search().setOnClickListener(v -> {
             Bundle bundle = new Bundle();
+            bundle.putString("mode","other");
+            bundle.putString("UID",characterkie.getUID());
+            bundle.putString("UID_WORLDKIE",characterkie.getUID_WORLDKIE());
             NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new CharacterkieView());
 
         });

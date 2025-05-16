@@ -12,6 +12,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.example.buuktu.R;
 import com.example.buuktu.utils.CheckUtil;
 import com.example.buuktu.utils.EfectsUtils;
+import com.example.buuktu.views.MainActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthCredential;
@@ -28,16 +29,17 @@ public class EditPasswordUserDialog extends Dialog implements View.OnClickListen
     ImageButton ib_accept_dialog,ib_close_dialog ;
     TextInputLayout et_newpasswordRepeatFull,et_newpasswordFull,et_oldpasswordFull;
     TextInputEditText et_oldpassword,et_newPassword,et_newPasswordRepeat;
-    Context context;
+    MainActivity context;
     LottieAnimationView animationView;
-    public EditPasswordUserDialog(@NonNull Context context) {
+    public EditPasswordUserDialog(@NonNull MainActivity context) {
         super(context);
+        this.context = context;
+
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_password_user_dialog);
-        context = getContext();
         initComponents();
          setListeners();
 
@@ -60,15 +62,18 @@ public class EditPasswordUserDialog extends Dialog implements View.OnClickListen
         ib_accept_dialog.setOnClickListener(this);
         ib_close_dialog.setOnClickListener(this);
     }
+    private void setVisibility(boolean loadingMode){
+        et_oldpasswordFull.setVisibility(loadingMode?View.GONE:View.VISIBLE);
+        et_newpasswordFull.setVisibility(loadingMode?View.GONE:View.VISIBLE);
+        et_newpasswordRepeatFull.setVisibility(loadingMode?View.GONE:View.VISIBLE);
+        ib_close_dialog.setVisibility(loadingMode?View.GONE:View.VISIBLE);
+        ib_accept_dialog.setVisibility(loadingMode?View.GONE:View.VISIBLE);
+        animationView.setVisibility(loadingMode?View.VISIBLE:View.GONE);
+    }
 private void saveNewPassword(){
-
-    ib_close_dialog.setVisibility(View.GONE);
-    ib_accept_dialog.setVisibility(View.GONE);
-    animationView.setVisibility(View.VISIBLE);
+    setVisibility(true);
     if(CheckUtil.handlerCheckNewIsTheSameAsOld(context,et_newPassword,et_oldpassword,et_newpasswordFull)) {
         if (CheckUtil.handlerCheckPassword(context, et_newPassword, et_newpasswordFull) && CheckUtil.handlerCheckPasswordRepeat(context, et_newPasswordRepeat, et_newPassword, et_newpasswordRepeatFull)) {
-            if (et_newPassword.getText().toString().equals(et_newPasswordRepeat.getText().toString())) {
-
                 AuthCredential credential = EmailAuthProvider.getCredential(FirebaseAuth.getInstance().getCurrentUser().getEmail(), et_oldpassword.getText().toString());
                 Completable.timer(2, TimeUnit.SECONDS)
                         .subscribeOn(Schedulers.io())
@@ -85,11 +90,10 @@ private void saveNewPassword(){
                                 });
                             } else {
                                 EfectsUtils.setAnimationsDialog("fail", animationView);
-                                et_oldpasswordFull.setError("Contraseña actual incorrecta");
+                                setVisibility(false);
+                                et_oldpasswordFull.setError(context.getString(R.string.actual_password_incorrect));
                             }
                         }));
-
-            }
         }
     }
     }

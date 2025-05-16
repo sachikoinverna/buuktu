@@ -94,14 +94,10 @@ ImageButton bt_basic_info_characterkies;
 
         View view = inflater.inflate(R.layout.fragment_create_characterkie, container, false);
 
-        bottomSheetProfilePhoto = new BottomSheetProfilePhoto();
         initComponents(view);
         setListeners();
 
-        gender = mainActivity.getResources().getString(R.string.gender);
-        pronouns = mainActivity.getResources().getString(R.string.pronouns);
-        birthday = mainActivity.getResources().getString(R.string.birthday);
-        status = mainActivity.getResources().getString(R.string.status);
+
         setCharacterkieModel();
         return view;
     }
@@ -307,6 +303,11 @@ ImageButton bt_basic_info_characterkies;
         tv_pronouns_characterkie = view.findViewById(R.id.tv_pronouns_characterkie);
         tv_basic_info_characterkies = view.findViewById(R.id.tv_basic_info_characterkies);
         bt_basic_info_characterkies = view.findViewById(R.id.bt_basic_info_characterkies);
+        bottomSheetProfilePhoto = new BottomSheetProfilePhoto();
+        gender = mainActivity.getResources().getString(R.string.gender);
+        pronouns = mainActivity.getResources().getString(R.string.pronouns);
+        birthday = mainActivity.getResources().getString(R.string.birthday);
+        status = mainActivity.getResources().getString(R.string.status);
         showHideBasicInfo();
         initVisibility();
     }

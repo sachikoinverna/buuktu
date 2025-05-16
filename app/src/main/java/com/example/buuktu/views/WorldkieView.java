@@ -78,9 +78,7 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
         setVar();
         initComponents(view);
         setVisibility();
-        ib_worldkieView.setVisibility(mode.equals("self")?View.VISIBLE:View.INVISIBLE);
-        ib_back.setVisibility(mode.equals("self")?View.GONE:View.VISIBLE);
-        UID_AUTHOR = mode.equals("other")?getArguments().getString("UID_AUTHOR"):firebaseAuth.getUid();
+
 
 
         getData();
@@ -88,22 +86,7 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
         return view;
     }
     private void getData(){
-        getWorldkie();
         getAuthor();
-        if((worldkieModel.isWorldkie_private()||userkieModel.isProfile_private()) && mode.equals("other")){
-            tv_locked_worldkie.setVisibility(View.VISIBLE);
-            iv_locked_worldkie.setVisibility(View.VISIBLE);
-            tv_characterkiesPreviewWorldkie.setVisibility(View.GONE);
-            cv_characterkiesPreviewWorldkie.setVisibility(View.GONE);
-            tv_stuffkiesPreviewWorldkie.setVisibility(View.GONE);
-            cv_stuffkiesPreviewWorldkie.setVisibility(View.GONE);
-            tv_scenariokiesPreviewWorldkie.setVisibility(View.GONE);
-            cv_scenariokiesPreviewWorldkie.setVisibility(View.GONE);
-        }else{
-            getCharacterkies();
-            getStuffkies();
-            getScenariokies();
-        }
     }
     private void addDraftQuery(Query query){
         if (mode.equals("other")){
@@ -140,6 +123,20 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
                 tv_creationDateWorldkieView.setText(new SimpleDateFormat("dd/MM/yyyy").format(worldkieModel.getCreation_date().toDate()));
                 tv_lastUpdateWorldkieView.setText(new SimpleDateFormat("dd/MM/yyyy").format(worldkieModel.getLast_update().toDate()));
                 getPhoto();
+                if((worldkieModel.isWorldkie_private()||userkieModel.isProfile_private()) && mode.equals("other")){
+                    tv_locked_worldkie.setVisibility(View.VISIBLE);
+                    iv_locked_worldkie.setVisibility(View.VISIBLE);
+                    tv_characterkiesPreviewWorldkie.setVisibility(View.GONE);
+                    cv_characterkiesPreviewWorldkie.setVisibility(View.GONE);
+                    tv_stuffkiesPreviewWorldkie.setVisibility(View.GONE);
+                    cv_stuffkiesPreviewWorldkie.setVisibility(View.GONE);
+                    tv_scenariokiesPreviewWorldkie.setVisibility(View.GONE);
+                    cv_scenariokiesPreviewWorldkie.setVisibility(View.GONE);
+                }else{
+                    getCharacterkies();
+                    getStuffkies();
+                    getScenariokies();
+                }
             }
         });
     }
@@ -151,6 +148,7 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
                 userkieModel = UserkieModel.fromSnapshot(document);
                 tv_nameUserWorldkieView.setText(userkieModel.getName());
                 tv_usernameWorldkieView.setText(userkieModel.getUsername());
+                getWorldkie();
             }
         });
     }
@@ -207,6 +205,7 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
     private void setListeners(){
         ib_back.setOnClickListener(this);
         ib_worldkieView.setOnClickListener(this);
+
     }
     private void initComponents(View view){
         tv_scenariokiesPreviewWorldkie = view.findViewById(R.id.tv_scenariokiesPreviewWorldkie);
@@ -230,6 +229,7 @@ public class WorldkieView extends Fragment implements View.OnClickListener {
         ib_save = mainActivity.getIb_save();
         ib_back = mainActivity.getBackButton();
         fragmentManager = mainActivity.getSupportFragmentManager();
+        UID_AUTHOR = mode.equals("other")?getArguments().getString("UID_AUTHOR"):mainActivity.getUID();
     }
     private void setVisibility(){
         ib_save.setVisibility(View.GONE);

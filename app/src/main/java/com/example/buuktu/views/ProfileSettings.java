@@ -29,26 +29,10 @@ public class ProfileSettings extends Fragment implements View.OnClickListener {
     MainActivity mainActivity;
     private RecyclerView rv_settings_profile;
     private final ArrayList<SettingModel> dataSet = new ArrayList<>();
-    Boolean lastValueProfilePrivate=false;
-    Switch tb_profile_private_settings;
-
     UserkieModel userkieModel;
     ImageButton backButton,ib_save,ib_profile_superior;
     FragmentManager fragmentManager;
-    private final CompoundButton.OnCheckedChangeListener switchListener = (buttonView, isChecked) -> {
-        if(!lastValueProfilePrivate.equals(isChecked)) {
-            Map<String, Object> worldkieData = new HashMap<>();
-            worldkieData.put("private", isChecked);
-            mainActivity.getCollectionUsers().document(mainActivity.getUID()).update(worldkieData);
-            lastValueProfilePrivate=isChecked;
-        }
-    };
-
     public ProfileSettings() {
-    }
-
-    public static ProfileSettings newInstance() {
-        return new ProfileSettings();
     }
 
     @Override
@@ -73,9 +57,6 @@ public class ProfileSettings extends Fragment implements View.OnClickListener {
             if (documentSnapshot != null) {
                 dataSet.clear();
                 userkieModel = UserkieModel.fromSnapshot(documentSnapshot);
-                tb_profile_private_settings.setOnCheckedChangeListener(null);
-                tb_profile_private_settings.setChecked(userkieModel.isProfile_private());
-                tb_profile_private_settings.setOnCheckedChangeListener(switchListener);
                 dataSet.add(new SettingModel(mainActivity.getResources().getString(R.string.name), userkieModel.getName()));
                 dataSet.add(new SettingModel(mainActivity.getResources().getString(R.string.pronouns), userkieModel.getPronouns()));
 
@@ -95,12 +76,10 @@ public class ProfileSettings extends Fragment implements View.OnClickListener {
 
     }
     private void setListeners(){
-        tb_profile_private_settings.setOnCheckedChangeListener(switchListener);
         backButton.setOnClickListener(this);
     }
     private void initComponents(View view) {
         mainActivity = (MainActivity) getActivity();
-        tb_profile_private_settings = view.findViewById(R.id.tb_profile_private_settings);
         rv_settings_profile = view.findViewById(R.id.rv_settings_profile);
         backButton = mainActivity.getBackButton();
         ib_profile_superior = mainActivity.getIb_self_profile();

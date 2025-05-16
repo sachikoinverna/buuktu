@@ -23,7 +23,6 @@ public class CardInspoDesafiosAdapter extends RecyclerView.Adapter<CardInspoDesa
     private final List<CardItem> dataSet;
     private final Context context;
 
-
     public CardInspoDesafiosAdapter(Context context, List<CardItem> dataSet) {
         this.context = context;
         this.dataSet = dataSet;
@@ -43,7 +42,7 @@ public class CardInspoDesafiosAdapter extends RecyclerView.Adapter<CardInspoDesa
 
         holder.getText().setText(cardItem.getText());
         holder.getCardView().setOnClickListener(v -> {
-            if(cardItem.getText().equals(context.getString(R.string.wordkie_of_the_day))){
+            if (cardItem.getText().equals(context.getString(R.string.wordkie_of_the_day))) {
                 PeriodWordsDialog periodWordsDialog = new PeriodWordsDialog(v.getContext());
                 periodWordsDialog.show();
             } else if (cardItem.getText().equals(context.getString(R.string.numberkie_of_the_day))) {

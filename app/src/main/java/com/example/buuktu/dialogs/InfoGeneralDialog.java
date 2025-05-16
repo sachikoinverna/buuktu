@@ -1,7 +1,6 @@
 package com.example.buuktu.dialogs;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;

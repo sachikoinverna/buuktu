@@ -11,8 +11,8 @@
     <string name="creation">Creation:</string>
     <string name="last_update">Last update:</string>
     <string name="worldkie">Worldkie:</string>
-    <string name="actual_password_incorrect">Contraseña actual incorrecta</string>
-<string name="incorrect_telephone">Incorrect telephone</string>
+    <string name="actual_password_incorrect">Incorrect current password</string>
+<string name="incorrect_telephone">Invalid phone number</string>
     <string name="wait_new_info">You\'ll be able to see more information soon.</string>
     <string name="old_password">Old password</string>
     <string name="new_password">New password</string>
@@ -83,10 +83,10 @@
     <string name="del">Are you sure?</string>
 
     <string name="userErrorExists">Username already exists</string>
-    <string name="emailErrorFormat">Email format no valid</string>
+    <string name="emailErrorFormat">Invalid email format</string>
     <string name="emailExists">Email already exists</string>
-    <string name="passwordTooShort">Password must contains at least 8 characters</string>
-    <string name="passwordErrorSpecialChar">Password must contain at least one special characters</string>
+    <string name="passwordTooShort">Password must contain at least 8 characters</string>
+    <string name="passwordErrorSpecialChar">Password must contain at least one special character</string>
     <string name="passwordErrorUppercase">Password must contain at least one uppercase letter</string>
     <string name="passwordErrorRepeat">Passwords do not match</string>
     <string name="gender">Gender</string>

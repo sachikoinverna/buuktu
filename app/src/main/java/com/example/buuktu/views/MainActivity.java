@@ -40,7 +40,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
+    private boolean isProfileImageLoaded = false;
     private DrawerLayout drawerLayout;
     private BottomNavigationView bottomNavigationView;
     private ImageButton ib_info,ib_back,ib_self_profile,ib_save;
@@ -154,34 +154,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         infoGeneralDialog.show();
     }
     private void getProfilePhoto(){
+if(!isProfileImageLoaded) {
+    ib_self_profile.setVisibility(View.INVISIBLE); // Hacerlo ligeramente transparente al principio
+    collectionUsers.document(UID).addSnapshotListener((queryDocumentSnapshot, e) -> {
+        if (queryDocumentSnapshot.getBoolean("photo_default")) {
+            int resId = getResources().getIdentifier(queryDocumentSnapshot.getString("photo_id"), "mipmap", getPackageName());
+            if (resId != 0) {
+                Drawable drawable = ContextCompat.getDrawable(this, resId);
+                DrawableUtils.personalizarImagenCircleButton(this, DrawableUtils.drawableToBitmap(drawable), ib_self_profile, R.color.purple1);
+                ib_self_profile.setVisibility(View.VISIBLE); // Hacerlo ligeramente transparente al principio
 
-        ib_self_profile.setVisibility(View.INVISIBLE); // Hacerlo ligeramente transparente al principio
-        collectionUsers.document(UID).addSnapshotListener((queryDocumentSnapshot, e) -> {
-            if(queryDocumentSnapshot.getBoolean("photo_default")) {
-                int resId = getResources().getIdentifier(queryDocumentSnapshot.getString("photo_id"), "mipmap", getPackageName());
-                if (resId != 0) {
-                    Drawable drawable = ContextCompat.getDrawable(this, resId);
-                    DrawableUtils.personalizarImagenCircleButton(this, DrawableUtils.drawableToBitmap(drawable), ib_self_profile, R.color.purple1);
-                    ib_self_profile.setVisibility(View.VISIBLE); // Hacerlo ligeramente transparente al principio
-
-                    EfectsUtils.startCircularReveal(drawable,ib_self_profile);
-                }
-            }else{
-                firebaseStorageUsers.getReference().listAll().addOnSuccessListener(listResult -> {
-                    for (StorageReference item : listResult.getItems()) {
-                        if (item.getName().startsWith("profile")) {
-                            item.getDownloadUrl().addOnSuccessListener(uri -> {
-                                DrawableUtils.personalizarImagenCircleButton(this, uri, ib_self_profile, R.color.purple1);
-                                ib_self_profile.setVisibility(View.VISIBLE); // Hacerlo ligeramente transparente al principio
-                                EfectsUtils.startCircularReveal(ib_self_profile.getDrawable(), ib_self_profile);
-                            });
-                            break;
-                        }
-                    }
-                });
-
+                EfectsUtils.startCircularReveal(drawable, ib_self_profile);
             }
-        });
+        } else {
+            firebaseStorageUsers.getReference().listAll().addOnSuccessListener(listResult -> {
+                for (StorageReference item : listResult.getItems()) {
+                    if (item.getName().startsWith("profile")) {
+                        item.getDownloadUrl().addOnSuccessListener(uri -> {
+                            DrawableUtils.personalizarImagenCircleButton(this, uri, ib_self_profile, R.color.purple1);
+                            ib_self_profile.setVisibility(View.VISIBLE); // Hacerlo ligeramente transparente al principio
+                            EfectsUtils.startCircularReveal(ib_self_profile.getDrawable(), ib_self_profile);
+                        });
+                        break;
+                    }
+                }
+            });
+
+        }
+    });
+    isProfileImageLoaded = true;
+
+}
     }
     private void initComponents(){
         ib_self_profile = findViewById(R.id.ib_self_profile);

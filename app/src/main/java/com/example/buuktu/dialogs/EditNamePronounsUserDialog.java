@@ -15,6 +15,8 @@ import com.example.buuktu.utils.CheckUtil;
 import com.example.buuktu.utils.EfectsUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -51,16 +53,12 @@ public class EditNamePronounsUserDialog extends Dialog implements View.OnClickLi
         setListeners();
         name = context.getString(R.string.name);
         pronouns = context.getString(R.string.pronouns);
-        email = context.getString(R.string.email);
         if(type.equals(name)){
                 et_namepronouns.setInputType(InputType.TYPE_CLASS_TEXT);
                 et_namepronounsFull.setStartIconDrawable(R.drawable.twotone_add_circle_24);}
         else if(type.equals(pronouns)) {
             et_namepronouns.setInputType(InputType.TYPE_CLASS_TEXT);
             et_namepronounsFull.setStartIconDrawable(R.drawable.twotone_add_circle_24);
-        } else if (type.equals(email)) {
-                et_namepronouns.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-                et_namepronounsFull.setStartIconDrawable(R.drawable.twotone_email_24);
         }
         et_namepronounsFull.setHint(type);
         et_namepronouns.setText(value);
@@ -82,8 +80,6 @@ public class EditNamePronounsUserDialog extends Dialog implements View.OnClickLi
                 saveName();
         } else if (type.equals(pronouns)) {
             savePronouns();
-        } else if (type.equals(email)) {
-                saveEmail();
         }
     }
     private void changeVisibility(){
@@ -116,23 +112,6 @@ public class EditNamePronounsUserDialog extends Dialog implements View.OnClickLi
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::dismiss);
-    }
-    private void saveEmail(){
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (!CheckUtil.handlerCheckNewIsTheSameAsOld(context,et_namepronouns,user.getEmail(),et_namepronounsFull)) {
-            changeVisibility();
-            Completable.timer(2, TimeUnit.SECONDS)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(() -> user.updateEmail(et_namepronouns.getText().toString()).addOnCompleteListener(updateTask -> {
-                        if (updateTask.isSuccessful()) {
-                            successFail("success");
-                        } else {
-                            successFail("fail");
-                        }
-                    })
-                    );
-        }
     }
     private void savePronouns(){
         if(CheckUtil.handlerCheckPronouns(context,et_namepronouns,et_namepronounsFull)) {

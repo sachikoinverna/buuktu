@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.view.menu.MenuWrapperICS;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 
@@ -32,16 +33,16 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment im
     Context context;
     ImageButton ib_prf_imgOne, ib_prf_imgTwo, ib_prf_imgThree, ib_prf_imgFour, ib_prf_imgFive, ib_prf_imgSix, ib_prf_imgSeven, ib_prf_imgEight, ib_prf_imgNine, ib_prf_imgTen, ib_prf_imgEleven, ib_back_default_photo_profile;
     Register register;
-    ArrayList<ImageButton> imageButtons = new ArrayList<>();
+    ArrayList<ImageButton> imageButtons;
     CreateEditWorldkie createEditWorldkie;
     CreateCharacterkie createCharacterkie;
     CreateEditStuffkie createEditStuffkie;
     CreateEditScenariokie createEditScenariokie;
-    ArrayList<Integer> photosWorldkies = new ArrayList<>();
-    ArrayList<Integer> photosUserkies = new ArrayList<>();
-    ArrayList<Integer> photosStuffkies = new ArrayList<>();
-    ArrayList<Integer> photosCharacterkies = new ArrayList<>();
-    ArrayList<Integer> photosScenariokies = new ArrayList<>();
+    ArrayList<Integer> photosWorldkies ;
+    ArrayList<Integer> photosUserkies ;
+    ArrayList<Integer> photosStuffkies;
+    ArrayList<Integer> photosCharacterkies ;
+    ArrayList<Integer> photosScenariokies ;
 
     public BottomSheetProfilePhotoDefault() {
     }
@@ -62,6 +63,7 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment im
 
     private void fillArrays() {
         if (register != null) {
+            photosUserkies = new ArrayList<>();
             photosUserkies.add(R.mipmap.photoprofileone);
             photosUserkies.add(R.mipmap.photoprofiletwo);
             photosUserkies.add(mipmap.photoprofilethree);
@@ -75,6 +77,7 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment im
             photosUserkies.add(mipmap.photoprofileeleven);
 
         } else if (createEditWorldkie != null) {
+            photosWorldkies = new ArrayList<>();
             photosWorldkies.add(R.mipmap.photoworldkieone);
             photosWorldkies.add(R.mipmap.photoworldkietwo);
             photosWorldkies.add(R.mipmap.photoworldkiethree);
@@ -88,6 +91,7 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment im
             photosWorldkies.add(R.mipmap.photoworldkieeleven);
 
         } else if (createCharacterkie != null) {
+            photosCharacterkies = new ArrayList<>();
             photosCharacterkies.add(R.mipmap.photocharacterkieone);
             photosCharacterkies.add(R.mipmap.photocharacterkietwo);
             photosCharacterkies.add(R.mipmap.photocharacterkiethree);
@@ -100,6 +104,7 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment im
             photosCharacterkies.add(mipmap.photocharacterkieten);
             photosCharacterkies.add(mipmap.photocharacterkieeleven);
         } else if (createEditStuffkie != null) {
+            photosStuffkies = new ArrayList<>();
             photosStuffkies.add(mipmap.photostuffkieone);
             photosStuffkies.add(mipmap.photostuffkietwo);
             photosStuffkies.add(mipmap.photostuffkiethree);
@@ -112,6 +117,7 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment im
             photosStuffkies.add(mipmap.photostuffkieten);
             photosStuffkies.add(mipmap.photostuffkieeleven);
         } else if (createEditScenariokie != null) {
+            photosScenariokies = new ArrayList<>();
             photosScenariokies.add(mipmap.photoscenariokieone);
             photosScenariokies.add(mipmap.photoscenariokietwo);
             photosScenariokies.add(mipmap.photoscenariokiethree);
@@ -175,15 +181,26 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment im
         ib_prf_imgEleven = v.findViewById(R.id.ib_prf_imgEleven);
         ib_back_default_photo_profile = v.findViewById(R.id.ib_back_default_photo_profile);
         if (getActivity() instanceof MainActivity) {
-            if (getParentFragment() instanceof CreateEditWorldkie)
+            if (getParentFragment() instanceof CreateEditWorldkie) {
+                imageButtons = new ArrayList<>();
                 createEditWorldkie = (CreateEditWorldkie) getParentFragment();
+            }
             else if (getParentFragment() instanceof CreateEditScenariokie)
-                createEditScenariokie = (CreateEditScenariokie) getParentFragment();
-            else if (getParentFragment() instanceof CreateCharacterkie)
-                createCharacterkie = (CreateCharacterkie) getParentFragment();
-            else if (getParentFragment() instanceof CreateEditStuffkie)
-                createEditStuffkie = (CreateEditStuffkie) getParentFragment();
+            {
+                imageButtons = new ArrayList<>();
 
+                createEditScenariokie = (CreateEditScenariokie) getParentFragment();
+            }
+            else if (getParentFragment() instanceof CreateCharacterkie)
+            {
+                imageButtons = new ArrayList<>();
+
+                createCharacterkie = (CreateCharacterkie) getParentFragment();
+            }
+            else if (getParentFragment() instanceof CreateEditStuffkie) {
+                imageButtons = new ArrayList<>();
+                createEditStuffkie = (CreateEditStuffkie) getParentFragment();
+            }
 
         } else if (getActivity() instanceof Register) register = (Register) getActivity();
     }
