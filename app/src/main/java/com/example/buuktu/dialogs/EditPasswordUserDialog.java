@@ -71,10 +71,10 @@ public class EditPasswordUserDialog extends Dialog implements View.OnClickListen
         animationView.setVisibility(loadingMode?View.VISIBLE:View.GONE);
     }
 private void saveNewPassword(){
-    setVisibility(true);
     if(CheckUtil.handlerCheckNewIsTheSameAsOld(context,et_newPassword,et_oldpassword,et_newpasswordFull)) {
         if (CheckUtil.handlerCheckPassword(context, et_newPassword, et_newpasswordFull) && CheckUtil.handlerCheckPasswordRepeat(context, et_newPasswordRepeat, et_newPassword, et_newpasswordRepeatFull)) {
-                AuthCredential credential = EmailAuthProvider.getCredential(FirebaseAuth.getInstance().getCurrentUser().getEmail(), et_oldpassword.getText().toString());
+            setVisibility(true);
+            AuthCredential credential = EmailAuthProvider.getCredential(FirebaseAuth.getInstance().getCurrentUser().getEmail(), et_oldpassword.getText().toString());
                 Completable.timer(2, TimeUnit.SECONDS)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
