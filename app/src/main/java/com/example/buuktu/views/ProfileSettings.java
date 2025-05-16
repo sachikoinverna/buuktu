@@ -19,7 +19,6 @@ import com.example.buuktu.adapters.SettingAdapter;
 import com.example.buuktu.models.SettingModel;
 import com.example.buuktu.models.UserkieModel;
 import com.example.buuktu.utils.NavigationUtils;
-import com.google.firebase.firestore.DocumentReference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -86,7 +85,7 @@ public class ProfileSettings extends Fragment implements View.OnClickListener {
     }
     private void setRecyclerView() {
         rv_settings_profile.setLayoutManager(new LinearLayoutManager(mainActivity));
-        settingAdapter = new SettingAdapter(dataSet, mainActivity, mainActivity.getUID());
+        settingAdapter = new SettingAdapter(dataSet, mainActivity);
         rv_settings_profile.setAdapter(settingAdapter);
     }
     private void setVisibility(){

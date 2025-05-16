@@ -261,7 +261,7 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
                 .subscribe(() -> dialog.dismiss());
     }
     private void save(){
-        if (CheckUtil.handlerCheckName(mainActivity, et_nameScenariokieCreate, et_nameScenariokieCreateFull)) {
+        if (!CheckUtil.handlerCheckName(mainActivity, et_nameScenariokieCreate, et_nameScenariokieCreateFull)) {
             dialog.show();
             animationView = dialog.getAnimationView();
             scenariokieModel.setName(et_nameScenariokieCreate.getText().toString());

@@ -12,10 +12,8 @@ import com.google.i18n.phonenumbers.Phonenumber;
 
 public class CheckUtil {
     public static boolean handlerCheckPassword(Context context,TextInputEditText textInputEditText,TextInputLayout textInputLayout) {
-        if (CheckUtil.checkTextEmpty( textInputEditText.getText().toString())) {
-            CheckUtil.setErrorMessage(context.getString(R.string.passwordErrorEmpty), textInputLayout);
+        if (CheckUtil.checkTextEmpty(context,textInputLayout,textInputEditText.getText().toString())) {
             return false;
-
         } else if ( textInputEditText.getText().toString().length() < 8) {
             CheckUtil.setErrorMessage(context.getString(R.string.passwordTooShort), textInputLayout);
             return false;
@@ -56,8 +54,7 @@ public class CheckUtil {
         return true;
     }
     public static boolean handlerCheckBirthdayDate(Context context, TextInputEditText textInputEditText, TextInputLayout textInputLayout) {
-        if (CheckUtil.checkTextEmpty(textInputEditText.getText().toString())) {
-            CheckUtil.setErrorMessage(context.getString(R.string.birthdayErrorEmpty), textInputLayout);
+        if (CheckUtil.checkTextEmpty(context,textInputLayout,textInputEditText.getText().toString())) {
             return false;
         }
         CheckUtil.setErrorMessage(null, textInputLayout);
@@ -72,8 +69,7 @@ public class CheckUtil {
 
             System.err.println("NumberParseException was thrown");
         }
-        if (CheckUtil.checkTextEmpty(textInputEditText.getText().toString())) {
-            CheckUtil.setErrorMessage(context.getString(R.string.telephoneErrorEmpty), textInputLayout);
+        if (CheckUtil.checkTextEmpty(context,textInputLayout,textInputEditText.getText().toString())) {
             return false;
         } else if (!phoneUtil.isValidNumber(number)) {
             CheckUtil.setErrorMessage(context.getString(R.string.incorrect_telephone), textInputLayout);
@@ -84,8 +80,7 @@ public class CheckUtil {
     }
 
     public static boolean handlerCheckName(Context context,TextInputEditText textInputEditText,TextInputLayout textInputLayout) {
-        if (CheckUtil.checkTextEmpty(textInputEditText.getText().toString())) {
-            CheckUtil.setErrorMessage(context.getString(R.string.nameErrorEmpty), textInputLayout);
+        if (CheckUtil.checkTextEmpty(context,textInputLayout,textInputEditText.getText().toString())) {
             return false;
         } else if (CheckUtil.checkNumbers(textInputEditText.getText().toString())){
             CheckUtil.setErrorMessage(context.getString(R.string.numberErrorTextField), textInputLayout);
@@ -95,8 +90,7 @@ public class CheckUtil {
         return true;
     }
     public static boolean handlerCheckPronouns(Context context,TextInputEditText textInputEditText,TextInputLayout textInputLayout) {
-        if (CheckUtil.checkTextEmpty(textInputEditText.getText().toString())) {
-            CheckUtil.setErrorMessage(context.getString(R.string.pronounsErrorEmpty), textInputLayout);
+        if (CheckUtil.checkTextEmpty(context,textInputLayout,textInputEditText.getText().toString())) {
             return false;
         }
         CheckUtil.setErrorMessage(null, textInputLayout);
@@ -108,8 +102,7 @@ public class CheckUtil {
 
     }
     public static boolean checkEmail(Context context,TextInputEditText textInputEditText,TextInputLayout textInputLayout){
-        if(CheckUtil.checkTextEmpty(textInputEditText.getText().toString())){
-            CheckUtil.setErrorMessage(context.getString(R.string.emailErrorEmpty), textInputLayout);
+        if (CheckUtil.checkTextEmpty(context,textInputLayout,textInputEditText.getText().toString())) {
             return false;
         }
         else if (!Patterns.EMAIL_ADDRESS.matcher(textInputEditText.getText().toString()).matches()) {
@@ -120,15 +113,18 @@ public class CheckUtil {
         return true;
     }
     public static boolean handlerCheckUsernameEmpty(Context context,TextInputEditText textInputEditText,TextInputLayout textInputLayout) {
-        if (CheckUtil.checkTextEmpty(textInputEditText.getText().toString())) {
-            CheckUtil.setErrorMessage(context.getString(R.string.userErrorEmpty), textInputLayout);
+        if (CheckUtil.checkTextEmpty(context,textInputLayout,textInputEditText.getText().toString())) {
             return false;
         }
         CheckUtil.setErrorMessage(null, textInputLayout);
         return true;
     }
-    public static boolean checkTextEmpty(String text){
-            return text.isEmpty();
+    public static boolean checkTextEmpty(Context context, TextInputLayout textInputLayout, String text){
+            if(text.isEmpty()){
+                CheckUtil.setErrorMessage(context.getString(R.string.fieldErrorEmpty), textInputLayout);
+                return false;
+            }
+            return true;
     }
 
     //Comprobueba si una cadena de texto contiene uno o más caracteres escritos en mayúscula.

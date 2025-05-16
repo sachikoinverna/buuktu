@@ -173,7 +173,7 @@
         android:backgroundTint="@color/green1"
         android:gravity="center"
         android:onClick="handlerLogin"
-        android:text="Iniciar sesion"
+        android:text="@string/login"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold"

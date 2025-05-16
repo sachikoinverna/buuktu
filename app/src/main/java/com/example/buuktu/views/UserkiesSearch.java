@@ -25,15 +25,9 @@ public class UserkiesSearch extends Fragment {
     MainActivity mainActivity;
     public UserkiesSearch() {}
 
-    public static UserkiesSearch newInstance() {
-        return new UserkiesSearch();
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override

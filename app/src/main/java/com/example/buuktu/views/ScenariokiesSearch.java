@@ -26,12 +26,6 @@ public class ScenariokiesSearch extends Fragment {
     public ScenariokiesSearch() {
     }
 
-
-    public static ScenariokiesSearch newInstance() {
-        return new ScenariokiesSearch();
-
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

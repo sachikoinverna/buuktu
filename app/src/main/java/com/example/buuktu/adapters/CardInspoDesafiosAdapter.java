@@ -43,10 +43,10 @@ public class CardInspoDesafiosAdapter extends RecyclerView.Adapter<CardInspoDesa
 
         holder.getText().setText(cardItem.getText());
         holder.getCardView().setOnClickListener(v -> {
-            if(cardItem.getText().equals("Wordkie of the day")){
+            if(cardItem.getText().equals(context.getString(R.string.wordkie_of_the_day))){
                 PeriodWordsDialog periodWordsDialog = new PeriodWordsDialog(v.getContext());
                 periodWordsDialog.show();
-            } else if (cardItem.getText().equals("Numberkie of the day")) {
+            } else if (cardItem.getText().equals(context.getString(R.string.numberkie_of_the_day))) {
                 PeriodNumbersDialog periodNumbersDialog = new PeriodNumbersDialog(v.getContext());
                 periodNumbersDialog.show();
             }

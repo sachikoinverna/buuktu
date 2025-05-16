@@ -1,6 +1,5 @@
 package com.example.buuktu.adapters;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +10,10 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buuktu.R;
-import com.example.buuktu.dialogs.CreateEditGeneralDialog;
 import com.example.buuktu.dialogs.EditNamePronounsUserDialog;
 import com.example.buuktu.dialogs.EditPasswordUserDialog;
 import com.example.buuktu.models.SettingModel;
 import com.example.buuktu.views.MainActivity;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 
 import java.util.ArrayList;
@@ -24,10 +21,7 @@ import java.util.ArrayList;
 public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.ViewHolder> {
 
     private final ArrayList<SettingModel> dataSet;
-    private final Context context;
-    final DocumentReference documentReference;
-    final FirebaseAuth firebaseAuth;
-    final String UID;
+    private final MainActivity context;
     EditNamePronounsUserDialog editNamePronounsUserDialog;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -56,12 +50,9 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.ViewHold
 
 
     //Constructor donde pasamos la lista de productos y el contexto
-    public SettingAdapter(ArrayList<SettingModel> dataSet, MainActivity ctx, String UID) {
+    public SettingAdapter(ArrayList<SettingModel> dataSet, MainActivity ctx) {
         this.dataSet = dataSet;
         this.context = ctx;
-        firebaseAuth = FirebaseAuth.getInstance();
-        this.UID = UID;
-        documentReference = ctx.getCollectionUsers().document(UID);
     }
 
 
@@ -77,6 +68,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull SettingAdapter.ViewHolder holder, int position) {
         SettingModel settingModel = dataSet.get(position);
+        DocumentReference documentReference = context.getCollectionUsers().document(context.getUID());
         if (!settingModel.getName().equals(context.getResources().getString(R.string.user_password))) {
             holder.getTv_value_setting_profile().setText(settingModel.getValue());
         } else {
@@ -86,7 +78,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.ViewHold
         holder.getTv_name_setting_profile().setText(settingModel.getName());
          holder.getCard_view_setting_list_profile().setOnClickListener(v -> {
              if (settingModel.getName().equals(context.getResources().getString(R.string.name)) || settingModel.getName().equals(context.getResources().getString(R.string.pronouns)) || settingModel.getName().equals(context.getResources().getString(R.string.email))) {
-                 editNamePronounsUserDialog = new EditNamePronounsUserDialog(v.getContext(), settingModel.getName(), settingModel.getValue(), documentReference);
+                 editNamePronounsUserDialog = new EditNamePronounsUserDialog(v.getContext(), settingModel.getName(), settingModel.getValue(),context.getCollectionUsers().document(context.getUID()));
                  editNamePronounsUserDialog.show();
              } else if (settingModel.getName().equals(context.getResources().getString(R.string.user_password))) {
 

@@ -50,7 +50,7 @@
                 android:layout_marginBottom="8dp"
                 android:ellipsize="end"
                 android:text="TextView"
-                android:textColor="@color/white"
+                android:textColor="@color/rose1"
                 android:textSize="20sp"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintEnd_toEndOf="parent"

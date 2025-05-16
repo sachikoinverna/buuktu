@@ -65,7 +65,7 @@ public class AccountSettings extends Fragment implements View.OnClickListener {
     private void setRecyclerView(){
         dataSet.add(new SettingModel(mainActivity.getString(R.string.email),mainActivity.getFirebaseAuth().getCurrentUser().getEmail()));
         dataSet.add(new SettingModel(mainActivity.getString(R.string.user_password),"*******"));
-        settingAdapter = new SettingAdapter(dataSet,mainActivity,mainActivity.getUID());
+        settingAdapter = new SettingAdapter(dataSet,mainActivity);
         rv_account_settings.setAdapter(settingAdapter);
         rv_account_settings.setLayoutManager(new LinearLayoutManager(mainActivity));
     }

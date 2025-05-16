@@ -9,7 +9,6 @@
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/purple2"
         app:cardCornerRadius="60dp"
-        app:cardElevation="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +37,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/imageView4dad"
+                android:id="@+id/iv_info_dialog"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_marginTop="8dp"
@@ -57,7 +56,7 @@
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView4dad" />
+                app:layout_constraintTop_toBottomOf="@+id/iv_info_dialog" />
 
             <ImageButton
                 android:id="@+id/ib_close_dialog"

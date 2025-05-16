@@ -123,8 +123,7 @@
                     android:maxLength="50"
                     android:shadowColor="@color/purple3"
                     android:textAlignment="center"
-                    android:textColor="@color/purple2"
-                    android:textColorHint="@color/brownMaroon"
+                    android:textColor="@color/purple1"
                     android:textSize="20sp" />
 
             </com.google.android.material.textfield.TextInputLayout>

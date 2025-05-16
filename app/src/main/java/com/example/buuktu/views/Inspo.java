@@ -26,10 +26,6 @@ public class Inspo extends Fragment {
     private ArrayList<CardItem> items = new ArrayList<>();
     public Inspo() {}
 
-    public static Inspo newInstance() {
-        return new Inspo();
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

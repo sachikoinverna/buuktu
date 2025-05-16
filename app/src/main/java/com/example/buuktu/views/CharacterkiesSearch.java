@@ -23,13 +23,6 @@ public class CharacterkiesSearch extends Fragment {
     private RecyclerView rc_characterkies_search;
     private CharacterkieSearchAdapter characterkieSearchAdapter;
     private MainActivity mainActivity;
-    public CharacterkiesSearch() {
-    }
-
-
-    public static CharacterkiesSearch newInstance() {
-        return new CharacterkiesSearch();
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

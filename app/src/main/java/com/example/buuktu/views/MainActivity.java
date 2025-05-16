@@ -134,30 +134,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     public void getInfo(){
             Fragment fragment  = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-            if (fragment instanceof Search) {
-                showInfoDialog("search");
-            } else if (fragment instanceof Inspo){
-                showInfoDialog("inspo");
-            }else if (fragment instanceof InspoDesafios){
-                showInfoDialog("future_function");
-            }else if(fragment instanceof Note) {
-                showInfoDialog( "notekies");
-            } else if(fragment instanceof SettingsFragment||fragment instanceof AccountSettings||fragment instanceof ProfileSettings){
-                showInfoDialog("settings");
-            }
-            else if (fragment instanceof Notikies) {
-                showInfoDialog("notikies");
-            } else if (fragment instanceof Notes){
-                showInfoDialog("notekies");
-            }else if (fragment instanceof Home || fragment instanceof WorldkieMenu || fragment instanceof WorldkieView||fragment instanceof CreateEditWorldkie){
-                showInfoDialog("worldkies");
-            }else if (fragment instanceof Characterkies || fragment instanceof CharacterkieView || fragment instanceof CreateCharacterkie){
-                showInfoDialog("characterkies");
-            }else if (fragment instanceof Stuffkies || fragment instanceof StuffkieView || fragment instanceof CreateEditStuffkie){
-                showInfoDialog("stuffkies");
-            }else if (fragment instanceof Scenariokies || fragment instanceof Scenariokie || fragment instanceof CreateEditScenariokie){
-                showInfoDialog("scenariokies");
-            }
+            if (fragment instanceof Search) showInfoDialog("search");
+            else if (fragment instanceof Inspo) showInfoDialog("inspo");
+            else if (fragment instanceof InspoDesafios) showInfoDialog("challenges");
+            else if(fragment instanceof Note) showInfoDialog( "notekies");
+            else if(fragment instanceof SettingsFragment||fragment instanceof AccountSettings||fragment instanceof ProfileSettings)showInfoDialog("settings");
+            else if (fragment instanceof Notikies) showInfoDialog("notikies");
+            else if (fragment instanceof Notes) showInfoDialog("notekies");
+            else if (fragment instanceof Home || fragment instanceof WorldkieMenu || fragment instanceof WorldkieView) showInfoDialog("worldkies");
+            else if (fragment instanceof Characterkies || fragment instanceof CharacterkieView) showInfoDialog("characterkies");
+            else if (fragment instanceof Stuffkies || fragment instanceof StuffkieView) showInfoDialog("stuffkies");
+            else if (fragment instanceof Scenariokies || fragment instanceof Scenariokie) showInfoDialog("scenariokies");
+            else if (fragment instanceof ProfileView) showInfoDialog("profile");
+
     }
 
     public void showInfoDialog(String mode){

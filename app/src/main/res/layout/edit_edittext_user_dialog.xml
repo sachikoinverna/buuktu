@@ -42,7 +42,6 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="24dp"
                 android:foregroundGravity="center"
-                android:hint="@string/name"
                 android:textAlignment="center"
                 android:textColorHint="@color/purple3"
                 app:boxBackgroundColor="@color/white"
@@ -76,7 +75,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textColor="@color/purple2"
+                    android:textColor="@color/purple1"
                     android:textSize="20sp" />
 
             </com.google.android.material.textfield.TextInputLayout>

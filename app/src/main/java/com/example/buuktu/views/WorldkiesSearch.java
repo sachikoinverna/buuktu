@@ -25,10 +25,6 @@ public class WorldkiesSearch extends Fragment {
     MainActivity mainActivity;
     public WorldkiesSearch() {}
 
-    public static WorldkiesSearch newInstance() {
-        return new WorldkiesSearch();
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1097,7 +1097,7 @@
                     android:inputType="number"
                     android:maxLength="50"
                     android:textAlignment="center"
-                    android:textColorHint="@color/brownMaroon" />
+                    android:textColor="@color/purple1" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

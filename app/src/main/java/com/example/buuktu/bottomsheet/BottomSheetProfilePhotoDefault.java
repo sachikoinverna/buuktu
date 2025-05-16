@@ -7,7 +7,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +16,11 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.buuktu.R;
+import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.views.CreateCharacterkie;
 import com.example.buuktu.views.CreateEditScenariokie;
 import com.example.buuktu.views.CreateEditStuffkie;
-import com.example.buuktu.R;
-import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.views.CreateEditWorldkie;
 import com.example.buuktu.views.MainActivity;
 import com.example.buuktu.views.Register;
@@ -29,7 +28,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
 
-public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  implements View.OnClickListener {
+public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment implements View.OnClickListener {
     Context context;
     ImageButton ib_prf_imgOne, ib_prf_imgTwo, ib_prf_imgThree, ib_prf_imgFour, ib_prf_imgFive, ib_prf_imgSix, ib_prf_imgSeven, ib_prf_imgEight, ib_prf_imgNine, ib_prf_imgTen, ib_prf_imgEleven, ib_back_default_photo_profile;
     Register register;
@@ -53,7 +52,6 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
         View v = inflater.inflate(R.layout.dialog_default_image_profile_photo,
                 container, false);
         initComponents(v);
-
 
         context = getContext();
         fillArrays();
@@ -145,7 +143,6 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
             if (register != null) {
                 DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(ContextCompat.getDrawable(context, photosUserkies.get(imageIndex))), imageButton, color.blue1);
             } else if (createCharacterkie != null) {
-                Log.d("BottomSheet", "photosCharacterkies size in setImages: " + photosCharacterkies.size());
                 DrawableUtils.personalizarImagenCircleButton(context, DrawableUtils.drawableToBitmap(ContextCompat.getDrawable(context, photosCharacterkies.get(imageIndex))), imageButton, color.greenWhatever);
 
                 imageButton.setImageDrawable(ContextCompat.getDrawable(context, photosCharacterkies.get(imageIndex)));
@@ -249,7 +246,6 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment  i
         else if (v.getId() == R.id.ib_back_default_photo_profile)
             goBackBottomSheetOptionsPhotoProfile();
     }
-
 
     public void goBackBottomSheetOptionsPhotoProfile() {
         FragmentManager fragmentManager = getParentFragment() != null

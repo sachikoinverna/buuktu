@@ -8,7 +8,6 @@ import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -29,13 +28,8 @@ public class Notes extends Fragment implements View.OnClickListener {
     private ArrayList<NotekieModel> items = new ArrayList<>();
     ImageButton ib_save,backButton,ib_profile_superior;
     private FloatingActionButton fbAddNote;
-    FragmentManager fragmentManager;
     MainActivity mainActivity;
     public Notes() {}
-
-    public static Notes newInstance() {
-        return new Notes();
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -59,7 +53,6 @@ public class Notes extends Fragment implements View.OnClickListener {
         ib_profile_superior = mainActivity.getIb_self_profile();
         recyclerView = view.findViewById(R.id.rc_all_notes_adapter);
         fbAddNote = view.findViewById(R.id.fb_add_note_list_notes);
-        fragmentManager = mainActivity.getSupportFragmentManager();
         setVisibility();
     }
     private void setVisibility(){
@@ -94,21 +87,16 @@ public class Notes extends Fragment implements View.OnClickListener {
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-        noteAdapter = new NoteAdapter(mainActivity, items, item -> {
-            Bundle bundle = new Bundle();
-            bundle.putString("note_id", item.getUID());
-            NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new Note());
-
-        });
+        noteAdapter = new NoteAdapter(mainActivity, items);
         recyclerView.setAdapter(noteAdapter);
     }
     @Override
     public void onClick(View v) {
         // Comprueba si se ha presionado el botón de retroceso.
         if(v.getId()==R.id.ib_back){
-            NavigationUtils.goBack(fragmentManager,mainActivity);
+            NavigationUtils.goBack(mainActivity.getSupportFragmentManager(),mainActivity);
         } else if (v.getId()==R.id.fb_add_note_list_notes) {
-            NavigationUtils.goNewFragment(fragmentManager,new Note());
+            NavigationUtils.goNewFragment(mainActivity.getSupportFragmentManager(),new Note());
         }
     }
 }

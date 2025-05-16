@@ -27,10 +27,6 @@ public class StuffkiesSearch extends Fragment {
     public StuffkiesSearch() {
     }
 
-    public static StuffkiesSearch newInstance() {
-        return new StuffkiesSearch();
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

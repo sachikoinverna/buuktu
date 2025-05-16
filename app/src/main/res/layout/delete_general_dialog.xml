@@ -26,7 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@string/attention"
+                android:text="@string/del"
                 android:textColor="@color/purple3"
                 android:textSize="34sp"
                 android:textStyle="bold"
@@ -35,7 +35,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/iv_photo_del"
+                android:id="@+id/iv_info_dialog"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_marginStart="8dp"
@@ -45,21 +45,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_title_del"
                 app:srcCompat="@mipmap/img_del_notes" />
-
-            <TextView
-                android:id="@+id/tv_text_del"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:gravity="center"
-                android:text="¿Deseas eliminar la nota? No podras recuperarla."
-                android:textColor="@color/purple1"
-                android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_photo_del" />
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/anim_del"
@@ -86,7 +71,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/ib_close_dialog"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_text_del"
+                app:layout_constraintTop_toBottomOf="@+id/iv_info_dialog"
                 app:srcCompat="@drawable/twotone_check_circle_24"
                 app:tint="#43A047" />
 
@@ -101,7 +86,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/ib_accept_dialog"
-                app:layout_constraintTop_toBottomOf="@+id/tv_text_del"
+                app:layout_constraintTop_toBottomOf="@+id/iv_info_dialog"
                 app:srcCompat="@drawable/twotone_cancel_24"
                 app:tint="#E62222" />
         </androidx.constraintlayout.widget.ConstraintLayout>

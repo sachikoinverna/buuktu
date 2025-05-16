@@ -92,14 +92,7 @@ public class DrawableUtils {
                         .transform(new RoundedBorderSquareTransformation(radius, border, ContextCompat.getColor(context, idColor))))
                 .into(imageView);
     }
-    public static void personalizarImagenCuadradoButton(Context context, int radius, int border, @ColorRes int idColor, Bitmap bitmap, ImageButton imageButton) {
-        Glide.with(context)
-                .load(bitmap)
-                .apply(new RequestOptions()
-                        .centerCrop()
-                        .transform(new RoundedBorderSquareTransformation(radius, border, ContextCompat.getColor(context, idColor))))
-                .into(imageButton);
-    }
+
     public static void personalizarImagenCuadradoButton(Context context, int radius, int border, @ColorRes int idColor, Bitmap bitmap, ImageView imageView) {
         Glide.with(context)
                 .load(bitmap)

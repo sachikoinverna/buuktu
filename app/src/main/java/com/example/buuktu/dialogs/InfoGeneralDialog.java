@@ -5,17 +5,23 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
 import com.example.buuktu.R;
+import com.example.buuktu.utils.DrawableUtils;
+import com.example.buuktu.views.MainActivity;
 
 public class InfoGeneralDialog extends Dialog implements View.OnClickListener {
     ImageButton ib_close_dialog ;
    String mode;
-    public InfoGeneralDialog(@NonNull Context context,String mode)
+   ImageView iv_info_dialog;
+   MainActivity context;
+    public InfoGeneralDialog(@NonNull MainActivity context, String mode)
     {
         super(context);
+        this.context=context;
         this.mode=mode;
     }
     @Override
@@ -23,6 +29,7 @@ public class InfoGeneralDialog extends Dialog implements View.OnClickListener {
         super.onCreate(savedInstanceState);
 
         initComponents();
+        customizeImage();
         setListeners();
         setDialogProperties();
     }
@@ -58,10 +65,20 @@ private void initComponents(){
         case "scenariokies":
             setContentView(R.layout.info_scenariokies_dialog);
             break;
+        case "profile":
+            setContentView(R.layout.info_profile);
+            break;
+        case "challenges":
+            setContentView(R.layout.info_desafios_dialog);
+            break;
     }
     ib_close_dialog = findViewById(R.id.ib_close_dialog);
+    iv_info_dialog = findViewById(R.id.iv_info_dialog);
 
 }
+    private void customizeImage(){
+        DrawableUtils.personalizarImagenCuadradoButton(context,30,7,R.color.purple1, iv_info_dialog.getDrawable(), iv_info_dialog);
+    }
 private void setListeners(){
     ib_close_dialog.setOnClickListener(this);
 }

@@ -20,80 +20,83 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.buuktu.R;
+import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.views.CreateCharacterkie;
 import com.example.buuktu.views.CreateEditScenariokie;
 import com.example.buuktu.views.CreateEditStuffkie;
-import com.example.buuktu.R;
-import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.views.CreateEditWorldkie;
 import com.example.buuktu.views.MainActivity;
 import com.example.buuktu.views.Register;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-public class BottomSheetProfilePhoto extends BottomSheetDialogFragment implements View.OnClickListener{
-    Context context;
-    Button tv_choose_photo_default,tv_choose_photo_gallery;
+public class BottomSheetProfilePhoto extends BottomSheetDialogFragment implements View.OnClickListener {
     final int REQUEST_CODE = 1;
-    private ActivityResultLauncher<Intent> imagePickerLauncher;
+    Context context;
+    Button tv_choose_photo_default, tv_choose_photo_gallery;
     Register register;
     CreateEditWorldkie createEditWorldkie;
     CreateCharacterkie createCharacterkie;
     CreateEditStuffkie createEditStuffkie;
     CreateEditScenariokie createEditScenariokie;
-    public BottomSheetProfilePhoto (){
+    private ActivityResultLauncher<Intent> imagePickerLauncher;
+
+    public BottomSheetProfilePhoto() {
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable
     ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.bottomsheet_choose_photo_origin,
                 container, false);
-    initComponents(v);
+        initComponents(v);
 
         initSelector();
         setListeners();
 
-
         return v;
     }
-    private void setListeners(){
+
+    private void setListeners() {
         tv_choose_photo_default.setOnClickListener(this);
         tv_choose_photo_gallery.setOnClickListener(this);
 
     }
-    private void initSelector(){
+
+    private void initSelector() {
         imagePickerLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                            Uri uri = result.getData().getData();
-                            if(register!=null) {
-                                register.setImageUri(uri);
-                                DrawableUtils.personalizarImagenCircleButton(context, uri, register.getIB_profile_photo(), R.color.blue1);
-                                    register.setPhotoNoDefault();
-                                    register.setSource("device");
-                                } else if (createEditWorldkie!=null) {
-                                createEditWorldkie.setImageUri(uri);
-                                DrawableUtils.personalizarImagenCuadradoButton(context,150/6,7,R.color.brownMaroon,uri, createEditWorldkie.getIb_select_img_create_worldkie());
-                                    createEditWorldkie.setPhotoNoDefault();
-                                } else if (createCharacterkie!=null) {
-                                createCharacterkie.setImageUri(uri);
-                                DrawableUtils.personalizarImagenCircleButton(context, uri, createCharacterkie.getIb_select_img_create_worldkie(), R.color.brownMaroon);
-                                    createCharacterkie.setPhotoNoDefault();
-                                }else if (createEditStuffkie!=null) {
-                                createEditStuffkie.setImageUri(uri);
-                                DrawableUtils.personalizarImagenCuadradoButton(context,150/6,7,R.color.brownMaroon,uri, createEditStuffkie.getIb_select_img_create_stuffkie());
-                                createEditStuffkie.setPhotoNoDefault();
-                                } else if(createEditScenariokie!=null){
-                                createEditScenariokie.setImageUri(uri);
+                        Uri uri = result.getData().getData();
+                        if (register != null) {
+                            register.setImageUri(uri);
+                            DrawableUtils.personalizarImagenCircleButton(context, uri, register.getIB_profile_photo(), R.color.blue1);
+                            register.setPhotoNoDefault();
+                        } else if (createEditWorldkie != null) {
+                            createEditWorldkie.setImageUri(uri);
+                            DrawableUtils.personalizarImagenCuadradoButton(context, 150 / 6, 7, R.color.brownMaroon, uri, createEditWorldkie.getIb_select_img_create_worldkie());
+                            createEditWorldkie.setPhotoNoDefault();
+                        } else if (createCharacterkie != null) {
+                            createCharacterkie.setImageUri(uri);
+                            DrawableUtils.personalizarImagenCircleButton(context, uri, createCharacterkie.getIb_select_img_create_worldkie(), R.color.brownMaroon);
+                            createCharacterkie.setPhotoNoDefault();
+                        } else if (createEditStuffkie != null) {
+                            createEditStuffkie.setImageUri(uri);
+                            DrawableUtils.personalizarImagenCuadradoButton(context, 150 / 6, 7, R.color.brownMaroon, uri, createEditStuffkie.getIb_select_img_create_stuffkie());
+                            createEditStuffkie.setPhotoNoDefault();
+                        } else if (createEditScenariokie != null) {
+                            createEditScenariokie.setImageUri(uri);
 
-                                DrawableUtils.personalizarImagenCuadradoButton(context,150/6,7,R.color.brownMaroon,uri, createEditScenariokie.getIb_select_img_create_scenariokie());
-                                    createEditScenariokie.setPhotoNoDefault();
-                                }
-                                dismiss();
-                            }
+                            DrawableUtils.personalizarImagenCuadradoButton(context, 150 / 6, 7, R.color.brownMaroon, uri, createEditScenariokie.getIb_select_img_create_scenariokie());
+                            createEditScenariokie.setPhotoNoDefault();
+                        }
+                        dismiss();
+                    }
                 }
         );
     }
+
     public void selectImageGallery() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED) {
@@ -114,24 +117,29 @@ public class BottomSheetProfilePhoto extends BottomSheetDialogFragment implement
 
     }
 
-    private void initComponents(View v){
-    tv_choose_photo_default = v.findViewById(R.id.tv_choose_photo_default);
-    tv_choose_photo_gallery = v.findViewById(R.id.tv_choose_photo_gallery);
+    private void initComponents(View v) {
+        tv_choose_photo_default = v.findViewById(R.id.tv_choose_photo_default);
+        tv_choose_photo_gallery = v.findViewById(R.id.tv_choose_photo_gallery);
         context = getContext();
-        if(getActivity() instanceof Register)register = (Register) getActivity();
-        else if(getActivity() instanceof MainActivity) {
-            if (getParentFragment() instanceof CreateEditWorldkie) createEditWorldkie = (CreateEditWorldkie) getParentFragment();
-            else if (getParentFragment() instanceof CreateCharacterkie) createCharacterkie = (CreateCharacterkie) getParentFragment();
-            else if (getParentFragment() instanceof CreateEditStuffkie) createEditStuffkie = (CreateEditStuffkie) getParentFragment();
-            else if (getParentFragment() instanceof CreateEditScenariokie) createEditScenariokie = (CreateEditScenariokie) getParentFragment();
+        if (getActivity() instanceof Register) register = (Register) getActivity();
+        else if (getActivity() instanceof MainActivity) {
+            if (getParentFragment() instanceof CreateEditWorldkie)
+                createEditWorldkie = (CreateEditWorldkie) getParentFragment();
+            else if (getParentFragment() instanceof CreateCharacterkie)
+                createCharacterkie = (CreateCharacterkie) getParentFragment();
+            else if (getParentFragment() instanceof CreateEditStuffkie)
+                createEditStuffkie = (CreateEditStuffkie) getParentFragment();
+            else if (getParentFragment() instanceof CreateEditScenariokie)
+                createEditScenariokie = (CreateEditScenariokie) getParentFragment();
 
         }
-}
+    }
+
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.tv_choose_photo_default){
+        if (v.getId() == R.id.tv_choose_photo_default) {
             BottomSheetProfilePhotoDefault bottomSheetProfilePhotoDefault = new BottomSheetProfilePhotoDefault();
-            bottomSheetProfilePhotoDefault.show(getParentFragmentManager(),"BottomSheetProfilePhotoDefault");
+            bottomSheetProfilePhotoDefault.show(getParentFragmentManager(), "BottomSheetProfilePhotoDefault");
             dismiss();
         } else if (v.getId() == R.id.tv_choose_photo_gallery) {
             selectImageGallery();

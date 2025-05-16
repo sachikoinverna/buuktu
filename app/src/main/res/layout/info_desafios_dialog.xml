@@ -11,7 +11,6 @@
         android:layout_marginEnd="8dp"
         app:cardBackgroundColor="@color/purple2"
         app:cardCornerRadius="60dp"
-        app:cardElevation="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,7 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/notikie"
+                android:text="@string/challenges"
                 android:textColor="@color/purple3"
                 android:textSize="34sp"
                 android:textStyle="bold"
@@ -37,7 +36,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/iv_photo_notikie"
+                android:id="@+id/iv_info_dialog"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:layout_marginTop="8dp"
@@ -57,7 +56,7 @@
                 android:textStyle="italic"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_photo_notikie" />
+                app:layout_constraintTop_toBottomOf="@+id/iv_info_dialog" />
 
             <ImageButton
                 android:id="@+id/ib_close_dialog"

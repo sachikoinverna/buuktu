@@ -1,21 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="MissingDefaultResource">
-
-    <!-- Base application theme -->
     <style name="Base.Theme.Buuktu" parent="Theme.Material3.Light.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:fontFamily">@font/alegreya</item>
         <item name="colorPrimary">@color/purple1</item>
-
     </style>
-
-    <!-- Main App Theme -->
-    <style name="Theme.Buuktu" parent="Base.Theme.Buuktu" />
-
-    <!-- Switch Text Style -->
-    <style name="SwitchTextAppearance" parent="@android:style/TextAppearance" />
-
-    <!-- Fade In/Out Animation -->
-
+    <style name="SwitchTextAppearance" parent="@android:style/TextAppearance">
+        <item name="android:fontFamily">@font/alegreya</item>
+    </style>
 </resources>

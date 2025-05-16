@@ -29,11 +29,6 @@ public class Notikies extends Fragment {
     public Notikies() {
     }
 
-
-    public static Notikies newInstance() {
-        return new Notikies();
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

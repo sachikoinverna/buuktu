@@ -33,10 +33,6 @@ public class Home extends Fragment implements View.OnClickListener {
 
     public Home() {}
 
-    public static Home newInstance() {
-        return new Home();
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

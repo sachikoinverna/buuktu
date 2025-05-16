@@ -156,8 +156,7 @@
                             android:inputType="text"
                             android:maxLength="50"
                             android:textAlignment="center"
-                            android:textColor="@color/rose2"
-                            android:textColorHint="@color/brownMaroon" />
+                            android:textColor="@color/rose1" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 

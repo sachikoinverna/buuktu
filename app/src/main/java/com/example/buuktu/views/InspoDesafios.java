@@ -28,10 +28,6 @@ public class InspoDesafios extends Fragment implements View.OnClickListener {
 
     public InspoDesafios() {}
 
-    public static InspoDesafios newInstance() {
-        return new InspoDesafios();
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

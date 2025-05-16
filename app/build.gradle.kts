@@ -40,7 +40,6 @@ dependencies {
     implementation(libs.libphonenumber)
     implementation(libs.material) // Usa la versión más reciente de Material Components
     implementation(libs.swiperefreshlayout)
-    implementation(libs.activity.v1101)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.storage)
     implementation(libs.appcompat)

@@ -27,11 +27,6 @@ public class Search extends Fragment {
     public Search() {
     }
 
-
-    public static Search newInstance() {
-        return new Search();
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
