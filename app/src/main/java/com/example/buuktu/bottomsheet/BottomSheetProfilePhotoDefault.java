@@ -7,6 +7,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import com.example.buuktu.views.CreateEditWorldkie;
 import com.example.buuktu.views.MainActivity;
 import com.example.buuktu.views.Register;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.recaptcha.RecaptchaTasksClient;
 
 import java.util.ArrayList;
 
@@ -38,23 +40,22 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment im
     CreateCharacterkie createCharacterkie;
     CreateEditStuffkie createEditStuffkie;
     CreateEditScenariokie createEditScenariokie;
-    ArrayList<Integer> photosWorldkies ;
-    ArrayList<Integer> photosUserkies ;
-    ArrayList<Integer> photosStuffkies;
-    ArrayList<Integer> photosCharacterkies ;
-    ArrayList<Integer> photosScenariokies ;
-
+    ArrayList<Integer> photosWorldkies = new ArrayList<>() ;
+    ArrayList<Integer> photosUserkies = new ArrayList<>(); ;
+    ArrayList<Integer> photosStuffkies = new ArrayList<>();
+    ArrayList<Integer> photosCharacterkies = new ArrayList();
+    ArrayList<Integer> photosScenariokies = new ArrayList<>();
+    String from;
     public BottomSheetProfilePhotoDefault() {
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable
     ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         View v = inflater.inflate(R.layout.dialog_default_image_profile_photo,
                 container, false);
         initComponents(v);
 
-        context = getContext();
         fillArrays();
         setImages();
         setListeners();
@@ -63,21 +64,21 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment im
 
     private void fillArrays() {
         if (register != null) {
-            photosUserkies = new ArrayList<>();
+
             photosUserkies.add(R.mipmap.photoprofileone);
             photosUserkies.add(R.mipmap.photoprofiletwo);
-            photosUserkies.add(mipmap.photoprofilethree);
-            photosUserkies.add(mipmap.photoprofilefour);
-            photosUserkies.add(mipmap.photoprofilefive);
-            photosUserkies.add(mipmap.photoprofilesix);
-            photosUserkies.add(mipmap.photoprofileseven);
-            photosUserkies.add(mipmap.photoprofileeight);
-            photosUserkies.add(mipmap.photoprofilenine);
-            photosUserkies.add(mipmap.photoprofileten);
-            photosUserkies.add(mipmap.photoprofileeleven);
+            photosUserkies.add(R.mipmap.photoprofilethree);
+            photosUserkies.add(R.mipmap.photoprofilefour);
+            photosUserkies.add(R.mipmap.photoprofilefive);
+            photosUserkies.add(R.mipmap.photoprofilesix);
+            photosUserkies.add(R.mipmap.photoprofileseven);
+            photosUserkies.add(R.mipmap.photoprofileeight);
+            photosUserkies.add(R.mipmap.photoprofilenine);
+            photosUserkies.add(R.mipmap.photoprofileten);
+            photosUserkies.add(R.mipmap.photoprofileeleven);
 
         } else if (createEditWorldkie != null) {
-            photosWorldkies = new ArrayList<>();
+
             photosWorldkies.add(R.mipmap.photoworldkieone);
             photosWorldkies.add(R.mipmap.photoworldkietwo);
             photosWorldkies.add(R.mipmap.photoworldkiethree);
@@ -91,7 +92,6 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment im
             photosWorldkies.add(R.mipmap.photoworldkieeleven);
 
         } else if (createCharacterkie != null) {
-            photosCharacterkies = new ArrayList<>();
             photosCharacterkies.add(R.mipmap.photocharacterkieone);
             photosCharacterkies.add(R.mipmap.photocharacterkietwo);
             photosCharacterkies.add(R.mipmap.photocharacterkiethree);
@@ -99,48 +99,36 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment im
             photosCharacterkies.add(R.mipmap.photocharacterkiefive);
             photosCharacterkies.add(R.mipmap.photocharacterkiesix);
             photosCharacterkies.add(R.mipmap.photocharacterkieseven);
-            photosCharacterkies.add(mipmap.photocharacterkieeight);
-            photosCharacterkies.add(mipmap.photocharacterkienine);
-            photosCharacterkies.add(mipmap.photocharacterkieten);
-            photosCharacterkies.add(mipmap.photocharacterkieeleven);
+            photosCharacterkies.add(R.mipmap.photocharacterkieeight);
+            photosCharacterkies.add(R.mipmap.photocharacterkienine);
+            photosCharacterkies.add(R.mipmap.photocharacterkieten);
+            photosCharacterkies.add(R.mipmap.photocharacterkieeleven);
         } else if (createEditStuffkie != null) {
-            photosStuffkies = new ArrayList<>();
-            photosStuffkies.add(mipmap.photostuffkieone);
-            photosStuffkies.add(mipmap.photostuffkietwo);
-            photosStuffkies.add(mipmap.photostuffkiethree);
-            photosStuffkies.add(mipmap.photostuffkiefour);
-            photosStuffkies.add(mipmap.photostuffkiefive);
-            photosStuffkies.add(mipmap.photostuffkiesix);
-            photosStuffkies.add(mipmap.photostuffkieseven);
-            photosStuffkies.add(mipmap.photostuffkieeight);
-            photosStuffkies.add(mipmap.photostuffkienine);
-            photosStuffkies.add(mipmap.photostuffkieten);
-            photosStuffkies.add(mipmap.photostuffkieeleven);
+            photosStuffkies.add(R.mipmap.photostuffkieone);
+            photosStuffkies.add(R.mipmap.photostuffkietwo);
+            photosStuffkies.add(R.mipmap.photostuffkiethree);
+            photosStuffkies.add(R.mipmap.photostuffkiefour);
+            photosStuffkies.add(R.mipmap.photostuffkiefive);
+            photosStuffkies.add(R.mipmap.photostuffkiesix);
+            photosStuffkies.add(R.mipmap.photostuffkieseven);
+            photosStuffkies.add(R.mipmap.photostuffkieeight);
+            photosStuffkies.add(R.mipmap.photostuffkienine);
+            photosStuffkies.add(R.mipmap.photostuffkieten);
+            photosStuffkies.add(R.mipmap.photostuffkieeleven);
+
         } else if (createEditScenariokie != null) {
-            photosScenariokies = new ArrayList<>();
-            photosScenariokies.add(mipmap.photoscenariokieone);
-            photosScenariokies.add(mipmap.photoscenariokietwo);
-            photosScenariokies.add(mipmap.photoscenariokiethree);
-            photosScenariokies.add(mipmap.photoscenariokiefour);
-            photosScenariokies.add(mipmap.photoscenariokiefive);
-            photosScenariokies.add(mipmap.photoscenariokiesix);
-            photosScenariokies.add(mipmap.photoscenariokieseven);
-            photosScenariokies.add(mipmap.photoscenariokieeight);
-            photosScenariokies.add(mipmap.photoscenariokienine);
-            photosScenariokies.add(mipmap.photoscenariokieten);
-            photosScenariokies.add(mipmap.photoscenariokieeleven);
+            photosScenariokies.add(R.mipmap.photoscenariokieone);
+            photosScenariokies.add(R.mipmap.photoscenariokietwo);
+            photosScenariokies.add(R.mipmap.photoscenariokiethree);
+            photosScenariokies.add(R.mipmap.photoscenariokiefour);
+            photosScenariokies.add(R.mipmap.photoscenariokiefive);
+            photosScenariokies.add(R.mipmap.photoscenariokiesix);
+            photosScenariokies.add(R.mipmap.photoscenariokieseven);
+            photosScenariokies.add(R.mipmap.photoscenariokieeight);
+            photosScenariokies.add(R.mipmap.photoscenariokienine);
+            photosScenariokies.add(R.mipmap.photoscenariokieten);
+            photosScenariokies.add(R.mipmap.photoscenariokieeleven);
         }
-        imageButtons.add(ib_prf_imgOne);
-        imageButtons.add(ib_prf_imgTwo);
-        imageButtons.add(ib_prf_imgThree);
-        imageButtons.add(ib_prf_imgFour);
-        imageButtons.add(ib_prf_imgFive);
-        imageButtons.add(ib_prf_imgSix);
-        imageButtons.add(ib_prf_imgSeven);
-        imageButtons.add(ib_prf_imgEight);
-        imageButtons.add(ib_prf_imgNine);
-        imageButtons.add(ib_prf_imgTen);
-        imageButtons.add(ib_prf_imgEleven);
     }
 
     private void setImages() {
@@ -168,6 +156,22 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment im
     }
 
     private void initComponents(View v) {
+        if (getParentFragment() != null) {
+
+            if (getParentFragment() instanceof CreateEditWorldkie) {
+                createEditWorldkie = (CreateEditWorldkie) getParentFragment();
+            } else if (getParentFragment() instanceof CreateCharacterkie) {
+                createCharacterkie = (CreateCharacterkie) getParentFragment();
+            } else if (getParentFragment() instanceof CreateEditStuffkie) {
+                createEditStuffkie = (CreateEditStuffkie) getParentFragment();
+            } else if (getParentFragment() instanceof CreateEditScenariokie) {
+                createEditScenariokie = (CreateEditScenariokie) getParentFragment();
+            }
+        }
+        if(getActivity() instanceof Register){
+            register = (Register) getActivity();
+        }
+        context = getContext();
         ib_prf_imgOne = v.findViewById(R.id.ib_prf_imgOne);
         ib_prf_imgTwo = v.findViewById(R.id.ib_prf_imgTwo);
         ib_prf_imgThree = v.findViewById(R.id.ib_prf_imgThree);
@@ -180,30 +184,29 @@ public class BottomSheetProfilePhotoDefault extends BottomSheetDialogFragment im
         ib_prf_imgTen = v.findViewById(R.id.ib_prf_imgTen);
         ib_prf_imgEleven = v.findViewById(R.id.ib_prf_imgEleven);
         ib_back_default_photo_profile = v.findViewById(R.id.ib_back_default_photo_profile);
-        if (getActivity() instanceof MainActivity) {
-            if (getParentFragment() instanceof CreateEditWorldkie) {
-                imageButtons = new ArrayList<>();
-                createEditWorldkie = (CreateEditWorldkie) getParentFragment();
-            }
-            else if (getParentFragment() instanceof CreateEditScenariokie)
-            {
-                imageButtons = new ArrayList<>();
+        photosWorldkies.clear(); // Limpiar la lista aquí
+        photosStuffkies.clear(); // Limpiar la lista aquí
+        photosScenariokies.clear(); // Limpiar la lista aquí
+        photosUserkies.clear();
+        photosCharacterkies.clear();
+        imageButtons = new ArrayList<>();
+        imageButtons.add(ib_prf_imgOne);
+        imageButtons.add(ib_prf_imgTwo);
+        imageButtons.add(ib_prf_imgThree);
+        imageButtons.add(ib_prf_imgFour);
+        imageButtons.add(ib_prf_imgFive);
+        imageButtons.add(ib_prf_imgSix);
+        imageButtons.add(ib_prf_imgSeven);
+        imageButtons.add(ib_prf_imgEight);
+        imageButtons.add(ib_prf_imgNine);
+        imageButtons.add(ib_prf_imgTen);
+        imageButtons.add(ib_prf_imgEleven);
 
-                createEditScenariokie = (CreateEditScenariokie) getParentFragment();
-            }
-            else if (getParentFragment() instanceof CreateCharacterkie)
-            {
-                imageButtons = new ArrayList<>();
+        // Detectar de forma segura desde el fragmento padre
 
-                createCharacterkie = (CreateCharacterkie) getParentFragment();
-            }
-            else if (getParentFragment() instanceof CreateEditStuffkie) {
-                imageButtons = new ArrayList<>();
-                createEditStuffkie = (CreateEditStuffkie) getParentFragment();
-            }
+        }
 
-        } else if (getActivity() instanceof Register) register = (Register) getActivity();
-    }
+
 
     private void setListeners() {
         for (ImageButton imageButton : imageButtons) {

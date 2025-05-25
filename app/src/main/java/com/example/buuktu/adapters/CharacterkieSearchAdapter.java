@@ -101,13 +101,14 @@ public class CharacterkieSearchAdapter extends RecyclerView.Adapter<Characterkie
         });
         holder.getTv_characterkie_name_search().setText(characterkie.getName());
         if(!characterkie.isCharacterkie_private()){
-            holder.getIv_characterkie_private_search().setVisibility(View.GONE);
+            holder.getIv_characterkie_private_search().setVisibility(View.INVISIBLE);
         }
         holder.getCv_characterkie_search().setOnClickListener(v -> {
             Bundle bundle = new Bundle();
             bundle.putString("mode","other");
             bundle.putString("UID",characterkie.getUID());
             bundle.putString("UID_WORLDKIE",characterkie.getUID_WORLDKIE());
+            bundle.putString("UID_AUTHOR",characterkie.getUID_AUTHOR());
             NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new CharacterkieView());
 
         });

@@ -25,9 +25,9 @@ import com.google.firebase.storage.StorageReference;
 
 
 public class CharacterkieView extends Fragment implements View.OnClickListener {
-    TextView tv_birthdayViewCharacterkie,tv_pronounsViewCharacterkie,tv_genderViewCharacterkie,tv_nameCharacterkieView,tv_nameUserCharacterkieView,tv_usernameCharacterkieView,tv_nameWorldkieViewCharacterkie,tv_locked_characterkie,tv_statusViewCharacterkie;
+    TextView tv_birthdayViewCharacterkie,tv_pronounsViewCharacterkie,tv_genderViewCharacterkie,tv_separator_basic_info_characterkie_view,tv_basic_info_characterkie_view,tv_nameCharacterkieView,tv_nameUserCharacterkieView,tv_usernameCharacterkieView,tv_nameWorldkieViewCharacterkie,tv_locked_characterkie;
     ImageButton bt_basic_info_characterkies_view,ib_back,ib_save,ib_characterkieView;
-    ImageView iv_locked_characterkie;
+    ImageView iv_locked_characterkie,iv_background_basic_info_characterkie,iv_basic_data_characterkie_view;
     String UID,UID_AUTHOR,UID_WORLDKIE,mode;
     UserkieModel userkieModel;
     FragmentManager fragmentManager;
@@ -35,7 +35,7 @@ public class CharacterkieView extends Fragment implements View.OnClickListener {
     MainActivity mainActivity;
     CharacterkieModel characterkieModel;
     boolean isBasicInfoVisible;
-    String[]meses;
+
     public CharacterkieView() {
     }
     public static CharacterkieView newInstance() {
@@ -49,6 +49,8 @@ public class CharacterkieView extends Fragment implements View.OnClickListener {
             mode = getArguments().getString("mode");
             UID = getArguments().getString("UID");
             UID_WORLDKIE = getArguments().getString("UID_WORLDKIE");
+            UID_AUTHOR = getArguments().getString("UID_AUTHOR");
+
         }
     }
 
@@ -58,17 +60,12 @@ public class CharacterkieView extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_characterkie_view, container, false);
         initComponents(view);
         setVisibility();
-        getData();
+        getCharacterkie();
 
 
 
         setListeners();
         return view;
-    }
-    private void getData(){
-        getUser();
-        getWorldkie();
-        getCharacterkie();
     }
     private void getCharacterkie(){
         mainActivity.getCollectionCharacterkies().document(UID).addSnapshotListener((documentSnapshot, ex) -> {
@@ -80,34 +77,45 @@ public class CharacterkieView extends Fragment implements View.OnClickListener {
                 tv_nameCharacterkieView.setText(characterkieModel.getName());
                 getStrings(characterkieModel.getPronouns(),"pronouns");
                 getStrings(characterkieModel.getGender(),"gender");
-                getStrings(characterkieModel.getStatus(),"status");
                 getBirthday();
                 getProfilePhoto();
-            }
-        });
-    }
-    private void getWorldkie(){
-        mainActivity.getCollectionWorldkies().document(UID_WORLDKIE).addSnapshotListener((documentSnapshot, e) -> {
-            if (e != null) return;
+                mainActivity.getCollectionWorldkies().document(UID_WORLDKIE).addSnapshotListener((documentSnap, e) -> {
+                    if (e != null) return;
 
-            if (documentSnapshot != null) {
-                worldkieModel = WorldkieModel.fromSnapshot(documentSnapshot);
-                tv_nameWorldkieViewCharacterkie.setText(worldkieModel.getName());
-            }
-        });
-    }
-    private void getUser(){
-        mainActivity.getCollectionUsers().document(UID_AUTHOR).addSnapshotListener((document, exx) -> {
-                    if (exx != null) return;
+                    if (documentSnap != null) {
+                        worldkieModel = WorldkieModel.fromSnapshot(documentSnap);
+                        tv_nameWorldkieViewCharacterkie.setText(worldkieModel.getName());
+
+                mainActivity.getCollectionUsers().document(UID_AUTHOR).addSnapshotListener((document, exx) -> {
+                            if (exx != null) return;
 
 
-                    if (document != null) {
-                        userkieModel = UserkieModel.fromSnapshot(document);
-                        tv_nameUserCharacterkieView.setText(userkieModel.getName());
-                        tv_usernameCharacterkieView.setText(userkieModel.getUsername());
+                            if (document != null) {
+                                userkieModel = UserkieModel.fromSnapshot(document);
+                                tv_nameUserCharacterkieView.setText(userkieModel.getName());
+                                tv_usernameCharacterkieView.setText(userkieModel.getUsername());
+                                if(((userkieModel.isProfile_private() && mode.equals("other")) || (!worldkieModel.isWorldkie_private()&& mode.equals("other")) || (!characterkieModel.isCharacterkie_private()&&mode.equals("other")))){
+                                    tv_locked_characterkie.setVisibility(View.VISIBLE);
+                                    iv_locked_characterkie.setVisibility(View.VISIBLE);
+                                    iv_background_basic_info_characterkie.setVisibility(View.GONE);
+                                    tv_birthdayViewCharacterkie.setVisibility(View.GONE);
+                                    tv_pronounsViewCharacterkie.setVisibility(View.GONE);
+                                    tv_genderViewCharacterkie.setVisibility(View.GONE);
+                                    bt_basic_info_characterkies_view.setVisibility(View.GONE);
+                                    tv_basic_info_characterkie_view.setVisibility(View.GONE);
+                                            iv_basic_data_characterkie_view.setVisibility(View.GONE);
+                                    tv_separator_basic_info_characterkie_view.setVisibility(View.GONE);
+                                }
+
+
+                            }
+                        }
+                );
                     }
-                }
-        );
+                });
+
+            }
+        });
     }
     private void getBirthday()
     {
@@ -118,10 +126,9 @@ public class CharacterkieView extends Fragment implements View.OnClickListener {
             tv_birthdayViewCharacterkie.setText(mainActivity.getString(R.string.birthday) + ": " + characterkieModel.getBirthday());
 
         } else if (characterkieModel.getBirthday_format().equals(mainActivity.getString(R.string.mm_yy))) {
-            String[] month = characterkieModel.getBirthday().split("/");
-            tv_birthdayViewCharacterkie.setText(mainActivity.getString(R.string.birthday) + ": " + meses[Integer.parseInt(month[0])] + " de " + month[1]);
+            tv_birthdayViewCharacterkie.setText(mainActivity.getString(R.string.birthday) + ": " + characterkieModel.getBirthday());
         } else if (characterkieModel.getBirthday_format().equals(mainActivity.getString(R.string.mm))) {
-            tv_birthdayViewCharacterkie.setText(mainActivity.getString(R.string.birthday) + ": " + meses[Integer.parseInt(characterkieModel.getBirthday())]);
+            tv_birthdayViewCharacterkie.setText(mainActivity.getString(R.string.birthday) + ": " + characterkieModel.getBirthday());
         } else if (characterkieModel.getBirthday_format().equals(mainActivity.getString(R.string.yyyy))) {
             tv_birthdayViewCharacterkie.setText(mainActivity.getString(R.string.birthday) + ": " + characterkieModel.getBirthday());
         }
@@ -138,11 +145,6 @@ public class CharacterkieView extends Fragment implements View.OnClickListener {
                 case "pronouns":
                     tv_pronounsViewCharacterkie.setText(mainActivity.getString(R.string.pronouns) + ": " + textString.toLowerCase());
                     break;
-                case "status":
-                    tv_statusViewCharacterkie.setText(mainActivity.getString(R.string.status) + ": " + textString.toLowerCase());
-                    break;
-                case "birthday":
-
             }
         } else {
             switch (option) {
@@ -151,9 +153,6 @@ public class CharacterkieView extends Fragment implements View.OnClickListener {
                     break;
                 case "pronouns":
                     tv_pronounsViewCharacterkie.setText(mainActivity.getString(R.string.pronouns)+": "+characterkieModel.getPronouns().toLowerCase());
-                    break;
-                case "status":
-                    tv_statusViewCharacterkie.setText(mainActivity.getString(R.string.status)+": "+characterkieModel.getGender().toLowerCase());
                     break;
             }
 
@@ -164,22 +163,26 @@ public class CharacterkieView extends Fragment implements View.OnClickListener {
         bt_basic_info_characterkies_view.setOnClickListener(this);
     }
     private void initComponents(View view){
-        tv_birthdayViewCharacterkie = view.findViewById(R.id.tv_birthdayViewCharacterkie);
+        tv_locked_characterkie = view.findViewById(R.id.tv_locked_characterkie);
+        iv_locked_characterkie = view.findViewById(R.id.iv_locked_characterkie);
+        tv_birthdayViewCharacterkie = view.findViewById(R.id.tv_characterkiesPreviewWorldkie);
         tv_genderViewCharacterkie = view.findViewById(R.id.tv_genderViewCharacterkie);
         tv_pronounsViewCharacterkie = view.findViewById(R.id.tv_pronounsViewCharacterkie);
-        tv_statusViewCharacterkie = view.findViewById(R.id.tv_statusViewCharacterkie);
         ib_characterkieView = view.findViewById(R.id.ib_characterkieView);
         tv_nameCharacterkieView = view.findViewById(R.id.tv_nameCharacterkieView);
         tv_nameUserCharacterkieView = view.findViewById(R.id.tv_nameUserCharacterkieView);
         tv_usernameCharacterkieView = view.findViewById(R.id.tv_usernameCharacterkieView);
         tv_nameWorldkieViewCharacterkie = view.findViewById(R.id.tv_nameWorldkieViewCharacterkie);
         bt_basic_info_characterkies_view = view.findViewById(R.id.bt_basic_info_characterkies_view);
+        iv_background_basic_info_characterkie = view.findViewById(R.id.iv_background_basic_info_characterkie);
+        tv_basic_info_characterkie_view = view.findViewById(R.id.tv_basic_info_characterkie_view);
+        iv_basic_data_characterkie_view = view.findViewById(R.id.iv_basic_data_characterkie_view);
+        tv_separator_basic_info_characterkie_view = view.findViewById(R.id.tv_separator_basic_info_characterkie_view);
         mainActivity = (MainActivity)getActivity();
         ib_save = mainActivity.getIb_save();
         ib_back = mainActivity.getBackButton();
         fragmentManager = mainActivity.getSupportFragmentManager();
         UID_AUTHOR = mode.equals("other") ? getArguments().getString("UID_AUTHOR") : mainActivity.getUID();
-        meses= new String[]{mainActivity.getString(R.string.january),mainActivity.getString(R.string.february),mainActivity.getString(R.string.march),mainActivity.getString(R.string.april),mainActivity.getString(R.string.may),mainActivity.getString(R.string.june),mainActivity.getString(R.string.july),mainActivity.getString(R.string.august),mainActivity.getString(R.string.september),mainActivity.getString(R.string.october),mainActivity.getString(R.string.november),mainActivity.getString(R.string.december)};
         showHideBasicInfo();
     }
 private void setVisibility(){
@@ -201,24 +204,18 @@ private void getProfilePhoto() {
             for (StorageReference item : listResult.getItems()) {
                 if (item.getName().startsWith("cover")) {
                     item.getDownloadUrl().addOnSuccessListener(uri -> {
-                        // try {
                         DrawableUtils.personalizarImagenCuadradoButton(mainActivity, 115 / 7, 7, R.color.greenWhatever, uri, ib_characterkieView);
-                        //} catch (IOException e) {
-                        //    throw new RuntimeException(e);
-                        // }
+
                     });
                 }
             }
-        }).addOnFailureListener(e -> Log.e("Storage", "Error listando archivos: " + e.getMessage()));
-
-
-        }
+        });
+    }
     }
     private void showHideBasicInfo(){
         tv_birthdayViewCharacterkie.setVisibility(isBasicInfoVisible ? View.GONE : View.VISIBLE);
         tv_genderViewCharacterkie.setVisibility(isBasicInfoVisible ? View.GONE : View.VISIBLE);
         tv_pronounsViewCharacterkie.setVisibility(isBasicInfoVisible ? View.GONE : View.VISIBLE);
-        tv_statusViewCharacterkie.setVisibility(isBasicInfoVisible ? View.GONE : View.VISIBLE);
         bt_basic_info_characterkies_view.setBackgroundResource(isBasicInfoVisible ? R.drawable.twotone_arrow_drop_down_circle_24:R.drawable.twotone_arrow_circle_up_24);
         isBasicInfoVisible = !isBasicInfoVisible;
     }

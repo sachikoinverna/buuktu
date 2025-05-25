@@ -42,19 +42,6 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@mipmap/photoprofileone" />
 
-                <ImageButton
-                    android:id="@+id/ib_profileViewEdit"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@drawable/button_backgground"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/twotone_brush_24"
-                    app:layout_constraintBottom_toBottomOf="@+id/ib_profileView"
-                    app:layout_constraintEnd_toEndOf="@+id/ib_profileView"
-                    app:tint="#F4F4F4" />
-
                 <TextView
                     android:id="@+id/tv_nameProfileView"
                     android:layout_width="match_parent"

@@ -18,6 +18,7 @@ import com.example.buuktu.models.WorldkieModel;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.EfectsUtils;
 import com.example.buuktu.views.MainActivity;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.concurrent.TimeUnit;
 
@@ -101,23 +102,58 @@ public class DeleteGeneralDialog extends Dialog implements View.OnClickListener 
 
     private void deleteWorldkie() {
         prepareLoading();
+
         context.getCollectionWorldkies().document(UID).get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.exists()) {
                 WorldkieModel worldkieModel = WorldkieModel.fromSnapshot(documentSnapshot);
 
+                context.getCollectionCharacterkies()
+                        .whereEqualTo("UID_WORLDKIE", UID)
+                        .get()
+                        .addOnSuccessListener(characterSnapshots -> {
+                            for (DocumentSnapshot doc : characterSnapshots) {
+                                context.getCollectionCharacterkies().document(doc.getId()).delete();
+                                context.getFirebaseStorageCharacterkies().getReference().child(doc.getId()).delete();
+                            }
 
-                context.getCollectionWorldkies().document(UID).delete().addOnSuccessListener(unused -> {
-                    if (!worldkieModel.isPhoto_default()) {
-                        context.getFirebaseStorageWorldkies().getReference().child(UID).delete().addOnSuccessListener(unused1 -> failSuccess("success"));
-                    } else {
-                        failSuccess("success");
+                            context.getCollectionStuffkies()
+                                    .whereEqualTo("WORDLKIE_UID", UID)
+                                    .get()
+                                    .addOnSuccessListener(stuffSnapshots -> {
+                                        for (DocumentSnapshot doc : stuffSnapshots) {
+                                            context.getCollectionStuffkies().document(doc.getId()).delete();
+                                            context.getFirebaseStorageStuffkies().getReference().child(doc.getId()).delete();
+                                        }
 
-                    }
-                }).addOnFailureListener(e -> failSuccess("fail"));
+                                        context.getCollectionScenariokies()
+                                                .whereEqualTo("WORDLKIE_UID", UID)
+                                                .get()
+                                                .addOnSuccessListener(scenariosSnapshots -> {
+                                                    for (DocumentSnapshot doc : scenariosSnapshots) {
+                                                        context.getCollectionScenariokies().document(doc.getId()).delete();
+                                                        context.getFirebaseStorageScenariokies().getReference().child(doc.getId()).delete();
+                                                    }
 
+                                                    context.getCollectionWorldkies().document(UID).delete()
+                                                            .addOnSuccessListener(unused -> {
+                                                                if (!worldkieModel.isPhoto_default()) {
+                                                                    context.getFirebaseStorageWorldkies().getReference().child(UID).delete()
+                                                                            .addOnSuccessListener(unused1 -> failSuccess("success"));
+                                                                } else {
+                                                                    failSuccess("success");
+                                                                }
+                                                            }).addOnFailureListener(e -> failSuccess("fail"));
+
+                                                }).addOnFailureListener(e -> failSuccess("fail"));
+
+                                    }).addOnFailureListener(e -> failSuccess("fail"));
+
+                        }).addOnFailureListener(e -> failSuccess("fail"));
             }
+
         }).addOnFailureListener(e -> failSuccess("fail"));
     }
+
 
     private void deleteCharacterkie() {
         prepareLoading();

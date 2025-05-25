@@ -8,9 +8,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#FFFFFF"
-        android:backgroundTint="#FFFFFF">
+        android:layout_height="match_parent">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cv_info_worldkie"
@@ -30,20 +28,6 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
-                <ImageView
-                    android:id="@+id/iv_background_basic_info_characterkie2"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:src="@drawable/button_backgground"
-                    android:tintMode="multiply"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:tint="#9FA8DA" />
 
                 <ImageButton
                     android:id="@+id/ib_characterkieView"
@@ -176,7 +160,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/textView13"
+                        android:id="@+id/tv_separator_basic_info_characterkie_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="------------------★-------------------"
@@ -184,10 +168,10 @@
                         android:textSize="24sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+                        app:layout_constraintTop_toBottomOf="@+id/iv_basic_data_characterkie_view" />
 
                     <ImageView
-                        android:id="@+id/iv_background_basic_info_characterkie3"
+                        android:id="@+id/iv_background_basic_info_characterkie"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_marginStart="8dp"
@@ -200,11 +184,11 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView13"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_separator_basic_info_characterkie_view"
                         app:tint="@color/rose1" />
 
                     <ImageView
-                        android:id="@+id/imageView2"
+                        android:id="@+id/iv_basic_data_characterkie_view"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
                         android:layout_marginStart="8dp"
@@ -220,7 +204,7 @@
                         app:tint="@color/rose1" />
 
                     <TextView
-                        android:id="@+id/tv_basic_info_characterkies2"
+                        android:id="@+id/tv_basic_info_characterkie_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="32dp"
@@ -236,8 +220,8 @@
                         android:id="@+id/bt_basic_info_characterkies_view"
                         android:layout_width="33dp"
                         android:layout_height="33dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="24dp"
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"
                         android:src="@drawable/twotone_arrow_drop_down_circle_24"
@@ -262,7 +246,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
-                        android:text="TextView"
+                        android:text="@string/characterkie_privacity"
                         android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -270,7 +254,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/iv_locked_characterkie" />
 
                     <TextView
-                        android:id="@+id/tv_birthdayViewCharacterkie"
+                        android:id="@+id/tv_characterkiesPreviewWorldkie"
                         android:layout_width="300dp"
                         android:layout_height="40dp"
                         android:layout_marginStart="8dp"
@@ -282,9 +266,9 @@
                         android:text="@string/birthday"
                         android:textColor="#FFFFFF"
                         android:textSize="16sp"
-                        app:layout_constraintEnd_toEndOf="@+id/iv_background_basic_info_characterkie3"
+                        app:layout_constraintEnd_toEndOf="@+id/iv_background_basic_info_characterkie"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+                        app:layout_constraintTop_toBottomOf="@+id/tv_separator_basic_info_characterkie_view" />
 
                     <TextView
                         android:id="@+id/tv_pronounsViewCharacterkie"
@@ -297,27 +281,12 @@
                         android:gravity="center"
                         android:text="@string/pronouns"
                         android:textColor="#FFFFFF"
-                        app:layout_constraintEnd_toEndOf="@+id/iv_background_basic_info_characterkie3"
+                        app:layout_constraintEnd_toEndOf="@+id/iv_background_basic_info_characterkie"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_birthdayViewCharacterkie" />
+                        app:layout_constraintTop_toBottomOf="@+id/tv_characterkiesPreviewWorldkie" />
 
                     <TextView
                         android:id="@+id/tv_genderViewCharacterkie"
-                        android:layout_width="300dp"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/button_backgground"
-                        android:backgroundTint="@color/rose1"
-                        android:backgroundTintMode="screen"
-                        android:gravity="center"
-                        android:text="@string/gender"
-                        android:textColor="#FFFFFF"
-                        app:layout_constraintEnd_toEndOf="@+id/iv_background_basic_info_characterkie3"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_pronounsViewCharacterkie" />
-
-                    <TextView
-                        android:id="@+id/tv_statusViewCharacterkie"
                         android:layout_width="300dp"
                         android:layout_height="40dp"
                         android:layout_marginTop="8dp"
@@ -326,12 +295,12 @@
                         android:backgroundTint="@color/rose1"
                         android:backgroundTintMode="screen"
                         android:gravity="center"
-                        android:text="@string/status"
+                        android:text="@string/gender"
                         android:textColor="#FFFFFF"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@+id/iv_background_basic_info_characterkie3"
+                        app:layout_constraintEnd_toEndOf="@+id/iv_background_basic_info_characterkie"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_genderViewCharacterkie" />
+                        app:layout_constraintTop_toBottomOf="@+id/tv_pronounsViewCharacterkie" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

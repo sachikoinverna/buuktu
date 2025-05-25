@@ -353,7 +353,7 @@ ImageButton bt_basic_info_characterkies;
             optionBirthdayString = month+"/"+year;
             characterkie.setBirthday(optionBirthdayString);
             characterkie.setBirthday_format(mainActivity.getString(R.string.mm_yy));
-            bt_birthday_characterkie.setText(meses[month]+" de "+year);
+            bt_birthday_characterkie.setText(optionBirthdayString);
 
         }else if (optionBirthday==R.id.rb_month_birthday) {
             optionBirthdayString = String.valueOf(month);
@@ -451,18 +451,10 @@ ImageButton bt_basic_info_characterkies;
             animationView = dialog.getAnimationView();
             if(characterkie_id == null){
                 addDataToFirestore();
-            }else{
-                editDataFirestore();
             }
         }
     }
-    private void editDataFirestore(){
-            Completable.timer(3, TimeUnit.SECONDS)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(() -> mainActivity.getCollectionCharacterkies().document(characterkie_id).update(characterkie.toMap()).addOnSuccessListener(unused -> success()).addOnFailureListener(e -> fail()));
 
-    }
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.ib_back){

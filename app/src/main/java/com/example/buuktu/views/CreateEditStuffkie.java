@@ -276,6 +276,10 @@ private void uploadNewImage(){
             }
         }
     }
+    private void selectImage (){
+        bottomSheetProfilePhoto.show(getChildFragmentManager(),"BottomSheetProfilePhoto");
+
+    }
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.ib_save){
@@ -284,7 +288,7 @@ private void uploadNewImage(){
         else if(v.getId()==R.id.ib_back){
             NavigationUtils.goBack(fragmentManager,mainActivity);
         }else if (v.getId()==R.id.ib_select_img_create_stuffkie) {
-            bottomSheetProfilePhoto.show(getChildFragmentManager(),"BottomSheetProfilePhoto");
+        selectImage();
         }
     }
 }

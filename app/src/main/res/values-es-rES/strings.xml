@@ -159,4 +159,7 @@
     <string name="open_nav">Open Navigation Drawer</string>
     <string name="close_nav">Abrir menú de navegación</string>
     <string name="worldkie_privacity">Worldkie privado</string>
+    <string name="characterkie_privacity">Characterkie privado</string>
+    <string name="scenariokie_privacity">Scenariokie privado</string>
+    <string name="stuffkie_privacity">Stuffkie privado</string>
 </resources>

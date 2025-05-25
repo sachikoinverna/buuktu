@@ -8,9 +8,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#FFFFFF"
-        android:backgroundTint="#FFFFFF">
+        android:layout_height="match_parent">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cv_info_worldkie"
@@ -214,7 +212,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/iv_locked_characterkie" />
 
                     <TextView
-                        android:id="@+id/tv_birthdayViewCharacterkie"
+                        android:id="@+id/tv_characterkiesPreviewWorldkie"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -223,8 +221,9 @@
                         android:textColor="@color/rose3"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:layout_editor_absoluteX="8dp" />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/cv_characterkiesPreviewWorldkie"
@@ -236,7 +235,7 @@
                         app:cardBackgroundColor="@color/rose2"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_birthdayViewCharacterkie"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_characterkiesPreviewWorldkie"
                         app:strokeColor="@color/rose1">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -250,8 +249,7 @@
                                 android:orientation="horizontal"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                />
+                                app:layout_constraintStart_toStartOf="parent" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </com.google.android.material.card.MaterialCardView>
@@ -278,13 +276,11 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="8dp"
                         android:paddingStart="8dp"
                         android:paddingLeft="8dp"
                         android:paddingEnd="8dp"
                         android:paddingRight="8dp"
                         app:cardBackgroundColor="@color/rose2"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_stuffkiesPreviewWorldkie"
@@ -302,7 +298,8 @@
                                 android:orientation="horizontal"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent" />
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -330,7 +327,6 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="8dp"
                         android:paddingStart="8dp"
                         android:paddingLeft="8dp"
                         android:paddingEnd="8dp"
@@ -339,7 +335,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/cv_stuffkiesPreviewWorldkie"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_scenariokiesPreviewWorldkie"
                         app:strokeColor="@color/rose1"
                         app:strokeWidth="3dp">
 
@@ -354,7 +350,8 @@
                                 android:orientation="horizontal"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent" />
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -162,4 +162,8 @@
     <string name="numberkie_of_the_day">Numberkie of the day</string>
     <string name="close_nav">Close Navigation Drawer</string>
     <string name="worldkie_privacity">Private worldkie</string>
+    <string name="characterkie_privacity">Private characterkie</string>
+    <string name="scenariokie_privacity">Private scenariokie</string>
+    <string name="stuffkie_privacity">Private stuffkie</string>
+
 </resources>

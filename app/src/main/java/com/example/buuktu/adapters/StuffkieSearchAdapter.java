@@ -29,7 +29,7 @@ public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAd
 
     private final ArrayList<StuffkieModel> dataSet;
     private final FragmentManager fragmentManager;
-
+private final String mode;
     private final MainActivity context;
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final ImageView iv_stuffkie_photo_search;
@@ -37,6 +37,7 @@ public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAd
         final MaterialCardView cv_stuffkie_search;
         final TextView tv_stuffkie_name_search;
         final TextView tv_stuffkie_username_search;
+
         public ViewHolder(View view) {
             super(view);
             tv_stuffkie_username_search = view.findViewById(R.id.tv_stuffkie_username_search);
@@ -65,10 +66,11 @@ public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAd
             return iv_stuffkie_private_search;
         }
     }
-    public StuffkieSearchAdapter(ArrayList<StuffkieModel> dataSet, MainActivity ctx, FragmentManager fragmentManager) {
+    public StuffkieSearchAdapter(ArrayList<StuffkieModel> dataSet, MainActivity ctx, FragmentManager fragmentManager,String mode) {
         this.dataSet = dataSet;
         this.context = ctx;
         this.fragmentManager = fragmentManager;
+        this.mode=mode;
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -96,7 +98,10 @@ public class StuffkieSearchAdapter extends RecyclerView.Adapter<StuffkieSearchAd
 
         holder.getCv_stuffkie_search().setOnClickListener(v -> {
             Bundle bundle = new Bundle();
-            //bundle.putString();
+            bundle.putString("mode",mode);
+            bundle.putString("UID",stuffkieModel.getUID());
+            bundle.putString("UID_AUTHOR", stuffkieModel.getAUTHOR_UID());
+            bundle.putString("UID_WORLDKIE",stuffkieModel.getWORDLKIE_UID());
             NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new StuffkieView());
 
         });

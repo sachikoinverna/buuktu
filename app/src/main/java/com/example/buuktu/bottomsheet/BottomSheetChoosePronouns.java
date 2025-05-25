@@ -90,6 +90,7 @@ public class BottomSheetChoosePronouns extends BottomSheetDialogFragment impleme
             });
             if (rb.getId() == option) {
                 rb.setChecked(true);
+                    rb_checked = rb;
             }
         }
         bt_save_pronouns_characterkie.setOnClickListener(this);
@@ -116,20 +117,20 @@ public class BottomSheetChoosePronouns extends BottomSheetDialogFragment impleme
     private void savePronouns() {
         if (rb_checked.getId() != option) {
             if (rb_checked.getId() == R.id.rb_other_characterkie) {
-                if (CheckUtil.checkTextEmpty(getContext(),et_otherPronounsCharacterkieFilled,et_otherPronounsCharacterkie.getText().toString())) return;
+                if (!CheckUtil.checkTextEmpty(getContext(),et_otherPronounsCharacterkieFilled,et_otherPronounsCharacterkie.getText().toString())) return;
                 createCharacterkie.getCharacterkie().setPronouns(et_otherPronounsCharacterkie.getText().toString());
 
                 createCharacterkie.setOptionPronounsString(et_otherPronounsCharacterkie.getText().toString());
+                createCharacterkie.setOptionPronouns(rb_checked.getId());
+
             } else {
                 createCharacterkie.setOptionPronounsString(rb_checked.getText().toString());
                 createCharacterkie.getCharacterkie().setPronouns(rb_checked.getTag().toString());
-            }
-            createCharacterkie.setOptionPronouns(rb_checked.getId());
-        } else {
-            if (rb_checked.getId() == R.id.rb_other_characterkie && !optionString.equals(et_otherPronounsCharacterkie.getText().toString())) {
-                createCharacterkie.setOptionStatusString(et_otherPronounsCharacterkie.getText().toString());
+                createCharacterkie.setOptionPronouns(rb_checked.getId());
+
             }
         }
+
         dismiss(); // ✅ Solo se cierra si todo está bien
     }
 

@@ -19,6 +19,7 @@ import com.example.buuktu.models.ScenariokieModel;
 import com.example.buuktu.utils.DrawableUtils;
 import com.example.buuktu.utils.NavigationUtils;
 import com.example.buuktu.views.MainActivity;
+import com.example.buuktu.views.Scenariokie;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.storage.StorageReference;
 
@@ -30,6 +31,7 @@ public class ScenariokieSearchAdapter extends RecyclerView.Adapter<ScenariokieSe
     private final FragmentManager fragmentManager;
 
     private final MainActivity context;
+    private String mode;
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final ImageView iv_scenariokie_photo_search;
         private final ImageView iv_characterkie_private_search;
@@ -64,10 +66,11 @@ public class ScenariokieSearchAdapter extends RecyclerView.Adapter<ScenariokieSe
             return iv_characterkie_private_search;
         }
     }
-    public ScenariokieSearchAdapter(ArrayList<ScenariokieModel> dataSet, MainActivity ctx, FragmentManager fragmentManager) {
+    public ScenariokieSearchAdapter(ArrayList<ScenariokieModel> dataSet, MainActivity ctx, FragmentManager fragmentManager, String mode) {
         this.dataSet = dataSet;
         this.context = ctx;
         this.fragmentManager = fragmentManager;
+        this.mode=mode;
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -92,7 +95,11 @@ public class ScenariokieSearchAdapter extends RecyclerView.Adapter<ScenariokieSe
         });
         holder.getCv_scenariokie_search().setOnClickListener(v -> {
             Bundle bundle = new Bundle();
-            NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new CharacterkieView());
+            bundle.putString("mode",mode);
+            bundle.putString("UID",scenariokieModel.getUID());
+            bundle.putString("UID_AUTHOR",scenariokieModel.getAUTHOR_UID());
+            bundle.putString("UID_WORLDKIE",scenariokieModel.getWORDLKIE_UID());
+            NavigationUtils.goNewFragmentWithBundle(bundle,fragmentManager,new Scenariokie());
 
         });
         if (scenariokieModel.isPhoto_default()) {

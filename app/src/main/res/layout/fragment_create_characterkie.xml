@@ -199,7 +199,7 @@
                         android:layout_marginBottom="16dp"
                         android:gravity="center"
                         android:switchPadding="8dp"
-                        android:text="@string/worldkie_privacity"
+                        android:text="@string/characterkie_privacity"
                         android:textColor="@color/rose3"
                         android:textSize="20sp"
                         android:textStyle="bold"

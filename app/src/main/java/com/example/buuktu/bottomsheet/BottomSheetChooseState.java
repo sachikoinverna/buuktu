@@ -76,7 +76,7 @@ public class BottomSheetChooseState extends BottomSheetDialogFragment implements
                     other.setChecked(false);
                 }
                 rb.setChecked(true);
-                rb_checked = rb;
+                rb_checked = v.findViewById(rb.getId());
                 et_otherStatusCharacterkieFilled.setVisibility(rb.getId() == R.id.rb_other_status_characterkie ? View.VISIBLE : View.GONE);
             });
             if (rb.getId() == option) {
@@ -90,17 +90,20 @@ public class BottomSheetChooseState extends BottomSheetDialogFragment implements
 
     private void saveOption() {
         if (rb_checked.getId() != option) {
-            if (rb_checked.getId() == R.id.rb_status_unknown) {
-                if (CheckUtil.checkTextEmpty(getContext(),et_otherStatusCharacterkieFilled,et_otherStatusCharacterkie.getText().toString())) return; // 🚫 No cerrar
+            if (rb_checked.getId() == R.id.rb_other_status_characterkie) {
+                if (!CheckUtil.checkTextEmpty(getContext(),et_otherStatusCharacterkieFilled,et_otherStatusCharacterkie.getText().toString())) return; // 🚫 No cerrar
                 createCharacterkie.getCharacterkie().setStatus(et_otherStatusCharacterkie.getText().toString());
                 createCharacterkie.setOptionStatusString(et_otherStatusCharacterkie.getText().toString());
+                createCharacterkie.setOptionStatus(rb_checked.getId());
+
             } else {
                 createCharacterkie.setOptionStatusString(rb_checked.getText().toString());
                 createCharacterkie.getCharacterkie().setStatus(rb_checked.getTag().toString());
+                createCharacterkie.setOptionStatus(rb_checked.getId());
+
             }
-            createCharacterkie.setOptionStatus(rb_checked.getId());
-            dismiss();
         }
+        dismiss();
     }
 
     @Override

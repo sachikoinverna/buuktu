@@ -97,7 +97,7 @@
                         android:layout_marginBottom="16dp"
                         android:gravity="center"
                         android:switchPadding="8dp"
-                        android:text="Private worldkie"
+                        android:text="@string/stuffkie_privacity"
                         android:textColor="@color/rose3"
                         android:textSize="20sp"
                         android:textStyle="bold"

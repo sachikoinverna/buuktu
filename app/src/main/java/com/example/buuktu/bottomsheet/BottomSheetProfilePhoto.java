@@ -40,7 +40,7 @@ public class BottomSheetProfilePhoto extends BottomSheetDialogFragment implement
     CreateEditStuffkie createEditStuffkie;
     CreateEditScenariokie createEditScenariokie;
     private ActivityResultLauncher<Intent> imagePickerLauncher;
-
+    String from;
     public BottomSheetProfilePhoto() {
     }
 
@@ -121,17 +121,27 @@ public class BottomSheetProfilePhoto extends BottomSheetDialogFragment implement
         tv_choose_photo_default = v.findViewById(R.id.tv_choose_photo_default);
         tv_choose_photo_gallery = v.findViewById(R.id.tv_choose_photo_gallery);
         context = getContext();
-        if (getActivity() instanceof Register) register = (Register) getActivity();
-        else if (getActivity() instanceof MainActivity) {
-            if (getParentFragment() instanceof CreateEditWorldkie)
+        if (getActivity() instanceof Register) {
+            register = (Register) getActivity();
+        }else if (getActivity() instanceof MainActivity) {
+            if (getParentFragment() instanceof CreateEditWorldkie) {
                 createEditWorldkie = (CreateEditWorldkie) getParentFragment();
-            else if (getParentFragment() instanceof CreateCharacterkie)
-                createCharacterkie = (CreateCharacterkie) getParentFragment();
-            else if (getParentFragment() instanceof CreateEditStuffkie)
-                createEditStuffkie = (CreateEditStuffkie) getParentFragment();
-            else if (getParentFragment() instanceof CreateEditScenariokie)
-                createEditScenariokie = (CreateEditScenariokie) getParentFragment();
 
+            }
+            else if (getParentFragment() instanceof CreateCharacterkie)
+            {
+                createCharacterkie = (CreateCharacterkie) getParentFragment();
+
+            }
+            else if (getParentFragment() instanceof CreateEditStuffkie)
+            {
+                createEditStuffkie = (CreateEditStuffkie) getParentFragment();
+
+            }
+            else if (getParentFragment() instanceof CreateEditScenariokie) {
+
+                createEditScenariokie = (CreateEditScenariokie) getParentFragment();
+            }
         }
     }
 

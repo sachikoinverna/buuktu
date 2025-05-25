@@ -39,7 +39,7 @@ import java.util.ArrayList;
 
 public class ProfileView extends Fragment implements View.OnClickListener {
     String mode;
-    private ImageButton ib_profileView, ib_profileViewEdit, ib_save, ib_back, ib_profile_superior;
+    private ImageButton ib_profileView, ib_save, ib_back, ib_profile_superior;
     ImageView iv_locked_profile;
     private TextView tv_usernameProfileView, tv_nameProfileView, tv_worldkiesPreviewUserkie, tv_stuffkiesPreviewUserkie, tv_characterkiesPreviewUserkie, tv_locked_profile, tv_scenariokiesPreviewUserkie;
     MaterialCardView cv_characterkiesPreviewUserkie, cv_stuffkiesPreviewUserkie, cv_worldkiesPreviewUserkie, cv_scenariokiesPreviewUserkie;
@@ -100,7 +100,7 @@ public class ProfileView extends Fragment implements View.OnClickListener {
                 getProfilePhoto();
                 tv_nameProfileView.setText(userkieModel.getName());
                 tv_usernameProfileView.setText(userkieModel.getUsername());
-                if ((userkieModel.isProfile_private() && mode.equals("other")) || (!mode.equals("self"))) {
+                if ((userkieModel.isProfile_private() && mode.equals("other"))) {
                     hideShowSection(tv_characterkiesPreviewUserkie, cv_characterkiesPreviewUserkie, false);
                     hideShowSection(tv_worldkiesPreviewUserkie, cv_worldkiesPreviewUserkie, false);
                     hideShowSection(tv_stuffkiesPreviewUserkie, cv_stuffkiesPreviewUserkie, false);
@@ -118,22 +118,18 @@ public class ProfileView extends Fragment implements View.OnClickListener {
         });
     }
     private void getStuffkies() {
-        Query queryStuffkies = mainActivity.getCollectionStuffkies().whereEqualTo("UID_AUTHOR", UID);
-        if (mode.equals("other")) {
-            queryStuffkies.whereNotEqualTo("draft", true);
-        }
-        queryStuffkies.addSnapshotListener((queryDocumentSnapshots, ex) -> {
+        Query queryStuffkies = mainActivity.getCollectionStuffkies().whereEqualTo("AUTHOR_UID", UID);
+        addDraftQuery(queryStuffkies).addSnapshotListener((queryDocumentSnapshots, ex) -> {
             if (ex != null) return;
 
             if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
                 stuffkieArrayList.clear();
                 for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
                     stuffkieArrayList.add(StuffkieModel.fromSnapshot(doc));
-                    hideShowSection(tv_stuffkiesPreviewUserkie, cv_stuffkiesPreviewUserkie, true);
-
-                    setRecyclerViewStuffkies();
-
                 }
+                hideShowSection(tv_stuffkiesPreviewUserkie, cv_stuffkiesPreviewUserkie, true);
+
+                setRecyclerViewStuffkies();
             } else {
                 hideShowSection(tv_stuffkiesPreviewUserkie, cv_stuffkiesPreviewUserkie, false);
                 setRecyclerViewStuffkies();
@@ -142,11 +138,8 @@ public class ProfileView extends Fragment implements View.OnClickListener {
         });
     }
     private void getWorldkies(){
-            Query queryWorldkies = mainActivity.getCollectionWorldkies().whereEqualTo("uid_AUTHOR",UID);
-            if(mode.equals("other")){
-                queryWorldkies.whereNotEqualTo("draft",true);
-            }
-            queryWorldkies.addSnapshotListener((queryDocumentSnapshots, ex) -> {
+            Query queryWorldkies = mainActivity.getCollectionWorldkies().whereEqualTo("UID_AUTHOR",UID);
+        addDraftQuery(queryWorldkies).addSnapshotListener((queryDocumentSnapshots, ex) -> {
                 if (ex != null) return;
 
 
@@ -155,10 +148,11 @@ public class ProfileView extends Fragment implements View.OnClickListener {
 
                     for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
                         worldkieArrayList.add(WorldkieModel.fromSnapshot(doc));
-                        hideShowSection(tv_worldkiesPreviewUserkie,cv_worldkiesPreviewUserkie,true);
 
-                        setRecyclerViewWorldkies();
                     }
+                    hideShowSection(tv_worldkiesPreviewUserkie,cv_worldkiesPreviewUserkie,true);
+
+                    setRecyclerViewWorldkies();
                 }else {
                     hideShowSection(tv_worldkiesPreviewUserkie,cv_worldkiesPreviewUserkie,false);
 
@@ -168,10 +162,8 @@ public class ProfileView extends Fragment implements View.OnClickListener {
         }
     private void getCharacterkies(){
             Query queryCharacterkies = mainActivity.getCollectionCharacterkies().whereEqualTo("UID_AUTHOR",UID);
-            if(mode.equals("other")){
-                queryCharacterkies.whereNotEqualTo("draft",true);
-            }
-            queryCharacterkies.addSnapshotListener((queryDocumentSnapshots, ex) -> {
+
+        addDraftQuery(queryCharacterkies).addSnapshotListener((queryDocumentSnapshots, ex) -> {
                 if (ex != null) {
                     return;
                 }
@@ -183,10 +175,11 @@ public class ProfileView extends Fragment implements View.OnClickListener {
 
 
                         characterkieArrayList.add(CharacterkieModel.fromSnapshot(doc));
-                        hideShowSection(tv_characterkiesPreviewUserkie,cv_characterkiesPreviewUserkie,true);
 
-                        setRecyclerViewCharacterkies();
                     }
+                    hideShowSection(tv_characterkiesPreviewUserkie,cv_characterkiesPreviewUserkie,true);
+
+                    setRecyclerViewCharacterkies();
                 }else {
                     hideShowSection(tv_characterkiesPreviewUserkie,cv_characterkiesPreviewUserkie,false);
                     setRecyclerViewCharacterkies();
@@ -194,12 +187,15 @@ public class ProfileView extends Fragment implements View.OnClickListener {
                 }
             });
         }
+    private Query addDraftQuery(Query query){
+        if (mode.equals("other")) {
+            return query.whereEqualTo("draft", false);
+        }
+        return query;
+    }
     private void getScenariokies(){
             Query queryScenariokies = mainActivity.getCollectionScenariokies().whereEqualTo("AUTHOR_UID",UID);
-            if(mode.equals("other")){
-                queryScenariokies.whereNotEqualTo("draft",true);
-            }
-            queryScenariokies.addSnapshotListener((queryDocumentSnapshots, ex) -> {
+            addDraftQuery(queryScenariokies).addSnapshotListener((queryDocumentSnapshots, ex) -> {
                 if (ex != null) {
                     return;
                 }
@@ -209,12 +205,15 @@ public class ProfileView extends Fragment implements View.OnClickListener {
 
                     for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
                         scenariokieModelArrayList.add(ScenariokieModel.fromSnapshot(doc));
-                        hideShowSection(tv_scenariokiesPreviewUserkie,cv_scenariokiesPreviewUserkie,true);
 
-                        setRecyclerViewScenariokies();
                     }
+                    hideShowSection(tv_scenariokiesPreviewUserkie,cv_scenariokiesPreviewUserkie,true);
+
+                    setRecyclerViewScenariokies();
                 }else {
                     hideShowSection(tv_scenariokiesPreviewUserkie,cv_scenariokiesPreviewUserkie,false);
+                    setRecyclerViewScenariokies();
+
                 }
             });
     }
@@ -232,7 +231,6 @@ public class ProfileView extends Fragment implements View.OnClickListener {
         cv_stuffkiesPreviewUserkie = view.findViewById(R.id.cv_stuffkiesPreviewUserkie);
         cv_characterkiesPreviewUserkie = view.findViewById(R.id.cv_characterkiesPreviewUserkie);
         ib_profileView = view.findViewById(R.id.ib_profileView);
-        ib_profileViewEdit = view.findViewById(R.id.ib_profileViewEdit);
         tv_usernameProfileView = view.findViewById(R.id.tv_usernameProfileView);
         tv_nameProfileView = view.findViewById(R.id.tv_nameProfileView);
         tv_characterkiesPreviewUserkie = view.findViewById(R.id.tv_characterkiesPreviewUserkie);
@@ -253,10 +251,8 @@ public class ProfileView extends Fragment implements View.OnClickListener {
         ib_save.setVisibility(View.GONE);
         ib_back.setVisibility(View.VISIBLE);
         ib_profile_superior.setVisibility(mode.equals("self")?View.INVISIBLE:View.VISIBLE);
-        ib_profileViewEdit.setVisibility(mode.equals("self")?View.VISIBLE:View.INVISIBLE);
     }
     private void setListeners(){
-                ib_profileViewEdit.setOnClickListener(this);
                 ib_back.setOnClickListener(this);
     }
     private void getProfilePhoto(){
@@ -289,14 +285,6 @@ public class ProfileView extends Fragment implements View.OnClickListener {
             }
             ib_profileView.setVisibility(View.VISIBLE);
             EfectsUtils.startCircularReveal(ib_profileView.getDrawable(),ib_profileView);
-/*.addOnFailureListener(e -> {
-                    Toast.makeText(this, "Error al buscar imagen", Toast.LENGTH_SHORT).show();
-                    Log.e("Storage", "Error listando archivos: " + e.getMessage());
-                })*/
-
-
-        // }
-            //}
     }
     private void setRecyclerViewStuffkies() {
         stuffkiesUserPreviewAdapter = new StuffkiesUserPreviewAdapter(stuffkieArrayList,mainActivity,fragmentManager,mode);
@@ -323,8 +311,6 @@ public class ProfileView extends Fragment implements View.OnClickListener {
         // Comprueba si se ha presionado el botón de retroceso.
         if(v.getId()==R.id.ib_back){
             NavigationUtils.goBack(fragmentManager,mainActivity);
-        } else if (v.getId() == R.id.ib_profileView) {
-            mainActivity.showInfoDialog("future_function");
         }
     }
 }

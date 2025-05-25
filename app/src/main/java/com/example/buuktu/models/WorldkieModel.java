@@ -39,10 +39,7 @@ public class WorldkieModel implements Serializable {
             worldkieModel.setId_photo(document.getString("id_photo"));
 
         }
-        // Verificar si el campo "options" existe en el documento antes de intentar obtenerlo
-        if (document.contains("draft")) {
             worldkieModel.setDraft(document.getBoolean("draft"));
-        }
         return worldkieModel;
     }
     public Map<String, Object> toMap() {

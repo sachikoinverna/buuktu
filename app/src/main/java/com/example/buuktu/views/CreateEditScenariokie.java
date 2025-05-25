@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Switch;
 
@@ -182,9 +183,12 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
         ib_select_img_create_scenariokie.setOnClickListener(this);
         ib_back.setOnClickListener(this);
         ib_save.setOnClickListener(this);
-        tb_scenariokiePrivacity.setOnCheckedChangeListener((buttonView, isChecked) -> tb_scenariokieDraft.setVisibility(isChecked?View.VISIBLE:View.INVISIBLE));
+        tb_scenariokiePrivacity.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            tb_scenariokieDraft.setVisibility(isChecked ? View.VISIBLE : View.INVISIBLE);
+            scenariokieModel.setScenariokie_private(isChecked);
+        });
         tb_scenariokieDraft.setOnCheckedChangeListener((buttonView, isChecked) -> {
-
+            scenariokieModel.setDraft(isChecked);
         });
     }
     private void addDataToFirestore(){
@@ -261,7 +265,7 @@ public class CreateEditScenariokie extends Fragment implements View.OnClickListe
                 .subscribe(() -> dialog.dismiss());
     }
     private void save(){
-        if (!CheckUtil.handlerCheckName(mainActivity, et_nameScenariokieCreate, et_nameScenariokieCreateFull)) {
+        if (CheckUtil.handlerCheckName(mainActivity, et_nameScenariokieCreate, et_nameScenariokieCreateFull)) {
             dialog.show();
             animationView = dialog.getAnimationView();
             scenariokieModel.setName(et_nameScenariokieCreate.getText().toString());

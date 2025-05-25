@@ -120,12 +120,13 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
             tvDays[i] = view.findViewById(tv_day_id_full);  // Asocia el TextView a cada posición en el array
             int bt_day_id_full = getResources().getIdentifier(bt_day_id, "id", context.getPackageName()); // Obtiene el ID del recurso
             dayButtons[i] = view.findViewById(bt_day_id_full);  // Asocia el TextView a cada posición en el array
+            int finalI = i; // Necesario para usar dentro del listener
             dayButtons[i].setOnClickListener(v -> {
                 bt_selected.setImageTintList(ColorStateList.valueOf(Color.parseColor("#9FA8DA")));
 
                 bt_selected = (ImageButton) v;
                 int color = getResources().getColor(R.color.brownMaroon, null); // Usando un color de recursos
-
+                day = Integer.parseInt(tvDays[finalI].getText().toString());
 // Aplica el tint al ImageButton
                 bt_selected.setImageTintList(ColorStateList.valueOf(color));
             });
@@ -289,9 +290,9 @@ public class BottomSheetChooseBirthday extends BottomSheetDialogFragment impleme
             createCharacterkie.setMonth(month);
         } else if (rb_checked.getId() == R.id.rb_month_year_birthday) {
             createCharacterkie.setMonth(month);
-            createCharacterkie.setDay(day);
+            createCharacterkie.setYear(year);
         } else if (rb_checked.getId() == R.id.rb_full_birthday) {
-            if (CheckUtil.checkTextEmpty(getContext(),et_yearBirthdayCreateFull,et_yearBirthdayCreate.getText().toString())) return;
+            if (!CheckUtil.checkTextEmpty(getContext(),et_yearBirthdayCreateFull,et_yearBirthdayCreate.getText().toString())) return;
             createCharacterkie.setYear(Integer.parseInt(et_yearBirthdayCreate.getText().toString()));
             createCharacterkie.setMonth(month);
             createCharacterkie.setDay(day);

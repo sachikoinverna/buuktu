@@ -47,7 +47,7 @@ public class StuffkiesSearch extends Fragment {
     }
     private void getStuffkies() {
         mainActivity.getCollectionStuffkies()
-                .whereNotEqualTo("UID_AUTHOR",mainActivity.getUID()).whereEqualTo("draft",false)
+                .whereNotEqualTo("AUTHOR_UID",mainActivity.getUID()).whereEqualTo("draft",false)
                 .addSnapshotListener((snapshots, error) -> {
                     if (error != null) return;
 
@@ -62,7 +62,7 @@ public class StuffkiesSearch extends Fragment {
     }
     private void setRecyclerView() {
         rc_stuffkies_search.setLayoutManager(new LinearLayoutManager(mainActivity));
-        stuffkieSearchAdapter = new StuffkieSearchAdapter(stuffkieModelArrayList, mainActivity, getParentFragmentManager());
+        stuffkieSearchAdapter = new StuffkieSearchAdapter(stuffkieModelArrayList, mainActivity, getParentFragmentManager(),"other");
         rc_stuffkies_search.setAdapter(stuffkieSearchAdapter);
     }
 }

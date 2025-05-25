@@ -17,6 +17,7 @@ import androidx.annotation.ColorRes;
 import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.buuktu.R;
 
@@ -44,7 +45,8 @@ public class DrawableUtils {
                 .load(imageRes)
                 .apply(new RequestOptions()
                         .centerCrop()
-                        .transform(new RoundedBorderSquareTransformation(radius, border, ContextCompat.getColor(context, colorRes))))
+                        .transform(new RoundedBorderSquareTransformation(radius, border, ContextCompat.getColor(context, colorRes)))).diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
                 .into(button);
     }
 
@@ -53,7 +55,8 @@ public class DrawableUtils {
                 .load(uri)
                 .apply(new RequestOptions()
                         .centerCrop()
-                        .transform(new RoundedBorderSquareTransformation(radius, border, ContextCompat.getColor(context, idColor))))
+                        .transform(new RoundedBorderSquareTransformation(radius, border, ContextCompat.getColor(context, idColor))).diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true))
                 .into(imageView);
 
     }
@@ -62,7 +65,8 @@ public class DrawableUtils {
                 .load(drawable)
                 .apply(new RequestOptions()
                         .centerCrop()
-                        .transform(new RoundedBorderSquareTransformation(radius, border, ContextCompat.getColor(context, idColor))))
+                        .transform(new RoundedBorderSquareTransformation(radius, border, ContextCompat.getColor(context, idColor))).diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true))
                 .into(imageView);
     }
     public static String getMipmapName(Context context, int id) {
@@ -81,7 +85,8 @@ public class DrawableUtils {
                 .load(uri)
                 .apply(new RequestOptions()
                         .centerCrop()
-                        .transform(new RoundedBorderSquareTransformation(radius, border, ContextCompat.getColor(context, idColor))))
+                        .transform(new RoundedBorderSquareTransformation(radius, border, ContextCompat.getColor(context, idColor))).diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true))
                 .into(imageButton);
     }
     public static void personalizarImagenCuadradoImageView(Context context, int radius, int border,@ColorRes int idColor, Uri uri, ImageView imageView) {
@@ -89,7 +94,8 @@ public class DrawableUtils {
                 .load(uri)
                 .apply(new RequestOptions()
                         .centerCrop()
-                        .transform(new RoundedBorderSquareTransformation(radius, border, ContextCompat.getColor(context, idColor))))
+                        .transform(new RoundedBorderSquareTransformation(radius, border, ContextCompat.getColor(context, idColor))).diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true))
                 .into(imageView);
     }
 
@@ -98,7 +104,8 @@ public class DrawableUtils {
                 .load(bitmap)
                 .apply(new RequestOptions()
                         .centerCrop()
-                        .transform(new RoundedBorderSquareTransformation(radius, border, ContextCompat.getColor(context, idColor))))
+                        .transform(new RoundedBorderSquareTransformation(radius, border, ContextCompat.getColor(context, idColor))).diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true))
                 .into(imageView);
     }
 

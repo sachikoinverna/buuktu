@@ -86,12 +86,11 @@ public class BottomSheetChooseGender extends BottomSheetDialogFragment implement
                 rb_checked = v.findViewById(rb.getId());
                 et_otherGendersCharacterkieFilled.setVisibility(rb.getId() == R.id.rb_other_gender_characterkie ? View.VISIBLE : View.GONE);
 
-                if (rb.getId() == option) {
-                    rb.setChecked(true);
-                }
             });
             if (rb.getId() == option) {
                 rb.setChecked(true);
+                rb_checked = rb;
+
             }
         }
         bt_save_gender_characterkie.setOnClickListener(this);
@@ -117,8 +116,8 @@ public class BottomSheetChooseGender extends BottomSheetDialogFragment implement
 
     private void saveGender() {
         if (rb_checked.getId() != option) {
-            if (rb_checked.getId() == R.id.rb_gender_unknown) {
-                if (CheckUtil.checkTextEmpty(getContext(),et_otherGendersCharacterkieFilled,et_otherGendersCharacterkie.getText().toString())) return;
+            if (rb_checked.getId() == R.id.rb_other_gender_characterkie) {
+                if (!CheckUtil.checkTextEmpty(getContext(),et_otherGendersCharacterkieFilled,et_otherGendersCharacterkie.getText().toString())) return;
                 createCharacterkie.setOptionGenderString(et_otherGendersCharacterkie.getText().toString());
                 createCharacterkie.getCharacterkie().setStatus(et_otherGendersCharacterkie.getText().toString());
             } else {
@@ -126,8 +125,8 @@ public class BottomSheetChooseGender extends BottomSheetDialogFragment implement
                 createCharacterkie.getCharacterkie().setStatus(rb_checked.getTag().toString());
             }
             createCharacterkie.setOptionGender(rb_checked.getId());
-            dismiss();
         }
+        dismiss();
     }
 
     @Override

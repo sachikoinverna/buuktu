@@ -46,7 +46,7 @@ public class ScenariokiesSearch extends Fragment {
     }
     private void getScenariokies() {
         mainActivity.getCollectionScenariokies()
-                .whereNotEqualTo("UID_AUTHOR",mainActivity.getUID()).whereEqualTo("draft",false)
+                .whereNotEqualTo("AUTHOR_UID",mainActivity.getUID()).whereEqualTo("draft",false)
                 .addSnapshotListener((snapshots, error) -> {
                     if (error != null) return;
 
@@ -61,7 +61,7 @@ public class ScenariokiesSearch extends Fragment {
     }
     private void setRecyclerView() {
         rc_scenariokies_search.setLayoutManager(new LinearLayoutManager(mainActivity));
-        scenariokieSearchAdapter = new ScenariokieSearchAdapter(scenariokieModelArrayList, mainActivity, getParentFragmentManager());
+        scenariokieSearchAdapter = new ScenariokieSearchAdapter(scenariokieModelArrayList, mainActivity, getParentFragmentManager(),"other");
         rc_scenariokies_search.setAdapter(scenariokieSearchAdapter);
     }
 }

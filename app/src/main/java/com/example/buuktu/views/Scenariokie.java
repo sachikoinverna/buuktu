@@ -82,14 +82,16 @@ public class Scenariokie extends Fragment implements View.OnClickListener {
                     scenariokieModel = scenariokieModel.fromSnapshot(queryDocumentSnapshots);
                     tv_nameScenariokieView.setText(scenariokieModel.getName());
                     getProfilePhoto();
+                    mainActivity.getCollectionWorldkies().document(UID_WORLDKIE).addSnapshotListener((queryDocumentSnapshots2, exx) -> {
+                        if (exx != null) return;
+                        worldkieModel = WorldkieModel.fromSnapshot(queryDocumentSnapshots2);
+                        tv_nameWorldkieViewScenariokie.setText(worldkieModel.getName());
+                        iv_locked_scenariokie.setBackgroundResource(((!userkieModel.isProfile_private() && mode.equals("other")) || (mode.equals("self") || (!worldkieModel.isWorldkie_private()&& mode.equals("other")) || (!scenariokieModel.isScenariokie_private()&&mode.equals("other")))  ? R.drawable.twotone_lock_24:R.drawable.twotone_build_circle_24));
+                        tv_locked_scenariokie.setText(((!userkieModel.isProfile_private() && mode.equals("other")) || (mode.equals("self")|| (!worldkieModel.isWorldkie_private()&& mode.equals("other")) || (!scenariokieModel.isScenariokie_private()&&mode.equals("other"))) ? mainActivity.getString(R.string.wait_new_info):mainActivity.getString(R.string.private_stuffkie)));
+                    });
                 });
-                mainActivity.getCollectionWorldkies().document(UID_WORLDKIE).addSnapshotListener((queryDocumentSnapshots2, ex) -> {
-                    if (ex != null) return;
-                    worldkieModel = WorldkieModel.fromSnapshot(queryDocumentSnapshots2);
-                    tv_nameWorldkieViewScenariokie.setText(worldkieModel.getName());
-                });
-                iv_locked_scenariokie.setBackgroundResource(((!userkieModel.isProfile_private() && mode.equals("other")) || (mode.equals("self") || (!worldkieModel.isWorldkie_private()&& mode.equals("other")) || (!scenariokieModel.isScenariokie_private()&&mode.equals("other")))  ? R.drawable.twotone_lock_24:R.drawable.twotone_build_circle_24));
-                tv_locked_scenariokie.setText(((!userkieModel.isProfile_private() && mode.equals("other")) || (mode.equals("self")|| (!worldkieModel.isWorldkie_private()&& mode.equals("other")) || (!scenariokieModel.isScenariokie_private()&&mode.equals("other"))) ? mainActivity.getString(R.string.wait_new_info):mainActivity.getString(R.string.private_stuffkie)));
+
+
             }
         });
     }
@@ -111,16 +113,12 @@ public class Scenariokie extends Fragment implements View.OnClickListener {
                 for (StorageReference item : listResult.getItems()) {
                     if (item.getName().startsWith("cover")) {
                         item.getDownloadUrl().addOnSuccessListener(uri -> {
-                            // try {
                             DrawableUtils.personalizarImagenCuadradoButton(mainActivity, 115 / 7, 7, R.color.greenWhatever, uri, ib_scenariokieView);
-                            //} catch (IOException e) {
-                            //    throw new RuntimeException(e);
-                            // }
+
                         });
                     }
                 }
-            }).addOnFailureListener(e -> Log.e("Storage", "Error listando archivos: " + e.getMessage()));
-
+            });
 
         }
     }

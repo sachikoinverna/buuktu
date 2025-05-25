@@ -68,23 +68,24 @@ public class Note extends Fragment implements View.OnClickListener {
                 if (e != null) return;
                 if (queryDocumentSnapshot != null) {
                     notekieModel = NotekieModel.fromSnapshot(queryDocumentSnapshot);
-                    createMode();
+                    if (!notekieModel.getTitle().isEmpty()) {
+                        et_title_note.setText(notekieModel.getTitle());
+                    }
+                    et_content_note.setText(notekieModel.getText());
                 }
             });
         }
         else{
             notekieModel = new NotekieModel();
             notekieModel.setUID_USER(mainActivity.getUID());
-            notekieModel.setTitle("");
+            notekieModel.setTitle(mainActivity.getString(R.string.untitled));
             notekieModel.setText("");
+            createMode();
+
         }
     }
     private void createMode(){
-        if (!notekieModel.getTitle().isEmpty()) {
-            et_title_note.setText(notekieModel.getTitle());
-        } else {
-            et_title_note.setHint(notekieModel.getTitle());
-        }
+        et_title_note.setHint(notekieModel.getTitle());
         et_content_note.setText(notekieModel.getText());
     }
     private void initComponents(View view){
@@ -131,9 +132,7 @@ private void delayedDismiss() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(() -> {
-                            Task<DocumentReference> addTask = mainActivity.getCollectionNotekies().add(notekieModel.toMap());
-
-                            addTask.addOnCompleteListener(task -> {
+                            mainActivity.getCollectionNotekies().document(notekieModel.getUID()).update(notekieModel.toMap()).addOnCompleteListener(task -> {
                                 if (task.isSuccessful()) {
                                     successFail("success");
                                 }

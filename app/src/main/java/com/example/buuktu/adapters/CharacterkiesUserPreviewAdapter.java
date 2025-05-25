@@ -130,12 +130,7 @@ public class CharacterkiesUserPreviewAdapter extends RecyclerView.Adapter<Charac
 
                 popupWindow.showAsDropDown(holder.getCardView(), 0, -50);
 
-                popupView.findViewById(R.id.bt_edit_item).setOnClickListener(view -> {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("characterkie_id", characterkieModel.getUID());
-                    NavigationUtils.goNewFragmentWithBundle(bundle, fragmentManager, new CreateCharacterkie());
-                    popupWindow.dismiss();
-                });
+                popupView.findViewById(R.id.bt_edit_item).setVisibility(View.GONE);
 
                 popupView.findViewById(R.id.bt_del_item).setOnClickListener(view2 -> {
                     DeleteGeneralDialog deleteGeneralDialog = new DeleteGeneralDialog(context, "characterkie", characterkieModel.getUID());
